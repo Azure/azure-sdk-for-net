@@ -41,7 +41,7 @@ public sealed class TestRow2PathCCrashFailedTests : CrashRecoveryE2ETestBase
         }
 
         Assert.That(handler.CallCount, Is.EqualTo(0), "mark-failed must not re-invoke the handler");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0), "recovery entry should be cleared after mark-failed");
+        await WaitForRecoveryEntryCountAsync(0, "recovery entry should be cleared after mark-failed");
     }
 
     [Test]

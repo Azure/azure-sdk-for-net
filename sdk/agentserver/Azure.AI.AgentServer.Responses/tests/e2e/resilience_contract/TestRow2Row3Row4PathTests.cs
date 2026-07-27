@@ -196,7 +196,7 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
         var get = await client.GetAsync($"/responses/{responseId}");
         Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.NotFound),
             "an unstored (store=false) response must not be retrievable");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0),
+        await WaitForRecoveryEntryCountAsync(0,
             "an unstored response must never write a recovery entry (no next-lifetime action)");
     }
 

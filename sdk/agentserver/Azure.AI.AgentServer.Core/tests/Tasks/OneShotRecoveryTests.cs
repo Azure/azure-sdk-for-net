@@ -210,8 +210,12 @@ public sealed class OneShotRecoveryTests
         int dispatched = await host.Engine.ScanAndRecoverAsync();
 
         Assert.That(dispatched, Is.EqualTo(1), "only the valid record should dispatch");
+        // Recovery dispatch is asynchronous: ScanAndRecoverAsync returns once the good record is
+        // dispatched, but the recovered handler runs on a background task. Wait for that task to
+        // complete (record deleted) before asserting the handler observed the recovery — asserting
+        // goodRecovered immediately would race the dispatch.
+        await host.WaitUntilDeletedAsync("good-1", TimeSpan.FromSeconds(5));
         Assert.That(goodRecovered, Is.EqualTo(1), "scan should continue after one record faults");
         Assert.That(await host.Store.GetAsync("bad-1"), Is.Not.Null, "faulting record remains for later retry/manual handling");
-        await host.WaitUntilDeletedAsync("good-1", TimeSpan.FromSeconds(5));
     }
 }

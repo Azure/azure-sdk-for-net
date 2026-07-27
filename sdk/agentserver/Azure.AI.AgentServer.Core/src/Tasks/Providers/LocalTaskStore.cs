@@ -28,6 +28,13 @@ internal sealed class LocalTaskStore : ITaskStore
 {
     private readonly string _baseDir;
 
+    // Serializes PatchAsync (a lease-renewal read-modify-write) against DeleteAsync so the two
+    // cannot interleave — which would otherwise let a renewal write resurrect a just-deleted
+    // record. Only these two operations race (the delete bypasses the engine's per-task write
+    // gate), so the lock is scoped to them. The hosted store gets this atomicity from the server;
+    // the local store provides the equivalent here. Local-only: the hosted store is a separate type.
+    private readonly object _ioLock = new();
+
     /// <summary>Initializes a new instance of the <see cref="LocalTaskStore"/> class.</summary>
     /// <param name="baseDir">Override for the <c>tasks</c> root directory; resolved from config when null.</param>
     public LocalTaskStore(string? baseDir = null)
@@ -71,12 +78,22 @@ internal sealed class LocalTaskStore : ITaskStore
 
         try
         {
-            var text = File.ReadAllText(path, Encoding.UTF8);
-            var node = JsonNode.Parse(text);
+            var node = JsonNode.Parse(ReadAllTextShared(path));
             return node is JsonObject obj ? TaskRecord.FromJson(obj) : null;
         }
         catch (JsonException)
         {
+            return null;
+        }
+        catch (IOException)
+        {
+            // The file was deleted (or is delete-pending) concurrently — treat as not-found,
+            // matching POSIX read-after-unlink semantics.
+            return null;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // Windows returns access-denied while a file is delete-pending — also not-found.
             return null;
         }
     }
@@ -87,7 +104,28 @@ internal sealed class LocalTaskStore : ITaskStore
         Directory.CreateDirectory(dir);
         task.Etag = GenerateEtag(task);
         var json = task.ToJson().ToJsonString(new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(TaskPath(task.AgentName, task.SessionId, task.Id), json, new UTF8Encoding(false));
+        WriteAllTextShared(TaskPath(task.AgentName, task.SessionId, task.Id), json);
+    }
+
+    // Open task files with FileShare.Delete (plus ReadWrite) so a concurrent delete/rename of the
+    // same file is not blocked — replicating POSIX unlink-of-open-file semantics (which the Python
+    // local provider relies on) and the hosted store's "concurrent ops, ETag-arbitrated" model.
+    // Without FileShare.Delete, Windows throws a sharing violation when File.Delete races the
+    // engine's background lease-renewal write.
+    private const FileShare ShareWithDelete = FileShare.ReadWrite | FileShare.Delete;
+
+    private static string ReadAllTextShared(string path)
+    {
+        using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, ShareWithDelete);
+        using var reader = new StreamReader(stream, Encoding.UTF8);
+        return reader.ReadToEnd();
+    }
+
+    private static void WriteAllTextShared(string path, string contents)
+    {
+        using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, ShareWithDelete);
+        using var writer = new StreamWriter(stream, new UTF8Encoding(false));
+        writer.Write(contents);
     }
 
     private static string GenerateEtag(TaskRecord task)
@@ -238,6 +276,14 @@ internal sealed class LocalTaskStore : ITaskStore
 
     /// <inheritdoc/>
     public Task<TaskRecord> PatchAsync(string taskId, TaskPatchRequest patch, string? ifMatch, CancellationToken cancellationToken = default)
+    {
+        lock (_ioLock)
+        {
+            return PatchCore(taskId, patch, ifMatch, cancellationToken);
+        }
+    }
+
+    private Task<TaskRecord> PatchCore(string taskId, TaskPatchRequest patch, string? ifMatch, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         ArgumentNullException.ThrowIfNull(patch);
@@ -552,6 +598,14 @@ internal sealed class LocalTaskStore : ITaskStore
 
     /// <inheritdoc/>
     public Task DeleteAsync(string taskId, string? ifMatch = null, bool force = false, bool cascade = false, CancellationToken cancellationToken = default)
+    {
+        lock (_ioLock)
+        {
+            return DeleteCore(taskId, ifMatch, force, cascade, cancellationToken);
+        }
+    }
+
+    private Task DeleteCore(string taskId, string? ifMatch = null, bool force = false, bool cascade = false, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 

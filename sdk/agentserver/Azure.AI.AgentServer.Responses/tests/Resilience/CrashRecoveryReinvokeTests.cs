@@ -79,6 +79,26 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
     private int RecoveryEntryCount()
         => CoreTaskRecoveryTestHelpers.TaskRecordCount(_tasksDir);
 
+    // The recovery entry (Core task record) is removed asynchronously as the task finalizes, which
+    // happens after the response reaches its terminal status. Poll for the count to settle rather
+    // than asserting instantaneous consistency (which races the async cleanup).
+    private async Task WaitForRecoveryEntryCountAsync(int expected, string message)
+    {
+        int last = -1;
+        for (var i = 0; i < 200; i++)
+        {
+            last = RecoveryEntryCount();
+            if (last == expected)
+            {
+                return;
+            }
+
+            await Task.Delay(25);
+        }
+
+        Assert.That(last, Is.EqualTo(expected), message);
+    }
+
     [Test]
     public async Task Reinvoke_CompletesInterruptedResponse_AndClearsEntry()
     {
@@ -104,7 +124,7 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         await WaitForStatusAsync(client, responseId, "completed");
 
         Assert.That(handler.CallCount, Is.EqualTo(1), "handler should have been re-invoked exactly once");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0), "recovery entry should be cleared after completion");
+        await WaitForRecoveryEntryCountAsync(0, "recovery entry should be cleared after completion");
     }
 
     [Test]
@@ -120,7 +140,7 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
         await WaitForStatusAsync(client, responseId, "failed");
 
         Assert.That(handler.CallCount, Is.EqualTo(0), "mark-failed must not re-invoke the handler");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0), "recovery entry should be cleared after mark-failed");
+        await WaitForRecoveryEntryCountAsync(0, "recovery entry should be cleared after mark-failed");
     }
 
     [Test]
@@ -143,7 +163,7 @@ public sealed class CrashRecoveryReinvokeTests : IDisposable
             await Task.Delay(25);
         }
 
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0), "entry for a missing durable record should be dropped");
+        await WaitForRecoveryEntryCountAsync(0, "entry for a missing durable record should be dropped");
         Assert.That(handler.CallCount, Is.EqualTo(0), "no handler should be invoked for a dropped entry");
     }
 

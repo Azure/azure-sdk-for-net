@@ -54,7 +54,7 @@ public sealed class TestRow1PathABSignalTests : CrashRecoveryE2ETestBase
         await factory.StopAsync();
 
         await WaitForStatusAsync(client, responseId, "completed");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0),
+        await WaitForRecoveryEntryCountAsync(0,
             "a naturally-terminal Row 1 response must clear its recovery entry");
     }
 
@@ -81,7 +81,7 @@ public sealed class TestRow1PathABSignalTests : CrashRecoveryE2ETestBase
         // The response must remain in_progress (NOT failed) so the next lifetime re-invokes it, and
         // the acceptance-time recovery entry must be retained.
         await WaitForStatusAsync(client, responseId, "in_progress");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "Row 1 Path B must retain the recovery entry for next-lifetime re-invocation");
 
         // The durable record must not carry an error (a deferral is not a failure).

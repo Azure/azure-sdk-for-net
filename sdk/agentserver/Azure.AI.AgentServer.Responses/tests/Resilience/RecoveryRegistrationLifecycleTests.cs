@@ -63,6 +63,26 @@ public sealed class RecoveryRegistrationLifecycleTests : IDisposable
     private int RecoveryEntryCount()
         => CoreTaskRecoveryTestHelpers.TaskRecordCount(_tasksDir);
 
+    // The recovery entry (Core task record) is removed asynchronously as the task finalizes, which
+    // happens after the response reaches its terminal status. Poll for the count to settle rather
+    // than asserting instantaneous consistency (which races the async cleanup).
+    private async Task WaitForRecoveryEntryCountAsync(int expected, string message)
+    {
+        int last = -1;
+        for (var i = 0; i < 200; i++)
+        {
+            last = RecoveryEntryCount();
+            if (last == expected)
+            {
+                return;
+            }
+
+            await Task.Delay(25);
+        }
+
+        Assert.That(last, Is.EqualTo(expected), message);
+    }
+
     [Test]
     public async Task BackgroundResponse_RegistersRecoveryEntry_ThenRemovesAtTerminal()
     {
@@ -85,7 +105,7 @@ public sealed class RecoveryRegistrationLifecycleTests : IDisposable
         Assert.That(responseId, Is.Not.Null.And.Not.Empty);
 
         // In-flight: recovery entry must exist so a crash can re-invoke this response.
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "Core task record should be written before the handler completes");
         var payload = await CoreTaskRecoveryTestHelpers.ReadTaskPayloadAsync(_tasksDir, responseId!);
         Assert.That(payload.ResponseId, Is.EqualTo(responseId));
@@ -95,7 +115,7 @@ public sealed class RecoveryRegistrationLifecycleTests : IDisposable
         gate.SetResult();
         await WaitForTerminalAsync(client, responseId!);
 
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0),
+        await WaitForRecoveryEntryCountAsync(0,
             "Core task record should be removed once the response reaches a terminal state");
     }
 
@@ -110,7 +130,7 @@ public sealed class RecoveryRegistrationLifecycleTests : IDisposable
             new StringContent(body, Encoding.UTF8, "application/json"));
         Assert.That(post.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0),
+        await WaitForRecoveryEntryCountAsync(0,
             "non-background responses are synchronous and must not create Core task records");
     }
 

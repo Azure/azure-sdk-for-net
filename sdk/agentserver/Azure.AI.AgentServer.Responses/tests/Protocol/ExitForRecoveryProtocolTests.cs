@@ -78,7 +78,7 @@ public sealed class ExitForRecoveryProtocolTests : IDisposable
             await Task.Delay(15);
         }
 
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "a resilient background deferral must retain the Core task record");
     }
 
@@ -97,7 +97,7 @@ public sealed class ExitForRecoveryProtocolTests : IDisposable
 
         // ExitForRecoveryAsync is a no-op here, so the handler runs on to completed.
         await WaitForStatusAsync(client, responseId, "completed");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0),
+        await WaitForRecoveryEntryCountAsync(0,
             "a non-resilient response must not create a Core task record");
     }
 
@@ -121,7 +121,8 @@ public sealed class ExitForRecoveryProtocolTests : IDisposable
         using var doc = JsonDocument.Parse(await post.Content.ReadAsStringAsync());
         Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"),
             "ExitForRecoveryAsync must be a no-op for a foreground response");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0));
+        await WaitForRecoveryEntryCountAsync(0,
+            "a foreground response must not retain a Core task record");
     }
 
     private TestWebApplicationFactory NewHost(TestHandler handler, bool resilient)
@@ -137,6 +138,27 @@ public sealed class ExitForRecoveryProtocolTests : IDisposable
 
     private int RecoveryEntryCount()
         => CoreTaskRecoveryTestHelpers.TaskRecordCount(_tasksDir);
+
+    // A non-resilient/foreground response is tracked by a Core one-shot task while it runs; the
+    // engine removes that record as the task finalizes, which happens asynchronously relative to
+    // the response reaching its terminal status. Poll for the record count to settle rather than
+    // asserting instantaneous consistency (which races the async cleanup).
+    private async Task WaitForRecoveryEntryCountAsync(int expected, string message)
+    {
+        int last = -1;
+        for (var i = 0; i < 200; i++)
+        {
+            last = RecoveryEntryCount();
+            if (last == expected)
+            {
+                return;
+            }
+
+            await Task.Delay(25);
+        }
+
+        Assert.That(last, Is.EqualTo(expected), message);
+    }
 
     private static async Task<string> CreateBackgroundAsync(HttpClient client)
     {

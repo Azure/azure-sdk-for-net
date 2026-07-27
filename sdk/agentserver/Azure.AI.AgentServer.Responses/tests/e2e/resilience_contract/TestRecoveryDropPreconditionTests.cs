@@ -44,7 +44,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
             await Task.Delay(25);
         }
 
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0), "definitive not-found must drop the recovery entry");
+        await WaitForRecoveryEntryCountAsync(0, "definitive not-found must drop the recovery entry");
         Assert.That(handler.CallCount, Is.EqualTo(0), "a dropped entry must never dispatch the handler");
     }
 
@@ -72,7 +72,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
         // Give the startup scan time to run and (correctly) fail transiently.
         await Task.Delay(500);
 
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "a transient read error must NOT drop the recovery entry — it is retried next lifetime");
         Assert.That(handler.CallCount, Is.EqualTo(0),
             "a transient precondition failure must not dispatch the handler");

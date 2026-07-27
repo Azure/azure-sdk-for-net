@@ -67,6 +67,26 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
     private int RecoveryEntryCount()
         => CoreTaskRecoveryTestHelpers.TaskRecordCount(_tasksDir);
 
+    // The recovery entry (Core task record) is removed asynchronously as the task finalizes, which
+    // happens after the response reaches its terminal status. Poll for the count to settle rather
+    // than asserting instantaneous consistency (which races the async cleanup).
+    private async Task WaitForRecoveryEntryCountAsync(int expected, string message)
+    {
+        int last = -1;
+        for (var i = 0; i < 200; i++)
+        {
+            last = RecoveryEntryCount();
+            if (last == expected)
+            {
+                return;
+            }
+
+            await Task.Delay(25);
+        }
+
+        Assert.That(last, Is.EqualTo(expected), message);
+    }
+
     [Test]
     public async Task ExitForRecovery_ResilientBackground_DefersWithoutTerminalOrOverwrite()
     {
@@ -111,7 +131,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
             "only the checkpoint write; finalization must not overwrite it with a pre-terminal record");
 
         // The Core task record must remain so a restarted sandbox re-invokes the deferred work.
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "Core task record must be retained across deferral (status is non-terminal)");
     }
 
@@ -137,7 +157,8 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         using var doc = JsonDocument.Parse(await post.Content.ReadAsStringAsync());
         Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"),
             "ExitForRecoveryAsync must be a no-op for non-resilient/non-background responses");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0));
+        await WaitForRecoveryEntryCountAsync(0,
+            "a non-resilient/non-background response must not retain a Core task record");
     }
 
     [Test]
@@ -180,7 +201,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         Assert.That(contents, Does.Not.Contain("\"__terminal__\": true"));
 
         // Core task record retained so a restarted sandbox re-invokes the deferred work.
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "Core task record must be retained across streaming deferral");
     }
 
@@ -216,7 +237,8 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("server_error"));
 
         // store=false responses are never task-tracked, so no recovery entry is registered.
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0));
+        await WaitForRecoveryEntryCountAsync(0,
+            "a store=false response must not register a Core task record");
     }
 
     [Test]
@@ -261,7 +283,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         Assert.That(provider.UpdateCount, Is.EqualTo(1),
             "only the checkpoint write; finalization must not overwrite it even when the signal was swallowed");
 
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "Core task record must be retained across a swallowed deferral");
     }
 
@@ -312,7 +334,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
             "finalization must not overwrite the checkpoint even when a terminal follows a swallowed deferral");
 
         // Core task record retained so a restarted sandbox re-invokes the deferred work.
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(1),
+        await WaitForRecoveryEntryCountAsync(1,
             "Core task record must be retained across a swallowed-then-terminal deferral");
     }
 

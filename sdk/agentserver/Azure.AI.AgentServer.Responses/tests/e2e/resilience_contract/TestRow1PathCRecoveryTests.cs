@@ -43,7 +43,7 @@ public sealed class TestRow1PathCRecoveryTests : CrashRecoveryE2ETestBase
         await WaitForStatusAsync(client, responseId, "completed");
 
         Assert.That(handler.CallCount, Is.EqualTo(1), "handler should have been re-invoked exactly once");
-        Assert.That(RecoveryEntryCount(), Is.EqualTo(0), "recovery entry should be cleared after completion");
+        await WaitForRecoveryEntryCountAsync(0, "recovery entry should be cleared after completion");
 
         if (stream)
         {
