@@ -94,27 +94,20 @@ internal static class BicepTypeMapping
             return BicepSyntax.Value(Convert.ToBase64String(value.ToArray()));
         }
 
-        try
+        Utf8JsonReader reader = new(value.ToMemory().Span);
+        BicepExpression expression = ReadJsonValue(ref reader);
+        if (reader.Read())
         {
-            Utf8JsonReader reader = new(value.ToMemory().Span);
-            BicepExpression expression = ReadJsonValue(ref reader);
-            if (reader.Read())
-            {
-                throw new JsonException();
-            }
-            return expression;
+            throw new JsonException($"Unexpected JSON token {reader.TokenType} after the top-level value.");
         }
-        catch (JsonException)
-        {
-            return BicepSyntax.Value(Convert.ToBase64String(value.ToArray()));
-        }
+        return expression;
     }
 
     private static BicepExpression ReadJsonValue(ref Utf8JsonReader reader)
     {
         if (!reader.Read())
         {
-            throw new JsonException();
+            throw new JsonException("Expected a JSON value.");
         }
         return ToBicep(ref reader);
     }
@@ -129,7 +122,7 @@ internal static class BicepTypeMapping
             JsonTokenType.True => BicepSyntax.Value(true),
             JsonTokenType.False => BicepSyntax.Value(false),
             JsonTokenType.Null => BicepSyntax.Null(),
-            _ => throw new JsonException()
+            _ => throw new JsonException($"Unexpected JSON token {reader.TokenType}.")
         };
 
     private static PropertyExpression[] ReadObjectProperties(ref Utf8JsonReader reader)
@@ -143,13 +136,13 @@ internal static class BicepTypeMapping
             }
             if (reader.TokenType != JsonTokenType.PropertyName)
             {
-                throw new JsonException();
+                throw new JsonException($"Expected JSON property name token but found {reader.TokenType}.");
             }
 
             string propertyName = reader.GetString()!;
             properties.Add(new PropertyExpression(propertyName, ReadJsonValue(ref reader)));
         }
-        throw new JsonException();
+        throw new JsonException("Expected end of JSON object.");
     }
 
     private static BicepExpression[] ReadArrayValues(ref Utf8JsonReader reader)
@@ -164,7 +157,7 @@ internal static class BicepTypeMapping
 
             values.Add(ToBicep(ref reader));
         }
-        throw new JsonException();
+        throw new JsonException("Expected end of JSON array.");
     }
 
     private static BicepExpression ToBicepNumber(ref Utf8JsonReader reader)

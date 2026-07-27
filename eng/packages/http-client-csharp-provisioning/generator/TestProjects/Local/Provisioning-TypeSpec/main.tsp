@@ -7,6 +7,7 @@ import "./item.tsp";
 import "./profileRevision.tsp";
 import "./extensionAssignment.tsp";
 import "./singletonSetting.tsp";
+import "./binaryData.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;

@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Provisioning.Primitives;
@@ -236,11 +237,11 @@ public class BicepValueTests
     }
 
     [Test]
-    public void ValidateNonJsonBinaryDataCompilesToBase64String()
+    public void ValidateNonJsonBinaryDataThrowsJsonException()
     {
-        TestHelpers.AssertExpression("'cGxhaW4gc3RyaW5n'", new BicepValue<BinaryData>(BinaryData.FromString("plain string")));
-        TestHelpers.AssertExpression("'QVFJREJBPT0='", new BicepValue<BinaryData>(BinaryData.FromString("AQIDBA==")));
-        TestHelpers.AssertExpression("'AQIDBA=='", new BicepValue<BinaryData>(BinaryData.FromBytes([1, 2, 3, 4])));
+        Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(BinaryData.FromString("plain string")).Compile());
+        Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(BinaryData.FromString("AQIDBA==")).Compile());
+        Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(BinaryData.FromBytes([1, 2, 3, 4])).Compile());
     }
 
     [Test]
@@ -252,6 +253,12 @@ public class BicepValueTests
 
         resource.Blob = BinaryData.FromString("""{"name":"value"}""");
         TestHelpers.AssertExpression("'eyJuYW1lIjoidmFsdWUifQ=='", resource.Blob);
+
+        resource.Blob = BinaryData.FromString("AQIDBA==");
+        TestHelpers.AssertExpression("'QVFJREJBPT0='", resource.Blob);
+
+        resource.Blob = BinaryData.FromBytes([1, 2, 3, 4]);
+        TestHelpers.AssertExpression("'AQIDBA=='", resource.Blob);
     }
 
     [Test]

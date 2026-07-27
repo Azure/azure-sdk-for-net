@@ -104,7 +104,7 @@ namespace Azure.Generator.Provisioning.Utilities
         public static string? GetLiteralFormat(InputType type) =>
             type switch
             {
-                InputPrimitiveType primitive when primitive == InputPrimitiveType.Base64 => "base64",
+                InputPrimitiveType { Kind: InputPrimitiveTypeKind.Bytes, Encode: "base64" } => "base64",
                 InputNullableType nullable => GetLiteralFormat(nullable.Type),
                 _ => null
             };
