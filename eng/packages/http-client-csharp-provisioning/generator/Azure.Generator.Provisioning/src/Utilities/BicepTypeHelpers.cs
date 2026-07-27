@@ -101,6 +101,9 @@ namespace Azure.Generator.Provisioning.Utilities
             }
             if (isOutput)
             {
+                // Output applies to this property occurrence, not recursively to the shared model/resource type.
+                // Setter availability is determined once per generated type from all of its usages. Deep per-usage
+                // read-only APIs would require separate input/output types or wrappers for both models and resources.
                 args.Add(new PositionalParameterReferenceExpression("isOutput", Literal(true)));
             }
             if (isRequired)
