@@ -56,7 +56,6 @@ internal static class Program
             new RedisSpecification(),
             new RedisEnterpriseSpecification(),
             new SecurityCenterSpecification(),
-            new ServiceBusSpecification(),
             new SignalRSpecification(),
             new SqlSpecification(),
             new StorageSpecification(),
