@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.ResourceManager.Resources.Bicep;
 
 namespace Azure.ResourceManager.Resources.Bicep.Models
