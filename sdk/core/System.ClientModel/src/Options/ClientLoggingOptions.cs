@@ -48,7 +48,8 @@ public class ClientLoggingOptions
                                                                           "Server",
                                                                           "Transfer-Encoding",
                                                                           "User-Agent",
-                                                                          "WWW-Authenticate" ];
+                                                                          "WWW-Authenticate",
+                                                                          "azure-deprecating" ];
     private static readonly HashSet<string> s_defaultAllowedQueryParameters = ["api-version"];
     private static readonly PipelineMessageSanitizer s_defaultSanitizer = new(s_defaultAllowedQueryParameters, s_defaultAllowedHeaderNames);
 
