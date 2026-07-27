@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
@@ -222,7 +221,6 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(PythonPackageCreateProperties))]
     [ModelReaderWriterBuildable(typeof(QueryTagSettingsProperties))]
     [ModelReaderWriterBuildable(typeof(RawGraphicalRunbookContent))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RunAsCredentialAssociationProperty))]
     [ModelReaderWriterBuildable(typeof(RunbookAssociationProperty))]
     [ModelReaderWriterBuildable(typeof(RunbookCreateOrUpdateProperties))]
