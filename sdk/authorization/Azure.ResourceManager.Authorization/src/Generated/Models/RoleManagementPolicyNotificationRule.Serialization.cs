@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 throw new FormatException($"The model {nameof(RoleManagementPolicyNotificationRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(NotificationDeliveryType))
+            if (Optional.IsDefined(RoleManagementNotificationDeliveryType))
             {
                 writer.WritePropertyName("notificationType"u8);
-                writer.WriteStringValue(NotificationDeliveryType.Value.ToString());
+                writer.WriteStringValue(RoleManagementNotificationDeliveryType.Value.ToString());
             }
             if (Optional.IsDefined(NotificationLevel))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleManagementPolicyRuleType ruleType = default;
             RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            NotificationDeliveryType? notificationDeliveryType = default;
+            RoleManagementNotificationDeliveryType? roleManagementNotificationDeliveryType = default;
             RoleManagementPolicyNotificationLevel? notificationLevel = default;
             RoleManagementPolicyRecipientType? recipientType = default;
             IList<string> notificationRecipients = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    notificationDeliveryType = new NotificationDeliveryType(prop.Value.GetString());
+                    roleManagementNotificationDeliveryType = new RoleManagementNotificationDeliveryType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("notificationLevel"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 ruleType,
                 target,
                 additionalBinaryDataProperties,
-                notificationDeliveryType,
+                roleManagementNotificationDeliveryType,
                 notificationLevel,
                 recipientType,
                 notificationRecipients ?? new ChangeTrackingList<string>(),

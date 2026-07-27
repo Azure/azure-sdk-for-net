@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Authorization
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            RoleManagementPolicyAssignmentProperties properties = default;
+            RoleManagementPolicyAssignmentDataProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    properties = RoleManagementPolicyAssignmentProperties.DeserializeRoleManagementPolicyAssignmentProperties(prop.Value, options);
+                    properties = RoleManagementPolicyAssignmentDataProperties.DeserializeRoleManagementPolicyAssignmentDataProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

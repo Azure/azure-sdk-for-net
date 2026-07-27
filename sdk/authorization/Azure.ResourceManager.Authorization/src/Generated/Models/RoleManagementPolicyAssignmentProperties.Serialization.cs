@@ -8,18 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Role management policy assignment properties with scope. </summary>
-    internal partial class RoleManagementPolicyAssignmentProperties : IJsonModel<RoleManagementPolicyAssignmentProperties>
+    /// <summary> Expanded info of resource scope, role definition and policy. </summary>
+    public partial class RoleManagementPolicyAssignmentProperties : ResourceData, IJsonModel<RoleManagementPolicyAssignmentProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoleManagementPolicyAssignmentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleManagementPolicyAssignmentProperties IPersistableModel<RoleManagementPolicyAssignmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RoleManagementPolicyAssignmentProperties IPersistableModel<RoleManagementPolicyAssignmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (RoleManagementPolicyAssignmentProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RoleManagementPolicyAssignmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -68,42 +70,28 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentProperties)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope);
+                writer.WriteObjectValue(Scope, options);
             }
-            if (Optional.IsDefined(RoleDefinitionId))
+            if (Optional.IsDefined(RoleDefinition))
             {
-                writer.WritePropertyName("roleDefinitionId"u8);
-                writer.WriteStringValue(RoleDefinitionId);
+                writer.WritePropertyName("roleDefinition"u8);
+                writer.WriteObjectValue(RoleDefinition, options);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveRules))
-            {
-                writer.WritePropertyName("effectiveRules"u8);
-                writer.WriteStartArray();
-                foreach (RoleManagementPolicyRule item in EffectiveRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentProperties))
-            {
-                writer.WritePropertyName("policyAssignmentProperties"u8);
-                writer.WriteObjectValue(PolicyAssignmentProperties, options);
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(Policy, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -124,11 +112,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleManagementPolicyAssignmentProperties IJsonModel<RoleManagementPolicyAssignmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RoleManagementPolicyAssignmentProperties IJsonModel<RoleManagementPolicyAssignmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RoleManagementPolicyAssignmentProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoleManagementPolicyAssignmentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -147,58 +135,73 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            string scope = default;
-            ResourceIdentifier roleDefinitionId = default;
-            ResourceIdentifier policyId = default;
-            IReadOnlyList<RoleManagementPolicyRule> effectiveRules = default;
-            PolicyAssignmentProperties policyAssignmentProperties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            PolicyAssignmentPropertiesScope scope = default;
+            PolicyAssignmentPropertiesRoleDefinition roleDefinition = default;
+            PolicyAssignmentPropertiesPolicy policy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAuthorizationContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("scope"u8))
                 {
-                    scope = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scope = PolicyAssignmentPropertiesScope.DeserializePolicyAssignmentPropertiesScope(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("roleDefinitionId"u8))
+                if (prop.NameEquals("roleDefinition"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    roleDefinitionId = new ResourceIdentifier(prop.Value.GetString());
+                    roleDefinition = PolicyAssignmentPropertiesRoleDefinition.DeserializePolicyAssignmentPropertiesRoleDefinition(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("policyId"u8))
+                if (prop.NameEquals("policy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("effectiveRules"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item, options));
-                    }
-                    effectiveRules = array;
-                    continue;
-                }
-                if (prop.NameEquals("policyAssignmentProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policyAssignmentProperties = PolicyAssignmentProperties.DeserializePolicyAssignmentProperties(prop.Value, options);
+                    policy = PolicyAssignmentPropertiesPolicy.DeserializePolicyAssignmentPropertiesPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -207,11 +210,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             return new RoleManagementPolicyAssignmentProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
                 scope,
-                roleDefinitionId,
-                policyId,
-                effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
-                policyAssignmentProperties,
+                roleDefinition,
+                policy,
                 additionalBinaryDataProperties);
         }
     }

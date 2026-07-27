@@ -955,30 +955,6 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="id"> The id of the rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        /// <param name="notificationDeliveryType"> The type of notification. </param>
-        /// <param name="notificationLevel"> The notification level. </param>
-        /// <param name="recipientType"> The recipient type. </param>
-        /// <param name="notificationRecipients"> The list of notification recipients. </param>
-        /// <param name="isDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPolicyNotificationRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyNotificationRule RoleManagementPolicyNotificationRule(string id = default, RoleManagementPolicyRuleTarget target = default, NotificationDeliveryType? notificationDeliveryType = default, RoleManagementPolicyNotificationLevel? notificationLevel = default, RoleManagementPolicyRecipientType? recipientType = default, IEnumerable<string> notificationRecipients = default, bool? isDefaultRecipientsEnabled = default)
-        {
-            notificationRecipients ??= new ChangeTrackingList<string>();
-
-            return new RoleManagementPolicyNotificationRule(
-                id,
-                default,
-                target,
-                default,
-                notificationDeliveryType,
-                notificationLevel,
-                recipientType,
-                (notificationRecipients ?? new ChangeTrackingList<string>()).ToList(),
-                isDefaultRecipientsEnabled);
-        }
-
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
         /// <param name="pimOnlyModeSettings"> The PIM Only Mode settings. </param>
         /// <returns> A new <see cref="Models.RoleManagementPolicyPimOnlyModeRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyPimOnlyModeRule RoleManagementPolicyPimOnlyModeRule(string id = default, RoleManagementPolicyRuleTarget target = default, PimOnlyModeSettings pimOnlyModeSettings = default)
@@ -1020,33 +996,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="scope"> The role management policy scope. </param>
-        /// <param name="roleDefinitionId"> The role definition of management policy assignment. </param>
-        /// <param name="policyId"> The policy id role management policy assignment. </param>
-        /// <param name="effectiveRules"> The readonly computed rule applied to the policy. </param>
-        /// <param name="policyAssignmentProperties"> Additional properties of scope, role definition and policy. </param>
-        /// <returns> A new <see cref="Authorization.RoleManagementPolicyAssignmentData"/> instance for mocking. </returns>
-        public static RoleManagementPolicyAssignmentData RoleManagementPolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, ResourceIdentifier roleDefinitionId = default, ResourceIdentifier policyId = default, IEnumerable<RoleManagementPolicyRule> effectiveRules = default, PolicyAssignmentProperties policyAssignmentProperties = default)
-        {
-            return new RoleManagementPolicyAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scope is null && roleDefinitionId is null && policyId is null && effectiveRules is null && policyAssignmentProperties is null ? default : new RoleManagementPolicyAssignmentProperties(
-                    scope,
-                    roleDefinitionId,
-                    policyId,
-                    (effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>()).ToList(),
-                    policyAssignmentProperties,
-                    default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the resource. </param>
@@ -1056,10 +1005,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="policyId"> Id of the policy. </param>
         /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
         /// <param name="lastModifiedOn"> The last modified date time. </param>
-        /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default)
+        /// <returns> A new <see cref="Models.RoleManagementPolicyAssignmentProperties"/> instance for mocking. </returns>
+        public static RoleManagementPolicyAssignmentProperties RoleManagementPolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default)
         {
-            return new PolicyAssignmentProperties(
+            return new RoleManagementPolicyAssignmentProperties(
                 id,
                 name,
                 resourceType,
@@ -1873,35 +1822,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementExpandedProperties RoleManagementExpandedProperties(Guid? principalId = default, string principalDisplayName = default, string email = default, RoleManagementPrincipalType? principalType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
         {
             return new RoleManagementExpandedProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new ExpandedPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new ExpandedPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), principalId is null && principalDisplayName is null && email is null && principalType is null ? default : new ExpandedPropertiesPrincipal(principalId, principalDisplayName, email, principalType, default), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentProperties"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyId"> Id of the policy. </param>
-        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
-        /// <param name="lastModifiedOn"> The last modified date time. </param>
-        /// <param name="roleDefinitionId"> Id of the role definition. </param>
-        /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
-        /// <param name="roleType"> The role type. </param>
-        /// <param name="scopeId"> Scope id of the resource. </param>
-        /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the scope. </param>
-        /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
-        {
-            return new PolicyAssignmentProperties(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scopeId is null && scopeDisplayName is null && scopeType is null ? default : new PolicyAssignmentPropertiesScope(scopeId, scopeDisplayName, scopeType, default),
-                roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new PolicyAssignmentPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default),
-                policyId is null && lastModifiedBy is null && lastModifiedOn is null ? default : new PolicyAssignmentPropertiesPolicy(policyId, lastModifiedBy, lastModifiedOn, default),
-                default);
         }
     }
 }
