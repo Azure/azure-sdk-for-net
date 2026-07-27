@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Models;
 
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictionInfo))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictions))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuZoneDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuntimeConfiguration))]
     [ModelReaderWriterBuildable(typeof(SecretsManagementSettings))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
