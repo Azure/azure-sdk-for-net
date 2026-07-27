@@ -23,6 +23,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public string ParentFileId { get; internal set; }
 
         /// <summary>
+        /// The unique file ID of the new parent directory containing the affected file or directory after the operation.
+        /// </summary>
+        public string NewParentFileId { get; internal set; }
+
+        /// <summary>
         /// The ETag of the file or directory after the operation, if available.
         /// </summary>
         public ETag? ETag { get; internal set; }
@@ -36,6 +41,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// The full path of the affected file or directory relative to the share root.
         /// </summary>
         public string FullFilePath { get; internal set; }
+
+        /// <summary>
+        /// The new full path of the affected file or directory relative to the share root after the operation.
+        /// </summary>
+        public string NewFullFilePath { get; internal set; }
 
         /// <summary>
         /// The identity of the caller who performed the operation, including Entra and SID information.
@@ -67,12 +77,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 FileId = (string)fileId;
             if (record.TryGetValue(Constants.FilesChangeFeed.EventData.ParentFileId, out object parentFileId))
                 ParentFileId = (string)parentFileId;
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.NewParentFileId, out object newParentFileId))
+                NewParentFileId = (string)newParentFileId;
             if (record.TryGetValue(Constants.FilesChangeFeed.EventData.Etag, out object etag) && etag is string etagStr && !string.IsNullOrEmpty(etagStr))
                 ETag = new ETag(etagStr);
             if (record.TryGetValue(Constants.FilesChangeFeed.EventData.FileName, out object fileName))
                 FileName = (string)fileName;
             if (record.TryGetValue(Constants.FilesChangeFeed.EventData.FullFilePath, out object fullFilePath))
                 FullFilePath = (string)fullFilePath;
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.NewFullFilePath, out object newFullFilePath))
+                NewFullFilePath = (string)newFullFilePath;
             if (record.TryGetValue(Constants.FilesChangeFeed.EventData.Identity, out object identity) && identity is Dictionary<string, object> identityDict)
                 Identity = new ShareChangeFeedEventIdentity(identityDict);
             if (record.TryGetValue(Constants.FilesChangeFeed.EventData.Description, out object description))

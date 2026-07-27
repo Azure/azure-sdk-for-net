@@ -38,9 +38,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static ShareChangeFeedEventData ShareChangeFeedEventData(
             string fileId = default,
             string parentFileId = default,
+            string newParentFileId = default,
             ETag? eTag = default,
             string fileName = default,
             string fullFilePath = default,
+            string newFullFilePath = default,
             ShareChangeFeedEventIdentity identity = default,
             string description = default,
             string initiator = default,
@@ -49,9 +51,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             {
                 FileId = fileId,
                 ParentFileId = parentFileId,
+                NewParentFileId = newParentFileId,
                 ETag = eTag,
                 FileName = fileName,
                 FullFilePath = fullFilePath,
+                NewFullFilePath = newFullFilePath,
                 Identity = identity,
                 Description = description,
                 Initiator = initiator,

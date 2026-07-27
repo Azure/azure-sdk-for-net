@@ -30,9 +30,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             {
                 { "FileId", "9223442405598953472" },
                 { "ParentFileId", "9223442405598958712" },
+                { "NewParentFileId", "9223442405598960000" },
                 { "Etag", "0x8D9F2171BE32588" },
                 { "FileName", "sample.txt" },
                 { "FullFilePath", "dir/sample.txt" },
+                { "NewFullFilePath", "newdir/sample.txt" },
                 { "IsDirectory", "false" },
                 { "Description", "test description" },
                 { "Initiator", "user@example.com" },
@@ -69,9 +71,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsNotNull(evt.EventData);
             Assert.AreEqual("9223442405598953472", evt.EventData.FileId);
             Assert.AreEqual("9223442405598958712", evt.EventData.ParentFileId);
+            Assert.AreEqual("9223442405598960000", evt.EventData.NewParentFileId);
             Assert.AreEqual(new ETag("0x8D9F2171BE32588"), evt.EventData.ETag);
             Assert.AreEqual("sample.txt", evt.EventData.FileName);
             Assert.AreEqual("dir/sample.txt", evt.EventData.FullFilePath);
+            Assert.AreEqual("newdir/sample.txt", evt.EventData.NewFullFilePath);
             Assert.IsFalse(evt.EventData.IsDirectory);
             Assert.AreEqual("test description", evt.EventData.Description);
             Assert.AreEqual("user@example.com", evt.EventData.Initiator);

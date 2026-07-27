@@ -554,9 +554,11 @@ namespace Azure.Storage
             {
                 public const string FileId = "FileId";
                 public const string ParentFileId = "ParentFileId";
+                public const string NewParentFileId = "NewParentFileId";
                 public const string Etag = "Etag";
                 public const string FileName = "FileName";
                 public const string FullFilePath = "FullFilePath";
+                public const string NewFullFilePath = "NewFullFilePath";
                 public const string Identity = "Identity";
                 public const string Description = "Description";
                 public const string Initiator = "Initiator";
