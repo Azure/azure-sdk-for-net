@@ -99,14 +99,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
-            var methodProvider = new ScmMethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 pageableOperationMethodProvider._signature,
                 pageableOperationMethodProvider._bodyStatements,
                 pageableOperationMethodProvider._enclosingType,
                 ScmMethodKind.Convenience,
-                null,
-                ((ScmMethodProvider)pageableOperationMethodProvider._convenienceMethod).CollectionDefinition,
-                pageableOperationMethodProvider._method);
+                collectionDefinition: ((ScmMethodProvider)pageableOperationMethodProvider._convenienceMethod).CollectionDefinition,
+                serviceMethod: pageableOperationMethodProvider._method);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(

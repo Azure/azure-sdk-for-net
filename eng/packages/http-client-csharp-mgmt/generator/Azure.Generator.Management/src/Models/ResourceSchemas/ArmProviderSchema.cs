@@ -33,9 +33,15 @@ public class ArmProviderSchema
     /// </summary>
     /// <param name="arguments">The decorator arguments containing resources and nonResourceMethods data</param>
     /// <param name="library">The management input library containing models cache</param>
-    /// <param name="methodFilter">Optional predicate to filter non-resource methods</param>
+    /// <param name="shouldDeserializeMethod">
+    /// Optional predicate evaluated against the raw method ID before deserialization. This allows callers to
+    /// skip decorator entries whose methods have already been removed from the input namespace.
+    /// </param>
     /// <returns>A new ArmProviderSchema instance</returns>
-    public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<string, bool>? methodFilter = null)
+    public static ArmProviderSchema Deserialize(
+        IReadOnlyDictionary<string, BinaryData> arguments,
+        ManagementInputLibrary library,
+        Func<string, bool>? shouldDeserializeMethod = null)
     {
         var resourceMetadata = new List<ArmResourceMetadata>();
         var resourceChildren = new Dictionary<string, List<RequestPathPattern>>();
@@ -85,7 +91,7 @@ public class ArmProviderSchema
             foreach (var item in document.RootElement.EnumerateArray())
             {
                 var methodId = item.GetProperty("methodId").GetString() ?? throw new JsonException("methodId cannot be null");
-                if (methodFilter == null || methodFilter(methodId))
+                if (shouldDeserializeMethod == null || shouldDeserializeMethod(methodId))
                 {
                     nonResourceMethods.Add(NonResourceMethod.DeserializeNonResourceMethod(item));
                 }

@@ -262,7 +262,14 @@ namespace Azure.Generator.Management
         private InputNamespace BuildInputNamespaceInternal()
         {
             var inputNamespace = base.InputNamespace;
-            var rootClients = inputNamespace.RootClients.Where(TransformClient).ToArray();
+            var rootClients = new List<InputClient>();
+            foreach (var client in inputNamespace.RootClients)
+            {
+                if (PrepareClientForManagementGeneration(client))
+                {
+                    rootClients.Add(client);
+                }
+            }
 
             return new InputNamespace(
                 inputNamespace.Name,
@@ -277,12 +284,19 @@ namespace Azure.Generator.Management
             };
         }
 
-        private static bool TransformClient(InputClient client)
+        private static bool PrepareClientForManagementGeneration(InputClient client)
         {
             var methods = client.Methods
                 .Where(method => !_methodsToOmit.Contains(method.CrossLanguageDefinitionId))
                 .ToArray();
-            var children = client.Children.Where(TransformClient).ToArray();
+            var children = new List<InputClient>();
+            foreach (var child in client.Children)
+            {
+                if (PrepareClientForManagementGeneration(child))
+                {
+                    children.Add(child);
+                }
+            }
 
             // For MPG, we always generate convenience methods for all operations.
             foreach (var method in methods)
@@ -290,12 +304,12 @@ namespace Azure.Generator.Management
                 method.Operation.Update(generateConvenienceMethod: true);
             }
 
-            if (methods.Length != client.Methods.Count || children.Length != client.Children.Count)
+            if (methods.Length != client.Methods.Count || children.Count != client.Children.Count)
             {
                 client.Update(methods: methods, children: children);
             }
 
-            return methods.Length > 0 || children.Length > 0;
+            return methods.Length > 0 || children.Count > 0;
         }
 
         // Resource-model checks must use the model's semantic identity rather than InputModelType object identity.
@@ -442,11 +456,13 @@ namespace Azure.Generator.Management
                     continue;
                 }
 
-                // Filter out methods that should be omitted during deserialization
+                // Omitted methods have already been removed from InputNamespace so base generation does not
+                // create orphan REST clients for them. Filter their raw IDs before deserialization because
+                // NonResourceMethod.DeserializeNonResourceMethod resolves the method through InputNamespace.
                 var schema = ArmProviderSchema.Deserialize(
                     decorator.Arguments,
                     this,
-                    methodFilter: methodId => !_methodsToOmit.Contains(methodId));
+                    shouldDeserializeMethod: methodId => !_methodsToOmit.Contains(methodId));
 
                 foreach (var resource in schema.Resources)
                 {
