@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public static partial class ArmDatadogModelFactory
     {
-        public static Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSContent DatadogActivateSaaSContent(System.Guid saaSGuid = default(System.Guid), Azure.ResourceManager.Datadog.Models.DatadogUserInfo userInfo = null, Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSContent DatadogActivateSaaSContent(Azure.Core.ResourceIdentifier saaSResourceId = null, Azure.ResourceManager.Datadog.Models.DatadogUserInfo userInfo = null, Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogAgreement DatadogAgreement(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties DatadogAgreementProperties(string publisher = null, string product = null, string plan = null, string licenseTextLink = null, string privacyPolicyLink = null, System.DateTimeOffset? retrieveDatetime = default(System.DateTimeOffset?), string signature = null, bool? isAccepted = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogApiKey DatadogApiKey(string createdBy = null, string name = null, string key = null, string created = null) { throw null; }
@@ -350,9 +350,9 @@ namespace Azure.ResourceManager.Datadog.Models
     }
     public partial class DatadogActivateSaaSContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSContent>
     {
-        public DatadogActivateSaaSContent(System.Guid saaSGuid) { }
+        public DatadogActivateSaaSContent(Azure.Core.ResourceIdentifier saaSResourceId) { }
         public Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties DatadogOrganizationProperties { get { throw null; } set { } }
-        public System.Guid SaaSGuid { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SaaSResourceId { get { throw null; } }
         public Azure.ResourceManager.Datadog.Models.DatadogUserInfo UserInfo { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

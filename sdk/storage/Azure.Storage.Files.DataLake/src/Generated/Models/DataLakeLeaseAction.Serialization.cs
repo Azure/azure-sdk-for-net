@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class DataLakeLeaseActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataLakeLeaseAction value) => value switch
         {
             DataLakeLeaseAction.Acquire => "acquire",
@@ -20,12 +21,25 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeLeaseAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataLakeLeaseAction ToDataLakeLeaseAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire")) return DataLakeLeaseAction.Acquire;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto-renew")) return DataLakeLeaseAction.AutoRenew;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "release")) return DataLakeLeaseAction.Release;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire-release")) return DataLakeLeaseAction.AcquireRelease;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire"))
+            {
+                return DataLakeLeaseAction.Acquire;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto-renew"))
+            {
+                return DataLakeLeaseAction.AutoRenew;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "release"))
+            {
+                return DataLakeLeaseAction.Release;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "acquire-release"))
+            {
+                return DataLakeLeaseAction.AcquireRelease;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeLeaseAction value.");
         }
     }
