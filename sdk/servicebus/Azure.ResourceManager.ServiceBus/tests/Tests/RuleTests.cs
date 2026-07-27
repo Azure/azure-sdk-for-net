@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/61397")]
         public async Task CreateRuleWithCorrelationFilter()
         {
             IgnoreTestInLiveMode();
@@ -120,9 +121,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 FilterType = ServiceBusFilterType.CorrelationFilter,
                 CorrelationFilter = new ServiceBusCorrelationFilter()
             };
-            input.CorrelationFilter.ApplicationProperties.Add("stringKey", "stringVal");
-            input.CorrelationFilter.ApplicationProperties.Add("intKey", 5);
-            input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
+            input.CorrelationFilter.Properties.Add("stringKey", "stringVal");
+            input.CorrelationFilter.Properties.Add("intKey", "5");
+            input.CorrelationFilter.Properties.Add("dateTimeKey", Recording.Now.UtcDateTime.ToString("O"));
             ServiceBusRuleResource rule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input)).Value;
             Assert.NotNull(rule);
             Assert.AreEqual(rule.Id.Name, ruleName);

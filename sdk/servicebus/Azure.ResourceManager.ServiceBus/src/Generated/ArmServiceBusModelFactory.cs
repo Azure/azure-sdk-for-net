@@ -475,35 +475,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, default);
         }
 
-        /// <param name="applicationProperties"> dictionary object for custom filters. </param>
-        /// <param name="correlationId"> Identifier of the correlation. </param>
-        /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="sendTo"> Address to send to. </param>
-        /// <param name="replyTo"> Address of the queue to reply to. </param>
-        /// <param name="subject"> Application specific label. </param>
-        /// <param name="sessionId"> Session identifier. </param>
-        /// <param name="replyToSessionId"> Session identifier to reply to. </param>
-        /// <param name="contentType"> Content type of the message. </param>
-        /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        /// <returns> A new <see cref="Models.ServiceBusCorrelationFilter"/> instance for mocking. </returns>
-        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
-        {
-            applicationProperties ??= new ChangeTrackingDictionary<string, object>();
-
-            return new ServiceBusCorrelationFilter(
-                applicationProperties ?? new ChangeTrackingDictionary<string, object>(),
-                correlationId,
-                messageId,
-                sendTo,
-                replyTo,
-                subject,
-                sessionId,
-                replyToSessionId,
-                contentType,
-                requiresPreprocessing,
-                default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
