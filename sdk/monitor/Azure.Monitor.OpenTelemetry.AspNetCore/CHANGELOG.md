@@ -1,10 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.6.0 (2026-07-27)
 
 ### Bugs Fixed
 
@@ -12,6 +8,8 @@
   ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
 
 ### Other Changes
+
+- Updated `Azure.Monitor.OpenTelemetry.Exporter` dependency to `1.8.3`, which brings: customer SDK stats enabled by default (opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`), internal Network SDK statistics signals, GenAI agent attribution processors for spans and logs, and `CategoryName` added to custom event custom dimensions.
 
 ## 1.5.0 (2026-04-30)
 
