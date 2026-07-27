@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
@@ -5787,13 +5786,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 limitSettings,
                 validationData,
                 primaryMetric);
-        }
-
-        /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
-        /// <returns> A new <see cref="Models.NlpVerticalFeaturizationSettings"/> instance for mocking. </returns>
-        public static NlpVerticalFeaturizationSettings NlpVerticalFeaturizationSettings(string datasetLanguage = default)
-        {
-            return new NlpVerticalFeaturizationSettings(datasetLanguage, default);
         }
 
         /// <param name="maxConcurrentTrials"> Maximum Concurrent AutoML iterations. </param>
