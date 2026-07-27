@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string roleManagementAlertConfigurationApiVersion);
             _alertConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Endpoint, roleManagementAlertConfigurationApiVersion ?? "2022-08-01-preview");
+            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleManagementAlertConfigurationApiVersion ?? "2022-08-01-preview");
             ValidateResourceId(id);
         }
 

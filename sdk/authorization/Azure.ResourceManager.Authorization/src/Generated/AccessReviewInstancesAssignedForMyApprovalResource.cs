@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string accessReviewInstancesAssignedForMyApprovalApiVersion);
             _accessReviewInstancesAssignedForMyApprovalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _accessReviewInstancesAssignedForMyApprovalRestClient = new AccessReviewInstancesAssignedForMyApproval(_accessReviewInstancesAssignedForMyApprovalClientDiagnostics, Pipeline, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstancesAssignedForMyApprovalRestClient = new AccessReviewInstancesAssignedForMyApproval(_accessReviewInstancesAssignedForMyApprovalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
             _accessReviewInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _accessReviewInstanceRestClient = new AccessReviewInstance(_accessReviewInstanceClientDiagnostics, Pipeline, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstanceRestClient = new AccessReviewInstance(_accessReviewInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
             _tenantLevelAccessReviewInstanceContactedReviewersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _tenantLevelAccessReviewInstanceContactedReviewersRestClient = new TenantLevelAccessReviewInstanceContactedReviewers(_tenantLevelAccessReviewInstanceContactedReviewersClientDiagnostics, Pipeline, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
+            _tenantLevelAccessReviewInstanceContactedReviewersRestClient = new TenantLevelAccessReviewInstanceContactedReviewers(_tenantLevelAccessReviewInstanceContactedReviewersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

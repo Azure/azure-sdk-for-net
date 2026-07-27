@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string scopeAccessReviewHistoryDefinitionApiVersion);
             _scopeAccessReviewHistoryDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewHistoryDefinitionRestClient = new ScopeAccessReviewHistoryDefinition(_scopeAccessReviewHistoryDefinitionClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewHistoryDefinitionRestClient = new ScopeAccessReviewHistoryDefinition(_scopeAccessReviewHistoryDefinitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
             _scopeAccessReviewHistoryDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewHistoryDefinitionsRestClient = new ScopeAccessReviewHistoryDefinitions(_scopeAccessReviewHistoryDefinitionsClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewHistoryDefinitionsRestClient = new ScopeAccessReviewHistoryDefinitions(_scopeAccessReviewHistoryDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
             _scopeAccessReviewHistoryDefinitionInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewHistoryDefinitionInstanceRestClient = new ScopeAccessReviewHistoryDefinitionInstance(_scopeAccessReviewHistoryDefinitionInstanceClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewHistoryDefinitionInstanceRestClient = new ScopeAccessReviewHistoryDefinitionInstance(_scopeAccessReviewHistoryDefinitionInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
             _scopeAccessReviewHistoryDefinitionInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewHistoryDefinitionInstancesRestClient = new ScopeAccessReviewHistoryDefinitionInstances(_scopeAccessReviewHistoryDefinitionInstancesClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewHistoryDefinitionInstancesRestClient = new ScopeAccessReviewHistoryDefinitionInstances(_scopeAccessReviewHistoryDefinitionInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

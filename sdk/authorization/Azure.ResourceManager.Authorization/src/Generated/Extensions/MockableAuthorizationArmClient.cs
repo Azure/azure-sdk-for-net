@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-07-01-preview");
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-04-01");
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-08-01-preview");
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-08-01-preview");
 
         private ClientDiagnostics EligibleChildResourcesClientDiagnostics => _eligibleChildResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EligibleChildResources EligibleChildResourcesRestClient => _eligibleChildResourcesRestClient ??= new EligibleChildResources(EligibleChildResourcesClientDiagnostics, Pipeline, Endpoint, "2024-09-01-preview");
+        private EligibleChildResources EligibleChildResourcesRestClient => _eligibleChildResourcesRestClient ??= new EligibleChildResources(EligibleChildResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-01-preview");
 
         private ClientDiagnostics PermissionsClientDiagnostics => _permissionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Permissions PermissionsRestClient => _permissionsRestClient ??= new Permissions(PermissionsClientDiagnostics, Pipeline, Endpoint, "2022-05-01-preview");
+        private Permissions PermissionsRestClient => _permissionsRestClient ??= new Permissions(PermissionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-05-01-preview");
 
         private ClientDiagnostics AlertOperationClientDiagnostics => _alertOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AlertOperation AlertOperationRestClient => _alertOperationRestClient ??= new AlertOperation(AlertOperationClientDiagnostics, Pipeline, Endpoint, "2022-08-01-preview");
+        private AlertOperation AlertOperationRestClient => _alertOperationRestClient ??= new AlertOperation(AlertOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-08-01-preview");
 
         /// <summary> Gets an object representing a <see cref="RoleManagementAttributeNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

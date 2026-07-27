@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string authorizationProviderOperationsMetadataApiVersion);
             _providerOperationsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _providerOperationsMetadataRestClient = new ProviderOperationsMetadata(_providerOperationsMetadataClientDiagnostics, Pipeline, Endpoint, authorizationProviderOperationsMetadataApiVersion ?? "2022-04-01");
+            _providerOperationsMetadataRestClient = new ProviderOperationsMetadata(_providerOperationsMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authorizationProviderOperationsMetadataApiVersion ?? "2022-04-01");
             ValidateResourceId(id);
         }
 

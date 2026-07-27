@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string scopeAccessReviewDefaultSettingApiVersion);
             _scopeAccessReviewDefaultSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewDefaultSettingsRestClient = new ScopeAccessReviewDefaultSettings(_scopeAccessReviewDefaultSettingsClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewDefaultSettingApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewDefaultSettingsRestClient = new ScopeAccessReviewDefaultSettings(_scopeAccessReviewDefaultSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewDefaultSettingApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

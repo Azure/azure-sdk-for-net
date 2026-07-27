@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-07-01-preview");
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-04-01");
 
         private ClientDiagnostics PermissionsClientDiagnostics => _permissionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Permissions PermissionsRestClient => _permissionsRestClient ??= new Permissions(PermissionsClientDiagnostics, Pipeline, Endpoint, "2022-05-01-preview");
+        private Permissions PermissionsRestClient => _permissionsRestClient ??= new Permissions(PermissionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-05-01-preview");
 
         /// <summary>
         /// Gets deny assignments for a resource group.

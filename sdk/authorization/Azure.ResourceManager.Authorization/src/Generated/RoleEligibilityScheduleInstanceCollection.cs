@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(RoleEligibilityScheduleInstanceResource.ResourceType, out string roleEligibilityScheduleInstanceApiVersion);
             _roleEligibilityScheduleInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", RoleEligibilityScheduleInstanceResource.ResourceType.Namespace, Diagnostics);
-            _roleEligibilityScheduleInstancesRestClient = new RoleEligibilityScheduleInstances(_roleEligibilityScheduleInstancesClientDiagnostics, Pipeline, Endpoint, roleEligibilityScheduleInstanceApiVersion ?? "2024-09-01-preview");
+            _roleEligibilityScheduleInstancesRestClient = new RoleEligibilityScheduleInstances(_roleEligibilityScheduleInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleEligibilityScheduleInstanceApiVersion ?? "2024-09-01-preview");
         }
 
         /// <summary>

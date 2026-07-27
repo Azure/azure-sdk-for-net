@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(AccessReviewDecisionResource.ResourceType, out string accessReviewDecisionApiVersion);
             _accessReviewInstanceMyDecisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", AccessReviewDecisionResource.ResourceType.Namespace, Diagnostics);
-            _accessReviewInstanceMyDecisionsRestClient = new AccessReviewInstanceMyDecisions(_accessReviewInstanceMyDecisionsClientDiagnostics, Pipeline, Endpoint, accessReviewDecisionApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstanceMyDecisionsRestClient = new AccessReviewInstanceMyDecisions(_accessReviewInstanceMyDecisionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewDecisionApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

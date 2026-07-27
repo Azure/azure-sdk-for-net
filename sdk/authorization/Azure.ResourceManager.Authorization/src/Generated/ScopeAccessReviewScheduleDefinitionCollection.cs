@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ScopeAccessReviewScheduleDefinitionResource.ResourceType, out string scopeAccessReviewScheduleDefinitionApiVersion);
             _scopeAccessReviewScheduleDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ScopeAccessReviewScheduleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewScheduleDefinitionsRestClient = new ScopeAccessReviewScheduleDefinitions(_scopeAccessReviewScheduleDefinitionsClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewScheduleDefinitionApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewScheduleDefinitionsRestClient = new ScopeAccessReviewScheduleDefinitions(_scopeAccessReviewScheduleDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewScheduleDefinitionApiVersion ?? "2021-12-01-preview");
         }
 
         /// <summary>

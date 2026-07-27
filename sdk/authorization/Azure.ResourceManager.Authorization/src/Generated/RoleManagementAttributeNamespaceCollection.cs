@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(RoleManagementAttributeNamespaceResource.ResourceType, out string roleManagementAttributeNamespaceApiVersion);
             _attributeNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", RoleManagementAttributeNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _attributeNamespacesRestClient = new AttributeNamespaces(_attributeNamespacesClientDiagnostics, Pipeline, Endpoint, roleManagementAttributeNamespaceApiVersion ?? "2025-12-01-preview");
+            _attributeNamespacesRestClient = new AttributeNamespaces(_attributeNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleManagementAttributeNamespaceApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

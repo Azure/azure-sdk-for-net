@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string denyAssignmentApiVersion);
             _denyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _denyAssignmentsRestClient = new DenyAssignments(_denyAssignmentsClientDiagnostics, Pipeline, Endpoint, denyAssignmentApiVersion ?? "2024-07-01-preview");
+            _denyAssignmentsRestClient = new DenyAssignments(_denyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, denyAssignmentApiVersion ?? "2024-07-01-preview");
             ValidateResourceId(id);
         }
 

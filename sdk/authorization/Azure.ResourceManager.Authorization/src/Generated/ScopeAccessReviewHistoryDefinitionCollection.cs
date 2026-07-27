@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ScopeAccessReviewHistoryDefinitionResource.ResourceType, out string scopeAccessReviewHistoryDefinitionApiVersion);
             _scopeAccessReviewHistoryDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ScopeAccessReviewHistoryDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewHistoryDefinitionRestClient = new ScopeAccessReviewHistoryDefinition(_scopeAccessReviewHistoryDefinitionClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewHistoryDefinitionRestClient = new ScopeAccessReviewHistoryDefinition(_scopeAccessReviewHistoryDefinitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
             _scopeAccessReviewHistoryDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ScopeAccessReviewHistoryDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _scopeAccessReviewHistoryDefinitionsRestClient = new ScopeAccessReviewHistoryDefinitions(_scopeAccessReviewHistoryDefinitionsClientDiagnostics, Pipeline, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
+            _scopeAccessReviewHistoryDefinitionsRestClient = new ScopeAccessReviewHistoryDefinitions(_scopeAccessReviewHistoryDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeAccessReviewHistoryDefinitionApiVersion ?? "2021-12-01-preview");
         }
 
         /// <summary>

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string accessReviewDefaultSettingApiVersion);
             _accessReviewDefaultSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _accessReviewDefaultSettingsRestClient = new AccessReviewDefaultSettings(_accessReviewDefaultSettingsClientDiagnostics, Pipeline, Endpoint, accessReviewDefaultSettingApiVersion ?? "2021-12-01-preview");
+            _accessReviewDefaultSettingsRestClient = new AccessReviewDefaultSettings(_accessReviewDefaultSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewDefaultSettingApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

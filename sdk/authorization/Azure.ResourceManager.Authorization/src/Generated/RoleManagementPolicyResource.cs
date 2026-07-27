@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string roleManagementPolicyApiVersion);
             _roleManagementPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _roleManagementPoliciesRestClient = new RoleManagementPolicies(_roleManagementPoliciesClientDiagnostics, Pipeline, Endpoint, roleManagementPolicyApiVersion ?? "2024-09-01-preview");
+            _roleManagementPoliciesRestClient = new RoleManagementPolicies(_roleManagementPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleManagementPolicyApiVersion ?? "2024-09-01-preview");
             ValidateResourceId(id);
         }
 

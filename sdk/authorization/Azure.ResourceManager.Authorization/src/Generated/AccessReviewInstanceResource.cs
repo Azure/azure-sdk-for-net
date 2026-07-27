@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string accessReviewInstanceApiVersion);
             _accessReviewInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _accessReviewInstancesRestClient = new AccessReviewInstances(_accessReviewInstancesClientDiagnostics, Pipeline, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstancesRestClient = new AccessReviewInstances(_accessReviewInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
             _accessReviewInstanceContactedReviewersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _accessReviewInstanceContactedReviewersRestClient = new AccessReviewInstanceContactedReviewers(_accessReviewInstanceContactedReviewersClientDiagnostics, Pipeline, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstanceContactedReviewersRestClient = new AccessReviewInstanceContactedReviewers(_accessReviewInstanceContactedReviewersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
             _accessReviewInstanceDecisionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _accessReviewInstanceDecisionsRestClient = new AccessReviewInstanceDecisions(_accessReviewInstanceDecisionsClientDiagnostics, Pipeline, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstanceDecisionsRestClient = new AccessReviewInstanceDecisions(_accessReviewInstanceDecisionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
             _accessReviewInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _accessReviewInstanceRestClient = new AccessReviewInstance(_accessReviewInstanceClientDiagnostics, Pipeline, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstanceRestClient = new AccessReviewInstance(_accessReviewInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstanceApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

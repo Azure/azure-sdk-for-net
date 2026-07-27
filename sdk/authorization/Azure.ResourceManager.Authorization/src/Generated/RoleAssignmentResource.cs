@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(ResourceType, out string roleAssignmentApiVersion);
             _roleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _roleAssignmentsRestClient = new RoleAssignments(_roleAssignmentsClientDiagnostics, Pipeline, Endpoint, roleAssignmentApiVersion ?? "2022-04-01");
+            _roleAssignmentsRestClient = new RoleAssignments(_roleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleAssignmentApiVersion ?? "2022-04-01");
             ValidateResourceId(id);
         }
 

@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-07-01-preview");
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-04-01");
 
         private ClientDiagnostics ClassicAdministratorsClientDiagnostics => _classicAdministratorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClassicAdministrators ClassicAdministratorsRestClient => _classicAdministratorsRestClient ??= new ClassicAdministrators(ClassicAdministratorsClientDiagnostics, Pipeline, Endpoint, "2015-07-01");
+        private ClassicAdministrators ClassicAdministratorsRestClient => _classicAdministratorsRestClient ??= new ClassicAdministrators(ClassicAdministratorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2015-07-01");
 
         /// <summary> Gets a collection of AccessReviewHistoryDefinitions in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of AccessReviewHistoryDefinitions and their operations over a AccessReviewHistoryDefinitionResource. </returns>

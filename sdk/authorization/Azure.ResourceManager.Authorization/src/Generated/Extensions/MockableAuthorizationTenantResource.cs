@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-07-01-preview");
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01-preview");
 
         private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-04-01");
 
         private ClientDiagnostics RoleDefinitionsClientDiagnostics => _roleDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RoleDefinitions RoleDefinitionsRestClient => _roleDefinitionsRestClient ??= new RoleDefinitions(RoleDefinitionsClientDiagnostics, Pipeline, Endpoint, "2022-05-01-preview");
+        private RoleDefinitions RoleDefinitionsRestClient => _roleDefinitionsRestClient ??= new RoleDefinitions(RoleDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-05-01-preview");
 
         private ClientDiagnostics AccessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics => _accessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AccessReviewScheduleDefinitionsAssignedForMyApproval AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient => _accessReviewScheduleDefinitionsAssignedForMyApprovalRestClient ??= new AccessReviewScheduleDefinitionsAssignedForMyApproval(AccessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics, Pipeline, Endpoint, "2021-12-01-preview");
+        private AccessReviewScheduleDefinitionsAssignedForMyApproval AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient => _accessReviewScheduleDefinitionsAssignedForMyApprovalRestClient ??= new AccessReviewScheduleDefinitionsAssignedForMyApproval(AccessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-12-01-preview");
 
         private ClientDiagnostics GlobalAdministratorClientDiagnostics => _globalAdministratorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GlobalAdministrator GlobalAdministratorRestClient => _globalAdministratorRestClient ??= new GlobalAdministrator(GlobalAdministratorClientDiagnostics, Pipeline, Endpoint, "2015-07-01");
+        private GlobalAdministrator GlobalAdministratorRestClient => _globalAdministratorRestClient ??= new GlobalAdministrator(GlobalAdministratorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2015-07-01");
 
         /// <summary> Gets a collection of RoleManagementAttributeNamespaces in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of RoleManagementAttributeNamespaces and their operations over a RoleManagementAttributeNamespaceResource. </returns>

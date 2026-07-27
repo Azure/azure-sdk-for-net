@@ -3377,6 +3377,8 @@ namespace Azure.ResourceManager.Authorization.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RoleManagementPrincipalType(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType AgentServicePrincipal { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType AgentUser { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType Device { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType ForeignGroup { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType Group { get { throw null; } }

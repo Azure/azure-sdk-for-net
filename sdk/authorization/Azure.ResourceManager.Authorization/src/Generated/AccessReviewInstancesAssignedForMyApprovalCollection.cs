@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization
             TryGetApiVersion(AccessReviewInstancesAssignedForMyApprovalResource.ResourceType, out string accessReviewInstancesAssignedForMyApprovalApiVersion);
             _scheduleDefinitionId = scheduleDefinitionId;
             _accessReviewInstancesAssignedForMyApprovalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", AccessReviewInstancesAssignedForMyApprovalResource.ResourceType.Namespace, Diagnostics);
-            _accessReviewInstancesAssignedForMyApprovalRestClient = new AccessReviewInstancesAssignedForMyApproval(_accessReviewInstancesAssignedForMyApprovalClientDiagnostics, Pipeline, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
+            _accessReviewInstancesAssignedForMyApprovalRestClient = new AccessReviewInstancesAssignedForMyApproval(_accessReviewInstancesAssignedForMyApprovalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessReviewInstancesAssignedForMyApprovalApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

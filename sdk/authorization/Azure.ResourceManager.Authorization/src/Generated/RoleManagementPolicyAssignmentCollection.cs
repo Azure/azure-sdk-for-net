@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization
         {
             TryGetApiVersion(RoleManagementPolicyAssignmentResource.ResourceType, out string roleManagementPolicyAssignmentApiVersion);
             _roleManagementPolicyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", RoleManagementPolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _roleManagementPolicyAssignmentsRestClient = new RoleManagementPolicyAssignments(_roleManagementPolicyAssignmentsClientDiagnostics, Pipeline, Endpoint, roleManagementPolicyAssignmentApiVersion ?? "2024-09-01-preview");
+            _roleManagementPolicyAssignmentsRestClient = new RoleManagementPolicyAssignments(_roleManagementPolicyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleManagementPolicyAssignmentApiVersion ?? "2024-09-01-preview");
         }
 
         /// <summary>
