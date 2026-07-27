@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
