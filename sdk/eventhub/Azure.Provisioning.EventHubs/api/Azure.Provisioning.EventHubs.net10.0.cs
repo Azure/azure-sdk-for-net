@@ -47,6 +47,11 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -61,9 +66,15 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubAuthorizationRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public Azure.Provisioning.EventHubs.EventHubsAccessKeys GetKeys() { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -92,6 +103,18 @@ namespace Azure.Provisioning.EventHubs
         Deleting = 7,
         Renaming = 8,
     }
+    public partial class EventHubsAccessKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public EventHubsAccessKeys() { }
+        public Azure.Provisioning.BicepValue<string> AliasPrimaryConnectionString { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> AliasSecondaryConnectionString { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PrimaryConnectionString { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum EventHubsAccessRight
     {
         Manage = 0,
@@ -114,6 +137,7 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -122,6 +146,26 @@ namespace Azure.Provisioning.EventHubs
         public EventHubsApplicationGroupPolicy() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventHubsBuiltInRole : System.IEquatable<Azure.Provisioning.EventHubs.EventHubsBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventHubsBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.EventHubs.EventHubsBuiltInRole AzureEventHubsDataOwner { get { throw null; } }
+        public static Azure.Provisioning.EventHubs.EventHubsBuiltInRole AzureEventHubsDataReceiver { get { throw null; } }
+        public static Azure.Provisioning.EventHubs.EventHubsBuiltInRole AzureEventHubsDataSender { get { throw null; } }
+        public static Azure.Provisioning.EventHubs.EventHubsBuiltInRole SchemaRegistryContributor { get { throw null; } }
+        public static Azure.Provisioning.EventHubs.EventHubsBuiltInRole SchemaRegistryReader { get { throw null; } }
+        public bool Equals(Azure.Provisioning.EventHubs.EventHubsBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.EventHubs.EventHubsBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.EventHubs.EventHubsBuiltInRole left, Azure.Provisioning.EventHubs.EventHubsBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.EventHubs.EventHubsBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.EventHubs.EventHubsBuiltInRole left, Azure.Provisioning.EventHubs.EventHubsBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EventHubsCaptureIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -152,10 +196,14 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> ZoneRedundant { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsCluster FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -202,6 +250,11 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -223,6 +276,9 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -319,11 +375,18 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> ZoneRedundant { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventHubs.EventHubsBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsNamespace FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -338,9 +401,15 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventHubs.EventHubsNamespaceAuthorizationRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public Azure.Provisioning.EventHubs.EventHubsAccessKeys GetKeys() { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -365,6 +434,9 @@ namespace Azure.Provisioning.EventHubs
         public static Azure.Provisioning.EventHubs.EventHubsNetworkRuleSet FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -488,6 +560,8 @@ namespace Azure.Provisioning.EventHubs
         public static Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -573,6 +647,11 @@ namespace Azure.Provisioning.EventHubs
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_09_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2021_11_01;
+            public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
     }
