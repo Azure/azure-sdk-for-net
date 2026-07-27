@@ -245,6 +245,16 @@ public class BicepValueTests
     }
 
     [Test]
+    public void ValidateBinaryDataJsonExceptionIncludesPosition()
+    {
+        JsonException? exception = Assert.Catch<JsonException>(
+            () => new BicepValue<BinaryData>(BinaryData.FromString("")).Compile());
+
+        Assert.That(exception!.Message, Does.Contain("LineNumber: 0"));
+        Assert.That(exception.Message, Does.Contain("BytePositionInLine: 0"));
+    }
+
+    [Test]
     public void ValidateBinaryDataWithBase64FormatCompilesToBase64String()
     {
         BinaryDataResource resource = new("resource");
