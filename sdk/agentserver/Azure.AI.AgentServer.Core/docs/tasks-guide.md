@@ -366,10 +366,10 @@ result. Catch the nudge and return cooperatively instead.
 
 ### 4.8 Retry
 
-Retries are **off by default**: a task with no configured `RetryPolicy` runs the handler
+Retries are **off by default**: a task with no configured `TaskRetryPolicy` runs the handler
 exactly once and surfaces the first failure. Opt in by setting
 `TaskRegistrationOptions.Retry`. When a handler throws, the library retries it according to
-the task's `RetryPolicy`. Across retries:
+the task's `TaskRetryPolicy`. Across retries:
 
 - `ctx.RetryAttempt` increments (0 on the first try).
 - Durable `Metadata` is preserved, so a marker written before the failure is still
@@ -387,18 +387,18 @@ When retries are exhausted the invoker throws `TaskFailedException`, whose `Erro
 the `ErrorType`, `Message`, `Attempts`, and the last error.
 
 ```csharp
-var policy = RetryPolicy.ExponentialBackoff(maxAttempts: 5);
+var policy = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 5);
 builder.AddTask<Order, Receipt>("charge", handler, o => o.Retry = policy);
 ```
 
-`RetryPolicy` ships with `ExponentialBackoff`, `FixedDelay`, `LinearBackoff`, and
+`TaskRetryPolicy` ships with `ExponentialBackoff`, `FixedDelay`, `LinearBackoff`, and
 `NoRetry` factories. You can scope which exceptions are retryable with `RetryOn`.
 
 **Hard limits — invalid values throw.** Two values are hard-capped so a misconfiguration cannot
 cause a task turn to retry unboundedly: `MaxAttempts` must be **1–10** (inclusive) and `MaxDelay`
 must be **0–1 hour**. A value outside those ranges — like a negative `InitialDelay`/`MaxDelay`, a
 `MaxAttempts` below 1 or above 10, a `MaxDelay` above 1 hour, or a `BackoffCoefficient` below 1.0 —
-throws `ArgumentOutOfRangeException` when the `RetryPolicy` is constructed. These are configuration
+throws `ArgumentOutOfRangeException` when the `TaskRetryPolicy` is constructed. These are configuration
 bugs, so they fail fast rather than being silently clamped. Combined with the per-turn timeout
 (§4.10), the bounded attempt count and delay keep the total time spent retrying a single turn
 bounded.
@@ -541,7 +541,7 @@ string? IfLastInputId;   // precondition: require the task's last input id to eq
 | `LastInputIdPreconditionFailedException` | `IfLastInputId` did not match (carries `ActualLastInputId`) |
 | `SteeringQueueFullException` | a steering input could not be queued |
 
-### 5.7 `RetryPolicy`
+### 5.7 `TaskRetryPolicy`
 
 Fields: `InitialDelay`, `BackoffCoefficient`, `MaxDelay`, `MaxAttempts`, `Jitter`,
 `RetryOn`. Factories: `ExponentialBackoff`, `FixedDelay`, `LinearBackoff`, `NoRetry`.
@@ -731,7 +731,7 @@ gets queued (multi-turn, when steering is enabled), or sees `TaskConflictExcepti
 
 **Does the framework retry by default?** No. Configure retry at registration via
 `TaskRegistrationOptions.Retry` (e.g. `builder.AddTask<TIn, TOut>(name, handler,
-o => o.Retry = RetryPolicy.ExponentialBackoff());`) to opt in. Without a policy a handler
+o => o.Retry = TaskRetryPolicy.ExponentialBackoff());`) to opt in. Without a policy a handler
 runs once and surfaces the exception.
 
 **Can I store conversation history in `ctx.Metadata`?** Small histories fit, but

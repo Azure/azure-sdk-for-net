@@ -32,5 +32,5 @@ public sealed class TaskRegistrationOptions
     public TimeSpan? Timeout { get; set; }
 
     /// <summary>The retry policy for handler failures. <see langword="null"/> uses the framework default.</summary>
-    public RetryPolicy? Retry { get; set; }
+    public TaskRetryPolicy? Retry { get; set; }
 }

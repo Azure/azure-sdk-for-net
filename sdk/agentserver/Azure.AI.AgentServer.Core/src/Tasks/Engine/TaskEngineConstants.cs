@@ -64,14 +64,14 @@ internal static class TaskEngineConstants
 
     /// <summary>
     /// The hard ceiling on retry attempts (including the first try). A developer-configured
-    /// <see cref="RetryPolicy.MaxAttempts"/> above this value is rejected at construction so a
+    /// <see cref="TaskRetryPolicy.MaxAttempts"/> above this value is rejected at construction so a
     /// misconfiguration cannot cause a task turn to retry unboundedly (10 attempts).
     /// </summary>
     public const int MaxRetryAttempts = 10;
 
     /// <summary>
     /// The hard ceiling on the delay between retry attempts. A developer-configured
-    /// <see cref="RetryPolicy.MaxDelay"/> above this value is rejected at construction so backoff
+    /// <see cref="TaskRetryPolicy.MaxDelay"/> above this value is rejected at construction so backoff
     /// growth cannot produce an arbitrarily long wait (1 hour).
     /// </summary>
     public static readonly System.TimeSpan MaxRetryDelay = System.TimeSpan.FromHours(1);

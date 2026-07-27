@@ -38,7 +38,7 @@ public sealed class TimeoutTests
             configure: o =>
             {
                 o.Timeout = TimeSpan.FromMilliseconds(150);
-                o.Retry = RetryPolicy.NoRetry();
+                o.Retry = TaskRetryPolicy.NoRetry();
             });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(

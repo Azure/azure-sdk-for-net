@@ -202,20 +202,6 @@ namespace Azure.AI.AgentServer.Core.Tasks
     {
         public static Azure.AI.AgentServer.Core.Tasks.IResilientTaskBuilder AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
     }
-    public sealed partial class RetryPolicy
-    {
-        public RetryPolicy() { }
-        public double BackoffCoefficient { get { throw null; } set { } }
-        public System.TimeSpan InitialDelay { get { throw null; } set { } }
-        public bool Jitter { get { throw null; } set { } }
-        public int MaxAttempts { get { throw null; } set { } }
-        public System.TimeSpan MaxDelay { get { throw null; } set { } }
-        public System.Func<System.Exception, bool>? RetryOn { get { throw null; } set { } }
-        public static Azure.AI.AgentServer.Core.Tasks.RetryPolicy ExponentialBackoff(int maxAttempts = 3, System.TimeSpan? initialDelay = default(System.TimeSpan?), double backoffCoefficient = 2, System.TimeSpan? maxDelay = default(System.TimeSpan?), bool jitter = true) { throw null; }
-        public static Azure.AI.AgentServer.Core.Tasks.RetryPolicy FixedDelay(int maxAttempts = 3, System.TimeSpan? delay = default(System.TimeSpan?), bool jitter = false) { throw null; }
-        public static Azure.AI.AgentServer.Core.Tasks.RetryPolicy LinearBackoff(int maxAttempts = 5, System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? increment = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), bool jitter = false) { throw null; }
-        public static Azure.AI.AgentServer.Core.Tasks.RetryPolicy NoRetry() { throw null; }
-    }
     public sealed partial class RunOptions
     {
         public RunOptions() { }
@@ -305,9 +291,23 @@ namespace Azure.AI.AgentServer.Core.Tasks
     public sealed partial class TaskRegistrationOptions
     {
         public TaskRegistrationOptions() { }
-        public Azure.AI.AgentServer.Core.Tasks.RetryPolicy? Retry { get { throw null; } set { } }
+        public Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy? Retry { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
         public string? Title { get { throw null; } set { } }
+    }
+    public sealed partial class TaskRetryPolicy
+    {
+        public TaskRetryPolicy() { }
+        public double BackoffCoefficient { get { throw null; } set { } }
+        public System.TimeSpan InitialDelay { get { throw null; } set { } }
+        public bool Jitter { get { throw null; } set { } }
+        public int MaxAttempts { get { throw null; } set { } }
+        public System.TimeSpan MaxDelay { get { throw null; } set { } }
+        public System.Func<System.Exception, bool>? RetryOn { get { throw null; } set { } }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy ExponentialBackoff(int maxAttempts = 3, System.TimeSpan? initialDelay = default(System.TimeSpan?), double backoffCoefficient = 2, System.TimeSpan? maxDelay = default(System.TimeSpan?), bool jitter = true) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy FixedDelay(int maxAttempts = 3, System.TimeSpan? delay = default(System.TimeSpan?), bool jitter = false) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy LinearBackoff(int maxAttempts = 5, System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? increment = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), bool jitter = false) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy NoRetry() { throw null; }
     }
     public partial class TaskRun<TOutput>
     {

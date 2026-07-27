@@ -117,13 +117,13 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             IServiceCollection services,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            RetryPolicy policy = RetryPolicy.ExponentialBackoff(maxAttempts: 5);
+            TaskRetryPolicy policy = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 5);
             services.AddResilientTasks()
                 .AddTask<string, string>("charge", handler, o => o.Retry = policy);
 
-            _ = RetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromSeconds(1));
-            _ = RetryPolicy.LinearBackoff(maxAttempts: 3, initialDelay: TimeSpan.FromSeconds(1));
-            _ = RetryPolicy.NoRetry();
+            _ = TaskRetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromSeconds(1));
+            _ = TaskRetryPolicy.LinearBackoff(maxAttempts: 3, initialDelay: TimeSpan.FromSeconds(1));
+            _ = TaskRetryPolicy.NoRetry();
         }
 
         // §4.10 Timeout.

@@ -10,11 +10,7 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// Controls how a failed task handler is retried. Mirrors the Python
 /// <c>RetryPolicy</c> field-for-field and is configured per task only.
 /// </summary>
-// AZC0034: the name 'RetryPolicy' is intentional for cross-language (Python) parity;
-// this is a developer-facing options record, not an Azure.Core pipeline policy.
-#pragma warning disable AZC0034
-public sealed class RetryPolicy
-#pragma warning restore AZC0034
+public sealed class TaskRetryPolicy
 {
     private readonly TimeSpan _initialDelay = TimeSpan.FromSeconds(1);
     private readonly double _backoffCoefficient = 2.0;
@@ -105,8 +101,8 @@ public sealed class RetryPolicy
     /// <param name="backoffCoefficient">The backoff multiplier; defaults to 2.0.</param>
     /// <param name="maxDelay">The maximum delay; defaults to 60 seconds.</param>
     /// <param name="jitter">Whether to apply jitter; defaults to <see langword="true"/>.</param>
-    /// <returns>A configured <see cref="RetryPolicy"/>.</returns>
-    public static RetryPolicy ExponentialBackoff(
+    /// <returns>A configured <see cref="TaskRetryPolicy"/>.</returns>
+    public static TaskRetryPolicy ExponentialBackoff(
         int maxAttempts = 3,
         TimeSpan? initialDelay = null,
         double backoffCoefficient = 2.0,
@@ -125,14 +121,14 @@ public sealed class RetryPolicy
     /// <param name="maxAttempts">The maximum number of attempts (including the first).</param>
     /// <param name="delay">The constant delay between attempts; defaults to 5 seconds.</param>
     /// <param name="jitter">Whether to apply jitter; defaults to <see langword="false"/> so the delay stays fixed.</param>
-    /// <returns>A configured <see cref="RetryPolicy"/>.</returns>
-    public static RetryPolicy FixedDelay(
+    /// <returns>A configured <see cref="TaskRetryPolicy"/>.</returns>
+    public static TaskRetryPolicy FixedDelay(
         int maxAttempts = 3,
         TimeSpan? delay = null,
         bool jitter = false)
     {
         TimeSpan d = delay ?? TimeSpan.FromSeconds(5);
-        return new RetryPolicy
+        return new TaskRetryPolicy
         {
             MaxAttempts = maxAttempts,
             InitialDelay = d,
@@ -148,8 +144,8 @@ public sealed class RetryPolicy
     /// <param name="increment">The per-attempt increment; defaults to the initial delay.</param>
     /// <param name="maxDelay">The maximum delay; defaults to 60 seconds.</param>
     /// <param name="jitter">Whether to apply jitter; defaults to <see langword="false"/>.</param>
-    /// <returns>A configured <see cref="RetryPolicy"/>.</returns>
-    public static RetryPolicy LinearBackoff(
+    /// <returns>A configured <see cref="TaskRetryPolicy"/>.</returns>
+    public static TaskRetryPolicy LinearBackoff(
         int maxAttempts = 5,
         TimeSpan? initialDelay = null,
         TimeSpan? increment = null,
@@ -157,7 +153,7 @@ public sealed class RetryPolicy
         bool jitter = false)
     {
         TimeSpan init = initialDelay ?? TimeSpan.FromSeconds(1);
-        return new RetryPolicy
+        return new TaskRetryPolicy
         {
             MaxAttempts = maxAttempts,
             InitialDelay = init,
@@ -171,8 +167,8 @@ public sealed class RetryPolicy
     }
 
     /// <summary>Creates a policy that performs no retries (a single attempt).</summary>
-    /// <returns>A configured <see cref="RetryPolicy"/> with <see cref="MaxAttempts"/> = 1.</returns>
-    public static RetryPolicy NoRetry()
+    /// <returns>A configured <see cref="TaskRetryPolicy"/> with <see cref="MaxAttempts"/> = 1.</returns>
+    public static TaskRetryPolicy NoRetry()
         => new() { MaxAttempts = 1, Jitter = false };
 
     /// <summary>The per-attempt linear increment used by <see cref="LinearBackoff"/>; <see langword="null"/> for non-linear policies.</summary>
@@ -189,7 +185,7 @@ public sealed class RetryPolicy
         if (_maxDelay < _initialDelay)
         {
             throw new ArgumentException(
-                $"RetryPolicy.MaxDelay ({_maxDelay}) must be >= RetryPolicy.InitialDelay ({_initialDelay}).");
+                $"TaskRetryPolicy.MaxDelay ({_maxDelay}) must be >= TaskRetryPolicy.InitialDelay ({_initialDelay}).");
         }
     }
 }

@@ -16,15 +16,13 @@
   </PropertyGroup>
 
   <!--
-    ── SDK reference (the ".NET package drop") ───────────────────────────────
-    These are consumed from the local NuGet feed configured in nuget.config
-    (../packages, staged from sdk/agentserver/packages/ by ./build.sh) — NOT a
-    ProjectReference into azure-sdk-for-net. That makes this sample portable:
-    copy it (with the .nupkg drop) into any repo and it restores unchanged.
+    ── SDK reference ─────────────────────────────────────────────────────────
+    The Azure.AI.AgentServer.* preview packages are consumed from the public Azure SDK
+    dev feed configured in nuget.config — NOT a ProjectReference into azure-sdk-for-net.
+    That makes this sample portable: copy it into any repo and it restores unchanged.
 
-    The drop ships the unreleased resilient + steerable preview surface. When the
-    packages publish to nuget.org, delete the local source in nuget.config and
-    these resolve from nuget.org with no other change.
+    When the packages publish to nuget.org, delete the dev-feed source in nuget.config
+    and these resolve from nuget.org with no other change.
   -->
   <ItemGroup>
     <!-- Responses transitively pulls Core; Core is pinned explicitly because the
@@ -35,8 +33,9 @@
     <PackageReference Include="Azure.AI.Projects" Version="2.0.1" />
     <!-- OpenAI bridge for Foundry — GetProjectResponsesClientForModel(), CreateResponseOptions, ResponseItem -->
     <PackageReference Include="Azure.AI.Extensions.OpenAI" Version="2.0.0" />
-    <!-- Azure authentication via DefaultAzureCredential -->
-    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+    <!-- Azure authentication — DefaultAzureCredential is provided by Azure.Core
+         (Azure.Identity is a type-forwarding shim, so Azure.Core is referenced directly). -->
+    <PackageReference Include="Azure.Core" Version="1.58.0" />
   </ItemGroup>
 
 </Project>

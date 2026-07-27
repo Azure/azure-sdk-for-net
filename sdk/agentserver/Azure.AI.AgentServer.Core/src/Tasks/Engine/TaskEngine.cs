@@ -673,9 +673,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         bool isSteeredTurn = false)
     {
         var handler = (Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler;
-        // Retry is opt-in (spec §15): a handler with no configured RetryPolicy fails on the first
+        // Retry is opt-in (spec §15): a handler with no configured TaskRetryPolicy fails on the first
         // raise, matching the Python reference (retry only applies when a policy is supplied).
-        RetryPolicy retry = registration.Options?.Retry ?? RetryPolicy.NoRetry();
+        TaskRetryPolicy retry = registration.Options?.Retry ?? TaskRetryPolicy.NoRetry();
 
         TaskRunState<TOutput> currentRun = runState;
         TInput currentInput = input;
@@ -835,7 +835,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     // handle resolution, or active-run cleanup (the orchestrator owns those).
     private async Task<TurnOutcome<TOutput>> RunTurnAsync<TInput, TOutput>(
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
-        RetryPolicy retry,
+        TaskRetryPolicy retry,
         ActiveRun<TOutput> activeRun,
         TaskRunState<TOutput> runState,
         TInput input,
@@ -903,7 +903,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         Exception? lastError = null;
         bool retriedToExhaustion = false;
         int attempt = 0;
-        // MaxAttempts is validated in [1, MaxRetryAttempts] at RetryPolicy construction.
+        // MaxAttempts is validated in [1, MaxRetryAttempts] at TaskRetryPolicy construction.
         int maxAttempts = retry.MaxAttempts;
 
         // Renew the lease for the WHOLE turn — across handler execution AND every inter-attempt
@@ -1500,7 +1500,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     private static string GenerateId(string prefix)
         => $"{prefix}-{Guid.NewGuid():N}";
 
-    private static TimeSpan ComputeDelay(RetryPolicy retry, int attempt)
+    private static TimeSpan ComputeDelay(TaskRetryPolicy retry, int attempt)
     {
         double baseMs;
         if (retry.LinearIncrement is { } increment)
@@ -1512,7 +1512,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             baseMs = retry.InitialDelay.TotalMilliseconds * Math.Pow(retry.BackoffCoefficient, attempt);
         }
 
-        // MaxDelay is validated in [0, MaxRetryDelay] at RetryPolicy construction.
+        // MaxDelay is validated in [0, MaxRetryDelay] at TaskRetryPolicy construction.
         baseMs = Math.Min(baseMs, retry.MaxDelay.TotalMilliseconds);
         if (retry.Jitter)
         {

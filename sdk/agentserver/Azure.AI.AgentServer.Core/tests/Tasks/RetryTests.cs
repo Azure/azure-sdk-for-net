@@ -16,7 +16,7 @@ public sealed class RetryTests
     [Test]
     public async Task NoRetryPolicyConfigured_FailsOnFirstRaise()
     {
-        // Retry is opt-in (spec §15): with no configured RetryPolicy the handler must fail on the
+        // Retry is opt-in (spec §15): with no configured TaskRetryPolicy the handler must fail on the
         // first raise (a single attempt), matching the Python reference — NOT silently retry 3x.
         using TaskTestHost host = TaskTestHost.Create();
         var attempts = new List<int>();
@@ -50,7 +50,7 @@ public sealed class RetryTests
                 attempts.Add(ctx.RetryAttempt);
                 throw new InvalidOperationException("always fails");
             },
-            configure: o => o.Retry = RetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromMilliseconds(1)));
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "flaky", "in", new RunOptions { TaskId = "t1" });
@@ -83,7 +83,7 @@ public sealed class RetryTests
                 await ctx.ExitForRecoveryAsync(ct);
                 return "unreached";
             },
-            configure: o => o.Retry = RetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
 
         // ExitForRecovery is gated on graceful shutdown — signal it before dispatch so the crash
         // simulation (Fresh turn bailing for recovery) is the documented production path.
@@ -106,7 +106,7 @@ public sealed class RetryTests
                 recovered.TrySetResult(ctx.RetryAttempt);
                 return Task.FromResult("ok");
             },
-            configure: o => o.Retry = RetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
 
         int dispatched = await host2.Engine.ScanAndRecoverAsync();
         Assert.That(dispatched, Is.EqualTo(1));

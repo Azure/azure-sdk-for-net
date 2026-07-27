@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 
 /// <summary>
-/// Asserts the <see cref="RetryPolicy"/> preset defaults match the Python reference
+/// Asserts the <see cref="TaskRetryPolicy"/> preset defaults match the Python reference
 /// field-for-field, so a developer using a zero-argument preset gets identical retry
 /// cadence across languages.
 /// </summary>
@@ -19,7 +19,7 @@ public sealed class RetryPolicyPresetTests
     public void FixedDelayDefaultsMatchPython()
     {
         // Python RetryPolicy.fixed_delay: delay=5s, jitter=False, max_attempts=3.
-        RetryPolicy policy = RetryPolicy.FixedDelay();
+        TaskRetryPolicy policy = TaskRetryPolicy.FixedDelay();
         Assert.That(policy.InitialDelay, Is.EqualTo(TimeSpan.FromSeconds(5)));
         Assert.That(policy.MaxDelay, Is.EqualTo(TimeSpan.FromSeconds(5)));
         Assert.That(policy.MaxAttempts, Is.EqualTo(3));
@@ -31,7 +31,7 @@ public sealed class RetryPolicyPresetTests
     public void LinearBackoffDefaultsMatchPython()
     {
         // Python RetryPolicy.linear_backoff: max_attempts=5, jitter=False, initial_delay=1s.
-        RetryPolicy policy = RetryPolicy.LinearBackoff();
+        TaskRetryPolicy policy = TaskRetryPolicy.LinearBackoff();
         Assert.That(policy.MaxAttempts, Is.EqualTo(5));
         Assert.That(policy.Jitter, Is.False);
         Assert.That(policy.InitialDelay, Is.EqualTo(TimeSpan.FromSeconds(1)));
@@ -43,7 +43,7 @@ public sealed class RetryPolicyPresetTests
     {
         // Python RetryPolicy.exponential_backoff: max_attempts=3, initial_delay=1s,
         // backoff_coefficient=2.0, max_delay=60s, jitter=True.
-        RetryPolicy policy = RetryPolicy.ExponentialBackoff();
+        TaskRetryPolicy policy = TaskRetryPolicy.ExponentialBackoff();
         Assert.That(policy.MaxAttempts, Is.EqualTo(3));
         Assert.That(policy.InitialDelay, Is.EqualTo(TimeSpan.FromSeconds(1)));
         Assert.That(policy.BackoffCoefficient, Is.EqualTo(2.0));

@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 /// Pins the per-turn timeout resolver: a 1-day default when unset (null) and a 1-day hard ceiling.
 /// An explicit zero is preserved as an immediate timeout. The ceiling is enforced by throwing at
 /// registration (see <c>ResilientTaskRegistrationTests</c>). Retry hard caps (10 attempts, 1-hour
-/// delay) are enforced at <see cref="Azure.AI.AgentServer.Core.Tasks.RetryPolicy"/> construction
+/// delay) are enforced at <see cref="Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy"/> construction
 /// (see <c>RetryPolicyValidationTests</c>).
 /// </summary>
 [TestFixture]
