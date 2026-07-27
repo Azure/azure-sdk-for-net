@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -49,6 +48,8 @@ namespace Azure.Generator.Management.Providers
         }
 
         public static IReadOnlyList<CSharpType> GetBodyDependencyTypes(IEnumerable<MethodProvider> methods)
+            // Methods with body-only generated dependencies must use ManagementMethodProvider.
+            // Plain MethodProvider instances are intentionally ignored because they currently have none.
             => methods
                 .OfType<ManagementMethodProvider>()
                 .SelectMany(method => method.BodyDependencyTypes)
@@ -66,6 +67,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             var itemType = unwrappedReturnType.Arguments[0];
+            // Method construction is lazy and occurs after OutputLibrary initializes its resource providers.
             var outputLibrary = ManagementClientGenerator.Instance.OutputLibrary;
             if (!outputLibrary.ResourceProviders.Any(resource => resource.Type.Equals(itemType)))
             {
