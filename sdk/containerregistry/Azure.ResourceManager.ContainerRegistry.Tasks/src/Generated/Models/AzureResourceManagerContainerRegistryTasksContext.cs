@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
 using Azure.ResourceManager.Models;
 
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
     [ModelReaderWriterBuildable(typeof(FileTaskRunContent))]
     [ModelReaderWriterBuildable(typeof(FileTaskStep))]
     [ModelReaderWriterBuildable(typeof(FileTaskStepUpdateContent))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RunContent))]
     [ModelReaderWriterBuildable(typeof(RunData))]
     [ModelReaderWriterBuildable(typeof(RunListResult))]
