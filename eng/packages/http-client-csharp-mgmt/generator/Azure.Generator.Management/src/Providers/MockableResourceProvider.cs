@@ -113,7 +113,7 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
+                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -131,6 +131,9 @@ namespace Azure.Generator.Management.Providers
         protected override FormattableString BuildDescription() => $"A class to add extension methods to {ArmCoreType:C}.";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
+
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementMethodProvider.GetBodyDependencyTypes(Methods);
 
         protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
@@ -356,7 +359,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }
 
-        return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, ResourceOperationKind.Action, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
+            return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, ResourceOperationKind.Action, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

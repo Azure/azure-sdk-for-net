@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string endpointDeploymentApiVersion);
             _endpointDeploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _endpointDeploymentRestClient = new EndpointDeployment(_endpointDeploymentClientDiagnostics, Pipeline, Endpoint, endpointDeploymentApiVersion ?? "2026-03-15-preview");
+            _endpointDeploymentRestClient = new EndpointDeployment(_endpointDeploymentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, endpointDeploymentApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

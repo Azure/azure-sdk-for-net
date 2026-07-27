@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string policySignaturesOverridesForIdpsApiVersion);
             _firewallPolicyIdpsSignaturesOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Endpoint, policySignaturesOverridesForIdpsApiVersion ?? "2025-07-01");
+            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policySignaturesOverridesForIdpsApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics, options);
             }
-            if (Optional.IsDefined(ContainerInsights))
-            {
-                writer.WritePropertyName("containerInsights"u8);
-                writer.WriteObjectValue(ContainerInsights, options);
-            }
             if (Optional.IsDefined(AppMonitoring))
             {
                 writer.WritePropertyName("appMonitoring"u8);
@@ -132,7 +127,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ManagedClusterMonitorProfileMetrics metrics = default;
-            ManagedClusterAzureMonitorProfileContainerInsights containerInsights = default;
             ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,15 +138,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     metrics = ManagedClusterMonitorProfileMetrics.DeserializeManagedClusterMonitorProfileMetrics(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("containerInsights"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    containerInsights = ManagedClusterAzureMonitorProfileContainerInsights.DeserializeManagedClusterAzureMonitorProfileContainerInsights(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("appMonitoring"u8))
@@ -169,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterAzureMonitorProfile(metrics, containerInsights, appMonitoring, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfile(metrics, appMonitoring, additionalBinaryDataProperties);
         }
     }
 }

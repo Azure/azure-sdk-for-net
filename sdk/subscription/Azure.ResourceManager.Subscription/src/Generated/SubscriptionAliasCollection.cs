@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Subscription
         {
             TryGetApiVersion(SubscriptionAliasResource.ResourceType, out string subscriptionAliasApiVersion);
             _subscriptionAliasResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", SubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionAliasResponsesRestClient = new SubscriptionAliasResponses(_subscriptionAliasResponsesClientDiagnostics, Pipeline, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
+            _subscriptionAliasResponsesRestClient = new SubscriptionAliasResponses(_subscriptionAliasResponsesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

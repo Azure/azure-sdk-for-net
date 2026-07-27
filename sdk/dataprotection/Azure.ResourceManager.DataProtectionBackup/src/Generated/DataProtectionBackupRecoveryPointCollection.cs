@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(DataProtectionBackupRecoveryPointResource.ResourceType, out string dataProtectionBackupRecoveryPointApiVersion);
             _azureBackupRecoveryPointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupRecoveryPointApiVersion ?? "2026-03-01");
+            _azureBackupRecoveryPointResourcesRestClient = new AzureBackupRecoveryPointResources(_azureBackupRecoveryPointResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupRecoveryPointApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

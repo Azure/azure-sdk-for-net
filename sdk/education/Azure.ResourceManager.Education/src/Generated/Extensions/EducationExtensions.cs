@@ -69,82 +69,82 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabDetailsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EducationLabResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetLabDetailsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationLabResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LabDetailsResource"/> object. </returns>
-        public static LabDetailsResource GetLabDetailsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationLabResource"/> object. </returns>
+        public static EducationLabResource GetEducationLabResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetLabDetailsResource(id);
+            return GetMockableEducationArmClient(client).GetEducationLabResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabDetailsResource"/> along with the instance operations that can be performed on it in the ArmClient
+        /// Gets an object representing a <see cref="EducationLabResource"/> along with the instance operations that can be performed on it in the ArmClient
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetLabDetails(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationLab(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LabDetailsResource"/> object. </returns>
-        public static LabDetailsResource GetLabDetails(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="EducationLabResource"/> object. </returns>
+        public static EducationLabResource GetEducationLab(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetLabDetails(scope);
+            return GetMockableEducationArmClient(client).GetEducationLab(scope);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JoinRequestDetailsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EducationJoinRequestResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetJoinRequestDetailsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationJoinRequestResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="JoinRequestDetailsResource"/> object. </returns>
-        public static JoinRequestDetailsResource GetJoinRequestDetailsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationJoinRequestResource"/> object. </returns>
+        public static EducationJoinRequestResource GetEducationJoinRequestResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetJoinRequestDetailsResource(id);
+            return GetMockableEducationArmClient(client).GetEducationJoinRequestResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="JoinRequestDetailsCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="EducationJoinRequestCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetAllJoinRequestDetails(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationJoinRequests(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="JoinRequestDetailsResource"/> objects. </returns>
-        public static JoinRequestDetailsCollection GetAllJoinRequestDetails(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="EducationJoinRequestResource"/> objects. </returns>
+        public static EducationJoinRequestCollection GetEducationJoinRequests(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetAllJoinRequestDetails(scope);
+            return GetMockableEducationArmClient(client).GetEducationJoinRequests(scope);
         }
 
         /// <summary>
         /// get student join requests
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetJoinRequestDetails(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationJoinRequest(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<JoinRequestDetailsResource> GetJoinRequestDetails(this ArmClient client, ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
+        public static Response<EducationJoinRequestResource> GetEducationJoinRequest(this ArmClient client, ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetJoinRequestDetails(scope, joinRequestName, cancellationToken);
+            return GetMockableEducationArmClient(client).GetEducationJoinRequest(scope, joinRequestName, cancellationToken);
         }
 
         /// <summary>
         /// get student join requests
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetJoinRequestDetailsAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationJoinRequestAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -173,54 +173,54 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<JoinRequestDetailsResource>> GetJoinRequestDetailsAsync(this ArmClient client, ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EducationJoinRequestResource>> GetEducationJoinRequestAsync(this ArmClient client, ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableEducationArmClient(client).GetJoinRequestDetailsAsync(scope, joinRequestName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEducationArmClient(client).GetEducationJoinRequestAsync(scope, joinRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StudentDetailsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EducationStudentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetStudentDetailsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationStudentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StudentDetailsResource"/> object. </returns>
-        public static StudentDetailsResource GetStudentDetailsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationStudentResource"/> object. </returns>
+        public static EducationStudentResource GetEducationStudentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetStudentDetailsResource(id);
+            return GetMockableEducationArmClient(client).GetEducationStudentResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="StudentDetailsCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="EducationStudentCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetAllStudentDetails(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationStudents(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="StudentDetailsResource"/> objects. </returns>
-        public static StudentDetailsCollection GetAllStudentDetails(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="EducationStudentResource"/> objects. </returns>
+        public static EducationStudentCollection GetEducationStudents(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetAllStudentDetails(scope);
+            return GetMockableEducationArmClient(client).GetEducationStudents(scope);
         }
 
         /// <summary>
         /// Get the details for a specific student in the specified lab by student alias
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetStudentDetails(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationStudent(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -229,18 +229,18 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<StudentDetailsResource> GetStudentDetails(this ArmClient client, ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
+        public static Response<EducationStudentResource> GetEducationStudent(this ArmClient client, ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetStudentDetails(scope, studentAlias, cancellationToken);
+            return GetMockableEducationArmClient(client).GetEducationStudent(scope, studentAlias, cancellationToken);
         }
 
         /// <summary>
         /// Get the details for a specific student in the specified lab by student alias
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetStudentDetailsAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationStudentAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StudentDetailsResource>> GetStudentDetailsAsync(this ArmClient client, ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
+        public static async Task<Response<EducationStudentResource>> GetEducationStudentAsync(this ArmClient client, ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableEducationArmClient(client).GetStudentDetailsAsync(scope, studentAlias, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEducationArmClient(client).GetEducationStudentAsync(scope, studentAlias, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

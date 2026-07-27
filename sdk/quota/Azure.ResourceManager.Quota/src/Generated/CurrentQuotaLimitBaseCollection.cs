@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(CurrentQuotaLimitBaseResource.ResourceType, out string currentQuotaLimitBaseApiVersion);
             _currentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", CurrentQuotaLimitBaseResource.ResourceType.Namespace, Diagnostics);
-            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
+            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
         }
 
         /// <summary>

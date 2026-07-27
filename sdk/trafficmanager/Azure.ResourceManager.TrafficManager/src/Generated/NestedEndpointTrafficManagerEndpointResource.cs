@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string nestedEndpointTrafficManagerEndpointApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, nestedEndpointTrafficManagerEndpointApiVersion ?? "2024-04-01-preview");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedEndpointTrafficManagerEndpointApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

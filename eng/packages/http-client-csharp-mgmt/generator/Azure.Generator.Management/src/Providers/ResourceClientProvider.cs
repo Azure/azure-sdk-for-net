@@ -111,6 +111,9 @@ namespace Azure.Generator.Management.Providers
 
         internal bool IsResourceDataType(CSharpType type) => ResourceData.Type.Equals(type) || _originalResourceDataType.Equals(type);
 
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementMethodProvider.GetBodyDependencyTypes(Methods);
+
         internal bool TryGetResourceDataTypeOverride(CSharpType originalType, out CSharpType resourceDataType)
         {
             if (_originalResourceDataType.Equals(originalType) &&
@@ -355,7 +358,7 @@ namespace Azure.Generator.Management.Providers
             {
                 bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
                 var effectiveApiVersion = apiVersion.NullCoalesce(Literal(inputClient.CurrentApiVersion));
-                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Diagnostics().Property(nameof(DiagnosticsOptions.ApplicationId)), thisResource.Endpoint(), effectiveApiVersion)).Terminate());
             }
 
             bodyStatements.Add(Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate());
@@ -526,7 +529,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, isAsync, methodName);
             }
 
-        return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
+            return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
         }
 
         private static bool CanPopulateTagUpdateMethodArguments(MethodSignature updateSignature, ParameterContextRegistry parameterMappings)

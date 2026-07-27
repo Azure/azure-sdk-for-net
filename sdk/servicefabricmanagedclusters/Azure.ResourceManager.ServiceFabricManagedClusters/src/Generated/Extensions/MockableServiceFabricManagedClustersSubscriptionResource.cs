@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 
         private ClientDiagnostics ManagedClustersClientDiagnostics => _managedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ManagedClusterVersionClientDiagnostics => _managedClusterVersionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusterVersion ManagedClusterVersionRestClient => _managedClusterVersionRestClient ??= new ManagedClusterVersion(ManagedClusterVersionClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ManagedClusterVersion ManagedClusterVersionRestClient => _managedClusterVersionRestClient ??= new ManagedClusterVersion(ManagedClusterVersionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ManagedUnsupportedVMSizesClientDiagnostics => _managedUnsupportedVMSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedUnsupportedVMSizes ManagedUnsupportedVMSizesRestClient => _managedUnsupportedVMSizesRestClient ??= new ManagedUnsupportedVMSizes(ManagedUnsupportedVMSizesClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ManagedUnsupportedVMSizes ManagedUnsupportedVMSizesRestClient => _managedUnsupportedVMSizesRestClient ??= new ManagedUnsupportedVMSizes(ManagedUnsupportedVMSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location for the unsupported VM sizes. This is different from cluster location. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location for the unsupported VM sizes. This is different from cluster location. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location for the unsupported VM sizes. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location for the unsupported VM sizes. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(AzureLocation location, CancellationToken cancellationToken = default)

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.AppNetwork
         {
             TryGetApiVersion(ResourceType, out string appLinkMemberApiVersion);
             _appLinkMembersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", ResourceType.Namespace, Diagnostics);
-            _appLinkMembersRestClient = new AppLinkMembers(_appLinkMembersClientDiagnostics, Pipeline, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
+            _appLinkMembersRestClient = new AppLinkMembers(_appLinkMembersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
             _upgradeHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", ResourceType.Namespace, Diagnostics);
-            _upgradeHistoriesRestClient = new UpgradeHistories(_upgradeHistoriesClientDiagnostics, Pipeline, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
+            _upgradeHistoriesRestClient = new UpgradeHistories(_upgradeHistoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

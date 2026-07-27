@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningOnlineDeploymentApiVersion);
             _onlineDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _onlineDeploymentsRestClient = new OnlineDeployments(_onlineDeploymentsClientDiagnostics, Pipeline, Endpoint, machineLearningOnlineDeploymentApiVersion ?? "2026-03-15-preview");
+            _onlineDeploymentsRestClient = new OnlineDeployments(_onlineDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningOnlineDeploymentApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

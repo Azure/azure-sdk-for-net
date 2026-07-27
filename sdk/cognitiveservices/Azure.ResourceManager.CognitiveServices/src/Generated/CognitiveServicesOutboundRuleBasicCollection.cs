@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesOutboundRuleBasicResource.ResourceType, out string cognitiveServicesOutboundRuleBasicApiVersion);
             _outboundRuleBasicResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesOutboundRuleBasicResource.ResourceType.Namespace, Diagnostics);
-            _outboundRuleBasicResourcesRestClient = new OutboundRuleBasicResources(_outboundRuleBasicResourcesClientDiagnostics, Pipeline, Endpoint, cognitiveServicesOutboundRuleBasicApiVersion ?? "2026-05-15-preview");
+            _outboundRuleBasicResourcesRestClient = new OutboundRuleBasicResources(_outboundRuleBasicResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesOutboundRuleBasicApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(ResourceType, out string generateDetailedCostReportOperationResultApiVersion);
             _generateDetailedCostReportOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
-            _generateDetailedCostReportOperationResultsRestClient = new GenerateDetailedCostReportOperationResults(_generateDetailedCostReportOperationResultsClientDiagnostics, Pipeline, Endpoint, generateDetailedCostReportOperationResultApiVersion ?? "2025-03-01");
+            _generateDetailedCostReportOperationResultsRestClient = new GenerateDetailedCostReportOperationResults(_generateDetailedCostReportOperationResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, generateDetailedCostReportOperationResultApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 
