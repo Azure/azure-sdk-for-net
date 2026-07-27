@@ -954,6 +954,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 _parent = parent;
                 _apiVersions = apiVersions;
+                ProvisioningGenerator.Instance.AddTypeToKeep(this, isRoot: false);
             }
 
             protected override string BuildName() => "ResourceVersions";
