@@ -136,7 +136,7 @@
 # ServiceOwners: @bganapa
 
 # PRLabel: %Azure.Core
-/sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash @m-redding
+/sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash
 
 # PRLabel: %Batch
 /sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
@@ -943,8 +943,8 @@
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
 /.config/1espt/                                                    @benbp
-/.vscode/                                                          @jsquire @m-redding
-/.devcontainer/                                                    @jsquire @m-redding
+/.vscode/                                                          @jsquire @m-nash @JoshLove-msft
+/.devcontainer/                                                    @jsquire @m-nash @JoshLove-msft
 /doc/                                                              @jsquire
 
 # Repository configuration that should not be overridden
@@ -958,9 +958,12 @@
 # CI pipeline configuration
 /sdk/**/ci*.yml                                                    @Azure/azure-sdk-write-net-core @jsquire
 
-# Code standards configuration
-/sdk/**/.gitignore                                                 @jsquire @m-redding
-/sdk/**/.gitattributes                                             @jsquire @m-redding
+# Code standards and common mistakes
+/sdk/**/.gitignore                                                 @jsquire @m-nash @JoshLove-msft
+/sdk/**/.gitattributes                                             @jsquire @m-nash @JoshLove-msft
+/sdk/**/*.sh                                                       @jsquire @m-nash @JoshLove-msft
+/sdk/**/*.tsp                                                      @jsquire @m-nash @JoshLove-msft
+/**/*.py                                                           @jsquire @m-nash @JoshLove-msft
 
 # Add owners for NPM configuration
 /**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder

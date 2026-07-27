@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementApprovalSettings : IUtf8JsonSerializable, IJsonModel<RoleManagementApprovalSettings>
+    /// <summary> The approval settings. </summary>
+    public partial class RoleManagementApprovalSettings : IJsonModel<RoleManagementApprovalSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementApprovalSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoleManagementApprovalSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRoleManagementApprovalSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleManagementApprovalSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RoleManagementApprovalSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RoleManagementApprovalSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleManagementApprovalSettings IPersistableModel<RoleManagementApprovalSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoleManagementApprovalSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoleManagementApprovalSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleManagementApprovalSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("isApprovalRequired"u8);
@@ -60,21 +98,21 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 writer.WritePropertyName("approvalStages"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApprovalStages)
+                foreach (RoleManagementApprovalStage item in ApprovalStages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,22 +121,27 @@ namespace Azure.ResourceManager.Authorization.Models
             }
         }
 
-        RoleManagementApprovalSettings IJsonModel<RoleManagementApprovalSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleManagementApprovalSettings IJsonModel<RoleManagementApprovalSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoleManagementApprovalSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleManagementApprovalSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRoleManagementApprovalSettings(document.RootElement, options);
         }
 
-        internal static RoleManagementApprovalSettings DeserializeRoleManagementApprovalSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RoleManagementApprovalSettings DeserializeRoleManagementApprovalSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,54 +151,53 @@ namespace Azure.ResourceManager.Authorization.Models
             bool? isRequestorJustificationRequired = default;
             RoleManagementApprovalMode? approvalMode = default;
             IList<RoleManagementApprovalStage> approvalStages = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("isApprovalRequired"u8))
+                if (prop.NameEquals("isApprovalRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isApprovalRequired = property.Value.GetBoolean();
+                    isApprovalRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isApprovalRequiredForExtension"u8))
+                if (prop.NameEquals("isApprovalRequiredForExtension"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isApprovalRequiredForExtension = property.Value.GetBoolean();
+                    isApprovalRequiredForExtension = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isRequestorJustificationRequired"u8))
+                if (prop.NameEquals("isRequestorJustificationRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isRequestorJustificationRequired = property.Value.GetBoolean();
+                    isRequestorJustificationRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("approvalMode"u8))
+                if (prop.NameEquals("approvalMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    approvalMode = new RoleManagementApprovalMode(property.Value.GetString());
+                    approvalMode = new RoleManagementApprovalMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("approvalStages"u8))
+                if (prop.NameEquals("approvalStages"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RoleManagementApprovalStage> array = new List<RoleManagementApprovalStage>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RoleManagementApprovalStage.DeserializeRoleManagementApprovalStage(item, options));
                     }
@@ -164,151 +206,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RoleManagementApprovalSettings(
                 isApprovalRequired,
                 isApprovalRequiredForExtension,
                 isRequestorJustificationRequired,
                 approvalMode,
                 approvalStages ?? new ChangeTrackingList<RoleManagementApprovalStage>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequired), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isApprovalRequired: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsApprovalRequired))
-                {
-                    builder.Append("  isApprovalRequired: ");
-                    var boolValue = IsApprovalRequired.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequiredForExtension), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isApprovalRequiredForExtension: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsApprovalRequiredForExtension))
-                {
-                    builder.Append("  isApprovalRequiredForExtension: ");
-                    var boolValue = IsApprovalRequiredForExtension.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRequestorJustificationRequired), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isRequestorJustificationRequired: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsRequestorJustificationRequired))
-                {
-                    builder.Append("  isRequestorJustificationRequired: ");
-                    var boolValue = IsRequestorJustificationRequired.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovalMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  approvalMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApprovalMode))
-                {
-                    builder.Append("  approvalMode: ");
-                    builder.AppendLine($"'{ApprovalMode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovalStages), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  approvalStages: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ApprovalStages))
-                {
-                    if (ApprovalStages.Any())
-                    {
-                        builder.Append("  approvalStages: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ApprovalStages)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  approvalStages: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RoleManagementApprovalSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RoleManagementApprovalSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RoleManagementApprovalSettings IPersistableModel<RoleManagementApprovalSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRoleManagementApprovalSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RoleManagementApprovalSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RoleManagementApprovalSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
