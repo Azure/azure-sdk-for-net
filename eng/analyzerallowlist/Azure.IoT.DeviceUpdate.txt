@@ -1,0 +1,12 @@
+# Azure.IoT.DeviceUpdate approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# This generated package exposes service-schema model names such as Device, Deployment, Group,
+# Step, and Update as established API names. Renaming the full generated model surface would be a
+# broad API change, so keep the single-word-name suppression centralized in the allow-list.
+nowarn:AZC0012
+
+# The generated service error models use conventional protocol names shared by the REST schema.
+# Renaming them would be an API-breaking generated-model rename, so suppress the known conflicts.
+nowarn:AZC0034 T:Azure.IoT.DeviceUpdate.Error
+nowarn:AZC0034 T:Azure.IoT.DeviceUpdate.InnerError
