@@ -4,6 +4,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,14 @@ namespace Azure.Generator.Provisioning.Utilities
                 return true;
             return typeof(ProvisionableConstruct).IsAssignableFrom(type.FrameworkType);
         }
+
+        /// <summary>
+        /// Returns true if the type derives from <see cref="ProvisionableResource"/>.
+        /// </summary>
+        public static bool IsResourceType(CSharpType type)
+            => type.IsFrameworkType
+                ? typeof(ProvisionableResource).IsAssignableFrom(type.FrameworkType)
+                : type.BaseType is not null && IsResourceType(type.BaseType);
 
         /// <summary>
         /// Returns true if the type is already represented as a provisioning type.
@@ -74,13 +83,22 @@ namespace Azure.Generator.Provisioning.Utilities
         /// isOutput and isRequired are independent flags and only emitted when true, using named arguments.
         /// </summary>
         public static ValueExpression[] BuildDefinePropertyArgs(
-            string propertyName, string[] bicepPath, bool isOutput, bool isRequired, string? defaultValue = null)
+            CSharpType propertyType,
+            string propertyName,
+            string[] bicepPath,
+            bool isOutput,
+            bool isRequired,
+            string? defaultValue = null)
         {
             var args = new List<ValueExpression>
             {
                 Nameof(Identifier(propertyName)),
                 New.Array(typeof(string), [.. bicepPath.Select(Literal)])
             };
+            if (IsResourceType(propertyType))
+            {
+                args.Add(New.Instance(propertyType, [Literal(propertyType.Name.ToVariableName())]));
+            }
             if (isOutput)
             {
                 args.Add(new PositionalParameterReferenceExpression("isOutput", Literal(true)));

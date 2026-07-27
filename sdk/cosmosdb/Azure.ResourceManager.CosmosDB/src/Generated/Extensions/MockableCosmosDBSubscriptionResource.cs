@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
 
         private ClientDiagnostics DatabaseAccountsClientDiagnostics => _databaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DatabaseAccounts DatabaseAccountsRestClient => _databaseAccountsRestClient ??= new DatabaseAccounts(DatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private DatabaseAccounts DatabaseAccountsRestClient => _databaseAccountsRestClient ??= new DatabaseAccounts(DatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics CassandraClustersClientDiagnostics => _cassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics FleetClientDiagnostics => _fleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics RestorableDatabaseAccountsClientDiagnostics => _restorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         /// <summary> Gets a collection of CosmosDBLocations in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of CosmosDBLocations and their operations over a CosmosDBLocationResource. </returns>

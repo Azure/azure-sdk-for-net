@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string bazApiVersion);
             _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Endpoint, bazApiVersion ?? "2024-05-01");
+            _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bazApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

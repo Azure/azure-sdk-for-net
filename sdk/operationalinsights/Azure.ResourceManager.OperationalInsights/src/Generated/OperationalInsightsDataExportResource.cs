@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(ResourceType, out string operationalInsightsDataExportApiVersion);
             _dataExportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _dataExportsRestClient = new DataExports(_dataExportsClientDiagnostics, Pipeline, Endpoint, operationalInsightsDataExportApiVersion ?? "2025-07-01");
+            _dataExportsRestClient = new DataExports(_dataExportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsDataExportApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

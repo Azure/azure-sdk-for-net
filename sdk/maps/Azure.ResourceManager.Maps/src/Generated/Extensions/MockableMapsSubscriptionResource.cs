@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maps.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary>
         /// Get all Maps Accounts in a Subscription

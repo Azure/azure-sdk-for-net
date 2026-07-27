@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(SecurityPartnerProviderResource.ResourceType, out string securityPartnerProviderApiVersion);
             _securityPartnerProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityPartnerProviderResource.ResourceType.Namespace, Diagnostics);
-            _securityPartnerProvidersRestClient = new SecurityPartnerProviders(_securityPartnerProvidersClientDiagnostics, Pipeline, Endpoint, securityPartnerProviderApiVersion ?? "2025-07-01");
+            _securityPartnerProvidersRestClient = new SecurityPartnerProviders(_securityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityPartnerProviderApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

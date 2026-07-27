@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Resource. </summary>
+        /// <summary> Gets the Resource. </summary>
         internal ComputeApiEntityReference Resource
         {
             get
@@ -30,25 +30,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _resource;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
-        /// <summary> Gets or sets the ActionState. </summary>
+        /// <summary> Gets the ActionState. </summary>
         public BicepValue<VirtualMachineScaleSetLifecycleHookActionState> ActionState
         {
             get
             {
                 Initialize();
                 return _actionState;
-            }
-            set
-            {
-                Initialize();
-                _actionState.Assign(value);
             }
         }
 
@@ -57,15 +47,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Resource is null ? default : Resource.Id;
-            }
-            set
-            {
-                if (Resource is null)
-                {
-                    Resource = new ComputeApiEntityReference();
-                }
-                Resource.Id = value;
+                return Resource.Id;
             }
         }
 

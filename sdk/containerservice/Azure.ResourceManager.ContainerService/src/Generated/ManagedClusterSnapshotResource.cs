@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string managedClusterSnapshotApiVersion);
             _managedClusterSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _managedClusterSnapshotsRestClient = new ManagedClusterSnapshots(_managedClusterSnapshotsClientDiagnostics, Pipeline, Endpoint, managedClusterSnapshotApiVersion ?? "2026-04-02-preview");
+            _managedClusterSnapshotsRestClient = new ManagedClusterSnapshots(_managedClusterSnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterSnapshotApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

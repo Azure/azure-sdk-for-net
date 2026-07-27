@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A non-fatal advisory produced during rubric evaluator generation when resolved inputs are technically valid but likely too weak to produce a high-quality rubric. Read-only; service-generated. Persisted with the terminal EvaluatorGenerationJob. </summary>
+    [Experimental("AAIP001")]
     public partial class RubricGenerationInputQualityWarning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

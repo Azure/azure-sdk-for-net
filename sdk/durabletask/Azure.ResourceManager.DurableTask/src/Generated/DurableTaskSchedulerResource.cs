@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(ResourceType, out string durableTaskSchedulerApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskSchedulerApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskSchedulerApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

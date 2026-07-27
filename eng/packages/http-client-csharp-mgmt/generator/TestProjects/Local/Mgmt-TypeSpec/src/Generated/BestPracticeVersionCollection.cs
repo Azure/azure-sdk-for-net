@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(BestPracticeVersionResource.ResourceType, out string bestPracticeVersionApiVersion);
             _bestPracticeVersionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BestPracticeVersionResource.ResourceType.Namespace, Diagnostics);
-            _bestPracticeVersionsRestClient = new BestPracticeVersions(_bestPracticeVersionsClientDiagnostics, Pipeline, Endpoint, bestPracticeVersionApiVersion ?? "2024-05-01");
+            _bestPracticeVersionsRestClient = new BestPracticeVersions(_bestPracticeVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bestPracticeVersionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -3,15 +3,21 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import { $onEmit as $onMgmtEmit } from "@azure-typespec/http-client-csharp-mgmt";
+import { emitManagementCodeModel } from "@azure-typespec/http-client-csharp-mgmt";
 import { AzureProvisioningEmitterOptions } from "./options.js";
+import { updateProvisioningCodeModel } from "./provisioning-code-model.js";
 
 export async function $onEmit(
   context: EmitContext<AzureProvisioningEmitterOptions>
 ) {
   context.options["generator-name"] ??= "ProvisioningGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
+  // TODO https://github.com/Azure/azure-sdk-for-net/issues/61205: Remove this workaround once trimming
+  // preserves reachable discriminator children without relying on XML documentation references.
+  context.options["unreferenced-types-handling"] ??= "internalize";
   // Provisioning libraries use a flat namespace (no .Models sub-namespace)
   context.options["model-namespace"] = false;
-  await $onMgmtEmit(context);
+  await emitManagementCodeModel(context, (codeModel, _, armProviderSchema) =>
+    updateProvisioningCodeModel(codeModel, armProviderSchema)
+  );
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Education
         {
             TryGetApiVersion(EducationStudentResource.ResourceType, out string educationStudentApiVersion);
             _studentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", EducationStudentResource.ResourceType.Namespace, Diagnostics);
-            _studentsRestClient = new Students(_studentsClientDiagnostics, Pipeline, Endpoint, educationStudentApiVersion ?? "2021-12-01-preview");
+            _studentsRestClient = new Students(_studentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, educationStudentApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

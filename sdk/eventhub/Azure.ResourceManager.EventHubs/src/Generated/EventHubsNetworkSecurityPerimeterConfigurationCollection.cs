@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(EventHubsNetworkSecurityPerimeterConfigurationResource.ResourceType, out string eventHubsNetworkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, eventHubsNetworkSecurityPerimeterConfigurationApiVersion ?? "2026-01-01");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsNetworkSecurityPerimeterConfigurationApiVersion ?? "2026-01-01");
             _networkSecurityPerimeterConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationRestClient = new NetworkSecurityPerimeterConfiguration(_networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, Endpoint, eventHubsNetworkSecurityPerimeterConfigurationApiVersion ?? "2026-01-01");
+            _networkSecurityPerimeterConfigurationRestClient = new NetworkSecurityPerimeterConfiguration(_networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsNetworkSecurityPerimeterConfigurationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
