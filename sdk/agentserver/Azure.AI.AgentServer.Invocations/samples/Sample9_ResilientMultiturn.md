@@ -262,4 +262,4 @@ curl -X POST "http://localhost:8088/invocations?agent_session_id=conv-001" \
 
 ## Implementation pattern
 
-This uses the **Multi-turn chain** pattern from the [Resilient Tasks guide](../../Azure.AI.AgentServer.Core/docs/tasks-guide.md). The durable `Metadata` persists conversation history across turns and restarts. Steering lets the client redirect the agent mid-turn without waiting for the current response.
+This uses the **Multi-turn chain** pattern from the [Resilient Tasks guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md). The durable `Metadata` persists conversation history across turns and restarts. Steering lets the client redirect the agent mid-turn without waiting for the current response.

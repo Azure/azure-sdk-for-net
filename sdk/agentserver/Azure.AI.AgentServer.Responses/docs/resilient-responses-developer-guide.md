@@ -114,7 +114,7 @@ Enabling steering does not require resilience and vice versa.
 
 Recovery semantics depend on `store`, `background`, and `ResilientBackground`.
 The table below is a quick orientation. For the normative per-row and
-per-termination-path contract, see [`resilience-contract.md`](resilience-contract.md).
+per-termination-path contract, see [`resilience-contract.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilience-contract.md).
 
 | `store` | `background` | `ResilientBackground` | Summary |
 |---|---|---|---|
@@ -153,7 +153,7 @@ partial**; it is kept, not cleared. A `cancelled` response is the exception:
 cancellation always wins and clears `output` to an empty list.
 
 `SteerableConversations = true` composes orthogonally: it enables multi-turn
-steering on top of any row above. Recovery composes with steering; see [`handler-implementation-guide.md`](handler-implementation-guide.md)
+steering on top of any row above. Recovery composes with steering; see [`handler-implementation-guide.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md)
 for the base handler mechanics that this guide builds on.
 
 ### Steerable conversations: no forking
@@ -312,8 +312,8 @@ the same turn.
 ## Crash recovery — what you get, what you owe
 
 Re-entry is governed by the recovery contract in
-[`resilience-contract.md`](resilience-contract.md), with handler mechanics covered
-in [`handler-implementation-guide.md`](handler-implementation-guide.md). This
+[`resilience-contract.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilience-contract.md), with handler mechanics covered
+in [`handler-implementation-guide.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md). This
 section is the configuration and decision context.
 
 ### What you get on recovered entry
@@ -479,7 +479,7 @@ response.completed
 ```
 
 The post-recovery guarantee is normative for Row 1 Path C in
-[`resilience-contract.md`](resilience-contract.md): a client reconnecting after
+[`resilience-contract.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilience-contract.md): a client reconnecting after
 a crash receives the events the recovered handler emits, framed by the reset rule
 below.
 
@@ -583,9 +583,9 @@ See the `samples/` directory for canonical resilient handler shapes:
 
 ## See also
 
-- [`resilience-contract.md`](resilience-contract.md) — normative per-row ×
+- [`resilience-contract.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilience-contract.md) — normative per-row ×
   per-path conformance contract.
-- [`handler-implementation-guide.md`](handler-implementation-guide.md) — handler
+- [`handler-implementation-guide.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md) — handler
   mechanics, cancellation, streaming, and implementation patterns.
 - `samples/Sample19_ResilientStreaming.md`, `Sample20_ResilientSteering.md`,
   `Sample22_ResilientMultiTurn.md` — worked resilient samples.

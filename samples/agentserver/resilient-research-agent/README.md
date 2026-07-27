@@ -68,7 +68,7 @@ SSE `id:` and reconnect cursor) plus `server_time_utc` / `server_uptime_sec`.
 - (Optional) Azure CLI signed in (`az login`) for `DefaultAzureCredential`
 
 The preview `Azure.AI.AgentServer.*` packages are not yet on nuget.org; the included
-[`nuget.config`](nuget.config) restores them from the public Azure SDK dev feed.
+[`nuget.config`](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/agentserver/resilient-research-agent/nuget.config) restores them from the public Azure SDK dev feed.
 
 ## Run it locally
 

@@ -462,5 +462,5 @@ vs the injected built-in `IEventStreamRegistry`. The shared contract is the
 
 ## See also
 
-- [Resilient Tasks — Developer Guide](./tasks-guide.md) — for the producer side when
+- [Resilient Tasks — Developer Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md) — for the producer side when
   the events come from a durable task.

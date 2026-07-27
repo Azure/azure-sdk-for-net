@@ -5,7 +5,7 @@
 guarantees that the resilience-contract conformance suite enforces. It is the
 .NET companion to the Python `resilience-contract.md` and mirrors its normative
 clause set except where this .NET package intentionally diverges. Where the
-[`resilient-responses-developer-guide.md`](resilient-responses-developer-guide.md)
+[`resilient-responses-developer-guide.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilient-responses-developer-guide.md)
 explains *why* and *how* resilience works, this document states the precise,
 testable promises for dispatch, recovery, streaming, checkpoints, steering, and
 composition.
@@ -593,8 +593,8 @@ sample directory jumps 16 → 18).
 
 ## See also
 
-- [`resilient-responses-developer-guide.md`](resilient-responses-developer-guide.md)
-- [`handler-implementation-guide.md`](handler-implementation-guide.md)
-- [`../samples/Sample19_ResilientStreaming.md`](../samples/Sample19_ResilientStreaming.md)
-- [`../samples/Sample20_ResilientSteering.md`](../samples/Sample20_ResilientSteering.md)
-- [`../samples/Sample22_ResilientMultiTurn.md`](../samples/Sample22_ResilientMultiTurn.md)
+- [`resilient-responses-developer-guide.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilient-responses-developer-guide.md)
+- [`handler-implementation-guide.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md)
+- [`../samples/Sample19_ResilientStreaming.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample19_ResilientStreaming.md)
+- [`../samples/Sample20_ResilientSteering.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample20_ResilientSteering.md)
+- [`../samples/Sample22_ResilientMultiTurn.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample22_ResilientMultiTurn.md)

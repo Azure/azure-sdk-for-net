@@ -1636,7 +1636,7 @@ The framework re-invokes your handler when the server crashes mid-response if
 to do to take advantage of it, and how clients reconcile a multi-attempt stream
 is the **recovery contract**.
 
-The deeper contract is in [`resilience-contract.md`](resilience-contract.md).
+The deeper contract is in [`resilience-contract.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilience-contract.md).
 This section is the developer how-to for the .NET surface.
 
 You can opt out of all of this and your response will still be correct (just
@@ -1815,7 +1815,7 @@ The cancellation contract composes with recovery:
 | `ResilientBackground` | `false` | Opt into crash-recoverable background responses. |
 | `SteerableConversations` | `false` | Multi-turn conversation steering; independent of resilience. |
 
-See the [Resilient Responses Developer Guide](resilient-responses-developer-guide.md)
+See the [Resilient Responses Developer Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilient-responses-developer-guide.md)
 for the configuration matrix (`store` × `background` × `ResilientBackground`),
 the recovery + steering surface, and client-side reconciliation rules.
 
@@ -2070,6 +2070,6 @@ or your own backing store and keep only a session/checkpoint reference in
 
 ## See also
 
-- [Resilience contract](resilience-contract.md) — normative per-row × per-path conformance contract.
-- [Resilient Responses Developer Guide](resilient-responses-developer-guide.md) — full .NET resilience guide and configuration matrix.
-- [Sample 19 — Resilient Streaming](../samples/Sample19_ResilientStreaming.md), [Sample 20 — Resilient Steering](../samples/Sample20_ResilientSteering.md), and [Sample 22 — Resilient Multi-turn](../samples/Sample22_ResilientMultiTurn.md) — worked resilient samples.
+- [Resilience contract](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilience-contract.md) — normative per-row × per-path conformance contract.
+- [Resilient Responses Developer Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/resilient-responses-developer-guide.md) — full .NET resilience guide and configuration matrix.
+- [Sample 19 — Resilient Streaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample19_ResilientStreaming.md), [Sample 20 — Resilient Steering](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample20_ResilientSteering.md), and [Sample 22 — Resilient Multi-turn](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample22_ResilientMultiTurn.md) — worked resilient samples.

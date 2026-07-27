@@ -642,4 +642,4 @@ This is the **Task ⇄ Stream bridge** pattern. The durable producer is the
 > are reclaimed; long-lived hosts can also call `IEventStreamRegistry.DeleteAsync` once a
 > client has fully drained a stream.
 
-This composes with the [Resilient Tasks guide](../../Azure.AI.AgentServer.Core/docs/tasks-guide.md) and the [Streaming guide](../../Azure.AI.AgentServer.Core/docs/streaming-guide.md).
+This composes with the [Resilient Tasks guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md) and the [Streaming guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/streaming-guide.md).
