@@ -1323,7 +1323,7 @@ namespace Azure.Communication.CallAutomation
                     ? new CreateHoldRoomRequestInternal()
                     : new CreateHoldRoomRequestInternal() {
                         OperationContext = options.OperationContext,
-                        PlaySourceInfo = options.PlaySourceInfo
+                        PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource)
                     };
 
                 return CallMediaRestClient.CreateHoldRoom(callConnectionId, request, cancellationToken);
@@ -1350,10 +1350,9 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new CreateHoldRoomRequestInternal()
-                    : new CreateHoldRoomRequestInternal()
-                    {
-                        OperationContext = options.OperationContext,
-                        PlaySourceInfo = options.PlaySourceInfo
+                    : new CreateHoldRoomRequestInternal() {
+                    OperationContext = options.OperationContext,
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource)
                     };
 
                 return await CallMediaRestClient.CreateHoldRoomAsync(callConnectionId, request, cancellationToken).ConfigureAwait(false);
@@ -1372,7 +1371,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">An optional object containing Delete Hold Room options.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual Response DeleteHoldRoom(string callConnectionId, CreateHoldRoomOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response DeleteHoldRoom(string callConnectionId, DeleteHoldRoomOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(DeleteHoldRoom)}");
             scope.Start();
@@ -1380,9 +1379,8 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new DeleteHoldRoomRequestInternal()
-                    : new DeleteHoldRoomRequestInternal()
-                    {
-                        OperationContext = options.OperationContext,
+                    : new DeleteHoldRoomRequestInternal() {
+                    OperationContext = options.OperationContext,
                     };
 
                 return CallMediaRestClient.DeleteHoldRoom(callConnectionId, request, cancellationToken);
@@ -1409,9 +1407,8 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new DeleteHoldRoomRequestInternal()
-                    : new DeleteHoldRoomRequestInternal()
-                    {
-                        OperationContext = options.OperationContext,
+                    : new DeleteHoldRoomRequestInternal() {
+                    OperationContext = options.OperationContext,
                     };
 
                 return await CallMediaRestClient.DeleteHoldRoomAsync(callConnectionId, request, cancellationToken).ConfigureAwait(false);

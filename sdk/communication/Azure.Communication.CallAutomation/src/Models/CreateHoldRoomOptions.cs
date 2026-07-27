@@ -7,7 +7,7 @@ namespace Azure.Communication.CallAutomation
     public class CreateHoldRoomOptions
     {
         /// <summary> Gets or sets the play source info. </summary>
-        public PlaySourceInternal PlaySourceInfo { get; set; }
+        public PlaySource PlaySource { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
     }
