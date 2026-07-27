@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                priority is null && author is null && templateData is null && galleries is null && localizedGalleries is null ? default : new WorkbookTemplateProperties(
+                priority is null && author is null && templateData is null && galleries is null ? default : new WorkbookTemplateProperties(
                     priority,
                     author,
                     templateData,
                     (galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>()).ToList(),
-                    localizedGalleries ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
+                    default,
                     default),
                 default);
         }
@@ -280,18 +280,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="author"> Information about the author of the workbook template. </param>
         /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
         /// <param name="galleries"> Workbook galleries supported by the template. </param>
-        /// <param name="localizedGalleries"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
+        /// <param name="localized"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsWorkbookTemplatePatch"/> instance for mocking. </returns>
-        public static ApplicationInsightsWorkbookTemplatePatch ApplicationInsightsWorkbookTemplatePatch(IDictionary<string, string> tags = default, int? priority = default, string author = default, BinaryData templateData = default, IEnumerable<WorkbookTemplateGallery> galleries = default, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries = default)
+        public static ApplicationInsightsWorkbookTemplatePatch ApplicationInsightsWorkbookTemplatePatch(IDictionary<string, string> tags = default, int? priority = default, string author = default, BinaryData templateData = default, IEnumerable<WorkbookTemplateGallery> galleries = default, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ApplicationInsightsWorkbookTemplatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), priority is null && author is null && templateData is null && galleries is null && localizedGalleries is null ? default : new WorkbookTemplateProperties(
+            return new ApplicationInsightsWorkbookTemplatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), priority is null && author is null && templateData is null && galleries is null && localized is null ? default : new WorkbookTemplateProperties(
                 priority,
                 author,
                 templateData,
                 (galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>()).ToList(),
-                localizedGalleries ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
+                localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
                 default), default);
         }
 

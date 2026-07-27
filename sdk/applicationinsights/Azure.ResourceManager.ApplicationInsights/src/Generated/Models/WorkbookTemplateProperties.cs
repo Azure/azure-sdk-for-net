@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
             TemplateData = templateData;
             Galleries = galleries.ToList();
-            LocalizedGalleries = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
+            Localized = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkbookTemplateProperties"/>. </summary>
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="author"> Information about the author of the workbook template. </param>
         /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
         /// <param name="galleries"> Workbook galleries supported by the template. </param>
-        /// <param name="localizedGalleries"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
+        /// <param name="localized"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkbookTemplateProperties(int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkbookTemplateProperties(int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Priority = priority;
             Author = author;
             TemplateData = templateData;
             Galleries = galleries;
-            LocalizedGalleries = localizedGalleries;
+            Localized = localized;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -93,6 +93,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </summary>
         [WirePath("localized")]
-        public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get; } = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
+        public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> Localized { get; } = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
     }
 }

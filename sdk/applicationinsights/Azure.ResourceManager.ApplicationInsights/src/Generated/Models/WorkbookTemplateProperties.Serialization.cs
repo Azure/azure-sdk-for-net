@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(LocalizedGalleries))
+            if (Optional.IsCollectionDefined(Localized))
             {
                 writer.WritePropertyName("localized"u8);
                 writer.WriteStartObject();
-                foreach (var item in LocalizedGalleries)
+                foreach (var item in Localized)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string author = default;
             BinaryData templateData = default;
             IList<WorkbookTemplateGallery> galleries = default;
-            IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries = default;
+            IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                             dictionary.Add(prop0.Name, array);
                         }
                     }
-                    localizedGalleries = dictionary;
+                    localized = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 author,
                 templateData,
                 galleries,
-                localizedGalleries ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
+                localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
                 additionalBinaryDataProperties);
         }
     }
