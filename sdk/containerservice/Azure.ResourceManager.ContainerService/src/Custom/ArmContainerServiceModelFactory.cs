@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="recentlyUsedVersions"> List of versions that the agent pool has recently been on. </param>
         /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
         /// <returns> A new <see cref="ContainerService.AgentPoolUpgradeProfileData"/> instance for mocking. </returns>
-        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, IEnumerable<AgentPoolRecentlyUsedVersion> recentlyUsedVersions, string latestNodeImageVersion)
+        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kubernetesVersion = null, ContainerServiceOSType osType = default, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = null, IEnumerable<AgentPoolRecentlyUsedVersion> recentlyUsedVersions = null, string latestNodeImageVersion = null)
         {
             return new AgentPoolUpgradeProfileData(
                 id,
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeSoakDurationInMinutes"> The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node. </param>
         /// <param name="undrainableNodeBehavior"> Defines the behavior for undrainable nodes during upgrade. </param>
         /// <returns> A new <see cref="Models.AgentPoolUpgradeSettings"/> instance for mocking. </returns>
-        public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge, string maxUnavailable, int? drainTimeoutInMinutes, int? nodeSoakDurationInMinutes, UndrainableNodeBehavior? undrainableNodeBehavior)
+        public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge = null, string maxUnavailable = null, int? drainTimeoutInMinutes = default, int? nodeSoakDurationInMinutes = default, UndrainableNodeBehavior? undrainableNodeBehavior = default)
         {
             return new AgentPoolUpgradeSettings(maxSurge, maxUnavailable, drainTimeoutInMinutes, nodeSoakDurationInMinutes, undrainableNodeBehavior, null);
         }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ContainerService.AgentPoolUpgradeProfileData"/>. </summary>
         /// <returns> A new <see cref="ContainerService.AgentPoolUpgradeProfileData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion)
+        public static AgentPoolUpgradeProfileData AgentPoolUpgradeProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kubernetesVersion = null, ContainerServiceOSType osType = default, IEnumerable<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = null, string latestNodeImageVersion = null)
         {
             return AgentPoolUpgradeProfileData(id, name, resourceType, systemData, kubernetesVersion, osType, upgrades, null, latestNodeImageVersion);
         }
