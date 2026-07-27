@@ -913,7 +913,7 @@ public class SampleEndToEndTests
     private static ResponsesClient CreateMockResponsesClient() =>
         new ResponsesClient(
             new ApiKeyCredential("unused-key"),
-            new OpenAIClientOptions
+            new ResponsesClientOptions
             {
                 Endpoint = new Uri("http://mock-openai-backend"),
                 Transport = new HttpClientPipelineTransport(

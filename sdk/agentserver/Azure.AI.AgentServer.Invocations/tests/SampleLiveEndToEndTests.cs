@@ -285,7 +285,7 @@ public class SampleLiveEndToEndTests
 
         return new ResponsesClient(
             new ApiKeyCredential(token.Token),
-            new OpenAIClientOptions { Endpoint = new Uri(OpenAIv1Base()) });
+            new ResponsesClientOptions { Endpoint = new Uri(OpenAIv1Base()) });
     }
 
     // Derives the Azure OpenAI v1-compatible base (`https://{host}/openai/v1`) from the

@@ -96,7 +96,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             new ResponsesClient(
                 new System.ClientModel.ApiKeyCredential(
                     Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "unused"),
-                new OpenAI.OpenAIClientOptions());
+                new OpenAI.Responses.ResponsesClientOptions());
 
         [Test]
         public void Implement_Handler()
