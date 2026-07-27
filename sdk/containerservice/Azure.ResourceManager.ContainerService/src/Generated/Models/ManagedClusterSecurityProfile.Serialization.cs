@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms, options);
             }
-            if (Optional.IsDefined(KubernetesResourceObjectEncryptionProfile))
-            {
-                writer.WritePropertyName("kubernetesResourceObjectEncryptionProfile"u8);
-                writer.WriteObjectValue(KubernetesResourceObjectEncryptionProfile, options);
-            }
             if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
@@ -99,25 +94,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner, options);
             }
-            if (Optional.IsDefined(ImageIntegrity))
-            {
-                writer.WritePropertyName("imageIntegrity"u8);
-                writer.WriteObjectValue(ImageIntegrity, options);
-            }
-            if (Optional.IsDefined(NodeRestriction))
-            {
-                writer.WritePropertyName("nodeRestriction"u8);
-                writer.WriteObjectValue(NodeRestriction, options);
-            }
             if (Optional.IsCollectionDefined(CustomCATrustCertificates))
             {
                 writer.WritePropertyName("customCATrustCertificates"u8);
                 SerializeCustomCATrustCertificates(writer, options);
-            }
-            if (Optional.IsDefined(ServiceAccountImagePullProfile))
-            {
-                writer.WritePropertyName("serviceAccountImagePullProfile"u8);
-                writer.WriteObjectValue(ServiceAccountImagePullProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,13 +143,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ManagedClusterSecurityProfileDefender defender = default;
             ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default;
-            KubernetesResourceObjectEncryptionProfile kubernetesResourceObjectEncryptionProfile = default;
             ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity = default;
             ManagedClusterSecurityProfileImageCleaner imageCleaner = default;
-            ManagedClusterSecurityProfileImageIntegrity imageIntegrity = default;
-            ManagedClusterSecurityProfileNodeRestriction nodeRestriction = default;
             IList<byte[]> customCATrustCertificates = default;
-            ServiceAccountImagePullProfile serviceAccountImagePullProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,15 +167,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("kubernetesResourceObjectEncryptionProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kubernetesResourceObjectEncryptionProfile = KubernetesResourceObjectEncryptionProfile.DeserializeKubernetesResourceObjectEncryptionProfile(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("workloadIdentity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -218,36 +185,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                     imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("imageIntegrity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    imageIntegrity = ManagedClusterSecurityProfileImageIntegrity.DeserializeManagedClusterSecurityProfileImageIntegrity(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("nodeRestriction"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeRestriction = ManagedClusterSecurityProfileNodeRestriction.DeserializeManagedClusterSecurityProfileNodeRestriction(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("customCATrustCertificates"u8))
                 {
                     DeserializeCustomCATrustCertificates(prop, ref customCATrustCertificates);
-                    continue;
-                }
-                if (prop.NameEquals("serviceAccountImagePullProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serviceAccountImagePullProfile = ServiceAccountImagePullProfile.DeserializeServiceAccountImagePullProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -258,13 +198,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterSecurityProfile(
                 defender,
                 azureKeyVaultKms,
-                kubernetesResourceObjectEncryptionProfile,
                 workloadIdentity,
                 imageCleaner,
-                imageIntegrity,
-                nodeRestriction,
                 customCATrustCertificates ?? new ChangeTrackingList<byte[]>(),
-                serviceAccountImagePullProfile,
                 additionalBinaryDataProperties);
         }
     }

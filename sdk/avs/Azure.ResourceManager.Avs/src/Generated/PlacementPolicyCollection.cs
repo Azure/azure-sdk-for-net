@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(PlacementPolicyResource.ResourceType, out string placementPolicyApiVersion);
             _placementPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", PlacementPolicyResource.ResourceType.Namespace, Diagnostics);
-            _placementPoliciesRestClient = new PlacementPolicies(_placementPoliciesClientDiagnostics, Pipeline, Endpoint, placementPolicyApiVersion ?? "2025-09-01");
+            _placementPoliciesRestClient = new PlacementPolicies(_placementPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, placementPolicyApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

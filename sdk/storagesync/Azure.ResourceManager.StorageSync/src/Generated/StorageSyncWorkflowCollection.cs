@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(StorageSyncWorkflowResource.ResourceType, out string storageSyncWorkflowApiVersion);
             _workflowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncWorkflowResource.ResourceType.Namespace, Diagnostics);
-            _workflowsRestClient = new Workflows(_workflowsClientDiagnostics, Pipeline, Endpoint, storageSyncWorkflowApiVersion ?? "2022-09-01");
+            _workflowsRestClient = new Workflows(_workflowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncWorkflowApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 

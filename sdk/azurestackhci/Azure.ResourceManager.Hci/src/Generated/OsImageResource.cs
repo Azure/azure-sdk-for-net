@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string osImageApiVersion);
             _osImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _osImagesRestClient = new OsImages(_osImagesClientDiagnostics, Pipeline, Endpoint, osImageApiVersion ?? "2026-05-01-preview");
+            _osImagesRestClient = new OsImages(_osImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, osImageApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

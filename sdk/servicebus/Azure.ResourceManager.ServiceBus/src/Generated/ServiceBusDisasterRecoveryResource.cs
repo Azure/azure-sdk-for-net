@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ResourceType, out string serviceBusDisasterRecoveryApiVersion);
             _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Endpoint, serviceBusDisasterRecoveryApiVersion ?? "2026-01-01");
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusDisasterRecoveryApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
