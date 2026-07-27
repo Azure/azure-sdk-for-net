@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using Azure.ResourceManager.Models;
 
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerProperties))]
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerConfidentialLedgerContext : ModelReaderWriterContext
     {
