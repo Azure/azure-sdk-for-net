@@ -12,31 +12,31 @@ using Azure.ResourceManager.ApplicationInsights;
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Properties that define an API key of an Application Insights Component. </summary>
-    public partial class ApplicationInsightsComponentAPIKey
+    public partial class ApplicationInsightsComponentApiKey
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAPIKey"/>. </summary>
-        internal ApplicationInsightsComponentAPIKey()
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentApiKey"/>. </summary>
+        internal ApplicationInsightsComponentApiKey()
         {
             LinkedReadProperties = new ChangeTrackingList<string>();
             LinkedWriteProperties = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAPIKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentApiKey"/>. </summary>
         /// <param name="id"> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </param>
         /// <param name="apiKey"> The API key value. It will be only return once when the API Key was created. </param>
-        /// <param name="createdDate"> The create date of this API key. </param>
+        /// <param name="createdOn"> The create date of this API key. </param>
         /// <param name="name"> The name of the API key. </param>
         /// <param name="linkedReadProperties"> The read access rights of this API Key. </param>
         /// <param name="linkedWriteProperties"> The write access rights of this API Key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentAPIKey(string id, string apiKey, string createdDate, string name, IList<string> linkedReadProperties, IList<string> linkedWriteProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentApiKey(string id, string apiKey, DateTimeOffset? createdOn, string name, IReadOnlyList<string> linkedReadProperties, IReadOnlyList<string> linkedWriteProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ApiKey = apiKey;
-            CreatedDate = createdDate;
+            CreatedOn = createdOn;
             Name = name;
             LinkedReadProperties = linkedReadProperties;
             LinkedWriteProperties = linkedWriteProperties;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> The create date of this API key. </summary>
         [WirePath("createdDate")]
-        public string CreatedDate { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The name of the API key. </summary>
         [WirePath("name")]
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> The read access rights of this API Key. </summary>
         [WirePath("linkedReadProperties")]
-        public IList<string> LinkedReadProperties { get; }
+        public IReadOnlyList<string> LinkedReadProperties { get; }
 
         /// <summary> The write access rights of this API Key. </summary>
         [WirePath("linkedWriteProperties")]
-        public IList<string> LinkedWriteProperties { get; }
+        public IReadOnlyList<string> LinkedWriteProperties { get; }
     }
 }

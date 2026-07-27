@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsAnnotation"/>. </summary>
         /// <param name="annotationName"> Name of annotation. </param>
         /// <param name="category"> Category of annotation, free form. </param>
-        /// <param name="eventOn"> Time when event occurred. </param>
+        /// <param name="eventOccurredOn"> Time when event occurred. </param>
         /// <param name="id"> Unique Id for annotation. </param>
         /// <param name="properties"> Serialized JSON object for detailed properties. </param>
         /// <param name="relatedAnnotation"> Related parent annotation if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsAnnotation(string annotationName, string category, DateTimeOffset? eventOn, string id, string properties, string relatedAnnotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsAnnotation(string annotationName, string category, DateTimeOffset? eventOccurredOn, string id, string properties, string relatedAnnotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AnnotationName = annotationName;
             Category = category;
-            EventOn = eventOn;
+            EventOccurredOn = eventOccurredOn;
             Id = id;
             Properties = properties;
             RelatedAnnotation = relatedAnnotation;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Time when event occurred. </summary>
         [WirePath("EventTime")]
-        public DateTimeOffset? EventOn { get; set; }
+        public DateTimeOffset? EventOccurredOn { get; set; }
 
         /// <summary> Unique Id for annotation. </summary>
         [WirePath("Id")]

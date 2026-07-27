@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> analyticsItems. </summary>
         private const string AnalyticsItemsValue = "analyticsItems";
         /// <summary> myanalyticsItems. </summary>
-        private const string MyanalyticsItemsValue = "myanalyticsItems";
+        private const string MyAnalyticsItemsValue = "myanalyticsItems";
 
         /// <summary> Initializes a new instance of <see cref="AnalyticsItemScopePath"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static AnalyticsItemScopePath AnalyticsItems { get; } = new AnalyticsItemScopePath(AnalyticsItemsValue);
 
         /// <summary> myanalyticsItems. </summary>
-        public static AnalyticsItemScopePath MyanalyticsItems { get; } = new AnalyticsItemScopePath(MyanalyticsItemsValue);
+        public static AnalyticsItemScopePath MyAnalyticsItems { get; } = new AnalyticsItemScopePath(MyAnalyticsItemsValue);
 
         /// <summary> Determines if two <see cref="AnalyticsItemScopePath"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

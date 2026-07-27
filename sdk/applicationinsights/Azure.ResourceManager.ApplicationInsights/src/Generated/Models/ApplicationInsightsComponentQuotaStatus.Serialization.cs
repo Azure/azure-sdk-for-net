@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("ShouldBeThrottled"u8);
                 writer.WriteBooleanValue(ShouldBeThrottled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("ExpirationTime"u8);
-                writer.WriteStringValue(ExpirationTime);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             string appId = default;
             bool? shouldBeThrottled = default;
-            string expirationTime = default;
+            DateTimeOffset? expireOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("ExpirationTime"u8))
                 {
-                    expirationTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +173,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expirationTime, additionalBinaryDataProperties);
+            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expireOn, additionalBinaryDataProperties);
         }
     }
 }

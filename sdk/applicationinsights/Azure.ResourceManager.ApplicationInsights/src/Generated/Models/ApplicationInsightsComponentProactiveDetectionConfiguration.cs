@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/>. </summary>
         /// <param name="name"> The rule name. </param>
-        /// <param name="enabled"> A flag that indicates whether this rule is enabled by the user. </param>
+        /// <param name="isEnabled"> A flag that indicates whether this rule is enabled by the user. </param>
         /// <param name="sendEmailsToSubscriptionOwners"> A flag that indicated whether notifications on this rule should be sent to subscription owners. </param>
         /// <param name="customEmails"> Custom email addresses for this rule notifications. </param>
-        /// <param name="lastUpdatedTime"> The last time this rule was updated. </param>
+        /// <param name="lastUpdatedOn"> The last time this rule was updated. </param>
         /// <param name="ruleDefinitions"> Static definitions of the ProactiveDetection configuration rule (same values for all components). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? enabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, string lastUpdatedTime, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentProactiveDetectionConfiguration(string name, bool? isEnabled, bool? sendEmailsToSubscriptionOwners, IList<string> customEmails, DateTimeOffset? lastUpdatedOn, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SendEmailsToSubscriptionOwners = sendEmailsToSubscriptionOwners;
             CustomEmails = customEmails;
-            LastUpdatedTime = lastUpdatedTime;
+            LastUpdatedOn = lastUpdatedOn;
             RuleDefinitions = ruleDefinitions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> A flag that indicates whether this rule is enabled by the user. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> A flag that indicated whether notifications on this rule should be sent to subscription owners. </summary>
         [WirePath("sendEmailsToSubscriptionOwners")]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> The last time this rule was updated. </summary>
         [WirePath("lastUpdatedTime")]
-        public string LastUpdatedTime { get; set; }
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary> Static definitions of the ProactiveDetection configuration rule (same values for all components). </summary>
         [WirePath("ruleDefinitions")]

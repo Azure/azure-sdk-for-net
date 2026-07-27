@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationType"> The Continuous Export destination type. This has to be 'Blob'. </param>
         /// <param name="destinationAddress"> The SAS URL for the destination storage container. It must grant write permission. </param>
         /// <param name="isEnabled"> Set to 'true' to create a Continuous Export configuration as enabled, otherwise set it to 'false'. </param>
-        /// <param name="notificationQueueEnabled"> Deprecated. </param>
+        /// <param name="isNotificationQueueEnabled"> Deprecated. </param>
         /// <param name="notificationQueueUri"> Deprecated. </param>
         /// <param name="destinationStorageSubscriptionId"> The subscription ID of the destination storage container. </param>
         /// <param name="destinationStorageLocationId"> The location ID of the destination storage container. </param>
         /// <param name="destinationAccountId"> The name of destination storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentExportContent(string recordTypes, string destinationType, string destinationAddress, string isEnabled, string notificationQueueEnabled, Uri notificationQueueUri, string destinationStorageSubscriptionId, string destinationStorageLocationId, ResourceIdentifier destinationAccountId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentExportContent(string recordTypes, string destinationType, string destinationAddress, string isEnabled, string isNotificationQueueEnabled, Uri notificationQueueUri, string destinationStorageSubscriptionId, string destinationStorageLocationId, ResourceIdentifier destinationAccountId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecordTypes = recordTypes;
             DestinationType = destinationType;
             DestinationAddress = destinationAddress;
             IsEnabled = isEnabled;
-            NotificationQueueEnabled = notificationQueueEnabled;
+            IsNotificationQueueEnabled = isNotificationQueueEnabled;
             NotificationQueueUri = notificationQueueUri;
             DestinationStorageSubscriptionId = destinationStorageSubscriptionId;
             DestinationStorageLocationId = destinationStorageLocationId;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Deprecated. </summary>
         [WirePath("NotificationQueueEnabled")]
-        public string NotificationQueueEnabled { get; set; }
+        public string IsNotificationQueueEnabled { get; set; }
 
         /// <summary> Deprecated. </summary>
         [WirePath("NotificationQueueUri")]

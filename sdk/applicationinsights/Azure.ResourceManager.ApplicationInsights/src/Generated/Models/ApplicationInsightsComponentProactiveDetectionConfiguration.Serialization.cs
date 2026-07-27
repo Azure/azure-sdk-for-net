@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
             {
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedTime))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
-                writer.WriteStringValue(LastUpdatedTime);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(RuleDefinitions))
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 return null;
             }
             string name = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             bool? sendEmailsToSubscriptionOwners = default;
             IList<string> customEmails = default;
-            string lastUpdatedTime = default;
+            DateTimeOffset? lastUpdatedOn = default;
             ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sendEmailsToSubscriptionOwners"u8))
@@ -230,7 +230,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("lastUpdatedTime"u8))
                 {
-                    lastUpdatedTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("ruleDefinitions"u8))
@@ -249,10 +253,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             return new ApplicationInsightsComponentProactiveDetectionConfiguration(
                 name,
-                enabled,
+                isEnabled,
                 sendEmailsToSubscriptionOwners,
                 customEmails ?? new ChangeTrackingList<string>(),
-                lastUpdatedTime,
+                lastUpdatedOn,
                 ruleDefinitions,
                 additionalBinaryDataProperties);
         }

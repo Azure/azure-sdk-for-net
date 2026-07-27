@@ -7,41 +7,47 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary> An Application Insights component definition. </summary>
-    public partial class ApplicationInsightsComponentData : ComponentsResource
+    public partial class ApplicationInsightsComponentData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="kind"/> is null. </exception>
-        public ApplicationInsightsComponentData(string location, string kind) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
+        public ApplicationInsightsComponentData(AzureLocation location, string kind) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <param name="properties"> Properties that define an Application Insights component resource. </param>
-        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string kind, string eTag, ApplicationInsightsComponentProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? eTag, ApplicationInsightsComponentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ETag = eTag;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </summary>
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Resource etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Properties that define an Application Insights component resource. </summary>
         [WirePath("properties")]
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Azure Tenant Id. </summary>
         [WirePath("properties.TenantId")]
-        public string TenantId
+        public Guid? TenantId
         {
             get
             {
@@ -259,11 +265,11 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Disable IP masking. </summary>
         [WirePath("properties.DisableIpMasking")]
-        public bool? DisableIpMasking
+        public bool? IsDisableIPMasking
         {
             get
             {
-                return Properties is null ? default : Properties.DisableIpMasking;
+                return Properties is null ? default : Properties.IsDisableIPMasking;
             }
             set
             {
@@ -271,17 +277,17 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     Properties = new ApplicationInsightsComponentProperties();
                 }
-                Properties.DisableIpMasking = value;
+                Properties.IsDisableIPMasking = value;
             }
         }
 
         /// <summary> Purge data immediately after 30 days. </summary>
         [WirePath("properties.ImmediatePurgeDataOn30Days")]
-        public bool? ImmediatePurgeDataOn30Days
+        public bool? IsImmediatePurgeDataOn30Days
         {
             get
             {
-                return Properties is null ? default : Properties.ImmediatePurgeDataOn30Days;
+                return Properties is null ? default : Properties.IsImmediatePurgeDataOn30Days;
             }
             set
             {
@@ -289,13 +295,13 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     Properties = new ApplicationInsightsComponentProperties();
                 }
-                Properties.ImmediatePurgeDataOn30Days = value;
+                Properties.IsImmediatePurgeDataOn30Days = value;
             }
         }
 
         /// <summary> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </summary>
         [WirePath("properties.WorkspaceResourceId")]
-        public string WorkspaceResourceId
+        public ResourceIdentifier WorkspaceResourceId
         {
             get
             {
@@ -391,11 +397,11 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Disable Non-AAD based Auth. </summary>
         [WirePath("properties.DisableLocalAuth")]
-        public bool? DisableLocalAuth
+        public bool? IsDisableLocalAuth
         {
             get
             {
-                return Properties is null ? default : Properties.DisableLocalAuth;
+                return Properties is null ? default : Properties.IsDisableLocalAuth;
             }
             set
             {
@@ -403,17 +409,17 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     Properties = new ApplicationInsightsComponentProperties();
                 }
-                Properties.DisableLocalAuth = value;
+                Properties.IsDisableLocalAuth = value;
             }
         }
 
         /// <summary> Force users to create their own storage account for profiler and debugger. </summary>
         [WirePath("properties.ForceCustomerStorageForProfiler")]
-        public bool? ForceCustomerStorageForProfiler
+        public bool? IsForceCustomerStorageForProfiler
         {
             get
             {
-                return Properties is null ? default : Properties.ForceCustomerStorageForProfiler;
+                return Properties is null ? default : Properties.IsForceCustomerStorageForProfiler;
             }
             set
             {
@@ -421,7 +427,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     Properties = new ApplicationInsightsComponentProperties();
                 }
-                Properties.ForceCustomerStorageForProfiler = value;
+                Properties.IsForceCustomerStorageForProfiler = value;
             }
         }
     }

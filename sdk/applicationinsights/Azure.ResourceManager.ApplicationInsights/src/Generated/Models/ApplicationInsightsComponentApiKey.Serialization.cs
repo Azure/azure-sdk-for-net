@@ -15,58 +15,58 @@ using Azure.ResourceManager.ApplicationInsights;
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Properties that define an API key of an Application Insights Component. </summary>
-    public partial class ApplicationInsightsComponentAPIKey : IJsonModel<ApplicationInsightsComponentAPIKey>
+    public partial class ApplicationInsightsComponentApiKey : IJsonModel<ApplicationInsightsComponentApiKey>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplicationInsightsComponentAPIKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ApplicationInsightsComponentApiKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAPIKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentApiKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationInsightsComponentAPIKey(document.RootElement, options);
+                        return DeserializeApplicationInsightsComponentApiKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAPIKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentApiKey)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAPIKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentApiKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAPIKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentApiKey)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationInsightsComponentAPIKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApplicationInsightsComponentApiKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationInsightsComponentAPIKey IPersistableModel<ApplicationInsightsComponentAPIKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApplicationInsightsComponentApiKey IPersistableModel<ApplicationInsightsComponentApiKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationInsightsComponentAPIKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApplicationInsightsComponentApiKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationInsightsComponentAPIKey"/> from. </param>
-        internal static ApplicationInsightsComponentAPIKey FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationInsightsComponentApiKey"/> from. </param>
+        internal static ApplicationInsightsComponentApiKey FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApplicationInsightsComponentAPIKey(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeApplicationInsightsComponentApiKey(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationInsightsComponentAPIKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApplicationInsightsComponentApiKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAPIKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAPIKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentApiKey)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Name))
             {
@@ -151,24 +151,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationInsightsComponentAPIKey IJsonModel<ApplicationInsightsComponentAPIKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApplicationInsightsComponentApiKey IJsonModel<ApplicationInsightsComponentApiKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplicationInsightsComponentAPIKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ApplicationInsightsComponentApiKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAPIKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAPIKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentApiKey)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationInsightsComponentAPIKey(document.RootElement, options);
+            return DeserializeApplicationInsightsComponentApiKey(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationInsightsComponentAPIKey DeserializeApplicationInsightsComponentAPIKey(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApplicationInsightsComponentApiKey DeserializeApplicationInsightsComponentApiKey(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             string id = default;
             string apiKey = default;
-            string createdDate = default;
+            DateTimeOffset? createdOn = default;
             string name = default;
-            IList<string> linkedReadProperties = default;
-            IList<string> linkedWriteProperties = default;
+            IReadOnlyList<string> linkedReadProperties = default;
+            IReadOnlyList<string> linkedWriteProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +195,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("createdDate"u8))
                 {
-                    createdDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -250,10 +254,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationInsightsComponentAPIKey(
+            return new ApplicationInsightsComponentApiKey(
                 id,
                 apiKey,
-                createdDate,
+                createdOn,
                 name,
                 linkedReadProperties ?? new ChangeTrackingList<string>(),
                 linkedWriteProperties ?? new ChangeTrackingList<string>(),

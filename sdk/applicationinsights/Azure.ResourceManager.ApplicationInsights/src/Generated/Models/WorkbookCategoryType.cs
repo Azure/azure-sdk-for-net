@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> workbook. </summary>
         private const string WorkbookValue = "workbook";
         /// <summary> TSG. </summary>
-        private const string TSGValue = "TSG";
+        private const string TsgValue = "TSG";
         /// <summary> performance. </summary>
         private const string PerformanceValue = "performance";
         /// <summary> retention. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static WorkbookCategoryType Workbook { get; } = new WorkbookCategoryType(WorkbookValue);
 
         /// <summary> TSG. </summary>
-        public static WorkbookCategoryType TSG { get; } = new WorkbookCategoryType(TSGValue);
+        public static WorkbookCategoryType Tsg { get; } = new WorkbookCategoryType(TsgValue);
 
         /// <summary> performance. </summary>
         public static WorkbookCategoryType Performance { get; } = new WorkbookCategoryType(PerformanceValue);

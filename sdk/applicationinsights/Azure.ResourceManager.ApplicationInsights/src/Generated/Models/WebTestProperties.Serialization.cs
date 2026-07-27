@@ -88,27 +88,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("Enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Frequency))
+            if (Optional.IsDefined(FrequencyInSeconds))
             {
                 writer.WritePropertyName("Frequency"u8);
-                writer.WriteNumberValue(Frequency.Value);
+                writer.WriteNumberValue(FrequencyInSeconds.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("Timeout"u8);
-                writer.WriteNumberValue(Timeout.Value);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("Kind"u8);
             writer.WriteStringValue(WebTestKind.ToSerialString());
-            if (Optional.IsDefined(RetryEnabled))
+            if (Optional.IsDefined(IsRetryEnabled))
             {
                 writer.WritePropertyName("RetryEnabled"u8);
-                writer.WriteBooleanValue(RetryEnabled.Value);
+                writer.WriteBooleanValue(IsRetryEnabled.Value);
             }
             writer.WritePropertyName("Locations"u8);
             writer.WriteStartArray();
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string syntheticMonitorId = default;
             string webTestName = default;
             string description = default;
-            bool? enabled = default;
-            int? frequency = default;
-            int? timeout = default;
+            bool? isEnabled = default;
+            int? frequencyInSeconds = default;
+            int? timeoutInSeconds = default;
             WebTestKind webTestKind = default;
-            bool? retryEnabled = default;
+            bool? isRetryEnabled = default;
             IList<WebTestGeolocation> locations = default;
             WebTestPropertiesConfiguration configuration = default;
             string provisioningState = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("Frequency"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    frequency = prop.Value.GetInt32();
+                    frequencyInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("Timeout"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    timeout = prop.Value.GetInt32();
+                    timeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("Kind"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    retryEnabled = prop.Value.GetBoolean();
+                    isRetryEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("Locations"u8))
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 syntheticMonitorId,
                 webTestName,
                 description,
-                enabled,
-                frequency,
-                timeout,
+                isEnabled,
+                frequencyInSeconds,
+                timeoutInSeconds,
                 webTestKind,
-                retryEnabled,
+                isRetryEnabled,
                 locations,
                 configuration,
                 provisioningState,

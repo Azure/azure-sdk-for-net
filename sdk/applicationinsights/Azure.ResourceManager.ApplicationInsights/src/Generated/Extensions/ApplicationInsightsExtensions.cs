@@ -151,36 +151,36 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <b>Gets an access token for live metrics stream data.</b>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetLiveTokenAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<LiveTokenResult>> GetAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static async Task<Response<LiveTokenResult>> GetLiveTokenAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableApplicationInsightsArmClient(client).GetAsync(scope, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApplicationInsightsArmClient(client).GetLiveTokenAsync(scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// <b>Gets an access token for live metrics stream data.</b>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.Get(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetLiveToken(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<LiveTokenResult> Get(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static Response<LiveTokenResult> GetLiveToken(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApplicationInsightsArmClient(client).Get(scope, cancellationToken);
+            return GetMockableApplicationInsightsArmClient(client).GetLiveToken(scope, cancellationToken);
         }
 
         /// <summary>

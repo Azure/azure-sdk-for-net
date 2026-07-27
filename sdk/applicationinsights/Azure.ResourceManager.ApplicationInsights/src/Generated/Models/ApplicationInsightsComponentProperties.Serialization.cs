@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("TenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(HockeyAppId))
             {
@@ -151,15 +152,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("RetentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Optional.IsDefined(DisableIpMasking))
+            if (Optional.IsDefined(IsDisableIPMasking))
             {
                 writer.WritePropertyName("DisableIpMasking"u8);
-                writer.WriteBooleanValue(DisableIpMasking.Value);
+                writer.WriteBooleanValue(IsDisableIPMasking.Value);
             }
-            if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
+            if (Optional.IsDefined(IsImmediatePurgeDataOn30Days))
             {
                 writer.WritePropertyName("ImmediatePurgeDataOn30Days"u8);
-                writer.WriteBooleanValue(ImmediatePurgeDataOn30Days.Value);
+                writer.WriteBooleanValue(IsImmediatePurgeDataOn30Days.Value);
             }
             if (Optional.IsDefined(WorkspaceResourceId))
             {
@@ -196,15 +197,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IngestionMode"u8);
                 writer.WriteStringValue(IngestionMode.Value.ToString());
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsDisableLocalAuth))
             {
                 writer.WritePropertyName("DisableLocalAuth"u8);
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsDisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(ForceCustomerStorageForProfiler))
+            if (Optional.IsDefined(IsForceCustomerStorageForProfiler))
             {
                 writer.WritePropertyName("ForceCustomerStorageForProfiler"u8);
-                writer.WriteBooleanValue(ForceCustomerStorageForProfiler.Value);
+                writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -256,23 +257,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ComponentRequestSource? requestSource = default;
             string instrumentationKey = default;
             DateTimeOffset? createdOn = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             string hockeyAppId = default;
             string hockeyAppToken = default;
             string provisioningState = default;
             double? samplingPercentage = default;
             string connectionString = default;
             int? retentionInDays = default;
-            bool? disableIpMasking = default;
-            bool? immediatePurgeDataOn30Days = default;
-            string workspaceResourceId = default;
+            bool? isDisableIPMasking = default;
+            bool? isImmediatePurgeDataOn30Days = default;
+            ResourceIdentifier workspaceResourceId = default;
             DateTimeOffset? laMigrationOn = default;
             IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources = default;
             ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default;
             ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default;
             ComponentIngestionMode? ingestionMode = default;
-            bool? disableLocalAuth = default;
-            bool? forceCustomerStorageForProfiler = default;
+            bool? isDisableLocalAuth = default;
+            bool? isForceCustomerStorageForProfiler = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -330,7 +331,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("TenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("HockeyAppId"u8))
@@ -377,7 +382,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    disableIpMasking = prop.Value.GetBoolean();
+                    isDisableIPMasking = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ImmediatePurgeDataOn30Days"u8))
@@ -386,12 +391,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    immediatePurgeDataOn30Days = prop.Value.GetBoolean();
+                    isImmediatePurgeDataOn30Days = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("WorkspaceResourceId"u8))
                 {
-                    workspaceResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workspaceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("LaMigrationDate"u8))
@@ -450,7 +459,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    disableLocalAuth = prop.Value.GetBoolean();
+                    isDisableLocalAuth = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ForceCustomerStorageForProfiler"u8))
@@ -459,7 +468,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    forceCustomerStorageForProfiler = prop.Value.GetBoolean();
+                    isForceCustomerStorageForProfiler = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -483,16 +492,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 samplingPercentage,
                 connectionString,
                 retentionInDays,
-                disableIpMasking,
-                immediatePurgeDataOn30Days,
+                isDisableIPMasking,
+                isImmediatePurgeDataOn30Days,
                 workspaceResourceId,
                 laMigrationOn,
                 privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceReference>(),
                 publicNetworkAccessForIngestion,
                 publicNetworkAccessForQuery,
                 ingestionMode,
-                disableLocalAuth,
-                forceCustomerStorageForProfiler,
+                isDisableLocalAuth,
+                isForceCustomerStorageForProfiler,
                 additionalBinaryDataProperties);
         }
     }

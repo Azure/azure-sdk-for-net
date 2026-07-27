@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("WarningThreshold"u8);
                 writer.WriteNumberValue(WarningThreshold.Value);
             }
-            if (Optional.IsDefined(StopSendNotificationWhenHitThreshold))
+            if (Optional.IsDefined(IsStopSendNotificationWhenHitThreshold))
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitThreshold"u8);
-                writer.WriteBooleanValue(StopSendNotificationWhenHitThreshold.Value);
+                writer.WriteBooleanValue(IsStopSendNotificationWhenHitThreshold.Value);
             }
-            if (Optional.IsDefined(StopSendNotificationWhenHitCap))
+            if (Optional.IsDefined(IsStopSendNotificationWhenHitCap))
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitCap"u8);
-                writer.WriteBooleanValue(StopSendNotificationWhenHitCap.Value);
+                writer.WriteBooleanValue(IsStopSendNotificationWhenHitCap.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxHistoryCap))
             {
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             float? cap = default;
             int? resetTime = default;
             int? warningThreshold = default;
-            bool? stopSendNotificationWhenHitThreshold = default;
-            bool? stopSendNotificationWhenHitCap = default;
+            bool? isStopSendNotificationWhenHitThreshold = default;
+            bool? isStopSendNotificationWhenHitCap = default;
             float? maxHistoryCap = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    stopSendNotificationWhenHitThreshold = prop.Value.GetBoolean();
+                    isStopSendNotificationWhenHitThreshold = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("StopSendNotificationWhenHitCap"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    stopSendNotificationWhenHitCap = prop.Value.GetBoolean();
+                    isStopSendNotificationWhenHitCap = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("MaxHistoryCap"u8))
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 cap,
                 resetTime,
                 warningThreshold,
-                stopSendNotificationWhenHitThreshold,
-                stopSendNotificationWhenHitCap,
+                isStopSendNotificationWhenHitThreshold,
+                isStopSendNotificationWhenHitCap,
                 maxHistoryCap,
                 additionalBinaryDataProperties);
         }

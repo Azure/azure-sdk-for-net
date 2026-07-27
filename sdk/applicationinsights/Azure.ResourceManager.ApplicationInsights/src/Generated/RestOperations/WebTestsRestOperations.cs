@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateGetByComponentRequest(string subscriptionId, string componentName, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateGetWebTestsRequest(string subscriptionId, string componentName, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetByComponentRequest(Uri nextPage, string subscriptionId, string componentName, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateNextGetWebTestsRequest(Uri nextPage, string subscriptionId, string componentName, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

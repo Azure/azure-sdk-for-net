@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="content"> Properties that need to be specified to create an API Key of an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> CreateApiKeyAsync(ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentApiKey>> CreateApiKeyAsync(ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 };
                 HttpMessage message = _apiKeysRestClient.CreateCreateApiKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplicationInsightsApiKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplicationInsightsComponentAPIKey> response = Response.FromValue(ApplicationInsightsComponentAPIKey.FromResponse(result), result);
+                Response<ApplicationInsightsComponentApiKey> response = Response.FromValue(ApplicationInsightsComponentApiKey.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1281,7 +1281,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="content"> Properties that need to be specified to create an API Key of an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ApplicationInsightsComponentAPIKey> CreateApiKey(ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentApiKey> CreateApiKey(ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1295,7 +1295,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 };
                 HttpMessage message = _apiKeysRestClient.CreateCreateApiKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplicationInsightsApiKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplicationInsightsComponentAPIKey> response = Response.FromValue(ApplicationInsightsComponentAPIKey.FromResponse(result), result);
+                Response<ApplicationInsightsComponentApiKey> response = Response.FromValue(ApplicationInsightsComponentApiKey.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1334,7 +1334,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> DeleteApiKeyAsync(string keyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentApiKey>> DeleteApiKeyAsync(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 };
                 HttpMessage message = _apiKeysRestClient.CreateDeleteApiKeyRequest(Id.ResourceGroupName, Id.SubscriptionId, Id.Name, keyId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplicationInsightsComponentAPIKey> response = Response.FromValue(ApplicationInsightsComponentAPIKey.FromResponse(result), result);
+                Response<ApplicationInsightsComponentApiKey> response = Response.FromValue(ApplicationInsightsComponentApiKey.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApplicationInsightsComponentAPIKey> DeleteApiKey(string keyId, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentApiKey> DeleteApiKey(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 };
                 HttpMessage message = _apiKeysRestClient.CreateDeleteApiKeyRequest(Id.ResourceGroupName, Id.SubscriptionId, Id.Name, keyId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplicationInsightsComponentAPIKey> response = Response.FromValue(ApplicationInsightsComponentAPIKey.FromResponse(result), result);
+                Response<ApplicationInsightsComponentApiKey> response = Response.FromValue(ApplicationInsightsComponentApiKey.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> GetApiKeyAsync(string keyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentApiKey>> GetApiKeyAsync(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
@@ -1454,7 +1454,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 };
                 HttpMessage message = _apiKeysRestClient.CreateGetApiKeyRequest(Id.ResourceGroupName, Id.SubscriptionId, Id.Name, keyId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplicationInsightsComponentAPIKey> response = Response.FromValue(ApplicationInsightsComponentAPIKey.FromResponse(result), result);
+                Response<ApplicationInsightsComponentApiKey> response = Response.FromValue(ApplicationInsightsComponentApiKey.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1493,7 +1493,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApplicationInsightsComponentAPIKey> GetApiKey(string keyId, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentApiKey> GetApiKey(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
@@ -1507,7 +1507,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 };
                 HttpMessage message = _apiKeysRestClient.CreateGetApiKeyRequest(Id.ResourceGroupName, Id.SubscriptionId, Id.Name, keyId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplicationInsightsComponentAPIKey> response = Response.FromValue(ApplicationInsightsComponentAPIKey.FromResponse(result), result);
+                Response<ApplicationInsightsComponentApiKey> response = Response.FromValue(ApplicationInsightsComponentApiKey.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1543,8 +1543,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentAPIKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationInsightsComponentAPIKey> GetApiKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentApiKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationInsightsComponentApiKey> GetApiKeysAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1581,8 +1581,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentAPIKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationInsightsComponentAPIKey> GetApiKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentApiKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationInsightsComponentApiKey> GetApiKeys(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -4200,19 +4200,19 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationInsightsComponentWebTestLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationInsightsComponentWebTestLocation> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WebTestLocationsGetAllAsyncCollectionResultOfT(
+            return new WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT(
                 _webTestLocationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ApplicationInsightsComponentResource.GetAll");
+                "ApplicationInsightsComponentResource.GetWebTestLocations");
         }
 
         /// <summary>
@@ -4238,19 +4238,19 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationInsightsComponentWebTestLocation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationInsightsComponentWebTestLocation> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WebTestLocationsGetAllCollectionResultOfT(
+            return new WebTestLocationsGetWebTestLocationsCollectionResultOfT(
                 _webTestLocationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ApplicationInsightsComponentResource.GetAll");
+                "ApplicationInsightsComponentResource.GetWebTestLocations");
         }
 
         /// <summary>
@@ -4276,19 +4276,19 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationInsightsWebTestResource> GetByComponentAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationInsightsWebTestResource> GetWebTestsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetByComponentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetWebTestsAsyncCollectionResultOfT(
                 _webTestsRestClient,
                 Id.SubscriptionId,
                 Id.Name,
                 Id.ResourceGroupName,
                 context,
-                "ApplicationInsightsComponentResource.GetByComponent"), data => new ApplicationInsightsWebTestResource(Client, data));
+                "ApplicationInsightsComponentResource.GetWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
@@ -4314,19 +4314,19 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationInsightsWebTestResource> GetByComponent(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationInsightsWebTestResource> GetWebTests(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetByComponentCollectionResultOfT(
+            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetWebTestsCollectionResultOfT(
                 _webTestsRestClient,
                 Id.SubscriptionId,
                 Id.Name,
                 Id.ResourceGroupName,
                 context,
-                "ApplicationInsightsComponentResource.GetByComponent"), data => new ApplicationInsightsWebTestResource(Client, data));
+                "ApplicationInsightsComponentResource.GetWebTests"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

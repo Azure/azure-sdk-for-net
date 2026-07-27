@@ -19,53 +19,55 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmApplicationInsightsModelFactory
     {
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </param>
         /// <param name="syntheticMonitorId"> Unique ID of this WebTest. This is typically the same value as the Name field. </param>
         /// <param name="webTestName"> User defined name if this WebTest. </param>
         /// <param name="description"> User defined description for this WebTest. </param>
-        /// <param name="enabled"> Is the test actively being monitored. </param>
-        /// <param name="frequency"> Interval in seconds between test runs for this WebTest. Default value is 300. </param>
-        /// <param name="timeout"> Seconds until this WebTest will timeout and fail. Default value is 30. </param>
+        /// <param name="isEnabled"> Is the test actively being monitored. </param>
+        /// <param name="frequencyInSeconds"> Interval in seconds between test runs for this WebTest. Default value is 300. </param>
+        /// <param name="timeoutInSeconds"> Seconds until this WebTest will timeout and fail. Default value is 30. </param>
         /// <param name="webTestKind"> The kind of web test this is, valid choices are ping, multistep and standard. </param>
-        /// <param name="retryEnabled"> Allow for retries should this WebTest fail. </param>
+        /// <param name="isRetryEnabled"> Allow for retries should this WebTest fail. </param>
         /// <param name="locations"> A list of where to physically run the tests from to give global coverage for accessibility of your application. </param>
         /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <param name="request"> The collection of request properties. </param>
         /// <param name="validationRules"> The collection of validation rule properties. </param>
         /// <param name="webTest"> The XML specification of a WebTest to run against an application. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/> instance for mocking. </returns>
-        public static ApplicationInsightsWebTestData ApplicationInsightsWebTestData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, WebTestKind? kind = default, string syntheticMonitorId = default, string webTestName = default, string description = default, bool? enabled = default, int? frequency = default, int? timeout = default, WebTestKind? webTestKind = default, bool? retryEnabled = default, IEnumerable<WebTestGeolocation> locations = default, string provisioningState = default, WebTestRequest request = default, WebTestValidationRules validationRules = default, string webTest = default)
+        public static ApplicationInsightsWebTestData ApplicationInsightsWebTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebTestKind? kind = default, string syntheticMonitorId = default, string webTestName = default, string description = default, bool? isEnabled = default, int? frequencyInSeconds = default, int? timeoutInSeconds = default, WebTestKind? webTestKind = default, bool? isRetryEnabled = default, IEnumerable<WebTestGeolocation> locations = default, string provisioningState = default, WebTestRequest request = default, WebTestValidationRules validationRules = default, string webTest = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ApplicationInsightsWebTestData(
                 id,
                 name,
-                @type,
-                location,
+                resourceType,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                location,
                 kind,
-                syntheticMonitorId is null && webTestName is null && description is null && enabled is null && frequency is null && timeout is null && webTestKind is null && retryEnabled is null && locations is null && webTest is null && provisioningState is null && request is null && validationRules is null ? default : new WebTestProperties(
+                syntheticMonitorId is null && webTestName is null && description is null && isEnabled is null && frequencyInSeconds is null && timeoutInSeconds is null && webTestKind is null && isRetryEnabled is null && locations is null && webTest is null && provisioningState is null && request is null && validationRules is null ? default : new WebTestProperties(
                     syntheticMonitorId,
                     webTestName,
                     description,
-                    enabled,
-                    frequency,
-                    timeout,
+                    isEnabled,
+                    frequencyInSeconds,
+                    timeoutInSeconds,
                     webTestKind.GetValueOrDefault(),
-                    retryEnabled,
+                    isRetryEnabled,
                     (locations ?? new ChangeTrackingList<WebTestGeolocation>()).ToList(),
                     new WebTestPropertiesConfiguration(webTest, default),
                     provisioningState,
                     request,
                     validationRules,
-                    default));
+                    default),
+                default);
         }
 
         /// <param name="location"> Location ID for the WebTest to run from. </param>
@@ -105,16 +107,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <param name="contentValidation"> The collection of content validation properties. </param>
-        /// <param name="sslCheck"> Checks to see if the SSL cert is still valid. </param>
+        /// <param name="checkSsl"> Checks to see if the SSL cert is still valid. </param>
         /// <param name="sslCertRemainingLifetimeCheck"> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </param>
         /// <param name="expectedHttpStatusCode"> Validate that the WebTest returns the http status code provided. </param>
         /// <param name="ignoreHttpStatusCode"> When set, validation will ignore the status code. </param>
         /// <returns> A new <see cref="Models.WebTestValidationRules"/> instance for mocking. </returns>
-        public static WebTestValidationRules WebTestValidationRules(WebTestContentValidation contentValidation = default, bool? sslCheck = default, int? sslCertRemainingLifetimeCheck = default, int? expectedHttpStatusCode = default, bool? ignoreHttpStatusCode = default)
+        public static WebTestValidationRules WebTestValidationRules(WebTestContentValidation contentValidation = default, bool? checkSsl = default, int? sslCertRemainingLifetimeCheck = default, int? expectedHttpStatusCode = default, bool? ignoreHttpStatusCode = default)
         {
             return new WebTestValidationRules(
                 contentValidation,
-                sslCheck,
+                checkSsl,
                 sslCertRemainingLifetimeCheck,
                 expectedHttpStatusCode,
                 ignoreHttpStatusCode,
@@ -128,25 +130,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static WebTestContentValidation WebTestContentValidation(string contentMatch = default, bool? ignoreCase = default, bool? passIfTextFound = default)
         {
             return new WebTestContentValidation(contentMatch, ignoreCase, passIfTextFound, default);
-        }
-
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.WebtestsResource"/> instance for mocking. </returns>
-        public static WebtestsResource WebtestsResource(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new WebtestsResource(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -167,7 +150,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
         /// <param name="serializedData"> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </param>
         /// <param name="version"> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this workbook definition. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this workbook definition. </param>
         /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
         /// <param name="tagsPropertiesTags"> Being deprecated, please use the other tags field. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this workbook. </param>
@@ -179,7 +162,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWorkbookData"/> instance for mocking. </returns>
-        public static ApplicationInsightsWorkbookData ApplicationInsightsWorkbookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string displayName = default, string serializedData = default, string version = default, DateTimeOffset? timeModified = default, string category = default, IEnumerable<string> tagsPropertiesTags = default, string userId = default, string sourceId = default, string storageUri = default, string description = default, string revision = default, WorkbookResourceIdentity identity = default, WorkbookSharedTypeKind? kind = default, string eTag = default)
+        public static ApplicationInsightsWorkbookData ApplicationInsightsWorkbookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string displayName = default, string serializedData = default, string version = default, DateTimeOffset? modifiedOn = default, string category = default, IEnumerable<string> tagsPropertiesTags = default, string userId = default, ResourceIdentifier sourceId = default, Uri storageUri = default, string description = default, string revision = default, ManagedServiceIdentity identity = default, WorkbookSharedTypeKind? kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -190,11 +173,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                displayName is null && serializedData is null && version is null && timeModified is null && category is null && tagsPropertiesTags is null && userId is null && sourceId is null && storageUri is null && description is null && revision is null ? default : new WorkbookProperties(
+                displayName is null && serializedData is null && version is null && modifiedOn is null && category is null && tagsPropertiesTags is null && userId is null && sourceId is null && storageUri is null && description is null && revision is null ? default : new WorkbookProperties(
                     displayName,
                     serializedData,
                     version,
-                    timeModified,
+                    modifiedOn,
                     category,
                     (tagsPropertiesTags ?? new ChangeTrackingList<string>()).ToList(),
                     userId,
@@ -207,12 +190,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 kind,
                 eTag,
                 default);
-        }
-
-        /// <returns> A new <see cref="Models.WorkbookResourceIdentity"/> instance for mocking. </returns>
-        public static WorkbookResourceIdentity WorkbookResourceIdentity()
-        {
-            return new WorkbookResourceIdentity(default);
         }
 
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
@@ -261,28 +238,28 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                priority is null && author is null && templateData is null && galleries is null ? default : new WorkbookTemplateProperties(
+                priority is null && author is null && templateData is null && galleries is null && localizedGalleries is null ? default : new WorkbookTemplateProperties(
                     priority,
                     author,
                     templateData,
                     (galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>()).ToList(),
-                    default,
+                    localizedGalleries ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
                     default),
                 default);
         }
 
         /// <param name="name"> Name of the workbook template in the gallery. </param>
         /// <param name="category"> Category for the gallery. </param>
-        /// <param name="type"> Type of workbook supported by the workbook template. </param>
+        /// <param name="workbookType"> Type of workbook supported by the workbook template. </param>
         /// <param name="order"> Order of the template within the gallery. </param>
         /// <param name="resourceType"> Azure resource type supported by the gallery. </param>
         /// <returns> A new <see cref="Models.WorkbookTemplateGallery"/> instance for mocking. </returns>
-        public static WorkbookTemplateGallery WorkbookTemplateGallery(string name = default, string category = default, string @type = default, int? order = default, string resourceType = default)
+        public static WorkbookTemplateGallery WorkbookTemplateGallery(string name = default, string category = default, string workbookType = default, int? order = default, string resourceType = default)
         {
             return new WorkbookTemplateGallery(
                 name,
                 category,
-                @type,
+                workbookType,
                 order,
                 resourceType,
                 default);
@@ -303,18 +280,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="author"> Information about the author of the workbook template. </param>
         /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
         /// <param name="galleries"> Workbook galleries supported by the template. </param>
-        /// <param name="localized"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
+        /// <param name="localizedGalleries"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsWorkbookTemplatePatch"/> instance for mocking. </returns>
-        public static ApplicationInsightsWorkbookTemplatePatch ApplicationInsightsWorkbookTemplatePatch(IDictionary<string, string> tags = default, int? priority = default, string author = default, BinaryData templateData = default, IEnumerable<WorkbookTemplateGallery> galleries = default, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default)
+        public static ApplicationInsightsWorkbookTemplatePatch ApplicationInsightsWorkbookTemplatePatch(IDictionary<string, string> tags = default, int? priority = default, string author = default, BinaryData templateData = default, IEnumerable<WorkbookTemplateGallery> galleries = default, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localizedGalleries = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ApplicationInsightsWorkbookTemplatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), priority is null && author is null && templateData is null && galleries is null && localized is null ? default : new WorkbookTemplateProperties(
+            return new ApplicationInsightsWorkbookTemplatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), priority is null && author is null && templateData is null && galleries is null && localizedGalleries is null ? default : new WorkbookTemplateProperties(
                 priority,
                 author,
                 templateData,
                 (galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>()).ToList(),
-                localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
+                localizedGalleries ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
                 default), default);
         }
 
@@ -323,12 +300,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="content"> The content of this item. </param>
         /// <param name="version"> This instance's version of the data model. This can change as new features are added. </param>
         /// <param name="scope"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
-        /// <param name="type"> Enum indicating the type of the Analytics item. </param>
-        /// <param name="timeCreated"> Date and time in UTC when this item was created. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this item. </param>
+        /// <param name="componentItemType"> Enum indicating the type of the Analytics item. </param>
+        /// <param name="createdOn"> Date and time in UTC when this item was created. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this item. </param>
         /// <param name="applicationInsightsComponentAnalyticsItemFunctionAlias"> A function alias, used when the type of the item is Function. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentAnalyticsItem"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = default, string name = default, string content = default, string version = default, ComponentItemScope? scope = default, ComponentItemType? @type = default, string timeCreated = default, string timeModified = default, string applicationInsightsComponentAnalyticsItemFunctionAlias = default)
+        public static ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = default, string name = default, string content = default, string version = default, ComponentItemScope? scope = default, ComponentItemType? componentItemType = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string applicationInsightsComponentAnalyticsItemFunctionAlias = default)
         {
             return new ApplicationInsightsComponentAnalyticsItem(
                 id,
@@ -336,26 +313,26 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 content,
                 version,
                 scope,
-                @type,
-                timeCreated,
-                timeModified,
+                componentItemType,
+                createdOn,
+                modifiedOn,
                 applicationInsightsComponentAnalyticsItemFunctionAlias is null ? default : new ApplicationInsightsComponentAnalyticsItemProperties(applicationInsightsComponentAnalyticsItemFunctionAlias, default),
                 default);
         }
 
         /// <param name="annotationName"> Name of annotation. </param>
         /// <param name="category"> Category of annotation, free form. </param>
-        /// <param name="eventOn"> Time when event occurred. </param>
+        /// <param name="eventOccurredOn"> Time when event occurred. </param>
         /// <param name="id"> Unique Id for annotation. </param>
         /// <param name="properties"> Serialized JSON object for detailed properties. </param>
         /// <param name="relatedAnnotation"> Related parent annotation if any. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsAnnotation"/> instance for mocking. </returns>
-        public static ApplicationInsightsAnnotation ApplicationInsightsAnnotation(string annotationName = default, string category = default, DateTimeOffset? eventOn = default, string id = default, string properties = default, string relatedAnnotation = default)
+        public static ApplicationInsightsAnnotation ApplicationInsightsAnnotation(string annotationName = default, string category = default, DateTimeOffset? eventOccurredOn = default, string id = default, string properties = default, string relatedAnnotation = default)
         {
             return new ApplicationInsightsAnnotation(
                 annotationName,
                 category,
-                eventOn,
+                eventOccurredOn,
                 id,
                 properties,
                 relatedAnnotation,
@@ -364,20 +341,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <param name="id"> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </param>
         /// <param name="apiKey"> The API key value. It will be only return once when the API Key was created. </param>
-        /// <param name="createdDate"> The create date of this API key. </param>
+        /// <param name="createdOn"> The create date of this API key. </param>
         /// <param name="name"> The name of the API key. </param>
         /// <param name="linkedReadProperties"> The read access rights of this API Key. </param>
         /// <param name="linkedWriteProperties"> The write access rights of this API Key. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsightsComponentAPIKey"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentAPIKey ApplicationInsightsComponentAPIKey(string id = default, string apiKey = default, string createdDate = default, string name = default, IEnumerable<string> linkedReadProperties = default, IEnumerable<string> linkedWriteProperties = default)
+        /// <returns> A new <see cref="Models.ApplicationInsightsComponentApiKey"/> instance for mocking. </returns>
+        public static ApplicationInsightsComponentApiKey ApplicationInsightsComponentApiKey(string id = default, string apiKey = default, DateTimeOffset? createdOn = default, string name = default, IEnumerable<string> linkedReadProperties = default, IEnumerable<string> linkedWriteProperties = default)
         {
             linkedReadProperties ??= new ChangeTrackingList<string>();
             linkedWriteProperties ??= new ChangeTrackingList<string>();
 
-            return new ApplicationInsightsComponentAPIKey(
+            return new ApplicationInsightsComponentApiKey(
                 id,
                 apiKey,
-                createdDate,
+                createdOn,
                 name,
                 (linkedReadProperties ?? new ChangeTrackingList<string>()).ToList(),
                 (linkedWriteProperties ?? new ChangeTrackingList<string>()).ToList(),
@@ -407,16 +384,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationAccountId"> The name of destination account. </param>
         /// <param name="destinationType"> The destination type. </param>
         /// <param name="isUserEnabled"> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </param>
-        /// <param name="lastUserUpdate"> Last time the Continuous Export configuration was updated. </param>
-        /// <param name="notificationQueueEnabled"> Deprecated. </param>
+        /// <param name="lastUserUpdatedOn"> Last time the Continuous Export configuration was updated. </param>
+        /// <param name="isNotificationQueueEnabled"> Deprecated. </param>
         /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </param>
-        /// <param name="lastSuccessTime"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
-        /// <param name="lastGapTime"> The last time the Continuous Export configuration started failing. </param>
+        /// <param name="lastSucceededOn"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
+        /// <param name="lastGappedOn"> The last time the Continuous Export configuration started failing. </param>
         /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </param>
         /// <param name="storageName"> The name of the destination storage account. </param>
         /// <param name="containerName"> The name of the destination storage container. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentExportConfiguration"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = default, string instrumentationKey = default, string recordTypes = default, string applicationName = default, string subscriptionId = default, string resourceGroup = default, string destinationStorageSubscriptionId = default, string destinationStorageLocationId = default, ResourceIdentifier destinationAccountId = default, string destinationType = default, string isUserEnabled = default, string lastUserUpdate = default, string notificationQueueEnabled = default, string exportStatus = default, string lastSuccessTime = default, string lastGapTime = default, string permanentErrorReason = default, string storageName = default, string containerName = default)
+        public static ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = default, string instrumentationKey = default, string recordTypes = default, string applicationName = default, string subscriptionId = default, string resourceGroup = default, string destinationStorageSubscriptionId = default, string destinationStorageLocationId = default, ResourceIdentifier destinationAccountId = default, string destinationType = default, string isUserEnabled = default, DateTimeOffset? lastUserUpdatedOn = default, string isNotificationQueueEnabled = default, string exportStatus = default, DateTimeOffset? lastSucceededOn = default, DateTimeOffset? lastGappedOn = default, string permanentErrorReason = default, string storageName = default, string containerName = default)
         {
             return new ApplicationInsightsComponentExportConfiguration(
                 exportId,
@@ -430,11 +407,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 destinationAccountId,
                 destinationType,
                 isUserEnabled,
-                lastUserUpdate,
-                notificationQueueEnabled,
+                lastUserUpdatedOn,
+                isNotificationQueueEnabled,
                 exportStatus,
-                lastSuccessTime,
-                lastGapTime,
+                lastSucceededOn,
+                lastGappedOn,
                 permanentErrorReason,
                 storageName,
                 containerName,
@@ -445,20 +422,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationType"> The Continuous Export destination type. This has to be 'Blob'. </param>
         /// <param name="destinationAddress"> The SAS URL for the destination storage container. It must grant write permission. </param>
         /// <param name="isEnabled"> Set to 'true' to create a Continuous Export configuration as enabled, otherwise set it to 'false'. </param>
-        /// <param name="notificationQueueEnabled"> Deprecated. </param>
+        /// <param name="isNotificationQueueEnabled"> Deprecated. </param>
         /// <param name="notificationQueueUri"> Deprecated. </param>
         /// <param name="destinationStorageSubscriptionId"> The subscription ID of the destination storage container. </param>
         /// <param name="destinationStorageLocationId"> The location ID of the destination storage container. </param>
         /// <param name="destinationAccountId"> The name of destination storage account. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentExportContent"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentExportContent ApplicationInsightsComponentExportContent(string recordTypes = default, string destinationType = default, string destinationAddress = default, string isEnabled = default, string notificationQueueEnabled = default, Uri notificationQueueUri = default, string destinationStorageSubscriptionId = default, string destinationStorageLocationId = default, ResourceIdentifier destinationAccountId = default)
+        public static ApplicationInsightsComponentExportContent ApplicationInsightsComponentExportContent(string recordTypes = default, string destinationType = default, string destinationAddress = default, string isEnabled = default, string isNotificationQueueEnabled = default, Uri notificationQueueUri = default, string destinationStorageSubscriptionId = default, string destinationStorageLocationId = default, ResourceIdentifier destinationAccountId = default)
         {
             return new ApplicationInsightsComponentExportContent(
                 recordTypes,
                 destinationType,
                 destinationAddress,
                 isEnabled,
-                notificationQueueEnabled,
+                isNotificationQueueEnabled,
                 notificationQueueUri,
                 destinationStorageSubscriptionId,
                 destinationStorageLocationId,
@@ -489,19 +466,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 cap,
                 resetTime,
                 warningThreshold,
-                default,
-                default,
+                isStopSendNotificationWhenHitThreshold,
+                isStopSendNotificationWhenHitCap,
                 maxHistoryCap,
                 default);
         }
 
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
-        /// <param name="expirationTime"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
+        /// <param name="expireOn"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentQuotaStatus"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentQuotaStatus ApplicationInsightsComponentQuotaStatus(string appId = default, bool? shouldBeThrottled = default, string expirationTime = default)
+        public static ApplicationInsightsComponentQuotaStatus ApplicationInsightsComponentQuotaStatus(string appId = default, bool? shouldBeThrottled = default, DateTimeOffset? expireOn = default)
         {
-            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expirationTime, default);
+            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expireOn, default);
         }
 
         /// <param name="isExportDataSupported"> Whether allow to use continuous export feature. </param>
@@ -524,7 +501,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static ApplicationInsightsComponentFeatureCapabilities ApplicationInsightsComponentFeatureCapabilities(bool? isExportDataSupported = default, string burstThrottlePolicy = default, string metadataClass = default, bool? liveStreamMetrics = default, bool? applicationMap = default, bool? workItemIntegration = default, bool? powerBIIntegration = default, bool? openSchema = default, bool? proactiveDetection = default, bool? analyticsIntegration = default, bool? multipleStepWebTest = default, string apiAccessLevel = default, string trackingType = default, float? dailyCap = default, float? dailyCapResetTime = default, float? throttleRate = default)
         {
             return new ApplicationInsightsComponentFeatureCapabilities(
-                default,
+                isExportDataSupported,
                 burstThrottlePolicy,
                 metadataClass,
                 liveStreamMetrics,
@@ -555,14 +532,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
         /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>
-        /// <param name="resouceId"> Reserved, not used now. </param>
+        /// <param name="resourceId"> Reserved, not used now. </param>
         /// <param name="isHidden"> Reserved, not used now. </param>
         /// <param name="capabilities"> A list of Application Insights component feature capability. </param>
         /// <param name="title"> Display name of the feature. </param>
         /// <param name="isMainFeature"> Whether can apply addon feature on to it. </param>
         /// <param name="supportedAddonFeatures"> The add on features on main feature. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentFeature"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentFeature ApplicationInsightsComponentFeature(string featureName = default, string meterId = default, string meterRateFrequency = default, string resouceId = default, bool? isHidden = default, IEnumerable<ApplicationInsightsComponentFeatureCapability> capabilities = default, string title = default, bool? isMainFeature = default, string supportedAddonFeatures = default)
+        public static ApplicationInsightsComponentFeature ApplicationInsightsComponentFeature(string featureName = default, string meterId = default, string meterRateFrequency = default, ResourceIdentifier resourceId = default, bool? isHidden = default, IEnumerable<ApplicationInsightsComponentFeatureCapability> capabilities = default, string title = default, bool? isMainFeature = default, string supportedAddonFeatures = default)
         {
             capabilities ??= new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>();
 
@@ -570,7 +547,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 featureName,
                 meterId,
                 meterRateFrequency,
-                resouceId,
+                resourceId,
                 isHidden,
                 (capabilities ?? new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>()).ToList(),
                 title,
@@ -599,22 +576,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <param name="name"> The rule name. </param>
-        /// <param name="enabled"> A flag that indicates whether this rule is enabled by the user. </param>
+        /// <param name="isEnabled"> A flag that indicates whether this rule is enabled by the user. </param>
         /// <param name="sendEmailsToSubscriptionOwners"> A flag that indicated whether notifications on this rule should be sent to subscription owners. </param>
         /// <param name="customEmails"> Custom email addresses for this rule notifications. </param>
-        /// <param name="lastUpdatedTime"> The last time this rule was updated. </param>
+        /// <param name="lastUpdatedOn"> The last time this rule was updated. </param>
         /// <param name="ruleDefinitions"> Static definitions of the ProactiveDetection configuration rule (same values for all components). </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentProactiveDetectionConfiguration"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentProactiveDetectionConfiguration ApplicationInsightsComponentProactiveDetectionConfiguration(string name = default, bool? enabled = default, bool? sendEmailsToSubscriptionOwners = default, IEnumerable<string> customEmails = default, string lastUpdatedTime = default, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions = default)
+        public static ApplicationInsightsComponentProactiveDetectionConfiguration ApplicationInsightsComponentProactiveDetectionConfiguration(string name = default, bool? isEnabled = default, bool? sendEmailsToSubscriptionOwners = default, IEnumerable<string> customEmails = default, DateTimeOffset? lastUpdatedOn = default, ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions = default)
         {
             customEmails ??= new ChangeTrackingList<string>();
 
             return new ApplicationInsightsComponentProactiveDetectionConfiguration(
                 name,
-                enabled,
+                isEnabled,
                 sendEmailsToSubscriptionOwners,
                 (customEmails ?? new ChangeTrackingList<string>()).ToList(),
-                lastUpdatedTime,
+                lastUpdatedOn,
                 ruleDefinitions,
                 default);
         }
@@ -626,9 +603,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isHidden"> A flag indicating whether the rule is hidden (from the UI). </param>
         /// <param name="isEnabledByDefault"> A flag indicating whether the rule is enabled by default. </param>
         /// <param name="isInPreview"> A flag indicating whether the rule is in preview. </param>
-        /// <param name="supportsEmailNotifications"> A flag indicating whether email notifications are supported for detections for this rule. </param>
+        /// <param name="isEmailNotificationsSupported"> A flag indicating whether email notifications are supported for detections for this rule. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name = default, string displayName = default, string description = default, Uri helpUri = default, bool? isHidden = default, bool? isEnabledByDefault = default, bool? isInPreview = default, bool? supportsEmailNotifications = default)
+        public static ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name = default, string displayName = default, string description = default, Uri helpUri = default, bool? isHidden = default, bool? isEnabledByDefault = default, bool? isInPreview = default, bool? isEmailNotificationsSupported = default)
         {
             return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(
                 name,
@@ -638,7 +615,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 isHidden,
                 isEnabledByDefault,
                 isInPreview,
-                supportsEmailNotifications,
+                isEmailNotificationsSupported,
                 default);
         }
 
@@ -661,14 +638,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <param name="connectorId"> Unique connector id. </param>
         /// <param name="connectorDataConfiguration"> Serialized JSON object for detailed properties. </param>
-        /// <param name="validateOnly"> Boolean indicating validate only. </param>
+        /// <param name="isValidateOnly"> Boolean indicating validate only. </param>
         /// <param name="workItemProperties"> Custom work item properties. </param>
         /// <returns> A new <see cref="Models.WorkItemCreateConfiguration"/> instance for mocking. </returns>
-        public static WorkItemCreateConfiguration WorkItemCreateConfiguration(string connectorId = default, string connectorDataConfiguration = default, bool? validateOnly = default, IDictionary<string, string> workItemProperties = default)
+        public static WorkItemCreateConfiguration WorkItemCreateConfiguration(string connectorId = default, string connectorDataConfiguration = default, bool? isValidateOnly = default, IDictionary<string, string> workItemProperties = default)
         {
             workItemProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new WorkItemCreateConfiguration(connectorId, connectorDataConfiguration, validateOnly, workItemProperties ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new WorkItemCreateConfiguration(connectorId, connectorDataConfiguration, isValidateOnly, workItemProperties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -695,13 +672,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ComponentLinkedStorageAccountsPatch(linkedStorageAccount is null ? default : new LinkedStorageAccountsProperties(linkedStorageAccount, default), default);
         }
 
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
-        /// <param name="eTag"> Resource etag. </param>
+        /// <param name="etag"> Resource etag. </param>
         /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
         /// <param name="appId"> Application Insights Unique ID for your Application. </param>
         /// <param name="namePropertiesName"> Application name. </param>
@@ -717,31 +695,31 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="samplingPercentage"> Percentage of the data produced by the application being monitored that is being sampled for Application Insights telemetry. </param>
         /// <param name="connectionString"> Application Insights component connection string. </param>
         /// <param name="retentionInDays"> Retention period in days. </param>
-        /// <param name="disableIpMasking"> Disable IP masking. </param>
-        /// <param name="immediatePurgeDataOn30Days"> Purge data immediately after 30 days. </param>
+        /// <param name="isDisableIPMasking"> Disable IP masking. </param>
+        /// <param name="isImmediatePurgeDataOn30Days"> Purge data immediately after 30 days. </param>
         /// <param name="workspaceResourceId"> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </param>
         /// <param name="laMigrationOn"> The date which the component got migrated to LA, in ISO 8601 format. </param>
         /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
         /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Application Insights ingestion. </param>
         /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Application Insights query. </param>
         /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
-        /// <param name="disableLocalAuth"> Disable Non-AAD based Auth. </param>
-        /// <param name="forceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
+        /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
+        /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsComponentData"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string kind = default, string eTag = default, string applicationId = default, string appId = default, string namePropertiesName = default, ApplicationInsightsApplicationType? applicationType = default, ComponentFlowType? flowType = default, ComponentRequestSource? requestSource = default, string instrumentationKey = default, DateTimeOffset? createdOn = default, string tenantId = default, string hockeyAppId = default, string hockeyAppToken = default, string provisioningState = default, double? samplingPercentage = default, string connectionString = default, int? retentionInDays = default, bool? disableIpMasking = default, bool? immediatePurgeDataOn30Days = default, string workspaceResourceId = default, DateTimeOffset? laMigrationOn = default, IEnumerable<PrivateLinkScopedResourceReference> privateLinkScopedResources = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, ComponentIngestionMode? ingestionMode = default, bool? disableLocalAuth = default, bool? forceCustomerStorageForProfiler = default)
+        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, ETag? etag = default, string applicationId = default, string appId = default, string namePropertiesName = default, ApplicationInsightsApplicationType? applicationType = default, ComponentFlowType? flowType = default, ComponentRequestSource? requestSource = default, string instrumentationKey = default, DateTimeOffset? createdOn = default, Guid? tenantId = default, string hockeyAppId = default, string hockeyAppToken = default, string provisioningState = default, double? samplingPercentage = default, string connectionString = default, int? retentionInDays = default, bool? isDisableIPMasking = default, bool? isImmediatePurgeDataOn30Days = default, ResourceIdentifier workspaceResourceId = default, DateTimeOffset? laMigrationOn = default, IEnumerable<PrivateLinkScopedResourceReference> privateLinkScopedResources = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, ComponentIngestionMode? ingestionMode = default, bool? isDisableLocalAuth = default, bool? isForceCustomerStorageForProfiler = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ApplicationInsightsComponentData(
                 id,
                 name,
-                @type,
-                location,
+                resourceType,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                location,
                 kind,
-                eTag,
-                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && createdOn is null && tenantId is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && disableIpMasking is null && immediatePurgeDataOn30Days is null && workspaceResourceId is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null && disableLocalAuth is null && forceCustomerStorageForProfiler is null ? default : new ApplicationInsightsComponentProperties(
+                etag,
+                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && createdOn is null && tenantId is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && isDisableIPMasking is null && isImmediatePurgeDataOn30Days is null && workspaceResourceId is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null && isDisableLocalAuth is null && isForceCustomerStorageForProfiler is null ? default : new ApplicationInsightsComponentProperties(
                     applicationId,
                     appId,
                     namePropertiesName,
@@ -757,17 +735,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     samplingPercentage,
                     connectionString,
                     retentionInDays,
-                    disableIpMasking,
-                    immediatePurgeDataOn30Days,
+                    isDisableIPMasking,
+                    isImmediatePurgeDataOn30Days,
                     workspaceResourceId,
                     laMigrationOn,
                     (privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceReference>()).ToList(),
                     publicNetworkAccessForIngestion,
                     publicNetworkAccessForQuery,
                     ingestionMode,
-                    disableLocalAuth,
-                    forceCustomerStorageForProfiler,
-                    default));
+                    isDisableLocalAuth,
+                    isForceCustomerStorageForProfiler,
+                    default),
+                default);
         }
 
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
@@ -776,25 +755,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static PrivateLinkScopedResourceReference PrivateLinkScopedResourceReference(ResourceIdentifier resourceId = default, string scopeId = default)
         {
             return new PrivateLinkScopedResourceReference(resourceId, scopeId, default);
-        }
-
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="type"> Azure resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ComponentsResource"/> instance for mocking. </returns>
-        public static ComponentsResource ComponentsResource(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ComponentsResource(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
         }
 
         /// <param name="table"> Table from which to purge data. </param>
@@ -911,13 +871,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="favoriteId"> Internally assigned unique id of the favorite definition. </param>
         /// <param name="favoriteType"> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
         /// <param name="sourceType"> The source of the favorite definition. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this favorite definition. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this favorite definition. </param>
         /// <param name="tags"> A list of 0 or more tags that are associated with this favorite definition. </param>
         /// <param name="category"> Favorite category, as defined by the user at creation time. </param>
         /// <param name="isGeneratedFromTemplate"> Flag denoting wether or not this favorite was generated from a template. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this favorite. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentFavorite"/> instance for mocking. </returns>
-        public static ApplicationInsightsComponentFavorite ApplicationInsightsComponentFavorite(string name = default, string config = default, string version = default, string favoriteId = default, ComponentFavoriteType? favoriteType = default, string sourceType = default, string timeModified = default, IEnumerable<string> tags = default, string category = default, bool? isGeneratedFromTemplate = default, string userId = default)
+        public static ApplicationInsightsComponentFavorite ApplicationInsightsComponentFavorite(string name = default, string config = default, string version = default, string favoriteId = default, ComponentFavoriteType? favoriteType = default, string sourceType = default, DateTimeOffset? modifiedOn = default, IEnumerable<string> tags = default, string category = default, bool? isGeneratedFromTemplate = default, string userId = default)
         {
             tags ??= new ChangeTrackingList<string>();
 
@@ -928,7 +888,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 favoriteId,
                 favoriteType,
                 sourceType,
-                timeModified,
+                modifiedOn,
                 (tags ?? new ChangeTrackingList<string>()).ToList(),
                 category,
                 isGeneratedFromTemplate,
@@ -949,198 +909,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static ApplicationInsightsComponentWebTestLocation ApplicationInsightsComponentWebTestLocation(string displayName = default, string tag = default)
         {
             return new ApplicationInsightsComponentWebTestLocation(displayName, tag, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsComponentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
-        /// <param name="etag"> Resource etag. </param>
-        /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
-        /// <param name="appId"> Application Insights Unique ID for your Application. </param>
-        /// <param name="namePropertiesName"> Application name. </param>
-        /// <param name="applicationType"> Type of application being monitored. </param>
-        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </param>
-        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </param>
-        /// <param name="instrumentationKey"> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </param>
-        /// <param name="createdOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
-        /// <param name="tenantId"> Azure Tenant Id. </param>
-        /// <param name="hockeyAppId"> The unique application ID created when a new application is added to HockeyApp, used for communications with HockeyApp. </param>
-        /// <param name="hockeyAppToken"> Token used to authenticate communications with between Application Insights and HockeyApp. </param>
-        /// <param name="provisioningState"> Current state of this component: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
-        /// <param name="samplingPercentage"> Percentage of the data produced by the application being monitored that is being sampled for Application Insights telemetry. </param>
-        /// <param name="connectionString"> Application Insights component connection string. </param>
-        /// <param name="retentionInDays"> Retention period in days. </param>
-        /// <param name="isDisableIPMasking"> Disable IP masking. </param>
-        /// <param name="isImmediatePurgeDataOn30Days"> Purge data immediately after 30 days. </param>
-        /// <param name="workspaceResourceId"> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </param>
-        /// <param name="laMigrationOn"> The date which the component got migrated to LA, in ISO 8601 format. </param>
-        /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
-        /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Application Insights ingestion. </param>
-        /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Application Insights query. </param>
-        /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
-        /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
-        /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
-        /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsComponentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsComponentData ApplicationInsightsComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, ETag? etag = default, string applicationId = default, string appId = default, string namePropertiesName = default, ApplicationInsightsApplicationType? applicationType = default, ComponentFlowType? flowType = default, ComponentRequestSource? requestSource = default, string instrumentationKey = default, DateTimeOffset? createdOn = default, Guid? tenantId = default, string hockeyAppId = default, string hockeyAppToken = default, string provisioningState = default, double? samplingPercentage = default, string connectionString = default, int? retentionInDays = default, bool? isDisableIPMasking = default, bool? isImmediatePurgeDataOn30Days = default, ResourceIdentifier workspaceResourceId = default, DateTimeOffset? laMigrationOn = default, IEnumerable<PrivateLinkScopedResourceReference> privateLinkScopedResources = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, ComponentIngestionMode? ingestionMode = default, bool? isDisableLocalAuth = default, bool? isForceCustomerStorageForProfiler = default)
-        {
-            return new ApplicationInsightsComponentData(
-                id,
-                name,
-                default,
-                default,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                kind,
-                default,
-                applicationId is null && appId is null && namePropertiesName is null && applicationType is null && flowType is null && requestSource is null && instrumentationKey is null && createdOn is null && hockeyAppId is null && hockeyAppToken is null && provisioningState is null && samplingPercentage is null && connectionString is null && retentionInDays is null && laMigrationOn is null && privateLinkScopedResources is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && ingestionMode is null ? default : new ApplicationInsightsComponentProperties(
-                    applicationId,
-                    appId,
-                    namePropertiesName,
-                    applicationType.GetValueOrDefault(),
-                    flowType,
-                    requestSource,
-                    instrumentationKey,
-                    createdOn,
-                    default,
-                    hockeyAppId,
-                    hockeyAppToken,
-                    provisioningState,
-                    samplingPercentage,
-                    connectionString,
-                    retentionInDays,
-                    default,
-                    default,
-                    default,
-                    laMigrationOn,
-                    (privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceReference>()).ToList(),
-                    publicNetworkAccessForIngestion,
-                    publicNetworkAccessForQuery,
-                    ingestionMode,
-                    default,
-                    default,
-                    default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentExportConfiguration"/>. </summary>
-        /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
-        /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
-        /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
-        /// <param name="applicationName"> The name of the Application Insights component. </param>
-        /// <param name="subscriptionId"> The subscription of the Application Insights component. </param>
-        /// <param name="resourceGroup"> The resource group of the Application Insights component. </param>
-        /// <param name="destinationStorageSubscriptionId"> The destination storage account subscription ID. </param>
-        /// <param name="destinationStorageLocationId"> The destination account location ID. </param>
-        /// <param name="destinationAccountId"> The name of destination account. </param>
-        /// <param name="destinationType"> The destination type. </param>
-        /// <param name="isUserEnabled"> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </param>
-        /// <param name="lastUserUpdatedOn"> Last time the Continuous Export configuration was updated. </param>
-        /// <param name="isNotificationQueueEnabled"> Deprecated. </param>
-        /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </param>
-        /// <param name="lastSucceededOn"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
-        /// <param name="lastGappedOn"> The last time the Continuous Export configuration started failing. </param>
-        /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </param>
-        /// <param name="storageName"> The name of the destination storage account. </param>
-        /// <param name="containerName"> The name of the destination storage container. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsightsComponentExportConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = default, string instrumentationKey = default, string recordTypes = default, string applicationName = default, string subscriptionId = default, string resourceGroup = default, string destinationStorageSubscriptionId = default, string destinationStorageLocationId = default, ResourceIdentifier destinationAccountId = default, string destinationType = default, string isUserEnabled = default, DateTimeOffset? lastUserUpdatedOn = default, string isNotificationQueueEnabled = default, string exportStatus = default, DateTimeOffset? lastSucceededOn = default, DateTimeOffset? lastGappedOn = default, string permanentErrorReason = default, string storageName = default, string containerName = default)
-        {
-            return new ApplicationInsightsComponentExportConfiguration(
-                exportId,
-                instrumentationKey,
-                recordTypes,
-                applicationName,
-                subscriptionId,
-                resourceGroup,
-                destinationStorageSubscriptionId,
-                destinationStorageLocationId,
-                destinationAccountId,
-                destinationType,
-                isUserEnabled,
-                default,
-                default,
-                exportStatus,
-                default,
-                default,
-                permanentErrorReason,
-                storageName,
-                containerName,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentQuotaStatus"/>. </summary>
-        /// <param name="appId"> The Application ID for the Application Insights component. </param>
-        /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
-        /// <param name="expireOn"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsightsComponentQuotaStatus"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsComponentQuotaStatus ApplicationInsightsComponentQuotaStatus(string appId = default, bool? shouldBeThrottled = default, DateTimeOffset? expireOn = default)
-        {
-            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, default, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFeature"/>. </summary>
-        /// <param name="featureName"> The pricing feature name. </param>
-        /// <param name="meterId"> The meter id used for the feature. </param>
-        /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>
-        /// <param name="resourceId"> Reserved, not used now. </param>
-        /// <param name="isHidden"> Reserved, not used now. </param>
-        /// <param name="capabilities"> A list of Application Insights component feature capability. </param>
-        /// <param name="title"> Display name of the feature. </param>
-        /// <param name="isMainFeature"> Whether can apply addon feature on to it. </param>
-        /// <param name="supportedAddonFeatures"> The add on features on main feature. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsightsComponentFeature"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsComponentFeature ApplicationInsightsComponentFeature(string featureName = default, string meterId = default, string meterRateFrequency = default, ResourceIdentifier resourceId = default, bool? isHidden = default, IEnumerable<ApplicationInsightsComponentFeatureCapability> capabilities = default, string title = default, bool? isMainFeature = default, string supportedAddonFeatures = default)
-        {
-            return new ApplicationInsightsComponentFeature(
-                featureName,
-                meterId,
-                meterRateFrequency,
-                default,
-                isHidden,
-                (capabilities ?? new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>()).ToList(),
-                title,
-                isMainFeature,
-                supportedAddonFeatures,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFavorite"/>. </summary>
-        /// <param name="name"> The user-defined name of the favorite. </param>
-        /// <param name="config"> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
-        /// <param name="favoriteId"> Internally assigned unique id of the favorite definition. </param>
-        /// <param name="favoriteType"> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
-        /// <param name="sourceType"> The source of the favorite definition. </param>
-        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this favorite definition. </param>
-        /// <param name="tags"> A list of 0 or more tags that are associated with this favorite definition. </param>
-        /// <param name="category"> Favorite category, as defined by the user at creation time. </param>
-        /// <param name="isGeneratedFromTemplate"> Flag denoting wether or not this favorite was generated from a template. </param>
-        /// <param name="userId"> Unique user id of the specific user that owns this favorite. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsightsComponentFavorite"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsComponentFavorite ApplicationInsightsComponentFavorite(string name = default, string config = default, string version = default, string favoriteId = default, ComponentFavoriteType? favoriteType = default, string sourceType = default, DateTimeOffset? modifiedOn = default, IEnumerable<string> tags = default, string category = default, bool? isGeneratedFromTemplate = default, string userId = default)
-        {
-            return new ApplicationInsightsComponentFavorite(
-                name,
-                config,
-                version,
-                favoriteId,
-                favoriteType,
-                sourceType,
-                default,
-                (tags ?? new ChangeTrackingList<string>()).ToList(),
-                category,
-                isGeneratedFromTemplate,
-                userId,
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/>. </summary>
@@ -1171,52 +939,26 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsWebTestData(
                 id,
                 name,
-                default,
-                default,
+                resourceType,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                location,
                 kind,
-                syntheticMonitorId is null && webTestName is null && description is null && webTestKind is null && locations is null && webTest is null && provisioningState is null && request is null && validationRules is null ? default : new WebTestProperties(
+                syntheticMonitorId is null && webTestName is null && description is null && isEnabled is null && frequencyInSeconds is null && timeoutInSeconds is null && webTestKind is null && isRetryEnabled is null && locations is null && webTest is null && provisioningState is null && request is null && validationRules is null ? default : new WebTestProperties(
                     syntheticMonitorId,
                     webTestName,
                     description,
-                    default,
-                    default,
-                    default,
+                    isEnabled,
+                    frequencyInSeconds,
+                    timeoutInSeconds,
                     webTestKind.GetValueOrDefault(),
-                    default,
+                    isRetryEnabled,
                     (locations ?? new ChangeTrackingList<WebTestGeolocation>()).ToList(),
                     new WebTestPropertiesConfiguration(webTest, default),
                     provisioningState,
                     request,
                     validationRules,
-                    default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentAnalyticsItem"/>. </summary>
-        /// <param name="id"> Internally assigned unique id of the item definition. </param>
-        /// <param name="name"> The user-defined name of the item. </param>
-        /// <param name="content"> The content of this item. </param>
-        /// <param name="version"> This instance's version of the data model. This can change as new features are added. </param>
-        /// <param name="scope"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
-        /// <param name="componentItemType"> Enum indicating the type of the Analytics item. </param>
-        /// <param name="createdOn"> Date and time in UTC when this item was created. </param>
-        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this item. </param>
-        /// <param name="applicationInsightsComponentAnalyticsItemFunctionAlias"> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsightsComponentAnalyticsItem"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = default, string name = default, string content = default, string version = default, ComponentItemScope? scope = default, ComponentItemType? componentItemType = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string applicationInsightsComponentAnalyticsItemFunctionAlias = default)
-        {
-            return new ApplicationInsightsComponentAnalyticsItem(
-                id,
-                name,
-                content,
-                version,
-                scope,
-                default,
-                default,
-                default,
-                applicationInsightsComponentAnalyticsItemFunctionAlias is null ? default : new ApplicationInsightsComponentAnalyticsItemProperties(applicationInsightsComponentAnalyticsItemFunctionAlias, default),
+                    default),
                 default);
         }
 
@@ -1251,22 +993,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                displayName is null && serializedData is null && version is null && category is null && userId is null && description is null && revision is null ? default : new WorkbookProperties(
+                displayName is null && serializedData is null && version is null && modifiedOn is null && category is null && userId is null && sourceId is null && storageUri is null && description is null && revision is null ? default : new WorkbookProperties(
                     displayName,
                     serializedData,
                     version,
-                    default,
+                    modifiedOn,
                     category,
                     default,
                     userId,
-                    default,
-                    default,
+                    sourceId,
+                    storageUri,
                     description,
                     revision,
                     default),
-                default,
+                identity,
                 kind,
-                default,
+                etag,
                 default);
         }
     }

@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportExportData))
+            if (options.Format != "W" && Optional.IsDefined(IsExportDataSupported))
             {
                 writer.WritePropertyName("SupportExportData"u8);
-                writer.WriteBooleanValue(SupportExportData.Value);
+                writer.WriteBooleanValue(IsExportDataSupported.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BurstThrottlePolicy))
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            bool? supportExportData = default;
+            bool? isExportDataSupported = default;
             string burstThrottlePolicy = default;
             string metadataClass = default;
             bool? liveStreamMetrics = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    supportExportData = prop.Value.GetBoolean();
+                    isExportDataSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("BurstThrottlePolicy"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             return new ApplicationInsightsComponentFeatureCapabilities(
-                supportExportData,
+                isExportDataSupported,
                 burstThrottlePolicy,
                 metadataClass,
                 liveStreamMetrics,

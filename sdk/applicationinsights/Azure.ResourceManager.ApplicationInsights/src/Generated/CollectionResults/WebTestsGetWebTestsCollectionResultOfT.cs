@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class WebTestsGetByComponentCollectionResultOfT : Pageable<ApplicationInsightsWebTestData>
+    internal partial class WebTestsGetWebTestsCollectionResultOfT : Pageable<ApplicationInsightsWebTestData>
     {
         private readonly WebTests _client;
         private readonly string _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of WebTestsGetByComponentCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of WebTestsGetWebTestsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The WebTests client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="componentName"> The name of the Application Insights component resource. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WebTestsGetByComponentCollectionResultOfT(WebTests client, string subscriptionId, string componentName, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WebTestsGetWebTestsCollectionResultOfT(WebTests client, string subscriptionId, string componentName, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of WebTestsGetByComponentCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of WebTestsGetWebTestsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WebTestsGetByComponentCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of WebTestsGetWebTestsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ApplicationInsightsWebTestData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByComponentRequest(nextLink, _subscriptionId, _componentName, _resourceGroupName, _context) : _client.CreateGetByComponentRequest(_subscriptionId, _componentName, _resourceGroupName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWebTestsRequest(nextLink, _subscriptionId, _componentName, _resourceGroupName, _context) : _client.CreateGetWebTestsRequest(_subscriptionId, _componentName, _resourceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

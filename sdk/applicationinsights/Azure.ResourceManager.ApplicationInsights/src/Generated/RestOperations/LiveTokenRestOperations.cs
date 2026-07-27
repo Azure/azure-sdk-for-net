@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string resourceUri, RequestContext context)
+        internal HttpMessage CreateGetLiveTokenRequest(string resourceUri, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

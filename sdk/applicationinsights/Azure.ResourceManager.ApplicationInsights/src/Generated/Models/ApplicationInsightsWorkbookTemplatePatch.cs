@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </summary>
         [WirePath("properties.localized")]
-        public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> Localized
+        public IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 {
                     Properties = new WorkbookTemplateProperties();
                 }
-                return Properties.Localized;
+                return Properties.LocalizedGalleries;
             }
         }
     }

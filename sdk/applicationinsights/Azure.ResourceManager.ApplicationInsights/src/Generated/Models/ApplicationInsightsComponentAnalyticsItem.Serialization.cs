@@ -118,20 +118,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ComponentItemType))
             {
                 writer.WritePropertyName("Type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ComponentItemType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("TimeCreated"u8);
-                writer.WriteStringValue(TimeCreated);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("TimeModified"u8);
-                writer.WriteStringValue(TimeModified);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string content = default;
             string version = default;
             ComponentItemScope? scope = default;
-            ComponentItemType? @type = default;
-            string timeCreated = default;
-            string timeModified = default;
+            ComponentItemType? componentItemType = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
             ApplicationInsightsComponentAnalyticsItemProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -227,17 +227,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    @type = new ComponentItemType(prop.Value.GetString());
+                    componentItemType = new ComponentItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("TimeCreated"u8))
                 {
-                    timeCreated = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("TimeModified"u8))
                 {
-                    timeModified = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("Properties"u8))
@@ -260,9 +268,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 content,
                 version,
                 scope,
-                @type,
-                timeCreated,
-                timeModified,
+                componentItemType,
+                createdOn,
+                modifiedOn,
                 properties,
                 additionalBinaryDataProperties);
         }

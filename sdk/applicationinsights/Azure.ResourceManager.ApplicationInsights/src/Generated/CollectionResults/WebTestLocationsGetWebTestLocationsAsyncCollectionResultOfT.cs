@@ -15,37 +15,37 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class WebTestsGetByComponentAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsWebTestData>
+    internal partial class WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsComponentWebTestLocation>
     {
-        private readonly WebTests _client;
+        private readonly WebTestLocations _client;
         private readonly string _subscriptionId;
-        private readonly string _componentName;
         private readonly string _resourceGroupName;
+        private readonly string _resourceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of WebTestsGetByComponentAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The WebTests client used to send requests. </param>
+        /// <summary> Initializes a new instance of WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The WebTestLocations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="componentName"> The name of the Application Insights component resource. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WebTestsGetByComponentAsyncCollectionResultOfT(WebTests client, string subscriptionId, string componentName, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT(WebTestLocations client, string subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _componentName = componentName;
             _resourceGroupName = resourceGroupName;
+            _resourceName = resourceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of WebTestsGetByComponentAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WebTestsGetByComponentAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApplicationInsightsWebTestData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of WebTestLocationsGetWebTestLocationsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ApplicationInsightsComponentWebTestLocation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,9 +55,10 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     yield break;
                 }
-                WebTestListResult result = WebTestListResult.FromResponse(response);
-                nextPage = result.NextLink;
-                yield return Page<ApplicationInsightsWebTestData>.FromValues((IReadOnlyList<ApplicationInsightsWebTestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ApplicationInsightsWebTestLocationsListResult result = ApplicationInsightsWebTestLocationsListResult.FromResponse(response);
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<ApplicationInsightsComponentWebTestLocation>.FromValues((IReadOnlyList<ApplicationInsightsComponentWebTestLocation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByComponentRequest(nextLink, _subscriptionId, _componentName, _resourceGroupName, _context) : _client.CreateGetByComponentRequest(_subscriptionId, _componentName, _resourceGroupName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWebTestLocationsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetWebTestLocationsRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

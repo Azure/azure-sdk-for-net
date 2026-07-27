@@ -138,30 +138,30 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsUserEnabled"u8);
                 writer.WriteStringValue(IsUserEnabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUserUpdate))
+            if (options.Format != "W" && Optional.IsDefined(LastUserUpdatedOn))
             {
                 writer.WritePropertyName("LastUserUpdate"u8);
-                writer.WriteStringValue(LastUserUpdate);
+                writer.WriteStringValue(LastUserUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationQueueEnabled))
+            if (Optional.IsDefined(IsNotificationQueueEnabled))
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
-                writer.WriteStringValue(NotificationQueueEnabled);
+                writer.WriteStringValue(IsNotificationQueueEnabled);
             }
             if (options.Format != "W" && Optional.IsDefined(ExportStatus))
             {
                 writer.WritePropertyName("ExportStatus"u8);
                 writer.WriteStringValue(ExportStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSuccessTime))
+            if (options.Format != "W" && Optional.IsDefined(LastSucceededOn))
             {
                 writer.WritePropertyName("LastSuccessTime"u8);
-                writer.WriteStringValue(LastSuccessTime);
+                writer.WriteStringValue(LastSucceededOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastGapTime))
+            if (options.Format != "W" && Optional.IsDefined(LastGappedOn))
             {
                 writer.WritePropertyName("LastGapTime"u8);
-                writer.WriteStringValue(LastGapTime);
+                writer.WriteStringValue(LastGappedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PermanentErrorReason))
             {
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ResourceIdentifier destinationAccountId = default;
             string destinationType = default;
             string isUserEnabled = default;
-            string lastUserUpdate = default;
-            string notificationQueueEnabled = default;
+            DateTimeOffset? lastUserUpdatedOn = default;
+            string isNotificationQueueEnabled = default;
             string exportStatus = default;
-            string lastSuccessTime = default;
-            string lastGapTime = default;
+            DateTimeOffset? lastSucceededOn = default;
+            DateTimeOffset? lastGappedOn = default;
             string permanentErrorReason = default;
             string storageName = default;
             string containerName = default;
@@ -303,12 +303,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("LastUserUpdate"u8))
                 {
-                    lastUserUpdate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUserUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("NotificationQueueEnabled"u8))
                 {
-                    notificationQueueEnabled = prop.Value.GetString();
+                    isNotificationQueueEnabled = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ExportStatus"u8))
@@ -318,12 +322,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("LastSuccessTime"u8))
                 {
-                    lastSuccessTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastSucceededOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("LastGapTime"u8))
                 {
-                    lastGapTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastGappedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("PermanentErrorReason"u8))
@@ -358,11 +370,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 destinationAccountId,
                 destinationType,
                 isUserEnabled,
-                lastUserUpdate,
-                notificationQueueEnabled,
+                lastUserUpdatedOn,
+                isNotificationQueueEnabled,
                 exportStatus,
-                lastSuccessTime,
-                lastGapTime,
+                lastSucceededOn,
+                lastGappedOn,
                 permanentErrorReason,
                 storageName,
                 containerName,

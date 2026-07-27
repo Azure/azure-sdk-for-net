@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("ConnectorDataConfiguration"u8);
                 writer.WriteStringValue(ConnectorDataConfiguration);
             }
-            if (Optional.IsDefined(ValidateOnly))
+            if (Optional.IsDefined(IsValidateOnly))
             {
                 writer.WritePropertyName("ValidateOnly"u8);
-                writer.WriteBooleanValue(ValidateOnly.Value);
+                writer.WriteBooleanValue(IsValidateOnly.Value);
             }
             if (Optional.IsCollectionDefined(WorkItemProperties))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             string connectorId = default;
             string connectorDataConfiguration = default;
-            bool? validateOnly = default;
+            bool? isValidateOnly = default;
             IDictionary<string, string> workItemProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    validateOnly = prop.Value.GetBoolean();
+                    isValidateOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("WorkItemProperties"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkItemCreateConfiguration(connectorId, connectorDataConfiguration, validateOnly, workItemProperties ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new WorkItemCreateConfiguration(connectorId, connectorDataConfiguration, isValidateOnly, workItemProperties ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

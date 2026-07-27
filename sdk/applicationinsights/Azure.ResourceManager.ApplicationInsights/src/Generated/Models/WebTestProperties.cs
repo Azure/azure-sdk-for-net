@@ -40,27 +40,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="syntheticMonitorId"> Unique ID of this WebTest. This is typically the same value as the Name field. </param>
         /// <param name="webTestName"> User defined name if this WebTest. </param>
         /// <param name="description"> User defined description for this WebTest. </param>
-        /// <param name="enabled"> Is the test actively being monitored. </param>
-        /// <param name="frequency"> Interval in seconds between test runs for this WebTest. Default value is 300. </param>
-        /// <param name="timeout"> Seconds until this WebTest will timeout and fail. Default value is 30. </param>
+        /// <param name="isEnabled"> Is the test actively being monitored. </param>
+        /// <param name="frequencyInSeconds"> Interval in seconds between test runs for this WebTest. Default value is 300. </param>
+        /// <param name="timeoutInSeconds"> Seconds until this WebTest will timeout and fail. Default value is 30. </param>
         /// <param name="webTestKind"> The kind of web test this is, valid choices are ping, multistep and standard. </param>
-        /// <param name="retryEnabled"> Allow for retries should this WebTest fail. </param>
+        /// <param name="isRetryEnabled"> Allow for retries should this WebTest fail. </param>
         /// <param name="locations"> A list of where to physically run the tests from to give global coverage for accessibility of your application. </param>
         /// <param name="configuration"> An XML configuration specification for a WebTest. </param>
         /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <param name="request"> The collection of request properties. </param>
         /// <param name="validationRules"> The collection of validation rule properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebTestProperties(string syntheticMonitorId, string webTestName, string description, bool? enabled, int? frequency, int? timeout, WebTestKind webTestKind, bool? retryEnabled, IList<WebTestGeolocation> locations, WebTestPropertiesConfiguration configuration, string provisioningState, WebTestRequest request, WebTestValidationRules validationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebTestProperties(string syntheticMonitorId, string webTestName, string description, bool? isEnabled, int? frequencyInSeconds, int? timeoutInSeconds, WebTestKind webTestKind, bool? isRetryEnabled, IList<WebTestGeolocation> locations, WebTestPropertiesConfiguration configuration, string provisioningState, WebTestRequest request, WebTestValidationRules validationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SyntheticMonitorId = syntheticMonitorId;
             WebTestName = webTestName;
             Description = description;
-            Enabled = enabled;
-            Frequency = frequency;
-            Timeout = timeout;
+            IsEnabled = isEnabled;
+            FrequencyInSeconds = frequencyInSeconds;
+            TimeoutInSeconds = timeoutInSeconds;
             WebTestKind = webTestKind;
-            RetryEnabled = retryEnabled;
+            IsRetryEnabled = isRetryEnabled;
             Locations = locations;
             Configuration = configuration;
             ProvisioningState = provisioningState;
@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Is the test actively being monitored. </summary>
         [WirePath("Enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Interval in seconds between test runs for this WebTest. Default value is 300. </summary>
         [WirePath("Frequency")]
-        public int? Frequency { get; set; }
+        public int? FrequencyInSeconds { get; set; }
 
         /// <summary> Seconds until this WebTest will timeout and fail. Default value is 30. </summary>
         [WirePath("Timeout")]
-        public int? Timeout { get; set; }
+        public int? TimeoutInSeconds { get; set; }
 
         /// <summary> The kind of web test this is, valid choices are ping, multistep and standard. </summary>
         [WirePath("Kind")]
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Allow for retries should this WebTest fail. </summary>
         [WirePath("RetryEnabled")]
-        public bool? RetryEnabled { get; set; }
+        public bool? IsRetryEnabled { get; set; }
 
         /// <summary> A list of where to physically run the tests from to give global coverage for accessibility of your application. </summary>
         [WirePath("Locations")]

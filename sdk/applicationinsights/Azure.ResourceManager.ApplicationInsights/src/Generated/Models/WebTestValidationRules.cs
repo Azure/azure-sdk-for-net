@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="WebTestValidationRules"/>. </summary>
         /// <param name="contentValidation"> The collection of content validation properties. </param>
-        /// <param name="sslCheck"> Checks to see if the SSL cert is still valid. </param>
+        /// <param name="checkSsl"> Checks to see if the SSL cert is still valid. </param>
         /// <param name="sslCertRemainingLifetimeCheck"> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </param>
         /// <param name="expectedHttpStatusCode"> Validate that the WebTest returns the http status code provided. </param>
         /// <param name="ignoreHttpStatusCode"> When set, validation will ignore the status code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebTestValidationRules(WebTestContentValidation contentValidation, bool? sslCheck, int? sslCertRemainingLifetimeCheck, int? expectedHttpStatusCode, bool? ignoreHttpStatusCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebTestValidationRules(WebTestContentValidation contentValidation, bool? checkSsl, int? sslCertRemainingLifetimeCheck, int? expectedHttpStatusCode, bool? ignoreHttpStatusCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContentValidation = contentValidation;
-            SSLCheck = sslCheck;
-            SSLCertRemainingLifetimeCheck = sslCertRemainingLifetimeCheck;
+            CheckSsl = checkSsl;
+            SslCertRemainingLifetimeCheck = sslCertRemainingLifetimeCheck;
             ExpectedHttpStatusCode = expectedHttpStatusCode;
             IgnoreHttpStatusCode = ignoreHttpStatusCode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Checks to see if the SSL cert is still valid. </summary>
         [WirePath("SSLCheck")]
-        public bool? SSLCheck { get; set; }
+        public bool? CheckSsl { get; set; }
 
         /// <summary> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </summary>
         [WirePath("SSLCertRemainingLifetimeCheck")]
-        public int? SSLCertRemainingLifetimeCheck { get; set; }
+        public int? SslCertRemainingLifetimeCheck { get; set; }
 
         /// <summary> Validate that the WebTest returns the http status code provided. </summary>
         [WirePath("ExpectedHttpStatusCode")]

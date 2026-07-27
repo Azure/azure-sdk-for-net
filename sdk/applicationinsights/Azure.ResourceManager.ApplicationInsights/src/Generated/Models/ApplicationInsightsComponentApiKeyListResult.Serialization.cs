@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ApplicationInsightsComponentAPIKey item in Value)
+            foreach (ApplicationInsightsComponentApiKey item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            IList<ApplicationInsightsComponentAPIKey> value = default;
+            IList<ApplicationInsightsComponentApiKey> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ApplicationInsightsComponentAPIKey> array = new List<ApplicationInsightsComponentAPIKey>();
+                    List<ApplicationInsightsComponentApiKey> array = new List<ApplicationInsightsComponentApiKey>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(item, options));
+                        array.Add(ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(item, options));
                     }
                     value = array;
                     continue;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsWorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkbookProperties properties, WorkbookResourceIdentity identity, WorkbookSharedTypeKind? kind, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ApplicationInsightsWorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkbookProperties properties, ManagedServiceIdentity identity, WorkbookSharedTypeKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Identity used for BYOS. </summary>
         [WirePath("identity")]
-        public WorkbookResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The kind of workbook. Only valid value is shared. </summary>
         [WirePath("kind")]
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Resource etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> The user-defined name (display name) of the workbook. </summary>
         [WirePath("properties.displayName")]
@@ -118,11 +119,11 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> Date and time in UTC of the last modification that was made to this workbook definition. </summary>
         [WirePath("properties.timeModified")]
-        public DateTimeOffset? TimeModified
+        public DateTimeOffset? ModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.TimeModified;
+                return Properties is null ? default : Properties.ModifiedOn;
             }
         }
 
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> ResourceId for a source resource. </summary>
         [WirePath("properties.sourceId")]
-        public string SourceId
+        public ResourceIdentifier SourceId
         {
             get
             {
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary> The resourceId to the storage account when bring your own storage is used. </summary>
         [WirePath("properties.storageUri")]
-        public string StorageUri
+        public Uri StorageUri
         {
             get
             {

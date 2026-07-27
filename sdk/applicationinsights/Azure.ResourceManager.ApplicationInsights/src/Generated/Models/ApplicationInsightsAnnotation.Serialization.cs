@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(EventOn))
+            if (Optional.IsDefined(EventOccurredOn))
             {
                 writer.WritePropertyName("EventTime"u8);
-                writer.WriteStringValue(EventOn.Value, "O");
+                writer.WriteStringValue(EventOccurredOn.Value, "O");
             }
             if (Optional.IsDefined(Id))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             string annotationName = default;
             string category = default;
-            DateTimeOffset? eventOn = default;
+            DateTimeOffset? eventOccurredOn = default;
             string id = default;
             string properties = default;
             string relatedAnnotation = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    eventOn = prop.Value.GetDateTimeOffset("O");
+                    eventOccurredOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("Id"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsAnnotation(
                 annotationName,
                 category,
-                eventOn,
+                eventOccurredOn,
                 id,
                 properties,
                 relatedAnnotation,

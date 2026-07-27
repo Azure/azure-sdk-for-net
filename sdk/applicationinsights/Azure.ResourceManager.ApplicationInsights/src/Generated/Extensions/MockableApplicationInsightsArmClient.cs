@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<LiveTokenResult>> GetAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LiveTokenResult>> GetLiveTokenAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.Get");
+            using DiagnosticScope scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LiveTokenRestClient.CreateGetRequest(scope.ToString(), context);
+                HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LiveTokenResult> response = Response.FromValue(LiveTokenResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<LiveTokenResult> Get(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual Response<LiveTokenResult> GetLiveToken(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.Get");
+            using DiagnosticScope scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LiveTokenRestClient.CreateGetRequest(scope.ToString(), context);
+                HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LiveTokenResult> response = Response.FromValue(LiveTokenResult.FromResponse(result), result);
                 if (response.Value == null)

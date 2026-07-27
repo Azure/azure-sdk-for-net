@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="cap"> Daily data volume cap in GB. </param>
         /// <param name="resetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="warningThreshold"> Reserved, not used for now. </param>
-        /// <param name="stopSendNotificationWhenHitThreshold"> Reserved, not used for now. </param>
-        /// <param name="stopSendNotificationWhenHitCap"> Do not send a notification email when the daily data volume cap is met. </param>
+        /// <param name="isStopSendNotificationWhenHitThreshold"> Reserved, not used for now. </param>
+        /// <param name="isStopSendNotificationWhenHitCap"> Do not send a notification email when the daily data volume cap is met. </param>
         /// <param name="maxHistoryCap"> Maximum daily data volume cap that the user can set for this component. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentDataVolumeCap(float? cap, int? resetTime, int? warningThreshold, bool? stopSendNotificationWhenHitThreshold, bool? stopSendNotificationWhenHitCap, float? maxHistoryCap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentDataVolumeCap(float? cap, int? resetTime, int? warningThreshold, bool? isStopSendNotificationWhenHitThreshold, bool? isStopSendNotificationWhenHitCap, float? maxHistoryCap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cap = cap;
             ResetTime = resetTime;
             WarningThreshold = warningThreshold;
-            StopSendNotificationWhenHitThreshold = stopSendNotificationWhenHitThreshold;
-            StopSendNotificationWhenHitCap = stopSendNotificationWhenHitCap;
+            IsStopSendNotificationWhenHitThreshold = isStopSendNotificationWhenHitThreshold;
+            IsStopSendNotificationWhenHitCap = isStopSendNotificationWhenHitCap;
             MaxHistoryCap = maxHistoryCap;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Reserved, not used for now. </summary>
         [WirePath("StopSendNotificationWhenHitThreshold")]
-        public bool? StopSendNotificationWhenHitThreshold { get; set; }
+        public bool? IsStopSendNotificationWhenHitThreshold { get; set; }
 
         /// <summary> Do not send a notification email when the daily data volume cap is met. </summary>
         [WirePath("StopSendNotificationWhenHitCap")]
-        public bool? StopSendNotificationWhenHitCap { get; set; }
+        public bool? IsStopSendNotificationWhenHitCap { get; set; }
 
         /// <summary> Maximum daily data volume cap that the user can set for this component. </summary>
         [WirePath("MaxHistoryCap")]

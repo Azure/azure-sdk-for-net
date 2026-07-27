@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsInPreview"u8);
                 writer.WriteBooleanValue(IsInPreview.Value);
             }
-            if (Optional.IsDefined(SupportsEmailNotifications))
+            if (Optional.IsDefined(IsEmailNotificationsSupported))
             {
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
-                writer.WriteBooleanValue(SupportsEmailNotifications.Value);
+                writer.WriteBooleanValue(IsEmailNotificationsSupported.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             bool? isHidden = default;
             bool? isEnabledByDefault = default;
             bool? isInPreview = default;
-            bool? supportsEmailNotifications = default;
+            bool? isEmailNotificationsSupported = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    supportsEmailNotifications = prop.Value.GetBoolean();
+                    isEmailNotificationsSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 isHidden,
                 isEnabledByDefault,
                 isInPreview,
-                supportsEmailNotifications,
+                isEmailNotificationsSupported,
                 additionalBinaryDataProperties);
         }
     }

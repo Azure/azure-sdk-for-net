@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
         /// <param name="serializedData"> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </param>
         /// <param name="version"> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this workbook definition. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this workbook definition. </param>
         /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
         /// <param name="tagsPropertiesTags"> Being deprecated, please use the other tags field. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this workbook. </param>
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="description"> The description of the workbook. </param>
         /// <param name="revision"> The unique revision id for this workbook definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkbookProperties(string displayName, string serializedData, string version, DateTimeOffset? timeModified, string category, IList<string> tagsPropertiesTags, string userId, string sourceId, string storageUri, string description, string revision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkbookProperties(string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, IList<string> tagsPropertiesTags, string userId, ResourceIdentifier sourceId, Uri storageUri, string description, string revision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             SerializedData = serializedData;
             Version = version;
-            TimeModified = timeModified;
+            ModifiedOn = modifiedOn;
             Category = category;
             TagsPropertiesTags = tagsPropertiesTags;
             UserId = userId;
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Date and time in UTC of the last modification that was made to this workbook definition. </summary>
         [WirePath("timeModified")]
-        public DateTimeOffset? TimeModified { get; }
+        public DateTimeOffset? ModifiedOn { get; }
 
         /// <summary> Workbook category, as defined by the user at creation time. </summary>
         [WirePath("category")]
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> ResourceId for a source resource. </summary>
         [WirePath("sourceId")]
-        public string SourceId { get; set; }
+        public ResourceIdentifier SourceId { get; set; }
 
         /// <summary> The resourceId to the storage account when bring your own storage is used. </summary>
         [WirePath("storageUri")]
-        public string StorageUri { get; set; }
+        public Uri StorageUri { get; set; }
 
         /// <summary> The description of the workbook. </summary>
         [WirePath("description")]

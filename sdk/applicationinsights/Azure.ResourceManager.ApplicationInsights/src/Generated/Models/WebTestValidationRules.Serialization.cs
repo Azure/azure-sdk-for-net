@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("ContentValidation"u8);
                 writer.WriteObjectValue(ContentValidation, options);
             }
-            if (Optional.IsDefined(SSLCheck))
+            if (Optional.IsDefined(CheckSsl))
             {
                 writer.WritePropertyName("SSLCheck"u8);
-                writer.WriteBooleanValue(SSLCheck.Value);
+                writer.WriteBooleanValue(CheckSsl.Value);
             }
-            if (Optional.IsDefined(SSLCertRemainingLifetimeCheck))
+            if (Optional.IsDefined(SslCertRemainingLifetimeCheck))
             {
                 writer.WritePropertyName("SSLCertRemainingLifetimeCheck"u8);
-                writer.WriteNumberValue(SSLCertRemainingLifetimeCheck.Value);
+                writer.WriteNumberValue(SslCertRemainingLifetimeCheck.Value);
             }
             if (Optional.IsDefined(ExpectedHttpStatusCode))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 return null;
             }
             WebTestContentValidation contentValidation = default;
-            bool? sslCheck = default;
+            bool? checkSsl = default;
             int? sslCertRemainingLifetimeCheck = default;
             int? expectedHttpStatusCode = default;
             bool? ignoreHttpStatusCode = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    sslCheck = prop.Value.GetBoolean();
+                    checkSsl = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("SSLCertRemainingLifetimeCheck"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             return new WebTestValidationRules(
                 contentValidation,
-                sslCheck,
+                checkSsl,
                 sslCertRemainingLifetimeCheck,
                 expectedHttpStatusCode,
                 ignoreHttpStatusCode,

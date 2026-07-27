@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsEnabled"u8);
                 writer.WriteStringValue(IsEnabled);
             }
-            if (Optional.IsDefined(NotificationQueueEnabled))
+            if (Optional.IsDefined(IsNotificationQueueEnabled))
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
-                writer.WriteStringValue(NotificationQueueEnabled);
+                writer.WriteStringValue(IsNotificationQueueEnabled);
             }
             if (Optional.IsDefined(NotificationQueueUri))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string destinationType = default;
             string destinationAddress = default;
             string isEnabled = default;
-            string notificationQueueEnabled = default;
+            string isNotificationQueueEnabled = default;
             Uri notificationQueueUri = default;
             string destinationStorageSubscriptionId = default;
             string destinationStorageLocationId = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("NotificationQueueEnabled"u8))
                 {
-                    notificationQueueEnabled = prop.Value.GetString();
+                    isNotificationQueueEnabled = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("NotificationQueueUri"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 destinationType,
                 destinationAddress,
                 isEnabled,
-                notificationQueueEnabled,
+                isNotificationQueueEnabled,
                 notificationQueueUri,
                 destinationStorageSubscriptionId,
                 destinationStorageLocationId,

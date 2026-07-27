@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of <see cref="WorkItemCreateConfiguration"/>. </summary>
         /// <param name="connectorId"> Unique connector id. </param>
         /// <param name="connectorDataConfiguration"> Serialized JSON object for detailed properties. </param>
-        /// <param name="validateOnly"> Boolean indicating validate only. </param>
+        /// <param name="isValidateOnly"> Boolean indicating validate only. </param>
         /// <param name="workItemProperties"> Custom work item properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkItemCreateConfiguration(string connectorId, string connectorDataConfiguration, bool? validateOnly, IDictionary<string, string> workItemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkItemCreateConfiguration(string connectorId, string connectorDataConfiguration, bool? isValidateOnly, IDictionary<string, string> workItemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectorId = connectorId;
             ConnectorDataConfiguration = connectorDataConfiguration;
-            ValidateOnly = validateOnly;
+            IsValidateOnly = isValidateOnly;
             WorkItemProperties = workItemProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Boolean indicating validate only. </summary>
         [WirePath("ValidateOnly")]
-        public bool? ValidateOnly { get; set; }
+        public bool? IsValidateOnly { get; set; }
 
         /// <summary> Custom work item properties. </summary>
         [WirePath("WorkItemProperties")]

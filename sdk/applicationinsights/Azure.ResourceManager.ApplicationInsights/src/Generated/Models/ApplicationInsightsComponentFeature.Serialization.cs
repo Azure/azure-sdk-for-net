@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("MeterRateFrequency"u8);
                 writer.WriteStringValue(MeterRateFrequency);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResouceId))
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("ResouceId"u8);
-                writer.WriteStringValue(ResouceId);
+                writer.WriteStringValue(ResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(IsHidden))
             {
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string featureName = default;
             string meterId = default;
             string meterRateFrequency = default;
-            string resouceId = default;
+            ResourceIdentifier resourceId = default;
             bool? isHidden = default;
             IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities = default;
             string title = default;
@@ -195,7 +196,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("ResouceId"u8))
                 {
-                    resouceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("IsHidden"u8))
@@ -249,7 +254,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 featureName,
                 meterId,
                 meterRateFrequency,
-                resouceId,
+                resourceId,
                 isHidden,
                 capabilities ?? new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>(),
                 title,

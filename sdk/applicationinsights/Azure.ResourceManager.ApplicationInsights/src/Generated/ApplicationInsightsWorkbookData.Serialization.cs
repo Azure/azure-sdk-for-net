@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             WorkbookProperties properties = default;
-            WorkbookResourceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             WorkbookSharedTypeKind? kind = default;
-            string eTag = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         continue;
                     }
-                    identity = WorkbookResourceIdentity.DeserializeWorkbookResourceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerApplicationInsightsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -263,7 +263,11 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

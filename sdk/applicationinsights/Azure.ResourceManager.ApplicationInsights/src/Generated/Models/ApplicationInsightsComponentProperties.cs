@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -41,18 +42,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="samplingPercentage"> Percentage of the data produced by the application being monitored that is being sampled for Application Insights telemetry. </param>
         /// <param name="connectionString"> Application Insights component connection string. </param>
         /// <param name="retentionInDays"> Retention period in days. </param>
-        /// <param name="disableIpMasking"> Disable IP masking. </param>
-        /// <param name="immediatePurgeDataOn30Days"> Purge data immediately after 30 days. </param>
+        /// <param name="isDisableIPMasking"> Disable IP masking. </param>
+        /// <param name="isImmediatePurgeDataOn30Days"> Purge data immediately after 30 days. </param>
         /// <param name="workspaceResourceId"> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </param>
         /// <param name="laMigrationOn"> The date which the component got migrated to LA, in ISO 8601 format. </param>
         /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
         /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Application Insights ingestion. </param>
         /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Application Insights query. </param>
         /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
-        /// <param name="disableLocalAuth"> Disable Non-AAD based Auth. </param>
-        /// <param name="forceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
+        /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
+        /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProperties(string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, string tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? disableIpMasking, bool? immediatePurgeDataOn30Days, string workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? disableLocalAuth, bool? forceCustomerStorageForProfiler, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentProperties(string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             AppId = appId;
@@ -69,16 +70,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             SamplingPercentage = samplingPercentage;
             ConnectionString = connectionString;
             RetentionInDays = retentionInDays;
-            DisableIpMasking = disableIpMasking;
-            ImmediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
+            IsDisableIPMasking = isDisableIPMasking;
+            IsImmediatePurgeDataOn30Days = isImmediatePurgeDataOn30Days;
             WorkspaceResourceId = workspaceResourceId;
             LaMigrationOn = laMigrationOn;
             PrivateLinkScopedResources = privateLinkScopedResources;
             PublicNetworkAccessForIngestion = publicNetworkAccessForIngestion;
             PublicNetworkAccessForQuery = publicNetworkAccessForQuery;
             IngestionMode = ingestionMode;
-            DisableLocalAuth = disableLocalAuth;
-            ForceCustomerStorageForProfiler = forceCustomerStorageForProfiler;
+            IsDisableLocalAuth = isDisableLocalAuth;
+            IsForceCustomerStorageForProfiler = isForceCustomerStorageForProfiler;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Azure Tenant Id. </summary>
         [WirePath("TenantId")]
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> The unique application ID created when a new application is added to HockeyApp, used for communications with HockeyApp. </summary>
         [WirePath("HockeyAppId")]
@@ -144,15 +145,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Disable IP masking. </summary>
         [WirePath("DisableIpMasking")]
-        public bool? DisableIpMasking { get; set; }
+        public bool? IsDisableIPMasking { get; set; }
 
         /// <summary> Purge data immediately after 30 days. </summary>
         [WirePath("ImmediatePurgeDataOn30Days")]
-        public bool? ImmediatePurgeDataOn30Days { get; set; }
+        public bool? IsImmediatePurgeDataOn30Days { get; set; }
 
         /// <summary> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </summary>
         [WirePath("WorkspaceResourceId")]
-        public string WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
 
         /// <summary> The date which the component got migrated to LA, in ISO 8601 format. </summary>
         [WirePath("LaMigrationDate")]
@@ -176,10 +177,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Disable Non-AAD based Auth. </summary>
         [WirePath("DisableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
+        public bool? IsDisableLocalAuth { get; set; }
 
         /// <summary> Force users to create their own storage account for profiler and debugger. </summary>
         [WirePath("ForceCustomerStorageForProfiler")]
-        public bool? ForceCustomerStorageForProfiler { get; set; }
+        public bool? IsForceCustomerStorageForProfiler { get; set; }
     }
 }

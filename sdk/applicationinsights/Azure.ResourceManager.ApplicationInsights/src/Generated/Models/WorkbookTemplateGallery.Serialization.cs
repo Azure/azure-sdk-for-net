@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(WorkbookType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(WorkbookType);
             }
             if (Optional.IsDefined(Order))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             string name = default;
             string category = default;
-            string @type = default;
+            string workbookType = default;
             int? order = default;
             string resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    workbookType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("order"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WorkbookTemplateGallery(
                 name,
                 category,
-                @type,
+                workbookType,
                 order,
                 resourceType,
                 additionalBinaryDataProperties);

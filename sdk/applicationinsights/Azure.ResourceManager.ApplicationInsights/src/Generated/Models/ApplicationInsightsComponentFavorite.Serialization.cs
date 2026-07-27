@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("SourceType"u8);
                 writer.WriteStringValue(SourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("TimeModified"u8);
-                writer.WriteStringValue(TimeModified);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string favoriteId = default;
             ComponentFavoriteType? favoriteType = default;
             string sourceType = default;
-            string timeModified = default;
+            DateTimeOffset? modifiedOn = default;
             IList<string> tags = default;
             string category = default;
             bool? isGeneratedFromTemplate = default;
@@ -250,7 +250,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("TimeModified"u8))
                 {
-                    timeModified = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("Tags"u8))
@@ -305,7 +309,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 favoriteId,
                 favoriteType,
                 sourceType,
-                timeModified,
+                modifiedOn,
                 tags ?? new ChangeTrackingList<string>(),
                 category,
                 isGeneratedFromTemplate,

@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="content"> The content of this item. </param>
         /// <param name="version"> This instance's version of the data model. This can change as new features are added. </param>
         /// <param name="scope"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
-        /// <param name="type"> Enum indicating the type of the Analytics item. </param>
-        /// <param name="timeCreated"> Date and time in UTC when this item was created. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this item. </param>
+        /// <param name="componentItemType"> Enum indicating the type of the Analytics item. </param>
+        /// <param name="createdOn"> Date and time in UTC when this item was created. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this item. </param>
         /// <param name="properties"> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentAnalyticsItem(string id, string name, string content, string version, ComponentItemScope? scope, ComponentItemType? @type, string timeCreated, string timeModified, ApplicationInsightsComponentAnalyticsItemProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsComponentAnalyticsItem(string id, string name, string content, string version, ComponentItemScope? scope, ComponentItemType? componentItemType, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ApplicationInsightsComponentAnalyticsItemProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Content = content;
             Version = version;
             Scope = scope;
-            Type = @type;
-            TimeCreated = timeCreated;
-            TimeModified = timeModified;
+            ComponentItemType = componentItemType;
+            CreatedOn = createdOn;
+            ModifiedOn = modifiedOn;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Enum indicating the type of the Analytics item. </summary>
         [WirePath("Type")]
-        public ComponentItemType? Type { get; set; }
+        public ComponentItemType? ComponentItemType { get; set; }
 
         /// <summary> Date and time in UTC when this item was created. </summary>
         [WirePath("TimeCreated")]
-        public string TimeCreated { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Date and time in UTC of the last modification that was made to this item. </summary>
         [WirePath("TimeModified")]
-        public string TimeModified { get; }
+        public DateTimeOffset? ModifiedOn { get; }
 
         /// <summary> A set of properties that can be defined in the context of a specific item type. Each type may have its own properties. </summary>
         [WirePath("Properties")]
