@@ -10,19 +10,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.SerialConsole;
-using Azure.ResourceManager.SerialConsole.Models;
 
 namespace Azure.ResourceManager.SerialConsole.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSerialConsoleArmClient : ArmResource
     {
-        private ClientDiagnostics _serialPortsClientDiagnostics;
-        private SerialPorts _serialPortsRestClient;
-
         /// <summary> Initializes a new instance of MockableSerialConsoleArmClient for mocking. </summary>
         protected MockableSerialConsoleArmClient()
         {
@@ -34,10 +29,6 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         internal MockableSerialConsoleArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics SerialPortsClientDiagnostics => _serialPortsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SerialConsole.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SerialPorts SerialPortsRestClient => _serialPortsRestClient ??= new SerialPorts(SerialPortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01");
 
         /// <summary> Gets an object representing a <see cref="SerialPortResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -82,102 +73,6 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
             Argument.AssertNotNullOrEmpty(serialPort, nameof(serialPort));
 
             return await GetSerialPorts(scope).GetAsync(serialPort, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists all of the configured serial ports for a parent resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourceType}/{parentResource}/providers/Microsoft.SerialConsole/serialPorts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SerialPorts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SerialPortListResult>> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using DiagnosticScope scope0 = SerialPortsClientDiagnostics.CreateScope("MockableSerialConsoleArmClient.GetAll");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SerialPortsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SerialPortListResult> response = Response.FromValue(SerialPortListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists all of the configured serial ports for a parent resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourceType}/{parentResource}/providers/Microsoft.SerialConsole/serialPorts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SerialPorts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SerialPortListResult> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using DiagnosticScope scope0 = SerialPortsClientDiagnostics.CreateScope("MockableSerialConsoleArmClient.GetAll");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SerialPortsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SerialPortListResult> response = Response.FromValue(SerialPortListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
         }
     }
 }

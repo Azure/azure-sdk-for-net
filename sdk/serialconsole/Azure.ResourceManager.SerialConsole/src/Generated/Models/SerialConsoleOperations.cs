@@ -11,8 +11,7 @@ using Azure.ResourceManager.SerialConsole;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> Serial Console operations. </summary>
-    public partial class SerialConsoleOperations
+    internal partial class SerialConsoleOperations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

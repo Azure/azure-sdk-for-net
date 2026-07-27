@@ -1,4 +1,4 @@
 directory: specification/serialconsole/resource-manager/Microsoft.SerialConsole/SerialConsole
-commit: 84b09e0c524b5c8730ec3db95549a4211718072b
+commit: 92aa5fd52579c0b9ef8f787f466fee81f6690a19
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

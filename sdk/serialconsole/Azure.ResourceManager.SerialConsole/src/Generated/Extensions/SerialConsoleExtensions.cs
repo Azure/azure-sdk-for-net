@@ -115,42 +115,6 @@ namespace Azure.ResourceManager.SerialConsole
         }
 
         /// <summary>
-        /// Lists all of the configured serial ports for a parent resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleArmClient.GetAllAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<SerialPortListResult>> GetAllAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableSerialConsoleArmClient(client).GetAllAsync(scope, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists all of the configured serial ports for a parent resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleArmClient.GetAll(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<SerialPortListResult> GetAll(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSerialConsoleArmClient(client).GetAll(scope, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets whether or not Serial Console is disabled for a given subscription
         /// <item>
         /// <term> Mocking. </term>
@@ -194,11 +158,12 @@ namespace Azure.ResourceManager.SerialConsole
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SerialPortListResult>> GetSerialPortsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SerialPortResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SerialPortResource> GetSerialPortsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableSerialConsoleSubscriptionResource(subscriptionResource).GetSerialPortsAsync(cancellationToken).ConfigureAwait(false);
+            return GetMockableSerialConsoleSubscriptionResource(subscriptionResource).GetSerialPortsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -211,7 +176,8 @@ namespace Azure.ResourceManager.SerialConsole
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SerialPortListResult> GetSerialPorts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SerialPortResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SerialPortResource> GetSerialPorts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -228,7 +194,7 @@ namespace Azure.ResourceManager.SerialConsole
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DisableSerialConsoleResult>> DisableConsoleAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<SerialConsoleStatus>> DisableConsoleAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -245,7 +211,7 @@ namespace Azure.ResourceManager.SerialConsole
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DisableSerialConsoleResult> DisableConsole(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<SerialConsoleStatus> DisableConsole(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -262,7 +228,7 @@ namespace Azure.ResourceManager.SerialConsole
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<EnableSerialConsoleResult>> EnableConsoleAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<SerialConsoleStatus>> EnableConsoleAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -279,7 +245,7 @@ namespace Azure.ResourceManager.SerialConsole
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<EnableSerialConsoleResult> EnableConsole(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<SerialConsoleStatus> EnableConsole(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -290,34 +256,28 @@ namespace Azure.ResourceManager.SerialConsole
         /// Gets a list of Serial Console API operations.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleTenantResource.GetOperationsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleTenantResource.GetSerialConsoleOperationsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<SerialConsoleOperations>> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static async Task<Response<SerialConsoleOperations>> GetSerialConsoleOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableSerialConsoleTenantResource(tenantResource).GetOperationsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableSerialConsoleTenantResource(tenantResource).GetSerialConsoleOperationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a list of Serial Console API operations.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleTenantResource.GetOperations(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleTenantResource.GetSerialConsoleOperations(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<SerialConsoleOperations> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static Response<SerialConsoleOperations> GetSerialConsoleOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSerialConsoleTenantResource(tenantResource).GetOperations(cancellationToken);
+            return GetMockableSerialConsoleTenantResource(tenantResource).GetSerialConsoleOperations(cancellationToken);
         }
     }
 }

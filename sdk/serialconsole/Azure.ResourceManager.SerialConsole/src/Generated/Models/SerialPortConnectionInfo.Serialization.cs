@@ -9,56 +9,64 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.SerialConsole;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> The DisableSerialConsoleResultProperties. </summary>
-    internal partial class DisableSerialConsoleResultProperties : IJsonModel<DisableSerialConsoleResultProperties>
+    /// <summary> Serial port connect result. </summary>
+    public partial class SerialPortConnectionInfo : IJsonModel<SerialPortConnectionInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DisableSerialConsoleResultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SerialPortConnectionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DisableSerialConsoleResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialPortConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDisableSerialConsoleResultProperties(document.RootElement, options);
+                        return DeserializeSerialPortConnectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DisableSerialConsoleResultProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SerialPortConnectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DisableSerialConsoleResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialPortConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSerialConsoleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DisableSerialConsoleResultProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SerialPortConnectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DisableSerialConsoleResultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SerialPortConnectionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DisableSerialConsoleResultProperties IPersistableModel<DisableSerialConsoleResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SerialPortConnectionInfo IPersistableModel<SerialPortConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DisableSerialConsoleResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SerialPortConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SerialPortConnectionInfo"/> from. </param>
+        internal static SerialPortConnectionInfo FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSerialPortConnectionInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DisableSerialConsoleResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SerialPortConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +77,15 @@ namespace Azure.ResourceManager.SerialConsole.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DisableSerialConsoleResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialPortConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DisableSerialConsoleResultProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SerialPortConnectionInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Disabled))
+            if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("disabled"u8);
-                writer.WriteBooleanValue(Disabled.Value);
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,40 +106,36 @@ namespace Azure.ResourceManager.SerialConsole.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DisableSerialConsoleResultProperties IJsonModel<DisableSerialConsoleResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SerialPortConnectionInfo IJsonModel<SerialPortConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DisableSerialConsoleResultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SerialPortConnectionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DisableSerialConsoleResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialPortConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DisableSerialConsoleResultProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SerialPortConnectionInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDisableSerialConsoleResultProperties(document.RootElement, options);
+            return DeserializeSerialPortConnectionInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DisableSerialConsoleResultProperties DeserializeDisableSerialConsoleResultProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SerialPortConnectionInfo DeserializeSerialPortConnectionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? disabled = default;
+            string connectionString = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("disabled"u8))
+                if (prop.NameEquals("connectionString"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disabled = prop.Value.GetBoolean();
+                    connectionString = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DisableSerialConsoleResultProperties(disabled, additionalBinaryDataProperties);
+            return new SerialPortConnectionInfo(connectionString, additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SerialConsole.Models
             {
                 throw new FormatException($"The model {nameof(SerialConsoleStatusProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Disabled))
+            if (Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("disabled"u8);
-                writer.WriteBooleanValue(Disabled.Value);
+                writer.WriteBooleanValue(IsDisabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
             {
                 return null;
             }
-            bool? disabled = default;
+            bool? isDisabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
                     {
                         continue;
                     }
-                    disabled = prop.Value.GetBoolean();
+                    isDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SerialConsoleStatusProperties(disabled, additionalBinaryDataProperties);
+            return new SerialConsoleStatusProperties(isDisabled, additionalBinaryDataProperties);
         }
     }
 }

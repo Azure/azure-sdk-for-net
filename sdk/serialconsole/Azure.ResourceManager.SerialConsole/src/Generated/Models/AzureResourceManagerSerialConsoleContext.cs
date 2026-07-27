@@ -15,16 +15,12 @@ namespace Azure.ResourceManager.SerialConsole
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(DisableSerialConsoleResult))]
-    [ModelReaderWriterBuildable(typeof(DisableSerialConsoleResultProperties))]
-    [ModelReaderWriterBuildable(typeof(EnableSerialConsoleResult))]
-    [ModelReaderWriterBuildable(typeof(EnableSerialConsoleResultProperties))]
     [ModelReaderWriterBuildable(typeof(SerialConsoleOperationDisplay))]
     [ModelReaderWriterBuildable(typeof(SerialConsoleOperationInfo))]
     [ModelReaderWriterBuildable(typeof(SerialConsoleOperations))]
     [ModelReaderWriterBuildable(typeof(SerialConsoleStatus))]
     [ModelReaderWriterBuildable(typeof(SerialConsoleStatusProperties))]
-    [ModelReaderWriterBuildable(typeof(SerialPortConnectResult))]
+    [ModelReaderWriterBuildable(typeof(SerialPortConnectionInfo))]
     [ModelReaderWriterBuildable(typeof(SerialPortData))]
     [ModelReaderWriterBuildable(typeof(SerialPortListResult))]
     [ModelReaderWriterBuildable(typeof(SerialPortProperties))]

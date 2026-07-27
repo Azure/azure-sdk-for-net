@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.SerialConsole.Models
         internal SerialConsoleStatusProperties Properties { get; }
 
         /// <summary> Whether or not Serial Console is disabled. </summary>
-        public bool? Disabled
+        public bool? IsDisabled
         {
             get
             {
-                return Properties is null ? default : Properties.Disabled;
+                return Properties is null ? default : Properties.IsDisabled;
             }
         }
     }

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SerialConsole.Models
 {
     /// <summary> Serial port connect result. </summary>
-    public partial class SerialPortConnectResult
+    public partial class SerialPortConnectionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SerialPortConnectResult"/>. </summary>
-        internal SerialPortConnectResult()
+        /// <summary> Initializes a new instance of <see cref="SerialPortConnectionInfo"/>. </summary>
+        internal SerialPortConnectionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SerialPortConnectResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SerialPortConnectionInfo"/>. </summary>
         /// <param name="connectionString"> Connection string to the serial port of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SerialPortConnectResult(string connectionString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SerialPortConnectionInfo(string connectionString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

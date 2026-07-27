@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SerialConsole
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsRequest(RequestContext context)
+        internal HttpMessage CreateGetSerialConsoleOperationsRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

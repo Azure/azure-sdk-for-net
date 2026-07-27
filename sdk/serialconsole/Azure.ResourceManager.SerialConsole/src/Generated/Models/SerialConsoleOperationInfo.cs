@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> The SerialConsoleOperationInfo. </summary>
-    public partial class SerialConsoleOperationInfo
+    internal partial class SerialConsoleOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -14,8 +14,7 @@ using Azure.ResourceManager.SerialConsole;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> Serial port list result. </summary>
-    public partial class SerialPortListResult : IJsonModel<SerialPortListResult>
+    internal partial class SerialPortListResult : IJsonModel<SerialPortListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

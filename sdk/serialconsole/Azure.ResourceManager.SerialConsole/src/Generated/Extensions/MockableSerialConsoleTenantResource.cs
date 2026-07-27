@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SerialConsoleOperations>> GetOperationsAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SerialConsoleOperations>> GetSerialConsoleOperationsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SerialConsoleClientClientDiagnostics.CreateScope("MockableSerialConsoleTenantResource.GetOperations");
+            using DiagnosticScope scope = SerialConsoleClientClientDiagnostics.CreateScope("MockableSerialConsoleTenantResource.GetSerialConsoleOperations");
             scope.Start();
             try
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetOperationsRequest(context);
+                HttpMessage message = SerialConsoleClientRestClient.CreateGetSerialConsoleOperationsRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialConsoleOperations> response = Response.FromValue(SerialConsoleOperations.FromResponse(result), result);
                 if (response.Value == null)
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SerialConsoleOperations> GetOperations(CancellationToken cancellationToken = default)
+        internal virtual Response<SerialConsoleOperations> GetSerialConsoleOperations(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SerialConsoleClientClientDiagnostics.CreateScope("MockableSerialConsoleTenantResource.GetOperations");
+            using DiagnosticScope scope = SerialConsoleClientClientDiagnostics.CreateScope("MockableSerialConsoleTenantResource.GetSerialConsoleOperations");
             scope.Start();
             try
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetOperationsRequest(context);
+                HttpMessage message = SerialConsoleClientRestClient.CreateGetSerialConsoleOperationsRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialConsoleOperations> response = Response.FromValue(SerialConsoleOperations.FromResponse(result), result);
                 if (response.Value == null)

@@ -11,8 +11,7 @@ using Azure.ResourceManager.SerialConsole;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> Serial port list result. </summary>
-    public partial class SerialPortListResult
+    internal partial class SerialPortListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

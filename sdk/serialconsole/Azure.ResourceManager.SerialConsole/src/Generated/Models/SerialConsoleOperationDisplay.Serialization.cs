@@ -13,8 +13,7 @@ using Azure.ResourceManager.SerialConsole;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> The SerialConsoleOperationDisplay. </summary>
-    public partial class SerialConsoleOperationDisplay : IJsonModel<SerialConsoleOperationDisplay>
+    internal partial class SerialConsoleOperationDisplay : IJsonModel<SerialConsoleOperationDisplay>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

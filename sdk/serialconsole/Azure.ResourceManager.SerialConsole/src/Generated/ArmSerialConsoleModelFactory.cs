@@ -17,39 +17,11 @@ namespace Azure.ResourceManager.SerialConsole.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmSerialConsoleModelFactory
     {
-        /// <param name="disabled"> Whether or not Serial Console is disabled. </param>
+        /// <param name="isDisabled"> Whether or not Serial Console is disabled. </param>
         /// <returns> A new <see cref="Models.SerialConsoleStatus"/> instance for mocking. </returns>
-        public static SerialConsoleStatus SerialConsoleStatus(bool? disabled = default)
+        public static SerialConsoleStatus SerialConsoleStatus(bool? isDisabled = default)
         {
-            return new SerialConsoleStatus(disabled is null ? default : new SerialConsoleStatusProperties(disabled, default), default);
-        }
-
-        /// <param name="value"> A list of Serial Console operations. </param>
-        /// <returns> A new <see cref="Models.SerialConsoleOperations"/> instance for mocking. </returns>
-        public static SerialConsoleOperations SerialConsoleOperations(IEnumerable<SerialConsoleOperationInfo> value = default)
-        {
-            value ??= new ChangeTrackingList<SerialConsoleOperationInfo>();
-
-            return new SerialConsoleOperations((value ?? new ChangeTrackingList<SerialConsoleOperationInfo>()).ToList(), default);
-        }
-
-        /// <param name="name"></param>
-        /// <param name="isDataAction"></param>
-        /// <param name="display"></param>
-        /// <returns> A new <see cref="Models.SerialConsoleOperationInfo"/> instance for mocking. </returns>
-        public static SerialConsoleOperationInfo SerialConsoleOperationInfo(string name = default, bool? isDataAction = default, SerialConsoleOperationDisplay display = default)
-        {
-            return new SerialConsoleOperationInfo(name, isDataAction, display, default);
-        }
-
-        /// <param name="provider"></param>
-        /// <param name="resource"></param>
-        /// <param name="operation"></param>
-        /// <param name="description"></param>
-        /// <returns> A new <see cref="Models.SerialConsoleOperationDisplay"/> instance for mocking. </returns>
-        public static SerialConsoleOperationDisplay SerialConsoleOperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
-        {
-            return new SerialConsoleOperationDisplay(provider, resource, operation, description, default);
+            return new SerialConsoleStatus(isDisabled is null ? default : new SerialConsoleStatusProperties(isDisabled, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -70,34 +42,11 @@ namespace Azure.ResourceManager.SerialConsole.Models
                 default);
         }
 
-        /// <param name="value"> The list of serial ports. </param>
-        /// <returns> A new <see cref="Models.SerialPortListResult"/> instance for mocking. </returns>
-        public static SerialPortListResult SerialPortListResult(IEnumerable<SerialPortData> value = default)
-        {
-            value ??= new ChangeTrackingList<SerialPortData>();
-
-            return new SerialPortListResult((value ?? new ChangeTrackingList<SerialPortData>()).ToList(), default);
-        }
-
         /// <param name="connectionString"> Connection string to the serial port of the resource. </param>
-        /// <returns> A new <see cref="Models.SerialPortConnectResult"/> instance for mocking. </returns>
-        public static SerialPortConnectResult SerialPortConnectResult(string connectionString = default)
+        /// <returns> A new <see cref="Models.SerialPortConnectionInfo"/> instance for mocking. </returns>
+        public static SerialPortConnectionInfo SerialPortConnectionInfo(string connectionString = default)
         {
-            return new SerialPortConnectResult(connectionString, default);
-        }
-
-        /// <param name="disabled"> Whether or not Serial Console is disabled. </param>
-        /// <returns> A new <see cref="Models.DisableSerialConsoleResult"/> instance for mocking. </returns>
-        public static DisableSerialConsoleResult DisableSerialConsoleResult(bool? disabled = default)
-        {
-            return new DisableSerialConsoleResult(disabled is null ? default : new DisableSerialConsoleResultProperties(disabled, default), default);
-        }
-
-        /// <param name="disabled"> Whether or not Serial Console is disabled. </param>
-        /// <returns> A new <see cref="Models.EnableSerialConsoleResult"/> instance for mocking. </returns>
-        public static EnableSerialConsoleResult EnableSerialConsoleResult(bool? disabled = default)
-        {
-            return new EnableSerialConsoleResult(disabled is null ? default : new EnableSerialConsoleResultProperties(disabled, default), default);
+            return new SerialPortConnectionInfo(connectionString, default);
         }
     }
 }

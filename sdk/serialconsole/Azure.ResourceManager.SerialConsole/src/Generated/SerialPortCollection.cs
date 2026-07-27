@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.SerialConsole
     /// Each <see cref="SerialPortResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="SerialPortCollection"/> instance call the GetSerialPorts method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class SerialPortCollection : ArmCollection
+    public partial class SerialPortCollection : ArmCollection, IEnumerable<SerialPortResource>, IAsyncEnumerable<SerialPortResource>
     {
         private readonly ClientDiagnostics _serialPortsClientDiagnostics;
         private readonly SerialPorts _serialPortsRestClient;
@@ -246,6 +248,78 @@ namespace Azure.ResourceManager.SerialConsole
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists all of the configured serial ports for a parent resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourceType}/{parentResource}/providers/Microsoft.SerialConsole/serialPorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SerialPorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SerialPortResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SerialPortResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SerialPortData, SerialPortResource>(new SerialPortsGetAllAsyncCollectionResultOfT(
+                _serialPortsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
+                context,
+                "SerialPortCollection.GetAll"), data => new SerialPortResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all of the configured serial ports for a parent resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourceType}/{parentResource}/providers/Microsoft.SerialConsole/serialPorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SerialPorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SerialPortResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SerialPortResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SerialPortData, SerialPortResource>(new SerialPortsGetAllCollectionResultOfT(
+                _serialPortsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
+                context,
+                "SerialPortCollection.GetAll"), data => new SerialPortResource(Client, data));
         }
 
         /// <summary>
@@ -482,6 +556,22 @@ namespace Azure.ResourceManager.SerialConsole
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SerialPortResource> IEnumerable<SerialPortResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SerialPortResource> IAsyncEnumerable<SerialPortResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

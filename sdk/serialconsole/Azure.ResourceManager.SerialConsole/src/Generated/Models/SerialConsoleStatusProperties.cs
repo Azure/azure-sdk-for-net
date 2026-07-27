@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.SerialConsole.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SerialConsoleStatusProperties"/>. </summary>
-        /// <param name="disabled"> Whether or not Serial Console is disabled. </param>
+        /// <param name="isDisabled"> Whether or not Serial Console is disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SerialConsoleStatusProperties(bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SerialConsoleStatusProperties(bool? isDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Disabled = disabled;
+            IsDisabled = isDisabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether or not Serial Console is disabled. </summary>
-        public bool? Disabled { get; }
+        public bool? IsDisabled { get; }
     }
 }
