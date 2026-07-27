@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.CloudHealth.Models;
 using Azure.ResourceManager.Models;
 
@@ -79,7 +78,6 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(ResourceMetricSignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceSignal))]
     [ModelReaderWriterBuildable(typeof(ResourceSignals))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SignalConfiguration))]
     [ModelReaderWriterBuildable(typeof(SignalDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(SignalHistoryDataPoint))]
