@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("FileSource")]
-    internal partial class FileSourceInternal
+    public partial class FileSourceInternal
     {
     }
 }

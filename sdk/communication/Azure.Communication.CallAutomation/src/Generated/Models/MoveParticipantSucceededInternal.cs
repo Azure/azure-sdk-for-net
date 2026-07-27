@@ -21,8 +21,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <param name="participant"> Participant. </param>
+        /// <param name="resultInformation"></param>
+        /// <param name="participant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         internal MoveParticipantSucceededInternal(string fromCall, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
         {
             FromCall = fromCall;
@@ -44,9 +44,9 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        /// <summary> Gets the result information. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> Participant. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Participant { get; }
     }
 }

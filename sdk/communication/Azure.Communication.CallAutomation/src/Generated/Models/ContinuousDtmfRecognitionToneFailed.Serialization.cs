@@ -17,27 +17,13 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            ResultInformation resultInformation = default;
-            string operationContext = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            ResultInformation resultInformation = default;
+            string operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -53,8 +39,22 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContinuousDtmfRecognitionToneFailed(resultInformation, operationContext, callConnectionId, serverCallId, correlationId);
+            return new ContinuousDtmfRecognitionToneFailed(callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

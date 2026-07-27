@@ -16,18 +16,18 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneFailed"/>. </summary>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="operationContext"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal ContinuousDtmfRecognitionToneFailed(ResultInformation resultInformation, string operationContext, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="resultInformation"></param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal ContinuousDtmfRecognitionToneFailed(string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext)
         {
-            ResultInformation = resultInformation;
-            OperationContext = operationContext;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            ResultInformation = resultInformation;
+            OperationContext = operationContext;
         }
     }
 }

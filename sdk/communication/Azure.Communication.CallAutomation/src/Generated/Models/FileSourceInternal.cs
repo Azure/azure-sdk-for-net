@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The FileSource. </summary>
-    internal partial class FileSourceInternal
+    public partial class FileSourceInternal
     {
         /// <summary> Initializes a new instance of <see cref="FileSourceInternal"/>. </summary>
         /// <param name="uri"> Uri for the audio file to be played. </param>

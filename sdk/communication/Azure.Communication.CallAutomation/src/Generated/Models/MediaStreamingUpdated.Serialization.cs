@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            MediaStreamingUpdate mediaStreamingUpdate = default;
+            MediaStreamingUpdated mediaStreamingUpdate = default;
             string streamUrl = default;
             string callConnectionId = default;
             string serverCallId = default;
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
+                    mediaStreamingUpdate = DeserializeMediaStreamingUpdated(property.Value);
                     continue;
                 }
                 if (property.NameEquals("streamUrl"u8))

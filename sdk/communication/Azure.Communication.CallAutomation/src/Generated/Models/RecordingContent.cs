@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The content type of call recording. </summary>
+    /// <summary> The RecordingContentType. </summary>
     public readonly partial struct RecordingContent : IEquatable<RecordingContent>
     {
         private readonly string _value;

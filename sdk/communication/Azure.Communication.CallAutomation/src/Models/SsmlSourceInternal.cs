@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("SsmlSource")]
-    internal partial class SsmlSourceInternal
+    public partial class SsmlSourceInternal
     {
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="MediaStreamingSubscriptionInternal"/>. </summary>
         /// <param name="id"> Subscription Id. </param>
-        /// <param name="state"> Media streaming subscription state. </param>
+        /// <param name="state"> Current state of media streaming session. </param>
         /// <param name="subscribedContentTypes"> Subscribed media streaming content types. </param>
         /// <param name="streamUrl"> Media streaming subscription stream URL. </param>
         internal MediaStreamingSubscriptionInternal(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes, string streamUrl)
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Subscription Id. </summary>
         public string Id { get; }
-        /// <summary> Media streaming subscription state. </summary>
+        /// <summary> Current state of media streaming session. </summary>
         public MediaStreamingSubscriptionState? State { get; }
         /// <summary> Subscribed media streaming content types. </summary>
         public IReadOnlyList<MediaStreamingContent> SubscribedContentTypes { get; }

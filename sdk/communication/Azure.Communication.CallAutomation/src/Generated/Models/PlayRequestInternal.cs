@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         /// The list of call participants play provided audio to.
         /// Plays to everyone in the call when not provided.
         /// </param>
-        /// <param name="playOptions"> Defines options for playing the audio. </param>
+        /// <param name="playOptions"></param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The source of the audio to be played. </summary>
         public IList<PlaySourceInternal> PlaySources { get; }
-        /// <summary> Defines options for playing the audio. </summary>
+        /// <summary> Gets or sets the play options. </summary>
         public PlayOptionsInternal PlayOptions { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

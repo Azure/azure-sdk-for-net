@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TextSource. </summary>
-    internal partial class TextSourceInternal
+    public partial class TextSourceInternal
     {
         /// <summary> Initializes a new instance of <see cref="TextSourceInternal"/>. </summary>
         /// <param name="text"> Text for the cognitive service to be played. </param>
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// Source language locale to be played
         /// Refer to available locales here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
         /// </param>
-        /// <param name="voiceKind"> Voice kind type. </param>
+        /// <param name="voiceKind"> Audio kind type. </param>
         /// <param name="voiceName">
         /// Voice name to be played
         /// Refer to available Text-to-speech voices here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation
         /// Refer to available locales here: &lt;seealso href="https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts" /&gt;
         /// </summary>
         public string SourceLocale { get; set; }
-        /// <summary> Voice kind type. </summary>
+        /// <summary> Audio kind type. </summary>
         public VoiceKind? VoiceKind { get; set; }
         /// <summary>
         /// Voice name to be played
