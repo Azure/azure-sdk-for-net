@@ -10,9 +10,8 @@ using Azure.Core;
 namespace ProvisioningTypeSpec;
 
 // ---- Model inheritance test (bug #57119) ----
-// ItemAttributes extends BaseItemAttributes with no own properties.
-// The provisioning generator must walk the baseModel chain to include
-// all inherited properties in the generated model.
+// The provisioning generator must preserve the TypeSpec base model and
+// generate inherited properties on that base model.
 
 /** Base attributes for items. */
 model BaseItemAttributes {

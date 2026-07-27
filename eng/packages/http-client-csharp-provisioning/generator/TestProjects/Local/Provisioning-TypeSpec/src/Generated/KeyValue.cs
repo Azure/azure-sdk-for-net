@@ -125,7 +125,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary></summary>
-        public static partial class ResourceVersions
+        internal static partial class ResourceVersions
         {
             /// <summary> API version "2024-05-01". </summary>
             public static readonly string V2024_05_01 = "2024-05-01";

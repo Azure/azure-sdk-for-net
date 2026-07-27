@@ -68,44 +68,7 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         protected override CSharpType? BuildBaseType()
-        {
-            if (CustomCodeView?.BaseType != null)
-            {
-                // Provisioning intentionally flattens non-discriminated TypeSpec model inheritance
-                // into ProvisionableConstruct. A custom base type is therefore an explicit migration
-                // compatibility decision and must take precedence over the generator's default base.
-                // Any properties duplicated by that compatibility base are suppressed in custom code
-                // with CodeGenSuppress rather than inferred here.
-                var customBaseType = CustomCodeView.BaseType;
-                if (string.IsNullOrEmpty(customBaseType.Namespace))
-                {
-                    // The base ModelProvider resolver creates every input model while searching for
-                    // an unqualified type. Provisioning cannot do that because its settable analysis
-                    // intentionally covers only reachable models. Resolve only the requested model so
-                    // same-namespace custom code remains concise without materializing unrelated types.
-                    var inputBaseModel = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Models
-                        .FirstOrDefault(model => string.Equals(model.Name, customBaseType.Name, StringComparison.Ordinal));
-                    var baseProvider = inputBaseModel == null
-                        ? null
-                        : ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputBaseModel);
-                    if (baseProvider != null)
-                    {
-                        return baseProvider.Type;
-                    }
-                }
-
-                return customBaseType;
-            }
-
-            // Derived discriminated types inherit from their base model type.
-            if (_inputModel.DiscriminatorValue != null && _inputModel.BaseModel != null)
-            {
-                var baseProvider = ProvisioningGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
-                if (baseProvider != null)
-                    return baseProvider.Type;
-            }
-            return new CSharpType(typeof(ProvisionableConstruct));
-        }
+            => base.BuildBaseType() ?? new CSharpType(typeof(ProvisionableConstruct));
 
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty property)
@@ -128,26 +91,13 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-            // Collect properties from the model and its base chain.
-            // Non-discriminated models use ProvisionableConstruct as C# base (not the TypeSpec base),
-            // so inherited properties must be explicitly collected here.
-            var model = _inputModel;
-            while (model != null)
+            foreach (var prop in _inputModel.Properties)
             {
-                foreach (var prop in model.Properties)
-                {
-                    if (prop.IsDiscriminator) continue;
-                    if (!seen.Add(prop.Name)) continue;
+                if (prop.IsDiscriminator) continue;
 
-                    var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
-                    if (property != null)
-                        properties.Add(property);
-                }
-                // Discriminated types use C# inheritance, so only collect own properties.
-                if (_inputModel.DiscriminatorValue != null) break;
-                model = model.BaseModel;
+                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
+                if (property != null)
+                    properties.Add(property);
             }
             return [.. properties];
         }
