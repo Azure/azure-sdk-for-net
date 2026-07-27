@@ -69,7 +69,19 @@ internal sealed class ActivityEndpointHandler
         ArgumentNullException.ThrowIfNull(adapter);
         ArgumentNullException.ThrowIfNull(agent);
 
-        await StampSessionAndBaggageAsync(context).ConfigureAwait(false);
+        // Resolve the correlation ids and stamp the required session-id response header before the
+        // adapter starts writing the response.
+        var (sessionId, conversationId, responseId) = await StampSessionAndBaggageAsync(context).ConfigureAwait(false);
+
+        // Start the per-turn invoke_agent span — the row the Foundry trace UI lists for the turn.
+        // Core's FoundryEnrichmentProcessor stamps the agent identity and project id; this span
+        // supplies the operation + session/conversation attributes and the response_id (the inbound
+        // activity id). The Foundry trace-list query requires a span carrying the agent identity,
+        // the project id, AND a response_id in the same trace — without the response_id the turn is
+        // not picked up. Kept open across ProcessAsync so the model/tool child spans parent to this
+        // turn. In Foundry-hosted (Agent365-only) mode there is no ASP.NET request activity, so this
+        // is the trace root.
+        using var span = _tracing.StartInvokeAgentSpan(sessionId, conversationId, responseId);
 
         // The Foundry gateway is a trusted, network-isolated proxy; inbound requests are not Bot
         // Framework channel JWTs. Set the synthesized outbound claims on the request principal so
@@ -87,7 +99,9 @@ internal sealed class ActivityEndpointHandler
     /// current request span. Safe to call for custom request handlers that bypass the SDK adapter.
     /// </summary>
     /// <param name="context">The current request context.</param>
-    public async Task StampSessionAndBaggageAsync(HttpContext context)
+    /// <returns>The resolved session id, conversation id (<c>null</c> when absent), and response id
+    /// (the inbound activity id; <c>null</c> when absent).</returns>
+    public async Task<(string SessionId, string? ConversationId, string? ResponseId)> StampSessionAndBaggageAsync(HttpContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
@@ -97,28 +111,32 @@ internal sealed class ActivityEndpointHandler
         var sessionId = ActivityIdSanitizer.Sanitize(ActivitySessionIdResolver.Resolve(context.Request));
         context.Response.Headers[PlatformHeaders.SessionId] = sessionId;
 
-        // Best-effort: resolve the conversation id from the inbound activity so traces can
-        // correlate a turn to its conversation (surfaced by the Core enrichment processor as the
-        // gen_ai.conversation.id tag). Sanitized to a null on absent/invalid values so we never
-        // stamp a fabricated correlation id.
-        var conversationId = ActivityIdSanitizer.SanitizeOrNull(
-            await TryReadConversationIdAsync(context.Request).ConfigureAwait(false));
+        // Best-effort: resolve the conversation id and the activity id from the inbound activity so
+        // traces can correlate a turn to its conversation (surfaced by the Core enrichment processor
+        // as gen_ai.conversation.id) and so the invoke_agent span carries a response_id (the inbound
+        // activity id) — the field the Foundry trace-list query requires to pick up the turn.
+        var (rawConversationId, rawActivityId) = await TryReadActivityIdsAsync(context.Request).ConfigureAwait(false);
+        var conversationId = ActivityIdSanitizer.SanitizeOrNull(rawConversationId);
+        var responseId = ActivityIdSanitizer.SanitizeOrNull(rawActivityId);
 
         // Promote correlation baggage onto the current request span so the core enrichment
         // processor stamps the session id (and conversation id, if any) onto every span and log.
         _tracing.PropagateActivityBaggage(sessionId, conversationId);
+
+        return (sessionId, conversationId, responseId);
     }
 
     /// <summary>
-    /// Best-effort extraction of <c>conversation.id</c> from the inbound activity JSON body. Enables
-    /// request buffering and rewinds the stream so the adapter (or custom handler) can still read
-    /// the body. Never throws — correlation is a diagnostic concern, not a request-failure one.
+    /// Best-effort extraction of <c>conversation.id</c> and the top-level activity <c>id</c> from the
+    /// inbound activity JSON body. Enables request buffering and rewinds the stream so the adapter
+    /// (or custom handler) can still read the body. Never throws — correlation is a diagnostic
+    /// concern, not a request-failure one.
     /// </summary>
-    private static async Task<string?> TryReadConversationIdAsync(HttpRequest request)
+    private static async Task<(string? ConversationId, string? ActivityId)> TryReadActivityIdsAsync(HttpRequest request)
     {
         if (request.ContentLength == 0)
         {
-            return null;
+            return (null, null);
         }
 
         try
@@ -127,18 +145,33 @@ internal sealed class ActivityEndpointHandler
             request.Body.Position = 0;
             using var document = await JsonDocument.ParseAsync(request.Body).ConfigureAwait(false);
 
-            if (document.RootElement.ValueKind == JsonValueKind.Object
-                && document.RootElement.TryGetProperty("conversation", out var conversation)
+            if (document.RootElement.ValueKind != JsonValueKind.Object)
+            {
+                return (null, null);
+            }
+
+            string? conversationId = null;
+            if (document.RootElement.TryGetProperty("conversation", out var conversation)
                 && conversation.ValueKind == JsonValueKind.Object
-                && conversation.TryGetProperty("id", out var id)
+                && conversation.TryGetProperty("id", out var convId)
+                && convId.ValueKind == JsonValueKind.String)
+            {
+                conversationId = convId.GetString();
+            }
+
+            string? activityId = null;
+            if (document.RootElement.TryGetProperty("id", out var id)
                 && id.ValueKind == JsonValueKind.String)
             {
-                return id.GetString();
+                activityId = id.GetString();
             }
+
+            return (conversationId, activityId);
         }
         catch (JsonException)
         {
-            // Non-JSON or malformed body — no conversation id to correlate.
+            // Non-JSON or malformed body — no ids to correlate.
+            return (null, null);
         }
         finally
         {
@@ -147,8 +180,6 @@ internal sealed class ActivityEndpointHandler
                 request.Body.Position = 0;
             }
         }
-
-        return null;
     }
 
     /// <summary>

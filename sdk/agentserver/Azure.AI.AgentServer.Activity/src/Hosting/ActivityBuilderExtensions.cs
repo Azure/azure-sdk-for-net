@@ -8,6 +8,7 @@ using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Activity;
 
@@ -153,5 +154,10 @@ public static class ActivityBuilderExtensions
         builder.Services.AddSingleton<IOptions<ActivityServerOptions>>(Options.Create(options));
         builder.Services.AddActivityServerServices();
         ActivityStack.RegisterM365Services(builder.Services, options);
+
+        // Register the Activity protocol's ActivitySource with the tracer provider so the per-turn
+        // invoke_agent span (started by ActivityProtocolActivitySource) is sampled and exported.
+        // Done here from the Activity package so the core telemetry wiring stays protocol-agnostic.
+        builder.ConfigureTracing(tracing => tracing.AddSource(ActivityProtocolActivitySource.SourceName));
     }
 }
