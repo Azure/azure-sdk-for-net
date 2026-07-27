@@ -231,6 +231,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(expected));
+            Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type));
+            Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.False);
         }
 
         [TestCase]

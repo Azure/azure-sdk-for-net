@@ -35,7 +35,7 @@ public class ArmProviderSchema
     /// <param name="library">The management input library containing models cache</param>
     /// <param name="methodFilter">Optional predicate to filter non-resource methods</param>
     /// <returns>A new ArmProviderSchema instance</returns>
-    public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<NonResourceMethod, bool>? methodFilter = null)
+    public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<string, bool>? methodFilter = null)
     {
         var resourceMetadata = new List<ArmResourceMetadata>();
         var resourceChildren = new Dictionary<string, List<RequestPathPattern>>();
@@ -84,12 +84,10 @@ public class ArmProviderSchema
             using var document = JsonDocument.Parse(nonResourceMethodsData);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                var nonResourceMethod = NonResourceMethod.DeserializeNonResourceMethod(item);
-
-                // Apply filter if provided
-                if (methodFilter == null || methodFilter(nonResourceMethod))
+                var methodId = item.GetProperty("methodId").GetString() ?? throw new JsonException("methodId cannot be null");
+                if (methodFilter == null || methodFilter(methodId))
                 {
-                    nonResourceMethods.Add(nonResourceMethod);
+                    nonResourceMethods.Add(NonResourceMethod.DeserializeNonResourceMethod(item));
                 }
             }
         }
