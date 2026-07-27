@@ -371,6 +371,119 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
         #endregion ResolveEffectivePolicy
 
+        #region ResetDetector surface/dedup
+
+        [Test]
+        public void ShouldSurface_ResetInRange_NewerPointerPastEnd_Surfaces()
+        {
+            // Requested range [start, end]. An in-range reset must be surfaced even when the
+            // pointer's latest reset lands past the end of the range.
+            DateTimeOffset start = new DateTimeOffset(2025, 11, 19, 13, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2025, 11, 19, 15, 0, 0, TimeSpan.Zero);
+            DateTimeOffset resetTime = new DateTimeOffset(2025, 11, 19, 13, 30, 0, TimeSpan.Zero);
+
+            bool result = ResetDetector.ShouldSurface(
+                resetTime,
+                resetFileTime: ResetFileTimeFixture,
+                resetId: ResetIdFixture,
+                lastSeenResetFileTime: null,
+                lastSeenResetId: null,
+                rangeStart: start,
+                rangeEnd: end);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void ShouldSurface_ResetAfterRangeStart_PastEnd_StillSurfaces()
+        {
+            // A reset at or after the range start surfaces regardless of the upper bound: the
+            // pointer only ever references the latest reset.
+            DateTimeOffset start = new DateTimeOffset(2025, 11, 19, 13, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2025, 11, 19, 15, 0, 0, TimeSpan.Zero);
+            DateTimeOffset resetTime = new DateTimeOffset(2025, 11, 19, 16, 0, 0, TimeSpan.Zero);
+
+            bool result = ResetDetector.ShouldSurface(
+                resetTime,
+                resetFileTime: ResetFileTimeFixture,
+                resetId: ResetIdFixture,
+                lastSeenResetFileTime: null,
+                lastSeenResetId: null,
+                rangeStart: start,
+                rangeEnd: end);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void ShouldSurface_ResetBeforeRangeStart_DoesNotSurface()
+        {
+            DateTimeOffset start = new DateTimeOffset(2025, 11, 19, 13, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2025, 11, 19, 15, 0, 0, TimeSpan.Zero);
+            DateTimeOffset resetTime = new DateTimeOffset(2025, 11, 19, 12, 0, 0, TimeSpan.Zero);
+
+            bool result = ResetDetector.ShouldSurface(
+                resetTime,
+                resetFileTime: ResetFileTimeFixture,
+                resetId: ResetIdFixture,
+                lastSeenResetFileTime: null,
+                lastSeenResetId: null,
+                rangeStart: start,
+                rangeEnd: end);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void ShouldSurface_Streaming_Unbounded_SurfacesWhenNewer()
+        {
+            bool result = ResetDetector.ShouldSurface(
+                ResetTimeUtcFixture,
+                resetFileTime: ResetFileTimeFixture,
+                resetId: ResetIdFixture,
+                lastSeenResetFileTime: null,
+                lastSeenResetId: null,
+                rangeStart: null,
+                rangeEnd: null);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void ShouldSurface_SameResetId_DoesNotSurface()
+        {
+            // Resuming with a token whose LastSeenResetId equals the pointer's LatestResetId:
+            // the reset was already surfaced, so it must not be re-emitted even when the
+            // FILETIME comparison alone would not distinguish it.
+            bool result = ResetDetector.ShouldSurface(
+                ResetTimeUtcFixture,
+                resetFileTime: ResetFileTimeFixture,
+                resetId: ResetIdFixture,
+                lastSeenResetFileTime: ResetFileTimeFixture - 1,
+                lastSeenResetId: ResetIdFixture,
+                rangeStart: null,
+                rangeEnd: null);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void ShouldSurface_NotNewer_DoesNotSurface()
+        {
+            bool result = ResetDetector.ShouldSurface(
+                ResetTimeUtcFixture,
+                resetFileTime: ResetFileTimeFixture,
+                resetId: ResetIdFixture,
+                lastSeenResetFileTime: ResetFileTimeFixture,
+                lastSeenResetId: Guid.NewGuid(),
+                rangeStart: null,
+                rangeEnd: null);
+
+            Assert.IsFalse(result);
+        }
+
+        #endregion ResetDetector surface/dedup
+
         #region Helpers
 
         private static Mock<BlobContainerClient> MockContainer()

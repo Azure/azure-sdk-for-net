@@ -77,16 +77,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (pointer != null)
             {
                 resetTime = pointer.LatestResetTimeUtc;
-                bool resetIsNewer = !lastSeenResetFileTime.HasValue
-                    || pointer.LatestResetFileTime > lastSeenResetFileTime.Value;
-                bool resetInRange = _startTime.HasValue
-                    && _endTime.HasValue
-                    && resetTime >= _startTime.Value
-                    && resetTime <= _endTime.Value;
-
-                bool shouldSurface = resetIsNewer && (
-                    (!_startTime.HasValue && !_endTime.HasValue)
-                    || resetInRange);
+                bool shouldSurface = ResetDetector.ShouldSurface(
+                    resetTime,
+                    pointer.LatestResetFileTime,
+                    pointer.LatestResetId,
+                    lastSeenResetFileTime,
+                    lastSeenResetId,
+                    rangeStart: _startTime,
+                    rangeEnd: _endTime);
 
                 if (shouldSurface)
                 {
