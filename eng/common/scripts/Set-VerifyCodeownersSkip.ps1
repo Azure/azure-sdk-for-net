@@ -39,7 +39,7 @@ Set-StrictMode -Version 4
 $ErrorActionPreference = 'Stop'
 
 if ($SkipVerifyCodeowners -ne 'true') {
-    Write-Host "Skip.VerifyCodeowners is not set. Verification will run."
+    Write-Host "Skip.VerifyCodeowners is not set to 'true' (value: '$SkipVerifyCodeowners'). Verification will run."
     Write-Host "##vso[task.setvariable variable=$OutputVariableName]false"
     return
 }
