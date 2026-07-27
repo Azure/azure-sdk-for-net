@@ -292,6 +292,21 @@ hand-written forwarder — is unavoidable. Emitting the forwarding shim once the
 mechanical; the Obsolete message follows the repo template ("This property is deprecated … Please
 use XXX instead").
 
+**Did the wire names change?** No — in every cataloged case the JSON wire name was **unchanged**;
+only the C# property name was renamed (a client-side rename, e.g. via `@clientName`). Verified
+against the generated serialization:
+- `ProductType` → `CertificateProductType`, wire name still `productType`
+  (`src/Generated/Models/AppServiceCertificateOrderProperties.Serialization.cs:113`).
+- `ProfileType` → `CertificateProfileType`, wire name still `profileType`
+  (`src/Generated/Models/CertificateProfileProperties.Serialization.cs:82`).
+- `LicensesSubscribed` → `SubscribedLicensesCount`, wire name still `licensesSubscribed`
+  (`src/Generated/Models/LambdaTestHyperExecuteOfferPartnerProperties.Serialization.cs:82`).
+
+In each case the retained wire name is exactly the camelCase of the *old* C# name, which is why the
+JSON property name works as the anchor for recovering the old→new mapping. The residual 🟡 risk is
+the case not observed in this survey — a property whose wire name *also* changed — where the anchor
+no longer holds and a per-property hint is required.
+
 **Base generator today:** ❌ not covered. The base generator preserves a renamed *parameter*
 name and a property's *type*, but does not keep a renamed **property** under its old name as an
 `[Obsolete]` forwarding shim — that remains an Azure-specific automation opportunity.
@@ -340,7 +355,11 @@ service dropped but that shipped previously.
 - `sdk/batch/Azure.ResourceManager.Batch/src/Custom/Models/BatchAccountCertificateProvisioningState.cs:12`
 
 **Automation approach:** the old contract lists the removed enum members; re-emitting them
-(with the standard extensible-enum boilerplate) is fully mechanical. Cross-references the
+(with the standard extensible-enum boilerplate) is fully mechanical. Tracked upstream in
+[microsoft/typespec#11417](https://github.com/microsoft/typespec/issues/11417) ("Investigate if
+Extensible Enums Members Can Be Restored via Back Compat"), which notes a likely limitation: the
+base generator does not currently pull symbols when loading a library's last-contract DLL, so the
+removed extensible-enum members are not visible to the back-compat pass today. Cross-references the
 provisioning enum work in [#60442](https://github.com/Azure/azure-sdk-for-net/issues/60442).
 
 **Base generator today:** ⚠️ partial. The base generator already re-adds dropped members of
