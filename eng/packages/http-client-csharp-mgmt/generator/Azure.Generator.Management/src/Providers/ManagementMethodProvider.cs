@@ -14,10 +14,10 @@ namespace Azure.Generator.Management.Providers
 {
     /// <summary>
     /// Represents a management convenience method together with generated types referenced only by its body.
-    /// MTG hybrid post-processing determines which generated providers to retain from type-level dependency
-    /// metadata, but management method bodies can reference collection results, pageable wrappers, LRO wrappers,
-    /// and operation sources that do not appear in their signatures. Enclosing management providers aggregate
-    /// this metadata through <see cref="GetBodyDependencyTypes"/> so those required helpers are not pruned.
+    /// MTG builds a provider reference map before code emission to determine which generated providers to retain.
+    /// Management method bodies can reference collection results, pageable wrappers, LRO wrappers, and operation
+    /// sources that do not appear in their signatures. Enclosing management providers aggregate this metadata
+    /// through <see cref="GetBodyDependencyTypes"/> so the reference map includes those required helpers.
     /// </summary>
     internal sealed class ManagementMethodProvider : ScmMethodProvider
     {
