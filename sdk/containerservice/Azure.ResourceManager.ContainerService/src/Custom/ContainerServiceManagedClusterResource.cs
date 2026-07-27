@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ignorePodDisruptionBudget"> This parameter is no longer supported by the service and is ignored. It is retained for backward compatibility only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken)
             => await DeleteAsync(waitUntil, default(ETag?), cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ignorePodDisruptionBudget"> This parameter is no longer supported by the service and is ignored. It is retained for backward compatibility only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, CancellationToken cancellationToken)
             => Delete(waitUntil, default(ETag?), cancellationToken: cancellationToken);
 
         /// <summary>
