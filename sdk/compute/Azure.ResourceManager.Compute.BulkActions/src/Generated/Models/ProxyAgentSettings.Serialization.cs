@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("imds"u8);
                 writer.WriteObjectValue(Imds, options);
             }
-            if (Optional.IsDefined(AddProxyAgentExtension))
+            if (Optional.IsDefined(ShouldAddProxyAgentExtension))
             {
                 writer.WritePropertyName("addProxyAgentExtension"u8);
-                writer.WriteBooleanValue(AddProxyAgentExtension.Value);
+                writer.WriteBooleanValue(ShouldAddProxyAgentExtension.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             int? keyIncarnationId = default;
             HostEndpointSettings wireServer = default;
             HostEndpointSettings imds = default;
-            bool? addProxyAgentExtension = default;
+            bool? shouldAddProxyAgentExtension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    addProxyAgentExtension = prop.Value.GetBoolean();
+                    shouldAddProxyAgentExtension = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 keyIncarnationId,
                 wireServer,
                 imds,
-                addProxyAgentExtension,
+                shouldAddProxyAgentExtension,
                 additionalBinaryDataProperties);
         }
     }

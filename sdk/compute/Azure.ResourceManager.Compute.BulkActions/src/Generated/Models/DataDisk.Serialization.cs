@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToString());
             }
-            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
-                writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
+                writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
             }
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("sourceResource"u8);
                 writer.WriteObjectValue(SourceResource, options);
             }
-            if (Optional.IsDefined(ToBeDetached))
+            if (Optional.IsDefined(IsToBeDetached))
             {
                 writer.WritePropertyName("toBeDetached"u8);
-                writer.WriteBooleanValue(ToBeDetached.Value);
+                writer.WriteBooleanValue(IsToBeDetached.Value);
             }
             if (Optional.IsDefined(DetachOption))
             {
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
             CachingTypes? caching = default;
-            bool? writeAcceleratorEnabled = default;
+            bool? isWriteAcceleratorEnabled = default;
             DiskCreateOptionTypes createOption = default;
             int? diskSizeGB = default;
             ManagedDiskParametersContent managedDisk = default;
             ApiEntityReference sourceResource = default;
-            bool? toBeDetached = default;
+            bool? isToBeDetached = default;
             DiskDetachOptionTypes? detachOption = default;
             DiskDeleteOptionTypes? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    writeAcceleratorEnabled = prop.Value.GetBoolean();
+                    isWriteAcceleratorEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("createOption"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    toBeDetached = prop.Value.GetBoolean();
+                    isToBeDetached = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("detachOption"u8))
@@ -312,12 +312,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 vhd,
                 image,
                 caching,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
                 managedDisk,
                 sourceResource,
-                toBeDetached,
+                isToBeDetached,
                 detachOption,
                 deleteOption,
                 additionalBinaryDataProperties);

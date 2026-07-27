@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfigurationProperties"/>. </summary>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary, DeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeBulkActionsSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeBulkActionsSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, DeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeBulkActionsSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeBulkActionsSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Primary = primary;
+            IsPrimary = isPrimary;
             DeleteOption = deleteOption;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             DisableTcpStateTracking = disableTcpStateTracking;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
-        public bool? Primary { get; set; }
+        public bool? IsPrimary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
         public DeleteConfig? DeleteOption { get; set; }

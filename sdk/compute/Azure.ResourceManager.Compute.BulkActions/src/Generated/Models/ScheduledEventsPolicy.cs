@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </summary>
-        public bool? AllInstancesDownAutomaticallyApprove
+        public bool? IsAllInstancesDownAutomaticallyApproved
         {
             get
             {
-                return AllInstancesDown is null ? default : AllInstancesDown.AllInstancesDownAutomaticallyApprove;
+                return AllInstancesDown is null ? default : AllInstancesDown.IsAllInstancesDownAutomaticallyApproved;
             }
             set
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 {
                     AllInstancesDown = new AllInstancesDown();
                 }
-                AllInstancesDown.AllInstancesDownAutomaticallyApprove = value;
+                AllInstancesDown.IsAllInstancesDownAutomaticallyApproved = value;
             }
         }
     }

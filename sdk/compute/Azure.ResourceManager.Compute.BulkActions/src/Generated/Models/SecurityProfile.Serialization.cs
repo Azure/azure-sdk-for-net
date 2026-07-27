@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings, options);
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (Optional.IsDefined(IsEncryptionAtHost))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
-                writer.WriteBooleanValue(EncryptionAtHost.Value);
+                writer.WriteBooleanValue(IsEncryptionAtHost.Value);
             }
             if (Optional.IsDefined(SecurityType))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             UefiSettings uefiSettings = default;
-            bool? encryptionAtHost = default;
+            bool? isEncryptionAtHost = default;
             SecurityTypes? securityType = default;
             EncryptionIdentity encryptionIdentity = default;
             ProxyAgentSettings proxyAgentSettings = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    encryptionAtHost = prop.Value.GetBoolean();
+                    isEncryptionAtHost = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("securityType"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             return new SecurityProfile(
                 uefiSettings,
-                encryptionAtHost,
+                isEncryptionAtHost,
                 securityType,
                 encryptionIdentity,
                 proxyAgentSettings,

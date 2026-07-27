@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(IsProvisionVMAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(IsProvisionVMAgent.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpdates))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            bool? provisionVMAgent = default;
+            bool? isProvisionVMAgent = default;
             bool? enableAutomaticUpdates = default;
             string timeZone = default;
             IList<AdditionalUnattendContent> additionalUnattendContent = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    provisionVMAgent = prop.Value.GetBoolean();
+                    isProvisionVMAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpdates"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
             }
             return new WindowsConfiguration(
-                provisionVMAgent,
+                isProvisionVMAgent,
                 enableAutomaticUpdates,
                 timeZone,
                 additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),

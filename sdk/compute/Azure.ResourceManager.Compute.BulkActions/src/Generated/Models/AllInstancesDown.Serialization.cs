@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(AllInstancesDown)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AllInstancesDownAutomaticallyApprove))
+            if (Optional.IsDefined(IsAllInstancesDownAutomaticallyApproved))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AllInstancesDownAutomaticallyApprove.Value);
+                writer.WriteBooleanValue(IsAllInstancesDownAutomaticallyApproved.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            bool? allInstancesDownAutomaticallyApprove = default;
+            bool? isAllInstancesDownAutomaticallyApproved = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    allInstancesDownAutomaticallyApprove = prop.Value.GetBoolean();
+                    isAllInstancesDownAutomaticallyApproved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllInstancesDown(allInstancesDownAutomaticallyApprove, additionalBinaryDataProperties);
+            return new AllInstancesDown(isAllInstancesDownAutomaticallyApproved, additionalBinaryDataProperties);
         }
     }
 }

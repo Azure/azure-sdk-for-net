@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(BulkActionsVirtualMachineReimageParametersContent))]
     [ModelReaderWriterBuildable(typeof(BulkActionVMExtension))]
     [ModelReaderWriterBuildable(typeof(BulkActionVMExtensionProperties))]
-    [ModelReaderWriterBuildable(typeof(BulkactionVMProperties))]
+    [ModelReaderWriterBuildable(typeof(BulkActionVMProperties))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomListResult))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverride))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverrideBase))]

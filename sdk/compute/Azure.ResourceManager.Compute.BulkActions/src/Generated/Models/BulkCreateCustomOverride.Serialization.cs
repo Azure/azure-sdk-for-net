@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             string virtualMachineName = default;
-            BulkactionVMProperties virtualMachineProfile = default;
+            BulkActionVMProperties virtualMachineProfile = default;
             IDictionary<string, string> tags = default;
             VirtualMachineIdentity identity = default;
             ArmPlan plan = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    virtualMachineProfile = BulkactionVMProperties.DeserializeBulkactionVMProperties(prop.Value, options);
+                    virtualMachineProfile = BulkActionVMProperties.DeserializeBulkActionVMProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

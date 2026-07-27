@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="type"> The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineIdentity(string principalId, string tenantId, ResourceIdentityType? @type, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineIdentity(string principalId, string tenantId, ComputeBulkActionsIdentityType? @type, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string TenantId { get; }
 
         /// <summary> The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </summary>
-        public ResourceIdentityType? Type { get; set; }
+        public ComputeBulkActionsIdentityType? Type { get; set; }
 
         /// <summary> The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         public IDictionary<string, UserAssignedIdentitiesValue> UserAssignedIdentities { get; }

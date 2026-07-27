@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet, options);
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             ComputeBulkActionsSubResource subnet = default;
-            bool? primary = default;
+            bool? isPrimary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersions? privateIPAddressVersion = default;
             IList<ComputeBulkActionsSubResource> applicationSecurityGroups = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddressConfiguration"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             return new VirtualMachineNetworkInterfaceIPConfigurationProperties(
                 subnet,
-                primary,
+                isPrimary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
                 applicationSecurityGroups ?? new ChangeTrackingList<ComputeBulkActionsSubResource>(),

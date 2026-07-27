@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            BulkactionVMProperties virtualMachineProfile = default;
+            BulkActionVMProperties virtualMachineProfile = default;
             IList<BulkActionVMExtension> extensions = default;
             string computeApiVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (prop.NameEquals("virtualMachineProfile"u8))
                 {
-                    virtualMachineProfile = BulkactionVMProperties.DeserializeBulkactionVMProperties(prop.Value, options);
+                    virtualMachineProfile = BulkActionVMProperties.DeserializeBulkActionVMProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extensions"u8))

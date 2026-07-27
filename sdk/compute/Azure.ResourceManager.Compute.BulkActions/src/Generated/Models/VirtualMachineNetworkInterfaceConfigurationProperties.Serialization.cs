@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            bool? primary = default;
+            bool? isPrimary = default;
             DeleteConfig? deleteOption = default;
             bool? enableAcceleratedNetworking = default;
             bool? disableTcpStateTracking = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
             }
             return new VirtualMachineNetworkInterfaceConfigurationProperties(
-                primary,
+                isPrimary,
                 deleteOption,
                 enableAcceleratedNetworking,
                 disableTcpStateTracking,

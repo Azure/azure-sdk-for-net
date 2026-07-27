@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(IsAutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(IsAutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SuppressFailures))
+            if (Optional.IsDefined(IsSuppressFailures))
             {
                 writer.WritePropertyName("suppressFailures"u8);
-                writer.WriteBooleanValue(SuppressFailures.Value);
+                writer.WriteBooleanValue(IsSuppressFailures.Value);
             }
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string publisher = default;
             string @type = default;
             string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
+            bool? isAutoUpgradeMinorVersion = default;
             bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> protectedSettings = default;
-            bool? suppressFailures = default;
+            bool? isSuppressFailures = default;
             KeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    isAutoUpgradeMinorVersion = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    suppressFailures = prop.Value.GetBoolean();
+                    isSuppressFailures = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("protectedSettingsFromKeyVault"u8))
@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
+                isAutoUpgradeMinorVersion,
                 enableAutomaticUpgrade,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                suppressFailures,
+                isSuppressFailures,
                 protectedSettingsFromKeyVault,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

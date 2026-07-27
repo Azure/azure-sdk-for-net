@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy, options);
             }
-            if (Optional.IsDefined(VerifyVmAgentHealth))
+            if (Optional.IsDefined(ShouldVerifyVmAgentHealth))
             {
                 writer.WritePropertyName("verifyVmAgentHealth"u8);
-                writer.WriteBooleanValue(VerifyVmAgentHealth.Value);
+                writer.WriteBooleanValue(ShouldVerifyVmAgentHealth.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             OptimizationPreference? optimizationPreference = default;
             BulkOperationRetryPolicy retryPolicy = default;
-            bool? verifyVmAgentHealth = default;
+            bool? shouldVerifyVmAgentHealth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    verifyVmAgentHealth = prop.Value.GetBoolean();
+                    shouldVerifyVmAgentHealth = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, verifyVmAgentHealth, additionalBinaryDataProperties);
+            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, additionalBinaryDataProperties);
         }
     }
 }

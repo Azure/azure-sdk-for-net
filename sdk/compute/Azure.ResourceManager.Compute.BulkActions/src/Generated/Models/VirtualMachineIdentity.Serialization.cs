@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             string principalId = default;
             string tenantId = default;
-            ResourceIdentityType? @type = default;
+            ComputeBulkActionsIdentityType? @type = default;
             IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToResourceIdentityType();
+                    @type = prop.Value.GetString().ToComputeBulkActionsIdentityType();
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))

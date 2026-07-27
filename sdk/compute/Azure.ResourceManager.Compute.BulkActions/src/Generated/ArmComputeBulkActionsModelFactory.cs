@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="verifyVmAgentHealth"> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </param>
+        /// <param name="shouldVerifyVmAgentHealth"> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </param>
         /// <returns> A new <see cref="Models.BulkActionExecutionParameterDetail"/> instance for mocking. </returns>
-        public static BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(OptimizationPreference? optimizationPreference = default, BulkOperationRetryPolicy retryPolicy = default, bool? verifyVmAgentHealth = default)
+        public static BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(OptimizationPreference? optimizationPreference = default, BulkOperationRetryPolicy retryPolicy = default, bool? shouldVerifyVmAgentHealth = default)
         {
-            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, verifyVmAgentHealth, default);
+            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, default);
         }
 
         /// <param name="retryCount"> Retry count for user request. </param>
@@ -396,13 +396,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new ReimagePayload(baseProfile, (resourceOverrides ?? new ChangeTrackingList<ReimageResourceOverride>()).ToList(), default);
         }
 
-        /// <param name="tempDisk"> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </param>
+        /// <param name="isTempDisk"> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </param>
         /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
         /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
         /// <returns> A new <see cref="Models.BulkActionsVirtualMachineReimageParametersContent"/> instance for mocking. </returns>
-        public static BulkActionsVirtualMachineReimageParametersContent BulkActionsVirtualMachineReimageParametersContent(bool? tempDisk = default, string exactVersion = default, BulkActionsOsProfileProvisioningContent osProfile = default)
+        public static BulkActionsVirtualMachineReimageParametersContent BulkActionsVirtualMachineReimageParametersContent(bool? isTempDisk = default, string exactVersion = default, BulkActionsOsProfileProvisioningContent osProfile = default)
         {
-            return new BulkActionsVirtualMachineReimageParametersContent(tempDisk, exactVersion, osProfile, default);
+            return new BulkActionsVirtualMachineReimageParametersContent(isTempDisk, exactVersion, osProfile, default);
         }
 
         /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; <b>Minimum-length (Windows):</b> 8 characters &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 6 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 123 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Linux):</b> 72 characters &lt;br&gt;&lt;br&gt; <b>Complexity requirements:</b> 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="extensions"> Virtual Machine Extensions Array to be specified according to specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachine.json#/definitions/VirtualMachineExtension. </param>
         /// <param name="computeApiVersion"> Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machines. The default value will be the latest supported computeApiVersion by LaunchBulkInstancesOperation. </param>
         /// <returns> A new <see cref="Models.ComputeProfile"/> instance for mocking. </returns>
-        public static ComputeProfile ComputeProfile(BulkactionVMProperties virtualMachineProfile = default, IEnumerable<BulkActionVMExtension> extensions = default, string computeApiVersion = default)
+        public static ComputeProfile ComputeProfile(BulkActionVMProperties virtualMachineProfile = default, IEnumerable<BulkActionVMExtension> extensions = default, string computeApiVersion = default)
         {
             extensions ??= new ChangeTrackingList<BulkActionVMExtension>();
 
@@ -617,12 +617,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="capacityReservationGroupId"> The ID of the sub-resource. </param>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
-        /// <returns> A new <see cref="Models.BulkactionVMProperties"/> instance for mocking. </returns>
-        public static BulkactionVMProperties BulkactionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy = default, StorageProfile storageProfile = default, HardwareProfile hardwareProfile = default, AdditionalCapabilities additionalCapabilities = default, OSProfile osProfile = default, NetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, string licenseType = default, string extensionsTimeBudget = default, ScheduledEventsProfile scheduledEventsProfile = default, string userData = default, string capacityReservationGroupId = default, IEnumerable<VMGalleryApplication> galleryApplications = default, IEnumerable<BulkActionVMExtension> vmExtensions = default)
+        /// <returns> A new <see cref="Models.BulkActionVMProperties"/> instance for mocking. </returns>
+        public static BulkActionVMProperties BulkActionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy = default, StorageProfile storageProfile = default, HardwareProfile hardwareProfile = default, AdditionalCapabilities additionalCapabilities = default, OSProfile osProfile = default, NetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, string licenseType = default, string extensionsTimeBudget = default, ScheduledEventsProfile scheduledEventsProfile = default, string userData = default, string capacityReservationGroupId = default, IEnumerable<VMGalleryApplication> galleryApplications = default, IEnumerable<BulkActionVMExtension> vmExtensions = default)
         {
             vmExtensions ??= new ChangeTrackingList<BulkActionVMExtension>();
 
-            return new BulkactionVMProperties(
+            return new BulkActionVMProperties(
                 scheduledEventsPolicy,
                 storageProfile,
                 hardwareProfile,
@@ -644,11 +644,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="userInitiatedRedeployAutomaticallyApprove"> Specifies Redeploy Scheduled Event related configurations. </param>
         /// <param name="userInitiatedRebootAutomaticallyApprove"> Specifies Reboot Scheduled Event related configurations. </param>
         /// <param name="scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph"> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </param>
-        /// <param name="allInstancesDownAutomaticallyApprove"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
+        /// <param name="isAllInstancesDownAutomaticallyApproved"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
         /// <returns> A new <see cref="Models.ScheduledEventsPolicy"/> instance for mocking. </returns>
-        public static ScheduledEventsPolicy ScheduledEventsPolicy(bool? userInitiatedRedeployAutomaticallyApprove = default, bool? userInitiatedRebootAutomaticallyApprove = default, EventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? allInstancesDownAutomaticallyApprove = default)
+        public static ScheduledEventsPolicy ScheduledEventsPolicy(bool? userInitiatedRedeployAutomaticallyApprove = default, bool? userInitiatedRebootAutomaticallyApprove = default, EventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? isAllInstancesDownAutomaticallyApproved = default)
         {
-            return new ScheduledEventsPolicy(userInitiatedRedeployAutomaticallyApprove is null ? default : new UserInitiatedRedeploy(userInitiatedRedeployAutomaticallyApprove, default), userInitiatedRebootAutomaticallyApprove is null ? default : new UserInitiatedReboot(userInitiatedRebootAutomaticallyApprove, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), allInstancesDownAutomaticallyApprove is null ? default : new AllInstancesDown(allInstancesDownAutomaticallyApprove, default), default);
+            return new ScheduledEventsPolicy(userInitiatedRedeployAutomaticallyApprove is null ? default : new UserInitiatedRedeploy(userInitiatedRedeployAutomaticallyApprove, default), userInitiatedRebootAutomaticallyApprove is null ? default : new UserInitiatedReboot(userInitiatedRebootAutomaticallyApprove, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), isAllInstancesDownAutomaticallyApproved is null ? default : new AllInstancesDown(isAllInstancesDownAutomaticallyApproved, default), default);
         }
 
         /// <param name="enable"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>
@@ -705,14 +705,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="vhdUri"> Specifies the virtual hard disk's uri. </param>
         /// <param name="imageUri"> Specifies the virtual hard disk's uri. </param>
         /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="diffDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
         /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. For an ephemeral OS Disk, the default value is set to Delete. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
-        public static OSDisk OSDisk(OperatingSystemTypes? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, string vhdUri = default, string imageUri = default, CachingTypes? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ManagedDiskParametersContent managedDisk = default, DiskDeleteOptionTypes? deleteOption = default)
+        public static OSDisk OSDisk(OperatingSystemTypes? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, string vhdUri = default, string imageUri = default, CachingTypes? caching = default, bool? isWriteAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ManagedDiskParametersContent managedDisk = default, DiskDeleteOptionTypes? deleteOption = default)
         {
             return new OSDisk(
                 osType,
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 vhdUri is null ? default : new VirtualHardDisk(vhdUri, default),
                 imageUri is null ? default : new VirtualHardDisk(imageUri, default),
                 caching,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 diffDiskSettings,
                 createOption,
                 diskSizeGB,
@@ -793,16 +793,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="vhdUri"> Specifies the virtual hard disk's uri. </param>
         /// <param name="imageUri"> Specifies the virtual hard disk's uri. </param>
         /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </param>
         /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="sourceResourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
-        /// <param name="toBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
+        /// <param name="isToBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
         /// <returns> A new <see cref="Models.DataDisk"/> instance for mocking. </returns>
-        public static DataDisk DataDisk(int lun = default, string name = default, string vhdUri = default, string imageUri = default, CachingTypes? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ManagedDiskParametersContent managedDisk = default, string sourceResourceId = default, bool? toBeDetached = default, DiskDetachOptionTypes? detachOption = default, DiskDeleteOptionTypes? deleteOption = default)
+        public static DataDisk DataDisk(int lun = default, string name = default, string vhdUri = default, string imageUri = default, CachingTypes? caching = default, bool? isWriteAcceleratorEnabled = default, DiskCreateOptionTypes createOption = default, int? diskSizeGB = default, ManagedDiskParametersContent managedDisk = default, string sourceResourceId = default, bool? isToBeDetached = default, DiskDetachOptionTypes? detachOption = default, DiskDeleteOptionTypes? deleteOption = default)
         {
             return new DataDisk(
                 lun,
@@ -810,12 +810,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 vhdUri is null ? default : new VirtualHardDisk(vhdUri, default),
                 imageUri is null ? default : new VirtualHardDisk(imageUri, default),
                 caching,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
                 managedDisk,
                 sourceResourceId is null ? default : new ApiEntityReference(sourceResourceId, default),
-                toBeDetached,
+                isToBeDetached,
                 detachOption,
                 deleteOption,
                 default);
@@ -837,12 +837,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new VmSizeProperties(vCpusAvailable, vCpusPerCore, default);
         }
 
-        /// <param name="ultraSSDEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
-        /// <param name="hibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
+        /// <param name="isUltraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
+        /// <param name="isHibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
         /// <returns> A new <see cref="Models.AdditionalCapabilities"/> instance for mocking. </returns>
-        public static AdditionalCapabilities AdditionalCapabilities(bool? ultraSSDEnabled = default, bool? hibernationEnabled = default)
+        public static AdditionalCapabilities AdditionalCapabilities(bool? isUltraSsdEnabled = default, bool? isHibernationEnabled = default)
         {
-            return new AdditionalCapabilities(ultraSSDEnabled, hibernationEnabled, default);
+            return new AdditionalCapabilities(isUltraSsdEnabled, isHibernationEnabled, default);
         }
 
         /// <param name="computerName"> Specifies the host OS name of the virtual machine. This name cannot be updated after the VM is created. <b>Max-length (Windows):</b> 15 characters. <b>Max-length (Linux):</b> 64 characters. For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules). </param>
@@ -853,9 +853,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
         /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
-        /// <param name="requireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
+        /// <param name="doesRequireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
         /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
-        public static OSProfile OSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? allowExtensionOperations = default, bool? requireGuestProvisionSignal = default)
+        public static OSProfile OSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? allowExtensionOperations = default, bool? doesRequireGuestProvisionSignal = default)
         {
             secrets ??= new ChangeTrackingList<VaultSecretGroup>();
 
@@ -868,23 +868,23 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 linuxConfiguration,
                 (secrets ?? new ChangeTrackingList<VaultSecretGroup>()).ToList(),
                 allowExtensionOperations,
-                requireGuestProvisionSignal,
+                doesRequireGuestProvisionSignal,
                 default);
         }
 
-        /// <param name="provisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="isProvisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="enableAutomaticUpdates"> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </param>
         /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Possible values can be [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id) value from time zones returned by [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones). </param>
         /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRMListeners"> The list of Windows Remote Management listeners. </param>
         /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
-        public static WindowsConfiguration WindowsConfiguration(bool? provisionVMAgent = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
+        public static WindowsConfiguration WindowsConfiguration(bool? isProvisionVMAgent = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
         {
             additionalUnattendContent ??= new ChangeTrackingList<AdditionalUnattendContent>();
 
             return new WindowsConfiguration(
-                provisionVMAgent,
+                isProvisionVMAgent,
                 enableAutomaticUpdates,
                 timeZone,
                 (additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>()).ToList(),
@@ -914,11 +914,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
-        /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        /// <param name="shouldBypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
         /// <returns> A new <see cref="Models.WindowsVMGuestPatchAutomaticByPlatformSettings"/> instance for mocking. </returns>
-        public static WindowsVMGuestPatchAutomaticByPlatformSettings WindowsVMGuestPatchAutomaticByPlatformSettings(WindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? bypassPlatformSafetyChecksOnUserSchedule = default)
+        public static WindowsVMGuestPatchAutomaticByPlatformSettings WindowsVMGuestPatchAutomaticByPlatformSettings(WindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? shouldBypassPlatformSafetyChecksOnUserSchedule = default)
         {
-            return new WindowsVMGuestPatchAutomaticByPlatformSettings(rebootSetting, bypassPlatformSafetyChecksOnUserSchedule, default);
+            return new WindowsVMGuestPatchAutomaticByPlatformSettings(rebootSetting, shouldBypassPlatformSafetyChecksOnUserSchedule, default);
         }
 
         /// <param name="protocol"> Specifies the protocol of WinRM listener. Possible values are: <b>http,</b> <b>https.</b>. </param>
@@ -931,16 +931,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
         /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
-        /// <param name="provisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="isProvisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
         /// <param name="enableVMAgentPlatformUpdates"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
         /// <returns> A new <see cref="Models.LinuxConfiguration"/> instance for mocking. </returns>
-        public static LinuxConfiguration LinuxConfiguration(bool? disablePasswordAuthentication = default, IEnumerable<SshPublicKey> sshPublicKeys = default, bool? provisionVMAgent = default, LinuxPatchSettings patchSettings = default, bool? enableVMAgentPlatformUpdates = default)
+        public static LinuxConfiguration LinuxConfiguration(bool? disablePasswordAuthentication = default, IEnumerable<SshPublicKey> sshPublicKeys = default, bool? isProvisionVMAgent = default, LinuxPatchSettings patchSettings = default, bool? enableVMAgentPlatformUpdates = default)
         {
             return new LinuxConfiguration(
                 disablePasswordAuthentication,
                 sshPublicKeys is null ? default : new SshConfiguration((sshPublicKeys ?? new ChangeTrackingList<SshPublicKey>()).ToList(), default),
-                provisionVMAgent,
+                isProvisionVMAgent,
                 patchSettings,
                 enableVMAgentPlatformUpdates,
                 default);
@@ -964,11 +964,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
-        /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        /// <param name="shouldBypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
         /// <returns> A new <see cref="Models.LinuxVMGuestPatchAutomaticByPlatformSettings"/> instance for mocking. </returns>
-        public static LinuxVMGuestPatchAutomaticByPlatformSettings LinuxVMGuestPatchAutomaticByPlatformSettings(LinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? bypassPlatformSafetyChecksOnUserSchedule = default)
+        public static LinuxVMGuestPatchAutomaticByPlatformSettings LinuxVMGuestPatchAutomaticByPlatformSettings(LinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? shouldBypassPlatformSafetyChecksOnUserSchedule = default)
         {
-            return new LinuxVMGuestPatchAutomaticByPlatformSettings(rebootSetting, bypassPlatformSafetyChecksOnUserSchedule, default);
+            return new LinuxVMGuestPatchAutomaticByPlatformSettings(rebootSetting, shouldBypassPlatformSafetyChecksOnUserSchedule, default);
         }
 
         /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
@@ -1009,12 +1009,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new NetworkInterfaceReference(id, default, properties);
         }
 
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <returns> A new <see cref="Models.NetworkInterfaceReferenceProperties"/> instance for mocking. </returns>
-        public static NetworkInterfaceReferenceProperties NetworkInterfaceReferenceProperties(bool? primary = default, DeleteConfig? deleteOption = default)
+        public static NetworkInterfaceReferenceProperties NetworkInterfaceReferenceProperties(bool? isPrimary = default, DeleteConfig? deleteOption = default)
         {
-            return new NetworkInterfaceReferenceProperties(primary, deleteOption, default);
+            return new NetworkInterfaceReferenceProperties(isPrimary, deleteOption, default);
         }
 
         /// <param name="name"> The network interface configuration name. </param>
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new VirtualMachineNetworkInterfaceConfiguration(name, properties, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
@@ -1041,12 +1041,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary = default, DeleteConfig? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, string networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, string dscpConfigurationId = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default)
+        public static VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary = default, DeleteConfig? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, string networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, string dscpConfigurationId = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default)
         {
             ipConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
 
             return new VirtualMachineNetworkInterfaceConfigurationProperties(
-                primary,
+                isPrimary,
                 deleteOption,
                 enableAcceleratedNetworking,
                 disableTcpStateTracking,
@@ -1070,14 +1070,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="subnetId"> The ID of the sub-resource. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(string subnetId = default, bool? primary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersions? privateIPAddressVersion = default, IEnumerable<ComputeBulkActionsSubResource> applicationSecurityGroups = default, IEnumerable<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default)
+        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(string subnetId = default, bool? isPrimary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersions? privateIPAddressVersion = default, IEnumerable<ComputeBulkActionsSubResource> applicationSecurityGroups = default, IEnumerable<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default)
         {
             applicationSecurityGroups ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
             applicationGatewayBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
             return new VirtualMachineNetworkInterfaceIPConfigurationProperties(
                 subnetId is null ? default : new ComputeBulkActionsSubResource(subnetId, default),
-                primary,
+                isPrimary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
                 (applicationSecurityGroups ?? new ChangeTrackingList<ComputeBulkActionsSubResource>()).ToList(),
@@ -1154,28 +1154,28 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum compute api-version: 2020-12-01. </param>
-        /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
+        /// <param name="isEncryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </param>
         /// <param name="userAssignedIdentityResourceId"> Specifies ARM Resource ID of one of the user identities associated with the VM. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </param>
         /// <returns> A new <see cref="Models.SecurityProfile"/> instance for mocking. </returns>
-        public static SecurityProfile SecurityProfile(UefiSettings uefiSettings = default, bool? encryptionAtHost = default, SecurityTypes? securityType = default, string userAssignedIdentityResourceId = default, ProxyAgentSettings proxyAgentSettings = default)
+        public static SecurityProfile SecurityProfile(UefiSettings uefiSettings = default, bool? isEncryptionAtHost = default, SecurityTypes? securityType = default, string userAssignedIdentityResourceId = default, ProxyAgentSettings proxyAgentSettings = default)
         {
             return new SecurityProfile(
                 uefiSettings,
-                encryptionAtHost,
+                isEncryptionAtHost,
                 securityType,
                 userAssignedIdentityResourceId is null ? default : new EncryptionIdentity(userAssignedIdentityResourceId, default),
                 proxyAgentSettings,
                 default);
         }
 
-        /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
-        /// <param name="vTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <param name="isVTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
         /// <returns> A new <see cref="Models.UefiSettings"/> instance for mocking. </returns>
-        public static UefiSettings UefiSettings(bool? secureBootEnabled = default, bool? vTpmEnabled = default)
+        public static UefiSettings UefiSettings(bool? isSecureBootEnabled = default, bool? isVTpmEnabled = default)
         {
-            return new UefiSettings(secureBootEnabled, vTpmEnabled, default);
+            return new UefiSettings(isSecureBootEnabled, isVTpmEnabled, default);
         }
 
         /// <param name="enabled"> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </param>
@@ -1183,9 +1183,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="keyIncarnationId"> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
         /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
-        /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
+        /// <param name="shouldAddProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <returns> A new <see cref="Models.ProxyAgentSettings"/> instance for mocking. </returns>
-        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, Mode? mode = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? addProxyAgentExtension = default)
+        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, Mode? mode = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? shouldAddProxyAgentExtension = default)
         {
             return new ProxyAgentSettings(
                 enabled,
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 keyIncarnationId,
                 wireServer,
                 imds,
-                addProxyAgentExtension,
+                shouldAddProxyAgentExtension,
                 default);
         }
 
@@ -1241,17 +1241,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
-        /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
+        /// <param name="isTreatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
         /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
         /// <returns> A new <see cref="Models.VMGalleryApplication"/> instance for mocking. </returns>
-        public static VMGalleryApplication VMGalleryApplication(string tags = default, int? order = default, string packageReferenceId = default, string configurationReference = default, bool? treatFailureAsDeploymentFailure = default, bool? enableAutomaticUpgrade = default)
+        public static VMGalleryApplication VMGalleryApplication(string tags = default, int? order = default, string packageReferenceId = default, string configurationReference = default, bool? isTreatFailureAsDeploymentFailure = default, bool? enableAutomaticUpgrade = default)
         {
             return new VMGalleryApplication(
                 tags,
                 order,
                 packageReferenceId,
                 configurationReference,
-                treatFailureAsDeploymentFailure,
+                isTreatFailureAsDeploymentFailure,
                 enableAutomaticUpgrade,
                 default);
         }
@@ -1268,15 +1268,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> Specifies the type of the extension; an example is 'CustomScriptExtension'. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="isAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="isSuppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <returns> A new <see cref="Models.BulkActionVMExtensionProperties"/> instance for mocking. </returns>
-        public static BulkActionVMExtensionProperties BulkActionVMExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? suppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
+        public static BulkActionVMExtensionProperties BulkActionVMExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? isAutoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? isSuppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
         {
             settings ??= new ChangeTrackingDictionary<string, BinaryData>();
             protectedSettings ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -1287,11 +1287,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
+                isAutoUpgradeMinorVersion,
                 enableAutomaticUpgrade,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                suppressFailures,
+                isSuppressFailures,
                 protectedSettingsFromKeyVault,
                 (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -1434,7 +1434,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="plan"> Plan overriding the operation-level plan. </param>
         /// <param name="extensions"> Extensions. When non-empty they replace the operation-level extensions; when omitted the operation-level extensions are inherited. </param>
         /// <returns> A new <see cref="Models.BulkCreateCustomOverrideBase"/> instance for mocking. </returns>
-        public static BulkCreateCustomOverrideBase BulkCreateCustomOverrideBase(BulkactionVMProperties virtualMachineProfile = default, IDictionary<string, string> tags = default, VirtualMachineIdentity identity = default, ArmPlan plan = default, IEnumerable<BulkActionVMExtension> extensions = default)
+        public static BulkCreateCustomOverrideBase BulkCreateCustomOverrideBase(BulkActionVMProperties virtualMachineProfile = default, IDictionary<string, string> tags = default, VirtualMachineIdentity identity = default, ArmPlan plan = default, IEnumerable<BulkActionVMExtension> extensions = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             extensions ??= new ChangeTrackingList<BulkActionVMExtension>();
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="type"> The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <returns> A new <see cref="Models.VirtualMachineIdentity"/> instance for mocking. </returns>
-        public static VirtualMachineIdentity VirtualMachineIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
+        public static VirtualMachineIdentity VirtualMachineIdentity(string principalId = default, string tenantId = default, ComputeBulkActionsIdentityType? @type = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentitiesValue>();
 
@@ -1495,7 +1495,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="plan"> Plan overriding the operation-level plan. </param>
         /// <param name="extensions"> Extensions. When non-empty they replace the operation-level extensions; when omitted the operation-level extensions are inherited. </param>
         /// <returns> A new <see cref="Models.BulkCreateCustomOverride"/> instance for mocking. </returns>
-        public static BulkCreateCustomOverride BulkCreateCustomOverride(string virtualMachineName = default, BulkactionVMProperties virtualMachineProfile = default, IDictionary<string, string> tags = default, VirtualMachineIdentity identity = default, ArmPlan plan = default, IEnumerable<BulkActionVMExtension> extensions = default)
+        public static BulkCreateCustomOverride BulkCreateCustomOverride(string virtualMachineName = default, BulkActionVMProperties virtualMachineProfile = default, IDictionary<string, string> tags = default, VirtualMachineIdentity identity = default, ArmPlan plan = default, IEnumerable<BulkActionVMExtension> extensions = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             extensions ??= new ChangeTrackingList<BulkActionVMExtension>();

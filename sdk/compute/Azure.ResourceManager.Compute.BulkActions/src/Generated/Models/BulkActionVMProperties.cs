@@ -12,18 +12,18 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes the properties of a Virtual Machine for bulk create. </summary>
-    public partial class BulkactionVMProperties
+    public partial class BulkActionVMProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkactionVMProperties"/>. </summary>
-        public BulkactionVMProperties()
+        /// <summary> Initializes a new instance of <see cref="BulkActionVMProperties"/>. </summary>
+        public BulkActionVMProperties()
         {
             VmExtensions = new ChangeTrackingList<BulkActionVMExtension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkactionVMProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionVMProperties"/>. </summary>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="hardwareProfile"> Specifies the hardware profile for the virtual machine. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="vmExtensions"> Virtual Machine Extensions Array to be applied to the Virtual Machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkactionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, HardwareProfile hardwareProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IList<BulkActionVMExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVMProperties(ScheduledEventsPolicy scheduledEventsPolicy, StorageProfile storageProfile, HardwareProfile hardwareProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, NetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IList<BulkActionVMExtension> vmExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
