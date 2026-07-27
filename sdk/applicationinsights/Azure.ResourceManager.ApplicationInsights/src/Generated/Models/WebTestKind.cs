@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> ping. </summary>
         Ping,
         /// <summary> multistep. </summary>
-        MultiStep,
+        Multistep,
         /// <summary> standard. </summary>
         Standard
     }
