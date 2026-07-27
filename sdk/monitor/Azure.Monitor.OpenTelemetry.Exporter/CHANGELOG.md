@@ -8,6 +8,12 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.8.3 (2026-07-24)
+
+### Bugs Fixed
+
 - Hardened ingestion and Live Metrics redirect handling to reject untrusted destinations before replaying telemetry or caching the redirect. Redirect targets must now use HTTPS and match an approved Azure Monitor trust boundary, preventing credentials and telemetry from being forwarded to attacker-controlled endpoints.
   ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
 

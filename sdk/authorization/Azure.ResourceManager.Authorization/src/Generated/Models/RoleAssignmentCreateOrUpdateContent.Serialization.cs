@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RoleAssignmentCreateOrUpdateContent>
+    /// <summary> Role assignment create parameters. </summary>
+    public partial class RoleAssignmentCreateOrUpdateContent : IJsonModel<RoleAssignmentCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateOrUpdateContent"/> for deserialization. </summary>
+        internal RoleAssignmentCreateOrUpdateContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoleAssignmentCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRoleAssignmentCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleAssignmentCreateOrUpdateContent IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoleAssignmentCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="roleAssignmentCreateOrUpdateContent"> The <see cref="RoleAssignmentCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RoleAssignmentCreateOrUpdateContent roleAssignmentCreateOrUpdateContent)
+        {
+            if (roleAssignmentCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(roleAssignmentCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoleAssignmentCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,85 +85,22 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Scope))
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope);
-            }
-            writer.WritePropertyName("roleDefinitionId"u8);
-            writer.WriteStringValue(RoleDefinitionId);
-            writer.WritePropertyName("principalId"u8);
-            writer.WriteStringValue(PrincipalId);
-            if (Optional.IsDefined(PrincipalType))
-            {
-                writer.WritePropertyName("principalType"u8);
-                writer.WriteStringValue(PrincipalType.Value.ToString());
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Condition))
-            {
-                writer.WritePropertyName("condition"u8);
-                writer.WriteStringValue(Condition);
-            }
-            if (Optional.IsDefined(ConditionVersion))
-            {
-                writer.WritePropertyName("conditionVersion"u8);
-                writer.WriteStringValue(ConditionVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdOn"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
-            {
-                writer.WritePropertyName("updatedOn"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
-            {
-                writer.WritePropertyName("createdBy"u8);
-                writer.WriteStringValue(CreatedBy);
-            }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
-            {
-                writer.WritePropertyName("updatedBy"u8);
-                writer.WriteStringValue(UpdatedBy);
-            }
-            if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
-            {
-                if (DelegatedManagedIdentityResourceId != null)
-                {
-                    writer.WritePropertyName("delegatedManagedIdentityResourceId"u8);
-                    writer.WriteStringValue(DelegatedManagedIdentityResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("delegatedManagedIdentityResourceId");
-                }
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -115,182 +109,46 @@ namespace Azure.ResourceManager.Authorization.Models
             }
         }
 
-        RoleAssignmentCreateOrUpdateContent IJsonModel<RoleAssignmentCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleAssignmentCreateOrUpdateContent IJsonModel<RoleAssignmentCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoleAssignmentCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRoleAssignmentCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static RoleAssignmentCreateOrUpdateContent DeserializeRoleAssignmentCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RoleAssignmentCreateOrUpdateContent DeserializeRoleAssignmentCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string scope = default;
-            ResourceIdentifier roleDefinitionId = default;
-            Guid principalId = default;
-            RoleManagementPrincipalType? principalType = default;
-            string description = default;
-            string condition = default;
-            string conditionVersion = default;
-            DateTimeOffset? createdOn = default;
-            DateTimeOffset? updatedOn = default;
-            string createdBy = default;
-            string updatedBy = default;
-            ResourceIdentifier delegatedManagedIdentityResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            RoleAssignmentProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("scope"u8))
-                        {
-                            scope = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("roleDefinitionId"u8))
-                        {
-                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("principalId"u8))
-                        {
-                            principalId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("principalType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            principalType = new RoleManagementPrincipalType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("condition"u8))
-                        {
-                            condition = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("conditionVersion"u8))
-                        {
-                            conditionVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdOn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createdOn = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("updatedOn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updatedOn = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("createdBy"u8))
-                        {
-                            createdBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("updatedBy"u8))
-                        {
-                            updatedBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("delegatedManagedIdentityResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                delegatedManagedIdentityResourceId = null;
-                                continue;
-                            }
-                            delegatedManagedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = RoleAssignmentProperties.DeserializeRoleAssignmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RoleAssignmentCreateOrUpdateContent(
-                scope,
-                roleDefinitionId,
-                principalId,
-                principalType,
-                description,
-                condition,
-                conditionVersion,
-                createdOn,
-                updatedOn,
-                createdBy,
-                updatedBy,
-                delegatedManagedIdentityResourceId,
-                serializedAdditionalRawData);
+            return new RoleAssignmentCreateOrUpdateContent(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RoleAssignmentCreateOrUpdateContent IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRoleAssignmentCreateOrUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RoleAssignmentCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

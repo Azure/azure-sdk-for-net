@@ -160,7 +160,9 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharepointGroundingToolCallOutput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharePointGroundingToolOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharepointPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointPreviewTool is experimental and may change in future versions.

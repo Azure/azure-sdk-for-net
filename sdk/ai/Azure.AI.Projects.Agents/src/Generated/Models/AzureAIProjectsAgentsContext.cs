@@ -292,12 +292,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(VersionRefIndicator))]
     [ModelReaderWriterBuildable(typeof(VersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(VersionSelector))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WebIQPreviewTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(WebIQPreviewTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WebIQPreviewTool is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WebIQPreviewToolboxTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(WebIQPreviewToolboxTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WebIQPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebSearchApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolboxTool))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]

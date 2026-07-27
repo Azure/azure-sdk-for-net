@@ -126,6 +126,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="OpenAI.SharePointGroundingToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SharePointGroundingToolOptions SharePointGroundingToolOptions(IEnumerable<ToolProjectConnection> projectConnections = default)
         {
             projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
