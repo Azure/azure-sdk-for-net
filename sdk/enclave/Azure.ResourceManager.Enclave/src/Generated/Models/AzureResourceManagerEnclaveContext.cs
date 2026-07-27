@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Enclave.Models;
 using Azure.ResourceManager.Models;
 
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.Enclave
     [ModelReaderWriterBuildable(typeof(EnclaveVirtualNetwork))]
     [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransitHubResourceListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
