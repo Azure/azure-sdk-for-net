@@ -3,10 +3,68 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Provisioning;
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.Provisioning.EventHubs
 {
     public partial class EventHubsNamespace
     {
+        /// <summary> Gets or sets the private endpoint connection resources. </summary>
+        // The TypeSpec provisioning generator models private endpoint connections as child resources.
+        // Keep that new resource-based API under a distinct name so the shipped data-model API can coexist.
+        [CodeGenMember("PrivateEndpointConnections")]
+        public BicepList<EventHubsPrivateEndpointConnection> PrivateEndpointConnectionResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                return Properties.PrivateEndpointConnectionResources;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.PrivateEndpointConnectionResources = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the private endpoint connection data models.
+        /// This compatibility property preserves the previous generated model shape.
+        /// </summary>
+        // Preserve the old flattened data-model list for callers compiled against Azure.Provisioning.EventHubs 1.1.0.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
+#pragma warning disable CS0618 // EventHubsPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
+        public BicepList<EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections
+#pragma warning restore CS0618
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.PrivateEndpointConnections = value;
+            }
+        }
+
         public static partial class ResourceVersions
         {
             // Preserve historical API versions that shipped from the reflection-based provisioning generator.

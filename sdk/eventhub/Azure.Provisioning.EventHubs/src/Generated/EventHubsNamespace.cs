@@ -360,23 +360,6 @@ namespace Azure.Provisioning.EventHubs
             }
         }
 
-        /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
-        public BicepList<EventHubsPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointConnections;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new EHNamespaceProperties();
-                }
-                Properties.PrivateEndpointConnections = value;
-            }
-        }
-
         /// <summary> Gets or sets the DisableLocalAuth. </summary>
         public BicepValue<bool> DisableLocalAuth
         {

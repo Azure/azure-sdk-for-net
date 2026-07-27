@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventHubs
 {
-    /// <summary> Namespace properties supplied for create namespace operation. </summary>
     internal partial class EHNamespaceProperties : ProvisionableConstruct
     {
         private BicepValue<EventHubsTlsVersion> _minimumTlsVersion;
@@ -29,7 +28,6 @@ namespace Azure.Provisioning.EventHubs
         private BicepValue<bool> _kafkaEnabled;
         private BicepValue<bool> _zoneRedundant;
         private EventHubsEncryption _encryption;
-        private BicepList<EventHubsPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<bool> _disableLocalAuth;
         private BicepValue<string> _alternateName;
         private PlatformCapabilities _platformCapabilities;
@@ -221,21 +219,6 @@ namespace Azure.Provisioning.EventHubs
             }
         }
 
-        /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
-        public BicepList<EventHubsPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnections;
-            }
-            set
-            {
-                Initialize();
-                _privateEndpointConnections.Assign(value);
-            }
-        }
-
         /// <summary> Gets or sets the DisableLocalAuth. </summary>
         public BicepValue<bool> DisableLocalAuth
         {
@@ -346,7 +329,6 @@ namespace Azure.Provisioning.EventHubs
             _kafkaEnabled = DefineProperty<bool>(nameof(KafkaEnabled), new string[] { "kafkaEnabled" });
             _zoneRedundant = DefineProperty<bool>(nameof(ZoneRedundant), new string[] { "zoneRedundant" });
             _encryption = DefineModelProperty<EventHubsEncryption>(nameof(Encryption), new string[] { "encryption" });
-            _privateEndpointConnections = DefineListProperty<EventHubsPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
             _disableLocalAuth = DefineProperty<bool>(nameof(DisableLocalAuth), new string[] { "disableLocalAuth" });
             _alternateName = DefineProperty<string>(nameof(AlternateName), new string[] { "alternateName" });
             _platformCapabilities = DefineModelProperty<PlatformCapabilities>(nameof(PlatformCapabilities), new string[] { "platformCapabilities" });

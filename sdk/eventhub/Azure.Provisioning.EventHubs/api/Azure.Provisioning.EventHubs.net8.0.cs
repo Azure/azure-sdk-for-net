@@ -365,7 +365,9 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsTlsVersion> MinimumTlsVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsConfidentialComputeMode> PlatformCapabilitiesConfidentialComputeMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceBusEndpoint { get { throw null; } }
@@ -564,6 +566,19 @@ namespace Azure.Provisioning.EventHubs
             public static readonly string V2024_01_01;
             public static readonly string V2026_01_01;
         }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version. Please use EventHubsPrivateEndpointConnection instead.")]
+    public partial class EventHubsPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public EventHubsPrivateEndpointConnectionData() { }
+        public Azure.Provisioning.EventHubs.EventHubsPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsPrivateEndpointConnectionProvisioningState
     {
