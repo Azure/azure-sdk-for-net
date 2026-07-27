@@ -402,6 +402,68 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void Base64ResourcePropertyUsesBase64Format()
+        {
+            var blobProperty = CreateProperty("Blob", type: InputPrimitiveType.Base64);
+            var metadataProperty = CreateProperty("Metadata", type: InputPrimitiveType.Any);
+            var model = CreateModel("WritableWidget", [blobProperty, metadataProperty]);
+            var writableResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(writableResource);
+
+            var blobInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(blobProperty);
+            var metadataInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(metadataProperty);
+
+            Assert.That(blobInfo, Is.Not.Null);
+            Assert.That(blobInfo!.Format, Is.EqualTo("base64"));
+            Assert.That(metadataInfo, Is.Not.Null);
+            Assert.That(metadataInfo!.Format, Is.Null);
+        }
+
+        [Test]
+        public void Base64ModelPropertyUsesBase64Format()
+        {
+            var blobProperty = CreateProperty("Blob", type: InputPrimitiveType.Base64);
+            var metadataProperty = CreateProperty("Metadata", type: InputPrimitiveType.Any);
+            var detailsModel = CreateModel("WritableWidgetDetails", [blobProperty, metadataProperty]);
+            var detailsProperty = CreateProperty("Details", type: detailsModel);
+            var resourceModel = CreateModel("WritableWidget", [detailsProperty]);
+            var writableResource = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, detailsModel]);
+            var resourceProvider = CreateResourceProvider(writableResource);
+            RegisterResourceProviders(resourceProvider);
+            var provider = new ProvisioningModelProvider(detailsModel);
+
+            var blobInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(blobProperty);
+            var metadataInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(metadataProperty);
+
+            Assert.That(blobInfo, Is.Not.Null);
+            Assert.That(blobInfo!.Format, Is.EqualTo("base64"));
+            Assert.That(metadataInfo, Is.Not.Null);
+            Assert.That(metadataInfo!.Format, Is.Null);
+        }
+
+        [Test]
         public void ReadOnlyResourceConstructorIsInternal()
         {
             var model = CreateModel("ReadOnlyWidget");

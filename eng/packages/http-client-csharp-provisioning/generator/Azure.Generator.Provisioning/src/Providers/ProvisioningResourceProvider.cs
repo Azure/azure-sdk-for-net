@@ -102,7 +102,8 @@ namespace Azure.Generator.Provisioning.Providers
                 propInfo.IsRequired,
                 propInfo.BicepPath,
                 propInfo.DefaultValue,
-                propInfo.TypeOverride);
+                propInfo.TypeOverride,
+                propInfo.Format);
         }
 
         /// <summary>
@@ -518,7 +519,7 @@ namespace Azure.Generator.Provisioning.Providers
                     typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
 
-                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride, BicepTypeHelpers.GetLiteralFormat(prop.Type)));
             }
         }
 
@@ -581,7 +582,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue, provProp.Format),
                         typeArgs,
                         false)
                 ).Terminate());
@@ -911,7 +912,8 @@ namespace Azure.Generator.Provisioning.Providers
                     bicepPath,
                     prop.IsReadOnly,
                     !prop.IsReadOnly && _isSettableResource,
-                    prop.IsRequired));
+                    prop.IsRequired,
+                    Format: BicepTypeHelpers.GetLiteralFormat(prop.Type)));
             }
             return result;
         }
@@ -941,7 +943,8 @@ namespace Azure.Generator.Provisioning.Providers
             bool IsSettable,
             bool IsRequired,
             string? DefaultValue = null,
-            CSharpType? TypeOverride = null);
+            CSharpType? TypeOverride = null,
+            string? Format = null);
 
         // ── ResourceVersions nested class ────────────────────────────
 
