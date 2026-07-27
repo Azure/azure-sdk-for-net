@@ -9,10 +9,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
-    /// <summary>
-    /// Describes the mechanism for performing a scaling operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
-    /// </summary>
+    /// <summary> Describes the mechanism for performing a scaling operation. </summary>
     public partial class ManagedServiceScalingMechanism : ProvisionableConstruct
     {
         /// <summary> Creates a new ManagedServiceScalingMechanism. </summary>

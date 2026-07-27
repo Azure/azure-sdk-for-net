@@ -10,14 +10,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
-    /// <summary> The service resource properties. </summary>
-    public partial class ManagedServiceProperties : ProvisionableConstruct
+    /// <summary> The common service resource properties. </summary>
+    internal partial class ManagedServiceBaseProperties : ProvisionableConstruct
     {
-        private BicepValue<string> _provisioningState;
-        private BicepValue<string> _serviceTypeName;
-        private ManagedServicePartitionScheme _partitionDescription;
-        private BicepValue<ManagedServicePackageActivationMode> _servicePackageActivationMode;
-        private BicepValue<string> _serviceDnsName;
         private BicepValue<string> _placementConstraints;
         private BicepList<ManagedServiceCorrelation> _correlationScheme;
         private BicepList<ManagedServiceLoadMetric> _serviceLoadMetrics;
@@ -25,79 +20,9 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         private BicepValue<ServiceFabricManagedServiceMoveCost> _defaultMoveCost;
         private BicepList<ManagedServiceScalingPolicy> _scalingPolicies;
 
-        /// <summary> Creates a new ManagedServiceProperties. </summary>
-        public ManagedServiceProperties()
+        /// <summary> Creates a new ManagedServiceBaseProperties. </summary>
+        public ManagedServiceBaseProperties()
         {
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<string> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the ServiceTypeName. </summary>
-        public BicepValue<string> ServiceTypeName
-        {
-            get
-            {
-                Initialize();
-                return _serviceTypeName;
-            }
-            set
-            {
-                Initialize();
-                _serviceTypeName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PartitionDescription. </summary>
-        public ManagedServicePartitionScheme PartitionDescription
-        {
-            get
-            {
-                Initialize();
-                return _partitionDescription;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _partitionDescription, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServicePackageActivationMode. </summary>
-        public BicepValue<ManagedServicePackageActivationMode> ServicePackageActivationMode
-        {
-            get
-            {
-                Initialize();
-                return _servicePackageActivationMode;
-            }
-            set
-            {
-                Initialize();
-                _servicePackageActivationMode.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServiceDnsName. </summary>
-        public BicepValue<string> ServiceDnsName
-        {
-            get
-            {
-                Initialize();
-                return _serviceDnsName;
-            }
-            set
-            {
-                Initialize();
-                _serviceDnsName.Assign(value);
-            }
         }
 
         /// <summary> Gets or sets the PlacementConstraints. </summary>
@@ -190,15 +115,10 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Define all the provisionable properties for ManagedServiceProperties. </summary>
+        /// <summary> Define all the provisionable properties for ManagedServiceBaseProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _serviceTypeName = DefineProperty<string>(nameof(ServiceTypeName), new string[] { "serviceTypeName" }, isRequired: true);
-            _partitionDescription = DefineModelProperty<ManagedServicePartitionScheme>(nameof(PartitionDescription), new string[] { "partitionDescription" }, isRequired: true);
-            _servicePackageActivationMode = DefineProperty<ManagedServicePackageActivationMode>(nameof(ServicePackageActivationMode), new string[] { "servicePackageActivationMode" });
-            _serviceDnsName = DefineProperty<string>(nameof(ServiceDnsName), new string[] { "serviceDnsName" });
             _placementConstraints = DefineProperty<string>(nameof(PlacementConstraints), new string[] { "placementConstraints" });
             _correlationScheme = DefineListProperty<ManagedServiceCorrelation>(nameof(CorrelationScheme), new string[] { "correlationScheme" });
             _serviceLoadMetrics = DefineListProperty<ManagedServiceLoadMetric>(nameof(ServiceLoadMetrics), new string[] { "serviceLoadMetrics" });
@@ -208,7 +128,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ManagedServiceProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ManagedServiceBaseProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
