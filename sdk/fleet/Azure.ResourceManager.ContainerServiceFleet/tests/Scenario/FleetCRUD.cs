@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             };
             ArmOperation<ClusterMeshProfileResource> createClusterMeshProfileLRO = await clusterMeshProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterMeshProfileName, clusterMeshProfileData);
             ClusterMeshProfileResource clusterMeshProfileResource = createClusterMeshProfileLRO.Value;
-            Debug.Assert(clusterMeshProfileResource.HasData, "CreateOrUpdateAsync ClusterMeshProfile data was not valid");
+            Assert.IsTrue(clusterMeshProfileResource.HasData, "CreateOrUpdateAsync ClusterMeshProfile data was not valid");
 
             // List ClusterMeshProfiles
             int clusterMeshProfileCount = 0;
@@ -409,12 +409,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             {
                 clusterMeshProfileCount++;
             }
-            Debug.Assert(clusterMeshProfileCount == 1, "Unexpected amount of cluster mesh profiles exist");
+            Assert.AreEqual(1, clusterMeshProfileCount, "Unexpected amount of cluster mesh profiles exist");
 
             // Get ClusterMeshProfile
             ClusterMeshProfileResource getClusterMeshProfileResult = await clusterMeshProfileCollection.GetAsync(clusterMeshProfileName);
-            Debug.Assert(getClusterMeshProfileResult.HasData, "GetAsync ClusterMeshProfile data was not valid");
-            Debug.Assert(getClusterMeshProfileResult.Data.MemberSelectorByLabel == "team=fleet", "ClusterMeshProfile MemberSelectorByLabel mismatch");
+            Assert.IsTrue(getClusterMeshProfileResult.HasData, "GetAsync ClusterMeshProfile data was not valid");
+            Assert.AreEqual("team=fleet", getClusterMeshProfileResult.Data.MemberSelectorByLabel, "ClusterMeshProfile MemberSelectorByLabel mismatch");
 
             // Update ClusterMeshProfile
             ClusterMeshProfileData updateClusterMeshProfileData = new ClusterMeshProfileData()
@@ -423,18 +423,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             };
             ArmOperation<ClusterMeshProfileResource> updateClusterMeshProfileLRO = await clusterMeshProfileResource.UpdateAsync(WaitUntil.Completed, updateClusterMeshProfileData);
             ClusterMeshProfileResource updateClusterMeshProfileResult = updateClusterMeshProfileLRO.Value;
-            Debug.Assert(updateClusterMeshProfileResult.HasData, "UpdateAsync ClusterMeshProfile data was not valid");
-            Debug.Assert(updateClusterMeshProfileResult.Data.MemberSelectorByLabel == "env=production", "ClusterMeshProfile MemberSelectorByLabel was not successfully updated");
+            Assert.IsTrue(updateClusterMeshProfileResult.HasData, "UpdateAsync ClusterMeshProfile data was not valid");
+            Assert.AreEqual("env=production", updateClusterMeshProfileResult.Data.MemberSelectorByLabel, "ClusterMeshProfile MemberSelectorByLabel was not successfully updated");
 
             // Apply ClusterMeshProfile
             ArmOperation<ClusterMeshProfileResource> applyClusterMeshProfileLRO = await updateClusterMeshProfileResult.ApplyAsync(WaitUntil.Completed);
             ClusterMeshProfileResource applyClusterMeshProfileResult = applyClusterMeshProfileLRO.Value;
-            Debug.Assert(applyClusterMeshProfileResult.HasData, "ApplyAsync ClusterMeshProfile data was not valid");
+            Assert.IsTrue(applyClusterMeshProfileResult.HasData, "ApplyAsync ClusterMeshProfile data was not valid");
 
             // Delete ClusterMeshProfile
             await applyClusterMeshProfileResult.DeleteAsync(WaitUntil.Completed);
             bool doesClusterMeshProfileExist = await clusterMeshProfileCollection.ExistsAsync(clusterMeshProfileName);
-            Debug.Assert(doesClusterMeshProfileExist == false, "ClusterMeshProfile was not deleted.");
+            Assert.IsFalse(doesClusterMeshProfileExist, "ClusterMeshProfile was not deleted.");
 
             // Delete UpdateRun
             await updateRunResource.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
