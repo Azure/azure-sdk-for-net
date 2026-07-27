@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -151,7 +150,6 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(QueueServiceData))]
     [ModelReaderWriterBuildable(typeof(QueueServicePropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(QueueServiceResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceSasContent))]
     [ModelReaderWriterBuildable(typeof(ServiceSharedKeyAccessProperties))]
