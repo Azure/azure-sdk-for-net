@@ -6,9 +6,8 @@ variable with the result.
 .DESCRIPTION
 Codeowners verification can be skipped when the 'Skip.VerifyCodeowners' variable
 is set to 'true' and the person who requested the build is a member of an allowed
-set of emails. The allowed set is the union of a default list (kept in sync with
-the emails used by create-apireview.yml) and any additional emails passed via
-the AdditionalSkipEmails parameter.
+set of emails. The allowed set is the union of a default list and any additional
+emails passed via the AdditionalSkipEmails parameter.
 
 The result is written to an Azure DevOps pipeline variable (default name
 'ShouldSkipVerifyCodeowners') so that later steps can gate on a single variable.
