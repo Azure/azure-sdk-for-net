@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Qumulo.Models;
 
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.Qumulo
     [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourceData))]
     [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourcePatch))]
     [ModelReaderWriterBuildable(typeof(QumuloUserDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerQumuloContext : ModelReaderWriterContext
