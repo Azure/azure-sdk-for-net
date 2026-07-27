@@ -9,10 +9,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
-    /// <summary>
-    /// Defines the parameters for certificate source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnCertificateSource"/> and <see cref="KeyVaultCertificateSource"/>.
-    /// </summary>
+    /// <summary> Defines the parameters for certificate source. </summary>
     public partial class CertificateSourceProperties : ProvisionableConstruct
     {
         /// <summary> Creates a new CertificateSourceProperties. </summary>
