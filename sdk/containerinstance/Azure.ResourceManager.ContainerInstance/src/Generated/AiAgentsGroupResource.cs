@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
-    /// A class representing a ContainerGroupProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerGroupProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerGroupProfiles method.
+    /// A class representing a AiAgentsGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AiAgentsGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAiAgentsGroups method.
     /// </summary>
-    public partial class ContainerGroupProfileResource : ArmResource
+    public partial class AiAgentsGroupResource : ArmResource
     {
-        private readonly ClientDiagnostics _cgProfileClientDiagnostics;
-        private readonly CGProfile _cgProfileRestClient;
-        private readonly ContainerGroupProfileData _data;
+        private readonly ClientDiagnostics _aiAgentsGroupsClientDiagnostics;
+        private readonly AiAgentsGroups _aiAgentsGroupsRestClient;
+        private readonly AiAgentsGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/containerGroupProfiles";
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/aiAgentsGroups";
 
-        /// <summary> Initializes a new instance of ContainerGroupProfileResource for mocking. </summary>
-        protected ContainerGroupProfileResource()
+        /// <summary> Initializes a new instance of AiAgentsGroupResource for mocking. </summary>
+        protected AiAgentsGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AiAgentsGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerGroupProfileResource(ArmClient client, ContainerGroupProfileData data) : this(client, data.Id)
+        internal AiAgentsGroupResource(ArmClient client, AiAgentsGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AiAgentsGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ContainerGroupProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AiAgentsGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string containerGroupProfileApiVersion);
-            _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileApiVersion ?? "2026-08-01-preview");
+            TryGetApiVersion(ResourceType, out string aiAgentsGroupApiVersion);
+            _aiAgentsGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
+            _aiAgentsGroupsRestClient = new AiAgentsGroups(_aiAgentsGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiAgentsGroupApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ContainerGroupProfileData Data
+        public virtual AiAgentsGroupData Data
         {
             get
             {
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="containerGroupProfileName"> The containerGroupProfileName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerGroupProfileName)
+        /// <param name="aiAgentsGroupName"> The aiAgentsGroupName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string aiAgentsGroupName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group profile.
+        /// Get an AiAgentsGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Get. </description>
+        /// <description> AiAgentsGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerGroupProfileResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AiAgentsGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group profile.
+        /// Get an AiAgentsGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Get. </description>
+        /// <description> AiAgentsGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerGroupProfileResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AiAgentsGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Update a specified container group profile.
+        /// Update an AiAgentsGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Update. </description>
+        /// <description> AiAgentsGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,18 +206,19 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The container group profile properties that need to be updated. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> UpdateAsync(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AiAgentsGroupResource>> UpdateAsync(WaitUntil waitUntil, AiAgentsGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Update");
             scope.Start();
             try
             {
@@ -225,14 +226,20 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AiAgentsGroupPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerInstanceArmOperation<AiAgentsGroupResource> operation = new ContainerInstanceArmOperation<AiAgentsGroupResource>(
+                    new AiAgentsGroupResourceOperationSource(Client),
+                    _aiAgentsGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -242,15 +249,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Update a specified container group profile.
+        /// Update an AiAgentsGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Update. </description>
+        /// <description> AiAgentsGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -258,18 +265,19 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The container group profile properties that need to be updated. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> Update(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AiAgentsGroupResource> Update(WaitUntil waitUntil, AiAgentsGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Update");
             scope.Start();
             try
             {
@@ -277,14 +285,20 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AiAgentsGroupPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerInstanceArmOperation<AiAgentsGroupResource> operation = new ContainerInstanceArmOperation<AiAgentsGroupResource>(
+                    new AiAgentsGroupResourceOperationSource(Client),
+                    _aiAgentsGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletion(cancellationToken);
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -294,15 +308,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Deletes a container group profile.
+        /// Delete an AiAgentsGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Delete. </description>
+        /// <description> AiAgentsGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -310,7 +324,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +332,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Delete");
             scope.Start();
             try
             {
@@ -326,11 +340,9 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(response, rehydrationToken);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_aiAgentsGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -345,15 +357,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Deletes a container group profile.
+        /// Delete an AiAgentsGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Delete. </description>
+        /// <description> AiAgentsGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -361,7 +373,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,7 +381,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Delete");
             scope.Start();
             try
             {
@@ -377,11 +389,9 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(response, rehydrationToken);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_aiAgentsGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -395,17 +405,113 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
+        /// <summary>
+        /// Get an access token and endpoint for connecting to the AiAgentsGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}/connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AiAgentsGroups_Connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AiAgentsGroupAccessToken>> ConnectAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Connect");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AiAgentsGroupAccessToken> response = Response.FromValue(AiAgentsGroupAccessToken.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get an access token and endpoint for connecting to the AiAgentsGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/aiAgentsGroups/{aiAgentsGroupName}/connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AiAgentsGroups_Connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AiAgentsGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AiAgentsGroupAccessToken> Connect(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.Connect");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _aiAgentsGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AiAgentsGroupAccessToken> response = Response.FromValue(AiAgentsGroupAccessToken.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AiAgentsGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -418,21 +524,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
+                    return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    AiAgentsGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AiAgentsGroupPatch patch = new AiAgentsGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AiAgentsGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -448,12 +554,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AiAgentsGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -466,21 +572,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
+                    return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    AiAgentsGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AiAgentsGroupPatch patch = new AiAgentsGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<AiAgentsGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -495,11 +601,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AiAgentsGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -513,17 +619,17 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
+                    return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    AiAgentsGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AiAgentsGroupPatch patch = new AiAgentsGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AiAgentsGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -538,11 +644,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AiAgentsGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -556,17 +662,17 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
+                    return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    AiAgentsGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AiAgentsGroupPatch patch = new AiAgentsGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<AiAgentsGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -581,11 +687,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AiAgentsGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -598,21 +704,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
+                    return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    AiAgentsGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AiAgentsGroupPatch patch = new AiAgentsGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AiAgentsGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -627,11 +733,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AiAgentsGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
+            using DiagnosticScope scope = _aiAgentsGroupsClientDiagnostics.CreateScope("AiAgentsGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -644,21 +750,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _aiAgentsGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<AiAgentsGroupData> response = Response.FromValue(AiAgentsGroupData.FromResponse(result), result);
+                    return Response.FromValue(new AiAgentsGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    AiAgentsGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AiAgentsGroupPatch patch = new AiAgentsGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<AiAgentsGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -667,39 +773,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of ContainerGroupProfileRevisions in the <see cref="ContainerGroupProfileResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerGroupProfileRevisions and their operations over a ContainerGroupProfileRevisionResource. </returns>
-        public virtual ContainerGroupProfileRevisionCollection GetContainerGroupProfileRevisions()
-        {
-            return GetCachedClient(client => new ContainerGroupProfileRevisionCollection(client, Id));
-        }
-
-        /// <summary> Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc. </summary>
-        /// <param name="revisionNumber"> The revision number of the container group profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerGroupProfileRevisionResource>> GetContainerGroupProfileRevisionAsync(string revisionNumber, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
-
-            return await GetContainerGroupProfileRevisions().GetAsync(revisionNumber, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc. </summary>
-        /// <param name="revisionNumber"> The revision number of the container group profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerGroupProfileRevisionResource> GetContainerGroupProfileRevision(string revisionNumber, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
-
-            return GetContainerGroupProfileRevisions().Get(revisionNumber, cancellationToken);
         }
     }
 }
