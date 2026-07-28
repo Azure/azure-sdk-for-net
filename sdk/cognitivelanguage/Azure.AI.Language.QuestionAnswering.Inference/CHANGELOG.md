@@ -21,4 +21,3 @@
     - Adds `AnswersOptions.QueryPreferences` property.
     - Adds models: `QueryPreferences`, `MatchingPolicy`, `PrebuiltQueryMatchingPolicy`.
     - Adds unions/enums: `Scorer` (Classic, Transformer, Semantic), `MatchingPolicyKind` (Prebuilt), MatchingPolicyFieldsType (Questions, Answer).
-

@@ -15,4 +15,3 @@
 ### Other Changes
 
 - Initial release of the Azure.Projects.Web package.
-

@@ -32,7 +32,7 @@ jobs:
   - job:
     displayName: "Build"
     dependsOn: ${{ parameters.DependsOn }}
-    condition: false
+    condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
     strategy:
       matrix: $[ ${{ parameters.Matrix }} ]
 
