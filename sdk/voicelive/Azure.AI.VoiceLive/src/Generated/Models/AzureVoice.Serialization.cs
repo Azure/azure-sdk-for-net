@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceProvider PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVoice IPersistableModel<AzureVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureVoice IPersistableModel<AzureVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureVoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -102,11 +102,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureVoice IJsonModel<AzureVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureVoice IJsonModel<AzureVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceProvider JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
