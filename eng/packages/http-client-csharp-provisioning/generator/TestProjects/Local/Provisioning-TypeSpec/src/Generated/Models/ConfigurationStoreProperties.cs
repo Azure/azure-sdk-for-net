@@ -26,6 +26,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<ConfigurationStoreSkuTier> _skuTier;
         private BicepValue<ConfigurationStoreCreateMode> _createMode;
         private BicepList<SubResource> _linkedResources;
+        private BicepValue<TimeSpan> _retentionPeriod;
+        private BicepValue<BinaryData> _binaryContent;
+        private BicepValue<BinaryData> _jsonMetadata;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
@@ -182,6 +185,51 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the RetentionPeriod. </summary>
+        public BicepValue<TimeSpan> RetentionPeriod
+        {
+            get
+            {
+                Initialize();
+                return _retentionPeriod;
+            }
+            set
+            {
+                Initialize();
+                _retentionPeriod.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the BinaryContent. </summary>
+        public BicepValue<BinaryData> BinaryContent
+        {
+            get
+            {
+                Initialize();
+                return _binaryContent;
+            }
+            set
+            {
+                Initialize();
+                _binaryContent.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the JsonMetadata. </summary>
+        public BicepValue<BinaryData> JsonMetadata
+        {
+            get
+            {
+                Initialize();
+                return _jsonMetadata;
+            }
+            set
+            {
+                Initialize();
+                _jsonMetadata.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> SkuName
         {
@@ -204,7 +252,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _endpoint = DefineProperty<string>(nameof(Endpoint), new string[] { "endpoint" }, isOutput: true);
             _sku = DefineModelProperty<ConfigurationStoreSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _softDeleteRetentionInDays = DefineProperty<int>(nameof(SoftDeleteRetentionInDays), new string[] { "softDeleteRetentionInDays" });
@@ -214,6 +262,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             _linkedResources = DefineListProperty<SubResource>(nameof(LinkedResources), new string[] { "linkedResources" });
+            _retentionPeriod = DefineProperty<TimeSpan>(nameof(RetentionPeriod), new string[] { "retentionPeriod" }, format: "P");
+            _binaryContent = DefineProperty<BinaryData>(nameof(BinaryContent), new string[] { "binaryContent" }, format: "base64");
+            _jsonMetadata = DefineProperty<BinaryData>(nameof(JsonMetadata), new string[] { "jsonMetadata" });
             DefineAdditionalProperties();
         }
 

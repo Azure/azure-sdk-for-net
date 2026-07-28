@@ -4,6 +4,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace Azure.Generator.Provisioning.Utilities
         /// isOutput and isRequired are independent flags and only emitted when true, using named arguments.
         /// </summary>
         public static ValueExpression[] BuildDefinePropertyArgs(
-            string propertyName, string[] bicepPath, bool isOutput, bool isRequired, string? defaultValue = null)
+            string propertyName, string[] bicepPath, bool isOutput, bool isRequired, string? defaultValue = null, string? format = null)
         {
             var args = new List<ValueExpression>
             {
@@ -93,7 +94,27 @@ namespace Azure.Generator.Provisioning.Utilities
             {
                 args.Add(new PositionalParameterReferenceExpression("defaultValue", Literal(defaultValue)));
             }
+            if (format is not null)
+            {
+                args.Add(new PositionalParameterReferenceExpression("format", Literal(format)));
+            }
             return [.. args];
+        }
+
+        /// <summary>
+        /// Gets the provisioning runtime format used to serialize a literal value.
+        /// </summary>
+        public static string? GetLiteralFormat(SerializationFormat? serializationFormat)
+        {
+            return serializationFormat switch
+            {
+                SerializationFormat.DateTime_RFC3339 or
+                SerializationFormat.DateTime_ISO8601 => "O",
+                SerializationFormat.Duration_ISO8601 => "P",
+                SerializationFormat.Duration_Constant => "c",
+                SerializationFormat.Bytes_Base64 => "base64",
+                _ => null
+            };
         }
     }
 }

@@ -54,6 +54,15 @@ model ConfigurationStoreProperties {
 
   /** The linked resources of the configuration store. */
   linkedResources?: LinkedResource[];
+
+  /** The amount of time configuration data should be retained. */
+  retentionPeriod?: duration;
+
+  /** Byte-oriented content serialized as a base64 string. */
+  binaryContent?: bytes;
+
+  /** Arbitrary JSON content that should keep JSON literal semantics. */
+  jsonMetadata?: unknown;
 }
 
 /** A linked resource reference. */

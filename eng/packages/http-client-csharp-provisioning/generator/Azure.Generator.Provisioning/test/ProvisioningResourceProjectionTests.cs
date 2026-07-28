@@ -5,6 +5,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Azure.Generator.Provisioning.Utilities;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -537,6 +538,81 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.True);
+        }
+
+        [TestCase(SerializationFormat.Default, null)]
+        [TestCase(SerializationFormat.DateTime_RFC1123, null)]
+        [TestCase(SerializationFormat.DateTime_RFC3339, "O")]
+        [TestCase(SerializationFormat.DateTime_RFC7231, null)]
+        [TestCase(SerializationFormat.DateTime_ISO8601, "O")]
+        [TestCase(SerializationFormat.DateTime_Unix, null)]
+        [TestCase(SerializationFormat.Date_ISO8601, null)]
+        [TestCase(SerializationFormat.Duration_ISO8601, "P")]
+        [TestCase(SerializationFormat.Duration_Constant, "c")]
+        [TestCase(SerializationFormat.Time_ISO8601, null)]
+        [TestCase(SerializationFormat.Bytes_Base64, "base64")]
+        [TestCase(SerializationFormat.Bytes_Base64Url, null)]
+        [TestCase(SerializationFormat.Duration_Seconds, null)]
+        [TestCase(SerializationFormat.Duration_Seconds_Int64, null)]
+        [TestCase(SerializationFormat.Duration_Seconds_Float, null)]
+        [TestCase(SerializationFormat.Duration_Seconds_Double, null)]
+        [TestCase(SerializationFormat.Duration_Milliseconds, null)]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Int64, null)]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Float, null)]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Double, null)]
+        [TestCase(SerializationFormat.Int_String, null)]
+        [TestCase(SerializationFormat.Array_CommaDelimited, null)]
+        [TestCase(SerializationFormat.Array_SpaceDelimited, null)]
+        [TestCase(SerializationFormat.Array_PipeDelimited, null)]
+        [TestCase(SerializationFormat.Array_NewlineDelimited, null)]
+        public void LiteralFormatUsesProvisioningRuntimeFormat(SerializationFormat serializationFormat, string? expected)
+        {
+            Assert.That(BicepTypeHelpers.GetLiteralFormat(serializationFormat), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ResourcePropertiesPreserveLiteralFormats()
+        {
+            var durationProperty = CreateProperty(
+                "RetentionPeriod",
+                type: new InputNullableType(new InputDurationType(
+                    DurationKnownEncoding.Iso8601,
+                    "duration",
+                    "TypeSpec.duration",
+                    InputPrimitiveType.String,
+                    null)));
+            var dateTimeProperty = CreateProperty(
+                "LastModified",
+                type: new InputDateTimeType(
+                    DateTimeKnownEncoding.Rfc3339,
+                    "utcDateTime",
+                    "TypeSpec.utcDateTime",
+                    InputPrimitiveType.String,
+                    null));
+            var blobProperty = CreateProperty("Blob", type: InputPrimitiveType.Base64);
+            var urlSafeBlobProperty = CreateProperty("UrlSafeBlob", type: InputPrimitiveType.Base64Url);
+            var metadataProperty = CreateProperty("Metadata", type: InputPrimitiveType.Any);
+            var model = CreateModel("FormattedWidget", [durationProperty, dateTimeProperty, blobProperty, urlSafeBlobProperty, metadataProperty]);
+            var writableResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(writableResource);
+            var properties = provider.Properties.OfType<ProvisioningPropertyProvider>().ToDictionary(property => property.Name);
+
+            Assert.That(properties["RetentionPeriod"].Format, Is.EqualTo("P"));
+            Assert.That(properties["LastModified"].Format, Is.EqualTo("O"));
+            Assert.That(properties["Blob"].Format, Is.EqualTo("base64"));
+            Assert.That(properties["UrlSafeBlob"].Format, Is.Null);
+            Assert.That(properties["Metadata"].Format, Is.Null);
         }
 
         [Test]
