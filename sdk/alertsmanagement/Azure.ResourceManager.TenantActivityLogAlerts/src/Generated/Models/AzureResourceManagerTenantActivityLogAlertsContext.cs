@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TenantActivityLogAlerts.Models;
 
@@ -19,7 +18,6 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
     [ModelReaderWriterBuildable(typeof(ActionList))]
     [ModelReaderWriterBuildable(typeof(AlertRuleAllOfCondition))]
     [ModelReaderWriterBuildable(typeof(AlertRuleProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertActionGroup))]
     [ModelReaderWriterBuildable(typeof(TenantActivityLogAlertAnyOfOrLeafCondition))]
