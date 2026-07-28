@@ -10,6 +10,7 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where response content logging could emit more bytes than were actually read when a non-buffered (streaming) response was read into a buffer larger than the response body. Previously, when the read began at offset 0, the entire caller-supplied buffer was logged — including the bytes past the response payload, which for a pooled buffer contain unrelated in-process content — and the configured `LoggedContentSizeLimit` was not applied. The logging policy now logs only the bytes that were read. ([#61399](https://github.com/Azure/azure-sdk-for-net/issues/61399))
 - Fixed an issue where `RequestFailedException` could throw a secondary `ArgumentNullException` while formatting a failed response that had a text content-type header but an empty body, masking the actual service failure. The exception now preserves the original HTTP status, reason phrase, and headers, and no longer formats empty response content.
 - Fixed `AzureCliCredential` to not pass both `--tenant` and `--subscription` flags to the Azure CLI, as the CLI rejects this combination. When a tenant is requested (for example, via challenge-based authentication) it now takes precedence and `--subscription` is omitted; `--subscription` is used only when no tenant is requested. ([#58949](https://github.com/Azure/azure-sdk-for-net/issues/58949))
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
@@ -546,6 +547,119 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task ResponseContentBlockIsNotPaddedWhenReadAtOffsetZero()
+        {
+            Response response = await SendRequestReadingFromOffsetZero(isError: false);
+
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
+
+            Assert.AreEqual(1, contentEvents.Length);
+            CollectionAssert.AreEqual(Encoding.UTF8.GetBytes("Hello world"), contentEvents[0].GetProperty<byte[]>("content"));
+        }
+
+        [Test]
+        public async Task ErrorResponseContentBlockIsNotPaddedWhenReadAtOffsetZero()
+        {
+            Response response = await SendRequestReadingFromOffsetZero(isError: true);
+
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ErrorResponseContentBlockEvent).ToArray();
+
+            Assert.AreEqual(1, contentEvents.Length);
+            CollectionAssert.AreEqual(Encoding.UTF8.GetBytes("Hello world"), contentEvents[0].GetProperty<byte[]>("content"));
+        }
+
+        [Test]
+        public async Task ResponseContentTextBlockIsNotPaddedWhenReadAtOffsetZero()
+        {
+            Response response = await SendRequestReadingFromOffsetZero(
+                isError: false,
+                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
+            );
+
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentTextBlockEvent).ToArray();
+
+            Assert.AreEqual(1, contentEvents.Length);
+            Assert.AreEqual("Hello world", contentEvents[0].GetProperty<string>("content"));
+        }
+
+        [Test]
+        public async Task ErrorResponseContentTextBlockIsNotPaddedWhenReadAtOffsetZero()
+        {
+            Response response = await SendRequestReadingFromOffsetZero(
+                isError: true,
+                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
+            );
+
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
+
+            Assert.AreEqual(1, contentEvents.Length);
+            Assert.AreEqual("Hello world", contentEvents[0].GetProperty<string>("content"));
+        }
+
+        [Test]
+        public async Task ResponseContentTextBlockIsTruncatedWhenReadAtOffsetZero()
+        {
+            Response response = await SendRequestReadingFromOffsetZero(
+                isError: false,
+                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml")),
+                maxLength: 5
+            );
+
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentTextBlockEvent).ToArray();
+
+            Assert.AreEqual(1, contentEvents.Length);
+            Assert.AreEqual("Hello", contentEvents[0].GetProperty<string>("content"));
+        }
+
+        [Test]
+        public async Task ResponseContentBlockIsTruncatedWhenReadAtOffsetZero()
+        {
+            Response response = await SendRequestReadingFromOffsetZero(isError: false, maxLength: 5);
+
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
+
+            Assert.AreEqual(1, contentEvents.Length);
+            CollectionAssert.AreEqual(Encoding.UTF8.GetBytes("Hello"), contentEvents[0].GetProperty<byte[]>("content"));
+        }
+
+        [Test]
+        public async Task ErrorResponseContentIsNotPaddedWhenBufferedByRequestFailedException()
+        {
+            // Poison the pool bucket that Stream.CopyTo rents from so that any bytes leaked
+            // past the end of the response body are recognizable.
+            byte[] poison = ArrayPool<byte>.Shared.Rent(81920);
+            poison.AsSpan().Fill((byte)'Z');
+            ArrayPool<byte>.Shared.Return(poison);
+
+            var mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"));
+            mockResponse.ContentStream = new NonSeekableMemoryStream(Encoding.UTF8.GetBytes("<Error/>"));
+
+            // ExpectSyncPipeline is deliberately left unset so the content stream is not wrapped in
+            // AsyncValidatingStream: RequestFailedException buffers the body from its constructor,
+            // which is necessarily a synchronous read even on the async pipeline.
+            var mockTransport = new MockTransport(mockResponse);
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
+
+            Response response = await SendRequestAsync(pipeline, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
+            },
+            bufferResponse: false);
+
+            // This is the code path Azure.Core itself takes for a failed non-buffered request:
+            // the exception constructor buffers the content stream using Stream.CopyTo, which
+            // rents an 81920-byte array from the shared pool and reads into it at offset 0.
+            _ = new RequestFailedException(response);
+
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
+
+            Assert.AreEqual(1, contentEvents.Length);
+            Assert.AreEqual("<Error/>", contentEvents[0].GetProperty<string>("content"));
+        }
+
+        [Test]
         public async Task HeadersAndQueryParametersAreSanitized()
         {
             var response = new MockResponse(200);
@@ -675,6 +789,41 @@ namespace Azure.Core.Tests
                 Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
                 Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
             }
+
+            return mockResponse;
+        }
+
+        private async Task<Response> SendRequestReadingFromOffsetZero(
+            bool isError,
+            Action<MockResponse> setupRequest = null,
+            int maxLength = int.MaxValue)
+        {
+            var mockResponse = new MockResponse(isError ? 500 : 200);
+            mockResponse.ContentStream = new NonSeekableMemoryStream(Encoding.UTF8.GetBytes("Hello world"));
+            setupRequest?.Invoke(mockResponse);
+
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, _sanitizer, "Test-SDK") });
+
+            Response response = await SendRequestAsync(pipeline, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("https://contoso.a.io"));
+            },
+            bufferResponse: false);
+
+            // Read the whole body in a single call starting at offset 0, into a buffer that is
+            // much larger than the body and pre-filled with recognizable bytes. This mirrors what
+            // Stream.CopyTo and the base Stream.ReadAsync(Memory<byte>) overload do with buffers
+            // rented from ArrayPool, where the tail holds unrelated recycled content.
+            byte[] buffer = new byte[1024];
+            buffer.AsSpan().Fill(0xAA);
+
+            int read = IsAsync
+                ? await response.ContentStream.ReadAsync(buffer, 0, buffer.Length)
+                : response.ContentStream.Read(buffer, 0, buffer.Length);
+
+            Assert.AreEqual(11, read);
 
             return mockResponse;
         }
