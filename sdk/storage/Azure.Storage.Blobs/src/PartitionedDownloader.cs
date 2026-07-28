@@ -451,6 +451,8 @@ namespace Azure.Storage.Blobs
                     ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
                 }
             }
+            await FinalizeDownloadInternal(destination, composedCrcBuf?.AsMemory(0, Crc64Len) ?? default, async, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         private async Task HandleOneShotDownload(
