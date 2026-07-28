@@ -363,4 +363,16 @@ The review body should contain:
 <short, actionable summary>
 ```
 
+Append this process guidance to every review body, including the low-risk fast-path and compact unchanged-status bodies:
+
+```markdown
+#### Resolving TypeSpec-related review comments
+
+1. Open a separate spec PR in `azure-rest-api-specs`, or update the existing spec PR for this SDK change.
+2. Before the spec PR merges, update `tsp-location.yaml` to the latest commit from the spec PR, regenerate the SDK, and rerun this review.
+3. Address any new findings in the same spec PR, update the SDK from its latest commit, and repeat until the review reports no more findings.
+4. Merge the spec PR.
+5. After the spec PR merges, update `tsp-location.yaml` to the latest `main` commit in `azure-rest-api-specs` that contains the merged changes, then regenerate the SDK.
+```
+
 If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no blocking management SDK review issues were found.
