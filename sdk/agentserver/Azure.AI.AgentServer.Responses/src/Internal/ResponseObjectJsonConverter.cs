@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable OPENAI001 // ResponseResult is the OpenAI response model AgentServer extends.
-
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
