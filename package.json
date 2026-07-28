@@ -2,7 +2,6 @@
   "name": "azure-sdk-for-net",
   "version": "1.0.0",
   "dependencies": {
-    "@autorest/core": "3.10.8",
     "autorest": "^3.7.1"
   }
 }
