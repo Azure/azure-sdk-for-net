@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using Azure.Provisioning.Primitives;
 
@@ -12,54 +12,54 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary> Namespace/ServiceBus connection strings and keys. </summary>
 public partial class ServiceBusAccessKeys : ProvisionableConstruct
 {
-    private BicepValue<string>? _primaryConnectionString;
-    private BicepValue<string>? _secondaryConnectionString;
-    private BicepValue<string>? _aliasPrimaryConnectionString;
-    private BicepValue<string>? _aliasSecondaryConnectionString;
-    private BicepValue<string>? _primaryKey;
-    private BicepValue<string>? _secondaryKey;
-    private BicepValue<string>? _keyName;
+    private BicepValue<string> _primaryConnectionString;
+    private BicepValue<string> _secondaryConnectionString;
+    private BicepValue<string> _aliasPrimaryConnectionString;
+    private BicepValue<string> _aliasSecondaryConnectionString;
+    private BicepValue<string> _primaryKey;
+    private BicepValue<string> _secondaryKey;
+    private BicepValue<string> _keyName;
 
     /// <summary> Primary connection string of the created namespace authorization rule. </summary>
     public BicepValue<string> PrimaryConnectionString
     {
-        get { Initialize(); return _primaryConnectionString!; }
+        get { Initialize(); return _primaryConnectionString; }
     }
 
     /// <summary> Secondary connection string of the created namespace authorization rule. </summary>
     public BicepValue<string> SecondaryConnectionString
     {
-        get { Initialize(); return _secondaryConnectionString!; }
+        get { Initialize(); return _secondaryConnectionString; }
     }
 
     /// <summary> Primary connection string of the alias if geo-disaster recovery is enabled. </summary>
     public BicepValue<string> AliasPrimaryConnectionString
     {
-        get { Initialize(); return _aliasPrimaryConnectionString!; }
+        get { Initialize(); return _aliasPrimaryConnectionString; }
     }
 
     /// <summary> Secondary connection string of the alias if geo-disaster recovery is enabled. </summary>
     public BicepValue<string> AliasSecondaryConnectionString
     {
-        get { Initialize(); return _aliasSecondaryConnectionString!; }
+        get { Initialize(); return _aliasSecondaryConnectionString; }
     }
 
     /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
     public BicepValue<string> PrimaryKey
     {
-        get { Initialize(); return _primaryKey!; }
+        get { Initialize(); return _primaryKey; }
     }
 
     /// <summary> A base64-encoded 256-bit secondary key for signing and validating the SAS token. </summary>
     public BicepValue<string> SecondaryKey
     {
-        get { Initialize(); return _secondaryKey!; }
+        get { Initialize(); return _secondaryKey; }
     }
 
     /// <summary> A string that describes the authorization rule. </summary>
     public BicepValue<string> KeyName
     {
-        get { Initialize(); return _keyName!; }
+        get { Initialize(); return _keyName; }
     }
 
     /// <summary> Creates a new ServiceBusAccessKeys. </summary>

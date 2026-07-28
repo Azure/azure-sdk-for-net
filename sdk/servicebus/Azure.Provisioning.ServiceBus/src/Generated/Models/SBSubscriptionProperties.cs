@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceBus
 {
-    /// <summary> Description of Subscription Resource. </summary>
     internal partial class SBSubscriptionProperties : ProvisionableConstruct
     {
         private BicepValue<long> _messageCount;

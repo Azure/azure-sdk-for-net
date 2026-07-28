@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceBus
 {
-    /// <summary> The Queue Properties definition. </summary>
     internal partial class SBQueueProperties : ProvisionableConstruct
     {
         private MessageCountDetails _countDetails;

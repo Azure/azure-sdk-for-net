@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceBus
 {
-    /// <summary> The Topic Properties definition. </summary>
     internal partial class SBTopicProperties : ProvisionableConstruct
     {
         private BicepValue<long> _sizeInBytes;
