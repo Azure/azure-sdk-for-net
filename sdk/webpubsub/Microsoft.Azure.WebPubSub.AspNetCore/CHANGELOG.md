@@ -85,4 +85,3 @@
 ### Features Added
 
 - Server side library to read and handle upstream requests using Azure Web PubSub service.
-
