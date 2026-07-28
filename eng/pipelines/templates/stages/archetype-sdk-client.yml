@@ -77,6 +77,8 @@ extends:
               value: true
             - name: Skip.Analyze
               value: true
+            - name: Skip.Compliance
+              value: true
           jobs:
             - job: NoOp
               displayName: No-op
