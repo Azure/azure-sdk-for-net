@@ -54,7 +54,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("policyType", new string[] { "policyType" }, defaultValue: "Bandit");
+            PolicyType.Assign("Bandit");
             _slackAmount = DefineProperty<float>(nameof(SlackAmount), new string[] { "slackAmount" });
             _slackFactor = DefineProperty<float>(nameof(SlackFactor), new string[] { "slackFactor" });
             DefineAdditionalProperties();

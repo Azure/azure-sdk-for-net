@@ -39,7 +39,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("referenceType", new string[] { "referenceType" }, defaultValue: "Id");
+            ReferenceType.Assign("Id");
             _assetId = DefineProperty<ResourceIdentifier>(nameof(AssetId), new string[] { "assetId" }, isRequired: true);
             DefineAdditionalProperties();
         }

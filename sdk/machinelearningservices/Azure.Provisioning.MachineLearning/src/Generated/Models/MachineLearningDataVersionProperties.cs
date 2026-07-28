@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningDataVersionProperties : ProvisionableConstruct
     {
+        private BicepValue<string> _dataType;
         private BicepValue<Uri> _dataUri;
         private BicepValue<bool> _isAnonymous;
         private BicepValue<bool> _isArchived;
@@ -27,6 +28,16 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningDataVersionProperties. </summary>
         public MachineLearningDataVersionProperties()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of data. </summary>
+        internal BicepValue<string> DataType
+        {
+            get
+            {
+                Initialize();
+                return _dataType;
+            }
         }
 
         /// <summary> Gets or sets the DataUri. </summary>
@@ -123,6 +134,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _dataType = DefineProperty<string>(nameof(DataType), new string[] { "dataType" }, isRequired: true);
             _dataUri = DefineProperty<Uri>(nameof(DataUri), new string[] { "dataUri" }, isRequired: true);
             _isAnonymous = DefineProperty<bool>(nameof(IsAnonymous), new string[] { "isAnonymous" });
             _isArchived = DefineProperty<bool>(nameof(IsArchived), new string[] { "isArchived" });

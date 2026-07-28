@@ -54,7 +54,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("samplingAlgorithmType", new string[] { "samplingAlgorithmType" }, defaultValue: "Random");
+            SamplingAlgorithmType.Assign("Random");
             _rule = DefineProperty<RandomSamplingAlgorithmRule>(nameof(Rule), new string[] { "rule" });
             _seed = DefineProperty<int>(nameof(Seed), new string[] { "seed" });
             DefineAdditionalProperties();

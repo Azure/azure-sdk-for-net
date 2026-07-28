@@ -102,7 +102,8 @@ namespace Azure.Generator.Provisioning.Providers
                 propInfo.IsRequired,
                 propInfo.BicepPath,
                 propInfo.DefaultValue,
-                propInfo.TypeOverride);
+                propInfo.TypeOverride,
+                inputProp.IsDiscriminator);
         }
 
         /// <summary>
@@ -468,15 +469,13 @@ namespace Azure.Generator.Provisioning.Providers
         {
             foreach (var prop in model.Properties)
             {
-                if (prop.IsDiscriminator) continue;
-
                 var serializedName = prop.SerializedName ?? prop.Name;
 
                 if (seen.Contains(serializedName)) continue;
                 seen.Add(serializedName);
 
                 // Skip "type" property and extension-resource language-level scope.
-                if (SkipProperties.Contains(serializedName)
+                if ((!prop.IsDiscriminator && SkipProperties.Contains(serializedName))
                     || (_resourceProjection?.IsExtensionResource == true
                         && serializedName == "scope"))
                 {
@@ -490,11 +489,12 @@ namespace Azure.Generator.Provisioning.Providers
                 // ARM resource name metadata is the wire property exactly named "name".
                 // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
                 var isResourceName = serializedName == "name";
-                var isOutput = (prop.IsReadOnly && !isResourceName && !_createBodyWritableProperties.Contains(serializedName))
-                    || OutputOnlyProperties.Contains(serializedName);
+                var isOutput = !prop.IsDiscriminator
+                    && ((prop.IsReadOnly && !isResourceName && !_createBodyWritableProperties.Contains(serializedName))
+                    || OutputOnlyProperties.Contains(serializedName));
                 // Read-only resources are referenced through FromExisting, so Name must remain settable.
                 // Other non-output properties are settable only when the resource has a writable scope.
-                var isSettable = !isOutput && (_isSettableResource || isResourceName);
+                var isSettable = !prop.IsDiscriminator && !isOutput && (_isSettableResource || isResourceName);
                 // Read-only resources should not require body properties that users cannot set.
                 // Metadata inputs such as resource name remain required even without writable scopes.
                 var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
@@ -529,25 +529,15 @@ namespace Azure.Generator.Provisioning.Providers
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
 
-            // Emit discriminator property for derived discriminated resource types
             if (_inputModel.DiscriminatorValue != null)
             {
-                var discriminatorProp = FindDiscriminatorProperty();
-                if (discriminatorProp != null)
+                var discriminatorProperty = FindDiscriminatorPropertyProvider();
+                if (discriminatorProperty != null)
                 {
-                    var serializedName = discriminatorProp.SerializedName ?? discriminatorProp.Name;
                     statements.Add(
-                        This.Invoke(
-                            "DefineProperty",
-                            [
-                                Literal(serializedName),
-                                New.Array(typeof(string), [Literal(serializedName)]),
-                                new PositionalParameterReferenceExpression("defaultValue", Literal(_inputModel.DiscriminatorValue))
-                            ],
-                            [typeof(string)],
-                            false
-                        ).Terminate()
-                    );
+                        This.Property(discriminatorProperty.Name)
+                            .Invoke("Assign", Literal(_inputModel.DiscriminatorValue))
+                            .Terminate());
                 }
             }
 
@@ -902,33 +892,57 @@ namespace Azure.Generator.Provisioning.Providers
             var result = new List<ResourcePropertyInfo>();
             foreach (var prop in _inputModel.Properties)
             {
-                if (prop.IsDiscriminator) continue;
+                if (prop.IsDiscriminator && IsInheritedDiscriminator(prop)) continue;
                 var serializedName = prop.SerializedName ?? prop.Name;
                 string[] bicepPath = [serializedName];
+                var isOutput = !prop.IsDiscriminator && prop.IsReadOnly;
+                var isSettable = !prop.IsDiscriminator && !prop.IsReadOnly && _isSettableResource;
                 result.Add(new ResourcePropertyInfo(
                     prop,
                     prop.Name.ToIdentifierName(),
                     bicepPath,
-                    prop.IsReadOnly,
-                    !prop.IsReadOnly && _isSettableResource,
+                    isOutput,
+                    isSettable,
                     prop.IsRequired));
             }
             return result;
         }
 
-        /// <summary>
-        /// Finds the discriminator property by walking up the model's base chain.
-        /// </summary>
-        private InputModelProperty? FindDiscriminatorProperty()
+        private PropertyProvider? FindDiscriminatorPropertyProvider()
         {
-            var model = _inputModel;
+            var model = _inputModel.BaseModel;
             while (model != null)
             {
                 if (model.DiscriminatorProperty != null)
-                    return model.DiscriminatorProperty;
+                {
+                    var discriminatorProperty = CodeModelGenerator.Instance.TypeFactory.CreateModel(model)?
+                        .Properties.FirstOrDefault(property => property.IsDiscriminator);
+                    if (discriminatorProperty != null)
+                        return discriminatorProperty;
+                }
                 model = model.BaseModel;
             }
             return null;
+        }
+
+        private bool IsInheritedDiscriminator(InputModelProperty property)
+        {
+            var serializedName = property.SerializedName ?? property.Name;
+            var model = _inputModel.BaseModel;
+            while (model != null)
+            {
+                var discriminator = model.DiscriminatorProperty;
+                if (discriminator != null
+                    && string.Equals(
+                        discriminator.SerializedName ?? discriminator.Name,
+                        serializedName,
+                        StringComparison.Ordinal))
+                {
+                    return true;
+                }
+                model = model.BaseModel;
+            }
+            return false;
         }
 
         // ── Property info record ─────────────────────────────────────

@@ -82,8 +82,18 @@ namespace Azure.Generator.Provisioning.Providers
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty property)
         {
-            if (property.IsDiscriminator) return null;
             var serializedName = property.SerializedName ?? property.Name;
+            if (property.IsDiscriminator)
+            {
+                return new ProvisioningPropertyInfo(
+                    property.Name.ToIdentifierName(),
+                    false,
+                    false,
+                    property.IsRequired && _hasSettableUsage,
+                    [serializedName],
+                    IsDiscriminator: true);
+            }
+
             return new ProvisioningPropertyInfo(
                 property.Name.ToIdentifierName(),
                 property.IsReadOnly,
@@ -110,7 +120,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 foreach (var prop in model.Properties)
                 {
-                    if (prop.IsDiscriminator) continue;
+                    if (prop.IsDiscriminator && IsInheritedDiscriminator(prop)) continue;
                     if (!seen.Add(prop.Name)) continue;
 
                     var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
@@ -153,25 +163,15 @@ namespace Azure.Generator.Provisioning.Providers
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
 
-            // Emit discriminator property for derived discriminated types
             if (_inputModel.DiscriminatorValue != null)
             {
-                var discriminatorProp = FindDiscriminatorProperty();
-                if (discriminatorProp != null)
+                var discriminatorProperty = FindDiscriminatorPropertyProvider();
+                if (discriminatorProperty != null)
                 {
-                    var serializedName = discriminatorProp.SerializedName ?? discriminatorProp.Name;
                     statements.Add(
-                        This.Invoke(
-                            "DefineProperty",
-                            [
-                                Literal(serializedName),
-                                New.Array(typeof(string), [Literal(serializedName)]),
-                                new PositionalParameterReferenceExpression("defaultValue", Literal(_inputModel.DiscriminatorValue))
-                            ],
-                            [typeof(string)],
-                            false
-                        ).Terminate()
-                    );
+                        This.Property(discriminatorProperty.Name)
+                            .Invoke("Assign", Literal(_inputModel.DiscriminatorValue))
+                            .Terminate());
                 }
             }
 
@@ -245,16 +245,38 @@ namespace Azure.Generator.Provisioning.Providers
 
         // ── Discriminator helpers ────────────────────────────────────
 
-        /// <summary>
-        /// Finds the discriminator property by walking up the model's base chain.
-        /// </summary>
-        private InputModelProperty? FindDiscriminatorProperty()
+        private bool IsInheritedDiscriminator(InputModelProperty property)
         {
-            var model = _inputModel;
+            var serializedName = property.SerializedName ?? property.Name;
+            var model = _inputModel.BaseModel;
+            while (model != null)
+            {
+                var discriminator = model.DiscriminatorProperty;
+                if (discriminator != null
+                    && string.Equals(
+                        discriminator.SerializedName ?? discriminator.Name,
+                        serializedName,
+                        StringComparison.Ordinal))
+                {
+                    return true;
+                }
+                model = model.BaseModel;
+            }
+            return false;
+        }
+
+        private PropertyProvider? FindDiscriminatorPropertyProvider()
+        {
+            var model = _inputModel.BaseModel;
             while (model != null)
             {
                 if (model.DiscriminatorProperty != null)
-                    return model.DiscriminatorProperty;
+                {
+                    var discriminatorProperty = CodeModelGenerator.Instance.TypeFactory.CreateModel(model)?
+                        .Properties.FirstOrDefault(property => property.IsDiscriminator);
+                    if (discriminatorProperty != null)
+                        return discriminatorProperty;
+                }
                 model = model.BaseModel;
             }
             return null;

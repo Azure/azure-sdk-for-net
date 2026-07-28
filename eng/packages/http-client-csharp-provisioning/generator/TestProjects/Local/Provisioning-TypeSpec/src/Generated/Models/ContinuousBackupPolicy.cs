@@ -38,7 +38,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Continuous");
+            Kind.Assign("Continuous");
             _tier = DefineProperty<string>(nameof(Tier), new string[] { "tier" });
             DefineAdditionalProperties();
         }

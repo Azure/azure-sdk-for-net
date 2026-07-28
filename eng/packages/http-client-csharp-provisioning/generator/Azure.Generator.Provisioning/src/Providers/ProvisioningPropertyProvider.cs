@@ -3,6 +3,7 @@
 
 using Azure.Generator.Provisioning.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -43,8 +44,16 @@ namespace Azure.Generator.Provisioning.Providers
             bool isOutput,
             bool isSettable,
             bool isRequired,
-            string? defaultValue)
-            : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
+            string? defaultValue,
+            PropertyWireInformation? wireInfo)
+            : base(
+                null,
+                MethodSignatureModifiers.Public,
+                type,
+                name,
+                body,
+                enclosingType,
+                wireInfo: wireInfo)
         {
             BackingField = backingField;
             BicepPath = bicepPath;
@@ -54,11 +63,40 @@ namespace Azure.Generator.Provisioning.Providers
             DefaultValue = defaultValue;
         }
 
+        private ProvisioningPropertyProvider(
+            InputModelProperty inputProperty,
+            FieldProvider backingField,
+            CSharpType type,
+            string name,
+            MethodPropertyBody body,
+            TypeProvider enclosingType,
+            string[] bicepPath,
+            bool isOutput,
+            bool isRequired,
+            string? defaultValue,
+            PropertyWireInformation? wireInfo)
+            : base(inputProperty, enclosingType)
+        {
+            Update(
+                modifiers: MethodSignatureModifiers.Internal,
+                type: type,
+                name: name,
+                body: body,
+                wireInfo: wireInfo);
+            BackingField = backingField;
+            BicepPath = bicepPath;
+            IsOutput = isOutput;
+            IsSettable = false;
+            IsRequired = isRequired;
+            DefaultValue = defaultValue;
+        }
+
         /// <summary>
         /// Creates a provisioning property with its linked backing field.
         /// This is the single unified implementation used by both model and resource providers.
         /// </summary>
         internal static ProvisioningPropertyProvider Create(
+            InputModelProperty inputProperty,
             string resolvedName,
             CSharpType bicepType,
             bool isOutput,
@@ -66,6 +104,8 @@ namespace Azure.Generator.Provisioning.Providers
             bool isRequired,
             string[] bicepPath,
             string? defaultValue,
+            PropertyWireInformation? wireInfo,
+            bool isDiscriminator,
             TypeProvider enclosingType)
         {
             var field = new FieldProvider(
@@ -81,7 +121,7 @@ namespace Azure.Generator.Provisioning.Providers
             ];
 
             MethodPropertyBody body;
-            if (!isSettable)
+            if (!isSettable || isDiscriminator)
             {
                 body = new MethodPropertyBody(getter);
             }
@@ -104,9 +144,13 @@ namespace Azure.Generator.Provisioning.Providers
                 body = new MethodPropertyBody(getter, setter);
             }
 
-            return new ProvisioningPropertyProvider(
-                field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isSettable, isRequired, defaultValue);
+            return isDiscriminator
+                ? new ProvisioningPropertyProvider(
+                    inputProperty, field, bicepType, resolvedName, body, enclosingType,
+                    bicepPath, isOutput, isRequired, defaultValue, wireInfo)
+                : new ProvisioningPropertyProvider(
+                    field, bicepType, resolvedName, body, enclosingType,
+                    bicepPath, isOutput, isSettable, isRequired, defaultValue, wireInfo);
         }
     }
 }

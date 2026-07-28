@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -627,6 +628,105 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.True);
+        }
+
+        [Test]
+        public void DiscriminatedResourceUsesInternalPropertyAndDerivedAssignment()
+        {
+            var discriminatorProperty = CreateProperty(
+                "Kind",
+                isRequired: true,
+                isDiscriminator: true,
+                serializedName: "type");
+            var baseModel = CreateModel(
+                "WritableWidget",
+                [discriminatorProperty],
+                discriminatorProperty: discriminatorProperty);
+            var derivedModel = CreateModel(
+                "DerivedWritableWidget",
+                [discriminatorProperty],
+                baseModel,
+                discriminatorValue: "derived",
+                discriminatorProperty: discriminatorProperty);
+            AddDiscriminatedSubtype(baseModel, derivedModel);
+            var writableResource = CreateMetadata(
+                baseModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel]);
+            var baseProvider = CreateResourceProvider(writableResource);
+            RegisterResourceProviders(baseProvider);
+            var derivedProvider = new ProvisioningResourceProvider(derivedModel);
+            var property = (ProvisioningPropertyProvider)baseProvider.Properties.Single();
+            var methodBody = derivedProvider.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+
+            Assert.That(property.IsDiscriminator, Is.True);
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+            Assert.That(property.Body.HasSetter, Is.False);
+            Assert.That(property.BicepPath, Is.EqualTo(new[] { "type" }));
+            Assert.That(methodBody, Does.Contain("Kind.Assign(\"derived\");"));
+            Assert.That(methodBody, Does.Not.Contain("defaultValue: \"derived\""));
+        }
+
+        [Test]
+        public void NestedResourceDiscriminatorsDefineAndAssignEachLevel()
+        {
+            var kind = CreateProperty("Kind", isRequired: true, isDiscriminator: true, serializedName: "type");
+            var baseModel = CreateModel("WritableWidget", [kind], discriminatorProperty: kind);
+            var breed = CreateProperty("Breed", isRequired: true, isDiscriminator: true);
+            var intermediateModel = CreateModel(
+                "IntermediateWritableWidget",
+                [kind, breed],
+                baseModel,
+                discriminatorValue: "intermediate",
+                discriminatorProperty: breed);
+            var leafModel = CreateModel(
+                "LeafWritableWidget",
+                [breed],
+                intermediateModel,
+                discriminatorValue: "leaf");
+            AddDiscriminatedSubtype(baseModel, intermediateModel);
+            AddDiscriminatedSubtype(intermediateModel, leafModel);
+            var writableResource = CreateMetadata(
+                baseModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, intermediateModel, leafModel]);
+            var baseProvider = CreateResourceProvider(writableResource);
+            RegisterResourceProviders(baseProvider);
+            var intermediateProvider = new ProvisioningResourceProvider(intermediateModel);
+            var leafProvider = new ProvisioningResourceProvider(leafModel);
+            var intermediateBody = intermediateProvider.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+            var leafBody = leafProvider.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+
+            Assert.That(intermediateProvider.Properties.Single().Name, Is.EqualTo("Breed"));
+            Assert.That(intermediateProvider.Properties.Single().IsDiscriminator, Is.True);
+            Assert.That(intermediateBody, Does.Contain("Kind.Assign(\"intermediate\");"));
+            Assert.That(intermediateBody, Does.Contain("nameof(Breed)"));
+            Assert.That(leafBody, Does.Contain("Breed.Assign(\"leaf\");"));
         }
 
         private static ArmResourceMetadata CreateMetadata(

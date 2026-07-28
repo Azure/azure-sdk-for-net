@@ -61,7 +61,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "CustomKeys");
+            AuthType.Assign("CustomKeys");
             _credentials = DefineModelProperty<CustomKeys>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

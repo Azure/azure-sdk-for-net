@@ -106,7 +106,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("taskType", new string[] { "taskType" }, defaultValue: "TextClassification");
+            TaskType.Assign("TextClassification");
             _featurizationSettings = DefineModelProperty<NlpVerticalFeaturizationSettings>(nameof(FeaturizationSettings), new string[] { "featurizationSettings" });
             _limitSettings = DefineModelProperty<NlpVerticalLimitSettings>(nameof(LimitSettings), new string[] { "limitSettings" });
             _validationData = DefineModelProperty<MachineLearningTableJobInput>(nameof(ValidationData), new string[] { "validationData" });
