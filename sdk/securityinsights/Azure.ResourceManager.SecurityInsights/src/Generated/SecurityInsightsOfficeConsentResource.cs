@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsOfficeConsentApiVersion);
             _officeConsentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _officeConsentsRestClient = new OfficeConsents(_officeConsentsClientDiagnostics, Pipeline, Endpoint, securityInsightsOfficeConsentApiVersion ?? "2025-07-01-preview");
+            _officeConsentsRestClient = new OfficeConsents(_officeConsentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsOfficeConsentApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

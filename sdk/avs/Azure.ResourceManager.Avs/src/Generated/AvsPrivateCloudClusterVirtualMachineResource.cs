@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string avsPrivateCloudClusterVirtualMachineApiVersion);
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudClusterVirtualMachineApiVersion ?? "2025-09-01");
+            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudClusterVirtualMachineApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

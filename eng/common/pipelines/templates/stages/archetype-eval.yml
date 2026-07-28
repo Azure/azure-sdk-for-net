@@ -15,8 +15,8 @@ parameters:
     # collect-stimuli.js mirrors this list as its no-args fallback — keep them in sync.
     type: object
     default:
-      - 'evals/tools/*.eval.yaml'
-      - 'evals/workflow-scenarios/mock/*.eval.yaml'
+      - 'tools/*.eval.yaml'
+      - 'workflows/mock/*.eval.yaml'
   - name: mcpSetupTemplate
     # SWAP POINT: builds/installs the MCP server(s) under artifacts/mcp/<name>. Required (no default):
     # each repo passes its own build template. This repo uses the shared mock/live builder

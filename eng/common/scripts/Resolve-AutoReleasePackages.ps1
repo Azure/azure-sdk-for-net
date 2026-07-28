@@ -47,6 +47,12 @@ The GitHub PR label that opts a merged PR into auto-release. Defaults to 'auto-r
 .PARAMETER BaseBranch
 The base branch a PR must have been merged into to qualify. Defaults to 'main'.
 
+.PARAMETER PipelineUrl
+The URL of the pipeline run, used for logging or linking back to the pipeline. Defaults to empty.
+
+.PARAMETER AzsdkExePath
+The path to the azsdk executable used for release operations. Defaults to the AZSDK environment variable.
+
 .OUTPUTS
 Azure DevOps output variables (reference cross-stage via dependencies.<stage>.outputs['<job>.<step>.<name>']):
   - HasAutoReleaseArtifacts    : 'true' if at least one declared package is releasable
@@ -63,7 +69,9 @@ param(
   [string] $Artifacts = $env:AUTORELEASE_ARTIFACTS,
   [string] $AuthToken = $env:GH_TOKEN,
   [string] $AutoReleaseLabel = 'auto-release',
-  [string] $BaseBranch = 'main'
+  [string] $BaseBranch = 'main',
+  [string] $PipelineUrl = '',
+  [string] $AzsdkExePath = $env:AZSDK
 )
 
 $ErrorActionPreference = 'Stop'
@@ -186,6 +194,40 @@ function Invoke-AutoReleaseResolution {
         Write-Host "  [$name] changed by PR $prLink -> releasable."
         Set-PipelineVariable -Name "ReleaseArtifact_$safeName" -Value 'true' -IsOutput
         $matchedArtifacts += $artifact
+
+        # Update release pending status and release pipeline URL in the release plan for this package.
+        # release status is updated as "Released" when the package has been successfully released; here we are marking it as "Approval Pending" to indicate that the release is awaiting approval.
+        try
+        {
+          if($AzsdkExePath)
+          {
+            $sdkPullRequestUrl = $pr.html_url
+            $cliArgs = @("release-plan", "update-release-status", "--package-name", $name, "--language", $LanguageDisplayName, "--status", "Approval Pending", "--sdk-pull-request", $sdkPullRequestUrl)
+            if ($PipelineUrl)
+            {
+                $cliArgs += @("--release-pipeline", $PipelineUrl)
+            }
+            else
+            {
+              LogWarning "Pipeline URL is not set; Not setting release pipeline link for package '$name' in release plan."
+            }
+
+            & $AzsdkExePath @cliArgs
+            if ($LASTEXITCODE -ne 0)
+            {
+                ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
+                Write-Host "Failed to update release pending status for package '$name' using azsdk. Exit code: $LASTEXITCODE"
+            }
+          }
+          else
+          {
+            Write-Host "AzsdkExePath is not set; skipping release plan update for package '$name'."
+          }          
+        }
+        catch
+        {
+          Write-Host "Failed to update release pending status in release plan for package '$name'. $($_.Exception.Message)"
+        }
       }
       else {
         Write-Host "  [$name] not changed by PR $prLink."

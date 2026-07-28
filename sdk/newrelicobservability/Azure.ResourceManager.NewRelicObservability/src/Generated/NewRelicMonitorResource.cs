@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             TryGetApiVersion(ResourceType, out string newRelicMonitorResourceApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
             _billingInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ResourceType.Namespace, Diagnostics);
-            _billingInfoRestClient = new BillingInfo(_billingInfoClientDiagnostics, Pipeline, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
+            _billingInfoRestClient = new BillingInfo(_billingInfoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
             _connectedPartnerResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ResourceType.Namespace, Diagnostics);
-            _connectedPartnerResourcesRestClient = new ConnectedPartnerResources(_connectedPartnerResourcesClientDiagnostics, Pipeline, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
+            _connectedPartnerResourcesRestClient = new ConnectedPartnerResources(_connectedPartnerResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1489,7 +1489,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Resubscribes the New Relic Organization of the underline Monitor Resource to be billed by Azure Marketplace
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

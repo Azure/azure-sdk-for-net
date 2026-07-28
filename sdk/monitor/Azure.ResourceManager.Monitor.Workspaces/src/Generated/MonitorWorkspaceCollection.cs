@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         {
             TryGetApiVersion(MonitorWorkspaceResource.ResourceType, out string monitorWorkspaceApiVersion);
             _azureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.Workspaces", MonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Endpoint, monitorWorkspaceApiVersion ?? "2025-10-03");
+            _azureMonitorWorkspacesRestClient = new AzureMonitorWorkspaces(_azureMonitorWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, monitorWorkspaceApiVersion ?? "2025-10-03");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(ElasticSanVolumeGroupResource.ResourceType, out string elasticSanVolumeGroupApiVersion);
             _volumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanVolumeGroupResource.ResourceType.Namespace, Diagnostics);
-            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Endpoint, elasticSanVolumeGroupApiVersion ?? "2025-09-01");
+            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeGroupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

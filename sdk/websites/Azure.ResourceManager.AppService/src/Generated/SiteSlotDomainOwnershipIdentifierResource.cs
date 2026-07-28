@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteSlotDomainOwnershipIdentifierApiVersion);
             _identifierOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _identifierOperationGroupRestClient = new IdentifierOperationGroup(_identifierOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
+            _identifierOperationGroupRestClient = new IdentifierOperationGroup(_identifierOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDomainOwnershipIdentifierApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

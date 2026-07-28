@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ResourceType, out string containerRegistryWebhookApiVersion);
             _webhooksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ResourceType.Namespace, Diagnostics);
-            _webhooksRestClient = new Webhooks(_webhooksClientDiagnostics, Pipeline, Endpoint, containerRegistryWebhookApiVersion ?? "2026-01-01-preview");
+            _webhooksRestClient = new Webhooks(_webhooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryWebhookApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

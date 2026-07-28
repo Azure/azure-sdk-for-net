@@ -41,7 +41,10 @@ extends:
     settings:
       skipBuildTagsForGitHubPullRequests: true
       # Do not add CFSClean until packages are published through ESRP instead of directly to NuGet.
-      networkIsolationPolicy: Permissive, CFSClean2, CFSClean3
+      ${{ if and(eq(variables['System.TeamProject'], 'internal'), or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'IndividualCI'))) }}:
+        networkIsolationPolicy: Permissive, CFSClean2, CFSClean3
+      ${{ else }}:
+        networkIsolationPolicy: Permissive, CFSClean, CFSClean2, CFSClean3
     sdl:
       ${{ if and(eq(variables['Build.DefinitionName'], 'net - core'), eq(variables['Build.SourceBranchName'], 'main'), eq(variables['System.TeamProject'], 'internal')) }}:
         autobaseline:

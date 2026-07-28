@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ExtendedLocations.Models;
 using Azure.ResourceManager.Models;
 
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.ExtendedLocations
     [ModelReaderWriterBuildable(typeof(ResourceSyncRuleProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceSyncRulePropertiesSelector))]
     [ModelReaderWriterBuildable(typeof(ResourceSyncRuleResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerExtendedLocationsContext : ModelReaderWriterContext

@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
 
         private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-06-01-preview");
 
         private ClientDiagnostics DeletedServicesClientDiagnostics => _deletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedServices DeletedServicesRestClient => _deletedServicesRestClient ??= new DeletedServices(DeletedServicesClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
+        private DeletedServices DeletedServicesRestClient => _deletedServicesRestClient ??= new DeletedServices(DeletedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-06-01-preview");
 
         /// <summary>
         /// Lists services within an Azure subscription.
