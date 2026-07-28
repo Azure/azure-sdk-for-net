@@ -20,3 +20,4 @@
 ### New Features
 
 - Initial Preview Release of the Azure FarmBeats client library for .NET
+
