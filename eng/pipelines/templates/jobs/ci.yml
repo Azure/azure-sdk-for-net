@@ -225,7 +225,9 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 10
+          # PackageInfo files are pre-batched by estimated test cost while preserving
+          # the existing ten-packages-per-job bucket count.
+          PRJobBatchSize: 1
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
@@ -235,6 +237,10 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
+                EnableTestDependencyGraphCache: true
+                EnableTestWeighting: true
+                TestPackagesPerJob: 10
+                DefaultMatrixConfigs: ${{ parameters.MatrixConfigs }}
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
