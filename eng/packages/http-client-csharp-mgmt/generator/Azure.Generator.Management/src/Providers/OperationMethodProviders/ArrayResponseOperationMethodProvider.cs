@@ -118,14 +118,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ArrayResponseOperationMethodProvider singlePageListOperationMethodProvider)
         {
-            var methodProvider = new ScmMethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 singlePageListOperationMethodProvider._signature,
                 singlePageListOperationMethodProvider._bodyStatements,
                 singlePageListOperationMethodProvider._enclosingType,
                 ScmMethodKind.Convenience,
-                null,
-                singlePageListOperationMethodProvider._collectionResult,
-                singlePageListOperationMethodProvider._serviceMethod);
+                collectionDefinition: singlePageListOperationMethodProvider._collectionResult,
+                serviceMethod: singlePageListOperationMethodProvider._serviceMethod);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(

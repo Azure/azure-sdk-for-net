@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `AzureAuthorityHosts.AzureBleuCloud` (`https://login.sovcloud-identity.fr/`), the Microsoft Entra authority host for Bleu Cloud, the national partner cloud for France. Interactive credentials' `Authenticate` methods now also resolve the default Azure Resource Manager scope for Bleu Cloud.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -12,6 +14,8 @@
 - Fixed `AzureCliCredential` to not pass both `--tenant` and `--subscription` flags to the Azure CLI, as the CLI rejects this combination. When a tenant is requested (for example, via challenge-based authentication) it now takes precedence and `--subscription` is omitted; `--subscription` is used only when no tenant is requested. ([#58949](https://github.com/Azure/azure-sdk-for-net/issues/58949))
 
 ### Other Changes
+
+- Added `azure-deprecating` to the default list of allowed (non-redacted) headers in `DiagnosticsOptions` to support [deprecating behavior notification](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#deprecating-behavior-notification).
 
 ## 1.60.0 (2026-06-30)
 

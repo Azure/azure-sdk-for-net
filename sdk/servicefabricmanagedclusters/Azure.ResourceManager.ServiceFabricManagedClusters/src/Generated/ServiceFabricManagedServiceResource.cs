@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// RestartReplica
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// RestartReplica
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
 
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.ElasticSan
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotCreationInfo))]
     [ModelReaderWriterBuildable(typeof(SnapshotList))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]

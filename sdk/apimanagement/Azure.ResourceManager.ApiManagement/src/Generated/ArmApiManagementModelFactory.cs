@@ -85,61 +85,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 default);
         }
 
-        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
-        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
-        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
-        /// <param name="apiType"> Type of API. </param>
-        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
-        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
-        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
-        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
-        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
-        /// <param name="apiVersionDescription"> Description of the API Version. </param>
-        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
-        /// <param name="contact"> Contact information for the API. </param>
-        /// <param name="license"> License information for the API. </param>
-        /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
-        /// <param name="sourceApiId"> API identifier of the source API. </param>
-        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
-        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
-        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
-        /// <param name="apiVersionSet"> Version set details. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.ApiContractProperties"/> instance for mocking. </returns>
-        public static ApiContractProperties ApiContractProperties(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default)
-        {
-            protocols ??= new ChangeTrackingList<ApiOperationInvokableProtocol>();
-
-            return new ApiContractProperties(
-                description,
-                authenticationSettings,
-                subscriptionKeyParameterNames,
-                apiType,
-                apiRevision,
-                apiVersion,
-                isCurrent,
-                isOnline,
-                apiRevisionDescription,
-                apiVersionDescription,
-                apiVersionSetId,
-                isSubscriptionRequired,
-                termsOfServiceLink,
-                contact,
-                license,
-                mcpProperties,
-                default,
-                sourceApiId,
-                displayName,
-                serviceLink,
-                path,
-                (protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>()).ToList(),
-                apiVersionSet,
-                provisioningState);
-        }
-
         /// <param name="id"> Identifier for existing API Version Set. Omit this value to create a new Version Set. </param>
         /// <param name="name"> The display Name of the API Version Set. </param>
         /// <param name="description"> Description of API Version Set. </param>
@@ -343,78 +288,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 translateRequiredQueryParametersConduct), default);
         }
 
-        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
-        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
-        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
-        /// <param name="apiType"> Type of API. </param>
-        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
-        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
-        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
-        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
-        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
-        /// <param name="apiVersionDescription"> Description of the API Version. </param>
-        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
-        /// <param name="contact"> Contact information for the API. </param>
-        /// <param name="license"> License information for the API. </param>
-        /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
-        /// <param name="sourceApiId"> API identifier of the source API. </param>
-        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
-        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
-        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
-        /// <param name="apiVersionSet"> Version set details. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="value"> Content value when Importing an API. </param>
-        /// <param name="format"> Format of the Content in which the API is getting imported. New formats can be added in the future. </param>
-        /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
-        /// <param name="soapApiType">
-        /// Type of API to create.
-        /// * `http` creates a REST API
-        /// * `soap` creates a SOAP pass-through API
-        /// * `websocket` creates websocket API
-        /// * `graphql` creates GraphQL API.
-        /// New types can be added in the future.
-        /// </param>
-        /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
-        /// <returns> A new <see cref="Models.ApiCreateOrUpdateProperties"/> instance for mocking. </returns>
-        public static ApiCreateOrUpdateProperties ApiCreateOrUpdateProperties(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default, string value = default, ContentFormat? format = default, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default, SoapApiType? soapApiType = default, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct = default)
-        {
-            protocols ??= new ChangeTrackingList<ApiOperationInvokableProtocol>();
-
-            return new ApiCreateOrUpdateProperties(
-                description,
-                authenticationSettings,
-                subscriptionKeyParameterNames,
-                apiType,
-                apiRevision,
-                apiVersion,
-                isCurrent,
-                isOnline,
-                apiRevisionDescription,
-                apiVersionDescription,
-                apiVersionSetId,
-                isSubscriptionRequired,
-                termsOfServiceLink,
-                contact,
-                license,
-                mcpProperties,
-                default,
-                sourceApiId,
-                displayName,
-                serviceLink,
-                path,
-                (protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>()).ToList(),
-                apiVersionSet,
-                provisioningState,
-                value,
-                format,
-                wsdlSelector,
-                soapApiType,
-                translateRequiredQueryParametersConduct);
-        }
-
         /// <param name="wsdlServiceName"> Name of service to import from WSDL. </param>
         /// <param name="wsdlEndpointName"> Name of endpoint(port) to import from WSDL. </param>
         /// <returns> A new <see cref="Models.ApiCreateOrUpdatePropertiesWsdlSelector"/> instance for mocking. </returns>
@@ -469,55 +342,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serviceLink,
                 path,
                 (protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>()).ToList()), default);
-        }
-
-        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
-        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
-        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
-        /// <param name="apiType"> Type of API. </param>
-        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
-        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
-        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
-        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
-        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
-        /// <param name="apiVersionDescription"> Description of the API Version. </param>
-        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
-        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
-        /// <param name="contact"> Contact information for the API. </param>
-        /// <param name="license"> License information for the API. </param>
-        /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
-        /// <param name="displayName"> API name. </param>
-        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. </param>
-        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
-        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
-        /// <returns> A new <see cref="Models.ApiContractUpdateProperties"/> instance for mocking. </returns>
-        public static ApiContractUpdateProperties ApiContractUpdateProperties(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
-        {
-            protocols ??= new ChangeTrackingList<ApiOperationInvokableProtocol>();
-
-            return new ApiContractUpdateProperties(
-                description,
-                authenticationSettings,
-                subscriptionKeyParameterNames,
-                apiType,
-                apiRevision,
-                apiVersion,
-                isCurrent,
-                isOnline,
-                apiRevisionDescription,
-                apiVersionDescription,
-                apiVersionSetId,
-                isSubscriptionRequired,
-                termsOfServiceLink,
-                contact,
-                license,
-                mcpProperties,
-                default,
-                displayName,
-                serviceLink,
-                path,
-                (protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>()).ToList());
         }
 
         /// <param name="source"> Definitions about the connectivity check origin. </param>
@@ -1736,33 +1560,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
         /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
-        /// <param name="displayName"> Product name. </param>
-        /// <returns> A new <see cref="Models.ProductContractProperties"/> instance for mocking. </returns>
-        public static ProductContractProperties ProductContractProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string displayName = default)
-        {
-            authenticationType ??= new ChangeTrackingList<ProductAuthType>();
-
-            return new ProductContractProperties(
-                description,
-                terms,
-                isSubscriptionRequired,
-                isApprovalRequired,
-                subscriptionsLimit,
-                (authenticationType ?? new ChangeTrackingList<ProductAuthType>()).ToList(),
-                applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, default),
-                state,
-                default,
-                displayName);
-        }
-
-        /// <param name="description"> Product description. May include HTML formatting tags. </param>
-        /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
-        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
-        /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
-        /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
-        /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
-        /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <returns> A new <see cref="Models.ProductEntityBaseProperties"/> instance for mocking. </returns>
         public static ProductEntityBaseProperties ProductEntityBaseProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default)
         {
@@ -1811,33 +1608,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 state,
                 default,
                 displayName), default);
-        }
-
-        /// <param name="description"> Product description. May include HTML formatting tags. </param>
-        /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
-        /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
-        /// <param name="isApprovalRequired"> whether subscription approval is required. If false, new subscriptions will be approved automatically enabling developers to call the product’s APIs immediately after subscribing. If true, administrators must manually approve the subscription before the developer can any of the product’s APIs. Can be present only if subscriptionRequired property is present and has a value of false. </param>
-        /// <param name="subscriptionsLimit"> Whether the number of subscriptions a user can have to this product at the same time. Set to null or omit to allow unlimited per user subscriptions. Can be present only if subscriptionRequired property is present and has a value of false. </param>
-        /// <param name="authenticationType"> Type of supported authentication for the product. The application configuration is required for application-token authentication type. The subscription-key authentication type is used by default. If the property is omitted, the subscription-key authentication type is used. </param>
-        /// <param name="applicationEntra"> Specifies Microsoft Entra settings needed to authorize product API calls using client application with Microsoft Entra OAuth token. </param>
-        /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
-        /// <param name="displayName"> Product name. </param>
-        /// <returns> A new <see cref="Models.ProductUpdateProperties"/> instance for mocking. </returns>
-        public static ProductUpdateProperties ProductUpdateProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, IEnumerable<ProductAuthType> authenticationType = default, ProductApplicationContractEntra applicationEntra = default, ApiManagementProductState? state = default, string displayName = default)
-        {
-            authenticationType ??= new ChangeTrackingList<ProductAuthType>();
-
-            return new ProductUpdateProperties(
-                description,
-                terms,
-                isSubscriptionRequired,
-                isApprovalRequired,
-                subscriptionsLimit,
-                (authenticationType ?? new ChangeTrackingList<ProductAuthType>()).ToList(),
-                applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, default),
-                state,
-                default,
-                displayName);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
