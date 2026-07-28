@@ -18,3 +18,4 @@
 
 - Initial beta release of Azure.Provisioning.ResourceGraph with support for declarative Resource Graph resource provisioning.
 - Added support for Resource Graph Query resources.
+

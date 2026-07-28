@@ -108,3 +108,4 @@
 - `InvocationsActivitySource` for OpenTelemetry distributed tracing integration.
 - ASP.NET Core hosting integration via `AddInvocations<THandler>()` builder extension.
 - Protocol identity registration with `ServerVersionRegistry` during route mapping.
+

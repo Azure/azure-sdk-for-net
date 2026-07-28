@@ -1030,3 +1030,4 @@ information about preview releases of other Azure SDK libraries, please visit ht
     - Added `ManagedIdentityCredential` class
 
 See the [documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) for more details. User authentication will be added in an upcoming preview release.
+
