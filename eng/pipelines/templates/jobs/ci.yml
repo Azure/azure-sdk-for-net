@@ -176,6 +176,7 @@ jobs:
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
     - job: Compliance
+      condition: and(succeededOrFailed(), ne(variables['Skip.Compliance'], true))
       pool:
         name: $(WINDOWSPOOL)
         image: $(WINDOWSVMIMAGE)
