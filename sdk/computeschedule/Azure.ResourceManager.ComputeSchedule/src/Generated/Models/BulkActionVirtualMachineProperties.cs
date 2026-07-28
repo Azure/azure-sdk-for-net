@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum compute api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVirtualMachineProperties(ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineHardwareProfile hardwareProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVirtualMachineProperties(ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, ComputeScheduleAdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineHardwareProfile hardwareProfile, ComputeScheduleSecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public VirtualMachineStorageProfile StorageProfile { get; set; }
 
         /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine. </summary>
-        public AdditionalCapabilities AdditionalCapabilities { get; set; }
+        public ComputeScheduleAdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
         public VirtualMachineOSProfile OsProfile { get; set; }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public VirtualMachineHardwareProfile HardwareProfile { get; set; }
 
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
-        public SecurityProfile SecurityProfile { get; set; }
+        public ComputeScheduleSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Specifies the boot diagnostic settings state. Minimum compute api-version: 2015-06-15. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal ApplicationProfile ApplicationProfile { get; set; }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
-        public BootDiagnostics BootDiagnostics
+        public ComputeScheduleBootDiagnostics BootDiagnostics
         {
             get
             {

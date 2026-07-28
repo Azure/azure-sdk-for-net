@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="hostname"> Hostname value. Supports valid domain name, partial or full wildcard. </param>
         /// <param name="certificateId"> Identifier of Certificate entity that will be used for TLS connection establishment. </param>
         /// <param name="isClientCertificateRequired"> Determines whether gateway requests client certificate. </param>
-        /// <param name="tls10Enabled"> Specifies if TLS 1.0 is supported. </param>
-        /// <param name="tls11Enabled"> Specifies if TLS 1.1 is supported. </param>
-        /// <param name="http2Enabled"> Specifies if HTTP/2.0 is supported. </param>
+        /// <param name="isTls10Enabled"> Specifies if TLS 1.0 is supported. </param>
+        /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
+        /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayHostnameConfigurationContractProperties(string hostname, string certificateId, bool? isClientCertificateRequired, bool? tls10Enabled, bool? tls11Enabled, bool? http2Enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayHostnameConfigurationContractProperties(string hostname, string certificateId, bool? isClientCertificateRequired, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Hostname = hostname;
             CertificateId = certificateId;
             IsClientCertificateRequired = isClientCertificateRequired;
-            Tls10Enabled = tls10Enabled;
-            Tls11Enabled = tls11Enabled;
-            Http2Enabled = http2Enabled;
+            IsTls10Enabled = isTls10Enabled;
+            IsTls11Enabled = isTls11Enabled;
+            IsHttp2_0Enabled = isHttp20Enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Specifies if TLS 1.0 is supported. </summary>
         [WirePath("tls10Enabled")]
-        public bool? Tls10Enabled { get; set; }
+        public bool? IsTls10Enabled { get; set; }
 
         /// <summary> Specifies if TLS 1.1 is supported. </summary>
         [WirePath("tls11Enabled")]
-        public bool? Tls11Enabled { get; set; }
+        public bool? IsTls11Enabled { get; set; }
 
         /// <summary> Specifies if HTTP/2.0 is supported. </summary>
         [WirePath("http2Enabled")]
-        public bool? Http2Enabled { get; set; }
+        public bool? IsHttp2_0Enabled { get; set; }
     }
 }

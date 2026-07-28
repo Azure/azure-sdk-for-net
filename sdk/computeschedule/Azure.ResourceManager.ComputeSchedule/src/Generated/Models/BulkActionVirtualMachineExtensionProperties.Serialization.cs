@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(IsAutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(IsAutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SuppressFailures))
+            if (Optional.IsDefined(IsSuppressFailures))
             {
                 writer.WritePropertyName("suppressFailures"u8);
-                writer.WriteBooleanValue(SuppressFailures.Value);
+                writer.WriteBooleanValue(IsSuppressFailures.Value);
             }
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string publisher = default;
             string @type = default;
             string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
+            bool? isAutoUpgradeMinorVersion = default;
             bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> protectedSettings = default;
-            bool? suppressFailures = default;
-            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
+            bool? isSuppressFailures = default;
+            ComputeScheduleKeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    isAutoUpgradeMinorVersion = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    suppressFailures = prop.Value.GetBoolean();
+                    isSuppressFailures = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("protectedSettingsFromKeyVault"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(prop.Value, options);
+                    protectedSettingsFromKeyVault = ComputeScheduleKeyVaultSecretReference.DeserializeComputeScheduleKeyVaultSecretReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisionAfterExtensions"u8))
@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
+                isAutoUpgradeMinorVersion,
                 enableAutomaticUpgrade,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                suppressFailures,
+                isSuppressFailures,
                 protectedSettingsFromKeyVault,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

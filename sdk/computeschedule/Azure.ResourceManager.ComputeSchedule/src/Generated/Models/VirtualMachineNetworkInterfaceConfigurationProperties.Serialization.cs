@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -183,16 +183,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            bool? primary = default;
-            DeleteOptions? deleteOption = default;
+            bool? isPrimary = default;
+            DeleteConfig? deleteOption = default;
             bool? enableAcceleratedNetworking = default;
             bool? disableTcpStateTracking = default;
             bool? enableFpga = default;
             bool? enableIPForwarding = default;
-            SubResource networkSecurityGroup = default;
+            ComputeScheduleSubResourceInfo networkSecurityGroup = default;
             VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
-            SubResource dscpConfiguration = default;
+            ComputeScheduleSubResourceInfo dscpConfiguration = default;
             NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             NetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new DeleteConfig(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableAcceleratedNetworking"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    networkSecurityGroup = ComputeScheduleSubResourceInfo.DeserializeComputeScheduleSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    dscpConfiguration = SubResource.DeserializeSubResource(prop.Value, options);
+                    dscpConfiguration = ComputeScheduleSubResourceInfo.DeserializeComputeScheduleSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("auxiliaryMode"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             return new VirtualMachineNetworkInterfaceConfigurationProperties(
-                primary,
+                isPrimary,
                 deleteOption,
                 enableAcceleratedNetworking,
                 disableTcpStateTracking,

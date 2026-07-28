@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ArmPlan plan = default;
             ManagedServiceIdentity identity = default;
             ExtendedLocation extendedLocation = default;
-            Placement placement = default;
+            ComputeSchedulePlacement placement = default;
             IDictionary<string, string> tags = default;
             BulkActionVirtualMachineProperties properties = default;
             IList<BulkActionVmExtension> vmExtensions = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    placement = Placement.DeserializePlacement(prop.Value, options);
+                    placement = ComputeSchedulePlacement.DeserializeComputeSchedulePlacement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

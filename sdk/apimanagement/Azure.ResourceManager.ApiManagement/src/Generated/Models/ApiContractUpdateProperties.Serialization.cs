@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string termsOfServiceLink = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
-            McpProperties mcpProperties = default;
+            ApiManagementMcpProperties mcpProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
             string serviceLink = default;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    mcpProperties = McpProperties.DeserializeMcpProperties(prop.Value, options);
+                    mcpProperties = ApiManagementMcpProperties.DeserializeApiManagementMcpProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))

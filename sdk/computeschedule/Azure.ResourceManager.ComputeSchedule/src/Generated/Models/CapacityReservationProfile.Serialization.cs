@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            SubResource capacityReservationGroup = default;
+            ComputeScheduleSubResourceInfo capacityReservationGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    capacityReservationGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    capacityReservationGroup = ComputeScheduleSubResourceInfo.DeserializeComputeScheduleSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

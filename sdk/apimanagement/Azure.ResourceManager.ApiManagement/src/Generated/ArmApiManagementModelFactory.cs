@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionSet"> Version set details. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ApiManagement.ApiData"/> instance for mocking. </returns>
-        public static ApiData ApiData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default, Uri termsOfServiceUri = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default)
+        public static ApiData ApiData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, ApiManagementMcpProperties mcpProperties = default, Uri termsOfServiceUri = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default)
         {
             return new ApiData(
                 id,
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="license"> License information for the API. </param>
         /// <param name="mcpProperties"> Properties specific to MCP API type. </param>
         /// <returns> A new <see cref="Models.ApiEntityBaseContract"/> instance for mocking. </returns>
-        public static ApiEntityBaseContract ApiEntityBaseContract(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default)
+        public static ApiEntityBaseContract ApiEntityBaseContract(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, ApiManagementMcpProperties mcpProperties = default)
         {
             return new ApiEntityBaseContract(
                 description,
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="transportType"> Transport type for Model Context Protocol API. </param>
         /// <param name="endpoints"> Collection of MCP endpoint definitions with relative URLs. </param>
-        /// <returns> A new <see cref="Models.McpProperties"/> instance for mocking. </returns>
-        public static McpProperties McpProperties(McpTransportType? transportType = default, IEnumerable<McpEndpoint> endpoints = default)
+        /// <returns> A new <see cref="Models.ApiManagementMcpProperties"/> instance for mocking. </returns>
+        public static ApiManagementMcpProperties ApiManagementMcpProperties(McpTransportType? transportType = default, IEnumerable<McpEndpoint> endpoints = default)
         {
             endpoints ??= new ChangeTrackingList<McpEndpoint>();
 
-            return new McpProperties(transportType, (endpoints ?? new ChangeTrackingList<McpEndpoint>()).ToList(), default);
+            return new ApiManagementMcpProperties(transportType, (endpoints ?? new ChangeTrackingList<McpEndpoint>()).ToList(), default);
         }
 
         /// <param name="name"> MCP endpoint name, e.g. 'sse' or 'messages'. </param>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </param>
         /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <returns> A new <see cref="Models.ApiCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default, Uri termsOfServiceUri = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default, string value = default, ContentFormat? format = default, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default, SoapApiType? soapApiType = default, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct = default)
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, ApiManagementMcpProperties mcpProperties = default, Uri termsOfServiceUri = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default, string value = default, ContentFormat? format = default, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default, SoapApiType? soapApiType = default, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct = default)
         {
             return new ApiCreateOrUpdateContent(description is null && authenticationSettings is null && subscriptionKeyParameterNames is null && apiType is null && apiRevision is null && apiVersion is null && isCurrent is null && isOnline is null && apiRevisionDescription is null && apiVersionDescription is null && apiVersionSetId is null && isSubscriptionRequired is null && termsOfServiceLink is null && contact is null && license is null && mcpProperties is null && sourceApiId is null && displayName is null && serviceLink is null && path is null && protocols is null && apiVersionSet is null && provisioningState is null && value is null && format is null && wsdlSelector is null && soapApiType is null && translateRequiredQueryParametersConduct is null ? default : new ApiCreateOrUpdateProperties(
                 description,
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.ApiPatch"/> instance for mocking. </returns>
-        public static ApiPatch ApiPatch(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default, Uri termsOfServiceUri = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
+        public static ApiPatch ApiPatch(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, ApiManagementMcpProperties mcpProperties = default, Uri termsOfServiceUri = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
         {
             return new ApiPatch(description is null && authenticationSettings is null && subscriptionKeyParameterNames is null && apiType is null && apiRevision is null && apiVersion is null && isCurrent is null && isOnline is null && apiRevisionDescription is null && apiVersionDescription is null && apiVersionSetId is null && isSubscriptionRequired is null && termsOfServiceLink is null && contact is null && license is null && mcpProperties is null && displayName is null && serviceLink is null && path is null && protocols is null ? default : new ApiContractUpdateProperties(
                 description,
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
         /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <returns> A new <see cref="ApiManagement.DiagnosticContractData"/> instance for mocking. </returns>
-        public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlwaysLog? alwaysLog = default, string loggerId = default, SamplingSettings sampling = default, PipelineDiagnosticSettings frontend = default, PipelineDiagnosticSettings backend = default, LLMDiagnosticSettings largeLanguageModel = default, bool? isLogClientIPEnabled = default, HttpCorrelationProtocol? httpCorrelationProtocol = default, TraceVerbosityLevel? verbosity = default, OperationNameFormat? operationNameFormat = default, bool? metrics = default)
+        public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlwaysLog? alwaysLog = default, string loggerId = default, SamplingSettings sampling = default, PipelineDiagnosticSettings frontend = default, PipelineDiagnosticSettings backend = default, LlmDiagnosticSettings largeLanguageModel = default, bool? isLogClientIPEnabled = default, HttpCorrelationProtocol? httpCorrelationProtocol = default, TraceVerbosityLevel? verbosity = default, OperationNameFormat? operationNameFormat = default, bool? metrics = default)
         {
             return new DiagnosticContractData(
                 id,
@@ -766,18 +766,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="logs"> Specifies whether default diagnostic should be enabled for Large Language Models or not. </param>
         /// <param name="requests"> Diagnostic settings for Large Language Models requests. </param>
         /// <param name="responses"> Diagnostic settings for Large Language Models responses. </param>
-        /// <returns> A new <see cref="Models.LLMDiagnosticSettings"/> instance for mocking. </returns>
-        public static LLMDiagnosticSettings LLMDiagnosticSettings(LlmDiagnosticLogState? logs = default, LLMMessageDiagnosticSettings requests = default, LLMMessageDiagnosticSettings responses = default)
+        /// <returns> A new <see cref="Models.LlmDiagnosticSettings"/> instance for mocking. </returns>
+        public static LlmDiagnosticSettings LlmDiagnosticSettings(LlmDiagnosticLogState? logs = default, LlmMessageDiagnosticSettings requests = default, LlmMessageDiagnosticSettings responses = default)
         {
-            return new LLMDiagnosticSettings(logs, requests, responses, default);
+            return new LlmDiagnosticSettings(logs, requests, responses, default);
         }
 
         /// <param name="messages"> Specifies which message should be logged. Currently there is only 'all' option. </param>
         /// <param name="maxSizeInBytes"> Maximum size of message to logs in bytes. The default size is 32KB. </param>
-        /// <returns> A new <see cref="Models.LLMMessageDiagnosticSettings"/> instance for mocking. </returns>
-        public static LLMMessageDiagnosticSettings LLMMessageDiagnosticSettings(LlmMessageLogTypes? messages = default, int? maxSizeInBytes = default)
+        /// <returns> A new <see cref="Models.LlmMessageDiagnosticSettings"/> instance for mocking. </returns>
+        public static LlmMessageDiagnosticSettings LlmMessageDiagnosticSettings(LlmMessageLogTypes? messages = default, int? maxSizeInBytes = default)
         {
-            return new LLMMessageDiagnosticSettings(messages, maxSizeInBytes, default);
+            return new LlmMessageDiagnosticSettings(messages, maxSizeInBytes, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1974,7 +1974,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.AssociatedApiProperties"/> instance for mocking. </returns>
-        public static AssociatedApiProperties AssociatedApiProperties(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, McpProperties mcpProperties = default, string id = default, string name = default, Uri serviceUri = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
+        public static AssociatedApiProperties AssociatedApiProperties(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, ApiManagementMcpProperties mcpProperties = default, string id = default, string name = default, Uri serviceUri = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
         {
             protocols ??= new ChangeTrackingList<ApiOperationInvokableProtocol>();
 
@@ -3015,12 +3015,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <param name="secretIdentifier"> Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret. </param>
-        /// <param name="updated"> When the secret was last updated in key vault. </param>
+        /// <param name="updatedOn"> When the secret was last updated in key vault. </param>
         /// <param name="lastStatus"> Last time sync and refresh of secret from key vault. </param>
         /// <returns> A new <see cref="Models.AuthorizationProviderKeyVaultContract"/> instance for mocking. </returns>
-        public static AuthorizationProviderKeyVaultContract AuthorizationProviderKeyVaultContract(string secretIdentifier = default, DateTimeOffset? updated = default, KeyVaultLastAccessStatusContractProperties lastStatus = default)
+        public static AuthorizationProviderKeyVaultContract AuthorizationProviderKeyVaultContract(string secretIdentifier = default, DateTimeOffset? updatedOn = default, KeyVaultLastAccessStatusContractProperties lastStatus = default)
         {
-            return new AuthorizationProviderKeyVaultContract(secretIdentifier, default, updated, lastStatus);
+            return new AuthorizationProviderKeyVaultContract(secretIdentifier, default, updatedOn, lastStatus);
         }
 
         /// <param name="secretIdentifier"> Key vault secret identifier for client secret. When provided, client secret will be retrieved from the provided key vault secret. </param>
@@ -3487,21 +3487,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <param name="code"> The last status of the Key Vault certificate fetch process. </param>
-        /// <param name="timeStampUtc"> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="lastSuccessTimeStampUtc"> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastAttemptedOn"> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastSucceededOn"> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <returns> A new <see cref="Models.GatewayHostnameBindingKeyVaultLastStatus"/> instance for mocking. </returns>
-        public static GatewayHostnameBindingKeyVaultLastStatus GatewayHostnameBindingKeyVaultLastStatus(KeyVaultFetchCode? code = default, DateTimeOffset? timeStampUtc = default, DateTimeOffset? lastSuccessTimeStampUtc = default)
+        public static GatewayHostnameBindingKeyVaultLastStatus GatewayHostnameBindingKeyVaultLastStatus(ApiManagementKeyVaultFetchCode? code = default, DateTimeOffset? lastAttemptedOn = default, DateTimeOffset? lastSucceededOn = default)
         {
-            return new GatewayHostnameBindingKeyVaultLastStatus(code, timeStampUtc, lastSuccessTimeStampUtc, default);
+            return new GatewayHostnameBindingKeyVaultLastStatus(code, lastAttemptedOn, lastSucceededOn, default);
         }
 
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
         /// <param name="subject"> The subject of the certificate. </param>
-        /// <param name="expiry"> The expiration date of the certificate. </param>
+        /// <param name="expireOn"> The expiration date of the certificate. </param>
         /// <returns> A new <see cref="Models.GatewayHostnameBindingCertificate"/> instance for mocking. </returns>
-        public static GatewayHostnameBindingCertificate GatewayHostnameBindingCertificate(string thumbprint = default, string subject = default, DateTimeOffset? expiry = default)
+        public static GatewayHostnameBindingCertificate GatewayHostnameBindingCertificate(string thumbprint = default, string subject = default, DateTimeOffset? expireOn = default)
         {
-            return new GatewayHostnameBindingCertificate(thumbprint, subject, expiry, default);
+            return new GatewayHostnameBindingCertificate(thumbprint, subject, expireOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3624,13 +3624,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                hostname is null && certificateId is null && isClientCertificateRequired is null ? default : new GatewayHostnameConfigurationContractProperties(
+                hostname is null && certificateId is null && isClientCertificateRequired is null && isTls10Enabled is null && isTls11Enabled is null && isHttp20Enabled is null ? default : new GatewayHostnameConfigurationContractProperties(
                     hostname,
                     certificateId,
                     isClientCertificateRequired,
-                    default,
-                    default,
-                    default,
+                    isTls10Enabled,
+                    isTls11Enabled,
+                    isHttp20Enabled,
                     default),
                 default);
         }

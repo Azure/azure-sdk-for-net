@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="terminateNotificationProfile"> Specifies Terminate Scheduled Event related configurations. </param>
         /// <param name="osImageNotificationProfile"> Specifies OS Image Scheduled Event related configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, OSImageNotificationProfile osImageNotificationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, ComputeScheduleOSImageNotificationProfile osImageNotificationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TerminateNotificationProfile = terminateNotificationProfile;
             OSImageNotificationProfile = osImageNotificationProfile;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public TerminateNotificationProfile TerminateNotificationProfile { get; set; }
 
         /// <summary> Specifies OS Image Scheduled Event related configurations. </summary>
-        public OSImageNotificationProfile OSImageNotificationProfile { get; set; }
+        public ComputeScheduleOSImageNotificationProfile OSImageNotificationProfile { get; set; }
     }
 }

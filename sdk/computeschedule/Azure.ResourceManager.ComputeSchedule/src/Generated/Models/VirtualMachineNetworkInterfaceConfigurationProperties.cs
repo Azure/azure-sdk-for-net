@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfigurationProperties"/>. </summary>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary, DeleteOptions? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, SubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, SubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, DeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeScheduleSubResourceInfo networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeScheduleSubResourceInfo dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Primary = primary;
+            IsPrimary = isPrimary;
             DeleteOption = deleteOption;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             DisableTcpStateTracking = disableTcpStateTracking;
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
-        public bool? Primary { get; set; }
+        public bool? IsPrimary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public DeleteConfig? DeleteOption { get; set; }
 
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary> The network security group. </summary>
-        internal SubResource NetworkSecurityGroup { get; set; }
+        internal ComputeScheduleSubResourceInfo NetworkSecurityGroup { get; set; }
 
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
 
         /// <summary> The DSCP configuration for the network interface. </summary>
-        internal SubResource DscpConfiguration { get; set; }
+        internal ComputeScheduleSubResourceInfo DscpConfiguration { get; set; }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
         public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (NetworkSecurityGroup is null)
                 {
-                    NetworkSecurityGroup = new SubResource();
+                    NetworkSecurityGroup = new ComputeScheduleSubResourceInfo();
                 }
                 NetworkSecurityGroup.Id = value;
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (DscpConfiguration is null)
                 {
-                    DscpConfiguration = new SubResource();
+                    DscpConfiguration = new ComputeScheduleSubResourceInfo();
                 }
                 DscpConfiguration.Id = value;
             }

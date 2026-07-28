@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("imds"u8);
                 writer.WriteObjectValue(Imds, options);
             }
-            if (Optional.IsDefined(AddProxyAgentExtension))
+            if (Optional.IsDefined(IsAddProxyAgentExtension))
             {
                 writer.WritePropertyName("addProxyAgentExtension"u8);
-                writer.WriteBooleanValue(AddProxyAgentExtension.Value);
+                writer.WriteBooleanValue(IsAddProxyAgentExtension.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             bool? enabled = default;
-            Mode? mode = default;
+            ComputeScheduleMode? mode = default;
             int? keyIncarnationId = default;
-            HostEndpointSettings wireServer = default;
-            HostEndpointSettings imds = default;
-            bool? addProxyAgentExtension = default;
+            ComputeScheduleHostEndpointSettings wireServer = default;
+            ComputeScheduleHostEndpointSettings imds = default;
+            bool? isAddProxyAgentExtension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    mode = new Mode(prop.Value.GetString());
+                    mode = new ComputeScheduleMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyIncarnationId"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    wireServer = HostEndpointSettings.DeserializeHostEndpointSettings(prop.Value, options);
+                    wireServer = ComputeScheduleHostEndpointSettings.DeserializeComputeScheduleHostEndpointSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("imds"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    imds = HostEndpointSettings.DeserializeHostEndpointSettings(prop.Value, options);
+                    imds = ComputeScheduleHostEndpointSettings.DeserializeComputeScheduleHostEndpointSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addProxyAgentExtension"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    addProxyAgentExtension = prop.Value.GetBoolean();
+                    isAddProxyAgentExtension = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 keyIncarnationId,
                 wireServer,
                 imds,
-                addProxyAgentExtension,
+                isAddProxyAgentExtension,
                 additionalBinaryDataProperties);
         }
     }

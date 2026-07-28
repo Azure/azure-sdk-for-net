@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
         /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticContractProperties(AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, LLMDiagnosticSettings largeLanguageModel, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticContractProperties(AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, LlmDiagnosticSettings largeLanguageModel, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Large Language Models diagnostic settings. </summary>
         [WirePath("largeLanguageModel")]
-        public LLMDiagnosticSettings LargeLanguageModel { get; set; }
+        public LlmDiagnosticSettings LargeLanguageModel { get; set; }
 
         /// <summary> Log the ClientIP. Default is false. </summary>
         [WirePath("logClientIp")]

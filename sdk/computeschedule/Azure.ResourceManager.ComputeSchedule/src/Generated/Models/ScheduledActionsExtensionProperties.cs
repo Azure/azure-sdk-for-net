@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
-        internal ScheduledActionsExtensionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationSettings> notificationSettings)
+        internal ScheduledActionsExtensionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<ComputeScheduleNotificationSettings> notificationSettings)
         {
             ResourceType = resourceType;
             ActionType = actionType;
             StartOn = startOn;
             Schedule = schedule;
             NotificationSettings = notificationSettings.ToList();
-            ResourceNotificationSettings = new ChangeTrackingList<NotificationSettings>();
+            ResourceNotificationSettings = new ChangeTrackingList<ComputeScheduleNotificationSettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsExtensionProperties"/>. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionsExtensionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationSettings> notificationSettings, bool? disabled, ScheduledActionResourceProvisioningState? provisioningState, IReadOnlyList<NotificationSettings> resourceNotificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionsExtensionProperties(ScheduledActionResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<ComputeScheduleNotificationSettings> notificationSettings, bool? disabled, ScheduledActionResourceProvisioningState? provisioningState, IReadOnlyList<ComputeScheduleNotificationSettings> resourceNotificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionsSchedule Schedule { get; }
 
         /// <summary> The notification settings for the scheduled action. </summary>
-        public IList<NotificationSettings> NotificationSettings { get; }
+        public IList<ComputeScheduleNotificationSettings> NotificationSettings { get; }
 
         /// <summary> Tell if the scheduled action is disabled or not. </summary>
         public bool? Disabled { get; }
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionResourceProvisioningState? ProvisioningState { get; }
 
         /// <summary> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </summary>
-        public IReadOnlyList<NotificationSettings> ResourceNotificationSettings { get; }
+        public IReadOnlyList<ComputeScheduleNotificationSettings> ResourceNotificationSettings { get; }
     }
 }

@@ -89,20 +89,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
-            if (Optional.IsDefined(Tls10Enabled))
+            if (Optional.IsDefined(IsTls10Enabled))
             {
                 writer.WritePropertyName("tls10Enabled"u8);
-                writer.WriteBooleanValue(Tls10Enabled.Value);
+                writer.WriteBooleanValue(IsTls10Enabled.Value);
             }
-            if (Optional.IsDefined(Tls11Enabled))
+            if (Optional.IsDefined(IsTls11Enabled))
             {
                 writer.WritePropertyName("tls11Enabled"u8);
-                writer.WriteBooleanValue(Tls11Enabled.Value);
+                writer.WriteBooleanValue(IsTls11Enabled.Value);
             }
-            if (Optional.IsDefined(Http2Enabled))
+            if (Optional.IsDefined(IsHttp2_0Enabled))
             {
                 writer.WritePropertyName("http2Enabled"u8);
-                writer.WriteBooleanValue(Http2Enabled.Value);
+                writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string hostname = default;
             string certificateId = default;
             bool? isClientCertificateRequired = default;
-            bool? tls10Enabled = default;
-            bool? tls11Enabled = default;
-            bool? http2Enabled = default;
+            bool? isTls10Enabled = default;
+            bool? isTls11Enabled = default;
+            bool? isHttp20Enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    tls10Enabled = prop.Value.GetBoolean();
+                    isTls10Enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("tls11Enabled"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    tls11Enabled = prop.Value.GetBoolean();
+                    isTls11Enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("http2Enabled"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    http2Enabled = prop.Value.GetBoolean();
+                    isHttp20Enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 hostname,
                 certificateId,
                 isClientCertificateRequired,
-                tls10Enabled,
-                tls11Enabled,
-                http2Enabled,
+                isTls10Enabled,
+                isTls11Enabled,
+                isHttp20Enabled,
                 additionalBinaryDataProperties);
         }
     }

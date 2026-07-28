@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </summary>
-        public EventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph
+        public ComputeScheduleEventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph
         {
             get
             {

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceReferenceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            bool? primary = default;
-            DeleteOptions? deleteOption = default;
+            bool? isPrimary = default;
+            DeleteConfig? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new DeleteConfig(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineNetworkInterfaceReferenceProperties(primary, deleteOption, additionalBinaryDataProperties);
+            return new VirtualMachineNetworkInterfaceReferenceProperties(isPrimary, deleteOption, additionalBinaryDataProperties);
         }
     }
 }

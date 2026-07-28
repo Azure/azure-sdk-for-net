@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Large Language Models diagnostic settings. </summary>
         [WirePath("properties.largeLanguageModel")]
-        public LLMDiagnosticSettings LargeLanguageModel
+        public LlmDiagnosticSettings LargeLanguageModel
         {
             get
             {

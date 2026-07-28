@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
                         },
                     },
                     DeadlineType = ScheduledActionDeadlineType.Unknown,
-                }, new NotificationSettings[]
+                }, new ComputeScheduleNotificationSettings[]
             {
-new NotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
+new ComputeScheduleNotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
 {
 IsDisabled = true,
 }

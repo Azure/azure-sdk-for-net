@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </param>
-        public VirtualMachineDataDisk(int lun, DiskCreateOptionType createOption)
+        public VirtualMachineDataDisk(int lun, ComputeScheduleDiskCreateOptionType createOption)
         {
             Lun = lun;
             CreateOption = createOption;
@@ -32,28 +32,28 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="vhd"> The virtual hard disk. </param>
         /// <param name="image"> The source user image virtual hard disk. The virtual hard disk will be copied before being attached to the virtual machine. If SourceImage is provided, the destination virtual hard drive must not exist. </param>
         /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </param>
         /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="sourceResource"> The source resource identifier. It can be a snapshot, or disk restore point from which to create a disk. </param>
-        /// <param name="toBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
+        /// <param name="isToBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, ComputeScheduleManagedDiskConfig managedDisk, ApiEntityReference sourceResource, bool? toBeDetached, DiskDetachOptionType? detachOption, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineDataDisk(int lun, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeScheduleCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeScheduleDiskCreateOptionType createOption, int? diskSizeGB, ComputeScheduleManagedDiskConfig managedDisk, ApiEntityReference sourceResource, bool? isToBeDetached, ComputeScheduleDiskDetachOptionType? detachOption, ComputeScheduleDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;
             Vhd = vhd;
             Image = image;
             Caching = caching;
-            WriteAcceleratorEnabled = writeAcceleratorEnabled;
+            IsWriteAcceleratorEnabled = isWriteAcceleratorEnabled;
             CreateOption = createOption;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
             SourceResource = sourceResource;
-            ToBeDetached = toBeDetached;
+            IsToBeDetached = isToBeDetached;
             DetachOption = detachOption;
             DeleteOption = deleteOption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal VirtualHardDisk Image { get; set; }
 
         /// <summary> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </summary>
-        public CachingType? Caching { get; set; }
+        public ComputeScheduleCachingType? Caching { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
-        public bool? WriteAcceleratorEnabled { get; set; }
+        public bool? IsWriteAcceleratorEnabled { get; set; }
 
         /// <summary> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </summary>
-        public DiskCreateOptionType CreateOption { get; }
+        public ComputeScheduleDiskCreateOptionType CreateOption { get; }
 
         /// <summary> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </summary>
         public int? DiskSizeGB { get; set; }
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal ApiEntityReference SourceResource { get; set; }
 
         /// <summary> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </summary>
-        public bool? ToBeDetached { get; set; }
+        public bool? IsToBeDetached { get; set; }
 
         /// <summary> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </summary>
-        public DiskDetachOptionType? DetachOption { get; set; }
+        public ComputeScheduleDiskDetachOptionType? DetachOption { get; set; }
 
         /// <summary> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </summary>
-        public DiskDeleteOptionType? DeleteOption { get; set; }
+        public ComputeScheduleDiskDeleteOptionType? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
         public Uri VhdUri

@@ -491,25 +491,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
                     StorageProfile = new VirtualMachineStorageProfile
                     {
-                        ImageReference = new ImageReference
+                        ImageReference = new ComputeScheduleImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
                             Sku = "2022-datacenter-azure-edition",
                             Version = "latest"
                         },
-                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                        OSDisk = new VirtualMachineOSDisk(ComputeScheduleDiskCreateOptionType.FromImage)
                         {
                             OSType = OperatingSystemType.Windows,
-                            Caching = CachingType.ReadWrite,
+                            Caching = ComputeScheduleCachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
-                                StorageAccountType = StorageAccountType.StandardLRS
+                                StorageAccountType = ComputeScheduleStorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionType.Delete,
+                            DeleteOption = ComputeScheduleDiskDeleteOptionType.Delete,
                             DiskSizeGB = 127
                         },
-                        DiskControllerType = DiskControllerType.SCSI
+                        DiskControllerType = ComputeScheduleDiskControllerType.SCSI
                     },
                     NetworkProfile = new VirtualMachineNetworkProfile
                     {
@@ -525,12 +525,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                             Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
                                             {
                                                 SubnetId = subnetId,
-                                                Primary = true,
+                                                IsPrimary = true,
                                             }
                                         }
                                     })
                                 {
-                                    Primary = true,
+                                    IsPrimary = true,
                                     EnableIPForwarding = true,
                                 }
                             }
@@ -555,9 +555,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                         ComputerName = "testflexvm",
                         AdminUsername = "testadmin",
                         AdminPassword = "TestPassword123!",
-                        WindowsConfiguration = new WindowsConfiguration
+                        WindowsConfiguration = new ComputeScheduleWindowsConfiguration
                         {
-                            ProvisionVmAgent = true,
+                            IsProvisionVmAgent = true,
                             IsAutomaticUpdatesEnabled = true
                         }
                     }
@@ -612,25 +612,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
                     StorageProfile = new VirtualMachineStorageProfile
                     {
-                        ImageReference = new ImageReference
+                        ImageReference = new ComputeScheduleImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
                             Sku = "2022-datacenter-azure-edition",
                             Version = "latest"
                         },
-                        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                        OSDisk = new VirtualMachineOSDisk(ComputeScheduleDiskCreateOptionType.FromImage)
                         {
                             OSType = OperatingSystemType.Windows,
-                            Caching = CachingType.ReadWrite,
+                            Caching = ComputeScheduleCachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
-                                StorageAccountType = StorageAccountType.StandardLRS
+                                StorageAccountType = ComputeScheduleStorageAccountType.StandardLRS
                             },
-                            DeleteOption = DiskDeleteOptionType.Delete,
+                            DeleteOption = ComputeScheduleDiskDeleteOptionType.Delete,
                             DiskSizeGB = 127
                         },
-                        DiskControllerType = DiskControllerType.SCSI
+                        DiskControllerType = ComputeScheduleDiskControllerType.SCSI
                     },
                     NetworkProfile = new VirtualMachineNetworkProfile
                     {
@@ -646,12 +646,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                             Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
                                             {
                                                 SubnetId = subnetId,
-                                                Primary = true,
+                                                IsPrimary = true,
                                             }
                                         }
                                     })
                                 {
-                                    Primary = true,
+                                    IsPrimary = true,
                                     EnableIPForwarding = true,
                                 }
                             }
@@ -676,9 +676,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                         ComputerName = "testcreatevm",
                         AdminUsername = "testadmin",
                         AdminPassword = "TestPassword123!",
-                        WindowsConfiguration = new WindowsConfiguration
+                        WindowsConfiguration = new ComputeScheduleWindowsConfiguration
                         {
-                            ProvisionVmAgent = true,
+                            IsProvisionVmAgent = true,
                             IsAutomaticUpdatesEnabled = true
                         }
                     }

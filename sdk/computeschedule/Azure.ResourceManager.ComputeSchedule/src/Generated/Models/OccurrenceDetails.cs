@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal OccurrenceDetails(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
-            NotificationSettings = new ChangeTrackingList<NotificationSettings>();
+            NotificationSettings = new ChangeTrackingList<ComputeScheduleNotificationSettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceDetails"/>. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceDetails(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OccurrenceDetails(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<ComputeScheduleNotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The desired notification settings for the specified resource. </summary>
-        public IList<NotificationSettings> NotificationSettings { get; }
+        public IList<ComputeScheduleNotificationSettings> NotificationSettings { get; }
 
         /// <summary> The time the occurrence is scheduled for the resource. </summary>
         public DateTimeOffset ScheduledOn { get; }

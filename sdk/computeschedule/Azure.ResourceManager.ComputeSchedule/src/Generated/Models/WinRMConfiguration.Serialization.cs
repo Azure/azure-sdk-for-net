@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("listeners"u8);
                 writer.WriteStartArray();
-                foreach (WinRMListener item in Listeners)
+                foreach (ComputeScheduleWinRMListener item in Listeners)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IList<WinRMListener> listeners = default;
+            IList<ComputeScheduleWinRMListener> listeners = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<WinRMListener> array = new List<WinRMListener>();
+                    List<ComputeScheduleWinRMListener> array = new List<ComputeScheduleWinRMListener>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WinRMListener.DeserializeWinRMListener(item, options));
+                        array.Add(ComputeScheduleWinRMListener.DeserializeComputeScheduleWinRMListener(item, options));
                     }
                     listeners = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<WinRMListener>(), additionalBinaryDataProperties);
+            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<ComputeScheduleWinRMListener>(), additionalBinaryDataProperties);
         }
     }
 }

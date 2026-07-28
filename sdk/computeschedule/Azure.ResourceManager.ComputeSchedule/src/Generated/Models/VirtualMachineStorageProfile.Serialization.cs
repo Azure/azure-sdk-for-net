@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            ImageReference imageReference = default;
+            ComputeScheduleImageReference imageReference = default;
             VirtualMachineOSDisk osDisk = default;
             IList<VirtualMachineDataDisk> dataDisks = default;
-            DiskControllerType? diskControllerType = default;
+            ComputeScheduleDiskControllerType? diskControllerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(prop.Value, options);
+                    imageReference = ComputeScheduleImageReference.DeserializeComputeScheduleImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osDisk"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    diskControllerType = new DiskControllerType(prop.Value.GetString());
+                    diskControllerType = new ComputeScheduleDiskControllerType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

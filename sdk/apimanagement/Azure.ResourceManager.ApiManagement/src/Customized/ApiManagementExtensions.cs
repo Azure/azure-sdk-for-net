@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     // Old SDK had GetApiGateways/GetApiManagementServices(CancellationToken) on SubscriptionResource.
     // New generator adds top/skipToken params. These simplified overloads preserve the old signature.
+    // The token remains required to avoid ambiguity; the generated overload still supports calls without arguments.
     // Not spec-fixable: C# convenience overloads.
 
     public static partial class ApiManagementExtensions

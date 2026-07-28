@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
-                foreach (SshPublicKeyConfiguration item in PublicKeys)
+                foreach (ComputeScheduleSshPublicKeyConfiguration item in PublicKeys)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IList<SshPublicKeyConfiguration> publicKeys = default;
+            IList<ComputeScheduleSshPublicKeyConfiguration> publicKeys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<SshPublicKeyConfiguration> array = new List<SshPublicKeyConfiguration>();
+                    List<ComputeScheduleSshPublicKeyConfiguration> array = new List<ComputeScheduleSshPublicKeyConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKeyConfiguration.DeserializeSshPublicKeyConfiguration(item, options));
+                        array.Add(ComputeScheduleSshPublicKeyConfiguration.DeserializeComputeScheduleSshPublicKeyConfiguration(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SshPublicKeyConfiguration>(), additionalBinaryDataProperties);
+            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<ComputeScheduleSshPublicKeyConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

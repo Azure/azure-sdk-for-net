@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
                         },
                         DeadlineType = ScheduledActionDeadlineType.Unknown,
                     },
-                    NotificationSettings = {new NotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
+                    NotificationSettings = {new ComputeScheduleNotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
 {
 IsDisabled = true,
 }},
@@ -189,7 +189,7 @@ IsDisabled = true,
             {
 new ScheduledActionResourceDetails(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
 {
-NotificationSettings = {new NotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
+NotificationSettings = {new ComputeScheduleNotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
 {
 IsDisabled = true,
 }},
@@ -252,7 +252,7 @@ IsDisabled = true,
             {
 new ScheduledActionResourceDetails(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
 {
-NotificationSettings = {new NotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
+NotificationSettings = {new ComputeScheduleNotificationSettings("wbhryycyolvnypjxzlawwvb", NotificationType.Email, NotificationLanguage.EnUs)
 {
 IsDisabled = true,
 }},

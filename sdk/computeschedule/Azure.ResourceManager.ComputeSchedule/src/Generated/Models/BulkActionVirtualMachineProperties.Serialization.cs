@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineStorageProfile storageProfile = default;
-            AdditionalCapabilities additionalCapabilities = default;
+            ComputeScheduleAdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
             VirtualMachineNetworkProfile networkProfile = default;
             VirtualMachineHardwareProfile hardwareProfile = default;
-            SecurityProfile securityProfile = default;
+            ComputeScheduleSecurityProfile securityProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
             string extensionsTimeBudget = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(prop.Value, options);
+                    additionalCapabilities = ComputeScheduleAdditionalCapabilities.DeserializeComputeScheduleAdditionalCapabilities(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osProfile"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(prop.Value, options);
+                    securityProfile = ComputeScheduleSecurityProfile.DeserializeComputeScheduleSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnosticsProfile"u8))

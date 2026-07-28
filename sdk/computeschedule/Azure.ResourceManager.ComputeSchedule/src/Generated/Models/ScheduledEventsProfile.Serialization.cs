@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             TerminateNotificationProfile terminateNotificationProfile = default;
-            OSImageNotificationProfile osImageNotificationProfile = default;
+            ComputeScheduleOSImageNotificationProfile osImageNotificationProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(prop.Value, options);
+                    osImageNotificationProfile = ComputeScheduleOSImageNotificationProfile.DeserializeComputeScheduleOSImageNotificationProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

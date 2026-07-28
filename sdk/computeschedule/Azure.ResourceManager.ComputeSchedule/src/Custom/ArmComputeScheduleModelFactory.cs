@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmComputeScheduleModelFactory
     {
+        // The legacy signature is retained for binary compatibility, but its parameters remain required to avoid
+        // ambiguity with the generated overload that adds another optional parameter.
         /// <summary> The details of a response from an operation on a resource. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg ArmId. </param>

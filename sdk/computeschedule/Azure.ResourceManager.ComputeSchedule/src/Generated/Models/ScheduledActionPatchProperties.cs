@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledActionPatchProperties"/>. </summary>
         public ScheduledActionPatchProperties()
         {
-            NotificationSettings = new ChangeTrackingList<NotificationSettings>();
+            NotificationSettings = new ChangeTrackingList<ComputeScheduleNotificationSettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionPatchProperties"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationSettings> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<ComputeScheduleNotificationSettings> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionsSchedule Schedule { get; set; }
 
         /// <summary> The notification settings for the scheduled action. </summary>
-        public IList<NotificationSettings> NotificationSettings { get; }
+        public IList<ComputeScheduleNotificationSettings> NotificationSettings { get; }
 
         /// <summary> Tell if the scheduled action is disabled or not. </summary>
         public bool? Disabled { get; set; }

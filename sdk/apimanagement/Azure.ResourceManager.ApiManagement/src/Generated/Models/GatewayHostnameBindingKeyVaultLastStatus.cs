@@ -24,27 +24,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingKeyVaultLastStatus"/>. </summary>
         /// <param name="code"> The last status of the Key Vault certificate fetch process. </param>
-        /// <param name="timeStampUtc"> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="lastSuccessTimeStampUtc"> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastAttemptedOn"> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="lastSucceededOn"> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayHostnameBindingKeyVaultLastStatus(KeyVaultFetchCode? code, DateTimeOffset? timeStampUtc, DateTimeOffset? lastSuccessTimeStampUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayHostnameBindingKeyVaultLastStatus(ApiManagementKeyVaultFetchCode? code, DateTimeOffset? lastAttemptedOn, DateTimeOffset? lastSucceededOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
-            TimeStampUtc = timeStampUtc;
-            LastSuccessTimeStampUtc = lastSuccessTimeStampUtc;
+            LastAttemptedOn = lastAttemptedOn;
+            LastSucceededOn = lastSucceededOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The last status of the Key Vault certificate fetch process. </summary>
         [WirePath("code")]
-        public KeyVaultFetchCode? Code { get; }
+        public ApiManagementKeyVaultFetchCode? Code { get; }
 
         /// <summary> The last time the Key Vault certificate fetch process was attempted. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("timeStampUtc")]
-        public DateTimeOffset? TimeStampUtc { get; }
+        public DateTimeOffset? LastAttemptedOn { get; }
 
         /// <summary> The last time the Key Vault certificate fetch process was successful. Only when the fetch process has succeeded at least once and current state is failed.  The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("lastSuccessTimeStampUtc")]
-        public DateTimeOffset? LastSuccessTimeStampUtc { get; }
+        public DateTimeOffset? LastSucceededOn { get; }
     }
 }

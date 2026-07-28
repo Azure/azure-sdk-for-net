@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class VirtualMachineNetworkInterfaceReference : SubResource
+    public partial class VirtualMachineNetworkInterfaceReference : ComputeScheduleSubResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceReference"/>. </summary>
         public VirtualMachineNetworkInterfaceReference()

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (VaultSecretGroup item in Secrets)
+                foreach (ComputeScheduleVaultSecretGroup item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("allowExtensionOperations"u8);
                 writer.WriteBooleanValue(AllowExtensionOperations.Value);
             }
-            if (Optional.IsDefined(RequireGuestProvisionSignal))
+            if (Optional.IsDefined(IsRequireGuestProvisionSignal))
             {
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
-                writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
+                writer.WriteBooleanValue(IsRequireGuestProvisionSignal.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string adminUsername = default;
             string adminPassword = default;
             string customData = default;
-            WindowsConfiguration windowsConfiguration = default;
-            LinuxConfiguration linuxConfiguration = default;
-            IList<VaultSecretGroup> secrets = default;
+            ComputeScheduleWindowsConfiguration windowsConfiguration = default;
+            ComputeScheduleLinuxConfiguration linuxConfiguration = default;
+            IList<ComputeScheduleVaultSecretGroup> secrets = default;
             bool? allowExtensionOperations = default;
-            bool? requireGuestProvisionSignal = default;
+            bool? isRequireGuestProvisionSignal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(prop.Value, options);
+                    windowsConfiguration = ComputeScheduleWindowsConfiguration.DeserializeComputeScheduleWindowsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("linuxConfiguration"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(prop.Value, options);
+                    linuxConfiguration = ComputeScheduleLinuxConfiguration.DeserializeComputeScheduleLinuxConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("secrets"u8))
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<VaultSecretGroup> array = new List<VaultSecretGroup>();
+                    List<ComputeScheduleVaultSecretGroup> array = new List<ComputeScheduleVaultSecretGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item, options));
+                        array.Add(ComputeScheduleVaultSecretGroup.DeserializeComputeScheduleVaultSecretGroup(item, options));
                     }
                     secrets = array;
                     continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    requireGuestProvisionSignal = prop.Value.GetBoolean();
+                    isRequireGuestProvisionSignal = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 customData,
                 windowsConfiguration,
                 linuxConfiguration,
-                secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
+                secrets ?? new ChangeTrackingList<ComputeScheduleVaultSecretGroup>(),
                 allowExtensionOperations,
-                requireGuestProvisionSignal,
+                isRequireGuestProvisionSignal,
                 additionalBinaryDataProperties);
         }
     }

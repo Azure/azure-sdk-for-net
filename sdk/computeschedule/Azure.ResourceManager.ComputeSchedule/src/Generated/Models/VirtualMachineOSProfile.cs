@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineOSProfile"/>. </summary>
         public VirtualMachineOSProfile()
         {
-            Secrets = new ChangeTrackingList<VaultSecretGroup>();
+            Secrets = new ChangeTrackingList<ComputeScheduleVaultSecretGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineOSProfile"/>. </summary>
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
         /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
-        /// <param name="requireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
+        /// <param name="isRequireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineOSProfile(string computerName, string adminUsername, string adminPassword, string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, bool? allowExtensionOperations, bool? requireGuestProvisionSignal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineOSProfile(string computerName, string adminUsername, string adminPassword, string customData, ComputeScheduleWindowsConfiguration windowsConfiguration, ComputeScheduleLinuxConfiguration linuxConfiguration, IList<ComputeScheduleVaultSecretGroup> secrets, bool? allowExtensionOperations, bool? isRequireGuestProvisionSignal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             LinuxConfiguration = linuxConfiguration;
             Secrets = secrets;
             AllowExtensionOperations = allowExtensionOperations;
-            RequireGuestProvisionSignal = requireGuestProvisionSignal;
+            IsRequireGuestProvisionSignal = isRequireGuestProvisionSignal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,18 +61,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string CustomData { get; set; }
 
         /// <summary> Specifies Windows operating system settings on the virtual machine. </summary>
-        public WindowsConfiguration WindowsConfiguration { get; set; }
+        public ComputeScheduleWindowsConfiguration WindowsConfiguration { get; set; }
 
         /// <summary> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
-        public LinuxConfiguration LinuxConfiguration { get; set; }
+        public ComputeScheduleLinuxConfiguration LinuxConfiguration { get; set; }
 
         /// <summary> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </summary>
-        public IList<VaultSecretGroup> Secrets { get; }
+        public IList<ComputeScheduleVaultSecretGroup> Secrets { get; }
 
         /// <summary> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </summary>
         public bool? AllowExtensionOperations { get; set; }
 
         /// <summary> Optional property which must either be set to True or omitted. </summary>
-        public bool? RequireGuestProvisionSignal { get; set; }
+        public bool? IsRequireGuestProvisionSignal { get; set; }
     }
 }
