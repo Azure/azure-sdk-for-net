@@ -115,6 +115,7 @@ extends:
                 - ${{ each config in parameters.AdditionalMatrixConfigs }}:
                     - ${{ config }}
               MatrixFilters: ${{ parameters.MatrixFilters }}
+              ExcludePaths: ${{ parameters.ExcludePaths }}
               MatrixReplace:
                 # For nightly/release pipelines we build and test release only
                 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
