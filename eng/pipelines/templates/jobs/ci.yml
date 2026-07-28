@@ -214,6 +214,15 @@ jobs:
       parameters:
         GenerateJobName: generate_target_service_test_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+        # TEMP: macOS public pool currently reports MaxConcurrency=0. Keep the matched
+        # performance experiment to Linux/Windows so unavailable agents do not cancel it.
+        Pools:
+          - name: Linux
+            filter: .*Linux.*Pool$
+            os: linux
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
         MatrixConfigs: ${{ parameters.MatrixConfigs }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace: ${{ parameters.MatrixReplace }}
