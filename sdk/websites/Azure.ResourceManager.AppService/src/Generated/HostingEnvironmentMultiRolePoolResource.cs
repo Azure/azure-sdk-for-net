@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string hostingEnvironmentMultiRolePoolApiVersion);
             _workerPoolResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _workerPoolResourcesRestClient = new WorkerPoolResources(_workerPoolResourcesClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentMultiRolePoolApiVersion ?? "2026-03-15");
+            _workerPoolResourcesRestClient = new WorkerPoolResources(_workerPoolResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentMultiRolePoolApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

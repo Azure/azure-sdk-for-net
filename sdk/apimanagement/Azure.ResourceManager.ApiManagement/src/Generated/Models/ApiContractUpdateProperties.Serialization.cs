@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API update contract properties. </summary>
-    public partial class ApiContractUpdateProperties : ApiEntityBaseContract, IJsonModel<ApiContractUpdateProperties>
+    internal partial class ApiContractUpdateProperties : ApiEntityBaseContract, IJsonModel<ApiContractUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

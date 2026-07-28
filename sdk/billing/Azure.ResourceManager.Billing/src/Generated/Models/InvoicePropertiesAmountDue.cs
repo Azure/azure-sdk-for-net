@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount due as of now. </summary>
-    public partial class InvoicePropertiesAmountDue : BillingAmount
+    internal partial class InvoicePropertiesAmountDue : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesAmountDue"/>. </summary>
         public InvoicePropertiesAmountDue()

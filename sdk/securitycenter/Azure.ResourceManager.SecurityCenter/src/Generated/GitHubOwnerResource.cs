@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string gitHubOwnerApiVersion);
             _gitHubOwnersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _gitHubOwnersRestClient = new GitHubOwners(_gitHubOwnersClientDiagnostics, Pipeline, Endpoint, gitHubOwnerApiVersion ?? "2025-11-01-preview");
+            _gitHubOwnersRestClient = new GitHubOwners(_gitHubOwnersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitHubOwnerApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

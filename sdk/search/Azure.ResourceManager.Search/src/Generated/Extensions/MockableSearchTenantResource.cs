@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Search.Mocking
 
         private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Endpoint, "2026-09-01-preview");
+        private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
 
         /// <summary>
         /// Fetches the features and SKUs offered by the Azure AI Search service in each region, along with the recommended default region for creating new services.

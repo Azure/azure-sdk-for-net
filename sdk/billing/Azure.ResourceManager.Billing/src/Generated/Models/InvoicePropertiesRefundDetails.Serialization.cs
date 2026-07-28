@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The details of a refund request. </summary>
-    public partial class InvoicePropertiesRefundDetails : RefundDetailsSummary, IJsonModel<InvoicePropertiesRefundDetails>
+    internal partial class InvoicePropertiesRefundDetails : RefundDetailsSummary, IJsonModel<InvoicePropertiesRefundDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

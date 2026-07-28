@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
 
         private ClientDiagnostics CatalogsClientDiagnostics => _catalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sphere.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Catalogs CatalogsRestClient => _catalogsRestClient ??= new Catalogs(CatalogsClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
+        private Catalogs CatalogsRestClient => _catalogsRestClient ??= new Catalogs(CatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01");
 
         /// <summary>
         /// List Catalog resources by subscription ID

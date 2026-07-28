@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingAccountApiVersion);
             _billingAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingAccountsRestClient = new BillingAccounts(_billingAccountsClientDiagnostics, Pipeline, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            _billingAccountsRestClient = new BillingAccounts(_billingAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             _availableBalancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _availableBalancesRestClient = new AvailableBalances(_availableBalancesClientDiagnostics, Pipeline, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            _availableBalancesRestClient = new AvailableBalances(_availableBalancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             _billingRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

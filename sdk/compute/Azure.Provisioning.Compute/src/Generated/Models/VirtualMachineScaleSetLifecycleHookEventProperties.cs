@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the EventType. </summary>
+        /// <summary> Gets the EventType. </summary>
         public BicepValue<VirtualMachineScaleSetLifecycleHookEventType> EventType
         {
             get
@@ -35,25 +35,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _eventType;
             }
-            set
-            {
-                Initialize();
-                _eventType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the WaitUntil. </summary>
+        /// <summary> Gets the WaitUntil. </summary>
         public BicepValue<string> WaitUntil
         {
             get
             {
                 Initialize();
                 return _waitUntil;
-            }
-            set
-            {
-                Initialize();
-                _waitUntil.Assign(value);
             }
         }
 
@@ -87,7 +77,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the TargetResources. </summary>
+        /// <summary> Gets the TargetResources. </summary>
         public BicepList<VirtualMachineScaleSetLifecycleHookEventTarget> TargetResources
         {
             get
@@ -95,25 +85,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _targetResources;
             }
-            set
-            {
-                Initialize();
-                _targetResources.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AdditionalContext. </summary>
+        /// <summary> Gets the AdditionalContext. </summary>
         internal VmScaleSetLifecycleHookEventAdditionalContext AdditionalContext
         {
             get
             {
                 Initialize();
                 return _additionalContext;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _additionalContext, value);
             }
         }
 
@@ -127,20 +107,12 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Priority. </summary>
+        /// <summary> Gets the Priority. </summary>
         public BicepValue<string> AdditionalContextPriority
         {
             get
             {
-                return AdditionalContext is null ? default : AdditionalContext.Priority;
-            }
-            set
-            {
-                if (AdditionalContext is null)
-                {
-                    AdditionalContext = new VmScaleSetLifecycleHookEventAdditionalContext();
-                }
-                AdditionalContext.Priority = value;
+                return AdditionalContext.Priority;
             }
         }
 

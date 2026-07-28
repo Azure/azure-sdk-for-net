@@ -560,8 +560,8 @@ namespace Azure.Provisioning.Batch
     }
     public partial class BatchPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public BatchPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.Batch.BatchPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        internal BatchPrivateEndpointConnection() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.Batch.BatchPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -570,7 +570,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Batch.BatchPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -614,8 +614,8 @@ namespace Azure.Provisioning.Batch
     {
         public BatchPrivateLinkServiceConnectionState() { }
         public Azure.Provisioning.BicepValue<string> ActionRequired { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPrivateLinkServiceConnectionStatus> Status { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPrivateLinkServiceConnectionStatus> Status { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum BatchPrivateLinkServiceConnectionStatus
