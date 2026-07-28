@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
@@ -625,12 +624,6 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ErrorResponseContentIsNotPaddedWhenBufferedByRequestFailedException()
         {
-            // Poison the pool bucket that Stream.CopyTo rents from so that any bytes leaked
-            // past the end of the response body are recognizable.
-            byte[] poison = ArrayPool<byte>.Shared.Rent(81920);
-            poison.AsSpan().Fill((byte)'Z');
-            ArrayPool<byte>.Shared.Return(poison);
-
             var mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"));
             mockResponse.ContentStream = new NonSeekableMemoryStream(Encoding.UTF8.GetBytes("<Error/>"));
@@ -656,7 +649,13 @@ namespace Azure.Core.Tests
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
 
             Assert.AreEqual(1, contentEvents.Length);
-            Assert.AreEqual("<Error/>", contentEvents[0].GetProperty<string>("content"));
+
+            // Assert on length before content: when the rented buffer is forwarded whole, the logged
+            // value is the full pool bucket (131,072 characters for a Rent(81920)), and comparing that
+            // against the expected string produces an unreadable failure message.
+            string content = contentEvents[0].GetProperty<string>("content");
+            Assert.AreEqual("<Error/>".Length, content.Length, "The logged content must not extend past the bytes actually read.");
+            Assert.AreEqual("<Error/>", content);
         }
 
         [Test]
