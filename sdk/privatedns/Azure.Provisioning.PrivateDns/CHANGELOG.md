@@ -21,3 +21,4 @@
 ### Features Added
 
 - Initial beta release of new Azure.Provisioning.PrivateDns.
+
