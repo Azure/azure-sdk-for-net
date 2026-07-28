@@ -123,8 +123,9 @@ public sealed class MetadataPersistenceTests
             return Task.FromResult(ctx.Input);
         });
 
-        await host.Invoker.StartAsync<string, string>("iso", "a", new RunOptions { TaskId = "iso-1" });
+        TaskRun<string> firstRun = await host.Invoker.StartAsync<string, string>("iso", "a", new RunOptions { TaskId = "iso-1" });
         await host.WaitForStatusAsync("iso-1", "suspended", TimeSpan.FromSeconds(5));
+        await WaitForInactiveAsync(host, "iso", "iso-1", firstRun.InputId);
 
         await host.Invoker.StartAsync<string, string>("iso", "b", new RunOptions { TaskId = "iso-1" });
         await host.WaitForStatusAsync("iso-1", "suspended", TimeSpan.FromSeconds(5));
@@ -136,5 +137,21 @@ public sealed class MetadataPersistenceTests
             Assert.That(defaultSawBillingKey, Is.False, "the default namespace must not observe a key written to 'billing'");
             Assert.That(billingSawDefaultKey, Is.False, "the 'billing' namespace must not observe a key written to the default namespace");
         });
+    }
+
+    private static async Task WaitForInactiveAsync(TaskTestHost host, string name, string taskId, string inputId)
+    {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        while (sw.Elapsed < TimeSpan.FromSeconds(5))
+        {
+            if (await host.Engine.GetActiveRunAsync<string>(name, taskId, inputId).ConfigureAwait(false) is null)
+            {
+                return;
+            }
+
+            await Task.Delay(20).ConfigureAwait(false);
+        }
+
+        throw new TimeoutException($"Task '{taskId}' input '{inputId}' remained active.");
     }
 }
