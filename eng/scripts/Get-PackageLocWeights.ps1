@@ -38,13 +38,16 @@ using System.Threading.Tasks;
 
 public static class AzSdkLocCounter
 {
-    private static long CountFile(string path)
+    // Kept under the 85,000 byte large-object-heap threshold so repeated scans never touch the LOH.
+    private const int BufferSize = 64 * 1024;
+
+    private static long CountFile(string path, byte[] buffer)
     {
-        byte[] buffer = new byte[1 << 20];
         long lines = 0;
         bool any = false;
         byte last = 0;
-        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1 << 20))
+        // bufferSize 1 disables FileStream's own buffering; we already read into our own buffer.
+        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1, FileOptions.SequentialScan))
         {
             int read;
             while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
@@ -66,11 +69,14 @@ public static class AzSdkLocCounter
     public static long CountDirectory(string root)
     {
         long total = 0;
+        // Allocated once per directory scan (so once per parallel worker) rather than once per
+        // file, which would otherwise churn one allocation for every .cs file in the repo.
+        byte[] buffer = new byte[BufferSize];
         try
         {
             foreach (string file in Directory.EnumerateFiles(root, "*.cs", SearchOption.AllDirectories))
             {
-                try { total += CountFile(file); }
+                try { total += CountFile(file, buffer); }
                 catch { /* unreadable file, ignore */ }
             }
         }

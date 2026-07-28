@@ -54,7 +54,7 @@ param (
   [Parameter()][int]$Target = 1800,
   [Parameter()][int]$IndirectTarget = 0,
   [Parameter()][int]$DefaultWeight = 1,
-  [Parameter()][int]$BaseCost = 0
+  [Parameter()][ValidateRange(0, [int]::MaxValue)][int]$BaseCost = 0
 )
 
 Set-StrictMode -Version 4
