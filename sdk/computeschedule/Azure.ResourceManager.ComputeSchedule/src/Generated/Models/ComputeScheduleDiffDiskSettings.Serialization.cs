@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            DiffDiskConfig? option = default;
+            ComputeScheduleDiffDiskConfig? option = default;
             ComputeScheduleDiffDiskPlacement? placement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    option = new DiffDiskConfig(prop.Value.GetString());
+                    option = new ComputeScheduleDiffDiskConfig(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("placement"u8))

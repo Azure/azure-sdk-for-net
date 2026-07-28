@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. For an ephemeral OS Disk, the default value is set to Delete. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineOSDisk(OperatingSystemType? osType, ComputeScheduleDiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeScheduleCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeScheduleDiffDiskSettings diffDiskSettings, ComputeScheduleDiskCreateOptionType createOption, int? diskSizeGB, ComputeScheduleManagedDiskConfig managedDisk, ComputeScheduleDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineOSDisk(ComputeScheduleOperatingSystemType? osType, ComputeScheduleDiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeScheduleCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeScheduleDiffDiskSettings diffDiskSettings, ComputeScheduleDiskCreateOptionType createOption, int? diskSizeGB, ComputeScheduleManagedDiskConfig managedDisk, ComputeScheduleDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </summary>
-        public OperatingSystemType? OSType { get; set; }
+        public ComputeScheduleOperatingSystemType? OSType { get; set; }
 
         /// <summary> Specifies the encryption settings for the OS Disk. Minimum compute api-version: 2015-06-15. </summary>
         public ComputeScheduleDiskEncryptionSettings EncryptionSettings { get; set; }

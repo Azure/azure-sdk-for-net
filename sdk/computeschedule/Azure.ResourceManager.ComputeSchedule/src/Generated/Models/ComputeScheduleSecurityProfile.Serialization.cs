@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             bool? isEncryptionAtHost = default;
             ComputeScheduleSecurityType? securityType = default;
             EncryptionIdentity encryptionIdentity = default;
-            ProxyAgentSettings proxyAgentSettings = default;
+            ComputeScheduleProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(prop.Value, options);
+                    proxyAgentSettings = ComputeScheduleProxyAgentSettings.DeserializeComputeScheduleProxyAgentSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

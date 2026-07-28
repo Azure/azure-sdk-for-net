@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             string name = default;
             VirtualMachinePublicIPAddressConfigurationProperties properties = default;
-            PublicIPAddressSku sku = default;
+            ComputeSchedulePublicIPAddressSku sku = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    sku = PublicIPAddressSku.DeserializePublicIPAddressSku(prop.Value, options);
+                    sku = ComputeSchedulePublicIPAddressSku.DeserializeComputeSchedulePublicIPAddressSku(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

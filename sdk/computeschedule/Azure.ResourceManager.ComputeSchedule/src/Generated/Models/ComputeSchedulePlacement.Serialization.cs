@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            ZonePlacementPolicyType? zonePlacementPolicy = default;
+            ComputeScheduleZonePlacementPolicyType? zonePlacementPolicy = default;
             IList<string> includeZones = default;
             IList<string> excludeZones = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    zonePlacementPolicy = new ZonePlacementPolicyType(prop.Value.GetString());
+                    zonePlacementPolicy = new ComputeScheduleZonePlacementPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("includeZones"u8))

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("additionalUnattendContent"u8);
                 writer.WriteStartArray();
-                foreach (AdditionalUnattendContent item in AdditionalUnattendContent)
+                foreach (ComputeScheduleAdditionalUnattendContent item in AdditionalUnattendContent)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             bool? isProvisionVmAgent = default;
             bool? isAutomaticUpdatesEnabled = default;
             string timeZone = default;
-            IList<AdditionalUnattendContent> additionalUnattendContent = default;
-            PatchSettings patchSettings = default;
+            IList<ComputeScheduleAdditionalUnattendContent> additionalUnattendContent = default;
+            ComputeSchedulePatchSettings patchSettings = default;
             WinRMConfiguration winRM = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<AdditionalUnattendContent> array = new List<AdditionalUnattendContent>();
+                    List<ComputeScheduleAdditionalUnattendContent> array = new List<ComputeScheduleAdditionalUnattendContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.AdditionalUnattendContent.DeserializeAdditionalUnattendContent(item, options));
+                        array.Add(ComputeScheduleAdditionalUnattendContent.DeserializeComputeScheduleAdditionalUnattendContent(item, options));
                     }
                     additionalUnattendContent = array;
                     continue;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    patchSettings = PatchSettings.DeserializePatchSettings(prop.Value, options);
+                    patchSettings = ComputeSchedulePatchSettings.DeserializeComputeSchedulePatchSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("winRM"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 isProvisionVmAgent,
                 isAutomaticUpdatesEnabled,
                 timeZone,
-                additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
+                additionalUnattendContent ?? new ChangeTrackingList<ComputeScheduleAdditionalUnattendContent>(),
                 patchSettings,
                 winRM,
                 additionalBinaryDataProperties);

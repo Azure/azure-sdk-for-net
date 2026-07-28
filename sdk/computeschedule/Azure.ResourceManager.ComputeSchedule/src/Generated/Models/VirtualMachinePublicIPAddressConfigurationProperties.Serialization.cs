@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             int? idleTimeoutInMinutes = default;
-            DeleteConfig? deleteOption = default;
+            ComputeScheduleDeleteConfig? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIpTag> ipTags = default;
             ComputeScheduleSubResourceInfo publicIPPrefix = default;
             ComputeScheduleIPVersion? publicIPAddressVersion = default;
-            PublicIPAllocationMethod? publicIPAllocationMethod = default;
+            ComputeSchedulePublicIPAllocationMethod? publicIPAllocationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteConfig(prop.Value.GetString());
+                    deleteOption = new ComputeScheduleDeleteConfig(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    publicIPAllocationMethod = new PublicIPAllocationMethod(prop.Value.GetString());
+                    publicIPAllocationMethod = new ComputeSchedulePublicIPAllocationMethod(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

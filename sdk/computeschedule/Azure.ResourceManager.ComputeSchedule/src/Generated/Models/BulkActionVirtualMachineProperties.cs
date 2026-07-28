@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum compute api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionVirtualMachineProperties(ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, ComputeScheduleAdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineHardwareProfile hardwareProfile, ComputeScheduleSecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionVirtualMachineProperties(ComputeScheduleScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, ComputeScheduleAdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineHardwareProfile hardwareProfile, ComputeScheduleSecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string extensionsTimeBudget, ComputeScheduleScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledEventsPolicy = scheduledEventsPolicy;
             StorageProfile = storageProfile;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </summary>
-        public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
+        public ComputeScheduleScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public VirtualMachineStorageProfile StorageProfile { get; set; }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string ExtensionsTimeBudget { get; set; }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        public ComputeScheduleScheduledEventsProfile ScheduledEventsProfile { get; set; }
 
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum compute api-version: 2021-03-01. </summary>
         public string UserData { get; set; }

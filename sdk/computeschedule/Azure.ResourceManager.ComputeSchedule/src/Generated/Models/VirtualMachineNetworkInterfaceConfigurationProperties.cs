@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, DeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeScheduleSubResourceInfo networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeScheduleSubResourceInfo dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, ComputeScheduleDeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeScheduleSubResourceInfo networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeScheduleSubResourceInfo dscpConfiguration, ComputeScheduleNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeScheduleNetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             DeleteOption = deleteOption;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public bool? IsPrimary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteConfig? DeleteOption { get; set; }
+        public ComputeScheduleDeleteConfig? DeleteOption { get; set; }
 
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal ComputeScheduleSubResourceInfo DscpConfiguration { get; set; }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+        public ComputeScheduleNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
 
         /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
+        public ComputeScheduleNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
 
         /// <summary> The ID of the sub-resource. </summary>
         public ResourceIdentifier NetworkSecurityGroupId

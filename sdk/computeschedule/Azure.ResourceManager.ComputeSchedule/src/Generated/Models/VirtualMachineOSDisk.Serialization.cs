@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            OperatingSystemType? osType = default;
+            ComputeScheduleOperatingSystemType? osType = default;
             ComputeScheduleDiskEncryptionSettings encryptionSettings = default;
             string name = default;
             VirtualHardDisk vhd = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    osType = new OperatingSystemType(prop.Value.GetString());
+                    osType = new ComputeScheduleOperatingSystemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionSettings"u8))

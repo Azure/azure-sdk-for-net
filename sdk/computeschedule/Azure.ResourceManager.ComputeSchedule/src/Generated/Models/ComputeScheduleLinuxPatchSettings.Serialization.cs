@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            LinuxVmGuestPatchMode? patchMode = default;
-            LinuxPatchAssessmentMode? assessmentMode = default;
-            LinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
+            ComputeScheduleLinuxVmGuestPatchMode? patchMode = default;
+            ComputeScheduleLinuxPatchAssessmentMode? assessmentMode = default;
+            ComputeScheduleLinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    patchMode = new LinuxVmGuestPatchMode(prop.Value.GetString());
+                    patchMode = new ComputeScheduleLinuxVmGuestPatchMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("assessmentMode"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    assessmentMode = new LinuxPatchAssessmentMode(prop.Value.GetString());
+                    assessmentMode = new ComputeScheduleLinuxPatchAssessmentMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("automaticByPlatformSettings"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = LinuxVmGuestPatchAutomaticByPlatformSettings.DeserializeLinuxVmGuestPatchAutomaticByPlatformSettings(prop.Value, options);
+                    automaticByPlatformSettings = ComputeScheduleLinuxVmGuestPatchAutomaticByPlatformSettings.DeserializeComputeScheduleLinuxVmGuestPatchAutomaticByPlatformSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

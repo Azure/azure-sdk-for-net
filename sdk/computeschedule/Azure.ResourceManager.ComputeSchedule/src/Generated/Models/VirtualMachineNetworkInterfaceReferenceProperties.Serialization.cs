@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             bool? isPrimary = default;
-            DeleteConfig? deleteOption = default;
+            ComputeScheduleDeleteConfig? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteConfig(prop.Value.GetString());
+                    deleteOption = new ComputeScheduleDeleteConfig(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

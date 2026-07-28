@@ -18,9 +18,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             Func<ApiGatewayCollection, Pageable<ApiGatewayResource>> collectionCall = collection => collection.GetAll();
             Func<SubscriptionResource, Pageable<ApiGatewayResource>> extensionCall = subscription => subscription.GetApiGateways();
+            Func<ApiGatewayCollection, CancellationToken, Pageable<ApiGatewayResource>> namedCollectionCall =
+                (collection, token) => collection.GetAll(cancellationToken: token);
+            Func<SubscriptionResource, CancellationToken, Pageable<ApiGatewayResource>> namedExtensionCall =
+                (subscription, token) => subscription.GetApiGateways(cancellationToken: token);
 
             Assert.That(collectionCall, Is.Not.Null);
             Assert.That(extensionCall, Is.Not.Null);
+            Assert.That(namedCollectionCall, Is.Not.Null);
+            Assert.That(namedExtensionCall, Is.Not.Null);
         }
 
         [Test]

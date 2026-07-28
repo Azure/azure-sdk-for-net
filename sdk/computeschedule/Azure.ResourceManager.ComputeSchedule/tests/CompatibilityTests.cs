@@ -14,8 +14,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         public void OptionalFactoryCallUsesGeneratedOverload()
         {
             Func<ResourceOperationDetails> factoryCall = () => ArmComputeScheduleModelFactory.ResourceOperationDetails();
+            Func<ResourceOperationDetails> namedFactoryCall = () =>
+                ArmComputeScheduleModelFactory.ResourceOperationDetails(operationId: "operation");
 
             Assert.That(factoryCall(), Is.Not.Null);
+            Assert.That(namedFactoryCall(), Is.Not.Null);
         }
 
         [Test]

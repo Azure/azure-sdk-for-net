@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             IList<VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
-            NetworkApiVersion? networkApiVersion = default;
+            ComputeScheduleNetworkApiVersion? networkApiVersion = default;
             IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    networkApiVersion = new NetworkApiVersion(prop.Value.GetString());
+                    networkApiVersion = new ComputeScheduleNetworkApiVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkInterfaceConfigurations"u8))

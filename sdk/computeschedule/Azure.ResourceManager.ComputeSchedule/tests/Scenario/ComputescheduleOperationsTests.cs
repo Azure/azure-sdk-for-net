@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                         },
                         OSDisk = new VirtualMachineOSDisk(ComputeScheduleDiskCreateOptionType.FromImage)
                         {
-                            OSType = OperatingSystemType.Windows,
+                            OSType = ComputeScheduleOperatingSystemType.Windows,
                             Caching = ComputeScheduleCachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                 }
                             }
                         },
-                        NetworkApiVersion = NetworkApiVersion._20201101
+                        NetworkApiVersion = ComputeScheduleNetworkApiVersion._20201101
                     }
                 }
             };
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                         },
                         OSDisk = new VirtualMachineOSDisk(ComputeScheduleDiskCreateOptionType.FromImage)
                         {
-                            OSType = OperatingSystemType.Windows,
+                            OSType = ComputeScheduleOperatingSystemType.Windows,
                             Caching = ComputeScheduleCachingType.ReadWrite,
                             ManagedDisk = new ComputeScheduleManagedDiskConfig
                             {
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                                 }
                             }
                         },
-                        NetworkApiVersion = NetworkApiVersion._20201101
+                        NetworkApiVersion = ComputeScheduleNetworkApiVersion._20201101
                     }
                 }
             };

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            SecurityEncryptionType? securityEncryptionType = default;
+            ComputeScheduleSecurityEncryptionType? securityEncryptionType = default;
             ComputeScheduleDiskEncryptionSetConfig diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    securityEncryptionType = new SecurityEncryptionType(prop.Value.GetString());
+                    securityEncryptionType = new ComputeScheduleSecurityEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="type"> Type of notification to be sent. </param>
         /// <param name="language"> The language the notification should be sent on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
-        public ComputeScheduleNotificationSettings(string destination, NotificationType @type, NotificationLanguage language)
+        public ComputeScheduleNotificationSettings(string destination, ComputeScheduleNotificationType @type, ComputeScheduleNotificationLanguage language)
         {
             Argument.AssertNotNull(destination, nameof(destination));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="language"> The language the notification should be sent on. </param>
         /// <param name="isDisabled"> Tells if the notification is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeScheduleNotificationSettings(string destination, NotificationType @type, NotificationLanguage language, bool? isDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleNotificationSettings(string destination, ComputeScheduleNotificationType @type, ComputeScheduleNotificationLanguage language, bool? isDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
             Type = @type;
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string Destination { get; set; }
 
         /// <summary> Type of notification to be sent. </summary>
-        public NotificationType Type { get; set; }
+        public ComputeScheduleNotificationType Type { get; set; }
 
         /// <summary> The language the notification should be sent on. </summary>
-        public NotificationLanguage Language { get; set; }
+        public ComputeScheduleNotificationLanguage Language { get; set; }
 
         /// <summary> Tells if the notification is enabled or not. </summary>
         public bool? IsDisabled { get; set; }

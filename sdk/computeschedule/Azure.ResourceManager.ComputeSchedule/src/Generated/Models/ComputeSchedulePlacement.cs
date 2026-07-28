@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="includeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </param>
         /// <param name="excludeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must not be present in the list of availability zones passed with 'excludeZones'. If 'excludeZones' is not provided, all availability zones in region will be considered for selection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSchedulePlacement(ZonePlacementPolicyType? zonePlacementPolicy, IList<string> includeZones, IList<string> excludeZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSchedulePlacement(ComputeScheduleZonePlacementPolicyType? zonePlacementPolicy, IList<string> includeZones, IList<string> excludeZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ZonePlacementPolicy = zonePlacementPolicy;
             IncludeZones = includeZones;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies the policy for resource's placement in availability zone. Possible values are: <b>Any</b> (used for Virtual Machines), <b>Auto</b> (used for Virtual Machine Scale Sets) - An availability zone will be automatically picked by system as part of resource creation. </summary>
-        public ZonePlacementPolicyType? ZonePlacementPolicy { get; set; }
+        public ComputeScheduleZonePlacementPolicyType? ZonePlacementPolicy { get; set; }
 
         /// <summary> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </summary>
         public IList<string> IncludeZones { get; }

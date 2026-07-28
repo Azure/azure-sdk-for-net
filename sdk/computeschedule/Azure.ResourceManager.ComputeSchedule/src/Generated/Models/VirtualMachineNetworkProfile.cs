@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkProfile(IList<VirtualMachineNetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkProfile(IList<VirtualMachineNetworkInterfaceReference> networkInterfaces, ComputeScheduleNetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaces = networkInterfaces;
             NetworkApiVersion = networkApiVersion;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IList<VirtualMachineNetworkInterfaceReference> NetworkInterfaces { get; }
 
         /// <summary> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </summary>
-        public NetworkApiVersion? NetworkApiVersion { get; set; }
+        public ComputeScheduleNetworkApiVersion? NetworkApiVersion { get; set; }
 
         /// <summary> Specifies the networking configurations that will be used to create the virtual machine networking resources. </summary>
         public IList<VirtualMachineNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get; }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleWindowsConfiguration"/>. </summary>
         public ComputeScheduleWindowsConfiguration()
         {
-            AdditionalUnattendContent = new ChangeTrackingList<AdditionalUnattendContent>();
+            AdditionalUnattendContent = new ChangeTrackingList<ComputeScheduleAdditionalUnattendContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeScheduleWindowsConfiguration"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRM"> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeScheduleWindowsConfiguration(bool? isProvisionVmAgent, bool? isAutomaticUpdatesEnabled, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, PatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleWindowsConfiguration(bool? isProvisionVmAgent, bool? isAutomaticUpdatesEnabled, string timeZone, IList<ComputeScheduleAdditionalUnattendContent> additionalUnattendContent, ComputeSchedulePatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsProvisionVmAgent = isProvisionVmAgent;
             IsAutomaticUpdatesEnabled = isAutomaticUpdatesEnabled;
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public string TimeZone { get; set; }
 
         /// <summary> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </summary>
-        public IList<AdditionalUnattendContent> AdditionalUnattendContent { get; }
+        public IList<ComputeScheduleAdditionalUnattendContent> AdditionalUnattendContent { get; }
 
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </summary>
-        public PatchSettings PatchSettings { get; set; }
+        public ComputeSchedulePatchSettings PatchSettings { get; set; }
 
         /// <summary> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </summary>
         internal WinRMConfiguration WinRM { get; set; }

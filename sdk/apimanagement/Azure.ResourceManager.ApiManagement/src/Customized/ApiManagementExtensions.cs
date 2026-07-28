@@ -21,37 +21,37 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets all the API gateways in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public static AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        public static AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken compatibilityCancellationToken)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewaysAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewaysAsync(compatibilityCancellationToken);
         }
 
         /// <summary> Gets all the API gateways in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public static Pageable<ApiGatewayResource> GetApiGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        public static Pageable<ApiGatewayResource> GetApiGateways(this SubscriptionResource subscriptionResource, CancellationToken compatibilityCancellationToken)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGateways(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGateways(compatibilityCancellationToken);
         }
 
         /// <summary> Gets all the API Management services in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken compatibilityCancellationToken)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServicesAsync(compatibilityCancellationToken);
         }
 
         /// <summary> Gets all the API Management services in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken compatibilityCancellationToken)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServices(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServices(compatibilityCancellationToken);
         }
     }
 }

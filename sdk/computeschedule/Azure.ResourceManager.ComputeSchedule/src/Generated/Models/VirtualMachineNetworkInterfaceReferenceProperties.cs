@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceReferenceProperties(bool? isPrimary, DeleteConfig? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceReferenceProperties(bool? isPrimary, ComputeScheduleDeleteConfig? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             DeleteOption = deleteOption;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public bool? IsPrimary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteConfig? DeleteOption { get; set; }
+        public ComputeScheduleDeleteConfig? DeleteOption { get; set; }
     }
 }

@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             string destination = default;
-            NotificationType @type = default;
-            NotificationLanguage language = default;
+            ComputeScheduleNotificationType @type = default;
+            ComputeScheduleNotificationLanguage language = default;
             bool? isDisabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new NotificationType(prop.Value.GetString());
+                    @type = new ComputeScheduleNotificationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("language"u8))
                 {
-                    language = new NotificationLanguage(prop.Value.GetString());
+                    language = new ComputeScheduleNotificationLanguage(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("disabled"u8))

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            ScheduledEventsPolicy scheduledEventsPolicy = default;
+            ComputeScheduleScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineStorageProfile storageProfile = default;
             ComputeScheduleAdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
             string extensionsTimeBudget = default;
-            ScheduledEventsProfile scheduledEventsProfile = default;
+            ComputeScheduleScheduledEventsProfile scheduledEventsProfile = default;
             string userData = default;
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(prop.Value, options);
+                    scheduledEventsPolicy = ComputeScheduleScheduledEventsPolicy.DeserializeComputeScheduleScheduledEventsPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(prop.Value, options);
+                    scheduledEventsProfile = ComputeScheduleScheduledEventsProfile.DeserializeComputeScheduleScheduledEventsProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userData"u8))

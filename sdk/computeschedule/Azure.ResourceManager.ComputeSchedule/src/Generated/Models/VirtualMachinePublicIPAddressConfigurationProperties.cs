@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, DeleteConfig? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIpTag> ipTags, ComputeScheduleSubResourceInfo publicIPPrefix, ComputeScheduleIPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, ComputeScheduleDeleteConfig? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIpTag> ipTags, ComputeScheduleSubResourceInfo publicIPPrefix, ComputeScheduleIPVersion? publicIPAddressVersion, ComputeSchedulePublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DeleteOption = deleteOption;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
-        public DeleteConfig? DeleteOption { get; set; }
+        public ComputeScheduleDeleteConfig? DeleteOption { get; set; }
 
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ComputeScheduleIPVersion? PublicIPAddressVersion { get; set; }
 
         /// <summary> Specify the public IP allocation type. </summary>
-        public PublicIPAllocationMethod? PublicIPAllocationMethod { get; set; }
+        public ComputeSchedulePublicIPAllocationMethod? PublicIPAllocationMethod { get; set; }
 
         /// <summary> The ID of the sub-resource. </summary>
         public ResourceIdentifier PublicIPPrefixId

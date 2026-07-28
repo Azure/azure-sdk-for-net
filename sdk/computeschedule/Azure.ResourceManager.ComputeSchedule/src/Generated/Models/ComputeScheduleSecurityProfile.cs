@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="encryptionIdentity"> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeScheduleSecurityProfile(ComputeScheduleUefiSettings uefiSettings, bool? isEncryptionAtHost, ComputeScheduleSecurityType? securityType, EncryptionIdentity encryptionIdentity, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeScheduleSecurityProfile(ComputeScheduleUefiSettings uefiSettings, bool? isEncryptionAtHost, ComputeScheduleSecurityType? securityType, EncryptionIdentity encryptionIdentity, ComputeScheduleProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UefiSettings = uefiSettings;
             IsEncryptionAtHost = isEncryptionAtHost;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal EncryptionIdentity EncryptionIdentity { get; set; }
 
         /// <summary> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </summary>
-        public ProxyAgentSettings ProxyAgentSettings { get; set; }
+        public ComputeScheduleProxyAgentSettings ProxyAgentSettings { get; set; }
 
         /// <summary> Specifies ARM Resource ID of one of the user identities associated with the VM. </summary>
         public ResourceIdentifier UserAssignedIdentityResourceId
