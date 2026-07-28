@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for datastore secrets.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAccountKeyDatastoreSecrets"/>, <see cref="MachineLearningCertificateDatastoreSecrets"/>, <see cref="MachineLearningSasDatastoreSecrets"/>, and <see cref="MachineLearningServicePrincipalDatastoreSecrets"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
     /// </summary>
     internal partial class MachineLearningDatastoreSecrets : ProvisionableConstruct
     {
