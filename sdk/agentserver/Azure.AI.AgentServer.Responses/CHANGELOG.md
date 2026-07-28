@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (2026-07-07)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 - Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
@@ -33,7 +33,6 @@
     own terminal) is now durably persisted as `completed`, so the client-visible
     `response.completed` matches the stored record and the turn is valid conversation context for
     the draining steered turn (FR-053).
-- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state. The value follows the native id convention: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. It embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope. When no explicit session ID is supplied, the derived agent session scope now falls back to the response's own partition key instead of a random value, so the chain id is stable from the first turn of a conversation onward.
 
 ### Breaking Changes
 - Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
@@ -48,6 +47,11 @@
 ### Other Changes
 - Retired the interim .NET ↔ Python resilience parity reports now that the port has
   converged.
+
+## 1.0.0-beta.7 (2026-07-07)
+
+### Features Added
+- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state. The value follows the native id convention: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. It embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope. When no explicit session ID is supplied, the derived agent session scope now falls back to the response's own partition key instead of a random value, so the chain id is stable from the first turn of a conversation onward.
 
 ## 1.0.0-beta.6 (2026-06-28)
 
