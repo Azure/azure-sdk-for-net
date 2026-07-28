@@ -6,7 +6,8 @@ Calculates repository-derived test weights for SDK packages.
 Produces a JSON object mapping package ArtifactName to a relative test cost. The estimate uses
 only files already present in the repository:
 
-  source LOC + (test LOC * 3) + (test markers * 250) + (test projects * 20000) + 5000
+  source LOC + (source files * 200) + (test LOC * 3) + (test markers * 100)
+  + (test projects * 20000) + 50000
 
 The values are intentionally relative rather than seconds. They are consumed by weighted
 batching while the package-count-based bucket count remains unchanged.
@@ -31,13 +32,22 @@ using System.Threading.Tasks;
 public sealed class AzSdkTestWeightMetrics
 {
     public long SourceLines;
+    public int SourceFiles;
     public long TestLines;
     public int TestMarkers;
     public int TestProjects;
 
     public long Weight
     {
-        get { return SourceLines + (TestLines * 3) + ((long)TestMarkers * 250) + ((long)TestProjects * 20000) + 5000; }
+        get
+        {
+            return SourceLines
+                + ((long)SourceFiles * 200)
+                + (TestLines * 3)
+                + ((long)TestMarkers * 100)
+                + ((long)TestProjects * 20000)
+                + 50000;
+        }
     }
 }
 
@@ -71,15 +81,20 @@ public static class AzSdkTestWeightCounter
         return lines;
     }
 
-    private static long CountDirectoryLines(string root)
+    private static long CountDirectoryLines(string root, out int fileCount)
     {
+        fileCount = 0;
         if (!Directory.Exists(root)) { return 0; }
 
         long total = 0;
         byte[] buffer = new byte[BufferSize];
         foreach (string file in Directory.EnumerateFiles(root, "*.cs", SearchOption.AllDirectories))
         {
-            try { total += CountFileLines(file, buffer); }
+            try
+            {
+                total += CountFileLines(file, buffer);
+                fileCount++;
+            }
             catch { /* unreadable file, ignore */ }
         }
         return total;
@@ -120,10 +135,13 @@ public static class AzSdkTestWeightCounter
     {
         string sourceRoot = Path.Combine(packageRoot, "src");
         string testRoot = Path.Combine(packageRoot, "tests");
+        int sourceFiles;
+        int ignoredTestFiles;
         return new AzSdkTestWeightMetrics
         {
-            SourceLines = CountDirectoryLines(sourceRoot),
-            TestLines = CountDirectoryLines(testRoot),
+            SourceLines = CountDirectoryLines(sourceRoot, out sourceFiles),
+            SourceFiles = sourceFiles,
+            TestLines = CountDirectoryLines(testRoot, out ignoredTestFiles),
             TestMarkers = CountTestMarkers(testRoot),
             TestProjects = CountTestProjects(testRoot)
         };
@@ -167,7 +185,7 @@ $weights = [ordered]@{}
 foreach ($name in ($metrics.Keys | Sort-Object)) {
   $value = $metrics[$name]
   $weights[$name] = $value.Weight
-  Write-Host "$name`: weight=$($value.Weight), src=$($value.SourceLines), tests=$($value.TestLines), markers=$($value.TestMarkers), projects=$($value.TestProjects)"
+  Write-Host "$name`: weight=$($value.Weight), src=$($value.SourceLines), srcFiles=$($value.SourceFiles), tests=$($value.TestLines), markers=$($value.TestMarkers), projects=$($value.TestProjects)"
 }
 
 $outputDirectory = Split-Path $OutputFile -Parent

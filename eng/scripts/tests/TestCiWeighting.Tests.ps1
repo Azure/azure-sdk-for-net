@@ -58,8 +58,9 @@ Describe "Get-PackageTestWeights" -Tag "UnitTest" {
       -PackageInfoFolder $info -RepoRoot $root -OutputFile $output
 
     $weights = Get-Content $output -Raw | ConvertFrom-Json
-    # 2 source lines + 4*3 test lines + 4*250 markers + 1*20000 project + 5000 fixed.
-    $weights."Package.One" | Should -Be 26014
+    # 2 source lines + 1*200 source file + 4*3 test lines + 4*100 markers
+    # + 1*20000 project + 50000 fixed.
+    $weights."Package.One" | Should -Be 70614
   }
 }
 
