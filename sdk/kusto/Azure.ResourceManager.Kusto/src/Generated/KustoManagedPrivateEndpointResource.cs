@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(ResourceType, out string kustoManagedPrivateEndpointApiVersion);
             _managedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Endpoint, kustoManagedPrivateEndpointApiVersion ?? "2025-02-14");
+            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoManagedPrivateEndpointApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 

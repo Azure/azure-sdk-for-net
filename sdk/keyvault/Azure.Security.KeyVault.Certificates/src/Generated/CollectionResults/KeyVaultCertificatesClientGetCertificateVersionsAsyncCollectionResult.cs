@@ -54,18 +54,18 @@ namespace Azure.Security.KeyVault.Certificates
                     yield break;
                 }
                 CertificateListResult result = (CertificateListResult)response;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSecurityKeyVaultCertificatesContext.Default));
                 }
-                string nextPageString = result.NextLink;
-                yield return Page<BinaryData>.FromValues(items, string.IsNullOrEmpty(nextPageString) ? null : nextPageString, response);
-                if (string.IsNullOrEmpty(nextPageString))
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

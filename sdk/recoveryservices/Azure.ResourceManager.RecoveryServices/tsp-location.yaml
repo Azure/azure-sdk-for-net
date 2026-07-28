@@ -1,5 +1,6 @@
 directory: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/RecoveryServices
+commit: 3de4ed97d8bf726aa7fb8dea311a5a7d5ec59730
 repo: Azure/azure-rest-api-specs
-commit: 26e19c2dc5c4a55ac552483db1d7ddfefd1b66b5
-additionalDirectories: []
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string recommendedActionApiVersion);
             _databaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databaseRecommendedActionsRestClient = new DatabaseRecommendedActions(_databaseRecommendedActionsClientDiagnostics, Pipeline, Endpoint, recommendedActionApiVersion ?? "2025-02-01-preview");
+            _databaseRecommendedActionsRestClient = new DatabaseRecommendedActions(_databaseRecommendedActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recommendedActionApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

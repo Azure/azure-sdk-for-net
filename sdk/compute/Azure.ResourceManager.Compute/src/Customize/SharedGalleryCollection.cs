@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
             _location = location;
             _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SharedGalleryResource.ResourceType, out string sharedGalleryApiVersion);
-            _sharedGalleryRestClient = new SharedGalleries(_sharedGalleryClientDiagnostics, Pipeline, Endpoint, sharedGalleryApiVersion);
+            _sharedGalleryRestClient = new SharedGalleries(_sharedGalleryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

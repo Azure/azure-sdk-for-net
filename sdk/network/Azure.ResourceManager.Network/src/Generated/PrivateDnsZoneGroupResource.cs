@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string privateDnsZoneGroupApiVersion);
             _privateDnsZoneGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _privateDnsZoneGroupsRestClient = new PrivateDnsZoneGroups(_privateDnsZoneGroupsClientDiagnostics, Pipeline, Endpoint, privateDnsZoneGroupApiVersion ?? "2025-07-01");
+            _privateDnsZoneGroupsRestClient = new PrivateDnsZoneGroups(_privateDnsZoneGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneGroupApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

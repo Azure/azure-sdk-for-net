@@ -11,18 +11,18 @@ namespace Azure.Provisioning.Kubernetes
     public enum ConnectedClusterProvisioningState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> Canceled. </summary>
-        Canceled,
+        Canceled = 2,
         /// <summary> Provisioning. </summary>
-        Provisioning,
+        Provisioning = 3,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 4,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 5,
         /// <summary> Accepted. </summary>
-        Accepted
+        Accepted = 6
     }
 }

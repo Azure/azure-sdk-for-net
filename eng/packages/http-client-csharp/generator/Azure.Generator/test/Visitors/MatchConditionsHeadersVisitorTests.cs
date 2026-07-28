@@ -228,6 +228,45 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void TestValidateCreateRequestMethod_CustomETagScalarParameter()
+        {
+            var visitor = new TestMatchConditionsHeaderVisitor();
+            var eTagType = InputFactory.Primitive.String("eTag", "Azure.Core.eTag");
+            var parameters = new List<InputParameter>
+            {
+                CreateTestParameter("ifMatch", "x-ms-blob-if-match", InputRequestLocation.Header, type: eTagType)
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifMatch", "x-ms-blob-if-match", InputRequestLocation.Header, type: eTagType)
+            };
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var restClient = clientProvider!.RestClient;
+            var method = restClient.Methods.First();
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, method);
+
+            var writer = new TypeProviderWriter(restClient);
+            var file = writer.Write();
+
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
         public void TestValidateCreateRequestMethod_RequestConditionParameter()
         {
             var visitor = new TestMatchConditionsHeaderVisitor();

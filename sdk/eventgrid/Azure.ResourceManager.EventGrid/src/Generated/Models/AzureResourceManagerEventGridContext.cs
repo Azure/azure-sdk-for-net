@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -229,7 +228,6 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(ResourceAssociation))]
     [ModelReaderWriterBuildable(typeof(ResourceMoveChangeHistory))]
     [ModelReaderWriterBuildable(typeof(ResourceSku))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoutingEnrichments))]
     [ModelReaderWriterBuildable(typeof(RoutingIdentityInfo))]
     [ModelReaderWriterBuildable(typeof(ServiceBusQueueEventSubscriptionDestination))]

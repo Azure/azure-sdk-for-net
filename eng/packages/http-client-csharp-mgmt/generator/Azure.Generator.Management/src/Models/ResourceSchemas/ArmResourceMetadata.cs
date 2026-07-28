@@ -24,7 +24,7 @@ namespace Azure.Generator.Management.Models;
 public record ArmResourceMetadata(
     RequestPathPattern ResourceIdPattern,
     string ResourceName,
-    string ResourceType,
+    ResourceTypePattern ResourceType,
     InputModelType ResourceModel,
     ArmScopeInfo Scope,
     IReadOnlyList<ResourceMethod> Methods,
@@ -109,7 +109,7 @@ public record ArmResourceMetadata(
         return new(
             new RequestPathPattern(resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null")),
             resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
-            resourceType ?? throw new InvalidOperationException("resourceType cannot be null"),
+            new ResourceTypePattern(resourceType ?? throw new InvalidOperationException("resourceType cannot be null")),
             inputModel,
             scope ?? throw new InvalidOperationException("scope cannot be null"),
             methods,

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Signals assigned to this signal group. </summary>
-        public IReadOnlyList<ExternalSignal> Signals { get; }
+        public IReadOnlyList<ExternalSignal> Signals { get; } = new ChangeTrackingList<ExternalSignal>();
     }
 }

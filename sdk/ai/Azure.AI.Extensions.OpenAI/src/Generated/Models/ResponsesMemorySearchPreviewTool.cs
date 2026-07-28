@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesMemorySearchPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/>. </summary>

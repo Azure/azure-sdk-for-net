@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A WorkIQ tool stored in a toolbox. </summary>
+    [Experimental("AAIP001")]
     public partial class WorkIQPreviewToolboxTool : ToolboxTool
     {
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewToolboxTool"/>. </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(InferenceGroupResource.ResourceType, out string inferenceGroupApiVersion);
             _inferenceGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", InferenceGroupResource.ResourceType.Namespace, Diagnostics);
-            _inferenceGroupsRestClient = new InferenceGroups(_inferenceGroupsClientDiagnostics, Pipeline, Endpoint, inferenceGroupApiVersion ?? "2026-03-15-preview");
+            _inferenceGroupsRestClient = new InferenceGroups(_inferenceGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, inferenceGroupApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

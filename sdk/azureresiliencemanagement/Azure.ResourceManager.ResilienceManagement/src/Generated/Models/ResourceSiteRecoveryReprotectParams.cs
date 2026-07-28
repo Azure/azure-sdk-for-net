@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Disk Reprotect Input Details. </summary>
-        public IList<DiskReprotectInputDetails> DiskReprotectInputDetails { get; }
+        public IList<DiskReprotectInputDetails> DiskReprotectInputDetails { get; } = new ChangeTrackingList<DiskReprotectInputDetails>();
     }
 }

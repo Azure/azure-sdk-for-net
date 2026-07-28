@@ -130,6 +130,16 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(InputQualityWarnings))
+            {
+                writer.WritePropertyName("input_quality_warnings"u8);
+                writer.WriteStartArray();
+                foreach (RubricGenerationInputQualityWarning item in InputQualityWarnings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -180,6 +190,7 @@ namespace Azure.AI.Projects.Evaluation
             DateTimeOffset createdAt = default;
             DateTimeOffset? finishedAt = default;
             EvaluatorGenerationTokenUsage usage = default;
+            IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -243,6 +254,20 @@ namespace Azure.AI.Projects.Evaluation
                     usage = EvaluatorGenerationTokenUsage.DeserializeEvaluatorGenerationTokenUsage(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("input_quality_warnings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RubricGenerationInputQualityWarning> array = new List<RubricGenerationInputQualityWarning>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RubricGenerationInputQualityWarning.DeserializeRubricGenerationInputQualityWarning(item, options));
+                    }
+                    inputQualityWarnings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -257,6 +282,7 @@ namespace Azure.AI.Projects.Evaluation
                 createdAt,
                 finishedAt,
                 usage,
+                inputQualityWarnings ?? new ChangeTrackingList<RubricGenerationInputQualityWarning>(),
                 additionalBinaryDataProperties);
         }
     }

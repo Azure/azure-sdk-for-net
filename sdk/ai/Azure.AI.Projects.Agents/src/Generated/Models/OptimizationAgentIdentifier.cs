@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationAgentIdentifier
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

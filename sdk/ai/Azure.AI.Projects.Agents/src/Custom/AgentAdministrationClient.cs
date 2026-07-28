@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -61,7 +62,9 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
+    [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
+    [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
@@ -87,6 +90,7 @@ public partial class AgentAdministrationClient
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
     /// <summary> Initializes a new instance of AgentsClient. </summary>
@@ -102,6 +106,7 @@ public partial class AgentAdministrationClient
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
 
@@ -792,7 +797,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult StopSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return StopSession(agentName, sessionId, cancellationToken);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentName, nameof(sessionId));
+        return StopSession(agentName, sessionId, cancellationToken.ToRequestOptions());
     }
 
     /// <summary>
@@ -807,7 +814,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return await StopSessionAsync(agentName, sessionId, cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentName, nameof(sessionId));
+        return await StopSessionAsync(agentName, sessionId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -1081,13 +1090,14 @@ public partial class AgentAdministrationClient
     /// <summary> Gets the lazily-initialized agent toolboxes sub-client. </summary>
     public virtual AgentToolboxes GetAgentToolboxes()
     {
-        return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
+        return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
     /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
+    [Experimental("AAIP001")]
     public virtual ProjectAgentSkills GetAgentSkills()
     {
-        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
     }
 
     /// <summary> Gets the lazily-initialized agent session files sub-client. </summary>
@@ -1099,12 +1109,13 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
-        return new AgentSessionFiles(Pipeline, _endpoint, _apiVersion, agentName, sessionId);
+        return new AgentSessionFiles(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, agentName, sessionId);
     }
 
     /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>
+    [Experimental("AAIP001")]
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
-        return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+           return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
     }
 }

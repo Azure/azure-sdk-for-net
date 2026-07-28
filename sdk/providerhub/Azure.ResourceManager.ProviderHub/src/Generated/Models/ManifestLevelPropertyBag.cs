@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The resource hydration accounts. </summary>
-        public IList<ResourceHydrationAccount> ResourceHydrationAccounts { get; }
+        public IList<ResourceHydrationAccount> ResourceHydrationAccounts { get; } = new ChangeTrackingList<ResourceHydrationAccount>();
     }
 }

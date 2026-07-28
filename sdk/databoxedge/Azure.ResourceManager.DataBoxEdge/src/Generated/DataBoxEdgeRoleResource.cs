@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeRoleApiVersion);
             _rolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeRoleApiVersion ?? "2023-12-01");
+            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeRoleApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterPublisherApiVersion);
             _publishersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Endpoint, hciClusterPublisherApiVersion ?? "2026-05-01-preview");
+            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterPublisherApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerConfigReadOnlyState
     {
         /// <summary> True. </summary>
-        True,
+        True = 0,
         /// <summary> False. </summary>
-        False
+        False = 1
     }
 }

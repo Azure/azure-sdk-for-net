@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Inline dataset — items supplied directly in the request body. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationInlineDatasetInput : OptimizationDatasetInput
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationInlineDatasetInput"/>. </summary>
