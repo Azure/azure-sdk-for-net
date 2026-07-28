@@ -18,9 +18,33 @@ parameters:
   - name: PublishArtifact
     type: boolean
     default: true
+  - name: EnableTestDependencyGraphCache
+    type: boolean
+    default: false
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+  - ${{ if eq(parameters.EnableTestDependencyGraphCache, true) }}:
+    - pwsh: |
+        git ls-files -s -- global.json "*.csproj" "*.props" "*.targets" "*.proj" "*.projects" `
+          | Sort-Object `
+          | Set-Content "$(Build.ArtifactStagingDirectory)/test-dependency-graph-key.txt"
+      displayName: Create test dependency graph cache key
+
+    - task: Cache@2
+      inputs:
+        key: 'dotnet-test-dependency-graph-v1 | "$(Agent.OS)" | $(Build.ArtifactStagingDirectory)/test-dependency-graph-key.txt'
+        path: $(Pipeline.Workspace)/dotnet-test-dependency-graph
+        cacheHitVar: TEST_DEPENDENCY_GRAPH_CACHE_RESTORED
+      continueOnError: true
+      displayName: Cache test dependency graph
+
+    - pwsh: |
+        $graphPath = "$(Pipeline.Workspace)/dotnet-test-dependency-graph/graph.txt"
+        Write-Host "Test dependency graph cache restored: $(TEST_DEPENDENCY_GRAPH_CACHE_RESTORED)"
+        Write-Host "##vso[task.setvariable variable=AZURESDK_TEST_DEPENDENCY_GRAPH_PATH;]$graphPath"
+      displayName: Configure test dependency graph
 
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:

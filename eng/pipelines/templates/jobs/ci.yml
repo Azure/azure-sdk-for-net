@@ -229,6 +229,7 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
+                EnableTestDependencyGraphCache: true
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}

@@ -200,4 +200,23 @@
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
   </Target>
 
+  <Target Name="GetTestDependencyGraph">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="GetTestDependencyGraph"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true">
+      <Output ItemName="TestDependencyGraphEntries" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+    <ItemGroup>
+      <TestDependencyGraphLines Include="@(TestDependencyGraphEntries -> '%(PackageRoot)|%(References)')" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(TestDependencyGraphLines)">
+      <Output TaskParameter="Filtered" ItemName="TestDependencyGraphLinesFiltered"/>
+    </RemoveDuplicates>
+    <WriteLinesToFile File="$(OutputProjectFilePath)"
+                      Lines="@(TestDependencyGraphLinesFiltered)"
+                      Overwrite="true" />
+  </Target>
+
 </Project>
