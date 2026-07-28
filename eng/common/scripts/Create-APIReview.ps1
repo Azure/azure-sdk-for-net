@@ -299,11 +299,7 @@ function ProcessPackage($packageInfo)
                     IsApproved = $false
                     Details = ""
                 }
-                $pkgNameStatus = [PSCustomObject]@{
-                    IsApproved = $false
-                    Details = ""
-                }
-                Process-ReviewStatusCode $respCode $packageInfo.ArtifactName $apiStatus $pkgNameStatus
+                Process-ReviewStatusCode $respCode $packageInfo.ArtifactName $apiStatus
 
                 if ($apiStatus.IsApproved) {
                     Write-Host "API status: $($apiStatus.Details)"
@@ -313,19 +309,7 @@ function ProcessPackage($packageInfo)
                 }
                 elseif ($version.IsPrerelease)
                 {
-                    # Check if package name is approved. Preview version cannot be released without package name approval
-                    if (!$pkgNameStatus.IsApproved)
-                    {
-                        if (IsApiviewStatusCheckRequired $packageInfo)
-                        {
-                            Write-Error $($pkgNameStatus.Details)
-                            return 1
-                        }
-                        else{
-                            Write-Host "Package name is not approved for package $($packageInfo.ArtifactName), however it is not required for this package type so it can still be released without API review approval."
-                        }
-                    }
-                    # Ignore API review status for prerelease version
+                    # Package name approval is now gated at spec PR level, no longer checked here
                     Write-Host "Package version is not GA. Ignoring API view approval status"
                 }
                 else

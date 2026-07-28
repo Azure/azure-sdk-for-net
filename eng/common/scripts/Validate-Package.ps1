@@ -78,11 +78,6 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
         Status = "Pending"
         Message = ""
     }
-    $PackageNameValidation = [PSCustomObject]@{
-        Name = "Package Name Approval"
-        Status = "Pending"
-        Message = ""
-    }
 
     try
     {
@@ -90,35 +85,23 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
             IsApproved = $false
             Details = ""
         }
-        $packageNameStatus = [PSCustomObject]@{
-            IsApproved = $false
-            Details = ""
-        }
         Write-Host "Checking API review status for package $packageName with version $packageVersion. language [$language]."
-        Check-ApiReviewStatus $packageName $packageVersion $language $APIViewUri $APIKey $apiStatus $packageNameStatus
+        Check-ApiReviewStatus $packageName $packageVersion $language $APIViewUri $APIKey $apiStatus
 
         Write-Host "API review approval details: $($apiStatus.Details)"
-        Write-Host "Package name approval details: $($packageNameStatus.Details)"
         #API review approval status
         $APIReviewValidation.Message = $apiStatus.Details
         $APIReviewValidation.Status = if ($apiStatus.IsApproved) { "Approved" } else { "Pending" }
-
-        # Package name approval status
-        $PackageNameValidation.Status = if ($packageNameStatus.IsApproved) { "Approved" } else { "Pending" }
-        $PackageNameValidation.Message = $packageNameStatus.Details
     }
     catch
     {
         Write-Warning "Failed to get API review status. Error: $_"
-        $PackageNameValidation.Status = "Failed"
-        $PackageNameValidation.Message = $_.Exception.Message
         $APIReviewValidation.Status = "Failed"
         $APIReviewValidation.Message = $_.Exception.Message
     }
 
     return [PSCustomObject]@{
         ApiviewApproval = $APIReviewValidation
-        PackageNameApproval = $PackageNameValidation
     }
 }
 
@@ -220,7 +203,6 @@ $pkgValidationDetails= [PSCustomObject]@{
     Version = $pkgInfo.Version
     ChangeLogValidation = $changeLogStatus
     APIReviewValidation = $apireviewDetails.ApiviewApproval
-    PackageNameValidation = $apireviewDetails.PackageNameApproval
 }
 
 $output = ConvertTo-Json $pkgValidationDetails
@@ -242,11 +224,10 @@ if ($updatedWi) {
 # Fail the build if any validation is not successful for a release build
 Write-Host "Change log status:" $changelogStatus.Status
 Write-Host "API Review status:" $apireviewDetails.ApiviewApproval.Status
-Write-Host "Package Name status:" $apireviewDetails.PackageNameApproval.Status
 
 if ($IsReleaseBuild)
 {
-    if (!$updatedWi -or $changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved") {
+    if (!$updatedWi -or $changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved") {
         Write-Error "At least one of the Validations above failed for package $pkgName with version $versionString."
         exit 1
     }

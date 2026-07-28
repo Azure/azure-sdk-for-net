@@ -1095,8 +1095,6 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
     $changeLogDetails  = $pkgValidationDetails.ChangeLogValidation.Message
     $apiReviewStatus = $pkgValidationDetails.APIReviewValidation.Status
     $apiReviewDetails = $pkgValidationDetails.APIReviewValidation.Message
-    $packageNameStatus = $pkgValidationDetails.PackageNameValidation.Status
-    $packageNameDetails = $pkgValidationDetails.PackageNameValidation.Message
 
     $fields = @()
     $fields += "`"PackageVersion=${versionString}`""
@@ -1104,8 +1102,6 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
     $fields += "`"ChangeLogValidationDetails=${changeLogDetails}`""
     $fields += "`"APIReviewStatus=${apiReviewStatus}`""
     $fields += "`"APIReviewStatusDetails=${apiReviewDetails}`""
-    $fields += "`"PackageNameApprovalStatus=${packageNameStatus}`""
-    $fields += "`"PackageNameApprovalDetails=${packageNameDetails}`""
     if ($BuildDefinition) {
         $fields += "`"PipelineDefinition=$BuildDefinition`""
     }

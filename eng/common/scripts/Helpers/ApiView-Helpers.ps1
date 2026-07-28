@@ -22,7 +22,7 @@ function MapLanguageToRequestParam($language)
     return $lang
 }
 
-function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $apiKey, $apiApprovalStatus = $null, $packageNameStatus = $null)
+function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $apiKey, $apiApprovalStatus = $null)
 {
   # Get API view URL and API Key to check status
   Write-Host "Checking API review status for package: ${packageName}"
@@ -39,31 +39,18 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
     }
   }
 
-  if (!$packageNameStatus) {
-    $packageNameStatus = [PSCustomObject]@{
-      IsApproved = $false
-      Details = ""
-    }
-  }
-
   try
   {
     $requestUrl = "${url}?language=${lang}&packageName=${packageName}&packageVersion=${packageVersion}"
     Write-Host "Request to APIView: [${requestUrl}]"
     $response = Invoke-WebRequest $requestUrl -Method 'GET' -Headers $headers
     Write-Host "Response: $($response.StatusCode)"
-    Process-ReviewStatusCode -statusCode $response.StatusCode -packageName $packageName -apiApprovalStatus $apiApprovalStatus -packageNameStatus $packageNameStatus
+    Process-ReviewStatusCode -statusCode $response.StatusCode -packageName $packageName -apiApprovalStatus $apiApprovalStatus
     if ($apiApprovalStatus.IsApproved) {
       Write-Host $($apiApprovalStatus.Details)
     }
     else {
       Write-warning $($apiApprovalStatus.Details)
-    }
-    if ($packageNameStatus.IsApproved) {
-      Write-Host $($packageNameStatus.Details)
-    }
-    else {
-      Write-warning $($packageNameStatus.Details)
     }
   }
   catch
@@ -72,18 +59,15 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
   }
 }
 
-function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus, $packageNameStatus)
+function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus)
 {
   $apiApproved = $false
   $apiApprovalDetails = "API Review is not approved for package $($packageName). Release pipeline will fail if API review is not approved for a GA version release. You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
   $apiApprovalDetails += " Once your API is approved, re-trigger the release pipeline again."
 
-  $packageNameApproved = $false
-  $packageNameApprovalDetails = ""
-
-  # 200 API approved and Package name approved
-  # 201 API review is not approved, Package name is approved
-  # 202 API review is not approved, Package name is not approved
+  # 200 API approved (and package name approved - legacy, now handled at spec PR level)
+  # 201 API review is not approved (package name approved - legacy)
+  # 202 API review is not approved (package name not approved - legacy)
 
   switch ($statusCode)
   {
@@ -91,33 +75,24 @@ function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus,
     {
       $apiApprovalDetails = "API Review is approved for package $($packageName)"
       $apiApproved = $true
-
-      $packageNameApproved = $true
-      $packageNameApprovalDetails = "Package name is approved for package $($packageName)"
     }
     201
     {
-      $packageNameApproved = $true
-      $packageNameApprovalDetails = "Package name is approved for package $($packageName)"
+      # API not approved, but package name was approved (legacy distinction)
     }
     202
     {
-      $packageNameApprovalDetails = "Package name $($packageName) is not yet approved by an SDK API approver. Package name must be approved to release a beta version if $($packageName) was never released as a stable version."
-      $packageNameApprovalDetails += " You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on package name Approval."
+      # API not approved, package name not approved (legacy distinction)
     }
     default
     {
       $apiApprovalDetails = "Invalid status code from APIView. status code $($statusCode)"
-      $packageNameApprovalDetails = "Invalid status code from APIView. status code $($statusCode)"
       Write-Error "Failed to process API Review status for for package $($PackageName). Please reach out to Azure SDK engineering systems on teams channel."
     }
   }
 
   $apiApprovalStatus.IsApproved = $apiApproved
   $apiApprovalStatus.Details = $apiApprovalDetails
-
-  $packageNameStatus.IsApproved = $packageNameApproved
-  $packageNameStatus.Details = $packageNameApprovalDetails
 }
 
 function Set-ApiViewCommentForRelatedIssues {
