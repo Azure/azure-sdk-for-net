@@ -41,3 +41,4 @@ Released.
 ### Added
 
 - Added `MicrosoftSpatialGeoJsonConverter` to serialize `Microsoft.Spatial.GeographyPoint` objects.
+

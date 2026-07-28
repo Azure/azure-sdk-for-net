@@ -39,3 +39,4 @@
 ### Features Added
 
 - Initial beta release of Azure.Messaging.EventGrid.Namespaces.
+
