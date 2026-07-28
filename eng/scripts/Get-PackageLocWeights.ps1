@@ -7,6 +7,10 @@ For each PackageInfo JSON file, finds the corresponding src directory and counts
 total lines of C# code. Outputs a JSON mapping of artifact name (the `ArtifactName`
 field from PackageInfo) to LOC count.
 
+This script runs inside the matrix-generation job, which every Build and Analyze job
+depends on, so it sits directly on the PR-CI critical path. Line counting is therefore
+done with a compiled byte-scanning reader and packages are counted in parallel.
+
 .PARAMETER PackageInfoFolder
 Path to the folder containing PackageInfo JSON files.
 
@@ -26,36 +30,100 @@ param (
 
 Set-StrictMode -Version 4
 
-$weights = @{}
+Add-Type -TypeDefinition @"
+using System;
+using System.Collections.Concurrent;
+using System.IO;
+using System.Threading.Tasks;
+
+public static class AzSdkLocCounter
+{
+    private static long CountFile(string path)
+    {
+        byte[] buffer = new byte[1 << 20];
+        long lines = 0;
+        bool any = false;
+        byte last = 0;
+        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 1 << 20))
+        {
+            int read;
+            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                any = true;
+                for (int i = 0; i < read; i++)
+                {
+                    if (buffer[i] == (byte)10) { lines++; }
+                }
+                last = buffer[read - 1];
+            }
+        }
+
+        // Count a trailing line that is not newline-terminated.
+        if (any && last != (byte)10) { lines++; }
+        return lines;
+    }
+
+    public static long CountDirectory(string root)
+    {
+        long total = 0;
+        try
+        {
+            foreach (string file in Directory.EnumerateFiles(root, "*.cs", SearchOption.AllDirectories))
+            {
+                try { total += CountFile(file); }
+                catch { /* unreadable file, ignore */ }
+            }
+        }
+        catch { /* unreadable directory, ignore */ }
+
+        return total;
+    }
+
+    // names and roots are parallel arrays; roots[i] may be null for packages with no src directory.
+    public static ConcurrentDictionary<string, long> CountAll(string[] names, string[] roots)
+    {
+        var results = new ConcurrentDictionary<string, long>();
+        Parallel.For(0, names.Length, i =>
+        {
+            results[names[i]] = string.IsNullOrEmpty(roots[i]) ? 0 : CountDirectory(roots[i]);
+        });
+        return results;
+    }
+}
+"@
+
+$names = [System.Collections.Generic.List[string]]::new()
+$roots = [System.Collections.Generic.List[string]]::new()
+
 $packageFiles = Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse
 
 foreach ($file in $packageFiles) {
-  $json = Get-Content $file.FullName | ConvertFrom-Json
+  $json = Get-Content $file.FullName -Raw | ConvertFrom-Json
   $name = $json.ArtifactName
   $dirPath = $json.DirectoryPath
 
-  if (-not $dirPath) {
-    $weights[$name] = 1
-    continue
+  $srcPath = $null
+  if ($dirPath) {
+    if ([System.IO.Path]::IsPathRooted($dirPath)) {
+      $candidate = Join-Path $dirPath "src"
+    }
+    else {
+      $candidate = Join-Path $RepoRoot $dirPath "src"
+    }
+    if (Test-Path $candidate) {
+      $srcPath = $candidate
+    }
   }
 
-  if ([System.IO.Path]::IsPathRooted($dirPath)) {
-    $srcPath = Join-Path $dirPath "src"
-  }
-  else {
-    $srcPath = Join-Path $RepoRoot $dirPath "src"
-  }
-  if (-not (Test-Path $srcPath)) {
-    $weights[$name] = 1
-    continue
-  }
+  $names.Add($name)
+  $roots.Add($srcPath)
+}
 
-  $loc = 0
-  Get-ChildItem $srcPath -Filter "*.cs" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $loc += @(Get-Content $_.FullName -ErrorAction SilentlyContinue).Count
-  }
+$counted = [AzSdkLocCounter]::CountAll($names.ToArray(), $roots.ToArray())
 
-  $weights[$name] = [math]::Max($loc, 1)
+$weights = @{}
+foreach ($name in $names) {
+  $weights[$name] = [int][math]::Max([long]$counted[$name], 1)
 }
 
 Write-Host "Counted LOC for $($weights.Count) packages."

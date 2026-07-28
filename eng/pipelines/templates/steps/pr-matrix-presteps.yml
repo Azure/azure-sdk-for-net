@@ -15,12 +15,24 @@ parameters:
   - name: LocTarget
     type: number
     default: 474000
+  - name: LocBaseCost
+    type: number
+    default: 0
   - name: PublishArtifact
     type: boolean
     default: true
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+  # When ForceDirect is set, every indirect package discovered below is deleted before matrix
+  # generation, and downstream jobs filter the published artifact down to the batch's
+  # ProjectNames. Computing the cross-package dependency graph (a full-repo MSBuild
+  # restore+evaluation, ~3.5 min) is therefore pure waste for these passes, so turn it off.
+  - ${{ if eq(parameters.ForceDirect, true) }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION;]true"
+      displayName: Skip dependent package calculation (direct packages only)
 
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
@@ -85,6 +97,7 @@ steps:
         eng/scripts/Apply-WeightedBatching.ps1 `
           -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -WeightsFile "$(Build.ArtifactStagingDirectory)/loc-weights.json" `
-          -Target ${{ parameters.LocTarget }}
-      displayName: Apply LOC-weighted batching (target ${{ parameters.LocTarget }})
+          -Target ${{ parameters.LocTarget }} `
+          -BaseCost ${{ parameters.LocBaseCost }}
+      displayName: Apply LOC-weighted batching (target ${{ parameters.LocTarget }}, base cost ${{ parameters.LocBaseCost }})
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
