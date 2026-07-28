@@ -11,7 +11,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for data deletion detection policies. </summary>
+    /// <summary>
+    /// Base type for data deletion detection policies.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SoftDeleteColumnDeletionDetectionPolicy"/> and <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>.
+    /// </summary>
     public partial class DataDeletionDetectionPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
