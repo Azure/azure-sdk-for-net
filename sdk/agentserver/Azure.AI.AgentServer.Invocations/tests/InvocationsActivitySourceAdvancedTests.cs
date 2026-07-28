@@ -43,7 +43,7 @@ public class InvocationsActivitySourceAdvancedTests
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
             new Dictionary<string, StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         var longRequestId = new string('x', 300);
         var headers = new HeaderDictionary { ["x-request-id"] = longRequestId };
@@ -72,7 +72,7 @@ public class InvocationsActivitySourceAdvancedTests
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
             new Dictionary<string, StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         var exactRequestId = new string('y', 256);
         var headers = new HeaderDictionary { ["x-request-id"] = exactRequestId };

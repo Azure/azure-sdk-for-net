@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringProperties"/>. </summary>
         /// <param name="peerAsn"> Peer ASN. </param>
-        /// <param name="peerIp"> Peer IP. </param>
+        /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualRouterPeeringProperties(long? peerAsn, string peerIp, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualRouterPeeringProperties(long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeerAsn = peerAsn;
-            PeerIp = peerIp;
+            PeerIP = peerIP;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Peer IP. </summary>
         [WirePath("peerIp")]
-        public string PeerIp { get; set; }
+        public string PeerIP { get; set; }
 
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("provisioningState")]

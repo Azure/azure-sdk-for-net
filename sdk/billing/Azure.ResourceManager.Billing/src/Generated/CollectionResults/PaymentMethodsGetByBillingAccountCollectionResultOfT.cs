@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 PaymentMethodsListResult result = PaymentMethodsListResult.FromResponse(response);
-                yield return Page<BillingPaymentMethodData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingPaymentMethodData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

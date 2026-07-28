@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     yield break;
                 }
                 AlertList result = AlertList.FromResponse(response);
-                yield return Page<DataBoxEdgeAlertData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataBoxEdgeAlertData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

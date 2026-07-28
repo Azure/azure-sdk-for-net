@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(ConnectivityEndpoint))]
     [ModelReaderWriterBuildable(typeof(EncryptionInTransitProperties))]
     [ModelReaderWriterBuildable(typeof(EntraUserInfo))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExcludedServicesConfig))]
     [ModelReaderWriterBuildable(typeof(ExecuteScriptActionContent))]
     [ModelReaderWriterBuildable(typeof(HardwareProfile))]
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationHttpsEndpoint))]
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(HDInsightApplicationResource))]
+    [ModelReaderWriterBuildable(typeof(HDInsightAsyncOperationResult))]
     [ModelReaderWriterBuildable(typeof(HDInsightAutoScaleCapacity))]
     [ModelReaderWriterBuildable(typeof(HDInsightAutoScaleConfiguration))]
     [ModelReaderWriterBuildable(typeof(HDInsightAutoScaleConfigurationUpdateContent))]
@@ -117,9 +119,9 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(ScriptActionsList))]
     [ModelReaderWriterBuildable(typeof(SshProfile))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UsagesListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHDInsightContext : ModelReaderWriterContext
     {
     }

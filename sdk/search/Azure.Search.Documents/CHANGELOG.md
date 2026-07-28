@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `System.Text.Json.JsonException` / `InvalidOperationException: Cannot skip tokens on partial JSON` thrown when asynchronously deserializing a `SearchDocument` (for example `SearchAsync<SearchDocument>`) whose result elements are large and contain OData (`@search.*`) properties. The internal converter now uses `Utf8JsonReader.TrySkip()` instead of `Skip()` so these properties can be skipped even when the converter is invoked over a non-final JSON block. ([#40768](https://github.com/Azure/azure-sdk-for-net/issues/40768))
+
 ### Other Changes
 
 ## 12.1.0-beta.1 (2026-05-28)

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     yield break;
                 }
                 IotDpsSkuDefinitionListResult result = IotDpsSkuDefinitionListResult.FromResponse(response);
-                yield return Page<DeviceProvisioningServicesSkuDefinition>.FromValues((IReadOnlyList<DeviceProvisioningServicesSkuDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DeviceProvisioningServicesSkuDefinition>.FromValues((IReadOnlyList<DeviceProvisioningServicesSkuDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

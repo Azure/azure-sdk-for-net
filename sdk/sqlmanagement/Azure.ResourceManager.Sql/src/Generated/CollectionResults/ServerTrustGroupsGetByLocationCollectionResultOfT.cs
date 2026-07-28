@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ServerTrustGroupListResult result = ServerTrustGroupListResult.FromResponse(response);
-                yield return Page<SqlServerTrustGroupData>.FromValues((IReadOnlyList<SqlServerTrustGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlServerTrustGroupData>.FromValues((IReadOnlyList<SqlServerTrustGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

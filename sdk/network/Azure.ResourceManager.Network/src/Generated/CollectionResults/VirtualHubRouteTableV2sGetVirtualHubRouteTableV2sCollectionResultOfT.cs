@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListVirtualHubRouteTableV2sResult result = ListVirtualHubRouteTableV2sResult.FromResponse(response);
-                yield return Page<VirtualHubRouteTableV2Data>.FromValues((IReadOnlyList<VirtualHubRouteTableV2Data>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualHubRouteTableV2Data>.FromValues((IReadOnlyList<VirtualHubRouteTableV2Data>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

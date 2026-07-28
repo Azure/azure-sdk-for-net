@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 WorkloadClassifierListResult result = WorkloadClassifierListResult.FromResponse(response);
-                yield return Page<WorkloadClassifierData>.FromValues((IReadOnlyList<WorkloadClassifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkloadClassifierData>.FromValues((IReadOnlyList<WorkloadClassifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

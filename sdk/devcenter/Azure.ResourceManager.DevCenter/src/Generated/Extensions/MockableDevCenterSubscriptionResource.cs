@@ -52,35 +52,35 @@ namespace Azure.ResourceManager.DevCenter.Mocking
 
         private ClientDiagnostics DevCentersClientDiagnostics => _devCentersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DevCenters DevCentersRestClient => _devCentersRestClient ??= new DevCenters(DevCentersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private DevCenters DevCentersRestClient => _devCentersRestClient ??= new DevCenters(DevCentersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics ProjectsClientDiagnostics => _projectsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Projects ProjectsRestClient => _projectsRestClient ??= new Projects(ProjectsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Projects ProjectsRestClient => _projectsRestClient ??= new Projects(ProjectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics NetworkConnectionsClientDiagnostics => _networkConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkConnections NetworkConnectionsRestClient => _networkConnectionsRestClient ??= new NetworkConnections(NetworkConnectionsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private NetworkConnections NetworkConnectionsRestClient => _networkConnectionsRestClient ??= new NetworkConnections(NetworkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationStatuses OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatuses(OperationStatusesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private OperationStatuses OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatuses(OperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         private ClientDiagnostics CheckScopedNameAvailabilityClientDiagnostics => _checkScopedNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckScopedNameAvailability CheckScopedNameAvailabilityRestClient => _checkScopedNameAvailabilityRestClient ??= new CheckScopedNameAvailability(CheckScopedNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private CheckScopedNameAvailability CheckScopedNameAvailabilityRestClient => _checkScopedNameAvailabilityRestClient ??= new CheckScopedNameAvailability(CheckScopedNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
 
         /// <summary>
         /// Lists all devcenters in a subscription.

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubEndpointHealthStatus : IEquatable<IotHubEndpointHealthStatus>
     {
         private readonly string _value;
+        /// <summary> unknown. </summary>
+        private const string UnknownValue = "unknown";
+        /// <summary> healthy. </summary>
+        private const string HealthyValue = "healthy";
+        /// <summary> degraded. </summary>
+        private const string DegradedValue = "degraded";
+        /// <summary> unhealthy. </summary>
+        private const string UnhealthyValue = "unhealthy";
+        /// <summary> dead. </summary>
+        private const string DeadValue = "dead";
 
         /// <summary> Initializes a new instance of <see cref="IotHubEndpointHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubEndpointHealthStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "unknown";
-        private const string HealthyValue = "healthy";
-        private const string DegradedValue = "degraded";
-        private const string UnhealthyValue = "unhealthy";
-        private const string DeadValue = "dead";
+            _value = value;
+        }
 
         /// <summary> unknown. </summary>
         public static IotHubEndpointHealthStatus Unknown { get; } = new IotHubEndpointHealthStatus(UnknownValue);
+
         /// <summary> healthy. </summary>
         public static IotHubEndpointHealthStatus Healthy { get; } = new IotHubEndpointHealthStatus(HealthyValue);
+
         /// <summary> degraded. </summary>
         public static IotHubEndpointHealthStatus Degraded { get; } = new IotHubEndpointHealthStatus(DegradedValue);
+
         /// <summary> unhealthy. </summary>
         public static IotHubEndpointHealthStatus Unhealthy { get; } = new IotHubEndpointHealthStatus(UnhealthyValue);
+
         /// <summary> dead. </summary>
         public static IotHubEndpointHealthStatus Dead { get; } = new IotHubEndpointHealthStatus(DeadValue);
+
         /// <summary> Determines if two <see cref="IotHubEndpointHealthStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubEndpointHealthStatus left, IotHubEndpointHealthStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubEndpointHealthStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubEndpointHealthStatus left, IotHubEndpointHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubEndpointHealthStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubEndpointHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubEndpointHealthStatus(string value) => new IotHubEndpointHealthStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubEndpointHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubEndpointHealthStatus?(string value) => value == null ? null : new IotHubEndpointHealthStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubEndpointHealthStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubEndpointHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateCreateToolboxVersionRequest(string name, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateCreateVersionRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetToolboxRequest(string name, RequestOptions options)
+        internal PipelineMessage CreateGetRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -54,7 +54,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetToolboxesRequest(int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetAllRequest(int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetToolboxVersionsRequest(string name, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetVersionsRequest(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetToolboxVersionRequest(string name, string version, RequestOptions options)
+        internal PipelineMessage CreateGetVersionRequest(string name, string version, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateUpdateToolboxRequest(string name, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateUpdateDefaultVersionRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -158,7 +158,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteToolboxRequest(string name, RequestOptions options)
+        internal PipelineMessage CreateDeleteRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteToolboxVersionRequest(string name, string version, RequestOptions options)
+        internal PipelineMessage CreateDeleteVersionRequest(string name, string version, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

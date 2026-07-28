@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(LearnedIPPrefixesListResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpPrefixes))
+            if (Optional.IsCollectionDefined(IPPrefixes))
             {
                 writer.WritePropertyName("ipPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpPrefixes)
+                foreach (string item in IPPrefixes)
                 {
                     if (item == null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<string> ipPrefixes = default;
+            IReadOnlyList<string> ipPrefixes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

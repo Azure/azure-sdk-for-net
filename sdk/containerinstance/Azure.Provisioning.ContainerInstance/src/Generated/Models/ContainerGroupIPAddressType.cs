@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerInstance
     public enum ContainerGroupIPAddressType
     {
         /// <summary> Public. </summary>
-        Public,
+        Public = 0,
         /// <summary> Private. </summary>
-        Private
+        Private = 1
     }
 }

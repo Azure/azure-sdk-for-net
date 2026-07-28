@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListHubRouteTablesResult result = ListHubRouteTablesResult.FromResponse(response);
-                yield return Page<HubRouteTableData>.FromValues((IReadOnlyList<HubRouteTableData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HubRouteTableData>.FromValues((IReadOnlyList<HubRouteTableData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

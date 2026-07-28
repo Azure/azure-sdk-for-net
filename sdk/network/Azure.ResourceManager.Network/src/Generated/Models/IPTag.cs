@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP tag type. Example: FirstPartyUsage. </summary>
         [WirePath("ipTagType")]
-        public string IpTagType { get; set; }
+        public string IPTagType { get; set; }
 
         /// <summary> The value of the IP tag associated with the public IP. Example: SQL. </summary>
         [WirePath("tag")]

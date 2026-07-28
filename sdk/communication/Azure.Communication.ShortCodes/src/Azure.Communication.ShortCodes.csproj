@@ -5,12 +5,11 @@
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.ShortCodes/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.ShortCodes/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication Short Code Service</AssemblyTitle>
-    <Version>1.0.0-alpha.1</Version>
+    <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft Azure Communication Short Codes Service;Microsoft;Azure;Azure Communication Service;Azure Communication Short Codes Service;Short Codes;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);AZC0035</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

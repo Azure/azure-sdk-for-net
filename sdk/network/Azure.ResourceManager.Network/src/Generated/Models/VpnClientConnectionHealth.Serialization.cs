@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("vpnClientConnectionsCount"u8);
                 writer.WriteNumberValue(VpnClientConnectionsCount.Value);
             }
-            if (Optional.IsCollectionDefined(AllocatedIpAddresses))
+            if (Optional.IsCollectionDefined(AllocatedIPAddresses))
             {
                 writer.WritePropertyName("allocatedIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in AllocatedIpAddresses)
+                foreach (string item in AllocatedIPAddresses)
                 {
                     if (item == null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
             long? totalIngressBytesTransferred = default;
             long? totalEgressBytesTransferred = default;
             int? vpnClientConnectionsCount = default;
-            IList<string> allocatedIpAddresses = default;
+            IReadOnlyList<string> allocatedIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    allocatedIpAddresses = array;
+                    allocatedIPAddresses = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VpnClientConnectionHealth(totalIngressBytesTransferred, totalEgressBytesTransferred, vpnClientConnectionsCount, allocatedIpAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new VpnClientConnectionHealth(totalIngressBytesTransferred, totalEgressBytesTransferred, vpnClientConnectionsCount, allocatedIPAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

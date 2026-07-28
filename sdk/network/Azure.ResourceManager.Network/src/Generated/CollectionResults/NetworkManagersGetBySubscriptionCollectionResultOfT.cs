@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NetworkManagerListResult result = NetworkManagerListResult.FromResponse(response);
-                yield return Page<NetworkManagerData>.FromValues((IReadOnlyList<NetworkManagerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkManagerData>.FromValues((IReadOnlyList<NetworkManagerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

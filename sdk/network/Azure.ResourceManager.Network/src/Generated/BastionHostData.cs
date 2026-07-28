@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> IP configuration of the Bastion Host resource. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<BastionHostIPConfiguration> IpConfigurations
+        public IList<BastionHostIPConfiguration> IPConfigurations
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new BastionHostPropertiesFormat();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Enable/Disable IP Connect feature of the Bastion Host resource. </summary>
         [WirePath("properties.enableIpConnect")]
-        public bool? EnableIpConnect
+        public bool? EnableIPConnect
         {
             get
             {
-                return Properties is null ? default : Properties.EnableIpConnect;
+                return Properties is null ? default : Properties.EnableIPConnect;
             }
             set
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new BastionHostPropertiesFormat();
                 }
-                Properties.EnableIpConnect = value;
+                Properties.EnableIPConnect = value;
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
         [WirePath("properties.networkAcls.ipRules")]
-        public IList<BastionHostIPRule> NetworkAclsIpRules
+        public IList<BastionHostIPRule> NetworkAclsIPRules
         {
             get
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new BastionHostPropertiesFormat();
                 }
-                return Properties.NetworkAclsIpRules;
+                return Properties.NetworkAclsIPRules;
             }
         }
 

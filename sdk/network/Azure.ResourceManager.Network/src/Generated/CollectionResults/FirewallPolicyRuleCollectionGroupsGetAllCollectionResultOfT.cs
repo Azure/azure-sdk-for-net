@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 FirewallPolicyRuleCollectionGroupListResult result = FirewallPolicyRuleCollectionGroupListResult.FromResponse(response);
-                yield return Page<FirewallPolicyRuleCollectionGroupData>.FromValues((IReadOnlyList<FirewallPolicyRuleCollectionGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FirewallPolicyRuleCollectionGroupData>.FromValues((IReadOnlyList<FirewallPolicyRuleCollectionGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

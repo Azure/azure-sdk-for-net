@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ElasticPoolOperationListResult result = ElasticPoolOperationListResult.FromResponse(response);
-                yield return Page<ElasticPoolOperationData>.FromValues((IReadOnlyList<ElasticPoolOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ElasticPoolOperationData>.FromValues((IReadOnlyList<ElasticPoolOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

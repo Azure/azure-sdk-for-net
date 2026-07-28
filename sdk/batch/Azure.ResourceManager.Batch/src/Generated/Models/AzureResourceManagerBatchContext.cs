@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedSkusResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmDiskSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(WindowsConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerBatchContext : ModelReaderWriterContext
     {
     }

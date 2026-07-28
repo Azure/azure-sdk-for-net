@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DisassociateCloudServicePublicIPContent"/>. </summary>
-        /// <param name="publicIpArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpArmId"/> is null. </exception>
-        public DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIpArmId)
+        /// <param name="publicIPArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPArmId"/> is null. </exception>
+        public DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIPArmId)
         {
-            Argument.AssertNotNull(publicIpArmId, nameof(publicIpArmId));
+            Argument.AssertNotNull(publicIPArmId, nameof(publicIPArmId));
 
-            PublicIpArmId = publicIpArmId;
+            PublicIPArmId = publicIPArmId;
         }
 
         /// <summary> Initializes a new instance of <see cref="DisassociateCloudServicePublicIPContent"/>. </summary>
-        /// <param name="publicIpArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
+        /// <param name="publicIPArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIpArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIPArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublicIpArmId = publicIpArmId;
+            PublicIPArmId = publicIPArmId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </summary>
         [WirePath("publicIpArmId")]
-        public ResourceIdentifier PublicIpArmId { get; }
+        public ResourceIdentifier PublicIPArmId { get; }
     }
 }

@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects;
 
 /// <summary>
-/// The optionsfor creating routines.
+/// The options for creating routines.
 /// </summary>
+[Experimental("AAIP001")]
 public partial class ProjectsRoutineOptions
 {
     /// <summary>
@@ -25,7 +27,7 @@ public partial class ProjectsRoutineOptions
         Action = action;
         Description = description;
         Triggers = [];
-        Enabled = enabled;
+        IsEnabled = enabled;
     }
 
     /// <summary>
@@ -46,5 +48,5 @@ public partial class ProjectsRoutineOptions
     /// <summary>
     /// Whether the routine is enabled.
     /// </summary>
-    public bool? Enabled { get; }
+    public bool? IsEnabled { get; }
 }

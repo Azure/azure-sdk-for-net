@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
             CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigProperties>();
             ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
-            IpConfigurations = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointProperties"/>. </summary>
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Network.Models
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
-            IpVersionType = ipVersionType;
+            IPVersionType = ipVersionType;
             PrivateLinkServiceConnections = privateLinkServiceConnections;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
             CustomDnsConfigs = customDnsConfigs;
             ApplicationSecurityGroups = applicationSecurityGroups;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             CustomNetworkInterfaceName = customNetworkInterfaceName;
             BillingSku = billingSku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Specifies the IP version type for the private IPs of the private endpoint. If not defined, this defaults to IPv4. </summary>
         [WirePath("ipVersionType")]
-        public PrivateEndpointIPVersionType? IpVersionType { get; set; }
+        public PrivateEndpointIPVersionType? IPVersionType { get; set; }
 
         /// <summary> A grouping of information about the connection to the remote resource. </summary>
         [WirePath("privateLinkServiceConnections")]
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </summary>
         [WirePath("ipConfigurations")]
-        public IList<PrivateEndpointIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
+        public IList<PrivateEndpointIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
 
         /// <summary> The custom name of the network interface attached to the private endpoint. </summary>
         [WirePath("customNetworkInterfaceName")]

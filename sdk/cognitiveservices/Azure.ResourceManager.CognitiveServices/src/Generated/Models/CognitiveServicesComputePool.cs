@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="instanceType"> The instance type (VM SKU) used in the pool. </param>
         /// <param name="nodeCount"> The number of nodes in the pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="instanceType"/> is null. </exception>
-        public CognitiveServicesComputePool(string name, VmPriority vmPriority, string instanceType, int nodeCount)
+        public CognitiveServicesComputePool(string name, CognitiveServicesVmPriority vmPriority, string instanceType, int nodeCount)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(instanceType, nameof(instanceType));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="instanceType"> The instance type (VM SKU) used in the pool. </param>
         /// <param name="nodeCount"> The number of nodes in the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputePool(string name, VmPriority vmPriority, string instanceType, int nodeCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesComputePool(string name, CognitiveServicesVmPriority vmPriority, string instanceType, int nodeCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             VmPriority = vmPriority;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The VM priority of the pool. </summary>
         [WirePath("vmPriority")]
-        public VmPriority VmPriority { get; set; }
+        public CognitiveServicesVmPriority VmPriority { get; set; }
 
         /// <summary> The instance type (VM SKU) used in the pool. </summary>
         [WirePath("instanceType")]

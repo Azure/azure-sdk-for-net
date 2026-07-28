@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("destinationResourceId"u8);
             writer.WriteStringValue(DestinationResourceId);
             writer.WritePropertyName("ipTraffic"u8);
-            writer.WriteObjectValue(IpTraffic, options);
+            writer.WriteObjectValue(IPTraffic, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

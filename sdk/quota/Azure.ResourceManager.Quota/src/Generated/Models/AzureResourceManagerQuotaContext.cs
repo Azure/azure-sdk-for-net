@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota.Models;
 
@@ -79,7 +78,6 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(QuotaUsagesObject))]
     [ModelReaderWriterBuildable(typeof(QuotaUsagesProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceUsageList))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceErrorDetail))]
     [ModelReaderWriterBuildable(typeof(SubmittedResourceRequestStatusList))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAllocatedQuota))]
@@ -90,9 +88,9 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetails))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetailsName))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UsagesLimits))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerQuotaContext : ModelReaderWriterContext
     {
     }

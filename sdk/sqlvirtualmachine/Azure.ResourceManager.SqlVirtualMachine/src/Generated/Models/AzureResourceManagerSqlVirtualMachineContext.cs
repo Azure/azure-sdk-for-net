@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
 
@@ -28,7 +27,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupReplica))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MultiSubnetIPConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SqlConnectivityUpdateSettings))]
     [ModelReaderWriterBuildable(typeof(SqlInstanceSettings))]
     [ModelReaderWriterBuildable(typeof(SqlServerConfigurationsManagementSettings))]
@@ -56,12 +54,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     [ModelReaderWriterBuildable(typeof(SqlVmTroubleshooting))]
     [ModelReaderWriterBuildable(typeof(SqlVmTroubleshootingStatus))]
     [ModelReaderWriterBuildable(typeof(SqlWorkloadTypeUpdateSettings))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TroubleshootingAdditionalProperties))]
     [ModelReaderWriterBuildable(typeof(UnhealthyReplicaInfo))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainCredentials))]
     [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainProfile))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSqlVirtualMachineContext : ModelReaderWriterContext
     {
     }

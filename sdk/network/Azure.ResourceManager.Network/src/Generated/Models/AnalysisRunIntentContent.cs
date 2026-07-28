@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             SourceResourceId = sourceResourceId;
             DestinationResourceId = destinationResourceId;
-            IpTraffic = ipTraffic;
+            IPTraffic = ipTraffic;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalysisRunIntentContent"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             Description = description;
             SourceResourceId = sourceResourceId;
             DestinationResourceId = destinationResourceId;
-            IpTraffic = ipTraffic;
+            IPTraffic = ipTraffic;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP traffic information. </summary>
         [WirePath("ipTraffic")]
-        public NetworkVerifierIPTraffic IpTraffic { get; }
+        public NetworkVerifierIPTraffic IPTraffic { get; }
     }
 }

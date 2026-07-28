@@ -37,10 +37,10 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         #endregion
         // Clean up any pre-existing routine with the same name.
         try
-        { await routinesClient.DeleteRoutineAsync(routineName); } catch { }
+        { await routinesClient.DeleteAsync(routineName); } catch { }
 
         #region Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        RoutineAction action = new AgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name
         };
@@ -54,37 +54,37 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         {
             EventName = "sample-event"
         });
-        ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
-            routineName: routineName,
+        ProjectsRoutine created = await routinesClient.CreateOrUpdateAsync(
+            name: routineName,
             options: routineOptions
         );
-        Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
+        Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}");
         #endregion
 
         #region Snippet:Sample_DisableRoutine_RoutinesCRUD_Async
-        ProjectsRoutine disabled = await routinesClient.DisableRoutineAsync(routineName);
-        Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.Enabled}");
+        ProjectsRoutine disabled = await routinesClient.DisableAsync(routineName);
+        Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.IsEnabled}");
         #endregion
 
         #region Snippet:Sample_GetRoutine_RoutinesCRUD_Async
-        ProjectsRoutine fetched = await routinesClient.GetRoutineAsync(routineName);
-        Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.Enabled} description={fetched.Description}");
+        ProjectsRoutine fetched = await routinesClient.GetAsync(routineName);
+        Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.IsEnabled} description={fetched.Description}");
         #endregion
 
         #region Snippet:Sample_EnableRoutine_RoutinesCRUD_Async
-        ProjectsRoutine enabled = await routinesClient.EnableRoutineAsync(routineName);
-        Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.Enabled}");
+        ProjectsRoutine enabled = await routinesClient.EnableAsync(routineName);
+        Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.IsEnabled}");
         #endregion
 
         #region Snippet:Sample_ListRoutines_RoutinesCRUD_Async
         await foreach (ProjectsRoutine routine in routinesClient.GetRoutinesAsync())
         {
-            Console.WriteLine($"  - {routine.Name} enabled={routine.Enabled}");
+            Console.WriteLine($"  - {routine.Name} enabled={routine.IsEnabled}");
         }
         #endregion
 
         #region Snippet:Sample_DeleteRoutine_RoutinesCRUD_Async
-        await routinesClient.DeleteRoutineAsync(routineName);
+        await routinesClient.DeleteAsync(routineName);
         Console.WriteLine("Routine deleted");
         #endregion
     }
@@ -105,13 +105,13 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
         // Clean up any pre-existing routine with the same name.
-        try { routinesClient.DeleteRoutine(routineName); } catch { }
+        try { routinesClient.Delete(routineName); } catch { }
         #region Snippet:Sample_GetHostedAgent_RoutinesCRUD_Sync
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgent(
             agentName: agentName).Value.GetLatestVersion();
         #endregion
         #region Snippet:Sample_CreateRoutine_RoutinesCRUD_Sync
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        RoutineAction action = new AgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name
         };
@@ -125,37 +125,37 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         {
             EventName = "sample-event"
         });
-        ProjectsRoutine created = routinesClient.CreateOrUpdateRoutine(
-            routineName: routineName,
+        ProjectsRoutine created = routinesClient.CreateOrUpdate(
+            name: routineName,
             options: routineOptions
         );
-        Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
+        Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}");
         #endregion
 
         #region Snippet:Sample_DisableRoutine_RoutinesCRUD_Sync
-        ProjectsRoutine disabled = routinesClient.DisableRoutine(routineName);
-        Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.Enabled}");
+        ProjectsRoutine disabled = routinesClient.Disable(routineName);
+        Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.IsEnabled}");
         #endregion
 
         #region Snippet:Sample_GetRoutine_RoutinesCRUD_Sync
-        ProjectsRoutine fetched = routinesClient.GetRoutine(routineName);
-        Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.Enabled} description={fetched.Description}");
+        ProjectsRoutine fetched = routinesClient.Get(routineName);
+        Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.IsEnabled} description={fetched.Description}");
         #endregion
 
         #region Snippet:Sample_EnableRoutine_RoutinesCRUD_Sync
-        ProjectsRoutine enabled = routinesClient.EnableRoutine(routineName);
-        Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.Enabled}");
+        ProjectsRoutine enabled = routinesClient.Enable(routineName);
+        Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.IsEnabled}");
         #endregion
 
         #region Snippet:Sample_ListRoutines_RoutinesCRUD_Sync
         foreach (ProjectsRoutine routine in routinesClient.GetRoutines())
         {
-            Console.WriteLine($"  - {routine.Name} enabled={routine.Enabled}");
+            Console.WriteLine($"  - {routine.Name} enabled={routine.IsEnabled}");
         }
         #endregion
 
         #region Snippet:Sample_DeleteRoutine_RoutinesCRUD_Sync
-        routinesClient.DeleteRoutine(routineName);
+        routinesClient.Delete(routineName);
         Console.WriteLine("Routine deleted");
         #endregion
     }

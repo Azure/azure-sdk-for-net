@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 VirtualClusterListResult result = VirtualClusterListResult.FromResponse(response);
-                yield return Page<VirtualClusterData>.FromValues((IReadOnlyList<VirtualClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualClusterData>.FromValues((IReadOnlyList<VirtualClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

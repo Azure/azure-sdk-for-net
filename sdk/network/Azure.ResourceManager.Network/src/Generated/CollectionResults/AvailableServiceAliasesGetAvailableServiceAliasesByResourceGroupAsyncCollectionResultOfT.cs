@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 AvailableServiceAliasesResult result = AvailableServiceAliasesResult.FromResponse(response);
-                yield return Page<AvailableServiceAlias>.FromValues((IReadOnlyList<AvailableServiceAlias>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvailableServiceAlias>.FromValues((IReadOnlyList<AvailableServiceAlias>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

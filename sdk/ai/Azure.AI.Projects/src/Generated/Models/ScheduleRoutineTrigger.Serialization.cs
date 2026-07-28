@@ -107,7 +107,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            RoutineTriggerType @type = default;
+            RoutineTriggerKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string cronExpression = default;
             string timeZone = default;
@@ -115,7 +115,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new RoutineTriggerType(prop.Value.GetString());
+                    @type = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("cron_expression"u8))

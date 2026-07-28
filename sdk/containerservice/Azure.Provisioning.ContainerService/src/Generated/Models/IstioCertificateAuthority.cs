@@ -39,6 +39,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _plugin = DefineModelProperty<IstioPluginCertificateAuthority>(nameof(Plugin), new string[] { "plugin" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for IstioCertificateAuthority that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

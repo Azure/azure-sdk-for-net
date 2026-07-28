@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ManagedClusterSkuName
     {
         /// <summary> Base option for the AKS control plane. </summary>
-        Base,
+        Base = 0,
         /// <summary> Automatic clusters are optimized to run most production workloads with configuration that follows AKS best practices and recommendations for cluster and workload setup, scalability, and security. For more details about Automatic clusters see aka.ms/aks/automatic. </summary>
-        Automatic
+        Automatic = 1
     }
 }

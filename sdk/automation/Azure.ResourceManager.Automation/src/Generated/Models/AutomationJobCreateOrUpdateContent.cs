@@ -13,74 +13,28 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create job operation. </summary>
     public partial class AutomationJobCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobCreateOrUpdateContent"/>. </summary>
-        public AutomationJobCreateOrUpdateContent()
+        /// <param name="properties"> Gets or sets the list of job properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobCreateOrUpdateContent(JobCreateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationJobCreateOrUpdateContent"/>. </summary>
-        /// <param name="runbook"> Gets or sets the runbook. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationJobCreateOrUpdateContent(RunbookAssociationProperty runbook, IDictionary<string, string> parameters, string runOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Runbook = runbook;
-            Parameters = parameters;
-            RunOn = runOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Gets or sets the runbook. </summary>
-        internal RunbookAssociationProperty Runbook { get; set; }
-        /// <summary> Gets or sets the name of the runbook. </summary>
-        public string RunbookName
-        {
-            get => Runbook is null ? default : Runbook.Name;
-            set
-            {
-                if (Runbook is null)
-                    Runbook = new RunbookAssociationProperty();
-                Runbook.Name = value;
-            }
-        }
+        /// <summary> Gets or sets the list of job properties. </summary>
+        internal JobCreateProperties Properties { get; }
 
         /// <summary> Gets or sets the parameters of the job. </summary>
-        public IDictionary<string, string> Parameters { get; }
-        /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
-        public string RunOn { get; set; }
+        public IDictionary<string, string> Parameters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Parameters;
+            }
+        }
     }
 }

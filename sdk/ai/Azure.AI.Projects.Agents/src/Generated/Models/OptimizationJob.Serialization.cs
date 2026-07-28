@@ -189,7 +189,7 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             OptimizationJobInputs inputs = default;
             OptimizationJobResult result = default;
-            JobStatus status = default;
+            AgentsJobStatus status = default;
             FoundryOpenAIError error = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset updatedAt = default;
@@ -223,7 +223,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new AgentsJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

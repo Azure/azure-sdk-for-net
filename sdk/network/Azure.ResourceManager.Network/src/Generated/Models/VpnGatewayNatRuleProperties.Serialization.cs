@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IpConfigurationId))
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipConfigurationId"u8);
-                writer.WriteStringValue(IpConfigurationId);
+                writer.WriteStringValue(IPConfigurationId);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EgressVpnSiteLinkConnections))
             {

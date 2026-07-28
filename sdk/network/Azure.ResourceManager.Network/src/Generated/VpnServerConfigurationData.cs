@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> VpnClientIpsecPolicies for VpnServerConfiguration. </summary>
         [WirePath("properties.vpnClientIpsecPolicies")]
-        public IList<IPsecPolicy> VpnClientIpsecPolicies
+        public IList<IPsecPolicy> VpnClientIPsecPolicies
         {
             get
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VpnServerConfigurationProperties();
                 }
-                return Properties.VpnClientIpsecPolicies;
+                return Properties.VpnClientIPsecPolicies;
             }
         }
 

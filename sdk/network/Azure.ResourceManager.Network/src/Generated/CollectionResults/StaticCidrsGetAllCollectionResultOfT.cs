@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 StaticCidrList result = StaticCidrList.FromResponse(response);
-                yield return Page<StaticCidrData>.FromValues((IReadOnlyList<StaticCidrData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StaticCidrData>.FromValues((IReadOnlyList<StaticCidrData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

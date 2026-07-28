@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub.Models;
 
@@ -155,13 +154,13 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuResource))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuSetting))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuZoneDetail))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RolloutStatusBase))]
     [ModelReaderWriterBuildable(typeof(ServiceTreeInfo))]
     [ModelReaderWriterBuildable(typeof(SubscriberSetting))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLifecycleNotificationSpecifications))]
     [ModelReaderWriterBuildable(typeof(SubscriptionStateOverrideAction))]
     [ModelReaderWriterBuildable(typeof(SwaggerSpecification))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TemplateDeploymentOptions))]
     [ModelReaderWriterBuildable(typeof(TemplateDeploymentPolicy))]
     [ModelReaderWriterBuildable(typeof(ThirdPartyExtension))]
@@ -172,7 +171,6 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(TrafficRegionRolloutConfiguration))]
     [ModelReaderWriterBuildable(typeof(TrafficRegions))]
     [ModelReaderWriterBuildable(typeof(TypedErrorInfo))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerProviderHubContext : ModelReaderWriterContext
     {
     }

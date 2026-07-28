@@ -49,8 +49,8 @@ namespace Azure.Communication.JobRouter
                     yield break;
                 }
                 PagedExceptionPolicy result = (PagedExceptionPolicy)response;
-                yield return Page<ExceptionPolicy>.FromValues((IReadOnlyList<ExceptionPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExceptionPolicy>.FromValues((IReadOnlyList<ExceptionPolicy>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

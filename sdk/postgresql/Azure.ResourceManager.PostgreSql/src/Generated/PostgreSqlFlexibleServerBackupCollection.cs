@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(PostgreSqlFlexibleServerBackupResource.ResourceType, out string postgreSqlFlexibleServerBackupApiVersion);
             _backupsAutomaticAndOnDemandClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerBackupResource.ResourceType.Namespace, Diagnostics);
-            _backupsAutomaticAndOnDemandRestClient = new BackupsAutomaticAndOnDemand(_backupsAutomaticAndOnDemandClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerBackupApiVersion ?? "2026-04-01-preview");
+            _backupsAutomaticAndOnDemandRestClient = new BackupsAutomaticAndOnDemand(_backupsAutomaticAndOnDemandClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerBackupApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Models;
 
@@ -61,11 +60,10 @@ namespace Azure.ResourceManager.Dynatrace
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitorResourceListResult))]
     [ModelReaderWriterBuildable(typeof(MonitorUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmHostsListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDynatraceContext : ModelReaderWriterContext
     {
     }

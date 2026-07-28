@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ServerKeyListResult result = ServerKeyListResult.FromResponse(response);
-                yield return Page<SqlServerKeyData>.FromValues((IReadOnlyList<SqlServerKeyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlServerKeyData>.FromValues((IReadOnlyList<SqlServerKeyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

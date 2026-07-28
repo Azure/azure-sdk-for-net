@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 SubnetListResult result = SubnetListResult.FromResponse(response);
-                yield return Page<SubnetData>.FromValues((IReadOnlyList<SubnetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SubnetData>.FromValues((IReadOnlyList<SubnetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

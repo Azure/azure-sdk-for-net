@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Caller-supplied inputs for an evaluator generation job. </summary>
     public partial class EvaluatorGenerationInputs : IJsonModel<EvaluatorGenerationInputs>
@@ -91,10 +92,10 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("evaluator_display_name"u8);
                 writer.WriteStringValue(EvaluatorDisplayName);
             }
-            if (Optional.IsDefined(EvaluatorDescription))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("evaluator_description"u8);
-                writer.WriteStringValue(EvaluatorDescription);
+                writer.WriteStringValue(Description);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,7 +143,7 @@ namespace Azure.AI.Projects
             string model = default;
             string evaluatorName = default;
             string evaluatorDisplayName = default;
-            string evaluatorDescription = default;
+            string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +174,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("evaluator_description"u8))
                 {
-                    evaluatorDescription = prop.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +187,7 @@ namespace Azure.AI.Projects
                 model,
                 evaluatorName,
                 evaluatorDisplayName,
-                evaluatorDescription,
+                description,
                 additionalBinaryDataProperties);
         }
     }

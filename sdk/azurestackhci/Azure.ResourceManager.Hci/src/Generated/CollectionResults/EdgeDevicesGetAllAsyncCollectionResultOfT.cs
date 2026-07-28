@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 EdgeDeviceListResult result = EdgeDeviceListResult.FromResponse(response);
-                yield return Page<HciEdgeDeviceData>.FromValues((IReadOnlyList<HciEdgeDeviceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HciEdgeDeviceData>.FromValues((IReadOnlyList<HciEdgeDeviceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string virtualMachineScaleSetLifecycleHookEventApiVersion);
             _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetLifeCycleHookEventsRestClient = new VirtualMachineScaleSetLifeCycleHookEvents(_virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetLifecycleHookEventApiVersion ?? "2026-03-01");
+            _virtualMachineScaleSetLifeCycleHookEventsRestClient = new VirtualMachineScaleSetLifeCycleHookEvents(_virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetLifecycleHookEventApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

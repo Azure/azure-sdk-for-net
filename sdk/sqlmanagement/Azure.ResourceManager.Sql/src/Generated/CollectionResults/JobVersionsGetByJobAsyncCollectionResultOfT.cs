@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 JobVersionListResult result = JobVersionListResult.FromResponse(response);
-                yield return Page<SqlServerJobVersionData>.FromValues((IReadOnlyList<SqlServerJobVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlServerJobVersionData>.FromValues((IReadOnlyList<SqlServerJobVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

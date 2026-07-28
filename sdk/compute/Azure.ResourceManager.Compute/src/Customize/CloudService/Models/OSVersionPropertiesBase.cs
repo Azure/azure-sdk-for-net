@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Whether this version is active. </summary>
         public bool? IsActive { get; }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

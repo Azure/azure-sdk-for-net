@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(OperationType))
+            if (Optional.IsDefined(OperationKind))
             {
                 writer.WritePropertyName("opType"u8);
-                writer.WriteStringValue(OperationType.Value.ToString());
+                writer.WriteStringValue(OperationKind.Value.ToString());
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("deadline"u8);
                 writer.WriteStringValue(DeadlineOn.Value, "O");
             }
-            if (Optional.IsDefined(DeadlineType))
+            if (Optional.IsDefined(DeadlineKind))
             {
                 writer.WritePropertyName("deadlineType"u8);
-                writer.WriteStringValue(DeadlineType.Value.ToString());
+                writer.WriteStringValue(DeadlineKind.Value.ToString());
             }
             if (Optional.IsDefined(State))
             {
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             string operationId = default;
             ResourceIdentifier resourceId = default;
-            ComputeBulkOperationType? operationType = default;
+            ComputeBulkOperationKind? operationKind = default;
             Guid? subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
-            ScheduledActionDeadlineType? deadlineType = default;
-            ScheduledActionOperationState? state = default;
+            BulkActionDeadlineKind? deadlineKind = default;
+            BulkActionOperationState? state = default;
             string timeZone = default;
             ComputeBulkOperationError error = default;
             ComputeBulkFallbackOperationInfo fallbackOperationInfo = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    operationType = new ComputeBulkOperationType(prop.Value.GetString());
+                    operationKind = new ComputeBulkOperationKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    deadlineType = new ScheduledActionDeadlineType(prop.Value.GetString());
+                    deadlineKind = new BulkActionDeadlineKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    state = new ScheduledActionOperationState(prop.Value.GetString());
+                    state = new BulkActionOperationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timezone"u8))
@@ -302,10 +302,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new ComputeBulkOperationDetails(
                 operationId,
                 resourceId,
-                operationType,
+                operationKind,
                 subscriptionId,
                 deadlineOn,
-                deadlineType,
+                deadlineKind,
                 state,
                 timeZone,
                 error,

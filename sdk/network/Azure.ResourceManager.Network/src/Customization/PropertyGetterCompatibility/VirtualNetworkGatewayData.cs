@@ -13,10 +13,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> CustomRoutesAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> EnablePrivateIPAddress { get; set; }
-        /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> IPConfigurations => Properties is null ? default : Properties.IpConfigurations;
-        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource GatewayDefaultSite
         {
             get => GatewayDefaultSiteId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = GatewayDefaultSiteId };

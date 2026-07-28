@@ -95,7 +95,7 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsCollectionDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
@@ -166,7 +166,7 @@ namespace Azure.AI.Projects
             }
             string name = default;
             string description = default;
-            bool enabled = default;
+            bool isEnabled = default;
             IDictionary<string, RoutineTrigger> triggers = default;
             RoutineAction action = default;
             DateTimeOffset? createdAt = default;
@@ -186,7 +186,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("triggers"u8))
@@ -238,7 +238,7 @@ namespace Azure.AI.Projects
             return new ProjectsRoutine(
                 name,
                 description,
-                enabled,
+                isEnabled,
                 triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(),
                 action,
                 createdAt,

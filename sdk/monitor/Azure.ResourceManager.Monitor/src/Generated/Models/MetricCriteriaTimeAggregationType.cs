@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MetricCriteriaTimeAggregationType : IEquatable<MetricCriteriaTimeAggregationType>
     {
         private readonly string _value;
+        /// <summary> Average. </summary>
+        private const string AverageValue = "Average";
+        /// <summary> Count. </summary>
+        private const string CountValue = "Count";
+        /// <summary> Minimum. </summary>
+        private const string MinimumValue = "Minimum";
+        /// <summary> Maximum. </summary>
+        private const string MaximumValue = "Maximum";
+        /// <summary> Total. </summary>
+        private const string TotalValue = "Total";
 
         /// <summary> Initializes a new instance of <see cref="MetricCriteriaTimeAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetricCriteriaTimeAggregationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AverageValue = "Average";
-        private const string CountValue = "Count";
-        private const string MinimumValue = "Minimum";
-        private const string MaximumValue = "Maximum";
-        private const string TotalValue = "Total";
+            _value = value;
+        }
 
         /// <summary> Average. </summary>
         public static MetricCriteriaTimeAggregationType Average { get; } = new MetricCriteriaTimeAggregationType(AverageValue);
+
         /// <summary> Count. </summary>
         public static MetricCriteriaTimeAggregationType Count { get; } = new MetricCriteriaTimeAggregationType(CountValue);
+
         /// <summary> Minimum. </summary>
         public static MetricCriteriaTimeAggregationType Minimum { get; } = new MetricCriteriaTimeAggregationType(MinimumValue);
+
         /// <summary> Maximum. </summary>
         public static MetricCriteriaTimeAggregationType Maximum { get; } = new MetricCriteriaTimeAggregationType(MaximumValue);
+
         /// <summary> Total. </summary>
         public static MetricCriteriaTimeAggregationType Total { get; } = new MetricCriteriaTimeAggregationType(TotalValue);
+
         /// <summary> Determines if two <see cref="MetricCriteriaTimeAggregationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetricCriteriaTimeAggregationType left, MetricCriteriaTimeAggregationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MetricCriteriaTimeAggregationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetricCriteriaTimeAggregationType left, MetricCriteriaTimeAggregationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricCriteriaTimeAggregationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MetricCriteriaTimeAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MetricCriteriaTimeAggregationType(string value) => new MetricCriteriaTimeAggregationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MetricCriteriaTimeAggregationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MetricCriteriaTimeAggregationType?(string value) => value == null ? null : new MetricCriteriaTimeAggregationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetricCriteriaTimeAggregationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MetricCriteriaTimeAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

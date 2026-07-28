@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextHopIpAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string name = default;
             IList<string> addressPrefixes = default;
-            string nextHopIpAddress = default;
+            string nextHopIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("nextHopIpAddress"u8))
                 {
-                    nextHopIpAddress = prop.Value.GetString();
+                    nextHopIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticRoute(name, addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIpAddress, additionalBinaryDataProperties);
+            return new StaticRoute(name, addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIPAddress, additionalBinaryDataProperties);
         }
     }
 }

@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     [ModelReaderWriterBuildable(typeof(MarkAsCompleteContent))]
     [ModelReaderWriterBuildable(typeof(MonitoringPropertiesOfDrill))]
     [ModelReaderWriterBuildable(typeof(OperationQualificationDetails))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(RecommendationsData))]
     [ModelReaderWriterBuildable(typeof(RecommendationsHighAvailabilityInfo))]
     [ModelReaderWriterBuildable(typeof(RecommendCapacityContent))]
@@ -134,6 +135,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     [ModelReaderWriterBuildable(typeof(ServiceGroupMembership))]
     [ModelReaderWriterBuildable(typeof(ServiceLevelTarget))]
     [ModelReaderWriterBuildable(typeof(SupportedVerbsForStage))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TestFailoverCleanupContent))]
     [ModelReaderWriterBuildable(typeof(UnifiedResilienceItemData))]
     [ModelReaderWriterBuildable(typeof(UnifiedResilienceItemListResult))]
@@ -161,7 +163,6 @@ namespace Azure.ResourceManager.ResilienceManagement
     [ModelReaderWriterBuildable(typeof(ValidateForOperationContent))]
     [ModelReaderWriterBuildable(typeof(ValidateForRecoveryOperationBaseResult))]
     [ModelReaderWriterBuildable(typeof(ZonalDrillProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResilienceManagementContext : ModelReaderWriterContext
     {
     }

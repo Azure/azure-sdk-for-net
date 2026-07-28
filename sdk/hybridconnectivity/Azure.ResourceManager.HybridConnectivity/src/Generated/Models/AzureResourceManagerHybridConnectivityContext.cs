@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.HybridConnectivity.Models;
 using Azure.ResourceManager.Models;
 
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(ListIngressGatewayCredentialsContent))]
     [ModelReaderWriterBuildable(typeof(ManagedProxyAsset))]
     [ModelReaderWriterBuildable(typeof(ManagedProxyContent))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorData))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorListResult))]
     [ModelReaderWriterBuildable(typeof(PublicCloudConnectorPatch))]
@@ -57,15 +55,14 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryProperties))]
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryResource))]
     [ModelReaderWriterBuildable(typeof(RelayNamespaceAccessProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceConfigurationList))]
     [ModelReaderWriterBuildable(typeof(ServiceConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceConfigurationPropertiesPatch))]
     [ModelReaderWriterBuildable(typeof(SolutionConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(SolutionConfigurationPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(SolutionTypeResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(TargetResourceEndpointAccess))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TargetResourceEndpointAccess))]
     public partial class AzureResourceManagerHybridConnectivityContext : ModelReaderWriterContext
     {
     }

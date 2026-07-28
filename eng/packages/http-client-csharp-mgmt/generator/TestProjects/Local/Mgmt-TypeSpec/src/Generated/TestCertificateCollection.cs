@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(TestCertificateResource.ResourceType, out string testCertificateApiVersion);
             _testCertificatesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", TestCertificateResource.ResourceType.Namespace, Diagnostics);
-            _testCertificatesRestClient = new TestCertificates(_testCertificatesClientDiagnostics, Pipeline, Endpoint, testCertificateApiVersion ?? "2024-05-01");
+            _testCertificatesRestClient = new TestCertificates(_testCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, testCertificateApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

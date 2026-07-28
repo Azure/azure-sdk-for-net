@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedHatOpenShift.Models;
 
@@ -46,9 +45,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
     [ModelReaderWriterBuildable(typeof(OpenShiftWorkerProfile))]
     [ModelReaderWriterBuildable(typeof(PlatformWorkloadIdentityRoleSetList))]
     [ModelReaderWriterBuildable(typeof(PlatformWorkloadIdentityRoleSetProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerRedHatOpenShiftContext : ModelReaderWriterContext
     {
     }

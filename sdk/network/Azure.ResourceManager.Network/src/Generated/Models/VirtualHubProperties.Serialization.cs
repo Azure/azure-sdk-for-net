@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("securityProviderName"u8);
                 writer.WriteStringValue(SecurityProviderName);
             }
-            if (Optional.IsCollectionDefined(VirtualHubRouteTableV2s))
+            if (Optional.IsCollectionDefined(VirtualHubRouteTableV2S))
             {
                 writer.WritePropertyName("virtualHubRouteTableV2s"u8);
                 writer.WriteStartArray();
-                foreach (VirtualHubRouteTableV2Data item in VirtualHubRouteTableV2s)
+                foreach (VirtualHubRouteTableV2Data item in VirtualHubRouteTableV2S)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpConfigurations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in IpConfigurations)
+                foreach (NetworkSubResource item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualRouterIps))
+            if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
                 writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
-                foreach (string item in VirtualRouterIps)
+                foreach (string item in VirtualRouterIPs)
                 {
                     if (item == null)
                     {
@@ -278,14 +278,14 @@ namespace Azure.ResourceManager.Network.Models
             VirtualHubRouteTable routeTable = default;
             NetworkProvisioningState? provisioningState = default;
             string securityProviderName = default;
-            IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2s = default;
+            IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S = default;
             string sku = default;
             RoutingState? routingState = default;
             IReadOnlyList<WritableSubResource> bgpConnections = default;
             IReadOnlyList<NetworkSubResource> ipConfigurations = default;
             IReadOnlyList<WritableSubResource> routeMaps = default;
             long? virtualRouterAsn = default;
-            IList<string> virtualRouterIps = default;
+            IList<string> virtualRouterIPs = default;
             bool? allowBranchToBranchTraffic = default;
             PreferredRoutingGateway? preferredRoutingGateway = default;
             HubRoutingPreference? hubRoutingPreference = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item, options));
                     }
-                    virtualHubRouteTableV2s = array;
+                    virtualHubRouteTableV2S = array;
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    virtualRouterIps = array;
+                    virtualRouterIPs = array;
                     continue;
                 }
                 if (prop.NameEquals("allowBranchToBranchTraffic"u8))
@@ -541,14 +541,14 @@ namespace Azure.ResourceManager.Network.Models
                 routeTable,
                 provisioningState,
                 securityProviderName,
-                virtualHubRouteTableV2s ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(),
+                virtualHubRouteTableV2S ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(),
                 sku,
                 routingState,
                 bgpConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 ipConfigurations ?? new ChangeTrackingList<NetworkSubResource>(),
                 routeMaps ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualRouterAsn,
-                virtualRouterIps ?? new ChangeTrackingList<string>(),
+                virtualRouterIPs ?? new ChangeTrackingList<string>(),
                 allowBranchToBranchTraffic,
                 preferredRoutingGateway,
                 hubRoutingPreference,

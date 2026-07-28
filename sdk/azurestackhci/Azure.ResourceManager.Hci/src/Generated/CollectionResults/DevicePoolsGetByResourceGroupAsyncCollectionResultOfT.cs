@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 DevicePoolListResult result = DevicePoolListResult.FromResponse(response);
-                yield return Page<DevicePoolData>.FromValues((IReadOnlyList<DevicePoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevicePoolData>.FromValues((IReadOnlyList<DevicePoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

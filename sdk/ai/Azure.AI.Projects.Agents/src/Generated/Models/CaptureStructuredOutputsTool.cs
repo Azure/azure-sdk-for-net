@@ -25,13 +25,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, StructuredOutputDefinition outputDefinition) : base(@type, additionalBinaryDataProperties)
         {
@@ -41,17 +37,13 @@ namespace Azure.AI.Projects.Agents
             OutputDefinition = outputDefinition;
         }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }
 
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The structured outputs to capture from the model. </summary>

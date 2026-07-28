@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.HealthcareApis
                     yield break;
                 }
                 ServicesDescriptionListResult result = ServicesDescriptionListResult.FromResponse(response);
-                yield return Page<HealthcareApisServiceData>.FromValues((IReadOnlyList<HealthcareApisServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HealthcareApisServiceData>.FromValues((IReadOnlyList<HealthcareApisServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

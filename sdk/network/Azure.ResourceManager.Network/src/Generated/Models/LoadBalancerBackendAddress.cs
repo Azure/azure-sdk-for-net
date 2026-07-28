@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
         [WirePath("properties.ipAddress")]
-        public string IpAddress
+        public string IPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.IpAddress;
+                return Properties is null ? default : Properties.IPAddress;
             }
             set
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new LoadBalancerBackendAddressPropertiesFormat();
                 }
-                Properties.IpAddress = value;
+                Properties.IPAddress = value;
             }
         }
 

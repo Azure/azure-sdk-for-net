@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ScaleSetEvictionPolicy
     {
         /// <summary> Nodes in the underlying Scale Set of the node pool are deleted when they're evicted. </summary>
-        Delete,
+        Delete = 0,
         /// <summary> Nodes in the underlying Scale Set of the node pool are set to the stopped-deallocated state upon eviction. Nodes in the stopped-deallocated state count against your compute quota and can cause issues with cluster scaling or upgrading. </summary>
-        Deallocate
+        Deallocate = 1
     }
 }

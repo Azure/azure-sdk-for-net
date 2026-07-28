@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAppliancePropertiesFormat"/>. </summary>
         public VirtualNetworkAppliancePropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkAppliancePropertiesFormat"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BandwidthInGbps = bandwidthInGbps;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             PrivateIPAddressVersion = privateIPAddressVersion;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("ipConfigurations")]
-        public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>();
+        public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>();
 
         /// <summary> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </summary>
         [WirePath("privateIPAddressVersion")]

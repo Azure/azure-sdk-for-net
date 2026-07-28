@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListVpnSiteLinkConnectionsResult result = ListVpnSiteLinkConnectionsResult.FromResponse(response);
-                yield return Page<VpnSiteLinkConnectionData>.FromValues((IReadOnlyList<VpnSiteLinkConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VpnSiteLinkConnectionData>.FromValues((IReadOnlyList<VpnSiteLinkConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
