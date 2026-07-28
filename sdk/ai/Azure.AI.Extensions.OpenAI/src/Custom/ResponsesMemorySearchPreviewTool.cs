@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "memory_search_preview"
         // discriminator so the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/> for deserialization. </summary>
-        internal MemorySearchPreviewTool(): base(ResponseToolKind.MemorySearchPreview)
+        internal MemorySearchPreviewTool() : base(ResponseToolKind.MemorySearchPreview)
         {
         }
     }

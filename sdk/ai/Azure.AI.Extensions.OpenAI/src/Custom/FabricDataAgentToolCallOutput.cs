@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
+
 public partial class FabricDataAgentToolCallOutput
 {
     /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCallOutput"/>. </summary>
@@ -27,7 +28,7 @@ public partial class FabricDataAgentToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCallOutput"/> for deserialization. </summary>
-    internal FabricDataAgentToolCallOutput(): base(ResponseItemKind.FabricDataAgentPreviewCallOutput)
+    internal FabricDataAgentToolCallOutput() : base(ResponseItemKind.FabricDataAgentPreviewCallOutput)
     {
     }
 

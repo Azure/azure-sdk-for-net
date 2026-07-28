@@ -30,7 +30,7 @@ public partial class OpenApiToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenApiToolCallOutput"/> for deserialization. </summary>
-    internal OpenApiToolCallOutput(): base(ResponseItemKind.OpenApiCallOutput)
+    internal OpenApiToolCallOutput() : base(ResponseItemKind.OpenApiCallOutput)
     {
     }
 

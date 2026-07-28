@@ -28,7 +28,7 @@ public partial class MemoryCommandToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="MemoryCommandToolCall"/> for deserialization. </summary>
-    internal MemoryCommandToolCall(): base(ResponseItemKind.MemoryCommandPreviewCall)
+    internal MemoryCommandToolCall() : base(ResponseItemKind.MemoryCommandPreviewCall)
     {
     }
 

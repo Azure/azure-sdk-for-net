@@ -26,7 +26,7 @@ public partial class MemorySearchToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/> for deserialization. </summary>
-    internal MemorySearchToolCall(): base(ResponseItemKind.MemorySearchCall)
+    internal MemorySearchToolCall() : base(ResponseItemKind.MemorySearchCall)
     {
     }
 

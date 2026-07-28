@@ -37,7 +37,7 @@ public partial class AzureAISearchToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="AzureAISearchToolCallOutput"/> for deserialization. </summary>
-    internal AzureAISearchToolCallOutput(): base(ResponseItemKind.AzureAISearchCallOutput)
+    internal AzureAISearchToolCallOutput() : base(ResponseItemKind.AzureAISearchCallOutput)
     {
     }
 

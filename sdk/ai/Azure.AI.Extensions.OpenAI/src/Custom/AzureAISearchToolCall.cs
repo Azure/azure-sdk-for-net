@@ -39,7 +39,7 @@ public partial class AzureAISearchToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="AzureAISearchToolCall"/> for deserialization. </summary>
-    internal AzureAISearchToolCall(): base(ResponseItemKind.AzureAISearchCall)
+    internal AzureAISearchToolCall() : base(ResponseItemKind.AzureAISearchCall)
     {
     }
 

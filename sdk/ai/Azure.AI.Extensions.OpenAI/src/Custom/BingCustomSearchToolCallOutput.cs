@@ -37,7 +37,7 @@ public partial class BingCustomSearchToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolCallOutput"/> for deserialization. </summary>
-    internal BingCustomSearchToolCallOutput(): base(ResponseItemKind.BingCustomSearchPreviewCallOutput)
+    internal BingCustomSearchToolCallOutput() : base(ResponseItemKind.BingCustomSearchPreviewCallOutput)
     {
     }
 

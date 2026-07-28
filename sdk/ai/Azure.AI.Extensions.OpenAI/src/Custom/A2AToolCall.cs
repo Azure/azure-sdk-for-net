@@ -43,7 +43,7 @@ public partial class A2AToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="A2AToolCall"/> for deserialization. </summary>
-    internal A2AToolCall(): base(ResponseItemKind.A2APreviewCall)
+    internal A2AToolCall() : base(ResponseItemKind.A2APreviewCall)
     {
     }
 

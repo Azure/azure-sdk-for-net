@@ -31,7 +31,7 @@ public partial class AgentStructuredOutputsResponseItem
     }
 
     /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/> for deserialization. </summary>
-    internal AgentStructuredOutputsResponseItem(): base(ResponseItemKind.StructuredOutputs)
+    internal AgentStructuredOutputsResponseItem() : base(ResponseItemKind.StructuredOutputs)
     {
     }
 

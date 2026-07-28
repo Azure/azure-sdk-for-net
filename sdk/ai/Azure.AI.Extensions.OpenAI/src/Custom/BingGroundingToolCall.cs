@@ -39,7 +39,7 @@ public partial class BingGroundingToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="BingGroundingToolCall"/> for deserialization. </summary>
-    internal BingGroundingToolCall(): base(ResponseItemKind.BingGroundingCall)
+    internal BingGroundingToolCall() : base(ResponseItemKind.BingGroundingCall)
     {
     }
 

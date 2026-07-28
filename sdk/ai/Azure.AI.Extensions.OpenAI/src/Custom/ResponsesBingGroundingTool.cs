@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "bing_grounding" discriminator so
         // the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/> for deserialization. </summary>
-        internal BingGroundingTool(): base(ResponseToolKind.BingGrounding)
+        internal BingGroundingTool() : base(ResponseToolKind.BingGrounding)
         {
         }
     }

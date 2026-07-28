@@ -9,7 +9,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// The approval required for the tool.
     /// </summary>
     public partial class FabricIQPreviewToolRequireApprovalChoice
-{
+    {
         /// <summary>
         /// The approval choce.
         /// </summary>

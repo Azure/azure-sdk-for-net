@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "browser_automation_preview"
         // discriminator so the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/> for deserialization. </summary>
-        internal BrowserAutomationPreviewTool(): base(ResponseToolKind.BrowserAutomationPreview)
+        internal BrowserAutomationPreviewTool() : base(ResponseToolKind.BrowserAutomationPreview)
         {
         }
     }

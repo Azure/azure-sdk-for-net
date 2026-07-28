@@ -43,7 +43,7 @@ public partial class AzureFunctionToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="AzureFunctionToolCall"/> for deserialization. </summary>
-    internal AzureFunctionToolCall(): base(ResponseItemKind.AzureFunctionCall)
+    internal AzureFunctionToolCall() : base(ResponseItemKind.AzureFunctionCall)
     {
     }
 

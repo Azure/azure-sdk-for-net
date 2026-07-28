@@ -41,7 +41,7 @@ public partial class A2AToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="A2AToolCallOutput"/> for deserialization. </summary>
-    internal A2AToolCallOutput(): base(ResponseItemKind.A2APreviewCallOutput)
+    internal A2AToolCallOutput() : base(ResponseItemKind.A2APreviewCallOutput)
     {
     }
 

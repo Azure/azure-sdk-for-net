@@ -20,7 +20,7 @@ public class RoutinesTests : ProjectsClientTestBase
 {
     public static readonly string HOSTED_AGENT_PREFIX = "cs-routines-hosted-agent";
     public static readonly string ROUTINE_NAME_PREFIX = "cs-routines";
-    private static readonly  int PAGE_SIZE = 3;
+    private static readonly int PAGE_SIZE = 3;
 
     public enum TriggerType
     {
@@ -105,7 +105,7 @@ public class RoutinesTests : ProjectsClientTestBase
         {
             EventName = "sample-event"
         };
-        for (int i=0; i< PAGE_SIZE + 1; i++)
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
             ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: false);
             routineOptions.Triggers.Add("manual", trigger);
@@ -255,7 +255,7 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        RoutineTrigger trigger= new ScheduleRoutineTrigger(
+        RoutineTrigger trigger = new ScheduleRoutineTrigger(
             cronExpression: "*/5 * * * *",
             timeZone: "UTC"
         );

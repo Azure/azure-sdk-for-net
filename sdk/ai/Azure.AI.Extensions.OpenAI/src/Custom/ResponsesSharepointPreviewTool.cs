@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "sharepoint_grounding_preview"
         // discriminator so the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/> for deserialization. </summary>
-        internal SharepointPreviewTool(): base(ResponseToolKind.SharePointGroundingPreview)
+        internal SharepointPreviewTool() : base(ResponseToolKind.SharePointGroundingPreview)
         {
         }
     }

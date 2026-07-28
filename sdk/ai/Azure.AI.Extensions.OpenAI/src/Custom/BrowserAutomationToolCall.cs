@@ -39,7 +39,7 @@ public partial class BrowserAutomationToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCall"/> for deserialization. </summary>
-    internal BrowserAutomationToolCall(): base(ResponseItemKind.BrowserAutomationPreviewCall)
+    internal BrowserAutomationToolCall() : base(ResponseItemKind.BrowserAutomationPreviewCall)
     {
     }
 

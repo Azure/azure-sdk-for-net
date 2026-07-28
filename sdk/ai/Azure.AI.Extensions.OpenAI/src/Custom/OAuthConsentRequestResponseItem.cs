@@ -49,7 +49,7 @@ public partial class OAuthConsentRequestResponseItem
     }
 
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
-    internal OAuthConsentRequestResponseItem(): base(ResponseItemKind.OAuthConsentRequest)
+    internal OAuthConsentRequestResponseItem() : base(ResponseItemKind.OAuthConsentRequest)
     {
     }
 

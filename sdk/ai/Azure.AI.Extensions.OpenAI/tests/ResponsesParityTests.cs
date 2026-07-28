@@ -12,8 +12,8 @@ using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Files;
 using OpenAI.Conversations;
+using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 // We need this alias to avoid conflict with internal enum MessageRole.

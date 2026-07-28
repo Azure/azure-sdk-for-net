@@ -37,7 +37,7 @@ public partial class BrowserAutomationToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallOutput"/> for deserialization. </summary>
-    internal BrowserAutomationToolCallOutput(): base(ResponseItemKind.BrowserAutomationPreviewCallOutput)
+    internal BrowserAutomationToolCallOutput() : base(ResponseItemKind.BrowserAutomationPreviewCallOutput)
     {
     }
 

@@ -48,7 +48,7 @@ public partial class AgentWorkflowPreviewActionResponseItem
     }
 
     /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/> for deserialization. </summary>
-    internal AgentWorkflowPreviewActionResponseItem(): base(ResponseItemKind.WorkflowAction)
+    internal AgentWorkflowPreviewActionResponseItem() : base(ResponseItemKind.WorkflowAction)
     {
     }
 

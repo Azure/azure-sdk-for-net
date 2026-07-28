@@ -9,8 +9,8 @@ using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Files;
 using OpenAI.Conversations;
+using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 

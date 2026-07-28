@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Responses;
 using OpenAI.Conversations;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 #pragma warning disable AAIP001

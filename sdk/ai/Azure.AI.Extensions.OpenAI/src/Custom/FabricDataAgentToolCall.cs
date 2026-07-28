@@ -28,7 +28,7 @@ public partial class FabricDataAgentToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCall"/> for deserialization. </summary>
-    internal FabricDataAgentToolCall(): base(ResponseItemKind.FabricDataAgentPreviewCall)
+    internal FabricDataAgentToolCall() : base(ResponseItemKind.FabricDataAgentPreviewCall)
     {
     }
 
