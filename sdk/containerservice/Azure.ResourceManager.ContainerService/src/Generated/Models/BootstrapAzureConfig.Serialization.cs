@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("targetAgentPoolName"u8);
                 writer.WriteStringValue(TargetAgentPoolName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BootstrapToken))
+            if (options.Format != "W" && Optional.IsDefined(BootstrapTokenDetail))
             {
                 writer.WritePropertyName("bootstrapToken"u8);
-                writer.WriteObjectValue<BootstrapTokenInfo>(BootstrapToken, options);
+                writer.WriteObjectValue<BootstrapTokenInfo>(BootstrapTokenDetail, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

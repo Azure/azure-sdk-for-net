@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceManagerEndpoint = resourceManagerEndpoint;
             TargetCluster = targetCluster;
             TargetAgentPoolName = targetAgentPoolName;
-            BootstrapToken = bootstrapToken;
+            BootstrapTokenDetail = bootstrapToken;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Bootstrap token for node enrollment. Do not cache or log. </summary>
         [WirePath("bootstrapToken")]
-        internal BootstrapTokenInfo BootstrapToken { get; }
+        internal BootstrapTokenInfo BootstrapTokenDetail { get; }
 
         /// <summary> Azure resource ID of the target AKS cluster. </summary>
         [WirePath("targetCluster.resourceId")]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return this.BootstrapToken is null ? default : BootstrapToken.Token;
+                return BootstrapTokenDetail is null ? default : BootstrapTokenDetail.Token;
             }
         }
     }
