@@ -10311,11 +10311,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
+              "doc": "",
               "operation": {
                 "$id": "624",
                 "name": "createOrUpdate",
                 "isExactName": false,
                 "resourceName": "Item",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
