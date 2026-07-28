@@ -97,7 +97,9 @@ namespace Azure.Generator.Provisioning.Utilities
             };
             if (IsResourceType(propertyType))
             {
-                args.Add(New.Instance(propertyType, [Literal(propertyType.Name.ToVariableName())]));
+                // The identifier is derived from the property so that multiple properties of the same
+                // resource type on one construct do not share the same bicep identifier.
+                args.Add(New.Instance(propertyType, [Literal(propertyName.ToVariableName())]));
             }
             if (isOutput)
             {
