@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PineconeVectorDB.Models;
 
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.PineconeVectorDB
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBPartnerProperties))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBSingleSignOnPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBUserDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPineconeVectorDBContext : ModelReaderWriterContext
