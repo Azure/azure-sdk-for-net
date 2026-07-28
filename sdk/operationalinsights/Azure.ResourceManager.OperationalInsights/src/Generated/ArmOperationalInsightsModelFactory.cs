@@ -1032,6 +1032,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new StorageInsightStatus(state, description, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="ruleType"> SummaryRules rule type: User. </param>
+        /// <param name="displayName"> The display name of the Summary rule. </param>
+        /// <param name="description"> The description of the Summary rule. </param>
+        /// <param name="isActive"> Indicates if Summary rule is active. If not, Summary rule execution stops. </param>
+        /// <param name="statusCode"> Indicates the reason for rule deactivation. </param>
+        /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
+        /// <param name="ruleDefinition"> Rule definition parameters. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSummaryLogsData"/> instance for mocking. </returns>
+        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default, OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
+        {
+            return new OperationalInsightsSummaryLogsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ruleType is null && displayName is null && description is null && isActive is null && statusCode is null && provisioningState is null && ruleDefinition is null ? default : new SummaryLogsProperties(
+                    ruleType,
+                    displayName,
+                    description,
+                    isActive,
+                    statusCode,
+                    provisioningState,
+                    ruleDefinition,
+                    default),
+                default);
+        }
+
         /// <param name="query"> Summary rule query. </param>
         /// <param name="binSize"> Scheduled window in minutes. Allowed values: 20, 30, 60, 120, 180, 360, 720, 1440. </param>
         /// <param name="binDelay"> The minimum delay in seconds before bin processing. </param>

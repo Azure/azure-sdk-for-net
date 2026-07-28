@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            OperationalInsightsSummaryLogsRuleType? ruleType = default;
+            OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default;
             string displayName = default;
             string description = default;
             bool? isActive = default;
-            OperationalInsightsSummaryLogsStatusCode? statusCode = default;
-            OperationalInsightsSummaryLogsProvisioningState? provisioningState = default;
+            OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default;
+            OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default;
             OperationalInsightsSummaryRule ruleDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    ruleType = new OperationalInsightsSummaryLogsRuleType(prop.Value.GetString());
+                    ruleType = new OperationalInsightsNetworkSecurityPerimeterRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    statusCode = new OperationalInsightsSummaryLogsStatusCode(prop.Value.GetString());
+                    statusCode = new OperationalInsightsNetworkSecurityPerimeterStatusCode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    provisioningState = new OperationalInsightsSummaryLogsProvisioningState(prop.Value.GetString());
+                    provisioningState = new OperationalInsightsNetworkSecurityPerimeterProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ruleDefinition"u8))
