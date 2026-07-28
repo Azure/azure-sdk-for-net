@@ -10,7 +10,7 @@
 
 - Correlation filter application-property values now serialize as JSON strings. The previous `ApplicationProperties` property remains available as a hidden obsolete compatibility shim and converts non-string values to invariant strings.
 
-## 1.2.0 (2026-07-17)
+## 1.2.0 (2026-07-28)
 
 ### Features Added
 

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of Azure prepayment applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesAzurePrepaymentApplied : BillingAmount, IJsonModel<InvoicePropertiesAzurePrepaymentApplied>
+    internal partial class InvoicePropertiesAzurePrepaymentApplied : BillingAmount, IJsonModel<InvoicePropertiesAzurePrepaymentApplied>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

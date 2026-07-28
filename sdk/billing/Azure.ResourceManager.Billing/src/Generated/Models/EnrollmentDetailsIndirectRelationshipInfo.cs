@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The properties of an enrollment which are applicable only for indirect enrollments. </summary>
-    public partial class EnrollmentDetailsIndirectRelationshipInfo : IndirectRelationshipInfo
+    internal partial class EnrollmentDetailsIndirectRelationshipInfo : IndirectRelationshipInfo
     {
         /// <summary> Initializes a new instance of <see cref="EnrollmentDetailsIndirectRelationshipInfo"/>. </summary>
         public EnrollmentDetailsIndirectRelationshipInfo()

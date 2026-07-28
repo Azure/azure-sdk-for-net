@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Models;
 
@@ -276,7 +275,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(ReservationSummary))]
     [ModelReaderWriterBuildable(typeof(ReservationSwapProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationUtilizationAggregates))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelList))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelProperties))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanOrderModelData))]
