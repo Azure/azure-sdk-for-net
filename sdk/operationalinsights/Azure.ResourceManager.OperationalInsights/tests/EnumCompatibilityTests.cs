@@ -44,5 +44,15 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
             Assert.AreEqual(default(OperationalInsightsNetworkSecurityPerimeterProvisioningState), data.ProvisioningState.Value);
 #pragma warning restore CS0618
         }
+
+        [Test]
+        public void CorrectFactoryOverloadIsPreferredForSharedArguments()
+        {
+            OperationalInsightsSummaryLogsData emptyData = ArmOperationalInsightsModelFactory.OperationalInsightsSummaryLogsData();
+            OperationalInsightsSummaryLogsData namedData = ArmOperationalInsightsModelFactory.OperationalInsightsSummaryLogsData(displayName: "display");
+
+            Assert.IsNull(emptyData.SummaryLogsRuleType);
+            Assert.AreEqual("display", namedData.DisplayName);
+        }
     }
 }

@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="provisioningState"> The provisioning state of the Summary rule. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSummaryLogsData"/> instance for mocking. </returns>
+        [OverloadResolutionPriority(-1)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is obsolete and will be removed in a future release.", false)]
         public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(
