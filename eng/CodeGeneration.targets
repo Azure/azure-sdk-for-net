@@ -1,5 +1,5 @@
 <Project>
-  
+
   <PropertyGroup>
     <TypeSpecInput Condition="Exists('$(MSBuildProjectDirectory)/../tsp-location.yaml') and $(MSBuildProjectDirectory.EndsWith('src'))">$(MSBuildProjectDirectory)/../tsp-location.yaml</TypeSpecInput>
     <_TspClientDir>$(MSBuildThisFileDirectory)common/tsp-client</_TspClientDir>
@@ -18,7 +18,7 @@
    <!-- For projects using the new TypeSpec generator, we don't include the Autorest dependency which pulls in the GenerateCode target.
    So we need to add it here. -->
   <Target Name="InstallTspClient" Condition="'$(TypeSpecInput)' != '' AND '$(SkipTspClientInstall)' != 'true'">
-    <Exec Command="npm ci --prefix $(_TspClientDir)" />
+    <Exec Command="npm ci --prefix $(_TspClientDir) --registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/" />
   </Target>
 
   <Target Name="BuildPlugin" Condition="'$(TypeSpecInput)' != '' AND '$(SkipBuildPlugin)' != 'true'">
@@ -32,14 +32,3 @@
   </Target>
 
 </Project>
-
-
-
-
-
-
-
-
-
-
-
