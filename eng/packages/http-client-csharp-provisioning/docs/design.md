@@ -209,9 +209,9 @@ Element types for `BicepList<T>` and `BicepDictionary<T>` are resolved without `
 Generates `ProvisionableResource` subclasses from input model types + resource metadata:
 - **Property collection**: walks the model's inheritance chain and collects all properties, flattening only those with the `@flattenProperty` decorator
 - **Field-property linking**: each property gets a nullable backing field. Properties and fields are co-created through the TypeFactory property creation pipeline, ensuring names go through the mgmt visitor pipeline. These linked pairs are lazily initialized on first access.
-- **System properties**: `name`, `location` (required input), `id`, `systemData` (output-only), `tags` (input), `type` (skipped)
+- **System properties**: `name` (always settable/required — resources without a writable scope are still addressed by `bicepIdentifier`/`Name` for `FromExisting()`), `id` / `systemData` (always output-only), `type` (skipped). `location` and `tags` are **not** special-cased: like any other resource body property, they are settable/required only when the resource's settable-usage decision (§9) is `true` for that resource — a read-only (`FromExisting`-only) resource generates them as getter-only and non-required.
 - **Parent resources**: child resources get a typed `Parent` property for parent-child relationship
-- **Constructor**: `(string bicepIdentifier, string? resourceVersion)` with default API version
+- **Constructor**: `(string bicepIdentifier, string? resourceVersion)` with default API version; visibility follows the same settable-usage decision (§9) — `public` for resources with a writable (create) scope, `internal` for read-only resources, which are obtained via `FromExisting()` instead
 - **`FromExisting()`**: static factory method
 - **`ResourceVersions`**: nested class with GA API version constants
 
@@ -219,7 +219,7 @@ Generates `ProvisionableResource` subclasses from input model types + resource m
 
 Generates `ProvisionableConstruct` subclasses:
 - Same field-property co-creation pattern as resources — properties go through the TypeFactory pipeline for visitor-based name resolution
-- Getter/setter patterns: models use `AssignOrReplace`, BicepValue types use `.Assign()`, read-only properties are getter-only
+- Getter/setter patterns: models use `AssignOrReplace`, BicepValue types use `.Assign()`. A property is getter-only when *either* it is itself read-only *or* the enclosing model type has no settable usage anywhere in the TypeSpec graph (see §9) — `IsReadOnly` on the property is not the sole determinant.
 - `DefineProvisionableProperties()` maps each property to its bicep path
 
 ### Enum Provider
