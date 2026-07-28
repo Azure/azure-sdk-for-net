@@ -4,6 +4,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -36,7 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         {
             if (instance.ApprovalPolicy != null)
             {
-                writer.WriteStringValue(instance.ApprovalPolicy.ToString());
+                ((IJsonModel<McpToolCallApprovalPolicy>)instance.ApprovalPolicy).Write(writer, options);
             }
             else if (instance.ApprovalString is not null)
             {
@@ -45,12 +47,16 @@ namespace Azure.AI.Extensions.OpenAI
         }
 #pragma warning restore OPENAI001
 
+#pragma warning disable OPENAI001
         internal static FabricIQPreviewToolRequireApprovalChoice DeserializeFabricIQPreviewToolRequireApprovalChoice(JsonElement element, ModelReaderWriterOptions options = null)
         {
             if (element.ValueKind == JsonValueKind.Object)
             {
-                var functionObject = FabricIQPreviewToolRequireApprovalChoice.DeserializeFabricIQPreviewToolRequireApprovalChoice(element, options);
-                return functionObject;
+                McpToolCallApprovalPolicy approvalPolicy = ModelReaderWriter.Read<McpToolCallApprovalPolicy>(
+                    BinaryData.FromString(element.GetRawText()),
+                    options ?? ModelReaderWriterOptions.Json,
+                    OpenAIContext.Default);
+                return new FabricIQPreviewToolRequireApprovalChoice(approvalPolicy);
             }
             if (element.ValueKind == JsonValueKind.String)
             {
@@ -58,6 +64,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return null;
         }
+#pragma warning restore OPENAI001
 
         internal static FabricIQPreviewToolRequireApprovalChoice FromBinaryData(BinaryData bytes)
         {
