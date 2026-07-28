@@ -6312,40 +6312,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        /// <param name="addOnPackages"> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </param>
-        /// <returns> A new <see cref="Models.MSDeployProperties"/> instance for mocking. </returns>
-        public static MSDeployProperties MSDeployProperties(Uri packageUri = default, string connectionString = default, string dbType = default, Uri setParametersXmlFileUri = default, IDictionary<string, string> setParameters = default, bool? skipAppData = default, bool? isAppOffline = default, IEnumerable<MSDeployCore> addOnPackages = default)
-        {
-            setParameters ??= new ChangeTrackingDictionary<string, string>();
-            addOnPackages ??= new ChangeTrackingList<MSDeployCore>();
-
-            return new MSDeployProperties(
-                packageUri,
-                connectionString,
-                dbType,
-                setParametersXmlFileUri,
-                setParameters ?? new ChangeTrackingDictionary<string, string>(),
-                skipAppData,
-                isAppOffline,
-                default,
-                (addOnPackages ?? new ChangeTrackingList<MSDeployCore>()).ToList());
-        }
-
-        /// <param name="packageUri"> Package URI. </param>
-        /// <param name="connectionString"> SQL Connection String. </param>
-        /// <param name="dbType"> Database Type. </param>
-        /// <param name="setParametersXmlFileUri"> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </param>
-        /// <param name="setParameters"> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </param>
-        /// <param name="skipAppData">
-        /// Controls whether the MSDeploy operation skips the App_Data directory.
-        /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
-        /// will not be deleted, and any App_Data directory in the source will be ignored.
-        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// </param>
-        /// <param name="isAppOffline">
-        /// Sets the AppOffline rule while the MSDeploy operation executes.
-        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// </param>
         /// <returns> A new <see cref="Models.MSDeployCore"/> instance for mocking. </returns>
         public static MSDeployCore MSDeployCore(Uri packageUri = default, string connectionString = default, string dbType = default, Uri setParametersXmlFileUri = default, IDictionary<string, string> setParameters = default, bool? skipAppData = default, bool? isAppOffline = default)
         {

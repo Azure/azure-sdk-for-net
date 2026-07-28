@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Search.Models;
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(QuotaUsageResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResultName))]
     [ModelReaderWriterBuildable(typeof(QuotaUsagesListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SearchAadApplicationCredentials))]
     [ModelReaderWriterBuildable(typeof(SearchAadAuthDataPlaneAuthOptions))]
     [ModelReaderWriterBuildable(typeof(SearchDataIdentity))]

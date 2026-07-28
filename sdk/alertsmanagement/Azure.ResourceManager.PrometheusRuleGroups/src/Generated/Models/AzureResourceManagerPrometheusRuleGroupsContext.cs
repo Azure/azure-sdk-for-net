@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrometheusRuleGroups.Models;
 
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
     [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupResourceCollection))]
     [ModelReaderWriterBuildable(typeof(PrometheusRuleGroupResourcePatchParametersProperties))]
     [ModelReaderWriterBuildable(typeof(PrometheusRuleResolveConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPrometheusRuleGroupsContext : ModelReaderWriterContext
     {

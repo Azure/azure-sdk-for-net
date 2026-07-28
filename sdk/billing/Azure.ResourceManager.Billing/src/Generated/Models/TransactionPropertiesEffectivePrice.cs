@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The price of the product after applying any discounts. </summary>
-    public partial class TransactionPropertiesEffectivePrice : BillingAmount
+    internal partial class TransactionPropertiesEffectivePrice : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesEffectivePrice"/>. </summary>
         public TransactionPropertiesEffectivePrice()
