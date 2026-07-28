@@ -1,0 +1,33 @@
+# Azure.IoT.DeviceUpdate approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+#
+# Background: Azure.IoT.DeviceUpdate 1.0.0 shipped on 2022-09-14 (GA) with
+# the type names below. The 1.1.0 release (TypeSpec migration, release plan
+# 2239) preserves the public surface for binary compatibility, so the type
+# names cannot be changed. The suppressions here record SDK-team approval
+# for keeping those shipped names.
+
+# AZC0012 — "Type name 'X' is too generic". The generic-named types below
+# (Device, Group, Instructions, Step, Update, Compatibility, Deployment,
+# Error) were all part of the 1.0.0 GA public API; renaming any of them
+# would be a binary-breaking change for every existing customer. Suppressed
+# assembly-wide (not per-type) because AZC0012 is emitted at
+# DiagnosticSeverity.Error, and Roslyn's DiagnosticSuppressor pipeline does
+# not honor scoped `T:` suppressions for Error-severity diagnostics — the
+# same limitation documented for AZC0034 below (see
+# eng/analyzerallowlist/README.md, "Limitation").
+nowarn:AZC0012
+
+# AZC0034 — "Type name conflicts with another library". Both `Error` and
+# `InnerError` are 1.0.0 GA types and match the field names ("error" /
+# "innererror") that ship in the wire payload of Device Update for IoT
+# Hub responses. Renaming them would be both a binary break for .NET
+# callers and a divergence from the over-the-wire shape that other SDK
+# languages still expose. Suppressed assembly-wide because AZC0034 is
+# emitted at DiagnosticSeverity.Error and Roslyn's DiagnosticSuppressor
+# pipeline does not honor scoped suppressions for Error-severity
+# diagnostics (see eng/analyzerallowlist/README.md, "Limitation").
+# Conflicting libraries observed at the time of writing:
+#   - Error: Azure.Deployments.Templates.Error
+#   - InnerError: Azure.DigitalTwins.Core.InnerError
+nowarn:AZC0034
