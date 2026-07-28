@@ -23,6 +23,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using System.Linq;
 
@@ -42,6 +43,7 @@ namespace Azure.Generator.Management.Providers
         // Cached Get method providers
         private MethodProvider? _getAsyncMethodProvider;
         private MethodProvider? _getSyncMethodProvider;
+        private MethodProvider? _getAllAsyncMethodProvider;
         private MethodProvider? _getAllSyncMethodProvider;
 
         // Support for multiple rest clients
@@ -522,6 +524,7 @@ namespace Azure.Generator.Management.Providers
 
                 if (i == 0)
                 {
+                    _getAllAsyncMethodProvider = async;
                     _getAllSyncMethodProvider = sync;
                 }
 
@@ -540,7 +543,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             const string getEnumeratormethodName = "GetEnumerator";
-            var body = Return(This.Invoke("GetAll").Invoke("GetEnumerator"));
+            var body = Return(This.Invoke("GetAll", BuildEnumeratorArguments(_getAllSyncMethodProvider!)).Invoke("GetEnumerator"));
             var getEnumeratorMethod = new MethodProvider(
                 new MethodSignature(getEnumeratormethodName, null, MethodSignatureModifiers.None, typeof(IEnumerator), null, [], ExplicitInterface: typeof(IEnumerable)),
                 body,
@@ -549,12 +552,19 @@ namespace Azure.Generator.Management.Providers
                 new MethodSignature(getEnumeratormethodName, null, MethodSignatureModifiers.None, new CSharpType(typeof(IEnumerator<>), _resource.Type), null, [], ExplicitInterface: new CSharpType(typeof(IEnumerable<>), _resource.Type)),
                 body,
                 this);
+            var cancellationToken = KnownAzureParameters.CancellationTokenWithoutDefault;
             var getEnumeratorAsyncMethod = new MethodProvider(
-                new MethodSignature("GetAsyncEnumerator", null, MethodSignatureModifiers.None, new CSharpType(typeof(IAsyncEnumerator<>), _resource.Type), null, [KnownAzureParameters.CancellationTokenWithoutDefault], ExplicitInterface: new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)),
-                Return(This.Invoke("GetAllAsync", [KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(KnownAzureParameters.CancellationTokenWithoutDefault)]).Invoke("GetAsyncEnumerator", [KnownAzureParameters.CancellationTokenWithoutDefault])),
+                new MethodSignature("GetAsyncEnumerator", null, MethodSignatureModifiers.None, new CSharpType(typeof(IAsyncEnumerator<>), _resource.Type), null, [cancellationToken], ExplicitInterface: new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)),
+                Return(This.Invoke("GetAllAsync", BuildEnumeratorArguments(_getAllAsyncMethodProvider!, cancellationToken)).Invoke("GetAsyncEnumerator", [cancellationToken])),
                 this);
             return [getEnumeratorOfTMethod, getEnumeratorMethod, getEnumeratorAsyncMethod];
         }
+
+        private static ValueExpression[] BuildEnumeratorArguments(MethodProvider getAllMethod, ParameterProvider? cancellationToken = null)
+            => [.. getAllMethod.Signature.Parameters.Select(parameter =>
+                cancellationToken is not null && parameter.Type.Equals(typeof(CancellationToken))
+                    ? parameter.PositionalReference(cancellationToken)
+                    : parameter.DefaultValue ?? Default.CastTo(parameter.Type))];
 
         private List<MethodProvider> BuildCreateOrUpdateMethods()
         {

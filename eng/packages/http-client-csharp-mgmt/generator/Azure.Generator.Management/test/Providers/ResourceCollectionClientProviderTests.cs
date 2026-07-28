@@ -53,6 +53,27 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_EnumeratorMethodsSpecifyOptionalGetAllArguments()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource(includeListQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .Single(p => p.Name == "ChildTypeCollection");
+
+            var enumeratorBodies = collection.Methods
+                .Where(m => m.Signature.Name is "GetEnumerator" or "GetAsyncEnumerator")
+                .Select(m => m.BodyStatements?.ToDisplayString())
+                .ToArray();
+
+            Assert.That(enumeratorBodies, Has.Some.Contains("this.GetAll(default"));
+            Assert.That(enumeratorBodies, Has.Some.Contains("this.GetAllAsync(default"));
+        }
+
+        [TestCase]
         public void Verify_ExtensionChildCollectionValidateResourceIdUsesParentResource()
         {
             var (parentClient, childClient, models) = InputResourceData.ClientWithNestedExtensionChildResource();

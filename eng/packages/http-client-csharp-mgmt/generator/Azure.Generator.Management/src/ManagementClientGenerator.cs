@@ -56,6 +56,8 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override TypeProviderWriter GetWriter(TypeProvider provider)
         {
+            BackCompatHelper.DisambiguateOptionalOverloads(provider.Methods, provider.CustomCodeView?.Methods ?? []);
+
             if (provider is ModelFactoryProvider modelFactory)
             {
                 // Run model-factory repairs at write time, after all visitors have finalized model constructor

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -50,6 +51,11 @@ namespace Azure.Generator.Management.Visitors
                     }
                 }
                 AddMissingLastContractModelMethods(modelFactory, updatedMethods);
+                BackCompatHelper.DisambiguateOptionalOverloads(
+                    updatedMethods,
+                    (modelFactory.CustomCodeView?.Methods ?? [])
+                        .Concat(modelFactory.LastContractView?.Methods ?? [])
+                        .ToArray());
                 modelFactory.Update(methods: updatedMethods);
                 return modelFactory;
             }

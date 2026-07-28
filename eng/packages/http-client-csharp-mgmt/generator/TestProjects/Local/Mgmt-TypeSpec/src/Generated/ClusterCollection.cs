@@ -565,12 +565,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         IEnumerator<ClusterResource> IEnumerable<ClusterResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(default).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(default).GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>

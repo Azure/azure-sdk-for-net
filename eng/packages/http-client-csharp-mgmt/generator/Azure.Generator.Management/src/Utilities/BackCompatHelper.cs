@@ -85,5 +85,80 @@ namespace Azure.Generator.Management.Utilities
             var lastParameter = signature.Parameters[signature.Parameters.Count - 1];
             return lastParameter.DefaultValue is null && lastParameter.Type.Equals(typeof(CancellationToken));
         }
+
+        internal static void DisambiguateOptionalOverloads(
+            IReadOnlyList<MethodProvider> generatedMethods,
+            IReadOnlyList<MethodProvider> customMethods)
+        {
+            foreach (var generatedMethod in generatedMethods)
+            {
+                foreach (var customMethod in customMethods)
+                {
+                    var generatedParameters = generatedMethod.Signature.Parameters;
+                    var customParameters = customMethod.Signature.Parameters;
+                    int requiredParameterCount = GetRequiredParameterCount(generatedParameters);
+                    if (generatedMethod.Signature.Name != customMethod.Signature.Name ||
+                        customParameters.Count >= generatedParameters.Count ||
+                        requiredParameterCount != GetRequiredParameterCount(customParameters))
+                    {
+                        continue;
+                    }
+
+                    if (!TryGetFirstExtraParameterIndex(generatedParameters, customParameters, out int firstExtraParameterIndex))
+                    {
+                        firstExtraParameterIndex = requiredParameterCount;
+                    }
+
+                    for (int i = 0; i <= firstExtraParameterIndex; i++)
+                    {
+                        generatedParameters[i].DefaultValue = null;
+                    }
+                    for (int i = firstExtraParameterIndex + 1; i < generatedParameters.Count; i++)
+                    {
+                        if (generatedParameters[i].Type.Equals(typeof(CancellationToken)))
+                        {
+                            generatedParameters[i].DefaultValue ??= Default;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        private static int GetRequiredParameterCount(IReadOnlyList<ParameterProvider> parameters)
+        {
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                if (parameters[i].DefaultValue is not null)
+                {
+                    return i;
+                }
+            }
+            return parameters.Count;
+        }
+
+        private static bool TryGetFirstExtraParameterIndex(
+            IReadOnlyList<ParameterProvider> generatedParameters,
+            IReadOnlyList<ParameterProvider> customParameters,
+            out int firstExtraParameterIndex)
+        {
+            int customIndex = 0;
+            firstExtraParameterIndex = -1;
+
+            for (int generatedIndex = 0; generatedIndex < generatedParameters.Count; generatedIndex++)
+            {
+                if (customIndex < customParameters.Count &&
+                    generatedParameters[generatedIndex].Type.Equals(customParameters[customIndex].Type))
+                {
+                    customIndex++;
+                }
+                else if (firstExtraParameterIndex < 0)
+                {
+                    firstExtraParameterIndex = generatedIndex;
+                }
+            }
+
+            return customIndex == customParameters.Count && firstExtraParameterIndex >= 0;
+        }
     }
 }

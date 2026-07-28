@@ -194,6 +194,92 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.That(BackCompatHelper.EndsWithRequiredCancellationToken(noParamsSignature), Is.False);
         }
 
+        [Test]
+        public void DisambiguatesGeneratedOverloadWithLeadingOptionalParameters()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var generated = CreateMethod(
+                enclosingType,
+                [
+                    OptionalParameter("top", typeof(int?)),
+                    OptionalParameter("skipToken", typeof(string)),
+                    OptionalCancellationToken()
+                ]);
+            var custom = CreateMethod(enclosingType, [OptionalCancellationToken()]);
+
+            BackCompatHelper.DisambiguateOptionalOverloads([generated], [custom]);
+
+            Assert.That(generated.Signature.Parameters[0].DefaultValue, Is.Null);
+            Assert.That(generated.Signature.Parameters[1].DefaultValue, Is.Not.Null);
+            Assert.That(generated.Signature.Parameters[2].DefaultValue, Is.Not.Null);
+        }
+
+        [Test]
+        public void DisambiguatesGeneratedOverloadWithInsertedOptionalParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var generated = CreateMethod(
+                enclosingType,
+                [
+                    OptionalParameter("operationId", typeof(string)),
+                    OptionalParameter("resourceId", typeof(string)),
+                    OptionalParameter("fallback", typeof(object)),
+                    OptionalParameter("completedOn", typeof(DateTimeOffset?))
+                ]);
+            var custom = CreateMethod(
+                enclosingType,
+                [
+                    OptionalParameter("operationId", typeof(string)),
+                    OptionalParameter("resourceId", typeof(string)),
+                    OptionalParameter("completedOn", typeof(DateTimeOffset?))
+                ]);
+
+            BackCompatHelper.DisambiguateOptionalOverloads([generated], [custom]);
+
+            Assert.That(generated.Signature.Parameters.Take(3).All(p => p.DefaultValue is null), Is.True);
+            Assert.That(generated.Signature.Parameters[3].DefaultValue, Is.Not.Null);
+        }
+
+        [Test]
+        public void DisambiguatesGeneratedOverloadWhenParameterNamesDiffer()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var generated = CreateMethod(
+                enclosingType,
+                [
+                    OptionalParameter("top", typeof(int?)),
+                    OptionalCancellationToken()
+                ]);
+            var custom = CreateMethod(
+                enclosingType,
+                [OptionalParameter("token", typeof(CancellationToken))]);
+
+            BackCompatHelper.DisambiguateOptionalOverloads([generated], [custom]);
+
+            Assert.That(generated.Signature.Parameters[0].DefaultValue, Is.Null);
+            Assert.That(generated.Signature.Parameters[1].DefaultValue, Is.Not.Null);
+        }
+
+        [Test]
+        public void DisambiguatesGeneratedOverloadWithoutMatchingParameterTypes()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var generated = CreateMethod(
+                enclosingType,
+                [
+                    OptionalParameter("top", typeof(int?)),
+                    OptionalCancellationToken()
+                ]);
+            var custom = CreateMethod(
+                enclosingType,
+                [OptionalParameter("filter", typeof(bool))]);
+
+            BackCompatHelper.DisambiguateOptionalOverloads([generated], [custom]);
+
+            Assert.That(generated.Signature.Parameters[0].DefaultValue, Is.Null);
+            Assert.That(generated.Signature.Parameters[1].DefaultValue, Is.Not.Null);
+        }
+
         private static MethodProvider CreateMethod(TypeProvider enclosingType, IReadOnlyList<ParameterProvider> parameters)
         {
             var signature = new MethodSignature(
@@ -211,6 +297,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
         private static ParameterProvider OptionalCancellationToken()
             => new("cancellationToken", $"The cancellation token to use.", new CSharpType(typeof(CancellationToken)), defaultValue: Default);
+
+        private static ParameterProvider OptionalParameter(string name, Type type)
+            => new(name, $"The {name}.", new CSharpType(type), defaultValue: Default);
 
         private static bool HasForwardsClientCalls(MethodProvider method)
             => method.Signature.Attributes.Any(a => a.Type.Name == ForwardsClientCallsAttributeName);

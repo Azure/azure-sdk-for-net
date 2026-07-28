@@ -563,12 +563,12 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
 
         IEnumerator<BarResource> IEnumerable<BarResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(default).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(default).GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>

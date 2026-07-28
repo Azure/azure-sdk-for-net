@@ -813,7 +813,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// Child:  .../parents/{parentName}/nestedTypes/{nestedTypeName}/children/{childName}
         /// The child has one extra path parameter (nestedTypeName) between parent and child.
         /// </summary>
-        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource()
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedChildResource(bool includeListQueryParameter = false)
         {
             const string ParentClientName = "ParentClient";
             const string ChildClientName = "ChildClient";
@@ -854,6 +854,7 @@ namespace Azure.Generator.Management.Tests.Common
             // Child operation parameters (includes nestedTypeName as extra path param)
             var nestedTypeNameOpParam = InputFactory.PathParameter("nestedTypeName", InputPrimitiveType.String, isRequired: true);
             var childNameOpParam = InputFactory.PathParameter("childName", InputPrimitiveType.String, isRequired: true);
+            var topOpParam = InputFactory.QueryParameter("top", InputPrimitiveType.Int32, serializedName: "$top");
 
             var parentIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/parents/{parentName}";
             var childIdPattern = parentIdPattern + "/nestedTypes/{nestedTypeName}/children/{childName}";
@@ -876,7 +877,12 @@ namespace Azure.Generator.Management.Tests.Common
                     InputFactory.Property("value", InputFactory.Array(childModel)),
                     InputFactory.Property("nextLink", InputPrimitiveType.Url),
                 ]);
-            var childListOp = InputFactory.Operation(name: "listByParent", responses: [InputFactory.OperationResponse(statusCodes: [200], bodytype: childPageModel)], parameters: [subsIdOpParam, rgOpParam, parentNameOpParam, nestedTypeNameOpParam], path: childListPath);
+            List<InputParameter> childListOperationParameters = [subsIdOpParam, rgOpParam, parentNameOpParam, nestedTypeNameOpParam];
+            if (includeListQueryParameter)
+            {
+                childListOperationParameters.Add(topOpParam);
+            }
+            var childListOp = InputFactory.Operation(name: "listByParent", responses: [InputFactory.OperationResponse(statusCodes: [200], bodytype: childPageModel)], parameters: [.. childListOperationParameters], path: childListPath);
 
             // Parent method parameters
             var subscriptionIdParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
@@ -888,6 +894,7 @@ namespace Azure.Generator.Management.Tests.Common
             var nestedTypeNameParam = InputFactory.MethodParameter("nestedTypeName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
             var childNameParam = InputFactory.MethodParameter("childName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
             var childDataParam = InputFactory.MethodParameter("data", childModel, location: InputRequestLocation.Body, isRequired: true);
+            var topParam = InputFactory.MethodParameter("top", InputPrimitiveType.Int32, location: InputRequestLocation.Query, serializedName: "$top");
 
             // Parent service methods
             var parentGetMethod = InputFactory.BasicServiceMethod("get", parentGetOp, parameters: [parentNameParam, subscriptionIdParam, resourceGroupParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
@@ -897,7 +904,12 @@ namespace Azure.Generator.Management.Tests.Common
             var childGetMethod = InputFactory.BasicServiceMethod("get", childGetOp, parameters: [childNameParam, nestedTypeNameParam, parentNameParam, subscriptionIdParam, resourceGroupParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var childCreateMethod = InputFactory.BasicServiceMethod("createChild", childCreateOp, parameters: [childNameParam, nestedTypeNameParam, parentNameParam, subscriptionIdParam, resourceGroupParam, childDataParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var childListPagingMetadata = InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body);
-            var childListMethod = InputFactory.PagingServiceMethod("listByParent", childListOp, parameters: [nestedTypeNameParam, parentNameParam, subscriptionIdParam, resourceGroupParam], pagingMetadata: childListPagingMetadata);
+            List<InputMethodParameter> childListMethodParameters = [nestedTypeNameParam, parentNameParam, subscriptionIdParam, resourceGroupParam];
+            if (includeListQueryParameter)
+            {
+                childListMethodParameters.Add(topParam);
+            }
+            var childListMethod = InputFactory.PagingServiceMethod("listByParent", childListOp, parameters: [.. childListMethodParameters], pagingMetadata: childListPagingMetadata);
 
             // Build multi-resource schema
             var armProviderDecorator = BuildArmProviderSchemaMultiResource([

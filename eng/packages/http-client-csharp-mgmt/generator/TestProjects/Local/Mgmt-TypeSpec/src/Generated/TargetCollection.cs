@@ -564,18 +564,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         IEnumerator<TargetResource> IEnumerable<TargetResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(default, default).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(default, default).GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<TargetResource> IAsyncEnumerable<TargetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(default, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

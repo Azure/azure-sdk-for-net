@@ -204,6 +204,7 @@ namespace Azure.Generator.Management.Providers
 
             var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
             var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
+            BackCompatHelper.DisambiguateOptionalOverloads(backCompatMethods, CustomCodeView?.Methods ?? []);
 
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
         }
