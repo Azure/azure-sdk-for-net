@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class JobNodes : ProvisionableConstruct
     {
+        private BicepValue<string> _nodesValueType;
+
         /// <summary> Creates a new JobNodes. </summary>
         public JobNodes()
         {
+        }
+
+        /// <summary> [Required] Type of the Nodes value. </summary>
+        internal BicepValue<string> NodesValueType
+        {
+            get
+            {
+                Initialize();
+                return _nodesValueType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for JobNodes. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _nodesValueType = DefineProperty<string>(nameof(NodesValueType), new string[] { "nodesValueType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

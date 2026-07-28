@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
     public partial class MachineLearningDatastoreProperties : ProvisionableConstruct
     {
         private MachineLearningDatastoreCredentials _credentials;
+        private BicepValue<string> _datastoreType;
         private BicepValue<bool> _isDefault;
         private BicepValue<string> _description;
         private BicepDictionary<string> _properties;
@@ -39,6 +40,16 @@ namespace Azure.Provisioning.MachineLearning
             {
                 Initialize();
                 AssignOrReplace(ref _credentials, value);
+            }
+        }
+
+        /// <summary> Enum to determine the datastore contents type. </summary>
+        internal BicepValue<string> DatastoreType
+        {
+            get
+            {
+                Initialize();
+                return _datastoreType;
             }
         }
 
@@ -102,6 +113,7 @@ namespace Azure.Provisioning.MachineLearning
         {
             base.DefineProvisionableProperties();
             _credentials = DefineModelProperty<MachineLearningDatastoreCredentials>(nameof(Credentials), new string[] { "credentials" }, isRequired: true);
+            _datastoreType = DefineProperty<string>(nameof(DatastoreType), new string[] { "datastoreType" }, isRequired: true);
             _isDefault = DefineProperty<bool>(nameof(IsDefault), new string[] { "isDefault" }, isOutput: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });

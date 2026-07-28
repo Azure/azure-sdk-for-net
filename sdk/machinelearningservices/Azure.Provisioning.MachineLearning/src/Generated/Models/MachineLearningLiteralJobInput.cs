@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobInputType", new string[] { "jobInputType" }, defaultValue: "literal");
+            JobInputType.Assign("literal");
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" }, isRequired: true);
             DefineAdditionalProperties();
         }

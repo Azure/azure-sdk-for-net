@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "mltable");
+            DataType.Assign("mltable");
             _referencedUris = DefineListProperty<string>(nameof(ReferencedUris), new string[] { "referencedUris" });
             DefineAdditionalProperties();
         }

@@ -8,6 +8,7 @@ using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -246,6 +247,105 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void DiscriminatorPropertyIsInternalAndReadOnly()
+        {
+            var discriminator = CreateProperty("kind", CreateStringEnum(), isDiscriminator: true);
+            var baseModel = new InputModelType(
+                "BaseModel",
+                "Sample.Models",
+                "Sample.Models.BaseModel",
+                "public",
+                null,
+                string.Empty,
+                "Base model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [discriminator],
+                null,
+                [],
+                null,
+                discriminator,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+            var derivedModel = CreateDerivedModel("DerivedModel", "derived", baseModel);
+            var discriminatedSubtypes = (IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes;
+            discriminatedSubtypes.Add("derived", derivedModel);
+            var factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []))
+                .Object.TypeFactory;
+
+            var provider = factory.CreateModel(baseModel);
+            var property = provider!.Properties.Single();
+            var derivedProvider = factory.CreateModel(derivedModel);
+            var methodBody = derivedProvider!.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+
+            Assert.That(property.IsDiscriminator, Is.True);
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.False);
+            Assert.That(property.Body.HasSetter, Is.False);
+            Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(BicepValue<>), typeof(string))));
+            Assert.That(methodBody, Does.Contain("Kind.Assign(\"derived\");"));
+            Assert.That(methodBody, Does.Not.Contain("defaultValue: \"derived\""));
+        }
+
+        [Test]
+        public void NestedDiscriminatorsDefineAndAssignEachLevel()
+        {
+            var kind = CreateProperty("kind", InputPrimitiveType.String, isDiscriminator: true);
+            var baseModel = new InputModelType(
+                "BaseModel",
+                "Sample.Models",
+                "Sample.Models.BaseModel",
+                "public",
+                null,
+                string.Empty,
+                "Base model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [kind],
+                null,
+                [],
+                null,
+                kind,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+            var breed = CreateProperty("breed", InputPrimitiveType.String, isDiscriminator: true);
+            var intermediateModel = CreateDerivedModel("IntermediateModel", "intermediate", baseModel, [breed], breed);
+            var leafModel = CreateDerivedModel("LeafModel", "leaf", intermediateModel);
+            ((IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes).Add("intermediate", intermediateModel);
+            ((IDictionary<string, InputModelType>)intermediateModel.DiscriminatedSubtypes).Add("leaf", leafModel);
+            var factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, intermediateModel, leafModel],
+                armProviderSchema: () => new ArmProviderSchema([], []))
+                .Object.TypeFactory;
+
+            var intermediateProvider = factory.CreateModel(intermediateModel)!;
+            var leafProvider = factory.CreateModel(leafModel)!;
+            var intermediateBody = intermediateProvider.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+            var leafBody = leafProvider.Methods
+                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
+                .BodyStatements!
+                .ToDisplayString();
+
+            Assert.That(intermediateProvider.Properties.Single().Name, Is.EqualTo("Breed"));
+            Assert.That(intermediateProvider.Properties.Single().IsDiscriminator, Is.True);
+            Assert.That(intermediateBody, Does.Contain("Kind.Assign(\"intermediate\");"));
+            Assert.That(intermediateBody, Does.Contain("nameof(Breed)"));
+            Assert.That(leafBody, Does.Contain("Breed.Assign(\"leaf\");"));
+        }
+
+        [Test]
         public void ArrayOfKnownModelTypeIsConvertedToBicepListOfModel()
         {
             var input = new InputArrayType("list", "list", CreateKnownModel());
@@ -400,8 +500,20 @@ namespace Azure.Generator.Provisioning.Tests
                 new InputSerializationOptions(),
                 false);
 
-        private static InputModelType CreateDerivedModel(string name, string discriminatorValue, InputModelType baseModel)
-            => new(
+        private static InputModelType CreateDerivedModel(
+            string name,
+            string discriminatorValue,
+            InputModelType baseModel,
+            IReadOnlyList<InputModelProperty>? properties = null,
+            InputModelProperty? discriminatorProperty = null)
+        {
+            IReadOnlyList<InputModelProperty> modelProperties = properties ?? [];
+            if (baseModel.DiscriminatorProperty is { } inheritedDiscriminator)
+            {
+                modelProperties = [inheritedDiscriminator, .. modelProperties];
+            }
+
+            return new(
                 name,
                 "Sample.Models",
                 $"Sample.Models.{name}",
@@ -410,16 +522,17 @@ namespace Azure.Generator.Provisioning.Tests
                 string.Empty,
                 $"{name} model.",
                 InputModelTypeUsage.Input | InputModelTypeUsage.Output,
-                [],
+                modelProperties,
                 baseModel,
                 [],
                 discriminatorValue,
-                null,
+                discriminatorProperty,
                 new Dictionary<string, InputModelType>(),
                 null,
                 false,
                 new InputSerializationOptions(),
                 false);
+        }
 
         private static InputModelProperty CreateProperty(string name, InputType type, bool isDiscriminator = false)
             => new(

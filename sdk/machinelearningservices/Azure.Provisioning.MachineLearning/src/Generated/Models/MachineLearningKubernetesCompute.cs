@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "Kubernetes");
+            ComputeType.Assign("Kubernetes");
             _properties = DefineModelProperty<MachineLearningKubernetesProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

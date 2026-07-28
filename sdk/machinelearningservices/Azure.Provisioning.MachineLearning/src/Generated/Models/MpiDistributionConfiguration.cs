@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("distributionType", new string[] { "distributionType" }, defaultValue: "Mpi");
+            DistributionType.Assign("Mpi");
             _processCountPerInstance = DefineProperty<int>(nameof(ProcessCountPerInstance), new string[] { "processCountPerInstance" });
             DefineAdditionalProperties();
         }

@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "HDInsight");
+            ComputeType.Assign("HDInsight");
             _properties = DefineModelProperty<MachineLearningHDInsightProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
