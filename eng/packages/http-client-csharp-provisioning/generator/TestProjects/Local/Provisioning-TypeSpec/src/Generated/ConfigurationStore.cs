@@ -193,7 +193,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary></summary>
-        internal static partial class ResourceVersions
+        public static partial class ResourceVersions
         {
             /// <summary> API version "2024-05-01". </summary>
             public static readonly string V2024_05_01 = "2024-05-01";
