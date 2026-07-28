@@ -3861,7 +3861,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static Azure.ResourceManager.MachineLearning.Models.MpiDistributionConfiguration MpiDistributionConfiguration(int? processCountPerInstance = default(int?)) { throw null; }
         public static Azure.ResourceManager.MachineLearning.Models.NCrossValidations NCrossValidations(string mode = null) { throw null; }
         public static Azure.ResourceManager.MachineLearning.Models.NetworkAcls NetworkAcls(Azure.ResourceManager.MachineLearning.Models.DefaultActionType? defaultAction = default(Azure.ResourceManager.MachineLearning.Models.DefaultActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.Models.IPRule> ipRules = null) { throw null; }
-        public static Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings NlpVerticalFeaturizationSettings(string datasetLanguage = null) { throw null; }
         public static Azure.ResourceManager.MachineLearning.Models.NlpVerticalLimitSettings NlpVerticalLimitSettings(int? maxConcurrentTrials = default(int?), int? maxTrials = default(int?), System.TimeSpan? timeout = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.MachineLearning.Models.NotificationSetting NotificationSetting(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.Models.EmailNotificationEnableType> emailOn = null, System.Collections.Generic.IEnumerable<string> emails = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.MachineLearningWebhook> webhooks = null) { throw null; }
         public static Azure.ResourceManager.MachineLearning.Models.NumericalDataDriftMetricThreshold NumericalDataDriftMetricThreshold(double? thresholdValue = default(double?), Azure.ResourceManager.MachineLearning.Models.NumericalDataDriftMetric metric = default(Azure.ResourceManager.MachineLearning.Models.NumericalDataDriftMetric)) { throw null; }
@@ -12814,19 +12813,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static implicit operator Azure.ResourceManager.MachineLearning.Models.NetworkingRuleAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.NetworkingRuleAction left, Azure.ResourceManager.MachineLearning.Models.NetworkingRuleAction right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class NlpVerticalFeaturizationSettings : Azure.ResourceManager.MachineLearning.Models.MachineLearningFeaturizationSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings>
-    {
-        public NlpVerticalFeaturizationSettings() { }
-        protected override Azure.ResourceManager.MachineLearning.Models.MachineLearningFeaturizationSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.MachineLearning.Models.MachineLearningFeaturizationSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalFeaturizationSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NlpVerticalLimitSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalLimitSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.NlpVerticalLimitSettings>
     {

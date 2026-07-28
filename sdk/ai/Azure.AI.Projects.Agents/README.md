@@ -194,17 +194,48 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 #### Hosted Agents from Code<a id="hosted-code-based"></a>
 
 Hosted Agents can also be deployed using local code. To deploy the Agent from code, please prepare the folder with the Agent code and dependencies.
-In the example below, we use Python source code.
+In the example below, we use C# source code.
 
-1. Create a folder containing the agent code and dependencies. In our example, it should be located in the `Assets/AgentsCode` folder next to the sample itself (this folder is not provided).
-2. Copy the contents of a [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py) to the file main.py in the `Assets` folder.
-3. Create the `requirements.txt` in the `Assets` folder with the following contents.
+1. Create a project and add `Azure.AI.AgentServer.Responses` package as a dependency.
 
+```bash
+dotnet new console --name EchoAgent --output EchoAgent
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ```
-azure-ai-agentserver-core
-azure-ai-agentserver-invocations
-azure-ai-agentserver-responses
+
+2. Populate the code in Program.cs
+
+```C#
+using Azure.AI.AgentServer.Responses;
+using Azure.AI.AgentServer.Responses.Models;
+
+ResponsesServer.Run<EchoHandler>();
+
+public class EchoHandler : ResponseHandler
+{
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
+            });
+    }
+}
 ```
+
+3. Compile the application.
+
+```bash
+dotnet publish
+```
+
+This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
+4. Copy the contents of `publish` folder to `Assets/AgentsCode`.
 
 Prepare the metadata for Agent:
 
@@ -218,9 +249,9 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
         CodeConfiguration = new(
-            runtime: "python_3_14",
-            entryPoint: ["python", "main.py"],
-            dependencyResolution: CodeDependencyResolution.RemoteBuild
+            runtime: "dotnet_10",
+            entryPoint: ["dotnet", "EchoAgent.dll"],
+            dependencyResolution: CodeDependencyResolution.Bundled
         ),
     };
     AgentVersionFromCodeMetadata metadata = new(agentDefinition);
