@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string workflowTriggerApiVersion);
             _workflowTriggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _workflowTriggersRestClient = new WorkflowTriggers(_workflowTriggersClientDiagnostics, Pipeline, Endpoint, workflowTriggerApiVersion ?? "2026-03-15");
+            _workflowTriggersRestClient = new WorkflowTriggers(_workflowTriggersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workflowTriggerApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

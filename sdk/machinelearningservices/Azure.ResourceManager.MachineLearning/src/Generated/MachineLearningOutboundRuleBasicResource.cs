@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningOutboundRuleBasicApiVersion);
             _managedNetworkSettingsRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsRuleRestClient = new ManagedNetworkSettingsRule(_managedNetworkSettingsRuleClientDiagnostics, Pipeline, Endpoint, machineLearningOutboundRuleBasicApiVersion ?? "2026-03-15-preview");
+            _managedNetworkSettingsRuleRestClient = new ManagedNetworkSettingsRule(_managedNetworkSettingsRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningOutboundRuleBasicApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

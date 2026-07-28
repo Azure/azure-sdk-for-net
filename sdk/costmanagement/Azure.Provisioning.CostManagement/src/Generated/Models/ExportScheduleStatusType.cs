@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ExportScheduleStatusType
     {
         /// <summary> Active. </summary>
-        Active,
+        Active = 0,
         /// <summary> Inactive. </summary>
-        Inactive
+        Inactive = 1
     }
 }

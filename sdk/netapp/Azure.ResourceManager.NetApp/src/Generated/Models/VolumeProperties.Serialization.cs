@@ -391,6 +391,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("inheritedSizeInBytes"u8);
                 writer.WriteNumberValue(InheritedSizeInBytes.Value);
             }
+            if (Optional.IsDefined(BreakthroughMode))
+            {
+                writer.WritePropertyName("breakthroughMode"u8);
+                writer.WriteStringValue(BreakthroughMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -491,6 +496,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
+            BreakthroughMode? breakthroughMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1012,6 +1018,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("breakthroughMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    breakthroughMode = new BreakthroughMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -1076,6 +1091,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 isLargeVolume,
                 originatingResourceId,
                 inheritedSizeInBytes,
+                breakthroughMode,
                 additionalBinaryDataProperties);
         }
     }

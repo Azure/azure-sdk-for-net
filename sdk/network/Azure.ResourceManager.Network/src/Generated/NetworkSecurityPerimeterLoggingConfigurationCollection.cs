@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkSecurityPerimeterLoggingConfigurationResource.ResourceType, out string networkSecurityPerimeterLoggingConfigurationApiVersion);
             _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterLoggingConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterLoggingConfigurationsRestClient = new NetworkSecurityPerimeterLoggingConfigurations(_networkSecurityPerimeterLoggingConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterLoggingConfigurationApiVersion ?? "2025-07-01");
+            _networkSecurityPerimeterLoggingConfigurationsRestClient = new NetworkSecurityPerimeterLoggingConfigurations(_networkSecurityPerimeterLoggingConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterLoggingConfigurationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
         [WirePath("ipRules")]
-        public IList<BastionHostIPRule> IPRules { get; }
+        public IList<BastionHostIPRule> IPRules { get; } = new ChangeTrackingList<BastionHostIPRule>();
     }
 }

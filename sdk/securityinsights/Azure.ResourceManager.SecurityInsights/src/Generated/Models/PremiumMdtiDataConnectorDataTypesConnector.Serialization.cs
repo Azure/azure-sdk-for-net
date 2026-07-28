@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for Microsoft Defender for Threat Intelligence Premium data connector. </summary>
-    public partial class PremiumMdtiDataConnectorDataTypesConnector : DataConnectorDataTypeCommon, IJsonModel<PremiumMdtiDataConnectorDataTypesConnector>
+    internal partial class PremiumMdtiDataConnectorDataTypesConnector : DataConnectorDataTypeCommon, IJsonModel<PremiumMdtiDataConnectorDataTypesConnector>
     {
         /// <summary> Initializes a new instance of <see cref="PremiumMdtiDataConnectorDataTypesConnector"/> for deserialization. </summary>
         internal PremiumMdtiDataConnectorDataTypesConnector()

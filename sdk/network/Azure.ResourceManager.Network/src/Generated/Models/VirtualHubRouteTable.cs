@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of all routes. </summary>
         [WirePath("routes")]
-        public IList<VirtualHubRoute> Routes { get; }
+        public IList<VirtualHubRoute> Routes { get; } = new ChangeTrackingList<VirtualHubRoute>();
     }
 }

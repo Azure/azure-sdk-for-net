@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
 
         private ClientDiagnostics DiscoverySolutionNLPClientDiagnostics => _discoverySolutionNLPClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiscoverySolutionNLP DiscoverySolutionNLPRestClient => _discoverySolutionNLPRestClient ??= new DiscoverySolutionNLP(DiscoverySolutionNLPClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
+        private DiscoverySolutionNLP DiscoverySolutionNLPRestClient => _discoverySolutionNLPRestClient ??= new DiscoverySolutionNLP(DiscoverySolutionNLPClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-01-preview");
 
         /// <summary>
         /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription.

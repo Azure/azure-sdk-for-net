@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OracleDatabase.Models;
 
@@ -16,7 +15,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseActionContent))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseBackupData))]
     [ModelReaderWriterBuildable(typeof(AutonomousDatabaseBackupListResult))]
@@ -180,7 +178,6 @@ namespace Azure.ResourceManager.OracleDatabase
     [ModelReaderWriterBuildable(typeof(PrivateIPAddressResult))]
     [ModelReaderWriterBuildable(typeof(RemoveVirtualMachineFromExadbVmClusterDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceAnchorListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreAutonomousDatabaseDetails))]
     [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
     [ModelReaderWriterBuildable(typeof(ScheduledOperationsType))]

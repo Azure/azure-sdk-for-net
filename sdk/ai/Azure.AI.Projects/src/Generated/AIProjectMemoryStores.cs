@@ -6,7 +6,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -25,11 +24,13 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectMemoryStores(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectMemoryStores(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -37,6 +38,9 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Creates a memory store resource with the provided configuration.
@@ -53,10 +57,20 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateMemoryStore(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -74,10 +88,20 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateMemoryStoreAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a memory store resource with the provided configuration. </summary>
@@ -89,7 +113,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryStore> CreateMemoryStore(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -109,7 +132,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryStore>> CreateMemoryStoreAsync(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -137,11 +159,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemoryStore(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -161,11 +193,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateMemoryStoreAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Updates the specified memory store with the supplied configuration changes. </summary>
@@ -218,10 +260,20 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetMemoryStore(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -240,10 +292,20 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetMemoryStoreAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified memory store and its current configuration. </summary>
@@ -290,10 +352,20 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteMemoryStore(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -312,10 +384,20 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteMemoryStoreAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified memory store. </summary>
@@ -324,7 +406,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<DeleteMemoryStoreResponse> DeleteMemoryStore(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -339,7 +420,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<DeleteMemoryStoreResponse>> DeleteMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -365,11 +445,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult SearchMemories(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.SearchMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -389,11 +479,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> SearchMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.SearchMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -414,11 +514,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemories(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -439,11 +549,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -463,11 +583,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetUpdateResult(string name, string updateId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetUpdateResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -487,11 +617,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetUpdateResultAsync(string name, string updateId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetUpdateResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the status and result of a memory store update operation. </summary>
@@ -543,11 +683,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteScope(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteScope");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -567,11 +717,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteScopeAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteScope");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes all memories in the specified memory store that are associated with the provided scope. </summary>
@@ -581,7 +741,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryStoreDeleteScopeResponse> DeleteScope(string name, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -599,7 +758,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryStoreDeleteScopeResponse>> DeleteScopeAsync(string name, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -627,11 +785,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateMemory(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -651,11 +819,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateMemoryAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a memory item in the specified memory store. </summary>
@@ -667,7 +845,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryItem> CreateMemory(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -688,7 +865,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryItem>> CreateMemoryAsync(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -718,12 +894,22 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemory(string name, string memoryId, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -744,12 +930,22 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateMemoryAsync(string name, string memoryId, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Updates the specified memory item in the memory store. </summary>
@@ -760,7 +956,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryItem> UpdateMemory(string name, string memoryId, string content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -780,7 +975,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryItem>> UpdateMemoryAsync(string name, string memoryId, string content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -809,11 +1003,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetMemory(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -833,11 +1037,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetMemoryAsync(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified memory item from the memory store. </summary>
@@ -847,7 +1061,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryItem> GetMemory(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -864,7 +1077,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryItem>> GetMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -910,19 +1122,29 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetMemoriesAsync(string name, BinaryContent content, string kind = default, int? limit = default, string order = default, string after = default, string before = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            return new AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(
-                this,
-                name,
-                content,
-                kind,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(
+                    this,
+                    name,
+                    content,
+                    kind,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -942,11 +1164,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteMemory(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -966,11 +1198,21 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteMemoryAsync(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified memory item from the memory store. </summary>
@@ -980,7 +1222,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryDeletionResult> DeleteMemory(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -997,7 +1238,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryDeletionResult>> DeleteMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

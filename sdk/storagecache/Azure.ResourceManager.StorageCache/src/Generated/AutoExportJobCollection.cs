@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             TryGetApiVersion(AutoExportJobResource.ResourceType, out string autoExportJobApiVersion);
             _autoExportJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", AutoExportJobResource.ResourceType.Namespace, Diagnostics);
-            _autoExportJobsRestClient = new AutoExportJobs(_autoExportJobsClientDiagnostics, Pipeline, Endpoint, autoExportJobApiVersion ?? "2026-01-01");
+            _autoExportJobsRestClient = new AutoExportJobs(_autoExportJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoExportJobApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

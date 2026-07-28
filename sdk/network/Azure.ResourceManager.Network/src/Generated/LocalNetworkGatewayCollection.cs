@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(LocalNetworkGatewayResource.ResourceType, out string localNetworkGatewayApiVersion);
             _localNetworkGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LocalNetworkGatewayResource.ResourceType.Namespace, Diagnostics);
-            _localNetworkGatewaysRestClient = new LocalNetworkGateways(_localNetworkGatewaysClientDiagnostics, Pipeline, Endpoint, localNetworkGatewayApiVersion ?? "2025-07-01");
+            _localNetworkGatewaysRestClient = new LocalNetworkGateways(_localNetworkGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, localNetworkGatewayApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

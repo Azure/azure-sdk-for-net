@@ -14,24 +14,24 @@ namespace Azure.Provisioning.Search
     {
         /// <summary> The search service is running and no provisioning operations are underway. </summary>
         [DataMember(Name = "running")]
-        Running,
+        Running = 0,
         /// <summary> The search service is being provisioned or scaled up or down. </summary>
         [DataMember(Name = "provisioning")]
-        Provisioning,
+        Provisioning = 1,
         /// <summary> The search service is being deleted. </summary>
         [DataMember(Name = "deleting")]
-        Deleting,
+        Deleting = 2,
         /// <summary> The search service is degraded because underlying search units are not healthy. </summary>
         [DataMember(Name = "degraded")]
-        Degraded,
+        Degraded = 3,
         /// <summary> The search service is disabled and all API requests will be rejected. </summary>
         [DataMember(Name = "disabled")]
-        Disabled,
+        Disabled = 4,
         /// <summary> The search service is in error state, indicating either a failure to provision or to be deleted. </summary>
         [DataMember(Name = "error")]
-        Error,
+        Error = 5,
         /// <summary> The search service is in a subscription that's disabled. </summary>
         [DataMember(Name = "stopped")]
-        Stopped
+        Stopped = 6
     }
 }

@@ -66,11 +66,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL";
 
         /// <summary>
-        /// Available for users to enable customer SDK stats.
+        /// Available for users to opt out of customer SDK stats.
         /// </summary>
         /// <remarks>
-        /// Customer SDK stats provide insights into SDK success/failure/retry counts.
-        /// Set to "false" to enable this feature.
+        /// Customer SDK stats provide insights into SDK success/failure/retry counts and are on by default.
+        /// Set to "true" to disable this feature.
         /// </remarks>
         public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED";
 
