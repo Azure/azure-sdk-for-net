@@ -40,5 +40,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.That(mockableMethod.GetParameters()[0].IsOptional, Is.False);
             Assert.That(extensionMethod.GetParameters()[1].IsOptional, Is.False);
         }
+
+        [Test]
+        public void LegacyTlsPropertiesForwardToCorrectedProperties()
+        {
+            var data = new ApiManagementGatewayHostnameConfigurationData
+            {
+                IsTls1_0Enabled = true,
+                IsTls1_1Enabled = false
+            };
+
+            Assert.That(data.IsTls10Enabled, Is.True);
+            Assert.That(data.IsTls11Enabled, Is.False);
+        }
     }
 }
