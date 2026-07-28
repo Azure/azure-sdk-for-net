@@ -36,6 +36,7 @@ Review only new or changed public API relative to the latest stable release. Exi
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
    ```
    Omit `-BaselineApiFilePath` when there is no stable baseline. Use `-PackagePath` only for local/manual trusted reviews. In GitHub Agentic Workflow mode, run the scanner from the base branch against explicit API files fetched from PR/baseline; do not execute PR scripts.
+   When a baseline is supplied, the scanner also compares required/optional parameter metadata for every matching public method and constructor. Treat `OPTPARAM001` and `OPTPARAM002` as blocking source-compatibility findings; ApiCompat may not report them.
 3. Treat scanner API-file line numbers as symbol identifiers, not final comment targets. Resolve each finding to generated source, customization source, or TypeSpec customization files before commenting.
 4. Run contextual naming exhaustively using inventory mode:
    ```powershell
@@ -44,7 +45,7 @@ Review only new or changed public API relative to the latest stable release. Exi
    Evaluate every `NEW` class/struct/enum. Verdicts: `OK`, `Flag`, or `OK (low confidence)`. The number of verdicts must equal the number of `NEW` entries. Report `Contextual naming: evaluated N new public types, flagged M`.
 5. Review API files, `src/Generated/`, TypeSpec customizations (`client.tsp`, `main.tsp`, `tspconfig.yaml`), and SDK customizations for issues not covered by the scanner.
 
-Scanner rule families include `SUFFIX001`-`SUFFIX010`, `RESINFIX001`, `RESNAME001`, `ACRONYM001`, `ACRONYM002`, `ARMCOMMON001`, `BOOL001`, `DATETIME001`, and `TTL001`. Contextual naming is intentionally manual; the scanner only provides the bounded worklist.
+Scanner rule families include `OPTPARAM001`, `OPTPARAM002`, `SUFFIX001`-`SUFFIX010`, `RESINFIX001`, `RESNAME001`, `ACRONYM001`, `ACRONYM002`, `ARMCOMMON001`, `BOOL001`, `DATETIME001`, and `TTL001`. Contextual naming is intentionally manual; the scanner only provides the bounded worklist.
 
 ### Comment Targets
 
@@ -92,6 +93,7 @@ Operation/model/property rules:
 - Integer interval/duration properties include units, e.g. `MonitoringIntervalInSeconds`.
 - TTL properties use `TimeToLiveIn<Unit>`.
 - Enums use singular names unless flags; numeric version members use underscore, e.g. `Tls1_0`, `Ver5_6`.
+- Enum member renames that preserve shipped names should be expressed in TypeSpec when possible. If a member target is defined in TypeSpec and needs an exact C# name (especially underscores), prefer `@@clientName(Enum.Member, Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")` over SDK-side `[CodeGenMember]`.
 - CheckNameAvailability method: `Check[Resource/RP name]NameAvailability`; model/response: `[Resource/RP name]NameAvailabilityXXX`; unavailable reason enum: `[Resource/RP name]NameUnavailableReason`.
 - PUT/PATCH optional body parameters should be required.
 - Discriminator base models should be `abstract`.
@@ -111,6 +113,7 @@ Contextual type naming:
 
 Naming fix recommendation:
 - If the symbol is defined in TypeSpec, recommend `@@clientName(..., "csharp")` in `client.tsp`, e.g. `@@clientName(PublicNetworkAccess, "DurableTaskPublicNetworkAccess", "csharp");`.
+- For exact enum member names, recommend `@@clientName(..., Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")`.
 - If not defined in TypeSpec, recommend SDK customization such as `[CodeGenType("OriginalGeneratedName")]` on a renamed partial class.
 - For migration PRs, compare against previous GA API first. If the generated name is a rename of shipped API, restore the shipped name rather than inventing a third stylistic name.
 
@@ -142,6 +145,8 @@ SDK migration method renames:
 If `ApiCompatVersion` exists, check breaking changes after Phase 2. Locally, build the project and inspect ApiCompat errors. In untrusted `pull_request_target` workflows, do not build PR code; rely on CI/check results and API diffs unless the workflow explicitly runs in a trusted context.
 
 For each ApiCompat error, list the removed/changed API and target the relevant source line when possible. Do not fix it during review; request mitigation through customization code, generator/spec features, or the `mitigate-breaking-changes` skill. Any unmitigated breaking change is blocking. If no `ApiCompatVersion` exists, skip this phase.
+
+ApiCompat passing is not sufficient for source compatibility. Before declaring this phase complete, confirm the scanner reported no `OPTPARAM001` or `OPTPARAM002` findings. Do not infer that a previously reported overload fix covers sibling overloads; compare every matching signature against the stable baseline.
 
 ## Output Format
 

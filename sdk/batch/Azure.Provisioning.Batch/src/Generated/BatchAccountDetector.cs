@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Creates a new BatchAccountDetector. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BatchAccountDetector(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/detectors", resourceVersion ?? "2025-06-01")
+        internal BatchAccountDetector(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/detectors", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -66,18 +66,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal DetectorResponseProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -91,18 +86,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
             {
                 Initialize();
                 return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
             }
         }
 
@@ -121,20 +111,12 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Value. </summary>
+        /// <summary> Gets the Value. </summary>
         public BicepValue<string> Value
         {
             get
             {
-                return Properties is null ? default : Properties.Value;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DetectorResponseProperties();
-                }
-                Properties.Value = value;
+                return Properties.Value;
             }
         }
 

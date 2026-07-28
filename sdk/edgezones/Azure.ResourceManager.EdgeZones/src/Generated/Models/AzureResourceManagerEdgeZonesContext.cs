@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.EdgeZones.Models;
 using Azure.ResourceManager.Models;
 
@@ -20,7 +19,6 @@ namespace Azure.ResourceManager.EdgeZones
     [ModelReaderWriterBuildable(typeof(ExtendedZoneListResult))]
     [ModelReaderWriterBuildable(typeof(ExtendedZoneProperties))]
     [ModelReaderWriterBuildable(typeof(ExtendedZoneResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerEdgeZonesContext : ModelReaderWriterContext
     {

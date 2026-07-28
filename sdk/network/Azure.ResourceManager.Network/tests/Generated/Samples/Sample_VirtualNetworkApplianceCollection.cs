@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Samples
                 },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkApplianceName, data);
+            ArmOperation<VirtualNetworkApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

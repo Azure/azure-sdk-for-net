@@ -126,6 +126,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<DeploymentExtensionSpecProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeploymentExtensionSpec that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

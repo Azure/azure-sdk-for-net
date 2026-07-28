@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos
             TryGetApiVersion(ChaosActionResource.ResourceType, out string chaosActionApiVersion);
             _location = location;
             _actionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosActionResource.ResourceType.Namespace, Diagnostics);
-            _actionsRestClient = new Actions(_actionsClientDiagnostics, Pipeline, Endpoint, chaosActionApiVersion ?? "2026-05-01-preview");
+            _actionsRestClient = new Actions(_actionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosActionApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

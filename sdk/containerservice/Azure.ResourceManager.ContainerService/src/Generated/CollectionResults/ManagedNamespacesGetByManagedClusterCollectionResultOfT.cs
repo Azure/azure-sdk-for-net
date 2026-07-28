@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 ManagedNamespaceListResult result = ManagedNamespaceListResult.FromResponse(response);
-                yield return Page<ManagedClusterNamespaceData>.FromValues((IReadOnlyList<ManagedClusterNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedClusterNamespaceData>.FromValues((IReadOnlyList<ManagedClusterNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

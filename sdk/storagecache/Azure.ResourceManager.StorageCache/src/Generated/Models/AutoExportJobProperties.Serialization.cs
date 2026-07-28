@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);

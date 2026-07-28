@@ -317,6 +317,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("aiToolchainOperatorProfile"u8);
                 writer.WriteObjectValue(AiToolchainOperatorProfile, options);
             }
+            if (Optional.IsDefined(SchedulerProfile))
+            {
+                writer.WritePropertyName("schedulerProfile"u8);
+                writer.WriteObjectValue(SchedulerProfile, options);
+            }
             if (Optional.IsDefined(HostedSystemProfile))
             {
                 writer.WritePropertyName("hostedSystemProfile"u8);
@@ -413,6 +418,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = default;
             ManagedClusterBootstrapProfile bootstrapProfile = default;
             ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile = default;
+            SchedulerProfile schedulerProfile = default;
             ManagedClusterHostedSystemProfile hostedSystemProfile = default;
             ManagedClusterStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -798,6 +804,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     aiToolchainOperatorProfile = ManagedClusterAIToolchainOperatorProfile.DeserializeManagedClusterAIToolchainOperatorProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("schedulerProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    schedulerProfile = SchedulerProfile.DeserializeSchedulerProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("hostedSystemProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -866,6 +881,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 nodeProvisioningProfile,
                 bootstrapProfile,
                 aiToolchainOperatorProfile,
+                schedulerProfile,
                 hostedSystemProfile,
                 status,
                 additionalBinaryDataProperties);

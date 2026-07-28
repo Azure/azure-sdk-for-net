@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.LoadTesting
                     yield break;
                 }
                 LoadTestResourceListResult result = LoadTestResourceListResult.FromResponse(response);
-                yield return Page<LoadTestingResourceData>.FromValues((IReadOnlyList<LoadTestingResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LoadTestingResourceData>.FromValues((IReadOnlyList<LoadTestingResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

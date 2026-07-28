@@ -87,6 +87,10 @@ namespace Azure.Provisioning.MySql
             _backupIntervalHours = DefineProperty<int>(nameof(BackupIntervalHours), new string[] { "backupIntervalHours" });
             _geoRedundantBackup = DefineProperty<MySqlFlexibleServerEnableStatusEnum>(nameof(GeoRedundantBackup), new string[] { "geoRedundantBackup" });
             _earliestRestoreOn = DefineProperty<DateTimeOffset>(nameof(EarliestRestoreOn), new string[] { "earliestRestoreDate" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerBackupProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

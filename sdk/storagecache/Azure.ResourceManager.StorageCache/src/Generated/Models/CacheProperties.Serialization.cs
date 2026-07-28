@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrimingJobs))
+            if (Optional.IsCollectionDefined(PrimingJobs))
             {
                 writer.WritePropertyName("primingJobs"u8);
                 writer.WriteStartArray();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             StorageCacheSecuritySettings securitySettings = default;
             StorageCacheDirectorySettings directoryServicesSettings = default;
             IList<string> zones = default;
-            IReadOnlyList<PrimingJob> primingJobs = default;
+            IList<PrimingJob> primingJobs = default;
             IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

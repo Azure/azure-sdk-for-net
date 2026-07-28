@@ -24,6 +24,8 @@ namespace Azure.Identity
 
         public bool IsForceRefreshEnabled { get; set; }
 
+        public bool DisableMtlsProofOfPossession { get; set; }
+
         internal MsalManagedIdentityClient MsalManagedIdentityClientOverride { get; set; }
 
         public ManagedIdentityClientOptions Clone()
@@ -36,6 +38,7 @@ namespace Azure.Identity
                 Pipeline = Pipeline,
                 ExcludeTokenExchangeManagedIdentitySource = ExcludeTokenExchangeManagedIdentitySource,
                 IsForceRefreshEnabled = IsForceRefreshEnabled,
+                DisableMtlsProofOfPossession = DisableMtlsProofOfPossession,
                 MsalManagedIdentityClientOverride = MsalManagedIdentityClientOverride,
             };
 

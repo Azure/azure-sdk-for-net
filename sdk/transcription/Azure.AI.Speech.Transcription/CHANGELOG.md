@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added distributed tracing support.
+
 ### Breaking Changes
 
 ### Bugs Fixed

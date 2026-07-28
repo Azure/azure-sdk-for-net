@@ -2,10 +2,10 @@ namespace Azure.Provisioning.KeyVault
 {
     public partial class DeletedKeyVault : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DeletedKeyVault(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal DeletedKeyVault() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.DeletedKeyVaultProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.DeletedKeyVaultProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.DeletedKeyVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -27,10 +27,10 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class DeletedManagedHsm : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DeletedManagedHsm(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal DeletedManagedHsm() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.DeletedManagedHsmProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.DeletedManagedHsmProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.DeletedManagedHsm FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -302,9 +302,9 @@ namespace Azure.Provisioning.KeyVault
     public partial class KeyVaultPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KeyVaultPrivateEndpointConnectionItemData() { }
-        public Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -555,10 +555,10 @@ namespace Azure.Provisioning.KeyVault
     public partial class ManagedHsmPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedHsmPrivateEndpointConnectionItemData() { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.KeyVault.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

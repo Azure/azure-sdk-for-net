@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Visitors;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -46,6 +47,12 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
 
+        private ResourceDataCustomizationResolver? _resourceDataCustomizationResolver;
+        internal ResourceDataCustomizationResolver ResourceDataCustomizationResolver => _resourceDataCustomizationResolver ??= new();
+
+        private TagPatchHookCustomizationResolver? _tagPatchHookCustomizationResolver;
+        internal TagPatchHookCustomizationResolver TagPatchHookCustomizationResolver => _tagPatchHookCustomizationResolver ??= new();
+
         /// <inheritdoc/>
         public override TypeProviderWriter GetWriter(TypeProvider provider)
         {
@@ -74,6 +81,8 @@ namespace Azure.Generator.Management
         /// </summary>
         protected override void Configure()
         {
+            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenResourceDataAttributeDefinition);
+            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenTagPatchHookAttributeDefinition);
             base.Configure();
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));

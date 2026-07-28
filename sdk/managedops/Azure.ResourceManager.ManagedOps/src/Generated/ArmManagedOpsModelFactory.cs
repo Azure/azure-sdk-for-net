@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedOps;
 using Azure.ResourceManager.Models;
@@ -116,17 +114,17 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <param name="managedOpUpdateDesiredConfiguration"> Desired configuration input by the user. </param>
         /// <returns> A new <see cref="Models.ManagedOpPatch"/> instance for mocking. </returns>
-        public static ManagedOpPatch ManagedOpPatch(ManagedOpsDesiredConfigurationUpdate managedOpUpdateDesiredConfiguration = default)
+        public static ManagedOpPatch ManagedOpPatch(ManagedOpsDesiredConfigurationPatch managedOpUpdateDesiredConfiguration = default)
         {
             return new ManagedOpPatch(managedOpUpdateDesiredConfiguration is null ? default : new ManagedOpUpdateProperties(managedOpUpdateDesiredConfiguration, default), default);
         }
 
         /// <param name="defenderForServers"> Desired enablement state of the Defender For Servers service. </param>
         /// <param name="defenderCspm"> Desired enablement state of the Defender Cloud Security Posture Management (CSPM) service. </param>
-        /// <returns> A new <see cref="Models.ManagedOpsDesiredConfigurationUpdate"/> instance for mocking. </returns>
-        public static ManagedOpsDesiredConfigurationUpdate ManagedOpsDesiredConfigurationUpdate(ManagedOpsDesiredEnablementState? defenderForServers = default, ManagedOpsDesiredEnablementState? defenderCspm = default)
+        /// <returns> A new <see cref="Models.ManagedOpsDesiredConfigurationPatch"/> instance for mocking. </returns>
+        public static ManagedOpsDesiredConfigurationPatch ManagedOpsDesiredConfigurationPatch(ManagedOpsDesiredEnablementState? defenderForServers = default, ManagedOpsDesiredEnablementState? defenderCspm = default)
         {
-            return new ManagedOpsDesiredConfigurationUpdate(defenderForServers, defenderCspm, default);
+            return new ManagedOpsDesiredConfigurationPatch(defenderForServers, defenderCspm, default);
         }
     }
 }

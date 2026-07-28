@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ManagedRulesDefinition : IUtf8JsonSerializable, IJsonModel<ManagedRulesDefinition>
+    /// <summary> Allow to exclude some variable satisfy the condition for the WAF check. </summary>
+    public partial class ManagedRulesDefinition : IJsonModel<ManagedRulesDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRulesDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ManagedRulesDefinition"/> for deserialization. </summary>
+        internal ManagedRulesDefinition()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedRulesDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedRulesDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedRulesDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedRulesDefinition IPersistableModel<ManagedRulesDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedRulesDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedRulesDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +74,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Exceptions))
             {
                 writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Exceptions)
+                foreach (ExceptionEntry item in Exceptions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Exclusions)
+                foreach (OwaspCrsExclusionEntry item in Exclusions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,20 +101,20 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("managedRuleSets"u8);
             writer.WriteStartArray();
-            foreach (var item in ManagedRuleSets)
+            foreach (ManagedRuleSet item in ManagedRuleSets)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -80,22 +123,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ManagedRulesDefinition IJsonModel<ManagedRulesDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedRulesDefinition IJsonModel<ManagedRulesDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedRulesDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedRulesDefinition(document.RootElement, options);
         }
 
-        internal static ManagedRulesDefinition DeserializeManagedRulesDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedRulesDefinition DeserializeManagedRulesDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,42 +151,41 @@ namespace Azure.ResourceManager.Network.Models
             IList<ExceptionEntry> exceptions = default;
             IList<OwaspCrsExclusionEntry> exclusions = default;
             IList<ManagedRuleSet> managedRuleSets = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("exceptions"u8))
+                if (prop.NameEquals("exceptions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ExceptionEntry> array = new List<ExceptionEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ExceptionEntry.DeserializeExceptionEntry(item, options));
                     }
                     exceptions = array;
                     continue;
                 }
-                if (property.NameEquals("exclusions"u8))
+                if (prop.NameEquals("exclusions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OwaspCrsExclusionEntry> array = new List<OwaspCrsExclusionEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OwaspCrsExclusionEntry.DeserializeOwaspCrsExclusionEntry(item, options));
                     }
                     exclusions = array;
                     continue;
                 }
-                if (property.NameEquals("managedRuleSets"u8))
+                if (prop.NameEquals("managedRuleSets"u8))
                 {
                     List<ManagedRuleSet> array = new List<ManagedRuleSet>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item, options));
                     }
@@ -147,128 +194,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedRulesDefinition(exceptions ?? new ChangeTrackingList<ExceptionEntry>(), exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets, serializedAdditionalRawData);
+            return new ManagedRulesDefinition(exceptions ?? new ChangeTrackingList<ExceptionEntry>(), exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exceptions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  exceptions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Exceptions))
-                {
-                    if (Exceptions.Any())
-                    {
-                        builder.Append("  exceptions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Exceptions)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  exceptions: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exclusions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  exclusions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Exclusions))
-                {
-                    if (Exclusions.Any())
-                    {
-                        builder.Append("  exclusions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Exclusions)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  exclusions: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedRuleSets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  managedRuleSets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ManagedRuleSets))
-                {
-                    if (ManagedRuleSets.Any())
-                    {
-                        builder.Append("  managedRuleSets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ManagedRuleSets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  managedRuleSets: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ManagedRulesDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedRulesDefinition IPersistableModel<ManagedRulesDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedRulesDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedRulesDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

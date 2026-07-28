@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Interactive authoring capability type properties. </summary>
     public partial class InteractiveQueryProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InteractiveQueryProperties"/>. </summary>
         public InteractiveQueryProperties()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="InteractiveQueryProperties"/>. </summary>
         /// <param name="status"> The interactive authoring capability status. Must be one of InteractiveCapabilityStatus. The default value is 'Enabling'. </param>
         /// <param name="autoTerminationMinutes"> The allowed idle time for interactive authoring. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InteractiveQueryProperties(InteractiveCapabilityStatus? status, int? autoTerminationMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InteractiveQueryProperties(InteractiveCapabilityStatus? status, int? autoTerminationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             AutoTerminationMinutes = autoTerminationMinutes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The interactive authoring capability status. Must be one of InteractiveCapabilityStatus. The default value is 'Enabling'. </summary>
         public InteractiveCapabilityStatus? Status { get; }
+
         /// <summary> The allowed idle time for interactive authoring. </summary>
         public int? AutoTerminationMinutes { get; }
     }

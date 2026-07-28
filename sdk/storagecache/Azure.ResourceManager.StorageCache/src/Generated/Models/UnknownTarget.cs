@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Dictionary of string-&gt;string pairs containing information about the Storage Target. </summary>
-        public IDictionary<string, string> Attributes { get; }
+        public IDictionary<string, string> Attributes { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

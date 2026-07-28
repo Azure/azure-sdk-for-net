@@ -937,6 +937,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
+        [WirePath("properties.virtualMachinesProfile.scale")]
+        public AgentPoolScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachinesScale;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.VirtualMachinesScale = value;
+            }
+        }
+
         /// <summary> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </summary>
         [WirePath("properties.status.provisioningError")]
         public ResponseError StatusProvisioningError

@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,47 +23,123 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        /// <param name="primary"> Whether the ip configuration is primary or not. </param>
-        /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
-        /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
-        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the private link service ip configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, PrivateLinkServiceIpConfigurationProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            PrivateIPAddress = privateIPAddress;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            Subnet = subnet;
-            Primary = primary;
-            ProvisioningState = provisioningState;
-            PrivateIPAddressVersion = privateIPAddressVersion;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the private link service ip configuration. </summary>
+        [WirePath("properties")]
+        internal PrivateLinkServiceIpConfigurationProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
+        public string PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                }
+                Properties.PrivateIPAddress = value;
+            }
+        }
+
         /// <summary> The private IP address allocation method. </summary>
         [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                }
+                Properties.PrivateIPAllocationMethod = value;
+            }
+        }
+
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("properties.subnet")]
-        public SubnetData Subnet { get; set; }
+        public SubnetData Subnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                }
+                Properties.Subnet = value;
+            }
+        }
+
         /// <summary> Whether the ip configuration is primary or not. </summary>
         [WirePath("properties.primary")]
-        public bool? Primary { get; set; }
+        public bool? Primary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                }
+                Properties.Primary = value;
+            }
+        }
+
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
         [WirePath("properties.privateIPAddressVersion")]
-        public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
+        public NetworkIPVersion? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                }
+                Properties.PrivateIPAddressVersion = value;
+            }
+        }
     }
 }

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a browser automation tool call. </summary>
+    [Experimental("AAIP001")]
     public partial class BrowserAutomationToolCallOutput : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallOutput"/>. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutoExportJobPropertiesStatus"/>. </summary>
-        public AutoExportJobPropertiesStatus()
+        internal AutoExportJobPropertiesStatus()
         {
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </summary>
-        public AutoExportStatusType? State { get; set; }
+        public AutoExportStatusType? State { get; }
 
         /// <summary> Server-defined status code for auto export job. </summary>
         public string StatusCode { get; }

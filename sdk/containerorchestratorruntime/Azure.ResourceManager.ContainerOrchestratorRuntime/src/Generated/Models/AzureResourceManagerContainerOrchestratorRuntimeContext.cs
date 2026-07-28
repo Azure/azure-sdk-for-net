@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 using Azure.ResourceManager.Models;
 
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
     [ModelReaderWriterBuildable(typeof(LoadBalancerListResult))]
     [ModelReaderWriterBuildable(typeof(NativeStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(NfsStorageClassTypeProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RwxStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SmbStorageClassTypeProperties))]

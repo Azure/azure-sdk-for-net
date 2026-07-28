@@ -1,0 +1,83 @@
+name: auto-build-repair-eval
+description: Evaluation suite for the auto-build-repair skill
+
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: auto-build-repair
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  # Happy path: a custom-code build failure on an Auto SDK PR should drive the
+  # shared engine with editScope CustomCode.
+  - name: repair-basic-001
+    prompt: >-
+      This Auto SDK PR is labeled auto-sdk-build-fix. The package at
+      sdk/contoso/Azure.Contoso.Widgets fails to build because a custom partial
+      class references a generated member that was renamed during regeneration.
+      Repair the build.
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_customized_code_update
+      - type: output-contains
+        config:
+          substring: "custom"
+
+  # Scope: the skill must stay in custom-code-only scope and must not edit spec
+  # inputs or move the pinned commit.
+  - name: repair-scope-001
+    prompt: >-
+      The Auto SDK PR for sdk/contoso/Azure.Contoso.Widgets is failing to build
+      after regeneration. Fix the build, but explain what you are and are not
+      allowed to change.
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_customized_code_update
+      - type: output-not-contains
+        config:
+          substring: "edit client.tsp"
+      - type: output-not-contains
+        config:
+          substring: "move the pinned commit"
+
+  # Stop condition: when the only viable fix is a spec/decorator change, the
+  # skill must report it as out of scope (a separate spec-repo PR), not attempt it.
+  - name: repair-stop-specchange-001
+    prompt: >-
+      The Auto SDK PR for sdk/contoso/Azure.Contoso.Widgets fails because a
+      client method name violates AZC0030 and the only correct fix is an
+      @@clientName rename in client.tsp. Repair the build.
+    graders:
+      - type: output-contains
+        config:
+          substring: "spec"
+      - type: output-contains
+        config:
+          substring: "out of scope"
+
+  # Negative: a brand-new TypeSpec authoring request must not drive the repair engine.
+  - name: repair-negative-001
+    prompt: "How do I define a new REST operation in my TypeSpec project?"
+    graders:
+      - type: tool-calls
+        config:
+          disallowed:
+            - name: azure-sdk-mcp-azsdk_customized_code_update
+      - type: output-not-contains
+        config:
+          substring: "auto-sdk-build-fix"

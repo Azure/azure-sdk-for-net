@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureOperatorNexusNetworkFunctionArmTemplateApplication : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>
+    /// <summary> Azure Operator Distributed Services network function Template application definition. </summary>
+    public partial class AzureOperatorNexusNetworkFunctionArmTemplateApplication : AzureOperatorNexusNetworkFunctionApplication, IJsonModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkFunctionApplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionArmTemplateApplication)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionArmTemplateApplication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureOperatorNexusNetworkFunctionArmTemplateApplication IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureOperatorNexusNetworkFunctionArmTemplateApplication)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionArmTemplateApplication)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ArtifactProfile))
             {
@@ -47,116 +87,88 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
         }
 
-        AzureOperatorNexusNetworkFunctionArmTemplateApplication IJsonModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureOperatorNexusNetworkFunctionArmTemplateApplication IJsonModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureOperatorNexusNetworkFunctionArmTemplateApplication)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkFunctionApplication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionArmTemplateApplication)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(document.RootElement, options);
         }
 
-        internal static AzureOperatorNexusNetworkFunctionArmTemplateApplication DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureOperatorNexusNetworkFunctionArmTemplateApplication DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureOperatorNexusArmTemplateArtifactProfile artifactProfile = default;
-            AzureOperatorNexusArmTemplateDeployMappingRuleProfile deployParametersMappingRuleProfile = default;
-            AzureOperatorNexusArtifactType artifactType = default;
             string name = default;
             DependsOnProfile dependsOnProfile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureOperatorNexusArtifactType artifactType = default;
+            AzureOperatorNexusArmTemplateArtifactProfile artifactProfile = default;
+            AzureOperatorNexusArmTemplateDeployMappingRuleProfile deployParametersMappingRuleProfile = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("artifactProfile"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dependsOnProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    artifactProfile = AzureOperatorNexusArmTemplateArtifactProfile.DeserializeAzureOperatorNexusArmTemplateArtifactProfile(property.Value, options);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("deployParametersMappingRuleProfile"u8))
+                if (prop.NameEquals("artifactType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    artifactType = new AzureOperatorNexusArtifactType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("artifactProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deployParametersMappingRuleProfile = AzureOperatorNexusArmTemplateDeployMappingRuleProfile.DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(property.Value, options);
+                    artifactProfile = AzureOperatorNexusArmTemplateArtifactProfile.DeserializeAzureOperatorNexusArmTemplateArtifactProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("artifactType"u8))
+                if (prop.NameEquals("deployParametersMappingRuleProfile"u8))
                 {
-                    artifactType = new AzureOperatorNexusArtifactType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dependsOnProfile"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
+                    deployParametersMappingRuleProfile = AzureOperatorNexusArmTemplateDeployMappingRuleProfile.DeserializeAzureOperatorNexusArmTemplateDeployMappingRuleProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AzureOperatorNexusNetworkFunctionArmTemplateApplication(
                 name,
                 dependsOnProfile,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 artifactType,
                 artifactProfile,
                 deployParametersMappingRuleProfile);
         }
-
-        BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionArmTemplateApplication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureOperatorNexusNetworkFunctionArmTemplateApplication IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionArmTemplateApplication)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureOperatorNexusNetworkFunctionArmTemplateApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

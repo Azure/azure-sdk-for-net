@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the information necessary to perform long term retention backup update operation. </summary>
     public partial class UpdateLongTermRetentionBackupContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateLongTermRetentionBackupContent"/>. </summary>
         public UpdateLongTermRetentionBackupContent()
@@ -51,16 +23,34 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateLongTermRetentionBackupContent"/>. </summary>
-        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateLongTermRetentionBackupContent(SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateLongTermRetentionBackupContent(UpdateLongTermRetentionBackupParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal UpdateLongTermRetentionBackupParametersProperties Properties { get; set; }
 
         /// <summary> The storage redundancy type of the copied backup. </summary>
         [WirePath("properties.requestedBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestedBackupStorageRedundancy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateLongTermRetentionBackupParametersProperties();
+                }
+                Properties.RequestedBackupStorageRedundancy = value;
+            }
+        }
     }
 }

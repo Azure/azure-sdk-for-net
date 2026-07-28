@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> IPv4, IPv6 addresses of the machine. </summary>
         [WirePath("ipAddresses")]
-        public IReadOnlyList<ContainerServiceMachineIPAddress> IPAddresses { get; }
+        public IReadOnlyList<ContainerServiceMachineIPAddress> IPAddresses { get; } = new ChangeTrackingList<ContainerServiceMachineIPAddress>();
     }
 }

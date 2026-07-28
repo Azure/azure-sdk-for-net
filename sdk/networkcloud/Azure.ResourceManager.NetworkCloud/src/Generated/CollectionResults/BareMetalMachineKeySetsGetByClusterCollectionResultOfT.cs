@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 BareMetalMachineKeySetList result = BareMetalMachineKeySetList.FromResponse(response);
-                yield return Page<NetworkCloudBareMetalMachineKeySetData>.FromValues((IReadOnlyList<NetworkCloudBareMetalMachineKeySetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudBareMetalMachineKeySetData>.FromValues((IReadOnlyList<NetworkCloudBareMetalMachineKeySetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

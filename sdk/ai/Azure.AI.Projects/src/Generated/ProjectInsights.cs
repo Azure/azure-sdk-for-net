@@ -23,11 +23,13 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Initializes a new instance of ProjectInsights. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectInsights(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectInsights(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -35,6 +37,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Generates an insights report from the provided evaluation configuration.
@@ -52,10 +57,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Generate(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Generate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -74,10 +89,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GenerateAsync(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Generate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Generates an insights report from the provided evaluation configuration. </summary>
@@ -126,10 +151,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string id, string foundryFeatures, bool? includeCoordinates, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -150,10 +185,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAsync(string id, string foundryFeatures, bool? includeCoordinates, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified insight report and its results. </summary>
@@ -207,15 +252,25 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            return new ProjectInsightsGetAllCollectionResult(
-                this,
-                foundryFeatures,
-                @type,
-                evalId,
-                runId,
-                agentName,
-                includeCoordinates,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.GetAll");
+            scope.Start();
+            try
+            {
+                return new ProjectInsightsGetAllCollectionResult(
+                    this,
+                    foundryFeatures,
+                    @type,
+                    evalId,
+                    runId,
+                    agentName,
+                    includeCoordinates,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -237,15 +292,25 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            return new ProjectInsightsGetAllAsyncCollectionResult(
-                this,
-                foundryFeatures,
-                @type,
-                evalId,
-                runId,
-                agentName,
-                includeCoordinates,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectInsights.GetAll");
+            scope.Start();
+            try
+            {
+                return new ProjectInsightsGetAllAsyncCollectionResult(
+                    this,
+                    foundryFeatures,
+                    @type,
+                    evalId,
+                    runId,
+                    agentName,
+                    includeCoordinates,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns insights in reverse chronological order, with the most recent entries first. </summary>

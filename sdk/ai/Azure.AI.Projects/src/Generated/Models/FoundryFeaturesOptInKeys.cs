@@ -19,8 +19,6 @@ namespace Azure.AI.Projects
         MemoryStoresV1Preview,
         /// <summary> RoutinesV1Preview. </summary>
         RoutinesV1Preview,
-        /// <summary> ToolboxesV1Preview. </summary>
-        ToolboxesV1Preview,
         /// <summary> SkillsV1Preview. </summary>
         SkillsV1Preview,
         /// <summary> DataGenerationJobsV1Preview. </summary>

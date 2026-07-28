@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVmSize : IUtf8JsonSerializable, IJsonModel<MachineLearningVmSize>
+    /// <summary> Describes the properties of a VM size. </summary>
+    public partial class MachineLearningVmSize : IJsonModel<MachineLearningVmSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVmSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningVmSize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningVmSize(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningVmSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningVmSize IPersistableModel<MachineLearningVmSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -46,20 +84,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCpus))
+            if (options.Format != "W" && Optional.IsDefined(VCPUs))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteNumberValue(VCpus.Value);
+                writer.WriteNumberValue(VCPUs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Gpus))
             {
                 writer.WritePropertyName("gpus"u8);
                 writer.WriteNumberValue(Gpus.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSVhdSizeMB))
+            if (options.Format != "W" && Optional.IsDefined(OsVhdSizeMB))
             {
                 writer.WritePropertyName("osVhdSizeMB"u8);
-                writer.WriteNumberValue(OSVhdSizeMB.Value);
+                writer.WriteNumberValue(OsVhdSizeMB.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxResourceVolumeMB))
             {
@@ -76,10 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("lowPriorityCapable"u8);
                 writer.WriteBooleanValue(LowPriorityCapable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPremiumIOSupported))
+            if (options.Format != "W" && Optional.IsDefined(SupportsPremiumIO))
             {
                 writer.WritePropertyName("premiumIO"u8);
-                writer.WriteBooleanValue(IsPremiumIOSupported.Value);
+                writer.WriteBooleanValue(SupportsPremiumIO.Value);
             }
             if (Optional.IsDefined(EstimatedVmPrices))
             {
@@ -90,21 +128,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("supportedComputeTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedComputeTypes)
+                foreach (string item in SupportedComputeTypes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,408 +156,166 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningVmSize IJsonModel<MachineLearningVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningVmSize IJsonModel<MachineLearningVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningVmSize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningVmSize(document.RootElement, options);
         }
 
-        internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string family = default;
-            int? vCpus = default;
+            int? vcpUs = default;
             int? gpus = default;
             int? osVhdSizeMB = default;
             int? maxResourceVolumeMB = default;
             double? memoryGB = default;
             bool? lowPriorityCapable = default;
-            bool? premiumIO = default;
+            bool? supportsPremiumIO = default;
             MachineLearningEstimatedVmPrices estimatedVmPrices = default;
             IReadOnlyList<string> supportedComputeTypes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"u8))
+                if (prop.NameEquals("family"u8))
                 {
-                    family = property.Value.GetString();
+                    family = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCPUs"u8))
+                if (prop.NameEquals("vCPUs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vCpus = property.Value.GetInt32();
+                    vcpUs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("gpus"u8))
+                if (prop.NameEquals("gpus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gpus = property.Value.GetInt32();
+                    gpus = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osVhdSizeMB"u8))
+                if (prop.NameEquals("osVhdSizeMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osVhdSizeMB = property.Value.GetInt32();
+                    osVhdSizeMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxResourceVolumeMB"u8))
+                if (prop.NameEquals("maxResourceVolumeMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxResourceVolumeMB = property.Value.GetInt32();
+                    maxResourceVolumeMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryGB"u8))
+                if (prop.NameEquals("memoryGB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryGB = property.Value.GetDouble();
+                    memoryGB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("lowPriorityCapable"u8))
+                if (prop.NameEquals("lowPriorityCapable"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lowPriorityCapable = property.Value.GetBoolean();
+                    lowPriorityCapable = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("premiumIO"u8))
+                if (prop.NameEquals("premiumIO"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    premiumIO = property.Value.GetBoolean();
+                    supportsPremiumIO = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("estimatedVMPrices"u8))
+                if (prop.NameEquals("estimatedVMPrices"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value, options);
+                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("supportedComputeTypes"u8))
+                if (prop.NameEquals("supportedComputeTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     supportedComputeTypes = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningVmSize(
                 name,
                 family,
-                vCpus,
+                vcpUs,
                 gpus,
                 osVhdSizeMB,
                 maxResourceVolumeMB,
                 memoryGB,
                 lowPriorityCapable,
-                premiumIO,
+                supportsPremiumIO,
                 estimatedVmPrices,
                 supportedComputeTypes ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  family: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Family))
-                {
-                    builder.Append("  family: ");
-                    if (Family.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Family}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Family}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VCpus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vCPUs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VCpus))
-                {
-                    builder.Append("  vCPUs: ");
-                    builder.AppendLine($"{VCpus.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Gpus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gpus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Gpus))
-                {
-                    builder.Append("  gpus: ");
-                    builder.AppendLine($"{Gpus.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSVhdSizeMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  osVhdSizeMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSVhdSizeMB))
-                {
-                    builder.Append("  osVhdSizeMB: ");
-                    builder.AppendLine($"{OSVhdSizeMB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxResourceVolumeMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxResourceVolumeMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxResourceVolumeMB))
-                {
-                    builder.Append("  maxResourceVolumeMB: ");
-                    builder.AppendLine($"{MaxResourceVolumeMB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryGB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryGB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryGB))
-                {
-                    builder.Append("  memoryGB: ");
-                    builder.AppendLine($"'{MemoryGB.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LowPriorityCapable), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lowPriorityCapable: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LowPriorityCapable))
-                {
-                    builder.Append("  lowPriorityCapable: ");
-                    var boolValue = LowPriorityCapable.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPremiumIOSupported), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  premiumIO: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsPremiumIOSupported))
-                {
-                    builder.Append("  premiumIO: ");
-                    var boolValue = IsPremiumIOSupported.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EstimatedVmPrices), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  estimatedVMPrices: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EstimatedVmPrices))
-                {
-                    builder.Append("  estimatedVMPrices: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, EstimatedVmPrices, options, 2, false, "  estimatedVMPrices: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedComputeTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  supportedComputeTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SupportedComputeTypes))
-                {
-                    if (SupportedComputeTypes.Any())
-                    {
-                        builder.Append("  supportedComputeTypes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SupportedComputeTypes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningVmSize>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningVmSize IPersistableModel<MachineLearningVmSize>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSize>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningVmSize(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningVmSize)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

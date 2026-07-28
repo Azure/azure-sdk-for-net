@@ -96,6 +96,10 @@ namespace Azure.Provisioning.ContainerInstance
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
             _eventType = DefineProperty<string>(nameof(EventType), new string[] { "type" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerEvent that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ServiceMeshMode
     {
         /// <summary> Istio deployed as an AKS addon. </summary>
-        Istio,
+        Istio = 0,
         /// <summary> Mesh is disabled. </summary>
-        Disabled
+        Disabled = 1
     }
 }

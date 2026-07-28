@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,26 +16,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="CategoricalDataDriftMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The categorical data drift metric to calculate. </param>
-        public CategoricalDataDriftMetricThreshold(CategoricalDataDriftMetric metric)
+        public CategoricalDataDriftMetricThreshold(CategoricalDataDriftMetric metric) : base(MonitoringFeatureDataType.Categorical)
         {
             Metric = metric;
-            DataType = MonitoringFeatureDataType.Categorical;
         }
 
         /// <summary> Initializes a new instance of <see cref="CategoricalDataDriftMetricThreshold"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metric"> [Required] The categorical data drift metric to calculate. </param>
-        internal CategoricalDataDriftMetricThreshold(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData, CategoricalDataDriftMetric metric) : base(dataType, threshold, serializedAdditionalRawData)
+        internal CategoricalDataDriftMetricThreshold(MonitoringFeatureDataType dataType, MonitoringThreshold threshold, IDictionary<string, BinaryData> additionalBinaryDataProperties, CategoricalDataDriftMetric metric) : base(dataType, threshold, additionalBinaryDataProperties)
         {
             Metric = metric;
-            DataType = dataType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CategoricalDataDriftMetricThreshold"/> for deserialization. </summary>
-        internal CategoricalDataDriftMetricThreshold()
-        {
         }
 
         /// <summary> [Required] The categorical data drift metric to calculate. </summary>

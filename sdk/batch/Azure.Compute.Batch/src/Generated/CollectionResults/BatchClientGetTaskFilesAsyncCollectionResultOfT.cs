@@ -80,8 +80,8 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchNodeFileListResult result = (BatchNodeFileListResult)response;
-                yield return Page<BatchNodeFile>.FromValues((IReadOnlyList<BatchNodeFile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
+                yield return Page<BatchNodeFile>.FromValues((IReadOnlyList<BatchNodeFile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

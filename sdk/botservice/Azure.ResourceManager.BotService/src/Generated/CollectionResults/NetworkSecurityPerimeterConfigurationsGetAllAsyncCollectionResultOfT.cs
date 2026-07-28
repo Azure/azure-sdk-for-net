@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.BotService
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationList result = NetworkSecurityPerimeterConfigurationList.FromResponse(response);
-                yield return Page<BotServiceNetworkSecurityPerimeterConfigurationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BotServiceNetworkSecurityPerimeterConfigurationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

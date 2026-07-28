@@ -58,8 +58,8 @@ namespace Azure.AI.Language.Text.Authoring
                     yield break;
                 }
                 PagedTextAnalysisAuthoringTrainingConfigVersion result = (PagedTextAnalysisAuthoringTrainingConfigVersion)response;
-                yield return Page<TextAuthoringTrainingConfigVersion>.FromValues((IReadOnlyList<TextAuthoringTrainingConfigVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TextAuthoringTrainingConfigVersion>.FromValues((IReadOnlyList<TextAuthoringTrainingConfigVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

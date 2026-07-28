@@ -462,6 +462,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
+        /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
+        [WirePath("virtualMachinesProfile.scale")]
+        public AgentPoolScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return VirtualMachinesProfile is null ? default : VirtualMachinesProfile.Scale;
+            }
+            set
+            {
+                if (VirtualMachinesProfile is null)
+                {
+                    VirtualMachinesProfile = new VirtualMachinesProfile();
+                }
+                VirtualMachinesProfile.Scale = value;
+            }
+        }
+
         /// <summary> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </summary>
         [WirePath("status.provisioningError")]
         public ResponseError StatusProvisioningError

@@ -163,10 +163,10 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("tool_choice"u8);
                 writer.WriteObjectValue(ToolChoice, options);
             }
-            if (Optional.IsDefined(ParallelToolCalls))
+            if (Optional.IsDefined(AllowParallelToolCalls))
             {
                 writer.WritePropertyName("parallel_tool_calls"u8);
-                writer.WriteBooleanValue(ParallelToolCalls.Value);
+                writer.WriteBooleanValue(AllowParallelToolCalls.Value);
             }
             if (Optional.IsDefined(Temperature))
             {
@@ -290,7 +290,7 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             ToolChoiceOption toolChoice = default;
-            bool? parallelToolCalls = default;
+            bool? allowParallelToolCalls = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             ReasoningEffort? reasoningEffort = default;
@@ -449,7 +449,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    parallelToolCalls = prop.Value.GetBoolean();
+                    allowParallelToolCalls = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
@@ -553,7 +553,7 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 toolChoice,
-                parallelToolCalls,
+                allowParallelToolCalls,
                 temperature,
                 maxResponseOutputTokens,
                 reasoningEffort,

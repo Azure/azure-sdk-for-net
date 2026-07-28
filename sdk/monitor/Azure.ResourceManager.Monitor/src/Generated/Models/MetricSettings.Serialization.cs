@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricSettings : IUtf8JsonSerializable, IJsonModel<MetricSettings>
+    /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric. </summary>
+    public partial class MetricSettings : IJsonModel<MetricSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MetricSettings"/> for deserialization. </summary>
+        internal MetricSettings()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMetricSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MetricSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricSettings IPersistableModel<MetricSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MetricSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
@@ -51,15 +96,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,100 +113,72 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        MetricSettings IJsonModel<MetricSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricSettings IJsonModel<MetricSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMetricSettings(document.RootElement, options);
         }
 
-        internal static MetricSettings DeserializeMetricSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MetricSettings DeserializeMetricSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             TimeSpan? timeGrain = default;
             string category = default;
-            bool enabled = default;
+            bool isEnabled = default;
             RetentionPolicy retentionPolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrain"u8))
+                if (prop.NameEquals("timeGrain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeGrain = property.Value.GetTimeSpan("P");
+                    timeGrain = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("category"u8))
+                if (prop.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString();
+                    category = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabled"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = property.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("retentionPolicy"u8))
+                if (prop.NameEquals("retentionPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value, options);
+                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MetricSettings(timeGrain, category, enabled, retentionPolicy, serializedAdditionalRawData);
+            return new MetricSettings(timeGrain, category, isEnabled, retentionPolicy, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MetricSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MetricSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MetricSettings IPersistableModel<MetricSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMetricSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MetricSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MetricSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

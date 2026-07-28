@@ -8,13 +8,14 @@ public partial class ProjectsAgentsModelFactory
     /// <summary> Creates a new instance of <see cref="Agents.ProjectsAgentRecord"/> for mocking. </summary>
     /// <param name="id">The agent identifier.</param>
     /// <param name="name">The agent name.</param>
-    public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default)
+    /// <param name="state">The agent state.</param>
+    public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state=default)
     {
-        return new ProjectsAgentRecord("agent", id, name, new AgentObjectVersions(), default, default, default, default, default, null);
+        return new ProjectsAgentRecord("agent", id, name, state, new AgentObjectVersions(), default, default, default, default, default, null);
     }
 
-    internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
+    internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state=default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
     {
-        return new ProjectsAgentRecord("agent", id, name, versions, agentEndpoint, instanceIdentity, blueprint, blueprintReference, agentCard, additionalBinaryDataProperties: null);
+        return new ProjectsAgentRecord("agent", id, name, state, versions, agentEndpoint, instanceIdentity, blueprint, blueprintReference, agentCard, additionalBinaryDataProperties: null);
     }
 }

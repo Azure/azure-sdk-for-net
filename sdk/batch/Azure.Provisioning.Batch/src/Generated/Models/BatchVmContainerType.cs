@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchVmContainerType
     {
         /// <summary> A Docker compatible container technology will be used to launch the containers. </summary>
-        DockerCompatible,
+        DockerCompatible = 0,
         /// <summary> A CRI based technology will be used to launch the containers. </summary>
-        CriCompatible
+        CriCompatible = 1
     }
 }

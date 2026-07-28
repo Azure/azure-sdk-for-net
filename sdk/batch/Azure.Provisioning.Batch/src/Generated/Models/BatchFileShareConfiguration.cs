@@ -109,6 +109,10 @@ namespace Azure.Provisioning.Batch
             _accountKey = DefineProperty<string>(nameof(AccountKey), new string[] { "accountKey" }, isRequired: true);
             _relativeMountPath = DefineProperty<string>(nameof(RelativeMountPath), new string[] { "relativeMountPath" }, isRequired: true);
             _mountOptions = DefineProperty<string>(nameof(MountOptions), new string[] { "mountOptions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchFileShareConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

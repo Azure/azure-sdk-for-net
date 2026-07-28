@@ -7,12 +7,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("MachineLearningPartialManagedServiceIdentity")]
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Managed service identity (system assigned and/or user assigned identities)
     /// </summary>
+    // Customized: preserve the previous SDK identity model shape while using the ARM identity enum.
+    // The TypeSpec generator models this partial identity schema differently, so the custom model keeps
+    // the GA property names and dictionary payload shape for source compatibility.
     public partial class MachineLearningPartialManagedServiceIdentity
     {
         /// <summary>

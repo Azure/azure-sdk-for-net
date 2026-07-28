@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServices.Models;
 
@@ -21,6 +20,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(CapabilitiesResultProperties))]
     [ModelReaderWriterBuildable(typeof(CmkKekIdentity))]
     [ModelReaderWriterBuildable(typeof(CmkKeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(CostManagementSettings))]
     [ModelReaderWriterBuildable(typeof(CrossSubscriptionRestoreSettings))]
     [ModelReaderWriterBuildable(typeof(DeletedVaultList))]
     [ModelReaderWriterBuildable(typeof(DeletedVaultProperties))]
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(DeletedVaultRestoreInputProperties))]
     [ModelReaderWriterBuildable(typeof(DnsZone))]
     [ModelReaderWriterBuildable(typeof(DnsZoneResult))]
+    [ModelReaderWriterBuildable(typeof(ImmutabilityConfiguration))]
     [ModelReaderWriterBuildable(typeof(ImmutabilitySettings))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
@@ -64,7 +65,6 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAadDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAcsDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreSettings))]
     [ModelReaderWriterBuildable(typeof(SourceScanConfiguration))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

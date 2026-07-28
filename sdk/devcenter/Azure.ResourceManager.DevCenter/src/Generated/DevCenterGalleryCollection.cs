@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterGalleryResource.ResourceType, out string devCenterGalleryApiVersion);
             _galleriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterGalleryResource.ResourceType.Namespace, Diagnostics);
-            _galleriesRestClient = new Galleries(_galleriesClientDiagnostics, Pipeline, Endpoint, devCenterGalleryApiVersion ?? "2026-01-01-preview");
+            _galleriesRestClient = new Galleries(_galleriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterGalleryApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

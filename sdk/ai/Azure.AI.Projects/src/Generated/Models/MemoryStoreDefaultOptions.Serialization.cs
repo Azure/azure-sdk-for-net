@@ -85,10 +85,10 @@ namespace Azure.AI.Projects.Memory
             }
             writer.WritePropertyName("chat_summary_enabled"u8);
             writer.WriteBooleanValue(IsChatSummaryEnabled);
-            if (Optional.IsDefined(ProceduralMemoryEnabled))
+            if (Optional.IsDefined(IsProceduralMemoryEnabled))
             {
                 writer.WritePropertyName("procedural_memory_enabled"u8);
-                writer.WriteBooleanValue(ProceduralMemoryEnabled.Value);
+                writer.WriteBooleanValue(IsProceduralMemoryEnabled.Value);
             }
             if (Optional.IsDefined(DefaultTtlSeconds))
             {
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.Memory
             bool isUserProfileEnabled = default;
             string userProfileDetails = default;
             bool isChatSummaryEnabled = default;
-            bool? proceduralMemoryEnabled = default;
+            bool? isProceduralMemoryEnabled = default;
             TimeSpan? defaultTtlSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.AI.Projects.Memory
                     {
                         continue;
                     }
-                    proceduralMemoryEnabled = prop.Value.GetBoolean();
+                    isProceduralMemoryEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("default_ttl_seconds"u8))
@@ -187,7 +187,7 @@ namespace Azure.AI.Projects.Memory
                 isUserProfileEnabled,
                 userProfileDetails,
                 isChatSummaryEnabled,
-                proceduralMemoryEnabled,
+                isProceduralMemoryEnabled,
                 defaultTtlSeconds,
                 additionalBinaryDataProperties);
         }

@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class GcpAuthModel : IUtf8JsonSerializable, IJsonModel<GcpAuthModel>
+    /// <summary> Model for API authentication for all GCP kind connectors. </summary>
+    public partial class GcpAuthModel : CcpAuthConfig, IJsonModel<GcpAuthModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpAuthModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="GcpAuthModel"/> for deserialization. </summary>
+        internal GcpAuthModel()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CcpAuthConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGcpAuthModel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GcpAuthModel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GcpAuthModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GcpAuthModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GcpAuthModel IPersistableModel<GcpAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options) => (GcpAuthModel)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GcpAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GcpAuthModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GcpAuthModel)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("serviceAccountEmail"u8);
             writer.WriteStringValue(ServiceAccountEmail);
@@ -44,190 +88,64 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(WorkloadIdentityProviderId);
         }
 
-        GcpAuthModel IJsonModel<GcpAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GcpAuthModel IJsonModel<GcpAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GcpAuthModel)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CcpAuthConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GcpAuthModel)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGcpAuthModel(document.RootElement, options);
         }
 
-        internal static GcpAuthModel DeserializeGcpAuthModel(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GcpAuthModel DeserializeGcpAuthModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            CcpAuthType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serviceAccountEmail = default;
             string projectNumber = default;
             string workloadIdentityProviderId = default;
-            CcpAuthType type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceAccountEmail"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    serviceAccountEmail = property.Value.GetString();
+                    @type = new CcpAuthType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("projectNumber"u8))
+                if (prop.NameEquals("serviceAccountEmail"u8))
                 {
-                    projectNumber = property.Value.GetString();
+                    serviceAccountEmail = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workloadIdentityProviderId"u8))
+                if (prop.NameEquals("projectNumber"u8))
                 {
-                    workloadIdentityProviderId = property.Value.GetString();
+                    projectNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("workloadIdentityProviderId"u8))
                 {
-                    type = new CcpAuthType(property.Value.GetString());
+                    workloadIdentityProviderId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GcpAuthModel(type, serializedAdditionalRawData, serviceAccountEmail, projectNumber, workloadIdentityProviderId);
+            return new GcpAuthModel(@type, additionalBinaryDataProperties, serviceAccountEmail, projectNumber, workloadIdentityProviderId);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceAccountEmail), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceAccountEmail: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceAccountEmail))
-                {
-                    builder.Append("  serviceAccountEmail: ");
-                    if (ServiceAccountEmail.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceAccountEmail}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceAccountEmail}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProjectNumber), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  projectNumber: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProjectNumber))
-                {
-                    builder.Append("  projectNumber: ");
-                    if (ProjectNumber.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProjectNumber}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProjectNumber}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkloadIdentityProviderId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  workloadIdentityProviderId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WorkloadIdentityProviderId))
-                {
-                    builder.Append("  workloadIdentityProviderId: ");
-                    if (WorkloadIdentityProviderId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{WorkloadIdentityProviderId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{WorkloadIdentityProviderId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{AuthType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<GcpAuthModel>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(GcpAuthModel)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GcpAuthModel IPersistableModel<GcpAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpAuthModel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGcpAuthModel(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GcpAuthModel)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GcpAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

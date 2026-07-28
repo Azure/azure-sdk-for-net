@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Search
         {
             TryGetApiVersion(SearchServiceNetworkSecurityPerimeterConfigurationResource.ResourceType, out string searchServiceNetworkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceNetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, searchServiceNetworkSecurityPerimeterConfigurationApiVersion ?? "2026-03-01-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, searchServiceNetworkSecurityPerimeterConfigurationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

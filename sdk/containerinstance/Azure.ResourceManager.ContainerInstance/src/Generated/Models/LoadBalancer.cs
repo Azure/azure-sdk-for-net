@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> List of Load Balancer Backend Address Pools. </summary>
-        public IList<LoadBalancerBackendAddressPool> BackendAddressPools { get; }
+        public IList<LoadBalancerBackendAddressPool> BackendAddressPools { get; } = new ChangeTrackingList<LoadBalancerBackendAddressPool>();
     }
 }

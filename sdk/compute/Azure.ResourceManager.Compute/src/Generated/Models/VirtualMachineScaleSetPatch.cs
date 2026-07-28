@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -22,14 +23,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> The virtual machine scale set sku. </param>
         /// <param name="plan"> The purchase plan when deploying a virtual machine scale set from VM Marketplace images. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set. </param>
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The virtual machine scale set zones. </param>
         /// <param name="placement"> User-defined constraints for virtual machine scale set hardware placement. </param>
-        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetPatchProperties properties, ManagedServiceIdentity identity, IList<string> zones, VirtualMachinePlacement placement) : base(tags, serializedAdditionalRawData)
+        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetPatchProperties properties, ManagedServiceIdentity identity, IList<string> zones, VirtualMachinePlacement placement) : base(tags, additionalBinaryDataProperties)
         {
             Sku = sku;
             Plan = plan;
@@ -41,14 +42,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The virtual machine scale set sku. </summary>
         public ComputeSku Sku { get; set; }
+
         /// <summary> The purchase plan when deploying a virtual machine scale set from VM Marketplace images. </summary>
         public ComputePlan Plan { get; set; }
+
         /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
         public VirtualMachineScaleSetPatchProperties Properties { get; set; }
+
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The virtual machine scale set zones. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> User-defined constraints for virtual machine scale set hardware placement. </summary>
         public VirtualMachinePlacement Placement { get; set; }
     }

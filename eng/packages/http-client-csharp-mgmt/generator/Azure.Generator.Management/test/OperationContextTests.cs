@@ -402,6 +402,36 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ValidateParameterMapping_MatchesConstantSegmentsCaseInsensitive()
+        {
+            Assert.That(new RequestPathSegment("resourcegroups"), Is.EqualTo(new RequestPathSegment("resourceGroups")));
+
+            var contextualPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}");
+            var operationContext = OperationContext.Create(contextualPathPattern);
+            var operationPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}");
+
+            var registry = operationContext.BuildParameterMapping(operationPath);
+
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(subscriptionMapping.ContextualParameter!.Key, Is.EqualTo("subscriptions"));
+            Assert.That(subscriptionMapping.ContextualParameter.VariableName, Is.EqualTo("subscriptionId"));
+
+            Assert.That(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping), Is.True);
+            Assert.That(resourceGroupMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(resourceGroupMapping.ContextualParameter!.Key, Is.EqualTo("resourcegroups"));
+            Assert.That(resourceGroupMapping.ContextualParameter.VariableName, Is.EqualTo("resourceGroupName"));
+
+            Assert.That(registry.TryGetValue("ruleName", out var ruleMapping), Is.True);
+            Assert.That(ruleMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(ruleMapping.ContextualParameter!.Key, Is.EqualTo("metricAlerts"));
+            Assert.That(ruleMapping.ContextualParameter.VariableName, Is.EqualTo("ruleName"));
+
+            Assert.That(registry.TryGetValue("statusName", out var statusMapping), Is.True);
+            Assert.That(statusMapping!.ContextualParameter, Is.Null);
+        }
+
+        [Test]
         public void ValidateParameterMapping_ChildResourceWithPassThroughParameter()
         {
             // Test case where operation path represents a child resource with an additional parameter

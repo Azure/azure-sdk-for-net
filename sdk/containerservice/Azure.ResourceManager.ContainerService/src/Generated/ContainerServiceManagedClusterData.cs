@@ -806,6 +806,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
+        [WirePath("properties.schedulerProfile.upstream.schedulerConfigMode")]
+        public SchedulerConfigMode? UpstreamSchedulerConfigMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpstreamSchedulerConfigMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.UpstreamSchedulerConfigMode = value;
+            }
+        }
+
         /// <summary> The error details information of the managed cluster. Preserves the detailed info of failure. If there was no error, this field is omitted. </summary>
         [WirePath("properties.status.provisioningError")]
         public ResponseError StatusProvisioningError

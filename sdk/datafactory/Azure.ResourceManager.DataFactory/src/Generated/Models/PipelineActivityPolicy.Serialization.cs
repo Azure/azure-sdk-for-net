@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineActivityPolicy : IUtf8JsonSerializable, IJsonModel<PipelineActivityPolicy>
+    /// <summary> Execution policy for an activity. </summary>
+    public partial class PipelineActivityPolicy : IJsonModel<PipelineActivityPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineActivityPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PipelineActivityPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePipelineActivityPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PipelineActivityPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PipelineActivityPolicy IPersistableModel<PipelineActivityPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PipelineActivityPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PipelineActivityPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,21 +70,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                JsonSerializer.Serialize(writer, Timeout);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Timeout, options);
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
-                JsonSerializer.Serialize(writer, Retry);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Retry, options);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
@@ -64,9 +104,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -74,22 +114,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        PipelineActivityPolicy IJsonModel<PipelineActivityPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PipelineActivityPolicy IJsonModel<PipelineActivityPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PipelineActivityPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePipelineActivityPolicy(document.RootElement, options);
         }
 
-        internal static PipelineActivityPolicy DeserializePipelineActivityPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PipelineActivityPolicy DeserializePipelineActivityPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,98 +142,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> timeout = default;
             DataFactoryElement<int> retry = default;
             int? retryIntervalInSeconds = default;
-            bool? secureInput = default;
-            bool? secureOutput = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isSecureInputEnabled = default;
+            bool? isSecureOutputEnabled = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("timeout"u8))
+                if (prop.NameEquals("timeout"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    ReadTimeout(prop, ref timeout);
+                    continue;
+                }
+                if (prop.NameEquals("retry"u8))
+                {
+                    ReadRetry(prop, ref retry);
+                    continue;
+                }
+                if (prop.NameEquals("retryIntervalInSeconds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    retryIntervalInSeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("retry"u8))
+                if (prop.NameEquals("secureInput"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retry = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    isSecureInputEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("retryIntervalInSeconds"u8))
+                if (prop.NameEquals("secureOutput"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retryIntervalInSeconds = property.Value.GetInt32();
+                    isSecureOutputEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("secureInput"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    secureInput = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("secureOutput"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    secureOutput = property.Value.GetBoolean();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new PipelineActivityPolicy(
                 timeout,
                 retry,
                 retryIntervalInSeconds,
-                secureInput,
-                secureOutput,
+                isSecureInputEnabled,
+                isSecureOutputEnabled,
                 additionalProperties);
         }
-
-        BinaryData IPersistableModel<PipelineActivityPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PipelineActivityPolicy IPersistableModel<PipelineActivityPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePipelineActivityPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PipelineActivityPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

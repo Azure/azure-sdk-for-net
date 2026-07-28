@@ -40,23 +40,5 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Application Monitoring Profile for Kubernetes Application Container. Collects application logs, metrics and traces through auto-instrumentation of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
         [WirePath("appMonitoring")]
         internal ManagedClusterAzureMonitorProfileAppMonitoring AppMonitoring { get; set; }
-
-        /// <summary> Indicates if Application Monitoring Auto-instrumentation is enabled or not. </summary>
-        [WirePath("appMonitoring.autoInstrumentation.enabled")]
-        public bool? IsAppMonitoringAutoInstrumentationEnabled
-        {
-            get
-            {
-                return AppMonitoring is null ? default : AppMonitoring.IsAppMonitoringAutoInstrumentationEnabled;
-            }
-            set
-            {
-                if (AppMonitoring is null)
-                {
-                    AppMonitoring = new ManagedClusterAzureMonitorProfileAppMonitoring();
-                }
-                AppMonitoring.IsAppMonitoringAutoInstrumentationEnabled = value;
-            }
-        }
     }
 }

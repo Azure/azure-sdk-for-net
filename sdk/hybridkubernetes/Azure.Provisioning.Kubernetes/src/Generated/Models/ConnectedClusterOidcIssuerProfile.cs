@@ -69,6 +69,10 @@ namespace Azure.Provisioning.Kubernetes
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _issuerUri = DefineProperty<string>(nameof(IssuerUri), new string[] { "issuerUrl" }, isOutput: true);
             _selfHostedIssuerUri = DefineProperty<string>(nameof(SelfHostedIssuerUri), new string[] { "selfHostedIssuerUrl" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterOidcIssuerProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

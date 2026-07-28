@@ -1,6 +1,16 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.2 (2026-06-18)
 
 ### Features Added
 - Upgraded api-version to 2026-04-01-preview.
@@ -11,10 +21,6 @@
 - Renamed `ComputeFleetMode.Instance` to `ComputeFleetMode.Launch` to align with the updated service terminology.
 - Removed `ComputeFleetVmOperationStatus.Canceled` and `ComputeFleetVmOperationStatus.CancelFailedStatusUnknown` enum values.
 - Removed `Cancel` and `CancelAsync` operations from `ComputeFleetResource`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.1 (2026-04-21)
 
