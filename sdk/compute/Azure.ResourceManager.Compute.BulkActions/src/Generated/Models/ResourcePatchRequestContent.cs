@@ -13,25 +13,25 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Request model perform a resource operation in a list of resources. </summary>
-    public partial class ResourcePatchRequest
+    public partial class ResourcePatchRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourcePatchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcePatchRequestContent"/>. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
-        public ResourcePatchRequest(IEnumerable<ScheduledActionResourceInput> resources)
+        public ResourcePatchRequestContent(IEnumerable<ScheduledActionResourceInput> resources)
         {
             Argument.AssertNotNull(resources, nameof(resources));
 
             Resources = resources.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourcePatchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcePatchRequestContent"/>. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcePatchRequest(IList<ScheduledActionResourceInput> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourcePatchRequestContent(IList<ScheduledActionResourceInput> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
