@@ -552,36 +552,6 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="_SetTestDependencyGraphInnerTarget">
-    <PropertyGroup>
-      <InnerTargets>GetTestDependencyGraphInner</InnerTargets>
-    </PropertyGroup>
-  </Target>
-
-  <Target
-    Name="GetTestDependencyGraph"
-    DependsOnTargets="_SetTestDependencyGraphInnerTarget;DispatchToInnerBuilds"
-    Condition="'$(IsCrossTargetingBuild)' == 'true'"
-    Returns="@(TestDependencyGraphEntry)">
-
-    <ItemGroup>
-      <TestDependencyGraphEntry Include="@(InnerOutput)" />
-    </ItemGroup>
-  </Target>
-
-  <Target Name="GetTestDependencyGraphInner" DependsOnTargets="ResolveReferences" Returns="@(TestDependencyGraphEntry)">
-    <PropertyGroup>
-      <_DependencyGraphPackageRoot>$(PackageRootDirectory.Replace($(RepoRoot), '').TrimStart('/').TrimStart('\'))</_DependencyGraphPackageRoot>
-    </PropertyGroup>
-
-    <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and '$(IsGeneratorLibrary)' != 'true'">
-      <TestDependencyGraphEntry Include="$(MSBuildProjectFullPath)">
-        <PackageRoot>$(_DependencyGraphPackageRoot)</PackageRoot>
-        <References>@(ReferencePath -> '%(Filename)', ',')</References>
-      </TestDependencyGraphEntry>
-    </ItemGroup>
-  </Target>
-
   <!--
     Central Package Management Enforcement
 

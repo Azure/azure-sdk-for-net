@@ -247,7 +247,6 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
-                EnableTestDependencyGraphCache: true
                 EnableTestWeighting: true
                 TestPackagesPerJob: 10
                 DefaultMatrixConfigs: ${{ parameters.MatrixConfigs }}

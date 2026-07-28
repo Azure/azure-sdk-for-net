@@ -91,27 +91,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   return $allPackageProps
 }
 
-function Get-DependentPackageRootsFromGraph($DependencyGraphPath, $DependencyNames)
-{
-  $dependencies = [System.Collections.Generic.HashSet[string]]::new(
-    [string[]]$DependencyNames,
-    [System.StringComparer]::OrdinalIgnoreCase)
-
-  return Get-Content $DependencyGraphPath | ForEach-Object {
-    $parts = $_ -split '\|', 2
-    if ($parts.Count -ne 2) {
-      throw "Malformed test dependency graph entry: $_"
-    }
-
-    foreach ($reference in ($parts[1] -split ',')) {
-      if ($dependencies.Contains($reference)) {
-        Join-Path $RepoRoot $parts[0]
-        break
-      }
-    }
-  } | Sort-Object -Unique
-}
-
 function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages, $diffObj, $AllPkgProps)
 {
   $additionalValidationPackages = @()
@@ -159,77 +138,23 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 
   Write-Host "Calculating dependencies for: $TestDependsOnDependency"
 
-  $dependentProjects = @()
-  $dependencyGraphPath = $env:AZURESDK_TEST_DEPENDENCY_GRAPH_PATH
+  $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
 
-  if ($dependencyGraphPath) {
-    $checksumPath = "$dependencyGraphPath.sha256"
-    $graphIsValid = $false
-    if ((Test-Path $dependencyGraphPath) -and (Test-Path $checksumPath)) {
-      $expectedChecksum = (Get-Content $checksumPath -Raw).Trim()
-      $actualChecksum = (Get-FileHash $dependencyGraphPath -Algorithm SHA256).Hash
-      $graphIsValid = $expectedChecksum -eq $actualChecksum
-      if (!$graphIsValid) {
-        Write-Warning "The cached test dependency graph checksum is invalid. Regenerating it."
-      }
-    }
+  $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    " /p:OutputProjectFilePath=`"$outputFilePath`""
 
-    if (!$graphIsValid) {
-      $dependencyGraphDirectory = Split-Path $dependencyGraphPath -Parent
-      New-Item -ItemType Directory -Path $dependencyGraphDirectory -Force | Out-Null
+  Invoke-LoggedMsbuildCommand $command
 
-      Write-Host "No cached test dependency graph was found. Generating the complete graph."
-      $command = "dotnet build /t:GetTestDependencyGraph ./eng/service.proj /p:IncludeSrc=false " +
-        "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-        " /p:OutputProjectFilePath=`"$dependencyGraphPath`""
-      Invoke-LoggedMsbuildCommand $command
-
-      if ((Test-Path $dependencyGraphPath) -and (Get-Item $dependencyGraphPath).Length -gt 0) {
-        (Get-FileHash $dependencyGraphPath -Algorithm SHA256).Hash | Set-Content $checksumPath
-      }
-    }
-    else {
-      Write-Host "Using cached test dependency graph '$dependencyGraphPath'."
-    }
-
-    if (!(Test-Path $dependencyGraphPath) -or (Get-Item $dependencyGraphPath).Length -eq 0) {
-      throw "The test dependency graph '$dependencyGraphPath' is missing or empty."
-    }
-
-    $dependentProjects = Get-DependentPackageRootsFromGraph `
-      -DependencyGraphPath $dependencyGraphPath `
-      -DependencyNames $TestDependsOnDependencySet.Name
-  }
-  else {
-    $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
-
-    $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
-      "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-      " /p:OutputProjectFilePath=`"$outputFilePath`""
-
-    Invoke-LoggedMsbuildCommand $command
-
-    if (Test-Path $outputFilePath) {
-      $dependentProjects = Get-Content $outputFilePath
-    }
-  }
-
-  if ($dependentProjects) {
-    $packagesByDirectory = [System.Collections.Generic.Dictionary[string, object]]::new(
-      [System.StringComparer]::OrdinalIgnoreCase)
-    foreach ($package in $AllPkgProps) {
-      if ($package.DirectoryPath) {
-        $packagesByDirectory[$package.DirectoryPath] = $package
-      }
-    }
+  if (Test-Path $outputFilePath) {
+    $dependentProjects = Get-Content $outputFilePath
 
     foreach ($packageRootPath in $dependentProjects) {
       if (!$packageRootPath) {
         Write-Verbose "Get-dotnet-AdditionalValidationPackagesFromPackageSet::dependentProjects Package root path is empty, skipping."
         continue
       }
-      $pkg = $null
-      [void]$packagesByDirectory.TryGetValue($packageRootPath, [ref]$pkg)
+      $pkg = $AllPkgProps | Where-Object { $_.DirectoryPath -eq $packageRootPath }
 
       if (!$pkg) {
         Write-Verbose "Unable to find package for path $packageRootPath, skipping. Most likely a nested test project not directly under test."

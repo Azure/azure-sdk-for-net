@@ -44,9 +44,6 @@ extends:
       # TEMP (draft only): these shared-infrastructure changes otherwise select Azure.Core
       # and nearly every dependent package, exceeding the dynamic YAML size limit. Remove
       # this block before marking the Test CI prototype ready for review.
-      - eng/Directory.Build.Common.targets
-      - eng/service.proj
-      - eng/scripts/Language-Settings.ps1
       - eng/scripts/Get-PackageTestWeights.ps1
       - eng/scripts/Apply-WeightedBatching.ps1
       - eng/scripts/tests/TestCiWeighting.Tests.ps1
