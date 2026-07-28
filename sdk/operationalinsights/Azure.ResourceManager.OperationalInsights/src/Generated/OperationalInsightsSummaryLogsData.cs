@@ -41,6 +41,24 @@ namespace Azure.ResourceManager.OperationalInsights
         [WirePath("properties")]
         internal SummaryLogsProperties Properties { get; set; }
 
+        /// <summary> SummaryRules rule type: User. </summary>
+        [WirePath("properties.ruleType")]
+        public OperationalInsightsSummaryLogsRuleType? SummaryLogsRuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SummaryLogsRuleType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SummaryLogsProperties();
+                }
+                Properties.SummaryLogsRuleType = value;
+            }
+        }
+
         /// <summary> The display name of the Summary rule. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName
@@ -84,6 +102,26 @@ namespace Azure.ResourceManager.OperationalInsights
             get
             {
                 return Properties is null ? default : Properties.IsActive;
+            }
+        }
+
+        /// <summary> Indicates the reason for rule deactivation. </summary>
+        [WirePath("properties.statusCode")]
+        public OperationalInsightsSummaryLogsStatusCode? SummaryLogsStatusCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SummaryLogsStatusCode;
+            }
+        }
+
+        /// <summary> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </summary>
+        [WirePath("properties.provisioningState")]
+        public OperationalInsightsSummaryLogsProvisioningState? SummaryLogsProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SummaryLogsProvisioningState;
             }
         }
 

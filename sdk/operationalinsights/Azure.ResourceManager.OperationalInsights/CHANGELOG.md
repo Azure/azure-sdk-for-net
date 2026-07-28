@@ -2,6 +2,12 @@
 
 ## 1.4.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
 ### Other Changes
 
 - Corrected the names of Summary Logs enum types. The previous names remain available as obsolete compatibility APIs.
