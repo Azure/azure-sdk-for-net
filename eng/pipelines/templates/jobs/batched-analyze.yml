@@ -32,7 +32,7 @@ jobs:
   - job:
     displayName: "Analyze"
     dependsOn: ${{ parameters.DependsOn }}
-    condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
+    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true), ne(${{ parameters.Matrix }}, '{}'))
 
     strategy:
       matrix: $[ ${{ parameters.Matrix }} ]

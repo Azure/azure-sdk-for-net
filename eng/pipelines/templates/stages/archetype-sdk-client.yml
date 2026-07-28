@@ -72,6 +72,11 @@ extends:
           variables:
             - template: /eng/pipelines/templates/variables/globals.yml
             - template: /eng/pipelines/templates/variables/image.yml
+            # TEMP: isolate Test jobs for the matched Test CI performance experiment.
+            - name: Skip.Build
+              value: true
+            - name: Skip.Analyze
+              value: true
           jobs:
             - job: NoOp
               displayName: No-op
