@@ -456,7 +456,7 @@
     <ApiCompatPermitUnnecessarySuppressions Condition="'$(ApiCompatPermitUnnecessarySuppressions)' == ''">true</ApiCompatPermitUnnecessarySuppressions>
     <ApiCompatSuppressionOutputFile>$(MSBuildThisFileDirectory)apicompatbaselines\$(MSBuildProjectName).xml</ApiCompatSuppressionOutputFile>
     <_ApiCompatValidateAssembliesSemaphoreFile>$(IntermediateOutputPath)ValidateApiCompatForSrc.semaphore</_ApiCompatValidateAssembliesSemaphoreFile>
-    <TargetsTriggeredByCompilation Condition="'$(RunApiCompatForSrc)' == 'true'">$(TargetsTriggeredByCompilation);ValidateApiCompatForSrc</TargetsTriggeredByCompilation>
+    <_ApiCompatIncrementalStateFile>$(IntermediateOutputPath)ValidateApiCompatForSrc.state</_ApiCompatIncrementalStateFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
@@ -486,8 +486,13 @@
            Text="Local CompatibilitySuppressions.xml files are not supported. Move suppressions to eng\apicompatbaselines\$(MSBuildProjectName).xml instead." />
   </Target>
 
-  <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
-     <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+  <Target Name="PrepareApiCompatIncrementalState"
+          BeforeTargets="ValidateApiCompatForSrc"
+          Condition="'$(ApiCompatVersion)' != ''">
+    <WriteLinesToFile File="$(_ApiCompatIncrementalStateFile)"
+                      Lines="GenerateSuppressionFile=$(ApiCompatGenerateSuppressionFile)|SuppressionFileExists=$([System.IO.File]::Exists('$(ApiCompatSuppressionOutputFile)'))"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
   </Target>
 
   <Target Name="NormalizeApiCompatSuppressionFile"
@@ -503,10 +508,12 @@
                       WriteOnlyWhenDifferent="true" />
   </Target>
 
+  <!-- Run even when compilation is up to date so a prior ApiCompat failure cannot be skipped. -->
   <Target Name="ValidateApiCompatForSrc"
+          AfterTargets="CoreCompile"
           Condition="'$(ApiCompatVersion)' != '' and '$(RunApiCompatForSrc)' == 'true' and '$(RunApiCompat)' == 'true' and '$(DesignTimeBuild)' != 'true'"
           DependsOnTargets="CollectApiCompatInputs;_ResolveResolvedMatchingContract;FindReferenceAssembliesForReferences"
-          Inputs="@(ResolvedMatchingContract);@(IntermediateAssembly);@(ApiCompatSuppressionFile);$(ApiCompatSuppressionOutputFile)"
+          Inputs="@(ResolvedMatchingContract);@(IntermediateAssembly);@(ApiCompatSuppressionFile);$(_ApiCompatIncrementalStateFile)"
           Outputs="$(_ApiCompatValidateAssembliesSemaphoreFile)">
     <Error Condition="'@(ResolvedMatchingContract)' == ''"
            Text="ResolvedMatchingContract item must be specified to run API compat." />
@@ -538,6 +545,11 @@
       LeftAssembliesTransformationPattern="@(ApiCompatLeftAssembliesTransformationPattern)"
       RightAssembliesTransformationPattern="@(ApiCompatRightAssembliesTransformationPattern)"
       SemaphoreFile="$(_ApiCompatValidateAssembliesSemaphoreFile)" />
+    <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+    <WriteLinesToFile File="$(_ApiCompatIncrementalStateFile)"
+                      Lines="GenerateSuppressionFile=$(ApiCompatGenerateSuppressionFile)|SuppressionFileExists=$([System.IO.File]::Exists('$(ApiCompatSuppressionOutputFile)'))"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
   </Target>
 
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
