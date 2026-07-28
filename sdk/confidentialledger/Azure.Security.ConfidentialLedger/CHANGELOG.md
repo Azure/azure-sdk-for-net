@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Renamed several generated model and enum types in the .NET client to follow Azure SDK for .NET naming guidelines (C# only; the REST contract and other language SDKs are unchanged): `Bundle` → `LedgerBundle`, `Constitution` → `LedgerConstitution`, `Metadata` → `LedgerEndpointMetadata`, `Mode` → `LedgerEndpointMode`, `Role` → `LedgerRole`, `Collection` → `LedgerCollectionInfo`, and `UserDefinedFunctionExecutionResponse` → `UserDefinedFunctionExecution`.
+
 ## 1.4.1-beta.5 (2026-05-26)
 
 ### Bugs Fixed

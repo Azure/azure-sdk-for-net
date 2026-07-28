@@ -78,17 +78,17 @@ namespace Azure.Security.ConfidentialLedger.Models
             {
                 return null;
             }
-            IList<Role> roles = default;
+            IList<LedgerRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roles"u8))
                 {
-                    List<Role> array = new List<Role>();
+                    List<LedgerRole> array = new List<LedgerRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Role.DeserializeRole(item, options));
+                        array.Add(LedgerRole.DeserializeLedgerRole(item, options));
                     }
                     roles = array;
                     continue;

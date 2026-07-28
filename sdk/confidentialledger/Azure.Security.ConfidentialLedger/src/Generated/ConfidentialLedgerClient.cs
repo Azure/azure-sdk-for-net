@@ -41,11 +41,11 @@ namespace Azure.Security.ConfidentialLedger
         /// consortium members.
         /// </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitutionAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<Constitution>> GetConstitutionAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LedgerConstitution>> GetConstitutionAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetConstitutionAsync(context).ConfigureAwait(false);
-            return Response.FromValue(Constitution.FromResponse(response), response);
+            return Response.FromValue(LedgerConstitution.FromResponse(response), response);
         }
 
         /// <summary> Gets the constitution used for governance. </summary>
@@ -55,11 +55,11 @@ namespace Azure.Security.ConfidentialLedger
         /// consortium members.
         /// </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitution(CancellationToken)']/*" />
-        public virtual Response<Constitution> GetConstitution(CancellationToken cancellationToken = default)
+        public virtual Response<LedgerConstitution> GetConstitution(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetConstitution(context);
-            return Response.FromValue(Constitution.FromResponse(response), response);
+            return Response.FromValue(LedgerConstitution.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1318,22 +1318,22 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Returns the user defined endpoint in the ACL instance. </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<Bundle>> GetUserDefinedEndpointAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LedgerBundle>> GetUserDefinedEndpointAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetUserDefinedEndpointAsync(context).ConfigureAwait(false);
-            return Response.FromValue(Bundle.FromResponse(response), response);
+            return Response.FromValue(LedgerBundle.FromResponse(response), response);
         }
 
         /// <summary> Gets a user defined endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Returns the user defined endpoint in the ACL instance. </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpoint(CancellationToken)']/*" />
-        public virtual Response<Bundle> GetUserDefinedEndpoint(CancellationToken cancellationToken = default)
+        public virtual Response<LedgerBundle> GetUserDefinedEndpoint(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetUserDefinedEndpoint(context);
-            return Response.FromValue(Bundle.FromResponse(response), response);
+            return Response.FromValue(LedgerBundle.FromResponse(response), response);
         }
 
         /// <summary>
@@ -1411,8 +1411,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bundle"/> is null. </exception>
         /// <remarks> Creates the user defined endpoint in the ACL instance. </remarks>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedEndpointAsync(Bundle,CancellationToken)']/*" />
-        public virtual async Task<Response> CreateUserDefinedEndpointAsync(Bundle bundle, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedEndpointAsync(LedgerBundle,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateUserDefinedEndpointAsync(LedgerBundle bundle, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(bundle, nameof(bundle));
 
@@ -1427,8 +1427,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bundle"/> is null. </exception>
         /// <remarks> Creates the user defined endpoint in the ACL instance. </remarks>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedEndpoint(Bundle,CancellationToken)']/*" />
-        public virtual Response CreateUserDefinedEndpoint(Bundle bundle, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedEndpoint(LedgerBundle,CancellationToken)']/*" />
+        public virtual Response CreateUserDefinedEndpoint(LedgerBundle bundle, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(bundle, nameof(bundle));
 
@@ -1448,7 +1448,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateUserDefinedEndpointAsync(Bundle,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateUserDefinedEndpointAsync(LedgerBundle,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1487,7 +1487,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateUserDefinedEndpoint(Bundle,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateUserDefinedEndpoint(LedgerBundle,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2098,14 +2098,14 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Executes the user defined function in the Confidential Ledger. </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='ExecuteUserDefinedFunctionAsync(string,UserDefinedFunctionExecutionProperties,CancellationToken)']/*" />
-        public virtual async Task<Response<UserDefinedFunctionExecutionResponse>> ExecuteUserDefinedFunctionAsync(string functionId, UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserDefinedFunctionExecution>> ExecuteUserDefinedFunctionAsync(string functionId, UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
 
             using RequestContent content = userDefinedFunctionExecutionProperties?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ExecuteUserDefinedFunctionAsync(functionId, content, context).ConfigureAwait(false);
-            return Response.FromValue(UserDefinedFunctionExecutionResponse.FromResponse(response), response);
+            return Response.FromValue(UserDefinedFunctionExecution.FromResponse(response), response);
         }
 
         /// <summary> Executes a user defined function. </summary>
@@ -2116,14 +2116,14 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Executes the user defined function in the Confidential Ledger. </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='ExecuteUserDefinedFunction(string,UserDefinedFunctionExecutionProperties,CancellationToken)']/*" />
-        public virtual Response<UserDefinedFunctionExecutionResponse> ExecuteUserDefinedFunction(string functionId, UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, CancellationToken cancellationToken = default)
+        public virtual Response<UserDefinedFunctionExecution> ExecuteUserDefinedFunction(string functionId, UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
 
             using RequestContent content = userDefinedFunctionExecutionProperties?.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ExecuteUserDefinedFunction(functionId, content, context);
-            return Response.FromValue(UserDefinedFunctionExecutionResponse.FromResponse(response), response);
+            return Response.FromValue(UserDefinedFunctionExecution.FromResponse(response), response);
         }
 
         /// <summary>
@@ -2646,24 +2646,24 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Collection ids are user-created collections of ledger entries. </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollectionsAsync(CancellationToken)']/*" />
-        public virtual AsyncPageable<Collection> GetCollectionsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LedgerCollectionInfo> GetCollectionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Collection.DeserializeCollection(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LedgerCollectionInfo.DeserializeLedgerCollectionInfo(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
         /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Collection ids are user-created collections of ledger entries. </remarks>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollections(CancellationToken)']/*" />
-        public virtual Pageable<Collection> GetCollections(CancellationToken cancellationToken = default)
+        public virtual Pageable<LedgerCollectionInfo> GetCollections(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Collection.DeserializeCollection(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LedgerCollectionInfo.DeserializeLedgerCollectionInfo(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
         /// <summary>

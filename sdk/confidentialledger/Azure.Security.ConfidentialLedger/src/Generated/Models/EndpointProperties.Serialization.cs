@@ -161,7 +161,7 @@ namespace Azure.Security.ConfidentialLedger.Models
             InterpreterReusePolicy interpreterReuse = default;
             string jsFunction = default;
             string jsModule = default;
-            Mode? mode = default;
+            LedgerEndpointMode? mode = default;
             IDictionary<string, BinaryData> openapi = default;
             bool? openapiHidden = default;
             RedirectionStrategy? redirectionStrategy = default;
@@ -228,7 +228,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    mode = new Mode(property.Value.GetString());
+                    mode = new LedgerEndpointMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("openapi"u8))

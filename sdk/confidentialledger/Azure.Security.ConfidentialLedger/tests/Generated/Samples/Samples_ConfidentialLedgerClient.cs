@@ -53,7 +53,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Response<Constitution> response = client.GetConstitution();
+            Response<LedgerConstitution> response = client.GetConstitution();
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Response<Constitution> response = await client.GetConstitutionAsync();
+            Response<LedgerConstitution> response = await client.GetConstitutionAsync();
         }
 
         [Test]
@@ -787,7 +787,7 @@ ReturnExceptionDetails = true,
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Response<Bundle> response = client.GetUserDefinedEndpoint();
+            Response<LedgerBundle> response = client.GetUserDefinedEndpoint();
         }
 
         [Test]
@@ -797,7 +797,7 @@ ReturnExceptionDetails = true,
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Response<Bundle> response = await client.GetUserDefinedEndpointAsync();
+            Response<LedgerBundle> response = await client.GetUserDefinedEndpointAsync();
         }
 
         [Test]
@@ -887,7 +887,7 @@ module = "TESTJS",
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
+            LedgerBundle bundle = new LedgerBundle(new LedgerEndpointMetadata(new Dictionary<string, MethodToEndpointProperties>
             {
                 ["/content"] = new MethodToEndpointProperties
                 {
@@ -910,7 +910,7 @@ new ModuleDef("TESTJS", "test.js")
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
+            LedgerBundle bundle = new LedgerBundle(new LedgerEndpointMetadata(new Dictionary<string, MethodToEndpointProperties>
             {
                 ["/content"] = new MethodToEndpointProperties
                 {
@@ -1251,7 +1251,7 @@ new ModuleDef("TESTJS", "test.js")
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Response<UserDefinedFunctionExecutionResponse> response = client.ExecuteUserDefinedFunction("myFunction");
+            Response<UserDefinedFunctionExecution> response = client.ExecuteUserDefinedFunction("myFunction");
         }
 
         [Test]
@@ -1261,7 +1261,7 @@ new ModuleDef("TESTJS", "test.js")
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            Response<UserDefinedFunctionExecutionResponse> response = await client.ExecuteUserDefinedFunctionAsync("myFunction");
+            Response<UserDefinedFunctionExecution> response = await client.ExecuteUserDefinedFunctionAsync("myFunction");
         }
 
         [Test]
@@ -1391,14 +1391,14 @@ roleActions = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            UserDefinedRoles body = new UserDefinedRoles(new Role[]
+            UserDefinedRoles body = new UserDefinedRoles(new LedgerRole[]
             {
-new Role
+new LedgerRole
 {
 RoleName = "administrator",
 RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
 },
-new Role
+new LedgerRole
 {
 RoleName = "contributor",
 RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
@@ -1414,14 +1414,14 @@ RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.Con
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            UserDefinedRoles body = new UserDefinedRoles(new Role[]
+            UserDefinedRoles body = new UserDefinedRoles(new LedgerRole[]
             {
-new Role
+new LedgerRole
 {
 RoleName = "administrator",
 RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
 },
-new Role
+new LedgerRole
 {
 RoleName = "contributor",
 RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
@@ -1597,7 +1597,7 @@ roleActions = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            foreach (Collection item in client.GetCollections())
+            foreach (LedgerCollectionInfo item in client.GetCollections())
             {
             }
         }
@@ -1609,7 +1609,7 @@ roleActions = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-            await foreach (Collection item in client.GetCollectionsAsync())
+            await foreach (LedgerCollectionInfo item in client.GetCollectionsAsync())
             {
             }
         }

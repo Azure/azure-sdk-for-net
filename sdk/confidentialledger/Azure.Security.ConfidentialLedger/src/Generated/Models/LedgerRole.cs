@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    /// <summary> Identifier for collections. </summary>
-    public partial class Collection
+    /// <summary> Definition for roles. </summary>
+    public partial class LedgerRole
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,26 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Collection"/>. </summary>
-        /// <param name="collectionId"> Identifier for the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        internal Collection(string collectionId)
+        /// <summary> Initializes a new instance of <see cref="LedgerRole"/>. </summary>
+        public LedgerRole()
         {
-            Argument.AssertNotNull(collectionId, nameof(collectionId));
-
-            CollectionId = collectionId;
+            RoleActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Collection"/>. </summary>
-        /// <param name="collectionId"> Identifier for the collection. </param>
+        /// <summary> Initializes a new instance of <see cref="LedgerRole"/>. </summary>
+        /// <param name="roleName"> name of the user defined role. </param>
+        /// <param name="roleActions"> role actions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Collection(string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LedgerRole(string roleName, IList<string> roleActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CollectionId = collectionId;
+            RoleName = roleName;
+            RoleActions = roleActions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Collection"/> for deserialization. </summary>
-        internal Collection()
-        {
-        }
-
-        /// <summary> Identifier for the collection. </summary>
-        public string CollectionId { get; }
+        /// <summary> name of the user defined role. </summary>
+        public string RoleName { get; set; }
+        /// <summary> role actions. </summary>
+        public IList<string> RoleActions { get; }
     }
 }

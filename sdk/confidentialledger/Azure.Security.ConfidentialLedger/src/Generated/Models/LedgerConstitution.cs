@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    /// <summary> Metadata for endpoints. </summary>
-    public partial class Metadata
+    /// <summary> The governance script for the application. </summary>
+    public partial class LedgerConstitution
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,38 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Metadata"/>. </summary>
-        /// <param name="endpoints"> A map of path to method endpoints for the path. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoints"/> is null. </exception>
-        public Metadata(IDictionary<string, MethodToEndpointProperties> endpoints)
+        /// <summary> Initializes a new instance of <see cref="LedgerConstitution"/>. </summary>
+        /// <param name="digest"> SHA256 digest of the constitution script. </param>
+        /// <param name="script"> Contents of the constitution. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="script"/> is null. </exception>
+        internal LedgerConstitution(string digest, string script)
         {
-            Argument.AssertNotNull(endpoints, nameof(endpoints));
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(script, nameof(script));
 
-            Endpoints = endpoints;
+            Digest = digest;
+            Script = script;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Metadata"/>. </summary>
-        /// <param name="endpoints"> A map of path to method endpoints for the path. </param>
+        /// <summary> Initializes a new instance of <see cref="LedgerConstitution"/>. </summary>
+        /// <param name="digest"> SHA256 digest of the constitution script. </param>
+        /// <param name="script"> Contents of the constitution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Metadata(IDictionary<string, MethodToEndpointProperties> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LedgerConstitution(string digest, string script, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Endpoints = endpoints;
+            Digest = digest;
+            Script = script;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Metadata"/> for deserialization. </summary>
-        internal Metadata()
+        /// <summary> Initializes a new instance of <see cref="LedgerConstitution"/> for deserialization. </summary>
+        internal LedgerConstitution()
         {
         }
 
-        /// <summary> A map of path to method endpoints for the path. </summary>
-        public IDictionary<string, MethodToEndpointProperties> Endpoints { get; }
+        /// <summary> SHA256 digest of the constitution script. </summary>
+        public string Digest { get; }
+        /// <summary> Contents of the constitution. </summary>
+        public string Script { get; }
     }
 }

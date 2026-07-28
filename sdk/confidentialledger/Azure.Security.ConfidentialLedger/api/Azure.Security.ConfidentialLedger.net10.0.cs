@@ -25,9 +25,9 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Azure.Response CreateOrUpdateUser(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateUserAsync(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateUserDefinedEndpoint(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response CreateUserDefinedEndpoint(Azure.Security.ConfidentialLedger.Models.Bundle bundle, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateUserDefinedEndpoint(Azure.Security.ConfidentialLedger.Models.LedgerBundle bundle, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateUserDefinedEndpointAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateUserDefinedEndpointAsync(Azure.Security.ConfidentialLedger.Models.Bundle bundle, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateUserDefinedEndpointAsync(Azure.Security.ConfidentialLedger.Models.LedgerBundle bundle, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateUserDefinedFunction(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.UserDefinedFunction> CreateUserDefinedFunction(string functionId, Azure.Security.ConfidentialLedger.Models.UserDefinedFunction userDefinedFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateUserDefinedFunctionAsync(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -45,21 +45,21 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Azure.Response DeleteUserDefinedRoleStable(string roleName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserDefinedRoleStableAsync(string roleName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response ExecuteUserDefinedFunction(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse> ExecuteUserDefinedFunction(string functionId, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution> ExecuteUserDefinedFunction(string functionId, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ExecuteUserDefinedFunctionAsync(string functionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>> ExecuteUserDefinedFunctionAsync(string functionId, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>> ExecuteUserDefinedFunctionAsync(string functionId, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetCollections(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Security.ConfidentialLedger.Models.Collection> GetCollections(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo> GetCollections(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetCollectionsAsync(Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Security.ConfidentialLedger.Models.Collection> GetCollectionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo> GetCollectionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetConsortiumMembers(Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Security.ConfidentialLedger.Models.ConsortiumMember> GetConsortiumMembers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetConsortiumMembersAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.ConfidentialLedger.Models.ConsortiumMember> GetConsortiumMembersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetConstitution(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.Constitution> GetConstitution(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerConstitution> GetConstitution(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConstitutionAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.Constitution>> GetConstitutionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>> GetConstitutionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCurrentLedgerEntry(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerEntry> GetCurrentLedgerEntry(string collectionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCurrentLedgerEntryAsync(string collectionId, Azure.RequestContext context) { throw null; }
@@ -107,9 +107,9 @@ namespace Azure.Security.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserAsync(string userId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerUser>> GetUserAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetUserDefinedEndpoint(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.Bundle> GetUserDefinedEndpoint(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerBundle> GetUserDefinedEndpoint(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserDefinedEndpointAsync(Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.Bundle>> GetUserDefinedEndpointAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerBundle>> GetUserDefinedEndpointAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetUserDefinedEndpointsModule(string moduleName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.ModuleDef> GetUserDefinedEndpointsModule(string moduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserDefinedEndpointsModuleAsync(string moduleName, Azure.RequestContext context) { throw null; }
@@ -222,18 +222,6 @@ namespace Azure.Security.ConfidentialLedger.Models
         public static bool operator !=(Azure.Security.ConfidentialLedger.Models.ApplicationClaimProtocol left, Azure.Security.ConfidentialLedger.Models.ApplicationClaimProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Bundle : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Bundle>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Bundle>
-    {
-        public Bundle(Azure.Security.ConfidentialLedger.Models.Metadata metadata, System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.ModuleDef> modules) { }
-        public Azure.Security.ConfidentialLedger.Models.Metadata Metadata { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Security.ConfidentialLedger.Models.ModuleDef> Modules { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Bundle System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Bundle>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Bundle>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Bundle System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Bundle>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Bundle>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Bundle>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ClaimDigest : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.ClaimDigest>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ClaimDigest>
     {
         internal ClaimDigest() { }
@@ -245,17 +233,6 @@ namespace Azure.Security.ConfidentialLedger.Models
         Azure.Security.ConfidentialLedger.Models.ClaimDigest System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ClaimDigest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ClaimDigest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ClaimDigest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Collection : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Collection>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Collection>
-    {
-        internal Collection() { }
-        public string CollectionId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Collection System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Collection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Collection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Collection System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Collection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Collection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Collection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConfidentialLedgerEnclaves : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerEnclaves>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerEnclaves>
     {
@@ -314,18 +291,6 @@ namespace Azure.Security.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ConsortiumMember>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ConsortiumMember>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Constitution : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Constitution>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Constitution>
-    {
-        internal Constitution() { }
-        public string Digest { get { throw null; } }
-        public string Script { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Constitution System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Constitution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Constitution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Constitution System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Constitution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Constitution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Constitution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class EnclaveQuote : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.EnclaveQuote>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.EnclaveQuote>
     {
         internal EnclaveQuote() { }
@@ -348,7 +313,7 @@ namespace Azure.Security.ConfidentialLedger.Models
         public Azure.Security.ConfidentialLedger.Models.InterpreterReusePolicy InterpreterReuse { get { throw null; } set { } }
         public string JsFunction { get { throw null; } set { } }
         public string JsModule { get { throw null; } set { } }
-        public Azure.Security.ConfidentialLedger.Models.Mode? Mode { get { throw null; } set { } }
+        public Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode? Mode { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Openapi { get { throw null; } }
         public bool? OpenapiHidden { get { throw null; } set { } }
         public Azure.Security.ConfidentialLedger.Models.RedirectionStrategy? RedirectionStrategy { get { throw null; } set { } }
@@ -403,6 +368,69 @@ namespace Azure.Security.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.JsRuntimeOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.JsRuntimeOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LedgerBundle : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerBundle>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerBundle>
+    {
+        public LedgerBundle(Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata metadata, System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.ModuleDef> modules) { }
+        public Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata Metadata { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Security.ConfidentialLedger.Models.ModuleDef> Modules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerBundle System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerBundle>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerBundle>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerBundle System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerBundle>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerBundle>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerBundle>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LedgerCollectionInfo : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo>
+    {
+        internal LedgerCollectionInfo() { }
+        public string CollectionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LedgerConstitution : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>
+    {
+        internal LedgerConstitution() { }
+        public string Digest { get { throw null; } }
+        public string Script { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerConstitution System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerConstitution System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LedgerEndpointMetadata : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata>
+    {
+        public LedgerEndpointMetadata(System.Collections.Generic.IDictionary<string, Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties> endpoints) { }
+        public System.Collections.Generic.IDictionary<string, Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties> Endpoints { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LedgerEndpointMode : System.IEquatable<Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LedgerEndpointMode(string value) { throw null; }
+        public static Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode Historical { get { throw null; } }
+        public static Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode Readonly { get { throw null; } }
+        public static Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode Readwrite { get { throw null; } }
+        public bool Equals(Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode left, Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode right) { throw null; }
+        public static implicit operator Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode (string value) { throw null; }
+        public static bool operator !=(Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode left, Azure.Security.ConfidentialLedger.Models.LedgerEndpointMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LedgerEntry : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerEntry>
     {
         public LedgerEntry(string contents) { }
@@ -444,6 +472,18 @@ namespace Azure.Security.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerQueryResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerQueryResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LedgerRole : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerRole>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerRole>
+    {
+        public LedgerRole() { }
+        public System.Collections.Generic.IList<string> RoleActions { get { throw null; } }
+        public string RoleName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerRole System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.LedgerRole System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerRole>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerRole>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class LedgerUser : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerUser>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerUser>
     {
         public LedgerUser(Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerUserRoleName assignedRole) { }
@@ -479,17 +519,6 @@ namespace Azure.Security.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Metadata : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Metadata>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Metadata>
-    {
-        public Metadata(System.Collections.Generic.IDictionary<string, Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties> endpoints) { }
-        public System.Collections.Generic.IDictionary<string, Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties> Endpoints { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Metadata System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Metadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Metadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Metadata System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Metadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Metadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Metadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class MethodToEndpointProperties : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties>
     {
         public MethodToEndpointProperties() { }
@@ -503,23 +532,6 @@ namespace Azure.Security.ConfidentialLedger.Models
         Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Mode : System.IEquatable<Azure.Security.ConfidentialLedger.Models.Mode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Mode(string value) { throw null; }
-        public static Azure.Security.ConfidentialLedger.Models.Mode Historical { get { throw null; } }
-        public static Azure.Security.ConfidentialLedger.Models.Mode Readonly { get { throw null; } }
-        public static Azure.Security.ConfidentialLedger.Models.Mode Readwrite { get { throw null; } }
-        public bool Equals(Azure.Security.ConfidentialLedger.Models.Mode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Security.ConfidentialLedger.Models.Mode left, Azure.Security.ConfidentialLedger.Models.Mode right) { throw null; }
-        public static implicit operator Azure.Security.ConfidentialLedger.Models.Mode (string value) { throw null; }
-        public static bool operator !=(Azure.Security.ConfidentialLedger.Models.Mode left, Azure.Security.ConfidentialLedger.Models.Mode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ModuleDef : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.ModuleDef>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.ModuleDef>
     {
@@ -593,27 +605,15 @@ namespace Azure.Security.ConfidentialLedger.Models
         public static bool operator !=(Azure.Security.ConfidentialLedger.Models.RedirectionStrategy left, Azure.Security.ConfidentialLedger.Models.RedirectionStrategy right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Role : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Role>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Role>
-    {
-        public Role() { }
-        public System.Collections.Generic.IList<string> RoleActions { get { throw null; } }
-        public string RoleName { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Role System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Role>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.Role>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.Role System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Role>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Role>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.Role>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class SecurityConfidentialLedgerModelFactory
     {
         public static Azure.Security.ConfidentialLedger.Models.ApplicationClaim ApplicationClaim(Azure.Security.ConfidentialLedger.Models.ClaimDigest digest = null, Azure.Security.ConfidentialLedger.Models.ApplicationClaimKind kind = default(Azure.Security.ConfidentialLedger.Models.ApplicationClaimKind), Azure.Security.ConfidentialLedger.Models.LedgerEntryClaim ledgerEntry = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.ClaimDigest ClaimDigest(string value = null, Azure.Security.ConfidentialLedger.Models.ApplicationClaimProtocol protocol = default(Azure.Security.ConfidentialLedger.Models.ApplicationClaimProtocol)) { throw null; }
-        public static Azure.Security.ConfidentialLedger.Models.Collection Collection(string collectionId = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerEnclaves ConfidentialLedgerEnclaves(string currentNodeId = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.Security.ConfidentialLedger.Models.EnclaveQuote> enclaveQuotes = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.ConsortiumMember ConsortiumMember(string certificate = null, string id = null) { throw null; }
-        public static Azure.Security.ConfidentialLedger.Models.Constitution Constitution(string digest = null, string script = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.EnclaveQuote EnclaveQuote(string nodeId = null, string mrenclave = null, string quoteVersion = null, string raw = null) { throw null; }
+        public static Azure.Security.ConfidentialLedger.Models.LedgerCollectionInfo LedgerCollectionInfo(string collectionId = null) { throw null; }
+        public static Azure.Security.ConfidentialLedger.Models.LedgerConstitution LedgerConstitution(string digest = null, string script = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.LedgerEntry LedgerEntry(string contents = null, string collectionId = null, string transactionId = null, System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionHook> preHooks = null, System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionHook> postHooks = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.LedgerEntryClaim LedgerEntryClaim(string collectionId = null, string contents = null, string secretKey = null, Azure.Security.ConfidentialLedger.Models.ApplicationClaimProtocol protocol = default(Azure.Security.ConfidentialLedger.Models.ApplicationClaimProtocol)) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.LedgerQueryResult LedgerQueryResult(Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerQueryState state = default(Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerQueryState), Azure.Security.ConfidentialLedger.Models.LedgerEntry entry = null) { throw null; }
@@ -626,10 +626,10 @@ namespace Azure.Security.ConfidentialLedger.Models
         public static Azure.Security.ConfidentialLedger.Models.TransactionReceipt TransactionReceipt(System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.ApplicationClaim> applicationClaims = null, Azure.Security.ConfidentialLedger.Models.ReceiptContents receipt = null, Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerQueryState state = default(Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerQueryState), string transactionId = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.TransactionStatus TransactionStatus(Azure.Security.ConfidentialLedger.Models.TransactionState state = default(Azure.Security.ConfidentialLedger.Models.TransactionState), string transactionId = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.UserDefinedFunction UserDefinedFunction(string code = null, string id = null) { throw null; }
+        public static Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution UserDefinedFunctionExecution(Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionError error = null, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResult result = null, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionStatus status = default(Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionStatus)) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionError UserDefinedFunctionExecutionError(string message = null) { throw null; }
-        public static Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse UserDefinedFunctionExecutionResponse(Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionError error = null, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResult result = null, Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionStatus status = default(Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionStatus)) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResult UserDefinedFunctionExecutionResult(string returnValue = null) { throw null; }
-        public static Azure.Security.ConfidentialLedger.Models.UserDefinedRole UserDefinedRole(System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.Role> role = null) { throw null; }
+        public static Azure.Security.ConfidentialLedger.Models.UserDefinedRole UserDefinedRole(System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.LedgerRole> role = null) { throw null; }
     }
     public partial class TransactionReceipt : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.TransactionReceipt>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.TransactionReceipt>
     {
@@ -685,6 +685,19 @@ namespace Azure.Security.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class UserDefinedFunctionExecution : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>
+    {
+        internal UserDefinedFunctionExecution() { }
+        public Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionError Error { get { throw null; } }
+        public Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResult Result { get { throw null; } }
+        public Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionStatus Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class UserDefinedFunctionExecutionError : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionError>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionError>
     {
         internal UserDefinedFunctionExecutionError() { }
@@ -708,19 +721,6 @@ namespace Azure.Security.ConfidentialLedger.Models
         Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class UserDefinedFunctionExecutionResponse : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>
-    {
-        internal UserDefinedFunctionExecutionResponse() { }
-        public Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionError Error { get { throw null; } }
-        public Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResult Result { get { throw null; } }
-        public Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionStatus Status { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UserDefinedFunctionExecutionResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedFunctionExecutionResult>
     {
@@ -764,7 +764,7 @@ namespace Azure.Security.ConfidentialLedger.Models
     public partial class UserDefinedRole : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRole>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRole>
     {
         internal UserDefinedRole() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Security.ConfidentialLedger.Models.Role> Role { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Security.ConfidentialLedger.Models.LedgerRole> Role { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.ConfidentialLedger.Models.UserDefinedRole System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -774,8 +774,8 @@ namespace Azure.Security.ConfidentialLedger.Models
     }
     public partial class UserDefinedRoles : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRoles>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRoles>
     {
-        public UserDefinedRoles(System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.Role> roles) { }
-        public System.Collections.Generic.IList<Azure.Security.ConfidentialLedger.Models.Role> Roles { get { throw null; } }
+        public UserDefinedRoles(System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.LedgerRole> roles) { }
+        public System.Collections.Generic.IList<Azure.Security.ConfidentialLedger.Models.LedgerRole> Roles { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.ConfidentialLedger.Models.UserDefinedRoles System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRoles>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.UserDefinedRoles>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

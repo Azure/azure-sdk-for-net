@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Security.ConfidentialLedger.Models
 {
     /// <summary> The result of a user defined function execution. </summary>
-    public partial class UserDefinedFunctionExecutionResponse
+    public partial class UserDefinedFunctionExecution
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionExecutionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionExecution"/>. </summary>
         /// <param name="status"> Represents the status of a user defined function execution. </param>
-        internal UserDefinedFunctionExecutionResponse(UserDefinedFunctionExecutionStatus status)
+        internal UserDefinedFunctionExecution(UserDefinedFunctionExecutionStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionExecutionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionExecution"/>. </summary>
         /// <param name="error">
         /// The error object of a user defined function execution. This is returned only
         /// when the user defined function execution throws an exception.
@@ -63,7 +63,7 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// </param>
         /// <param name="status"> Represents the status of a user defined function execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserDefinedFunctionExecutionResponse(UserDefinedFunctionExecutionError error, UserDefinedFunctionExecutionResult result, UserDefinedFunctionExecutionStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserDefinedFunctionExecution(UserDefinedFunctionExecutionError error, UserDefinedFunctionExecutionResult result, UserDefinedFunctionExecutionStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
             Result = result;
@@ -71,8 +71,8 @@ namespace Azure.Security.ConfidentialLedger.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionExecutionResponse"/> for deserialization. </summary>
-        internal UserDefinedFunctionExecutionResponse()
+        /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionExecution"/> for deserialization. </summary>
+        internal UserDefinedFunctionExecution()
         {
         }
 

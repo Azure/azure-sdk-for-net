@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    public partial class Bundle : IUtf8JsonSerializable, IJsonModel<Bundle>
+    public partial class LedgerCollectionInfo : IUtf8JsonSerializable, IJsonModel<LedgerCollectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Bundle>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LedgerCollectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Bundle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LedgerCollectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,14 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Bundle>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Bundle)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LedgerCollectionInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata, options);
-            writer.WritePropertyName("modules"u8);
-            writer.WriteStartArray();
-            foreach (var item in Modules)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("collectionId"u8);
+            writer.WriteStringValue(CollectionId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,19 +53,19 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
         }
 
-        Bundle IJsonModel<Bundle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LedgerCollectionInfo IJsonModel<LedgerCollectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Bundle>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Bundle)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LedgerCollectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBundle(document.RootElement, options);
+            return DeserializeLedgerCollectionInfo(document.RootElement, options);
         }
 
-        internal static Bundle DeserializeBundle(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LedgerCollectionInfo DeserializeLedgerCollectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,25 +73,14 @@ namespace Azure.Security.ConfidentialLedger.Models
             {
                 return null;
             }
-            Metadata metadata = default;
-            IList<ModuleDef> modules = default;
+            string collectionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadata"u8))
+                if (property.NameEquals("collectionId"u8))
                 {
-                    metadata = Metadata.DeserializeMetadata(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("modules"u8))
-                {
-                    List<ModuleDef> array = new List<ModuleDef>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ModuleDef.DeserializeModuleDef(item, options));
-                    }
-                    modules = array;
+                    collectionId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,46 +89,46 @@ namespace Azure.Security.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Bundle(metadata, modules, serializedAdditionalRawData);
+            return new LedgerCollectionInfo(collectionId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Bundle>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LedgerCollectionInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Bundle>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Bundle)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LedgerCollectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Bundle IPersistableModel<Bundle>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LedgerCollectionInfo IPersistableModel<LedgerCollectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Bundle>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBundle(document.RootElement, options);
+                        return DeserializeLedgerCollectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Bundle)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LedgerCollectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Bundle>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LedgerCollectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Bundle FromResponse(Response response)
+        internal static LedgerCollectionInfo FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBundle(document.RootElement);
+            return DeserializeLedgerCollectionInfo(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -13,13 +13,13 @@ namespace Azure.Security.ConfidentialLedger.Models
     /// <summary> Model factory for models. </summary>
     public static partial class SecurityConfidentialLedgerModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.Constitution"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LedgerConstitution"/>. </summary>
         /// <param name="digest"> SHA256 digest of the constitution script. </param>
         /// <param name="script"> Contents of the constitution. </param>
-        /// <returns> A new <see cref="Models.Constitution"/> instance for mocking. </returns>
-        public static Constitution Constitution(string digest = null, string script = null)
+        /// <returns> A new <see cref="Models.LedgerConstitution"/> instance for mocking. </returns>
+        public static LedgerConstitution LedgerConstitution(string digest = null, string script = null)
         {
-            return new Constitution(digest, script, serializedAdditionalRawData: null);
+            return new LedgerConstitution(digest, script, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsortiumMember"/>. </summary>
@@ -53,12 +53,12 @@ namespace Azure.Security.ConfidentialLedger.Models
             return new EnclaveQuote(nodeId, mrenclave, quoteVersion, raw, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Collection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LedgerCollectionInfo"/>. </summary>
         /// <param name="collectionId"> Identifier for the collection. </param>
-        /// <returns> A new <see cref="Models.Collection"/> instance for mocking. </returns>
-        public static Collection Collection(string collectionId = null)
+        /// <returns> A new <see cref="Models.LedgerCollectionInfo"/> instance for mocking. </returns>
+        public static LedgerCollectionInfo LedgerCollectionInfo(string collectionId = null)
         {
-            return new Collection(collectionId, serializedAdditionalRawData: null);
+            return new LedgerCollectionInfo(collectionId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LedgerEntry"/>. </summary>
@@ -256,7 +256,7 @@ namespace Azure.Security.ConfidentialLedger.Models
             return new UserDefinedFunction(code, id, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UserDefinedFunctionExecutionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UserDefinedFunctionExecution"/>. </summary>
         /// <param name="error">
         /// The error object of a user defined function execution. This is returned only
         /// when the user defined function execution throws an exception.
@@ -266,10 +266,10 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// when the user defined function executes successfully.
         /// </param>
         /// <param name="status"> Represents the status of a user defined function execution. </param>
-        /// <returns> A new <see cref="Models.UserDefinedFunctionExecutionResponse"/> instance for mocking. </returns>
-        public static UserDefinedFunctionExecutionResponse UserDefinedFunctionExecutionResponse(UserDefinedFunctionExecutionError error = null, UserDefinedFunctionExecutionResult result = null, UserDefinedFunctionExecutionStatus status = default)
+        /// <returns> A new <see cref="Models.UserDefinedFunctionExecution"/> instance for mocking. </returns>
+        public static UserDefinedFunctionExecution UserDefinedFunctionExecution(UserDefinedFunctionExecutionError error = null, UserDefinedFunctionExecutionResult result = null, UserDefinedFunctionExecutionStatus status = default)
         {
-            return new UserDefinedFunctionExecutionResponse(error, result, status, serializedAdditionalRawData: null);
+            return new UserDefinedFunctionExecution(error, result, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserDefinedFunctionExecutionError"/>. </summary>
@@ -294,9 +294,9 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of <see cref="Models.UserDefinedRole"/>. </summary>
         /// <param name="role"> User defined role. </param>
         /// <returns> A new <see cref="Models.UserDefinedRole"/> instance for mocking. </returns>
-        public static UserDefinedRole UserDefinedRole(IEnumerable<Role> role = null)
+        public static UserDefinedRole UserDefinedRole(IEnumerable<LedgerRole> role = null)
         {
-            role ??= new List<Role>();
+            role ??= new List<LedgerRole>();
 
             return new UserDefinedRole(role?.ToList(), serializedAdditionalRawData: null);
         }

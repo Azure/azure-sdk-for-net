@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    /// <summary> bundle for the user defined endpoints. </summary>
-    public partial class Bundle
+    /// <summary> Metadata for endpoints. </summary>
+    public partial class LedgerEndpointMetadata
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,38 +45,31 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Bundle"/>. </summary>
-        /// <param name="metadata"> Metadata information for the bundle. </param>
-        /// <param name="modules"> Any object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="modules"/> is null. </exception>
-        public Bundle(Metadata metadata, IEnumerable<ModuleDef> modules)
+        /// <summary> Initializes a new instance of <see cref="LedgerEndpointMetadata"/>. </summary>
+        /// <param name="endpoints"> A map of path to method endpoints for the path. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoints"/> is null. </exception>
+        public LedgerEndpointMetadata(IDictionary<string, MethodToEndpointProperties> endpoints)
         {
-            Argument.AssertNotNull(metadata, nameof(metadata));
-            Argument.AssertNotNull(modules, nameof(modules));
+            Argument.AssertNotNull(endpoints, nameof(endpoints));
 
-            Metadata = metadata;
-            Modules = modules.ToList();
+            Endpoints = endpoints;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Bundle"/>. </summary>
-        /// <param name="metadata"> Metadata information for the bundle. </param>
-        /// <param name="modules"> Any object. </param>
+        /// <summary> Initializes a new instance of <see cref="LedgerEndpointMetadata"/>. </summary>
+        /// <param name="endpoints"> A map of path to method endpoints for the path. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Bundle(Metadata metadata, IList<ModuleDef> modules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LedgerEndpointMetadata(IDictionary<string, MethodToEndpointProperties> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Metadata = metadata;
-            Modules = modules;
+            Endpoints = endpoints;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Bundle"/> for deserialization. </summary>
-        internal Bundle()
+        /// <summary> Initializes a new instance of <see cref="LedgerEndpointMetadata"/> for deserialization. </summary>
+        internal LedgerEndpointMetadata()
         {
         }
 
-        /// <summary> Metadata information for the bundle. </summary>
-        public Metadata Metadata { get; set; }
-        /// <summary> Any object. </summary>
-        public IList<ModuleDef> Modules { get; }
+        /// <summary> A map of path to method endpoints for the path. </summary>
+        public IDictionary<string, MethodToEndpointProperties> Endpoints { get; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    /// <summary> The governance script for the application. </summary>
-    public partial class Constitution
+    /// <summary> bundle for the user defined endpoints. </summary>
+    public partial class LedgerBundle
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +46,38 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Constitution"/>. </summary>
-        /// <param name="digest"> SHA256 digest of the constitution script. </param>
-        /// <param name="script"> Contents of the constitution. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="script"/> is null. </exception>
-        internal Constitution(string digest, string script)
+        /// <summary> Initializes a new instance of <see cref="LedgerBundle"/>. </summary>
+        /// <param name="metadata"> Metadata information for the bundle. </param>
+        /// <param name="modules"> Any object. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="modules"/> is null. </exception>
+        public LedgerBundle(LedgerEndpointMetadata metadata, IEnumerable<ModuleDef> modules)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
-            Argument.AssertNotNull(script, nameof(script));
+            Argument.AssertNotNull(metadata, nameof(metadata));
+            Argument.AssertNotNull(modules, nameof(modules));
 
-            Digest = digest;
-            Script = script;
+            Metadata = metadata;
+            Modules = modules.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Constitution"/>. </summary>
-        /// <param name="digest"> SHA256 digest of the constitution script. </param>
-        /// <param name="script"> Contents of the constitution. </param>
+        /// <summary> Initializes a new instance of <see cref="LedgerBundle"/>. </summary>
+        /// <param name="metadata"> Metadata information for the bundle. </param>
+        /// <param name="modules"> Any object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Constitution(string digest, string script, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LedgerBundle(LedgerEndpointMetadata metadata, IList<ModuleDef> modules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Digest = digest;
-            Script = script;
+            Metadata = metadata;
+            Modules = modules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Constitution"/> for deserialization. </summary>
-        internal Constitution()
+        /// <summary> Initializes a new instance of <see cref="LedgerBundle"/> for deserialization. </summary>
+        internal LedgerBundle()
         {
         }
 
-        /// <summary> SHA256 digest of the constitution script. </summary>
-        public string Digest { get; }
-        /// <summary> Contents of the constitution. </summary>
-        public string Script { get; }
+        /// <summary> Metadata information for the bundle. </summary>
+        public LedgerEndpointMetadata Metadata { get; set; }
+        /// <summary> Any object. </summary>
+        public IList<ModuleDef> Modules { get; }
     }
 }

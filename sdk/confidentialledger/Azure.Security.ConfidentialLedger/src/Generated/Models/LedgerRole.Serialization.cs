@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    public partial class Metadata : IUtf8JsonSerializable, IJsonModel<Metadata>
+    public partial class LedgerRole : IUtf8JsonSerializable, IJsonModel<LedgerRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Metadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LedgerRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Metadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LedgerRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,20 +28,27 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metadata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LedgerRole)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("endpoints"u8);
-            writer.WriteStartObject();
-            foreach (var item in Endpoints)
+            if (Optional.IsDefined(RoleName))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WritePropertyName("roleName"u8);
+                writer.WriteStringValue(RoleName);
             }
-            writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(RoleActions))
+            {
+                writer.WritePropertyName("roleActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in RoleActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -59,19 +66,19 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
         }
 
-        Metadata IJsonModel<Metadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LedgerRole IJsonModel<LedgerRole>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metadata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LedgerRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetadata(document.RootElement, options);
+            return DeserializeLedgerRole(document.RootElement, options);
         }
 
-        internal static Metadata DeserializeMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LedgerRole DeserializeLedgerRole(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,19 +86,29 @@ namespace Azure.Security.ConfidentialLedger.Models
             {
                 return null;
             }
-            IDictionary<string, MethodToEndpointProperties> endpoints = default;
+            string roleName = default;
+            IList<string> roleActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoints"u8))
+                if (property.NameEquals("roleName"u8))
                 {
-                    Dictionary<string, MethodToEndpointProperties> dictionary = new Dictionary<string, MethodToEndpointProperties>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    roleName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("roleActions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dictionary.Add(property0.Name, MethodToEndpointProperties.DeserializeMethodToEndpointProperties(property0.Value, options));
+                        continue;
                     }
-                    endpoints = dictionary;
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    roleActions = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,46 +117,46 @@ namespace Azure.Security.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Metadata(endpoints, serializedAdditionalRawData);
+            return new LedgerRole(roleName, roleActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Metadata>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LedgerRole>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerRole>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Metadata)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LedgerRole)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Metadata IPersistableModel<Metadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LedgerRole IPersistableModel<LedgerRole>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LedgerRole>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMetadata(document.RootElement, options);
+                        return DeserializeLedgerRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Metadata)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LedgerRole)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Metadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LedgerRole>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Metadata FromResponse(Response response)
+        internal static LedgerRole FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMetadata(document.RootElement);
+            return DeserializeLedgerRole(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

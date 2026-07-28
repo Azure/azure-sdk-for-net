@@ -8,7 +8,7 @@ This sample shows how to call GetConstitutionAsync.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Response<Constitution> response = await client.GetConstitutionAsync();
+Response<LedgerConstitution> response = await client.GetConstitutionAsync();
 ]]></code></example>
     </member>
     <member name="GetConstitution(CancellationToken)">
@@ -18,7 +18,7 @@ This sample shows how to call GetConstitution.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Response<Constitution> response = client.GetConstitution();
+Response<LedgerConstitution> response = client.GetConstitution();
 ]]></code></example>
     </member>
     <member name="GetConstitutionAsync(RequestContext)">
@@ -740,7 +740,7 @@ This sample shows how to call GetUserDefinedEndpointAsync.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Response<Bundle> response = await client.GetUserDefinedEndpointAsync();
+Response<LedgerBundle> response = await client.GetUserDefinedEndpointAsync();
 ]]></code></example>
     </member>
     <member name="GetUserDefinedEndpoint(CancellationToken)">
@@ -750,7 +750,7 @@ This sample shows how to call GetUserDefinedEndpoint.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Response<Bundle> response = client.GetUserDefinedEndpoint();
+Response<LedgerBundle> response = client.GetUserDefinedEndpoint();
 ]]></code></example>
     </member>
     <member name="GetUserDefinedEndpointAsync(RequestContext)">
@@ -783,14 +783,14 @@ Console.WriteLine(result.GetProperty("modules")[0].GetProperty("module").ToStrin
 Console.WriteLine(result.GetProperty("modules")[0].GetProperty("name").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateUserDefinedEndpointAsync(Bundle,CancellationToken)">
+    <member name="CreateUserDefinedEndpointAsync(LedgerBundle,CancellationToken)">
       <example>
 This sample shows how to call CreateUserDefinedEndpointAsync.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
+LedgerBundle bundle = new LedgerBundle(new LedgerEndpointMetadata(new Dictionary<string, MethodToEndpointProperties>
 {
     ["/content"] = new MethodToEndpointProperties
     {
@@ -806,14 +806,14 @@ Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointP
 Response response = await client.CreateUserDefinedEndpointAsync(bundle);
 ]]></code></example>
     </member>
-    <member name="CreateUserDefinedEndpoint(Bundle,CancellationToken)">
+    <member name="CreateUserDefinedEndpoint(LedgerBundle,CancellationToken)">
       <example>
 This sample shows how to call CreateUserDefinedEndpoint.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
+LedgerBundle bundle = new LedgerBundle(new LedgerEndpointMetadata(new Dictionary<string, MethodToEndpointProperties>
 {
     ["/content"] = new MethodToEndpointProperties
     {
@@ -1172,7 +1172,7 @@ This sample shows how to call ExecuteUserDefinedFunctionAsync.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Response<UserDefinedFunctionExecutionResponse> response = await client.ExecuteUserDefinedFunctionAsync("myFunction");
+Response<UserDefinedFunctionExecution> response = await client.ExecuteUserDefinedFunctionAsync("myFunction");
 ]]></code></example>
     </member>
     <member name="ExecuteUserDefinedFunction(string,UserDefinedFunctionExecutionProperties,CancellationToken)">
@@ -1182,7 +1182,7 @@ This sample shows how to call ExecuteUserDefinedFunction.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-Response<UserDefinedFunctionExecutionResponse> response = client.ExecuteUserDefinedFunction("myFunction");
+Response<UserDefinedFunctionExecution> response = client.ExecuteUserDefinedFunction("myFunction");
 ]]></code></example>
     </member>
     <member name="ExecuteUserDefinedFunctionAsync(string,RequestContent,RequestContext)">
@@ -1300,14 +1300,14 @@ This sample shows how to call CreateUserDefinedRoleStableAsync.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-UserDefinedRoles body = new UserDefinedRoles(new Role[]
+UserDefinedRoles body = new UserDefinedRoles(new LedgerRole[]
 {
-    new Role
+    new LedgerRole
     {
         RoleName = "administrator",
         RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
     },
-    new Role
+    new LedgerRole
     {
         RoleName = "contributor",
         RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
@@ -1323,14 +1323,14 @@ This sample shows how to call CreateUserDefinedRoleStable.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-UserDefinedRoles body = new UserDefinedRoles(new Role[]
+UserDefinedRoles body = new UserDefinedRoles(new LedgerRole[]
 {
-    new Role
+    new LedgerRole
     {
         RoleName = "administrator",
         RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
     },
-    new Role
+    new LedgerRole
     {
         RoleName = "contributor",
         RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
@@ -1552,7 +1552,7 @@ This sample shows how to call GetCollectionsAsync.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-await foreach (Collection item in client.GetCollectionsAsync())
+await foreach (LedgerCollectionInfo item in client.GetCollectionsAsync())
 {
 }
 ]]></code></example>
@@ -1564,7 +1564,7 @@ This sample shows how to call GetCollections.
 TokenCredential credential = new DefaultAzureCredential();
 ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
-foreach (Collection item in client.GetCollections())
+foreach (LedgerCollectionInfo item in client.GetCollections())
 {
 }
 ]]></code></example>

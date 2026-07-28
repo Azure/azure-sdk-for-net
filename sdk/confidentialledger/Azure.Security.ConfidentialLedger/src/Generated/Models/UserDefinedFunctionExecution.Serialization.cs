@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    public partial class UserDefinedFunctionExecutionResponse : IUtf8JsonSerializable, IJsonModel<UserDefinedFunctionExecutionResponse>
+    public partial class UserDefinedFunctionExecution : IUtf8JsonSerializable, IJsonModel<UserDefinedFunctionExecution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserDefinedFunctionExecutionResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserDefinedFunctionExecution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UserDefinedFunctionExecutionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserDefinedFunctionExecution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecutionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDefinedFunctionExecutionResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserDefinedFunctionExecution)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Error))
@@ -63,19 +63,19 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
         }
 
-        UserDefinedFunctionExecutionResponse IJsonModel<UserDefinedFunctionExecutionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserDefinedFunctionExecution IJsonModel<UserDefinedFunctionExecution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecutionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDefinedFunctionExecutionResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserDefinedFunctionExecution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserDefinedFunctionExecutionResponse(document.RootElement, options);
+            return DeserializeUserDefinedFunctionExecution(document.RootElement, options);
         }
 
-        internal static UserDefinedFunctionExecutionResponse DeserializeUserDefinedFunctionExecutionResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UserDefinedFunctionExecution DeserializeUserDefinedFunctionExecution(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,46 +119,46 @@ namespace Azure.Security.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserDefinedFunctionExecutionResponse(error, result, status, serializedAdditionalRawData);
+            return new UserDefinedFunctionExecution(error, result, status, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UserDefinedFunctionExecutionResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UserDefinedFunctionExecution>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecutionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecution>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserDefinedFunctionExecutionResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserDefinedFunctionExecution)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UserDefinedFunctionExecutionResponse IPersistableModel<UserDefinedFunctionExecutionResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UserDefinedFunctionExecution IPersistableModel<UserDefinedFunctionExecution>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecutionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDefinedFunctionExecution>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUserDefinedFunctionExecutionResponse(document.RootElement, options);
+                        return DeserializeUserDefinedFunctionExecution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserDefinedFunctionExecutionResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserDefinedFunctionExecution)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UserDefinedFunctionExecutionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserDefinedFunctionExecution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static UserDefinedFunctionExecutionResponse FromResponse(Response response)
+        internal static UserDefinedFunctionExecution FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUserDefinedFunctionExecutionResponse(document.RootElement);
+            return DeserializeUserDefinedFunctionExecution(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

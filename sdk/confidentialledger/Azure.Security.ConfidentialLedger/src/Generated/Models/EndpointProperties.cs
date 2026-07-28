@@ -70,7 +70,7 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="openapiHidden"> Openapi hidden. </param>
         /// <param name="redirectionStrategy"> Redirection strategy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointProperties(IList<IDictionary<string, BinaryData>> authnPolicies, ForwardingRequired forwardingRequired, InterpreterReusePolicy interpreterReuse, string jsFunction, string jsModule, Mode? mode, IDictionary<string, BinaryData> openapi, bool? openapiHidden, RedirectionStrategy? redirectionStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EndpointProperties(IList<IDictionary<string, BinaryData>> authnPolicies, ForwardingRequired forwardingRequired, InterpreterReusePolicy interpreterReuse, string jsFunction, string jsModule, LedgerEndpointMode? mode, IDictionary<string, BinaryData> openapi, bool? openapiHidden, RedirectionStrategy? redirectionStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthnPolicies = authnPolicies;
             ForwardingRequired = forwardingRequired;
@@ -129,7 +129,7 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <summary> The JavaScript module. </summary>
         public string JsModule { get; set; }
         /// <summary> The operation mode for this endpoint. </summary>
-        public Mode? Mode { get; set; }
+        public LedgerEndpointMode? Mode { get; set; }
         /// <summary>
         /// Anything
         /// <para>

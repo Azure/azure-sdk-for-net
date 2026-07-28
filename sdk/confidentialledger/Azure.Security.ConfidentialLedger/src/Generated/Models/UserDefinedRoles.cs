@@ -49,7 +49,7 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of <see cref="UserDefinedRoles"/>. </summary>
         /// <param name="roles"> Roles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roles"/> is null. </exception>
-        public UserDefinedRoles(IEnumerable<Role> roles)
+        public UserDefinedRoles(IEnumerable<LedgerRole> roles)
         {
             Argument.AssertNotNull(roles, nameof(roles));
 
@@ -59,7 +59,7 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of <see cref="UserDefinedRoles"/>. </summary>
         /// <param name="roles"> Roles. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserDefinedRoles(IList<Role> roles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserDefinedRoles(IList<LedgerRole> roles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Roles = roles;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.Security.ConfidentialLedger.Models
         }
 
         /// <summary> Roles. </summary>
-        public IList<Role> Roles { get; }
+        public IList<LedgerRole> Roles { get; }
     }
 }
