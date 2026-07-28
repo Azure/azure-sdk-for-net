@@ -41,3 +41,13 @@ extends:
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
+      # TEMP: keep the Test performance treatment's own implementation files from
+      # changing the package set used by the matched A/B fixture.
+      - eng/Directory.Build.Common.targets
+      - eng/service.proj
+      - eng/scripts/Language-Settings.ps1
+      - eng/scripts/Get-PackageTestWeights.ps1
+      - eng/scripts/Apply-WeightedBatching.ps1
+      - eng/scripts/tests/TestCiWeighting.Tests.ps1
+      - eng/pipelines/templates/jobs/ci.yml
+      - eng/pipelines/templates/steps/pr-matrix-presteps.yml
