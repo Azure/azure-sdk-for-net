@@ -100,6 +100,9 @@ namespace Azure.Generator.Provisioning
             if (model.IsUnknownDiscriminatorModel)
                 return null;
 
+            if (model.DiscriminatorValue is null && !ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(model))
+                return null;
+
             // Resource models → look up from output library's pre-created resource providers
             var outputLib = ProvisioningGenerator.Instance.OutputLibrary;
             if (outputLib.TryGetResourcesByModel(model, out var resources))

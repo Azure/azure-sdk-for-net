@@ -13,6 +13,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public partial class ResourceProfileProperties : ProvisionableConstruct
     {
         private ResourceProfileRevision _latestRevision;
+        private ResourceProfileRevision _previousRevision;
         private SpecializedResourceProfile _specializedProfile;
 
         /// <summary> Creates a new ResourceProfileProperties. </summary>
@@ -30,6 +31,16 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets the PreviousRevision. </summary>
+        public ResourceProfileRevision PreviousRevision
+        {
+            get
+            {
+                Initialize();
+                return _previousRevision;
+            }
+        }
+
         /// <summary> Gets the SpecializedProfile. </summary>
         public SpecializedResourceProfile SpecializedProfile
         {
@@ -44,8 +55,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _latestRevision = DefineModelProperty(nameof(LatestRevision), new string[] { "latestRevision" }, new ResourceProfileRevision("resourceProfileRevision"), isOutput: true);
-            _specializedProfile = DefineModelProperty(nameof(SpecializedProfile), new string[] { "specializedProfile" }, new SpecializedResourceProfile("specializedResourceProfile"), isOutput: true);
+            _latestRevision = DefineModelProperty(nameof(LatestRevision), new string[] { "latestRevision" }, new ResourceProfileRevision("latestRevision"), isOutput: true);
+            _previousRevision = DefineModelProperty(nameof(PreviousRevision), new string[] { "previousRevision" }, new ResourceProfileRevision("previousRevision"), isOutput: true);
+            _specializedProfile = DefineModelProperty(nameof(SpecializedProfile), new string[] { "specializedProfile" }, new SpecializedResourceProfile("specializedProfile"), isOutput: true);
             DefineAdditionalProperties();
         }
 
