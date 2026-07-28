@@ -63,6 +63,7 @@ namespace Azure.AI.AgentServer.Core
         public static string? AgentVersion { get { throw null; } }
         public static string? AppInsightsConnectionString { get { throw null; } }
         public static bool IsAgent365TracingEnabled { get { throw null; } }
+        public static bool IsAppInsightsEntraAuth { get { throw null; } }
         public static bool IsHosted { get { throw null; } }
         public static string? OtlpEndpoint { get { throw null; } }
         public static int Port { get { throw null; } }

@@ -11,19 +11,30 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class SequenceNumberActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SequenceNumberAction value) => value switch
         {
+            SequenceNumberAction.Increment => "increment",
             SequenceNumberAction.Max => "max",
             SequenceNumberAction.Update => "update",
-            SequenceNumberAction.Increment => "increment",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SequenceNumberAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SequenceNumberAction ToSequenceNumberAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "max")) return SequenceNumberAction.Max;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "update")) return SequenceNumberAction.Update;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "increment")) return SequenceNumberAction.Increment;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "increment"))
+            {
+                return SequenceNumberAction.Increment;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "max"))
+            {
+                return SequenceNumberAction.Max;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "update"))
+            {
+                return SequenceNumberAction.Update;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SequenceNumberAction value.");
         }
     }
