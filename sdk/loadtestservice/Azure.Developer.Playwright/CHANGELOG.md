@@ -36,4 +36,3 @@ This release marks the general availability of the `Azure.Developer.Playwright` 
 ### Features Added
 
 - Added authentication using Microsoft Entra ID for the service.
-

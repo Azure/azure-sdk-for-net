@@ -44,4 +44,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Support uniform telemetry across all languages.
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-
