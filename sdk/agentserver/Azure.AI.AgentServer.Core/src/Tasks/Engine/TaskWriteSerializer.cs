@@ -147,21 +147,20 @@ internal sealed class TaskWriteSerializer : IDisposable
                     .PatchAsync(taskId, patch, ifMatch: entry.TrackedEtag, cancellationToken)
                     .ConfigureAwait(false);
                 entry.TrackedEtag = updated.Etag;
-                if (updated.Lease is not null)
+                bool refreshedLease = patch.LeaseOwner is not null && patch.LeaseDurationSeconds > 0;
+                if (updated.Lease is not null && refreshedLease)
                 {
                     entry.CachedExpiryCount = updated.Lease.ExpiryCount;
 
                     // Remember the lease identity we just wrote so the resolver can fence a
                     // same-owner takeover (a restarted process reacquiring under a new instance
                     // id) even when the lease never expired and the expiry count did not advance.
-                    if (intent == WriteIntent.LeaseHeartbeat)
-                    {
-                        entry.HeldInstanceId = updated.Lease.InstanceId;
-                        entry.HeldGeneration = updated.Lease.Generation;
-                    }
+                    entry.HeldInstanceId = updated.Lease.InstanceId;
+                    entry.HeldGeneration = updated.Lease.Generation;
 
-                    // A write that leaves the lease held refreshed it as a side effect; record the
-                    // time so the renewal loop can shadow a redundant heartbeat (Python parity).
+                    // A write that carries lease parameters refreshed the lease as a side effect;
+                    // record the time so the renewal loop can shadow a redundant heartbeat.
+                    // Payload-only writes may return a leased record without extending expires_at.
                     entry.LastRefreshUtc = DateTimeOffset.UtcNow;
                 }
 

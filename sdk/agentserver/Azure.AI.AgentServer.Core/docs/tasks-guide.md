@@ -493,6 +493,10 @@ ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
     Action<TaskRegistrationOptions>? configure = null);
 ```
 
+`credential` is required when the host is running in Foundry hosted mode and the
+framework selects hosted task storage. Local development uses the file-backed
+store and does not require a credential.
+
 ### 5.2 `ITaskInvoker`
 
 ```csharp

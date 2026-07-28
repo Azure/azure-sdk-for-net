@@ -18,8 +18,8 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// Registration entry point for the resilient-tasks feature. There is no global
 /// configuration object: backend selection (local/hosted), lease durations, and
 /// retry/timeout defaults are not developer-configurable (Python parity). The
-/// optional <see cref="TokenCredential"/> is the only knob (hosted-mode auth;
-/// defaults to <c>DefaultAzureCredential</c> when omitted).
+/// optional <see cref="TokenCredential"/> is the only knob; it is required when
+/// running against hosted task storage and ignored by the local file-backed store.
 /// </summary>
 public static class ResilientTaskServiceCollectionExtensions
 {
@@ -27,7 +27,7 @@ public static class ResilientTaskServiceCollectionExtensions
     /// Adds the resilient-tasks services and returns a builder for registering tasks.
     /// </summary>
     /// <param name="services">The service collection.</param>
-    /// <param name="credential">An optional credential for hosted-mode authentication.</param>
+    /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
     /// <returns>An <see cref="ResilientTaskBuilder"/> for registering tasks.</returns>
     public static ResilientTaskBuilder AddResilientTasks(
         this IServiceCollection services,

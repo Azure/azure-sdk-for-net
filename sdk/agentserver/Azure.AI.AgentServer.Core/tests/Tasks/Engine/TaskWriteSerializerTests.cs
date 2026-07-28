@@ -91,6 +91,43 @@ public sealed class TaskWriteSerializerTests
     }
 
     [Test]
+    public async Task PayloadOnlyWriteDoesNotRefreshLeaseHeartbeatTimestamp()
+    {
+        await CreateLeasedTaskAsync("leased-payload");
+        ActiveTaskEntry entry = _serializer.GetOrAddEntry("leased-payload");
+        DateTimeOffset oldRefresh = DateTimeOffset.UtcNow.AddMinutes(-5);
+        entry.LastRefreshUtc = oldRefresh;
+
+        await _serializer.UpdateAsync("leased-payload", _ => new TaskPatchRequest
+        {
+            PayloadSupplied = true,
+            Payload = new JsonObject { ["counter"] = 1 },
+        }, WriteIntent.MetadataFlush);
+
+        Assert.That(entry.LastRefreshUtc, Is.EqualTo(oldRefresh),
+            "payload-only writes do not extend lease.expires_at and must not suppress the next heartbeat");
+    }
+
+    [Test]
+    public async Task LeaseWriteRefreshesLeaseHeartbeatTimestamp()
+    {
+        await CreateLeasedTaskAsync("leased-heartbeat");
+        ActiveTaskEntry entry = _serializer.GetOrAddEntry("leased-heartbeat");
+        DateTimeOffset oldRefresh = DateTimeOffset.UtcNow.AddMinutes(-5);
+        entry.LastRefreshUtc = oldRefresh;
+
+        await _serializer.UpdateAsync("leased-heartbeat", _ => new TaskPatchRequest
+        {
+            LeaseOwner = "owner",
+            LeaseInstanceId = "instance-1",
+            LeaseDurationSeconds = 60,
+        }, WriteIntent.LeaseHeartbeat);
+
+        Assert.That(entry.LastRefreshUtc, Is.GreaterThan(oldRefresh));
+        Assert.That(entry.HeldInstanceId, Is.EqualTo("instance-1"));
+    }
+
+    [Test]
     public async Task NoOpComputeReturnsCurrentWithoutWrite()
     {
         var result = await _serializer.UpdateAsync("t", _ => null, WriteIntent.Generic);
@@ -142,6 +179,24 @@ public sealed class TaskWriteSerializerTests
                 PayloadSupplied = true,
                 Payload = new JsonObject { ["counter"] = 1 },
             }, WriteIntent.Generic));
+    }
+
+    private async Task CreateLeasedTaskAsync(string id)
+    {
+        var created = await _store.CreateAsync(new TaskCreateRequest
+        {
+            Id = id,
+            AgentName = "agent-a",
+            SessionId = "sess-1",
+            Title = id,
+            Status = "in_progress",
+            LeaseOwner = "owner",
+            LeaseInstanceId = "instance-1",
+            LeaseDurationSeconds = 60,
+            Payload = new JsonObject { ["counter"] = 0 },
+            Source = new JsonObject { ["type"] = "agentserver.task", ["name"] = "demo", ["server_version"] = "x/1" },
+        });
+        _serializer.SeedLease(created);
     }
 
     /// <summary>A fake store whose <see cref="PatchAsync"/> always fails with a 409 eviction code.</summary>

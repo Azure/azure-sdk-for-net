@@ -50,7 +50,15 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         _deserializer = deserializer;
 
         AcquireWriterLock();
-        Rehydrate();
+        try
+        {
+            Rehydrate();
+        }
+        catch
+        {
+            ReleaseWriterLock();
+            throw;
+        }
     }
 
     // Maps a stream id to a single, safe on-disk filename stem. Well-formed ids (GUIDs and other

@@ -218,4 +218,59 @@ public sealed class OneShotRecoveryTests
         Assert.That(goodRecovered, Is.EqualTo(1), "scan should continue after one record faults");
         Assert.That(await host.Store.GetAsync("bad-1"), Is.Not.Null, "faulting record remains for later retry/manual handling");
     }
+
+    [Test]
+    public async Task RecoveryScanProcessesAllPages()
+    {
+        var registry = new TaskRegistry();
+        using var host = TaskTestHost.Create(sharedRegistry: registry);
+        int recovered = 0;
+        host.Builder.AddTask<string, string>("paged", (ctx, ct) =>
+        {
+            if (ctx.EntryMode == EntryMode.Recovered)
+            {
+                Interlocked.Increment(ref recovered);
+            }
+
+            return Task.FromResult(ctx.Input);
+        });
+
+        string owner = LeaseManager.FormatOwner(host.AgentName, host.SessionId);
+        for (int i = 0; i < 25; i++)
+        {
+            await host.Store.CreateAsync(new Azure.AI.AgentServer.Core.Tasks.Providers.TaskCreateRequest
+            {
+                Id = $"paged-{i:D2}",
+                AgentName = host.AgentName,
+                SessionId = host.SessionId,
+                Title = $"paged-{i:D2}",
+                Status = "in_progress",
+                LeaseOwner = owner,
+                LeaseInstanceId = $"worker-{i:D2}",
+                LeaseDurationSeconds = 60,
+                Payload = new System.Text.Json.Nodes.JsonObject
+                {
+                    [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
+                    [TaskWireKeys.PayloadInput] = $"payload-{i:D2}",
+                    [TaskWireKeys.PayloadLastInputId] = $"paged-{i:D2}",
+                },
+                Source = new System.Text.Json.Nodes.JsonObject
+                {
+                    [TaskWireKeys.SourceType] = TaskWireKeys.SourceTypeValue,
+                    [TaskWireKeys.SourceName] = "paged",
+                    [TaskWireKeys.SourceServerVersion] = "test",
+                },
+            });
+        }
+
+        int dispatched = await host.Engine.ScanAndRecoverAsync();
+
+        Assert.That(dispatched, Is.EqualTo(25), "scan must follow all list pages, not only the first page");
+        for (int i = 0; i < 25; i++)
+        {
+            await host.WaitUntilDeletedAsync($"paged-{i:D2}", TimeSpan.FromSeconds(5));
+        }
+
+        Assert.That(recovered, Is.EqualTo(25));
+    }
 }

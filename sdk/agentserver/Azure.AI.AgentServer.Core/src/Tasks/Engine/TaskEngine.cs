@@ -1727,15 +1727,25 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     /// <returns>The number of tasks dispatched for recovery.</returns>
     internal async Task<int> ScanAndRecoverAsync(CancellationToken cancellationToken = default)
     {
-        TaskListResult listed = await _store.ListAsync(new TaskListQuery
-        {
-            AgentName = _agentName,
-            SessionId = _sessionId,
-            Status = TaskWireKeys.StatusInProgress,
-        }, cancellationToken).ConfigureAwait(false);
-
         int dispatched = 0;
-        foreach (TaskRecordRef item in listed.Items)
+        var candidates = new List<TaskRecordRef>();
+        string? after = null;
+        do
+        {
+            TaskListResult listed = await _store.ListAsync(new TaskListQuery
+            {
+                AgentName = _agentName,
+                SessionId = _sessionId,
+                Status = TaskWireKeys.StatusInProgress,
+                After = after,
+            }, cancellationToken).ConfigureAwait(false);
+
+            candidates.AddRange(listed.Items);
+            after = listed.NextAfter;
+        }
+        while (after is not null);
+
+        foreach (TaskRecordRef item in candidates)
         {
             TaskRecord record = item.Record;
             // Only dispatch records owned by this stable lease owner and stamped with our

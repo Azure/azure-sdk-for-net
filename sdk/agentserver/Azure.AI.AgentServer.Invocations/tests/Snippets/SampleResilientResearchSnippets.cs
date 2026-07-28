@@ -148,7 +148,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
             public void Save(string key, string content)
             {
-                string path = Path.Combine(_directory, key + ".json");
+                string path = PathForKey(key);
                 string tmp = path + ".tmp";
                 File.WriteAllText(tmp, content);
                 File.Move(tmp, path, overwrite: true);
@@ -156,15 +156,22 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
             public string? Load(string key)
             {
-                string path = Path.Combine(_directory, key + ".json");
+                string path = PathForKey(key);
                 return File.Exists(path) ? File.ReadAllText(path) : null;
             }
 
             public void Delete(string key)
             {
-                string path = Path.Combine(_directory, key + ".json");
+                string path = PathForKey(key);
                 if (File.Exists(path))
                     File.Delete(path);
+            }
+
+            private string PathForKey(string key)
+            {
+                byte[] hash = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(key));
+                string safeKey = Convert.ToHexString(hash).ToLowerInvariant();
+                return Path.Combine(_directory, safeKey + ".json");
             }
         }
 

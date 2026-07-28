@@ -225,6 +225,23 @@ public sealed class FileBackedReplayEventStreamTests
     }
 
     [Test]
+    public async Task FailedRehydrateReleasesWriterLock()
+    {
+        string path = Path.Combine(_dir, "bad-lock.jsonl");
+        File.WriteAllText(path, "not-json-garbage\n");
+
+        EventStreamRegistry registry1 = NewRegistry();
+        Assert.ThrowsAsync<EventStreamException>(async () => await registry1.GetOrCreateAsync("bad-lock"));
+
+        File.WriteAllText(path, "{\"emit_time\": 1.0, \"payload\": \"0\"}\n");
+
+        EventStreamRegistry registry2 = NewRegistry();
+        EventStream stream = await registry2.GetOrCreateAsync("bad-lock");
+
+        Assert.That(await stream.GetLastCursorAsync(), Is.EqualTo(0));
+    }
+
+    [Test]
     public async Task TrailingPartialLineIsTruncatedAndIgnored()
     {
         // A valid line followed by a crash mid-write (no trailing newline).
