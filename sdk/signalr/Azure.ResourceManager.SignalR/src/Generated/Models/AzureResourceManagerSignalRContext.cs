@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SignalR.Models;
 
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.SignalR
     [ModelReaderWriterBuildable(typeof(ReplicaList))]
     [ModelReaderWriterBuildable(typeof(ReplicaProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceReference))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServerlessUpstreamSettings))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceType))]

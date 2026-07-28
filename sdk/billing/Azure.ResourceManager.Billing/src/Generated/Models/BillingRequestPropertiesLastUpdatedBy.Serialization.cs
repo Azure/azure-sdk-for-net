@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The principal of the entity who last updated the request. </summary>
-    public partial class BillingRequestPropertiesLastUpdatedBy : BillingPrincipal, IJsonModel<BillingRequestPropertiesLastUpdatedBy>
+    internal partial class BillingRequestPropertiesLastUpdatedBy : BillingPrincipal, IJsonModel<BillingRequestPropertiesLastUpdatedBy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
