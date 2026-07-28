@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-07-24 22:35:59 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-07-27 07:49:31 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 433
+- Total libraries: 434
 - Management Plane (MPG): 253
-  - Autorest/Swagger: 47
-  - New Emitter (TypeSpec): 206
+  - Autorest/Swagger: 46
+  - New Emitter (TypeSpec): 207
   - Old TypeSpec: 0
 - Data Plane (DPG): 130
   - Autorest/Swagger: 33
   - New Emitter (TypeSpec): 50
   - Old TypeSpec: 0
-- Provisioning: 50
+- Provisioning: 51
   - Reflection-based generator: 27
-  - TypeSpec-based generator: 21
+  - TypeSpec-based generator: 22
   - No generator: 2
 - No generator: 47
 
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 33
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 206 / 206 (100%)
+**Migration Status**: 207 / 207 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -155,6 +155,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
 | astronomer | Azure.ResourceManager.Astro | ✅ |
 | attestation | Azure.ResourceManager.Attestation | ✅ |
+| authorization | Azure.ResourceManager.Authorization | ✅ |
 | automation | Azure.ResourceManager.Automation | ✅ |
 | avs | Azure.ResourceManager.Avs | ✅ |
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
@@ -351,7 +352,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 47
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 46
 
 | Service | Library |
 | ------- | ------- |
@@ -360,7 +361,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 47
 | analysisservices | Azure.ResourceManager.Analysis |
 | applicationinsights | Azure.ResourceManager.ApplicationInsights |
 | arc-scvmm | Azure.ResourceManager.ScVmm |
-| authorization | Azure.ResourceManager.Authorization |
 | automanage | Azure.ResourceManager.Automanage |
 | blueprint | Azure.ResourceManager.Blueprint |
 | changeanalysis | Azure.ResourceManager.ChangeAnalysis |
@@ -408,7 +408,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 47
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 21 / 50 migrated to TypeSpec-based generator
+**Migration Status**: 22 / 51 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -438,13 +438,14 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | Reflection |
 | logic | Azure.Provisioning.Logic | Azure.ResourceManager.Logic | Reflection |
+| machinelearningservices | Azure.Provisioning.MachineLearning | Azure.ResourceManager.MachineLearning ✅ | TypeSpec ✅ |
 | monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor ✅ | Reflection |
 | mysql | Azure.Provisioning.MySql | Azure.ResourceManager.MySql ✅ | TypeSpec ✅ |
 | network | Azure.Provisioning.Network | Azure.ResourceManager.Network ✅ | Reflection |
 | operationalinsights | Azure.Provisioning.OperationalInsights | Azure.ResourceManager.OperationalInsights ✅ | Reflection |
 | postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql ✅ | Reflection |
 | privatedns | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns ✅ | Reflection |
-| provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization<br>Azure.ResourceManager.ManagedServiceIdentities ✅ | Reflection |
+| provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization ✅<br>Azure.ResourceManager.ManagedServiceIdentities ✅ | Reflection |
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis ✅ | TypeSpec ✅ |
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |

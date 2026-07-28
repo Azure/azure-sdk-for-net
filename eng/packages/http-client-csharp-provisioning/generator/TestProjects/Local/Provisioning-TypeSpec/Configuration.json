@@ -1,7 +1,6 @@
 {
   "package-name": "Azure.Provisioning.ProvisioningTypeSpec",
   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
-  "unreferenced-types-handling": "internalize",
   "model-namespace": false,
   "license": {
     "name": "MIT License",
