@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
 
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(NGroupsListResult))]
     [ModelReaderWriterBuildable(typeof(NGroupUpdateProfile))]
     [ModelReaderWriterBuildable(typeof(PlacementProfile))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StandbyPoolProfileDefinition))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

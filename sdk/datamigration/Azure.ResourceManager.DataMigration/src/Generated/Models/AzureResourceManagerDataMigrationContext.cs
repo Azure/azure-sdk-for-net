@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
@@ -299,7 +298,6 @@ namespace Azure.ResourceManager.DataMigration
     [ModelReaderWriterBuildable(typeof(QueryExecutionResult))]
     [ModelReaderWriterBuildable(typeof(QuotaList))]
     [ModelReaderWriterBuildable(typeof(ResourceSkusResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchemaComparisonValidationResult))]
     [ModelReaderWriterBuildable(typeof(SchemaComparisonValidationResultType))]
     [ModelReaderWriterBuildable(typeof(SchemaMigrationSetting))]

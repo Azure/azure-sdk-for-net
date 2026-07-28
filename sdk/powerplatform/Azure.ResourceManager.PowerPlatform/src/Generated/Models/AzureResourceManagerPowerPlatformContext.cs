@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PowerPlatform.Models;
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.PowerPlatform
     [ModelReaderWriterBuildable(typeof(Properties))]
     [ModelReaderWriterBuildable(typeof(PropertiesLockbox))]
     [ModelReaderWriterBuildable(typeof(PropertiesNetworkInjection))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubnetProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPowerPlatformContext : ModelReaderWriterContext
