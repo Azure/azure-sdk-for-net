@@ -25,7 +25,6 @@ namespace Azure.Data.AppConfiguration
     [ModelReaderWriterBuildable(typeof(FeatureFlagVariantDefinition))]
     [ModelReaderWriterBuildable(typeof(GroupAllocation))]
     [ModelReaderWriterBuildable(typeof(PercentileAllocation))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SettingLabel))]
     [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(UserAllocation))]
