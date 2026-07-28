@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ComputeScheduleStorageAccountType? storageAccountType = default;
             ComputeScheduleDiskEncryptionSetConfig diskEncryptionSet = default;
-            VirtualMachineDiskSecurityProfile securityProfile = default;
+            ComputeScheduleVirtualMachineDiskSecurityProfile securityProfile = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(prop.Value, options);
+                    securityProfile = ComputeScheduleVirtualMachineDiskSecurityProfile.DeserializeComputeScheduleVirtualMachineDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,52 +13,52 @@ using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Contains the list of gallery applications that should be made available to the VM. </summary>
-    internal partial class ApplicationProfile : IJsonModel<ApplicationProfile>
+    /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
+    public partial class ComputeScheduleVirtualMachineSizeProperties : IJsonModel<ComputeScheduleVirtualMachineSizeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplicationProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeScheduleVirtualMachineSizeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationProfile(document.RootElement, options);
+                        return DeserializeComputeScheduleVirtualMachineSizeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineSizeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineSizeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeScheduleVirtualMachineSizeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationProfile IPersistableModel<ApplicationProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeScheduleVirtualMachineSizeProperties IPersistableModel<ComputeScheduleVirtualMachineSizeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeScheduleVirtualMachineSizeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeScheduleVirtualMachineSizeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineSizeProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(GalleryApplications))
+            if (Optional.IsDefined(VCpusAvailable))
             {
-                writer.WritePropertyName("galleryApplications"u8);
-                writer.WriteStartArray();
-                foreach (ComputeScheduleVmGalleryApplication item in GalleryApplications)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("vCpusAvailable"u8);
+                writer.WriteNumberValue(VCpusAvailable.Value);
+            }
+            if (Optional.IsDefined(VCpusPerCore))
+            {
+                writer.WritePropertyName("vCpusPerCore"u8);
+                writer.WriteNumberValue(VCpusPerCore.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,45 +103,50 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationProfile IJsonModel<ApplicationProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeScheduleVirtualMachineSizeProperties IJsonModel<ComputeScheduleVirtualMachineSizeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplicationProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeScheduleVirtualMachineSizeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineSizeProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationProfile(document.RootElement, options);
+            return DeserializeComputeScheduleVirtualMachineSizeProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationProfile DeserializeApplicationProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeScheduleVirtualMachineSizeProperties DeserializeComputeScheduleVirtualMachineSizeProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ComputeScheduleVmGalleryApplication> galleryApplications = default;
+            int? vCpusAvailable = default;
+            int? vCpusPerCore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("galleryApplications"u8))
+                if (prop.NameEquals("vCpusAvailable"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ComputeScheduleVmGalleryApplication> array = new List<ComputeScheduleVmGalleryApplication>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    vCpusAvailable = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("vCpusPerCore"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(ComputeScheduleVmGalleryApplication.DeserializeComputeScheduleVmGalleryApplication(item, options));
+                        continue;
                     }
-                    galleryApplications = array;
+                    vCpusPerCore = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationProfile(galleryApplications ?? new ChangeTrackingList<ComputeScheduleVmGalleryApplication>(), additionalBinaryDataProperties);
+            return new ComputeScheduleVirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, additionalBinaryDataProperties);
         }
     }
 }

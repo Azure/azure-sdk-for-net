@@ -18,15 +18,62 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             Func<ApiGatewayCollection, Pageable<ApiGatewayResource>> collectionCall = collection => collection.GetAll();
             Func<SubscriptionResource, Pageable<ApiGatewayResource>> extensionCall = subscription => subscription.GetApiGateways();
-            Func<ApiGatewayCollection, CancellationToken, Pageable<ApiGatewayResource>> namedCollectionCall =
+            Func<ApiGatewayCollection, CancellationToken, Pageable<ApiGatewayResource>> gatewayCollectionCall =
                 (collection, token) => collection.GetAll(cancellationToken: token);
-            Func<SubscriptionResource, CancellationToken, Pageable<ApiGatewayResource>> namedExtensionCall =
+            Func<ApiGatewayCollection, CancellationToken, AsyncPageable<ApiGatewayResource>> gatewayCollectionAsyncCall =
+                (collection, token) => collection.GetAllAsync(cancellationToken: token);
+            Func<ApiGatewayConfigConnectionCollection, CancellationToken, Pageable<ApiGatewayConfigConnectionResource>> configConnectionCollectionCall =
+                (collection, token) => collection.GetAll(cancellationToken: token);
+            Func<ApiGatewayConfigConnectionCollection, CancellationToken, AsyncPageable<ApiGatewayConfigConnectionResource>> configConnectionCollectionAsyncCall =
+                (collection, token) => collection.GetAllAsync(cancellationToken: token);
+            Func<ApiManagementServiceCollection, CancellationToken, Pageable<ApiManagementServiceResource>> serviceCollectionCall =
+                (collection, token) => collection.GetAll(cancellationToken: token);
+            Func<ApiManagementServiceCollection, CancellationToken, AsyncPageable<ApiManagementServiceResource>> serviceCollectionAsyncCall =
+                (collection, token) => collection.GetAllAsync(cancellationToken: token);
+            Func<ApiManagementWorkspaceLinksCollection, CancellationToken, Pageable<ApiManagementWorkspaceLinksResource>> workspaceLinksCollectionCall =
+                (collection, token) => collection.GetAll(cancellationToken: token);
+            Func<ApiManagementWorkspaceLinksCollection, CancellationToken, AsyncPageable<ApiManagementWorkspaceLinksResource>> workspaceLinksCollectionAsyncCall =
+                (collection, token) => collection.GetAllAsync(cancellationToken: token);
+            Func<SubscriptionResource, CancellationToken, Pageable<ApiGatewayResource>> gatewayExtensionCall =
                 (subscription, token) => subscription.GetApiGateways(cancellationToken: token);
+            Func<SubscriptionResource, CancellationToken, AsyncPageable<ApiGatewayResource>> gatewayExtensionAsyncCall =
+                (subscription, token) => subscription.GetApiGatewaysAsync(cancellationToken: token);
+            Func<SubscriptionResource, CancellationToken, Pageable<ApiManagementServiceResource>> serviceExtensionCall =
+                (subscription, token) => subscription.GetApiManagementServices(cancellationToken: token);
+            Func<SubscriptionResource, CancellationToken, AsyncPageable<ApiManagementServiceResource>> serviceExtensionAsyncCall =
+                (subscription, token) => subscription.GetApiManagementServicesAsync(cancellationToken: token);
+            Func<MockableApiManagementSubscriptionResource, CancellationToken, Pageable<ApiGatewayResource>> mockableGatewayCall =
+                (resource, token) => resource.GetApiGateways(cancellationToken: token);
+            Func<MockableApiManagementSubscriptionResource, CancellationToken, AsyncPageable<ApiGatewayResource>> mockableGatewayAsyncCall =
+                (resource, token) => resource.GetApiGatewaysAsync(cancellationToken: token);
+            Func<MockableApiManagementSubscriptionResource, CancellationToken, Pageable<ApiManagementServiceResource>> mockableServiceCall =
+                (resource, token) => resource.GetApiManagementServices(cancellationToken: token);
+            Func<MockableApiManagementSubscriptionResource, CancellationToken, AsyncPageable<ApiManagementServiceResource>> mockableServiceAsyncCall =
+                (resource, token) => resource.GetApiManagementServicesAsync(cancellationToken: token);
 
             Assert.That(collectionCall, Is.Not.Null);
             Assert.That(extensionCall, Is.Not.Null);
-            Assert.That(namedCollectionCall, Is.Not.Null);
-            Assert.That(namedExtensionCall, Is.Not.Null);
+            Assert.That(
+                new Delegate[]
+                {
+                    gatewayCollectionCall,
+                    gatewayCollectionAsyncCall,
+                    configConnectionCollectionCall,
+                    configConnectionCollectionAsyncCall,
+                    serviceCollectionCall,
+                    serviceCollectionAsyncCall,
+                    workspaceLinksCollectionCall,
+                    workspaceLinksCollectionAsyncCall,
+                    gatewayExtensionCall,
+                    gatewayExtensionAsyncCall,
+                    serviceExtensionCall,
+                    serviceExtensionAsyncCall,
+                    mockableGatewayCall,
+                    mockableGatewayAsyncCall,
+                    mockableServiceCall,
+                    mockableServiceAsyncCall
+                },
+                Has.All.Not.Null);
         }
 
         [Test]

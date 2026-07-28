@@ -16,9 +16,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             Func<ResourceOperationDetails> factoryCall = () => ArmComputeScheduleModelFactory.ResourceOperationDetails();
             Func<ResourceOperationDetails> namedFactoryCall = () =>
                 ArmComputeScheduleModelFactory.ResourceOperationDetails(operationId: "operation");
+            Func<ResourceOperationDetails> allOriginalNamedArgumentsCall = () =>
+                ArmComputeScheduleModelFactory.ResourceOperationDetails(
+                    operationId: "operation",
+                    resourceId: null,
+                    opType: null,
+                    subscriptionId: null,
+                    deadline: null,
+                    deadlineType: null,
+                    state: null,
+                    timezone: null,
+                    operationTimezone: null,
+                    resourceOperationError: null,
+                    completedOn: null,
+                    retryPolicy: null);
 
             Assert.That(factoryCall(), Is.Not.Null);
             Assert.That(namedFactoryCall(), Is.Not.Null);
+            Assert.That(allOriginalNamedArgumentsCall(), Is.Not.Null);
         }
 
         [Test]

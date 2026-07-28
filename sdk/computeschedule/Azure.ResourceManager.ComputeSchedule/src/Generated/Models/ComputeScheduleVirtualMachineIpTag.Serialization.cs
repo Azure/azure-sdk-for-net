@@ -13,57 +13,52 @@ using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Defines a virtual machine extension. </summary>
-    public partial class BulkActionVmExtension : IJsonModel<BulkActionVmExtension>
+    /// <summary> Contains the IP tag associated with the public IP address. </summary>
+    public partial class ComputeScheduleVirtualMachineIpTag : IJsonModel<ComputeScheduleVirtualMachineIpTag>
     {
-        /// <summary> Initializes a new instance of <see cref="BulkActionVmExtension"/> for deserialization. </summary>
-        internal BulkActionVmExtension()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionVmExtension PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeScheduleVirtualMachineIpTag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmExtension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBulkActionVmExtension(document.RootElement, options);
+                        return DeserializeComputeScheduleVirtualMachineIpTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionVmExtension)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineIpTag)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmExtension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionVmExtension)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineIpTag)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BulkActionVmExtension>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeScheduleVirtualMachineIpTag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionVmExtension IPersistableModel<BulkActionVmExtension>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeScheduleVirtualMachineIpTag IPersistableModel<ComputeScheduleVirtualMachineIpTag>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BulkActionVmExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeScheduleVirtualMachineIpTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BulkActionVmExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeScheduleVirtualMachineIpTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +69,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmExtension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionVmExtension)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineIpTag)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(IpTagType))
+            {
+                writer.WritePropertyName("ipTagType"u8);
+                writer.WriteStringValue(IpTagType);
+            }
+            if (Optional.IsDefined(Tag))
+            {
+                writer.WritePropertyName("tag"u8);
+                writer.WriteStringValue(Tag);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,42 +103,42 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionVmExtension IJsonModel<BulkActionVmExtension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeScheduleVirtualMachineIpTag IJsonModel<ComputeScheduleVirtualMachineIpTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionVmExtension JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeScheduleVirtualMachineIpTag JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionVmExtension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleVirtualMachineIpTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionVmExtension)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduleVirtualMachineIpTag)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBulkActionVmExtension(document.RootElement, options);
+            return DeserializeComputeScheduleVirtualMachineIpTag(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BulkActionVmExtension DeserializeBulkActionVmExtension(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeScheduleVirtualMachineIpTag DeserializeComputeScheduleVirtualMachineIpTag(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            ComputeScheduleBulkActionVirtualMachineExtensionProperties properties = default;
+            string ipTagType = default;
+            string tag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("ipTagType"u8))
                 {
-                    name = prop.Value.GetString();
+                    ipTagType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("tag"u8))
                 {
-                    properties = ComputeScheduleBulkActionVirtualMachineExtensionProperties.DeserializeComputeScheduleBulkActionVirtualMachineExtensionProperties(prop.Value, options);
+                    tag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionVmExtension(name, properties, additionalBinaryDataProperties);
+            return new ComputeScheduleVirtualMachineIpTag(ipTagType, tag, additionalBinaryDataProperties);
         }
     }
 }
