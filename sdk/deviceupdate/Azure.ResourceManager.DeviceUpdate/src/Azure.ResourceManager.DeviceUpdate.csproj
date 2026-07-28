@@ -8,6 +8,6 @@
     <PackageTags>azure;management;arm;resource manager;deviceupdate</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
-    <AutoRestCoreVersion>3.10.8</AutoRestCoreVersion>
+    <AutoRestCoreVersion>$(RepoRoot)/node_modules/@autorest/core</AutoRestCoreVersion>
   </PropertyGroup>
 </Project>
