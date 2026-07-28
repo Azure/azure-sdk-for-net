@@ -3,22 +3,6 @@
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
     <DiagnosticId>CP0014</DiagnosticId>
-    <Target>F:Azure.Provisioning.PostgreSql.ReadReplicaPromoteMode Azure.Provisioning.PostgreSql.ReadReplicaPromoteMode.Standalone:[T:System.Runtime.Serialization.DataMemberAttribute]</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0014</DiagnosticId>
-    <Target>F:Azure.Provisioning.PostgreSql.ReadReplicaPromoteMode Azure.Provisioning.PostgreSql.ReadReplicaPromoteMode.Switchover:[T:System.Runtime.Serialization.DataMemberAttribute]</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0014</DiagnosticId>
-    <Target>F:Azure.Provisioning.PostgreSql.ReplicationPromoteOption Azure.Provisioning.PostgreSql.ReplicationPromoteOption.Forced:[T:System.Runtime.Serialization.DataMemberAttribute]</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0014</DiagnosticId>
-    <Target>F:Azure.Provisioning.PostgreSql.ReplicationPromoteOption Azure.Provisioning.PostgreSql.ReplicationPromoteOption.Planned:[T:System.Runtime.Serialization.DataMemberAttribute]</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0014</DiagnosticId>
     <Target>F:Azure.Provisioning.PostgreSql.ReadReplicaPromoteMode.Standalone:[T:System.Runtime.Serialization.DataMemberAttribute]</Target>
   </Suppression>
   <Suppression>

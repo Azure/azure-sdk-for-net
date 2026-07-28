@@ -494,7 +494,7 @@
           AfterTargets="ValidateApiCompatForSrc"
           Condition="'$(ApiCompatGenerateSuppressionFile)' == 'true' and Exists('$(ApiCompatSuppressionOutputFile)')">
     <PropertyGroup>
-      <_ApiCompatSuppressionContents>$([System.IO.File]::ReadAllText($(ApiCompatSuppressionOutputFile)))</_ApiCompatSuppressionContents>
+      <_ApiCompatSuppressionContents>$([System.IO.File]::ReadAllText('$(ApiCompatSuppressionOutputFile)'))</_ApiCompatSuppressionContents>
       <_ApiCompatSuppressionContents><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace('$(_ApiCompatSuppressionContents)', '[ \t]*<(?:Left|Right)>.*?</(?:Left|Right)>\r?\n', ''))]]></_ApiCompatSuppressionContents>
     </PropertyGroup>
     <WriteLinesToFile File="$(ApiCompatSuppressionOutputFile)"
