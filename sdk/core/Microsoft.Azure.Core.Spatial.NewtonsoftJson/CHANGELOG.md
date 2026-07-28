@@ -37,4 +37,3 @@ Released.
 ### Added
 
 - Added `NewtonsoftJsonMicrosoftSpatialGeoJsonConverter` to serialize `Microsoft.Spatial.GeographyPoint` objects.
-
