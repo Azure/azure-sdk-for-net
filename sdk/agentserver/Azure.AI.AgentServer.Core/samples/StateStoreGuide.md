@@ -1,4 +1,4 @@
-# Sample 3: Durable state store
+# Durable state store guide
 
 `FoundryStateStore` is a durable, server-backed store for agent state. Each store holds items — keyed JSON values — that you read, write, and list by key. Use it to persist checkpoints, conversation state, counters, or any small state your agent needs to survive across requests and restarts.
 
@@ -55,7 +55,8 @@ Every request and response is a typed model, so you get IDE completion and compi
 
 | Returned by | Model |
 |---|---|
-| `GetOrCreateAsync()`, `GetAsync()`, `UpdateAsync()` | `StateStore` |
+| `GetOrCreateAsync()` | `FoundryStateStore` (bound client) |
+| `GetAsync()`, `UpdateAsync()` | `StateStore` |
 | `DeleteAsync()` | `DeletedStateStore` |
 | `CreateItemAsync()`, `SetItemAsync()` | `StateStoreItemRef` |
 | `GetItemAsync(key)` | `StateStoreItem?` |
@@ -266,6 +267,42 @@ catch (FoundryStorageException ex)                // base type for all storage e
 }
 ```
 
+## Limits
+
+All request-body and query fields are bounded by the service. A request that
+violates these constraints is rejected with `400 Bad Request`; the
+`FoundryStorageBadRequestException.Param` property identifies the invalid
+field.
+
+**Store (`GetOrCreateAsync`, `UpdateAsync`):**
+
+| Field | Constraints | Mutability |
+|---|---|---|
+| `name` | 1–128 characters. Unicode; may contain `/` as a hierarchy separator. Unique within the project and agent. | Immutable |
+| `userIsolation` | Boolean. Defaults to `false` for agent-level shared storage. | Immutable after creation |
+| `itemTtlSeconds` | Defaults to `2592000` (30 days); `-1` means never expire; otherwise `1`–`2147483647`. The TTL renews when an item is written, not when it is read. | Immutable after creation |
+| `description` | At most 1024 characters. | Mutable through `UpdateAsync` |
+| `tags` | At most 16 entries. Keys are 1–64 characters and may contain letters, numbers, `_`, `.`, and `-`. Values are at most 256 characters. Updates replace the complete tag collection. | Mutable through `UpdateAsync` |
+
+**Item (`CreateItemAsync`, `SetItemAsync`):**
+
+| Field | Constraints | Mutability |
+|---|---|---|
+| `key` | 1–128 characters. Unicode; may contain `/`. Unique within the store. | Immutable |
+| `value` | JSON object, at most 1 MB when serialized inline. | Replaced through `SetItemAsync` |
+| `tags` | At most 16 entries, with the same key and value constraints as store tags. | Replaced through `SetItemAsync` |
+
+Items do not have individual TTL settings. Each item inherits the store's
+`itemTtlSeconds`.
+
+**Query parameters (`ListKeysAsync`):**
+
+| Parameter | Constraints |
+|---|---|
+| `limit` | 1–100. Defaults to 20. |
+| `order` | `ListRequestOrder.Asc` or `ListRequestOrder.Desc`. Defaults to `Desc`. |
+| `after` / `before` | Opaque cursors that are mutually exclusive. |
+
 ## Best practices
 
 1. **Prefer `GetOrCreateAsync`.** It is the only lifecycle call you need for the common case; do not assume item writes will create the store for you.
@@ -273,3 +310,4 @@ catch (FoundryStorageException ex)                // base type for all storage e
 3. **Use `userIsolation: true` only when needed.** Prefer a stable store naming scheme first, then add per-user partitioning when the store name is shared.
 4. **Use `ifMatch` for read-modify-write flows.** Counters and checkpoints are race-prone without it.
 5. **Keep values as JSON.** Serialize your own models explicitly with `BinaryData.FromObjectAsJson`.
+6. **Reuse the bound client.** Construct a store once with `GetOrCreateAsync` and reuse it for operations against that store.

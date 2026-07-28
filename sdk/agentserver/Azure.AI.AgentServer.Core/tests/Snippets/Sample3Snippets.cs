@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing Sample3_StateStore.md. Compiled to prevent rot but
+    /// Code snippets backing StateStoreGuide.md. Compiled to prevent rot but
     /// require a running Foundry storage endpoint to execute.
     /// </summary>
     [TestFixture]
