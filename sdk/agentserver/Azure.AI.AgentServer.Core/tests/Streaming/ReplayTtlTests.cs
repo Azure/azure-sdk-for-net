@@ -17,9 +17,9 @@ public sealed class ReplayTtlTests
     {
         var options = new EventStreamOptions();
         options.UseInMemoryReplay(cursor: p => (int)p, ttl: TimeSpan.FromMilliseconds(80));
-        var registry = new EventStreamRegistry(options);
+        var registry = new InMemoryEventStreamRegistry(options);
 
-        IEventStream stream = await registry.GetOrCreateAsync("ttl1");
+        EventStream stream = await registry.GetOrCreateAsync("ttl1");
         await stream.EmitAsync(1);
         await stream.CloseAsync();
 
@@ -40,16 +40,16 @@ public sealed class ReplayTtlTests
     {
         var options = new EventStreamOptions();
         options.UseInMemoryReplay(cursor: p => (int)p, ttl: TimeSpan.FromMilliseconds(50));
-        var registry = new EventStreamRegistry(options);
+        var registry = new InMemoryEventStreamRegistry(options);
 
-        IEventStream first = await registry.GetOrCreateAsync("ttl2");
+        EventStream first = await registry.GetOrCreateAsync("ttl2");
         await first.EmitAsync(1);
         await first.CloseAsync();
         await Task.Delay(120);
         Assert.ThrowsAsync<EventStreamNotFoundException>(async () => await first.EmitAsync(2));
 
         // A fresh GetOrCreate after the tombstone yields a brand-new, usable stream.
-        IEventStream second = await registry.GetOrCreateAsync("ttl2");
+        EventStream second = await registry.GetOrCreateAsync("ttl2");
         Assert.That(second, Is.Not.SameAs(first));
         Assert.DoesNotThrowAsync(async () => await second.EmitAsync(10));
     }
@@ -59,9 +59,9 @@ public sealed class ReplayTtlTests
     {
         var options = new EventStreamOptions();
         options.UseInMemoryReplay(cursor: p => (int)p, ttl: TimeSpan.FromMilliseconds(60));
-        var registry = new EventStreamRegistry(options);
+        var registry = new InMemoryEventStreamRegistry(options);
 
-        IEventStream stream = await registry.GetOrCreateAsync("ttl3");
+        EventStream stream = await registry.GetOrCreateAsync("ttl3");
         await stream.EmitAsync(42);
         await stream.CloseAsync();
         await Task.Delay(150);

@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 /// cursor. A close-clock auto-tombstone fires <c>ttl</c> after close. Mirrors
 /// Python's in-memory replay backing.
 /// </summary>
-internal class ReplayEventStream : IEventStream, IDestroyableStream
+internal class ReplayEventStream : EventStream, IDestroyableStream
 {
     private readonly object _gate = new();
     private readonly SubscriberHub _hub = new();
@@ -43,7 +43,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
     /// <summary>Whether a cursor function is configured.</summary>
     protected bool HasCursor => _cursor is not null;
 
-    public ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default)
+    public override ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         bool selfDestroyed = false;
@@ -105,7 +105,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         return default;
     }
 
-    public ValueTask CloseAsync(CancellationToken cancellationToken = default)
+    public override ValueTask CloseAsync(CancellationToken cancellationToken = default)
     {
         lock (_gate)
         {
@@ -121,7 +121,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         return default;
     }
 
-    public IAsyncEnumerable<object> Subscribe(
+    public override IAsyncEnumerable<object> Subscribe(
         int? after = null, CancellationToken cancellationToken = default)
     {
         // Validate eagerly (mirroring Python's synchronous `subscribe`): a NotFound for a destroyed
@@ -192,7 +192,7 @@ internal class ReplayEventStream : IEventStream, IDestroyableStream
         }
     }
 
-    public ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default)
+    public override ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default)
     {
         // Side-effect-free: never evicts and never triggers the close-clock tombstone,
         // so a recovering producer can read it during the close window.

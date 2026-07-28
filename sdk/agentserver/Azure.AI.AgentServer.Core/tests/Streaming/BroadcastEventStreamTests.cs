@@ -17,15 +17,15 @@ public sealed class BroadcastEventStreamTests
     {
         var options = new EventStreamOptions();
         options.UseInMemoryLive();
-        return new EventStreamRegistry(options);
+        return new InMemoryEventStreamRegistry(options);
     }
 
     [Test]
     public async Task GetOrCreateIsIdempotentSameInstance()
     {
         EventStreamRegistry registry = NewLiveRegistry();
-        IEventStream a = await registry.GetOrCreateAsync("s1");
-        IEventStream b = await registry.GetOrCreateAsync("s1");
+        EventStream a = await registry.GetOrCreateAsync("s1");
+        EventStream b = await registry.GetOrCreateAsync("s1");
         Assert.That(a, Is.SameAs(b));
     }
 
@@ -33,7 +33,7 @@ public sealed class BroadcastEventStreamTests
     public async Task OrderedLiveDeliveryThenCleanTerminationOnClose()
     {
         EventStreamRegistry registry = NewLiveRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("s2");
+        EventStream stream = await registry.GetOrCreateAsync("s2");
 
         var received = new List<object>();
         var subscriberReady = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -64,7 +64,7 @@ public sealed class BroadcastEventStreamTests
     public async Task EmitAfterCloseRaisesClosed()
     {
         EventStreamRegistry registry = NewLiveRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("s3");
+        EventStream stream = await registry.GetOrCreateAsync("s3");
         await stream.CloseAsync();
 
         Assert.ThrowsAsync<EventStreamClosedException>(async () => await stream.EmitAsync(1));
@@ -74,7 +74,7 @@ public sealed class BroadcastEventStreamTests
     public async Task CloseIsIdempotent()
     {
         EventStreamRegistry registry = NewLiveRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("s4");
+        EventStream stream = await registry.GetOrCreateAsync("s4");
         await stream.CloseAsync();
         Assert.DoesNotThrowAsync(async () => await stream.CloseAsync());
     }
@@ -83,7 +83,7 @@ public sealed class BroadcastEventStreamTests
     public async Task EmitWithCloseDeliversThenCloses()
     {
         EventStreamRegistry registry = NewLiveRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("s5");
+        EventStream stream = await registry.GetOrCreateAsync("s5");
 
         var received = new List<object>();
         var subscriberReady = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);

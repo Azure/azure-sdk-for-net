@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 /// <summary>
 /// Registration entry point for the event-streaming feature. Replaces Python's
 /// module-global <c>streams</c> singleton with an injectable
-/// <see cref="IEventStreamRegistry"/>. A backing is selected once at startup via
+/// <see cref="EventStreamRegistry"/>. A backing is selected once at startup via
 /// <see cref="EventStreamOptions"/>; the default (no configuration) is the
 /// in-memory live backing.
 /// </summary>
@@ -32,7 +32,7 @@ public static class EventStreamServiceCollectionExtensions
         var options = new EventStreamOptions();
         configure?.Invoke(options);
 
-        services.TryAddSingleton<IEventStreamRegistry>(_ => new EventStreamRegistry(options));
+        services.TryAddSingleton<EventStreamRegistry>(_ => new InMemoryEventStreamRegistry(options));
         return services;
     }
 }

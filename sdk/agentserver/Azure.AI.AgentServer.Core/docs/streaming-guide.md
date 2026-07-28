@@ -24,7 +24,7 @@ builder.Services.AddEventStreams();
 //    backing there is no history, so a subscriber only sees events emitted after it
 //    attached — start consuming before the producer emits (see "subscribe-before-start"
 //    below), or use a replay backing if you cannot guarantee that ordering.
-IEventStream stream = await registry.GetOrCreateAsync(streamId);
+EventStream stream = await registry.GetOrCreateAsync(streamId);
 Task consume = Task.Run(async () =>
 {
     await foreach (object evt in stream.Subscribe())
@@ -42,7 +42,7 @@ await consume;                                   // subscriber drains and finish
 ```
 
 `registry.GetOrCreateAsync(id)` is idempotent: the producer and subscriber both call
-it with the same id and get the **same** `IEventStream` instance back.
+it with the same id and get the **same** `EventStream` instance back.
 
 ---
 
@@ -56,26 +56,26 @@ the stream contract, and a few stream-specific exceptions (covered in
 |---|---|
 | `IServiceCollection.AddEventStreams(configure?)` | registration; selects the backing |
 | `EventStreamOptions` | chooses and configures the single process backing |
-| `IEventStreamRegistry` | maps stream ids to live `IEventStream` instances |
-| `IEventStream` | a single producer/consumer event stream |
+| `EventStreamRegistry` | maps stream ids to live `EventStream` instances |
+| `EventStream` | a single producer/consumer event stream |
 
-Obtain stream instances from `IEventStreamRegistry` and program against
-`IEventStream`:
+Obtain stream instances from `EventStreamRegistry` and program against
+`EventStream`:
 
 ```csharp
-public interface IEventStream
+public abstract class EventStream
 {
-    ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default);
-    ValueTask CloseAsync(CancellationToken cancellationToken = default);
-    IAsyncEnumerable<object> Subscribe(int? after = null, CancellationToken cancellationToken = default);
-    ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default);
+    public abstract ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default);
+    public abstract ValueTask CloseAsync(CancellationToken cancellationToken = default);
+    public abstract IAsyncEnumerable<object> Subscribe(int? after = null, CancellationToken cancellationToken = default);
+    public abstract ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default);
 }
 
-public interface IEventStreamRegistry
+public abstract class EventStreamRegistry
 {
-    ValueTask<IEventStream> GetAsync(string id, CancellationToken cancellationToken = default);          // throws if absent
-    ValueTask<IEventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default);  // creates if absent
-    ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default);                     // remove + free resources
+    public abstract ValueTask<EventStream> GetAsync(string id, CancellationToken cancellationToken = default);          // throws if absent
+    public abstract ValueTask<EventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default);  // creates if absent
+    public abstract ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default);                     // remove + free resources
 }
 ```
 
@@ -165,7 +165,7 @@ id; choose ids that are stable and boring enough for your storage policy.
 
 ---
 
-## The `IEventStream` protocol
+## The `EventStream` protocol
 
 Every stream — regardless of backing — exposes the same four operations.
 
@@ -259,12 +259,12 @@ A few practical implications:
 
 ## The registry
 
-`IEventStreamRegistry` is the process-level map from ids to live streams:
+`EventStreamRegistry` is the process-level map from ids to live streams:
 
 - `GetAsync(id)` — returns the registered stream when it **must** already exist; throws
   `EventStreamNotFoundException` if not.
 - `GetOrCreateAsync(id)` — idempotent: the producer and subscriber using the same id
-  get the same `IEventStream` instance; if the id was previously destroyed, this
+  get the same `EventStream` instance; if the id was previously destroyed, this
   creates a fresh stream.
 - `DeleteAsync(id)` — removes the stream and backing resources. Use it for immediate
   cleanup (end-of-request hook, test teardown) or for backings without TTL cleanup.
@@ -323,7 +323,7 @@ Once you have picked a strategy, the canonical pattern is:
 ```csharp
 // Pattern 1 (recommended): create the stream and start subscribing in the HTTP
 // layer, THEN kick off the producer.
-IEventStream stream = await registry.GetOrCreateAsync(id);
+EventStream stream = await registry.GetOrCreateAsync(id);
 var consume = ConsumeAsync(stream);          // attaches the subscriber
 await StartProducerAsync(id);                // producer emits into the same id
 await consume;
@@ -385,7 +385,7 @@ Typical endpoint helper for serving a stream over Server-Sent Events:
 ```csharp
 // GET /runs/{id}/events  — stream a run's events as SSE, resumable via Last-Event-ID.
 app.MapGet("/runs/{id}/events", async (string id, HttpContext http,
-                                        IEventStreamRegistry registry) =>
+                                        EventStreamRegistry registry) =>
 {
     http.Response.Headers.ContentType = "text/event-stream";
 
@@ -396,7 +396,7 @@ app.MapGet("/runs/{id}/events", async (string id, HttpContext http,
     // producer created it). Use GetAsync — not GetOrCreateAsync — so an unknown or
     // TTL-expired id surfaces EventStreamNotFoundException → 404 instead of silently
     // creating a new empty stream.
-    IEventStream stream;
+    EventStream stream;
     try
     {
         stream = await registry.GetAsync(id, http.RequestAborted);
@@ -430,11 +430,11 @@ through to `Subscribe(after: lastEventId)` to skip already-delivered events.
 
 ---
 
-## Bringing your own `IEventStream` implementation
+## Bringing your own `EventStream` implementation
 
-You can write your own `IEventStream` implementation (for example a Redis-backed
-stream). It is accepted anywhere the interface is — the registry and the SSE bridge
-only depend on `IEventStream`, not on the bundled backings.
+You can write your own `EventStream` implementation (for example a Redis-backed
+stream). It is accepted anywhere the abstract class is — the registry and the SSE bridge
+only depend on `EventStream`, not on the bundled backings.
 
 **But** don't register your custom implementation with the built-in `AddEventStreams`
 registry — that registry's lifecycle (TTL eviction, file cleanup, tombstoning) is
@@ -442,21 +442,21 @@ wired to the bundled backings only. Ship your own peer registry instead, and let
 consumers pick which one to call:
 
 ```csharp
-// A peer namespace to the SDK's IEventStreamRegistry — same interface, its own
+// A peer namespace to the SDK's EventStreamRegistry — same abstract class, its own
 // lifecycle. Register it under your own DI type so callers choose explicitly.
-public sealed class MyRedisStreams : IEventStreamRegistry
+public sealed class MyRedisStreams : EventStreamRegistry
 {
     public MyRedisStreams(string redisConnectionString) { /* ... */ }
 
-    public ValueTask<IEventStream> GetOrCreateAsync(string id, CancellationToken ct = default) { /* ... */ }
-    public ValueTask<IEventStream> GetAsync(string id, CancellationToken ct = default) { /* ... */ }
-    public ValueTask DeleteAsync(string id, CancellationToken ct = default) { /* ... */ }
+    public override ValueTask<EventStream> GetOrCreateAsync(string id, CancellationToken ct = default) { /* ... */ }
+    public override ValueTask<EventStream> GetAsync(string id, CancellationToken ct = default) { /* ... */ }
+    public override ValueTask DeleteAsync(string id, CancellationToken ct = default) { /* ... */ }
 }
 ```
 
 Consumers explicitly choose which registry they want — `myRedisStreams.GetOrCreateAsync(id)`
-vs the injected built-in `IEventStreamRegistry`. The shared contract is the
-`IEventStream` interface; lifecycle is each registry's own concern.
+vs the injected built-in `EventStreamRegistry`. The shared contract is the
+`EventStream` abstract class; lifecycle is each registry's own concern.
 
 ---
 

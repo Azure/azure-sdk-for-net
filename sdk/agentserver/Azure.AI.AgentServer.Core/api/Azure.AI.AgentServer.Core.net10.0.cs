@@ -118,6 +118,14 @@ namespace Azure.AI.AgentServer.Core
 }
 namespace Azure.AI.AgentServer.Core.Streaming
 {
+    public abstract partial class EventStream
+    {
+        protected EventStream() { }
+        public abstract System.Threading.Tasks.ValueTask CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask EmitAsync(object payload, bool close = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<int?> GetLastCursorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Collections.Generic.IAsyncEnumerable<object> Subscribe(int? after = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public sealed partial class EventStreamClosedException : Azure.AI.AgentServer.Core.Streaming.EventStreamException
     {
         public EventStreamClosedException() { }
@@ -144,22 +152,16 @@ namespace Azure.AI.AgentServer.Core.Streaming
         public void UseInMemoryLive() { }
         public void UseInMemoryReplay(System.Func<object, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?)) { }
     }
+    public abstract partial class EventStreamRegistry
+    {
+        protected EventStreamRegistry() { }
+        public abstract System.Threading.Tasks.ValueTask DeleteAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<Azure.AI.AgentServer.Core.Streaming.EventStream> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<Azure.AI.AgentServer.Core.Streaming.EventStream> GetOrCreateAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public static partial class EventStreamServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddEventStreams(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Core.Streaming.EventStreamOptions>? configure = null) { throw null; }
-    }
-    public partial interface IEventStream
-    {
-        System.Threading.Tasks.ValueTask CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.ValueTask EmitAsync(object payload, bool close = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.ValueTask<int?> GetLastCursorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Collections.Generic.IAsyncEnumerable<object> Subscribe(int? after = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public partial interface IEventStreamRegistry
-    {
-        System.Threading.Tasks.ValueTask DeleteAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.ValueTask<Azure.AI.AgentServer.Core.Streaming.IEventStream> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        System.Threading.Tasks.ValueTask<Azure.AI.AgentServer.Core.Streaming.IEventStream> GetOrCreateAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }
 namespace Azure.AI.AgentServer.Core.Tasks
@@ -179,13 +181,6 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public InputTooLargeException() { }
         public InputTooLargeException(string message) { }
     }
-    public partial interface IResilientTaskBuilder
-    {
-        Azure.AI.AgentServer.Core.Tasks.IResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        Azure.AI.AgentServer.Core.Tasks.IResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<System.IServiceProvider, Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        Azure.AI.AgentServer.Core.Tasks.IResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-        Azure.AI.AgentServer.Core.Tasks.IResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<System.IServiceProvider, Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
-    }
     public partial interface ITaskInvoker
     {
         System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(string name, string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -198,9 +193,17 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public LastInputIdPreconditionFailedException(string? actualLastInputId, string? message = null) { }
         public string? ActualLastInputId { get { throw null; } }
     }
+    public abstract partial class ResilientTaskBuilder
+    {
+        protected ResilientTaskBuilder() { }
+        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
+        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(string name, System.Func<System.IServiceProvider, Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
+        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
+        public abstract Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddTask<TInput, TOutput>(string name, System.Func<System.IServiceProvider, Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null);
+    }
     public static partial class ResilientTaskServiceCollectionExtensions
     {
-        public static Azure.AI.AgentServer.Core.Tasks.IResilientTaskBuilder AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
+        public static Azure.AI.AgentServer.Core.Tasks.ResilientTaskBuilder AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
     }
     public sealed partial class RunOptions
     {

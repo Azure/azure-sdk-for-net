@@ -67,7 +67,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // when a task is invoked. The provider-aware overload hands the handler the application
             // IServiceProvider at invocation time, so dependencies are resolved from DI without a
             // premature BuildServiceProvider() call or a forward-declared, captured provider.
-            IResilientTaskBuilder tasks = services.AddResilientTasks();
+            ResilientTaskBuilder tasks = services.AddResilientTasks();
 
             // The resilient "research" task is session-scoped and steerable: one durable
             // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
@@ -76,7 +76,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
                 "research",
                 (provider, ctx, ct) => RunResearchAsync(
-                    provider.GetRequiredService<IEventStreamRegistry>(),
+                    provider.GetRequiredService<EventStreamRegistry>(),
                     provider.GetRequiredService<ResponsesClient>(),
                     ModelDeployment,
                     ctx,
@@ -184,7 +184,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         /// owns its own replayable stream while the durable task spans the whole session.
         /// </summary>
         public static async Task<ResearchResult> RunResearchAsync(
-            IEventStreamRegistry registry,
+            EventStreamRegistry registry,
             ResponsesClient model,
             string modelName,
             TaskContext<ResearchRequest> ctx,
@@ -199,7 +199,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // The stream id is the per-turn invocation id (one stream per turn), while the
             // durable TaskId spans the whole session.
             string invId = ctx.Input.InvocationId;
-            IEventStream stream = await registry.GetOrCreateAsync(invId, ct);
+            EventStream stream = await registry.GetOrCreateAsync(invId, ct);
 
             // On crash recovery, last_cursor rehydrates the sequence counter.
             int? lastCursor = await stream.GetLastCursorAsync(ct);
@@ -386,7 +386,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         }
 
         private static async Task FinishTurn(
-            IEventStream stream, TaskContext<ResearchRequest> ctx,
+            EventStream stream, TaskContext<ResearchRequest> ctx,
             string invId, CheckpointStore store)
         {
             await stream.CloseAsync();
@@ -438,7 +438,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     ?? new ResearchStartRequest("general knowledge");
 
                 var registry = request.HttpContext.RequestServices
-                    .GetRequiredService<IEventStreamRegistry>();
+                    .GetRequiredService<EventStreamRegistry>();
                 var invoker = request.HttpContext.RequestServices
                     .GetRequiredService<ITaskInvoker>();
 
@@ -448,7 +448,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
                 // Reserve the per-turn stream BEFORE starting the task so a live subscriber
                 // attaches without missing early events.
-                IEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
+                EventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
 
                 // Start a new turn or steer the running one. With the same TaskId, the engine
                 // transparently enqueues this input as steering while a turn is in flight.
@@ -483,9 +483,9 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 CancellationToken cancellationToken)
             {
                 var registry = request.HttpContext.RequestServices
-                    .GetRequiredService<IEventStreamRegistry>();
+                    .GetRequiredService<EventStreamRegistry>();
 
-                IEventStream stream;
+                EventStream stream;
                 try
                 {
                     stream = await registry.GetAsync(invocationId, cancellationToken);
@@ -558,7 +558,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             }
 
             private static async Task WriteSseAsync(
-                HttpResponse response, IEventStream stream, int? after, CancellationToken ct)
+                HttpResponse response, EventStream stream, int? after, CancellationToken ct)
             {
                 response.ContentType = "text/event-stream";
                 response.Headers.CacheControl = "no-cache";

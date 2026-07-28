@@ -4,121 +4,98 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.AgentServer.Core.Tasks.Engine;
 
 namespace Azure.AI.AgentServer.Core.Tasks;
 
 /// <summary>
-/// The concrete <see cref="IResilientTaskBuilder"/> that records registrations into
-/// the shared <see cref="TaskRegistry"/>.
+/// Fluent builder for registering resilient tasks. Only the delegate registration
+/// form is exposed (Python parity — <c>@task</c> decorates a function); a DI-resolved
+/// class handler can be wrapped in the delegate.
 /// </summary>
-internal sealed class ResilientTaskBuilder : IResilientTaskBuilder
+public abstract class ResilientTaskBuilder
 {
-    private readonly TaskRegistry _registry;
-    private readonly TaskServiceProviderAccessor _providerAccessor;
-
-    public ResilientTaskBuilder(TaskRegistry registry, TaskServiceProviderAccessor providerAccessor)
+    /// <summary>Initializes a new instance of the <see cref="ResilientTaskBuilder"/> class.</summary>
+    protected ResilientTaskBuilder()
     {
-        _registry = registry;
-        _providerAccessor = providerAccessor;
     }
 
-    /// <inheritdoc/>
-    public IResilientTaskBuilder AddTask<TInput, TOutput>(
+    /// <summary>
+    /// Registers a one-shot task (Python <c>@task</c>).
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public abstract ResilientTaskBuilder AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
-        Action<TaskRegistrationOptions>? configure = null)
-        => Add(name, handler, multiTurn: false, steerable: false, configure);
+        Action<TaskRegistrationOptions>? configure = null);
 
-    /// <inheritdoc/>
-    public IResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+    /// <summary>
+    /// Registers a multi-turn task (Python <c>@multi_turn_task</c>), optionally steerable.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="steerable">Whether the task accepts steering input.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public abstract ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
-        Action<TaskRegistrationOptions>? configure = null)
-        => Add(name, handler, multiTurn: true, steerable, configure);
+        Action<TaskRegistrationOptions>? configure = null);
 
-    /// <inheritdoc/>
-    public IResilientTaskBuilder AddTask<TInput, TOutput>(
+    /// <summary>
+    /// Registers a one-shot task whose handler resolves dependencies from the application
+    /// <see cref="IServiceProvider"/>. The provider is supplied at invocation time, so there is no
+    /// need to call <c>BuildServiceProvider()</c> before registering tasks.
+    /// </summary>
+    /// <remarks>
+    /// The provider passed to the handler is the <b>root</b> application provider. Task handlers run
+    /// on background/recovery paths with no ambient request scope, so resolve <b>singleton</b> (or
+    /// transient) services here; resolving a <b>scoped</b> service directly throws. If a handler
+    /// needs scoped services, create a scope explicitly
+    /// (<c>provider.GetRequiredService&lt;IServiceScopeFactory&gt;().CreateScope()</c>) and resolve
+    /// from <c>scope.ServiceProvider</c>.
+    /// </remarks>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate; its first argument is the resolved service provider.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public abstract ResilientTaskBuilder AddTask<TInput, TOutput>(
         string name,
         Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
-        Action<TaskRegistrationOptions>? configure = null)
-    {
-        ArgumentNullException.ThrowIfNull(handler);
-        return Add(name, Wrap(handler), multiTurn: false, steerable: false, configure);
-    }
+        Action<TaskRegistrationOptions>? configure = null);
 
-    /// <inheritdoc/>
-    public IResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+    /// <summary>
+    /// Registers a multi-turn task (optionally steerable) whose handler resolves dependencies from
+    /// the application <see cref="IServiceProvider"/>. The provider is supplied at invocation time,
+    /// so there is no need to call <c>BuildServiceProvider()</c> before registering tasks.
+    /// </summary>
+    /// <remarks>
+    /// The provider passed to the handler is the <b>root</b> application provider. Task handlers run
+    /// on background/recovery paths with no ambient request scope, so resolve <b>singleton</b> (or
+    /// transient) services here; resolving a <b>scoped</b> service directly throws. If a handler
+    /// needs scoped services, create a scope explicitly
+    /// (<c>provider.GetRequiredService&lt;IServiceScopeFactory&gt;().CreateScope()</c>) and resolve
+    /// from <c>scope.ServiceProvider</c>.
+    /// </remarks>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate; its first argument is the resolved service provider.</param>
+    /// <param name="steerable">Whether the task accepts steering input.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public abstract ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
-        Action<TaskRegistrationOptions>? configure = null)
-    {
-        ArgumentNullException.ThrowIfNull(handler);
-        return Add(name, Wrap(handler), multiTurn: true, steerable, configure);
-    }
-
-    // Adapts a provider-aware handler to the plain delegate shape the engine invokes. The provider
-    // is resolved from the shared accessor at invocation time (populated when the engine is built),
-    // so registration does not depend on the container already existing.
-    private Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> Wrap<TInput, TOutput>(
-        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler)
-        => (ctx, ct) => handler(_providerAccessor.Require(), ctx, ct);
-
-    private IResilientTaskBuilder Add<TInput, TOutput>(
-        string name,
-        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
-        bool multiTurn,
-        bool steerable,
-        Action<TaskRegistrationOptions>? configure)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new ArgumentException("Task name must be a non-empty, non-whitespace string.", nameof(name));
-        }
-
-        ArgumentNullException.ThrowIfNull(handler);
-
-        TaskRegistrationOptions? options = null;
-        if (configure is not null)
-        {
-            options = new TaskRegistrationOptions();
-            configure(options);
-
-            if (options.Timeout is { } timeout)
-            {
-                if (timeout < TimeSpan.Zero)
-                {
-                    throw new ArgumentOutOfRangeException(
-                        nameof(configure), timeout, "TaskRegistrationOptions.Timeout must not be negative.");
-                }
-
-                if (timeout > TaskEngineConstants.MaxTaskTimeout)
-                {
-                    throw new ArgumentOutOfRangeException(
-                        nameof(configure), timeout,
-                        $"TaskRegistrationOptions.Timeout must not exceed the {TaskEngineConstants.MaxTaskTimeout.TotalDays:0}-day hard cap.");
-                }
-            }
-
-            options.Retry?.Validate();
-        }
-
-        var registration = new TaskRegistration(
-            name,
-            typeof(TInput),
-            typeof(TOutput),
-            handler,
-            multiTurn,
-            steerable,
-            options);
-
-        registration.RecoverDispatch = (engineObj, record) =>
-            ((TaskEngine)engineObj).RecoverAsync<TInput, TOutput>(registration, record);
-
-        _registry.Add(registration);
-
-        return this;
-    }
+        Action<TaskRegistrationOptions>? configure = null);
 }

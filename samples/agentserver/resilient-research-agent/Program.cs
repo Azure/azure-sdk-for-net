@@ -100,7 +100,7 @@ builder.Services.AddResilientTasks(new DefaultAzureCredential())
     .AddMultiTurnTask<ResearchRequest, ResearchResult>(
         "research",
         (provider, ctx, ct) => ResilientResearchHandler.RunResearchAsync(
-            provider.GetRequiredService<IEventStreamRegistry>(),
+            provider.GetRequiredService<EventStreamRegistry>(),
             provider.GetRequiredService<UpstreamModel>(),
             ctx,
             checkpointStore,

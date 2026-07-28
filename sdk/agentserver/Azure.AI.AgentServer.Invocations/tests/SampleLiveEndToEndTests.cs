@@ -317,7 +317,7 @@ public class SampleLiveEndToEndTests
                      SampleResilientResearchSnippets.ResearchResult>(
                 "research",
                 (provider, ctx, ct) => SampleResilientResearchSnippets.RunResearchAsync(
-                    provider.GetRequiredService<IEventStreamRegistry>(), model, _model, ctx, checkpointStore,
+                    provider.GetRequiredService<EventStreamRegistry>(), model, _model, ctx, checkpointStore,
                     numPhases: 2, callsPerPhase: 2, ct: ct),
                 steerable: true);
 

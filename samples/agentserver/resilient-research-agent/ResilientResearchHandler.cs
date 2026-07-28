@@ -72,7 +72,7 @@ public class ResilientResearchHandler : InvocationHandler
             return;
         }
 
-        var registry = request.HttpContext.RequestServices.GetRequiredService<IEventStreamRegistry>();
+        var registry = request.HttpContext.RequestServices.GetRequiredService<EventStreamRegistry>();
         var invoker = request.HttpContext.RequestServices.GetRequiredService<ITaskInvoker>();
 
         // ONE resilient task per session so steering finds the active run. invocationId labels
@@ -111,9 +111,9 @@ public class ResilientResearchHandler : InvocationHandler
         InvocationContext context,
         CancellationToken cancellationToken)
     {
-        var registry = request.HttpContext.RequestServices.GetRequiredService<IEventStreamRegistry>();
+        var registry = request.HttpContext.RequestServices.GetRequiredService<EventStreamRegistry>();
 
-        IEventStream stream;
+        EventStream stream;
         try
         {
             stream = await registry.GetAsync(invocationId, cancellationToken);
@@ -222,7 +222,7 @@ public class ResilientResearchHandler : InvocationHandler
     /// phase text lives in the file-backed <paramref name="checkpointStore"/>.
     /// </summary>
     public static async Task<ResearchResult> RunResearchAsync(
-        IEventStreamRegistry registry,
+        EventStreamRegistry registry,
         UpstreamModel model,
         TaskContext<ResearchRequest> ctx,
         CheckpointStore checkpointStore,
@@ -230,7 +230,7 @@ public class ResilientResearchHandler : InvocationHandler
     {
         string topic = ctx.Input.Topic;
         string invId = ctx.Input.InvocationId; // one stream per turn; TaskId spans the session.
-        IEventStream stream = await registry.GetOrCreateAsync(invId, ct);
+        EventStream stream = await registry.GetOrCreateAsync(invId, ct);
 
         // On crash recovery, last_cursor rehydrates the sequence counter (no gap, no dupes).
         int? lastCursor = await stream.GetLastCursorAsync(ct);
@@ -503,7 +503,7 @@ public class ResilientResearchHandler : InvocationHandler
 
     private static async Task<ResearchResult> WindDownAsync(
         Func<ResearchEvent, bool, Task> emit,
-        IEventStream stream,
+        EventStream stream,
         TaskContext<ResearchRequest> ctx,
         string invId,
         CheckpointStore checkpointStore,
@@ -517,7 +517,7 @@ public class ResilientResearchHandler : InvocationHandler
         // invocation's stream (a steered re-entry runs as a NEW invocation with its own stream),
         // so emit+close is one atomic durable unit. Critically, close:true routes through
         // CancellationToken.None inside `emit` — on the steering / cancel path `ct` is already
-        // cancelled, and IEventStream.EmitAsync throws OperationCanceledException on a cancelled
+        // cancelled, and EventStream.EmitAsync throws OperationCanceledException on a cancelled
         // token, which would otherwise skip the watermark wipe below and leave a steered re-entry
         // resuming mid-plan. We still guard the emit so the wipe runs even if it fails.
         try
@@ -545,7 +545,7 @@ public class ResilientResearchHandler : InvocationHandler
     // timeout, normal completion). NOT called on crash paths — the wire stream must stay open for
     // the recovery re-entry and the watermarks must remain so it can resume mid-turn.
     private static async Task FinishTurnAsync(
-        IEventStream stream, TaskContext<ResearchRequest> ctx, string invId, CheckpointStore store)
+        EventStream stream, TaskContext<ResearchRequest> ctx, string invId, CheckpointStore store)
     {
         await stream.CloseAsync();
         ctx.Metadata.Remove("completed_phases");

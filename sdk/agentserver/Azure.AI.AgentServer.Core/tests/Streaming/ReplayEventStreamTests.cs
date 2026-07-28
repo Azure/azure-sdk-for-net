@@ -17,10 +17,10 @@ public sealed class ReplayEventStreamTests
     {
         var options = new EventStreamOptions();
         options.UseInMemoryReplay(cursor: p => ((CursoredEvent)p).N, ttl: ttl);
-        return new EventStreamRegistry(options);
+        return new InMemoryEventStreamRegistry(options);
     }
 
-    private static async Task<List<object>> DrainAsync(IEventStream stream, int? after = null)
+    private static async Task<List<object>> DrainAsync(EventStream stream, int? after = null)
     {
         var items = new List<object>();
         await foreach (object item in stream.Subscribe(after))
@@ -35,7 +35,7 @@ public sealed class ReplayEventStreamTests
     public async Task LateSubscriberCatchesUpFromHistory()
     {
         EventStreamRegistry registry = NewReplayRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("r1");
+        EventStream stream = await registry.GetOrCreateAsync("r1");
 
         await stream.EmitAsync(new CursoredEvent(0));
         await stream.EmitAsync(new CursoredEvent(1));
@@ -52,7 +52,7 @@ public sealed class ReplayEventStreamTests
     public async Task ReconnectAfterCursorDeliversOnlyLaterEvents()
     {
         EventStreamRegistry registry = NewReplayRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("r2");
+        EventStream stream = await registry.GetOrCreateAsync("r2");
 
         for (int n = 0; n < 5; n++)
         {
@@ -71,7 +71,7 @@ public sealed class ReplayEventStreamTests
     public async Task GetLastCursorReturnsHighestSeen()
     {
         EventStreamRegistry registry = NewReplayRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("r3");
+        EventStream stream = await registry.GetOrCreateAsync("r3");
 
         Assert.That(await stream.GetLastCursorAsync(), Is.Null);
 
@@ -86,8 +86,8 @@ public sealed class ReplayEventStreamTests
     {
         var options = new EventStreamOptions();
         options.UseInMemoryLive();
-        var registry = new EventStreamRegistry(options);
-        IEventStream stream = await registry.GetOrCreateAsync("r4");
+        var registry = new InMemoryEventStreamRegistry(options);
+        EventStream stream = await registry.GetOrCreateAsync("r4");
 
         Assert.That(await stream.GetLastCursorAsync(), Is.Null);
     }

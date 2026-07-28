@@ -28,8 +28,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="credential">An optional credential for hosted-mode authentication.</param>
-    /// <returns>An <see cref="IResilientTaskBuilder"/> for registering tasks.</returns>
-    public static IResilientTaskBuilder AddResilientTasks(
+    /// <returns>An <see cref="ResilientTaskBuilder"/> for registering tasks.</returns>
+    public static ResilientTaskBuilder AddResilientTasks(
         this IServiceCollection services,
         TokenCredential? credential = null)
     {
@@ -142,7 +142,7 @@ public static class ResilientTaskServiceCollectionExtensions
         });
         services.AddHostedService(sp => sp.GetRequiredService<TaskDurabilityService>());
 
-        return new ResilientTaskBuilder(canonical, canonicalAccessor);
+        return new DefaultResilientTaskBuilder(canonical, canonicalAccessor);
     }
 
     private static (string AgentName, string SessionId) ResolveScope()

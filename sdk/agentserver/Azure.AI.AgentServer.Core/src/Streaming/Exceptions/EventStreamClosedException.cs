@@ -6,7 +6,7 @@ using System;
 namespace Azure.AI.AgentServer.Core.Streaming;
 
 /// <summary>
-/// Raised when <see cref="IEventStream.EmitAsync"/> is called after the stream
+/// Raised when <see cref="EventStream.EmitAsync"/> is called after the stream
 /// has been closed. This signals a producer bug (the producer should not emit
 /// after closing); HTTP layers should treat it as a server error (5xx), not a
 /// client error. Mirrors Python's <c>EventStreamClosedError</c>.

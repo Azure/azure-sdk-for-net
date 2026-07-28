@@ -17,7 +17,7 @@ public sealed class EventStreamOptions
     /// <summary>The default per-event retention for the file-backed replay backing (10 minutes).</summary>
     private static readonly TimeSpan DefaultFileBackedTtl = TimeSpan.FromMinutes(10);
 
-    private Func<string, Action, IEventStream> _factory = (id, _) => new BroadcastEventStream(id);
+    private Func<string, Action, EventStream> _factory = (id, _) => new BroadcastEventStream(id);
 
     /// <summary>
     /// Selects the in-memory live backing (the default): constant memory, no
@@ -42,7 +42,7 @@ public sealed class EventStreamOptions
     /// Selects the file-backed replay backing with typed JSON persistence: events are serialized
     /// as JSON to <c>&lt;storageDirectory&gt;/&lt;id&gt;.jsonl</c> and rehydrated back to
     /// <typeparamref name="TPayload"/> on the next
-    /// <see cref="IEventStreamRegistry.GetOrCreateAsync"/>, surviving a process crash. This is the
+    /// <see cref="EventStreamRegistry.GetOrCreateAsync"/>, surviving a process crash. This is the
     /// low-ceremony form: the storage directory, retention, and JSON serialization all have
     /// sensible defaults, so most callers only supply a <paramref name="cursor"/>.
     /// </summary>
@@ -71,7 +71,7 @@ public sealed class EventStreamOptions
     /// <summary>
     /// Selects the file-backed replay backing: events persist to
     /// <c>&lt;storageDirectory&gt;/&lt;id&gt;.jsonl</c> and rehydrate on the next
-    /// <see cref="IEventStreamRegistry.GetOrCreateAsync"/>, surviving a process crash. This
+    /// <see cref="EventStreamRegistry.GetOrCreateAsync"/>, surviving a process crash. This
     /// overload accepts custom (non-JSON) serialization; for typed JSON persistence prefer
     /// <see cref="UseFileBackedReplay{TPayload}(System.Func{TPayload,int}?,System.TimeSpan?,string?)"/>.
     /// </summary>
@@ -115,5 +115,5 @@ public sealed class EventStreamOptions
             : storageDirectory;
 
     /// <summary>Builds a backing instance for the given id, wiring its self-destroy callback.</summary>
-    internal IEventStream CreateStream(string id, Action onDestroy) => _factory(id, onDestroy);
+    internal EventStream CreateStream(string id, Action onDestroy) => _factory(id, onDestroy);
 }

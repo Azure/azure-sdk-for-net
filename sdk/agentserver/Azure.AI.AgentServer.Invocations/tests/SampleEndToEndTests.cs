@@ -894,7 +894,7 @@ public class SampleEndToEndTests
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
                         (provider, ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            provider.GetRequiredService<IEventStreamRegistry>(), model, "test-model", ctx, checkpointStore,
+                            provider.GetRequiredService<EventStreamRegistry>(), model, "test-model", ctx, checkpointStore,
                             numPhases: 2, callsPerPhase: 2,
                             interPhaseCooldown: TimeSpan.Zero,
                             intraPhaseCooldown: TimeSpan.Zero,

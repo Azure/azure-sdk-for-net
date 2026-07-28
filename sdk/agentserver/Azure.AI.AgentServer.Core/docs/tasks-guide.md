@@ -478,15 +478,15 @@ no-op if the chain is already gone.
 ### 5.1 Registration
 
 ```csharp
-IResilientTaskBuilder AddResilientTasks(this IServiceCollection services,
+ResilientTaskBuilder AddResilientTasks(this IServiceCollection services,
                                         TokenCredential? credential = null);
 
-IResilientTaskBuilder AddTask<TInput, TOutput>(
+ResilientTaskBuilder AddTask<TInput, TOutput>(
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     Action<TaskRegistrationOptions>? configure = null);
 
-IResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     bool steerable = false,

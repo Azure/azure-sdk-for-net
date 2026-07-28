@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 /// The in-memory live backing: constant memory, no replay. Subscribers only see
 /// events emitted after their iteration begins. Mirrors Python's live backing.
 /// </summary>
-internal sealed class BroadcastEventStream : IEventStream, IDestroyableStream
+internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
 {
     private readonly object _gate = new();
     private readonly SubscriberHub _hub = new();
@@ -22,7 +22,7 @@ internal sealed class BroadcastEventStream : IEventStream, IDestroyableStream
 
     public BroadcastEventStream(string id) => _id = id;
 
-    public ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default)
+    public override ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         lock (_gate)
@@ -48,7 +48,7 @@ internal sealed class BroadcastEventStream : IEventStream, IDestroyableStream
         return default;
     }
 
-    public ValueTask CloseAsync(CancellationToken cancellationToken = default)
+    public override ValueTask CloseAsync(CancellationToken cancellationToken = default)
     {
         lock (_gate)
         {
@@ -62,7 +62,7 @@ internal sealed class BroadcastEventStream : IEventStream, IDestroyableStream
         return default;
     }
 
-    public IAsyncEnumerable<object> Subscribe(
+    public override IAsyncEnumerable<object> Subscribe(
         int? after = null, CancellationToken cancellationToken = default)
     {
         // Validate eagerly (mirroring Python's synchronous `subscribe`): a NotFound for a destroyed
@@ -105,7 +105,7 @@ internal sealed class BroadcastEventStream : IEventStream, IDestroyableStream
         }
     }
 
-    public ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default)
+    public override ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default)
     {
         lock (_gate)
         {

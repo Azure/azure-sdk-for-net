@@ -54,7 +54,7 @@ public sealed class ResilientTaskRegistrationTests
         var services = new ServiceCollection();
         services.AddSingleton<Dependency>();
 
-        IResilientTaskBuilder tasks = services.AddResilientTasks();
+        ResilientTaskBuilder tasks = services.AddResilientTasks();
         tasks.AddTask<string, string>(
             "echo-dep",
             (provider, ctx, ct) =>

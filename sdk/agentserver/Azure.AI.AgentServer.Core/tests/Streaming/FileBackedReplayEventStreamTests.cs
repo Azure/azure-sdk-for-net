@@ -45,7 +45,7 @@ public sealed class FileBackedReplayEventStreamTests
             ttl: TimeSpan.FromHours(1),
             serializer: p => Encoding.UTF8.GetBytes(p.ToString()!),
             deserializer: b => int.Parse(Encoding.UTF8.GetString(b)));
-        return new EventStreamRegistry(options);
+        return new InMemoryEventStreamRegistry(options);
     }
 
     [Test]
@@ -55,7 +55,7 @@ public sealed class FileBackedReplayEventStreamTests
         // hash-encodes such ids to a safe stem, so the file lands in _dir and no parent-escaping
         // path is created.
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("../evil/id");
+        EventStream stream = await registry.GetOrCreateAsync("../evil/id");
         await stream.EmitAsync(1);
 
         Assert.That(File.Exists(Path.Combine(_dir, "../evil/id.jsonl")), Is.False,
@@ -72,7 +72,7 @@ public sealed class FileBackedReplayEventStreamTests
         // Python's hexdigest() emits lowercase hex; the .NET stem must match byte-for-byte so a
         // file written by one language is found by the other.
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("unsafe/id");
+        EventStream stream = await registry.GetOrCreateAsync("unsafe/id");
         await stream.EmitAsync(1);
 
         string[] jsonl = Directory.GetFiles(_dir, "*.jsonl");
@@ -92,7 +92,7 @@ public sealed class FileBackedReplayEventStreamTests
         // used verbatim (it could alias the hash-encoding of a different, unsafe id); it is rehashed.
         string reserved = "h_" + new string('a', 64);
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync(reserved);
+        EventStream stream = await registry.GetOrCreateAsync(reserved);
         await stream.EmitAsync(1);
 
         Assert.That(File.Exists(Path.Combine(_dir, reserved + ".jsonl")), Is.False,
@@ -112,7 +112,7 @@ public sealed class FileBackedReplayEventStreamTests
         // Mirroring Python's synchronous `subscribe`, a NotFound for a destroyed stream must surface
         // at the call site — not be deferred until the caller starts enumerating the iterator.
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("gone-1");
+        EventStream stream = await registry.GetOrCreateAsync("gone-1");
         await registry.DeleteAsync("gone-1");
 
         Assert.Throws<EventStreamNotFoundException>(() => stream.Subscribe());
@@ -124,7 +124,7 @@ public sealed class FileBackedReplayEventStreamTests
         // emit(close: true) must persist the event line immediately followed by the terminal
         // sentinel as one durable unit (a crash can never leave the event without its terminal).
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("atomic-1");
+        EventStream stream = await registry.GetOrCreateAsync("atomic-1");
         await stream.EmitAsync(7, close: true);
 
         string[] lines = File.ReadAllLines(Path.Combine(_dir, "atomic-1.jsonl"));
@@ -138,7 +138,7 @@ public sealed class FileBackedReplayEventStreamTests
     public async Task PersistsJsonlWithTerminalSentinel()
     {
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("turn-1");
+        EventStream stream = await registry.GetOrCreateAsync("turn-1");
         await stream.EmitAsync(0);
         await stream.EmitAsync(1, close: true);
 
@@ -152,7 +152,7 @@ public sealed class FileBackedReplayEventStreamTests
     public async Task CrashMidStreamRehydratesAndResumesFromNextCursor()
     {
         EventStreamRegistry registry1 = NewRegistry();
-        IEventStream stream1 = await registry1.GetOrCreateAsync("turn-2");
+        EventStream stream1 = await registry1.GetOrCreateAsync("turn-2");
         await stream1.EmitAsync(0);
         await stream1.EmitAsync(1);
         await stream1.EmitAsync(2);
@@ -161,7 +161,7 @@ public sealed class FileBackedReplayEventStreamTests
         ((IDisposable)stream1).Dispose();
 
         EventStreamRegistry registry2 = NewRegistry();
-        IEventStream stream2 = await registry2.GetOrCreateAsync("turn-2");
+        EventStream stream2 = await registry2.GetOrCreateAsync("turn-2");
 
         Assert.That(await stream2.GetLastCursorAsync(), Is.EqualTo(2));
 
@@ -177,7 +177,7 @@ public sealed class FileBackedReplayEventStreamTests
         // A same-id GetOrCreateAsync after delete must therefore start empty rather than
         // rehydrate the deleted stream's events from a lingering .jsonl file.
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("turn-del");
+        EventStream stream = await registry.GetOrCreateAsync("turn-del");
         await stream.EmitAsync(0);
         await stream.EmitAsync(1);
 
@@ -187,7 +187,7 @@ public sealed class FileBackedReplayEventStreamTests
         await registry.DeleteAsync("turn-del");
         Assert.That(File.Exists(path), Is.False, "delete() must remove the backing file (cleanup-before-tombstone).");
 
-        IEventStream recreated = await registry.GetOrCreateAsync("turn-del");
+        EventStream recreated = await registry.GetOrCreateAsync("turn-del");
         Assert.That(await recreated.GetLastCursorAsync(), Is.Null, "recreated stream must not rehydrate deleted events.");
     }
 
@@ -195,13 +195,13 @@ public sealed class FileBackedReplayEventStreamTests
     public async Task RehydratedHistoryIsReplayedToLateSubscriber()
     {
         EventStreamRegistry registry1 = NewRegistry();
-        IEventStream stream1 = await registry1.GetOrCreateAsync("turn-3");
+        EventStream stream1 = await registry1.GetOrCreateAsync("turn-3");
         await stream1.EmitAsync(10);
         await stream1.EmitAsync(11);
         ((IDisposable)stream1).Dispose();
 
         EventStreamRegistry registry2 = NewRegistry();
-        IEventStream stream2 = await registry2.GetOrCreateAsync("turn-3");
+        EventStream stream2 = await registry2.GetOrCreateAsync("turn-3");
 
         var items = new List<object>();
         await stream2.EmitAsync(12, close: true);
@@ -233,7 +233,7 @@ public sealed class FileBackedReplayEventStreamTests
             "{\"emit_time\": 1.0, \"payload\": \"0\"}\n{\"emit_time\": 2.0, \"payl");
 
         EventStreamRegistry registry = NewRegistry();
-        IEventStream stream = await registry.GetOrCreateAsync("partial");
+        EventStream stream = await registry.GetOrCreateAsync("partial");
 
         Assert.That(await stream.GetLastCursorAsync(), Is.EqualTo(0));
     }
@@ -273,9 +273,9 @@ public sealed class FileBackedReplayEventStreamTests
             ttl: TimeSpan.FromMilliseconds(1),
             serializer: p => Encoding.UTF8.GetBytes(p.ToString()!),
             deserializer: b => int.Parse(Encoding.UTF8.GetString(b)));
-        var registry = new EventStreamRegistry(options);
+        var registry = new InMemoryEventStreamRegistry(options);
 
-        IEventStream stream = await registry.GetOrCreateAsync("compact-1");
+        EventStream stream = await registry.GetOrCreateAsync("compact-1");
         for (int i = 0; i < 1100; i++)
         {
             await stream.EmitAsync(i);
@@ -286,7 +286,7 @@ public sealed class FileBackedReplayEventStreamTests
 
         // The compacted log still rehydrates without error.
         ((IDisposable)stream).Dispose();
-        var registry2 = new EventStreamRegistry(options);
+        var registry2 = new InMemoryEventStreamRegistry(options);
         Assert.DoesNotThrowAsync(async () => await registry2.GetOrCreateAsync("compact-1"));
     }
 
@@ -299,16 +299,16 @@ public sealed class FileBackedReplayEventStreamTests
         // JsonNode), so a cursor written against the typed payload keeps working after restart.
         var options = new EventStreamOptions();
         options.UseFileBackedReplay<TypedEvent>(cursor: e => e.Cursor, storageDirectory: _dir);
-        var registry = new EventStreamRegistry(options);
+        var registry = new InMemoryEventStreamRegistry(options);
 
-        IEventStream stream = await registry.GetOrCreateAsync("typed-1");
+        EventStream stream = await registry.GetOrCreateAsync("typed-1");
         await stream.EmitAsync(new TypedEvent(0, "hello"));
         await stream.EmitAsync(new TypedEvent(1, "world"));
         ((IDisposable)stream).Dispose();
 
         // Rehydrate in a fresh registry; the cursor runs against the decoded payloads.
-        var registry2 = new EventStreamRegistry(options);
-        IEventStream rehydrated = await registry2.GetOrCreateAsync("typed-1");
+        var registry2 = new InMemoryEventStreamRegistry(options);
+        EventStream rehydrated = await registry2.GetOrCreateAsync("typed-1");
         Assert.That(await rehydrated.GetLastCursorAsync(), Is.EqualTo(1));
 
         var items = new List<object>();
@@ -336,9 +336,9 @@ public sealed class FileBackedReplayEventStreamTests
 
             var options = new EventStreamOptions();
             options.UseFileBackedReplay<TypedEvent>(cursor: e => e.Cursor);
-            var registry = new EventStreamRegistry(options);
+            var registry = new InMemoryEventStreamRegistry(options);
 
-            IEventStream stream = await registry.GetOrCreateAsync("defaulted");
+            EventStream stream = await registry.GetOrCreateAsync("defaulted");
             await stream.EmitAsync(new TypedEvent(0, "x"));
 
             string expected = Path.Combine(stateRoot, "streams", "defaulted.jsonl");

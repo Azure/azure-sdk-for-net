@@ -22,11 +22,11 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         private sealed record MyEvent(int Sequence, string Token);
 
         // 5-minute getting started — produce + consume.
-        public static async Task GettingStarted(IServiceCollection services, IEventStreamRegistry registry, string streamId)
+        public static async Task GettingStarted(IServiceCollection services, EventStreamRegistry registry, string streamId)
         {
             services.AddEventStreams();
 
-            IEventStream stream = await registry.GetOrCreateAsync(streamId);
+            EventStream stream = await registry.GetOrCreateAsync(streamId);
             await stream.EmitAsync(new { token = "Hello" });
             await stream.EmitAsync(new { token = " world" });
             await stream.CloseAsync();
@@ -64,19 +64,19 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
 
         // Subscribe-before-start — Pattern 1.
         public static async Task SubscribeBeforeStart(
-            IEventStreamRegistry registry,
+            EventStreamRegistry registry,
             string id,
-            Func<IEventStream, Task> consumeAsync,
+            Func<EventStream, Task> consumeAsync,
             Func<string, Task> startProducerAsync)
         {
-            IEventStream stream = await registry.GetOrCreateAsync(id);
+            EventStream stream = await registry.GetOrCreateAsync(id);
             Task consume = consumeAsync(stream);
             await startProducerAsync(id);
             await consume;
         }
 
         // Recovery & resumption — cursored reconnect.
-        public static async Task CursoredReconnect(IEventStream stream)
+        public static async Task CursoredReconnect(EventStream stream)
         {
             await foreach (object evt in stream.Subscribe(after: 42))
             {
@@ -88,10 +88,10 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         }
 
         // Registry surface.
-        public static async Task RegistryUsage(IEventStreamRegistry registry, string id)
+        public static async Task RegistryUsage(EventStreamRegistry registry, string id)
         {
-            IEventStream created = await registry.GetOrCreateAsync(id);
-            IEventStream existing = await registry.GetAsync(id);
+            EventStream created = await registry.GetOrCreateAsync(id);
+            EventStream existing = await registry.GetAsync(id);
             await registry.DeleteAsync(id);
             _ = (created, existing);
         }

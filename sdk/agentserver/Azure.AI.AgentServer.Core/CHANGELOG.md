@@ -5,11 +5,11 @@
 ### Features Added
 
 - Added resilient **task** and **streaming** primitives for building durable, long-running agents (`Azure.AI.AgentServer.Core.Tasks` and `Azure.AI.AgentServer.Core.Streaming`):
-  - Register one-shot and multi-turn tasks with `IServiceCollection.AddResilientTasks()` and the `IResilientTaskBuilder` (`AddTask` / `AddMultiTurnTask`).
+  - Register one-shot and multi-turn tasks with `IServiceCollection.AddResilientTasks()` and the `ResilientTaskBuilder` (`AddTask` / `AddMultiTurnTask`).
   - Run and resume tasks through `ITaskInvoker` (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the awaitable `TaskRun<TOutput>` handle and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, durable `TaskMetadata`, cooperative cancellation, shutdown, and steering signals).
   - Configure per-task durability with `TaskRegistrationOptions` (title, timeout, retry) and `TaskRetryPolicy` factories (`ExponentialBackoff`, `LinearBackoff`, `FixedDelay`, `NoRetry`).
   - Idempotent, serializable task state via `TaskMetadata` (values are `BinaryData`) with namespacing and atomic `Increment`/`Append` helpers.
-  - Resumable event streaming with `IEventStreamRegistry` / `IEventStream` and `AddEventStreams()`, supporting in-memory live, in-memory replay, and file-backed replay backings via `EventStreamOptions`.
+  - Resumable event streaming with `EventStreamRegistry` / `EventStream` and `AddEventStreams()`, supporting in-memory live, in-memory replay, and file-backed replay backings via `EventStreamOptions`.
   - A complete task and streaming error taxonomy (`TaskFailedException`, `TaskConflictException`, `TaskCancelledException`, `TaskDeferredException`, `InputTooLargeException`, `LastInputIdPreconditionFailedException`, `SteeringQueueFullException`, and the streaming `EventStreamException` hierarchy).
 
 ### Breaking Changes
