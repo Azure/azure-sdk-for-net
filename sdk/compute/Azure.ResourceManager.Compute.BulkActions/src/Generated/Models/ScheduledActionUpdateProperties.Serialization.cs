@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ComputeBulkActionsResourceType? resourceType = default;
+            ScheduledActionsResourceType? resourceType = default;
             ScheduledActionType? actionType = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    resourceType = new ComputeBulkActionsResourceType(prop.Value.GetString());
+                    resourceType = new ScheduledActionsResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actionType"u8))

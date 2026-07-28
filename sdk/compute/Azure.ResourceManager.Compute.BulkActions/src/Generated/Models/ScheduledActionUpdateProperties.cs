@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionUpdateProperties(ComputeBulkActionsResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedulePatch schedule, IList<NotificationProperties> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionUpdateProperties(ScheduledActionsResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedulePatch schedule, IList<NotificationProperties> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The type of resource the scheduled action is targeting. </summary>
-        public ComputeBulkActionsResourceType? ResourceType { get; set; }
+        public ScheduledActionsResourceType? ResourceType { get; set; }
 
         /// <summary> The action the scheduled action should perform in the resources. </summary>
         public ScheduledActionType? ActionType { get; set; }
