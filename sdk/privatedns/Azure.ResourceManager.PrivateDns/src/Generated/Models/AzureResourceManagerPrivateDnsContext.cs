@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.PrivateDns
     [ModelReaderWriterBuildable(typeof(PrivateZoneListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateZoneProperties))]
     [ModelReaderWriterBuildable(typeof(RecordSetListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkData))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkListResult))]
