@@ -1,4 +1,4 @@
-# Durable state store guide
+# State store guide
 
 `FoundryStateStore` is a durable, server-backed store for agent state. Each store holds items — keyed JSON values — that you read, write, and list by key. Use it to persist checkpoints, conversation state, counters, or any small state your agent needs to survive across requests and restarts.
 

@@ -165,6 +165,7 @@ public class FoundryStateStoreTests
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Name, Is.EqualTo(DefaultName));
         Assert.That(result.Id, Is.EqualTo("ss_1"));
+        Assert.That(result.Description, Is.Null);
     }
 
     [Test]
@@ -251,6 +252,19 @@ public class FoundryStateStoreTests
     }
 
     [Test]
+    public async Task Delete_ReturnsNullId_WhenStoreAlreadyAbsent()
+    {
+        var transport = new MockTransport(Json(
+            200, """{"object":"state_store","name":"prefs","deleted":true}"""));
+        FoundryStateStore store = MakeStore(transport, name: "prefs");
+
+        DeletedStateStore result = await store.DeleteAsync();
+
+        Assert.That(result.Id, Is.Null);
+        Assert.That(result.Deleted, Is.True);
+    }
+
+    [Test]
     public async Task DeleteItem_ReturnsMarkerAndSendsHeaders()
     {
         var transport = new MockTransport(Json(
@@ -265,6 +279,19 @@ public class FoundryStateStoreTests
         Assert.That(ifMatch, Is.EqualTo("\"0x8DD\""));
         Assert.That(request.Headers.TryGetValue("x-ms-user-id", out string? uid), Is.True);
         Assert.That(uid, Is.EqualTo("user-42"));
+        Assert.That(result.Deleted, Is.True);
+    }
+
+    [Test]
+    public async Task DeleteItem_ReturnsNullId_WhenItemAlreadyAbsent()
+    {
+        var transport = new MockTransport(Json(
+            200, """{"object":"state_store.item","key":"step/1","deleted":true}"""));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+
+        DeletedStateStoreItem result = await store.DeleteItemAsync("step/1");
+
+        Assert.That(result.Id, Is.Null);
         Assert.That(result.Deleted, Is.True);
     }
 

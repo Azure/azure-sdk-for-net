@@ -150,7 +150,7 @@ A `/readiness` endpoint is registered by default, responding to liveness and rea
 
 ### Durable state store
 
-`FoundryStateStore` is a durable, server-backed store for agent state. Each store is bound to a caller-chosen name and holds items — keyed JSON values — that you read, write, and list. Use it to persist checkpoints, conversation state, or counters across requests and restarts. `FoundryStateStore.GetOrCreateAsync` fetches or creates the store in one call, and items support tags, store-level TTL, and optimistic concurrency via `If-Match`. See the [durable state store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/StateStoreGuide.md).
+`FoundryStateStore` is a durable, server-backed store for agent state. Each store is bound to a caller-chosen name and holds items — keyed JSON values — that you read, write, and list. Use it to persist checkpoints, conversation state, or counters across requests and restarts. `FoundryStateStore.GetOrCreateAsync` fetches or creates the store in one call, and items support tags, store-level TTL, and optimistic concurrency via `If-Match`. See the [state store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md).
 
 ## Examples
 
@@ -170,7 +170,7 @@ The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` 
 ## Next steps
 
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples) — Getting started, multi-protocol composition
-- [Durable state store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/StateStoreGuide.md) — Persist agent state with `FoundryStateStore`
+- [State store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md) — Persist agent state with `FoundryStateStore`
 
 ## Contributing
 

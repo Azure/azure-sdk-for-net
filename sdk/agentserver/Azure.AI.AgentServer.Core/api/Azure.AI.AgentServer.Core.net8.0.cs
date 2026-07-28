@@ -125,9 +125,9 @@ namespace Azure.AI.AgentServer.Core.Storage
     }
     public static partial class AzureAIAgentServerCoreStorageModelFactory
     {
-        public static Azure.AI.AgentServer.Core.Storage.DeletedStateStore DeletedStateStore(string id = null, string name = null, bool deleted = false) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem DeletedStateStoreItem(string id = null, string key = null, bool deleted = false) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.StateStore StateStore(string id = null, string name = null, bool userIsolation = false, int itemTtlSeconds = 0, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.DeletedStateStore DeletedStateStore(string? id = null, string name = null, bool deleted = false) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem DeletedStateStoreItem(string? id = null, string key = null, bool deleted = false) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.StateStore StateStore(string id = null, string name = null, bool userIsolation = false, int itemTtlSeconds = 0, string? description = null, System.Collections.Generic.IDictionary<string, string> tags = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Core.Storage.StateStoreItem StateStoreItem(string id = null, string key = null, System.Collections.Generic.IDictionary<string, System.BinaryData> value = null, System.Collections.Generic.IDictionary<string, string> tags = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Core.Storage.StateStoreItemKey StateStoreItemKey(string id = null, string key = null, System.Collections.Generic.IDictionary<string, string> tags = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
         public static Azure.AI.AgentServer.Core.Storage.StateStoreItemRef StateStoreItemRef(string id = null, string key = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
@@ -136,7 +136,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal DeletedStateStore() { }
         public bool Deleted { get { throw null; } }
-        public string Id { get { throw null; } }
+        public string? Id { get { throw null; } }
         public string Name { get { throw null; } }
         public string Object { get { throw null; } }
         protected virtual Azure.AI.AgentServer.Core.Storage.DeletedStateStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -154,7 +154,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal DeletedStateStoreItem() { }
         public bool Deleted { get { throw null; } }
-        public string Id { get { throw null; } }
+        public string? Id { get { throw null; } }
         public string Key { get { throw null; } }
         public string Object { get { throw null; } }
         protected virtual Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -218,7 +218,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal StateStore() { }
         public long CreatedAt { get { throw null; } }
-        public string Description { get { throw null; } }
+        public string? Description { get { throw null; } }
         public string Id { get { throw null; } }
         public int ItemTtlSeconds { get { throw null; } }
         public string Name { get { throw null; } }
