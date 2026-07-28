@@ -11,7 +11,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 {
     public class Program
     {
-        private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+        private static readonly string ConnectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING")
+            ?? "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
         public static void Main()
         {
@@ -19,14 +20,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             // var credential = new DefaultAzureCredential();
             // using var traceDemo = new TraceDemo(ConnectionString, credential);
 
-            using var traceDemo = new TraceDemo(ConnectionString);
-            traceDemo.GenerateTraces();
+            // using var traceDemo = new TraceDemo(ConnectionString);
+            // traceDemo.GenerateTraces();
 
-            using var metricDemo = new MetricDemo(ConnectionString);
-            metricDemo.GenerateMetrics();
+            // using var metricDemo = new MetricDemo(ConnectionString);
+            // metricDemo.GenerateMetrics();
 
-            using var logDemo = new LogDemo(ConnectionString);
-            logDemo.GenerateLogs();
+            // using var logDemo = new LogDemo(ConnectionString);
+            // logDemo.GenerateLogs();
+
+            using var useAzureMonitorDemo = new UseAzureMonitorExporterDemo(ConnectionString);
+            useAzureMonitorDemo.GenerateTrace();
+
+            Console.WriteLine("Waiting for telemetry to flush...");
+            System.Threading.Thread.Sleep(10000);
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
