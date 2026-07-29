@@ -446,8 +446,6 @@ namespace Azure.Storage.Blobs
                 {
                     StorageCrc64Composer.Compose(
                         (composedCrcBuf, 0L),
-                        //(partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                        //    ?? initialResponse.Value.Details.ContentLength)
                         (partitionChecksum, copied)
                     ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
                 }
