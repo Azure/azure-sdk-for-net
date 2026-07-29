@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
 
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.AppConfiguration
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicaProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceAssociation))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotKeyValueFilter))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Error details of the transfer eligibility validation. </summary>
-    public partial class MoveProductEligibilityResultErrorDetails : MoveProductErrorDetails, IJsonModel<MoveProductEligibilityResultErrorDetails>
+    internal partial class MoveProductEligibilityResultErrorDetails : MoveProductErrorDetails, IJsonModel<MoveProductEligibilityResultErrorDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
