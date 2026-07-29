@@ -40,6 +40,5 @@ extends:
       ServiceDirectory: ${{ parameters.Service }}
     BuildSnippets: true
     EnableTestCheckoutNarrowing: true
-    EnableTestRuntimeTrimming: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
