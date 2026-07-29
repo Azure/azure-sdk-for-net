@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -30,21 +29,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="provisioningState"> The provisioning state of the Summary rule. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSummaryLogsData"/> instance for mocking. </returns>
-        [OverloadResolutionPriority(-1)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is obsolete and will be removed in a future release.", false)]
         public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(
-            ResourceIdentifier id = default,
-            string name = default,
-            ResourceType resourceType = default,
-            SystemData systemData = default,
-            OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default,
-            string displayName = default,
-            string description = default,
-            bool? isActive = default,
-            OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default,
-            OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default,
-            OperationalInsightsSummaryRule ruleDefinition = default)
+            ResourceIdentifier id,
+            string name,
+            ResourceType resourceType,
+            SystemData systemData,
+            OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType,
+            string displayName,
+            string description,
+            bool? isActive,
+            OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode,
+            OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState,
+            OperationalInsightsSummaryRule ruleDefinition)
         {
             return new OperationalInsightsSummaryLogsData(
                 id,

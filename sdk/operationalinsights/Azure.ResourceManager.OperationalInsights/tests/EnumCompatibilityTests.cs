@@ -35,9 +35,17 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
             OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default(OperationalInsightsNetworkSecurityPerimeterProvisioningState);
 
             OperationalInsightsSummaryLogsData data = ArmOperationalInsightsModelFactory.OperationalInsightsSummaryLogsData(
+                id: default,
+                name: default,
+                resourceType: default,
+                systemData: default,
                 ruleType: ruleType,
+                displayName: default,
+                description: default,
+                isActive: default,
                 statusCode: statusCode,
-                provisioningState: provisioningState);
+                provisioningState: provisioningState,
+                ruleDefinition: default);
 
             Assert.AreEqual(default(OperationalInsightsNetworkSecurityPerimeterRuleType), data.RuleType.Value);
             Assert.AreEqual(default(OperationalInsightsNetworkSecurityPerimeterStatusCode), data.StatusCode.Value);
