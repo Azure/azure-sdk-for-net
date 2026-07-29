@@ -18,11 +18,20 @@ dotnet add package Azure.IoT.DeviceUpdate --prerelease
 
 ## Key concepts
 
+The Device Update for IoT Hub client library contains clients for update management and device management operations.
+
 ## Examples
+
+Code samples for using the management library for .NET can be found in the following locations
+- [.NET Device Update Code Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate/samples)
 
 ## Troubleshooting
 
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+
 ## Next steps
+
+For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 
