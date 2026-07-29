@@ -353,7 +353,9 @@
       "filename": "**/sdk/compute/**/*.cs",
       "words": [
         "dscp",
+        "mbps",
         "nvme",
+        "rdma",
         "reimage",
         "ssdlrs",
         "ssdzrs",
