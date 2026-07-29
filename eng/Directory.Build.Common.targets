@@ -94,6 +94,7 @@
 
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
+    <PackageRootDirectory Condition="!Exists('$(PackageRootDirectory)/CHANGELOG.md') and Exists('$(MSBuildProjectDirectory)/CHANGELOG.md')">$(MSBuildProjectDirectory)</PackageRootDirectory>
 
     <!--
         For API compat checks, libraries that don't release often are likely to not have newer targets,
