@@ -13,23 +13,23 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Represents an scheduled action resource metadata. </summary>
-    public partial class ScheduledActionResource
+    public partial class ScheduledActionResourceMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceMetadata"/>. </summary>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
-        internal ScheduledActionResource(ResourceIdentifier resourceId)
+        internal ScheduledActionResourceMetadata(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
             NotificationSettings = new ChangeTrackingList<NotificationProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceMetadata"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="id"> The compute RP resource id of the resource in the scheduled actions scope. . </param>
         /// <param name="type"> The type of resource. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// </param>
         /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionResource(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionResourceMetadata(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;

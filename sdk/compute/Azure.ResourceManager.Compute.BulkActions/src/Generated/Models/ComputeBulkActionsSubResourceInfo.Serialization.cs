@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes a reference to a sub-resource. </summary>
-    public partial class ComputeBulkActionsSubResource : IJsonModel<ComputeBulkActionsSubResource>
+    public partial class ComputeBulkActionsSubResourceInfo : IJsonModel<ComputeBulkActionsSubResourceInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeBulkActionsSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsSubResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeBulkActionsSubResource(document.RootElement, options);
+                        return DeserializeComputeBulkActionsSubResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeBulkActionsSubResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsSubResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeBulkActionsSubResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeBulkActionsSubResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeBulkActionsSubResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeBulkActionsSubResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeBulkActionsSubResource IPersistableModel<ComputeBulkActionsSubResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeBulkActionsSubResourceInfo IPersistableModel<ComputeBulkActionsSubResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeBulkActionsSubResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeBulkActionsSubResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeBulkActionsSubResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeBulkActionsSubResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeBulkActionsSubResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsSubResourceInfo)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -98,24 +98,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeBulkActionsSubResource IJsonModel<ComputeBulkActionsSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeBulkActionsSubResourceInfo IJsonModel<ComputeBulkActionsSubResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeBulkActionsSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeBulkActionsSubResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeBulkActionsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeBulkActionsSubResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeBulkActionsSubResourceInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeBulkActionsSubResource(document.RootElement, options);
+            return DeserializeComputeBulkActionsSubResourceInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeBulkActionsSubResource DeserializeComputeBulkActionsSubResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeBulkActionsSubResourceInfo DeserializeComputeBulkActionsSubResourceInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeBulkActionsSubResource(id, additionalBinaryDataProperties);
+            return new ComputeBulkActionsSubResourceInfo(id, additionalBinaryDataProperties);
         }
     }
 }

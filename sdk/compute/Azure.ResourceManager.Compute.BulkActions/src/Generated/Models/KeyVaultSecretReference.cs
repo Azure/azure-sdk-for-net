@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSecretReference(string secretUri, ComputeBulkActionsSubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSecretReference(string secretUri, ComputeBulkActionsSubResourceInfo sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretUri = secretUri;
             SourceVault = sourceVault;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string SecretUri { get; set; }
 
         /// <summary> The relative URL of the Key Vault containing the secret. </summary>
-        internal ComputeBulkActionsSubResource SourceVault { get; set; }
+        internal ComputeBulkActionsSubResourceInfo SourceVault { get; set; }
 
         /// <summary> The ID of the sub-resource. </summary>
         public string SourceVaultId
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (SourceVault is null)
                 {
-                    SourceVault = new ComputeBulkActionsSubResource();
+                    SourceVault = new ComputeBulkActionsSubResourceInfo();
                 }
                 SourceVault.Id = value;
             }

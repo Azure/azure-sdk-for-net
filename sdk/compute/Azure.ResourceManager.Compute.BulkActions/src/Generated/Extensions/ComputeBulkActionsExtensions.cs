@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OccurrenceExtensionResource> GetOccurrenceByVmsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.OccurrenceExtension"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<Models.OccurrenceExtension> GetOccurrenceByVmsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OccurrenceExtensionResource> GetOccurrenceByVms(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.OccurrenceExtension"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<Models.OccurrenceExtension> GetOccurrenceByVms(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

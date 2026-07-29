@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (OccurrenceResource item in Value)
+            foreach (OccurrenceResourceMetadata item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            IList<OccurrenceResource> value = default;
+            IList<OccurrenceResourceMetadata> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<OccurrenceResource> array = new List<OccurrenceResource>();
+                    List<OccurrenceResourceMetadata> array = new List<OccurrenceResourceMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OccurrenceResource.DeserializeOccurrenceResource(item, options));
+                        array.Add(OccurrenceResourceMetadata.DeserializeOccurrenceResourceMetadata(item, options));
                     }
                     value = array;
                     continue;

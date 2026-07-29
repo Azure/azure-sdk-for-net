@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             bool? disableTcpStateTracking = default;
             bool? enableFpga = default;
             bool? enableIPForwarding = default;
-            ComputeBulkActionsSubResource networkSecurityGroup = default;
+            ComputeBulkActionsSubResourceInfo networkSecurityGroup = default;
             VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
-            ComputeBulkActionsSubResource dscpConfiguration = default;
+            ComputeBulkActionsSubResourceInfo dscpConfiguration = default;
             NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             NetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
+                    networkSecurityGroup = ComputeBulkActionsSubResourceInfo.DeserializeComputeBulkActionsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    dscpConfiguration = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
+                    dscpConfiguration = ComputeBulkActionsSubResourceInfo.DeserializeComputeBulkActionsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("auxiliaryMode"u8))

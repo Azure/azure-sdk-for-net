@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ComputeBulkActionsSubResource sourceVault = default;
+            ComputeBulkActionsSubResourceInfo sourceVault = default;
             IList<VaultCertificate> vaultCertificates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    sourceVault = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
+                    sourceVault = ComputeBulkActionsSubResourceInfo.DeserializeComputeBulkActionsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vaultCertificates"u8))

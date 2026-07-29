@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/>. </summary>
         /// <param name="value"> The ScheduledActionResource items on this page. </param>
-        internal ResourceListResponse(IEnumerable<ScheduledActionResource> value)
+        internal ResourceListResponse(IEnumerable<ScheduledActionResourceMetadata> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="value"> The ScheduledActionResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceListResponse(IList<ScheduledActionResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceListResponse(IList<ScheduledActionResourceMetadata> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The ScheduledActionResource items on this page. </summary>
-        public IList<ScheduledActionResource> Value { get; }
+        public IList<ScheduledActionResourceMetadata> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

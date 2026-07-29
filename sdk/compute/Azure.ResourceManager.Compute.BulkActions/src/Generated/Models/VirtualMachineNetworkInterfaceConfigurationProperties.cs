@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, DeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeBulkActionsSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeBulkActionsSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary, DeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeBulkActionsSubResourceInfo networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeBulkActionsSubResourceInfo dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             DeleteOption = deleteOption;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary> The network security group. </summary>
-        internal ComputeBulkActionsSubResource NetworkSecurityGroup { get; set; }
+        internal ComputeBulkActionsSubResourceInfo NetworkSecurityGroup { get; set; }
 
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
 
         /// <summary> The DSCP configuration for the network interface. </summary>
-        internal ComputeBulkActionsSubResource DscpConfiguration { get; set; }
+        internal ComputeBulkActionsSubResourceInfo DscpConfiguration { get; set; }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
         public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (NetworkSecurityGroup is null)
                 {
-                    NetworkSecurityGroup = new ComputeBulkActionsSubResource();
+                    NetworkSecurityGroup = new ComputeBulkActionsSubResourceInfo();
                 }
                 NetworkSecurityGroup.Id = value;
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (DscpConfiguration is null)
                 {
-                    DscpConfiguration = new ComputeBulkActionsSubResource();
+                    DscpConfiguration = new ComputeBulkActionsSubResourceInfo();
                 }
                 DscpConfiguration.Id = value;
             }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    internal partial class OccurrencesGetResourcesAsyncCollectionResultOfT : AsyncPageable<Models.OccurrenceResource>
+    internal partial class OccurrencesGetResourcesAsyncCollectionResultOfT : AsyncPageable<OccurrenceResourceMetadata>
     {
         private readonly Occurrences _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OccurrencesGetResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<Models.OccurrenceResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<OccurrenceResourceMetadata>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 }
                 OccurrenceResourceListResponse result = OccurrenceResourceListResponse.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<Models.OccurrenceResource>.FromValues((IReadOnlyList<Models.OccurrenceResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<OccurrenceResourceMetadata>.FromValues((IReadOnlyList<OccurrenceResourceMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

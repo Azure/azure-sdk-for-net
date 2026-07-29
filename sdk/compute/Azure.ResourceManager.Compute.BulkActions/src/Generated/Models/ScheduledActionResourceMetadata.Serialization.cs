@@ -8,65 +8,63 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Represents an scheduled action resource metadata. </summary>
-    public partial class OccurrenceResource : IJsonModel<OccurrenceResource>
+    public partial class ScheduledActionResourceMetadata : IJsonModel<ScheduledActionResourceMetadata>
     {
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResource"/> for deserialization. </summary>
-        internal OccurrenceResource()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceMetadata"/> for deserialization. </summary>
+        internal ScheduledActionResourceMetadata()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OccurrenceResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionResourceMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOccurrenceResource(document.RootElement, options);
+                        return DeserializeScheduledActionResourceMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionResourceMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionResourceMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OccurrenceResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduledActionResourceMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceResource IPersistableModel<OccurrenceResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduledActionResourceMetadata IPersistableModel<ScheduledActionResourceMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OccurrenceResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionResourceMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OccurrenceResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionResourceMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +75,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionResourceMetadata)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -109,21 +107,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("scheduledTime"u8);
-                writer.WriteStringValue(ScheduledOn, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
-            {
-                writer.WritePropertyName("errorDetails"u8);
-                ((IJsonModel<ResponseError>)ErrorDetails).Write(writer, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,24 +126,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OccurrenceResource IJsonModel<OccurrenceResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduledActionResourceMetadata IJsonModel<ScheduledActionResourceMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OccurrenceResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionResourceMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionResourceMetadata)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOccurrenceResource(document.RootElement, options);
+            return DeserializeScheduledActionResourceMetadata(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OccurrenceResource DeserializeOccurrenceResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionResourceMetadata DeserializeScheduledActionResourceMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,9 +154,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string @type = default;
             ResourceIdentifier resourceId = default;
             IList<NotificationProperties> notificationSettings = default;
-            DateTimeOffset scheduledOn = default;
-            ResourceProvisioningState? provisioningState = default;
-            ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,43 +191,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     notificationSettings = array;
                     continue;
                 }
-                if (prop.NameEquals("scheduledTime"u8))
-                {
-                    scheduledOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ResourceProvisioningState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("errorDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OccurrenceResource(
+            return new ScheduledActionResourceMetadata(
                 name,
                 id,
                 @type,
                 resourceId,
                 notificationSettings ?? new ChangeTrackingList<NotificationProperties>(),
-                scheduledOn,
-                provisioningState,
-                errorDetails,
                 additionalBinaryDataProperties);
         }
     }

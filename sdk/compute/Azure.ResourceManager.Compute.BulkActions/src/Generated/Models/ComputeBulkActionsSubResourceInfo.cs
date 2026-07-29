@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes a reference to a sub-resource. </summary>
-    public partial class ComputeBulkActionsSubResource
+    public partial class ComputeBulkActionsSubResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsSubResource"/>. </summary>
-        public ComputeBulkActionsSubResource()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsSubResourceInfo"/>. </summary>
+        public ComputeBulkActionsSubResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsSubResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsSubResourceInfo"/>. </summary>
         /// <param name="id"> The ID of the sub-resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkActionsSubResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkActionsSubResourceInfo(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

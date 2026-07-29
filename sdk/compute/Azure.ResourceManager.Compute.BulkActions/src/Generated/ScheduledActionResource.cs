@@ -964,8 +964,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.ScheduledActionResource> GetResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionResourceMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionResourceMetadata> GetResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1002,8 +1002,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.ScheduledActionResource> GetResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionResourceMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionResourceMetadata> GetResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

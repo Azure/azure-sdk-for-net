@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 extensionsTimeBudget,
                 scheduledEventsProfile,
                 userData,
-                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeBulkActionsSubResource(capacityReservationGroupId, default), default),
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeBulkActionsSubResourceInfo(capacityReservationGroupId, default), default),
                 galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VMGalleryApplication>()).ToList(), default),
                 (vmExtensions ?? new ChangeTrackingList<BulkActionVMExtension>()).ToList(),
                 default);
@@ -693,10 +693,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="id"> The ID of the sub-resource. </param>
-        /// <returns> A new <see cref="Models.ComputeBulkActionsSubResource"/> instance for mocking. </returns>
-        public static ComputeBulkActionsSubResource ComputeBulkActionsSubResource(string id = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsSubResourceInfo"/> instance for mocking. </returns>
+        public static ComputeBulkActionsSubResourceInfo ComputeBulkActionsSubResourceInfo(string id = default)
         {
-            return new ComputeBulkActionsSubResource(id, default);
+            return new ComputeBulkActionsSubResourceInfo(id, default);
         }
 
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <returns> A new <see cref="Models.KeyVaultSecretReference"/> instance for mocking. </returns>
         public static KeyVaultSecretReference KeyVaultSecretReference(string secretUri = default, string sourceVaultId = default)
         {
-            return new KeyVaultSecretReference(secretUri, sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, default), default);
+            return new KeyVaultSecretReference(secretUri, sourceVaultId is null ? default : new ComputeBulkActionsSubResourceInfo(sourceVaultId, default), default);
         }
 
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <returns> A new <see cref="Models.KeyVaultKeyReference"/> instance for mocking. </returns>
         public static KeyVaultKeyReference KeyVaultKeyReference(string keyUri = default, string sourceVaultId = default)
         {
-            return new KeyVaultKeyReference(keyUri, sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, default), default);
+            return new KeyVaultKeyReference(keyUri, sourceVaultId is null ? default : new ComputeBulkActionsSubResourceInfo(sourceVaultId, default), default);
         }
 
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         {
             vaultCertificates ??= new ChangeTrackingList<VaultCertificate>();
 
-            return new VaultSecretGroup(sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, default), (vaultCertificates ?? new ChangeTrackingList<VaultCertificate>()).ToList(), default);
+            return new VaultSecretGroup(sourceVaultId is null ? default : new ComputeBulkActionsSubResourceInfo(sourceVaultId, default), (vaultCertificates ?? new ChangeTrackingList<VaultCertificate>()).ToList(), default);
         }
 
         /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this case, your certificate needs to be It is the Base64 encoding of the following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;  'data':'&lt;Base64-encoded-certificate&gt;',&lt;br&gt;  'dataType':'pfx',&lt;br&gt;  'password':'&lt;pfx-file-password&gt;'&lt;br&gt;} &lt;br&gt; To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
@@ -1045,10 +1045,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 disableTcpStateTracking,
                 enableFpga,
                 enableIPForwarding,
-                networkSecurityGroupId is null ? default : new ComputeBulkActionsSubResource(networkSecurityGroupId, default),
+                networkSecurityGroupId is null ? default : new ComputeBulkActionsSubResourceInfo(networkSecurityGroupId, default),
                 dnsServers is null ? default : new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>()).ToList(),
-                dscpConfigurationId is null ? default : new ComputeBulkActionsSubResource(dscpConfigurationId, default),
+                dscpConfigurationId is null ? default : new ComputeBulkActionsSubResourceInfo(dscpConfigurationId, default),
                 auxiliaryMode,
                 auxiliarySku,
                 default);
@@ -1070,20 +1070,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(string subnetId = default, bool? isPrimary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersions? privateIPAddressVersion = default, IEnumerable<ComputeBulkActionsSubResource> applicationSecurityGroups = default, IEnumerable<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default)
+        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(string subnetId = default, bool? isPrimary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersions? privateIPAddressVersion = default, IEnumerable<ComputeBulkActionsSubResourceInfo> applicationSecurityGroups = default, IEnumerable<ComputeBulkActionsSubResourceInfo> applicationGatewayBackendAddressPools = default, IEnumerable<ComputeBulkActionsSubResourceInfo> loadBalancerBackendAddressPools = default)
         {
-            applicationSecurityGroups ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
-            applicationGatewayBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
-            loadBalancerBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
+            applicationSecurityGroups ??= new ChangeTrackingList<ComputeBulkActionsSubResourceInfo>();
+            applicationGatewayBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResourceInfo>();
+            loadBalancerBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResourceInfo>();
 
             return new VirtualMachineNetworkInterfaceIPConfigurationProperties(
-                subnetId is null ? default : new ComputeBulkActionsSubResource(subnetId, default),
+                subnetId is null ? default : new ComputeBulkActionsSubResourceInfo(subnetId, default),
                 isPrimary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
-                (applicationSecurityGroups ?? new ChangeTrackingList<ComputeBulkActionsSubResource>()).ToList(),
-                (applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResource>()).ToList(),
-                (loadBalancerBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResource>()).ToList(),
+                (applicationSecurityGroups ?? new ChangeTrackingList<ComputeBulkActionsSubResourceInfo>()).ToList(),
+                (applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResourceInfo>()).ToList(),
+                (loadBalancerBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResourceInfo>()).ToList(),
                 default);
         }
 
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 deleteOption,
                 dnsSettings,
                 (ipTags ?? new ChangeTrackingList<VirtualMachineIpTag>()).ToList(),
-                publicIPPrefixId is null ? default : new ComputeBulkActionsSubResource(publicIPPrefixId, default),
+                publicIPPrefixId is null ? default : new ComputeBulkActionsSubResourceInfo(publicIPPrefixId, default),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
                 default);
@@ -1669,12 +1669,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
         /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResource"/> instance for mocking. </returns>
-        public static ScheduledActionResource ScheduledActionResource(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default)
+        /// <returns> A new <see cref="Models.ScheduledActionResourceMetadata"/> instance for mocking. </returns>
+        public static ScheduledActionResourceMetadata ScheduledActionResourceMetadata(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
 
-            return new ScheduledActionResource(
+            return new ScheduledActionResourceMetadata(
                 name,
                 id,
                 @type,
@@ -1852,12 +1852,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
-        /// <returns> A new <see cref="Models.OccurrenceResource"/> instance for mocking. </returns>
-        public static OccurrenceResource OccurrenceResource(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default, DateTimeOffset scheduledOn = default, ResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        /// <returns> A new <see cref="Models.OccurrenceResourceMetadata"/> instance for mocking. </returns>
+        public static OccurrenceResourceMetadata OccurrenceResourceMetadata(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationProperties> notificationSettings = default, DateTimeOffset scheduledOn = default, ResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
 
-            return new OccurrenceResource(
+            return new OccurrenceResourceMetadata(
                 name,
                 id,
                 @type,
@@ -1884,10 +1884,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.OccurrenceExtensionResource"/> instance for mocking. </returns>
-        public static OccurrenceExtensionResource OccurrenceExtensionResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceExtensionProperties properties = default)
+        /// <returns> A new <see cref="Models.OccurrenceExtension"/> instance for mocking. </returns>
+        public static OccurrenceExtension OccurrenceExtension(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceExtensionProperties properties = default)
         {
-            return new OccurrenceExtensionResource(
+            return new OccurrenceExtension(
                 id,
                 name,
                 resourceType,

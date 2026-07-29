@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             DeleteConfig? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIpTag> ipTags = default;
-            ComputeBulkActionsSubResource publicIPPrefix = default;
+            ComputeBulkActionsSubResourceInfo publicIPPrefix = default;
             IPVersions? publicIPAddressVersion = default;
             PublicIPAllocationMethod? publicIPAllocationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    publicIPPrefix = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
+                    publicIPPrefix = ComputeBulkActionsSubResourceInfo.DeserializeComputeBulkActionsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddressVersion"u8))

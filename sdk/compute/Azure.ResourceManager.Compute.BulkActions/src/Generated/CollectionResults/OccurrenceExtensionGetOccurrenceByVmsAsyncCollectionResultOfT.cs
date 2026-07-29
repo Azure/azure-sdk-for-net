@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    internal partial class OccurrenceExtensionGetOccurrenceByVmsAsyncCollectionResultOfT : AsyncPageable<OccurrenceExtensionResource>
+    internal partial class OccurrenceExtensionGetOccurrenceByVmsAsyncCollectionResultOfT : AsyncPageable<Models.OccurrenceExtension>
     {
         private readonly OccurrenceExtension _client;
         private readonly string _resourceUri;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OccurrenceExtensionGetOccurrenceByVmsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<OccurrenceExtensionResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<Models.OccurrenceExtension>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 }
                 OccurrenceExtensionResourceListResult result = OccurrenceExtensionResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<OccurrenceExtensionResource>.FromValues((IReadOnlyList<OccurrenceExtensionResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<Models.OccurrenceExtension>.FromValues((IReadOnlyList<Models.OccurrenceExtension>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

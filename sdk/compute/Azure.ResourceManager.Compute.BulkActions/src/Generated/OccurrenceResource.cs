@@ -446,8 +446,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.OccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.OccurrenceResource> GetResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceResourceMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceResourceMetadata> GetResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -485,8 +485,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.OccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.OccurrenceResource> GetResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceResourceMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceResourceMetadata> GetResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
