@@ -41,3 +41,6 @@ extends:
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
+      # TEMP (measurement branch only): keeps the matrix within the dynamic YAML size
+      # limit so this baseline matches the treatment branch package-for-package.
+      - eng/

@@ -223,3 +223,4 @@ Changes from both the last release and the last beta include:
 
 - Add `KeyVaultAccessControlClient`.
 - Add `KeyVaultBackupClient`.
+

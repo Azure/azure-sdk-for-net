@@ -34,3 +34,4 @@
 - Initial beta release of Azure.Provisioning.Cdn with support for declarative CDN resource provisioning.
 - Added support for CDN Profile, Endpoint, Origin, OriginGroup, CustomDomain, and WebApplicationFirewallPolicy resources.
 - Added support for Front Door Endpoint, Origin, OriginGroup, CustomDomain, Route, Rule, RuleSet, Secret, and SecurityPolicy resources.
+
