@@ -919,6 +919,27 @@ function New-MgmtPackageScaffolding()
     Write-Host "Management SDK scaffolding complete for $packageName"
 }
 
+function Get-SDKSolutionBuildPath()
+{
+    param(
+        [string]$projectFolder,
+        [string]$sdkRootPath,
+        [string]$serviceType
+    )
+
+    if ($serviceType -eq "resource-manager") {
+        $solution = Get-ChildItem -Path $projectFolder -Filter "*.sln*" -File |
+            Where-Object { $_.Extension -in ".sln", ".slnx" } |
+            Select-Object -First 1
+        if (!$solution) {
+            throw "Management SDK solution not found in $projectFolder."
+        }
+        return $solution.FullName
+    }
+
+    return Join-Path $sdkRootPath 'eng' 'service.proj'
+}
+
 function GeneratePackage()
 {
     param(
@@ -989,8 +1010,12 @@ function GeneratePackage()
             # Build the whole solution and generate artifacts if the project build successfully
             # Build the whole solution
             Write-Host "Start to build sdk solution: $projectFolder"
-            $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
-            dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
+            $solutionBuildPath = Get-SDKSolutionBuildPath -projectFolder $projectFolder -sdkRootPath $sdkRootPath -serviceType $serviceType
+            if ($serviceType -eq "resource-manager") {
+                dotnet build $solutionBuildPath /p:RunApiCompat=$false
+            } else {
+                dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $solutionBuildPath
+            }
             if ( !$? ) {
                 Write-Host "[WARNING] Failed to build sdk solution:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "warning"
@@ -1082,12 +1107,6 @@ function GeneratePackage()
     $ciFilePath = "sdk/$service/ci.yml"
     if ( $serviceType -eq "resource-manager" ) {
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
-    }
-
-    # For management plane, result is purely based on generation success — no "warning" option.
-    # Build/pack/Export-API failures should not downgrade a successful generation to "warning".
-    if ($serviceType -eq "resource-manager" -and $isGenerateSuccess) {
-        $result = "succeeded"
     }
 
     $packageDetails = @{

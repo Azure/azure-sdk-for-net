@@ -169,6 +169,50 @@ Describe "Update-MgmtPackageFolder function" -Tag "UnitTest" {
     }
 }
 
+Describe "Get-SDKSolutionBuildPath function" -Tag "UnitTest" {
+    BeforeEach {
+        $script:testRootDir = Join-Path ([System.IO.Path]::GetTempPath()) "sdk-solution-build-test-$(Get-Random)"
+        $script:testProjectFolder = Join-Path $script:testRootDir "sdk" "compute" "Azure.ResourceManager.Compute"
+        New-Item -ItemType Directory -Path $script:testProjectFolder -Force | Out-Null
+    }
+
+    AfterEach {
+        if (Test-Path $script:testRootDir) {
+            Remove-Item -Recurse -Force $script:testRootDir
+        }
+    }
+
+    It "selects the management package solution" {
+        $solutionPath = Join-Path $script:testProjectFolder "Azure.ResourceManager.Compute.slnx"
+        Set-Content -Path $solutionPath -Value "<Solution />"
+
+        $result = Get-SDKSolutionBuildPath `
+            -projectFolder $script:testProjectFolder `
+            -sdkRootPath $script:testRootDir `
+            -serviceType "resource-manager"
+
+        $result | Should -Be $solutionPath
+    }
+
+    It "selects service.proj for data-plane packages" {
+        $result = Get-SDKSolutionBuildPath `
+            -projectFolder $script:testProjectFolder `
+            -sdkRootPath $script:testRootDir `
+            -serviceType "data-plane"
+
+        $result | Should -Be (Join-Path $script:testRootDir "eng" "service.proj")
+    }
+
+    It "fails when a management package has no solution" {
+        {
+            Get-SDKSolutionBuildPath `
+                -projectFolder $script:testProjectFolder `
+                -sdkRootPath $script:testRootDir `
+                -serviceType "resource-manager"
+        } | Should -Throw "Management SDK solution not found*"
+    }
+}
+
 Describe "GetSDKProjectFolder function" -Tag "UnitTest" {
     BeforeAll {
         $testTspConfigDir = Join-Path $PSScriptRoot "test-data"
