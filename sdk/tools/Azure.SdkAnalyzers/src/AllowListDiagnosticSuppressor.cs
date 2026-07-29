@@ -26,21 +26,21 @@ namespace Azure.SdkAnalyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class AllowListDiagnosticSuppressor : DiagnosticSuppressor
     {
-        private static readonly string[] SupportedDiagnosticIds = new[]
-        {
-            "AZC0007",
-            "AZC0012",
-            "AZC0014",
-            "AZC0015",
-            "AZC0030",
-            "AZC0034",
-            "AZC0035",
-            "CS0618",
-            "AAIP001",
-            "AAIP002",
-            "OPENAI001",
-            "OPENAICUA001"
-        };
+        internal static readonly ImmutableHashSet<string> SupportedDiagnosticIds =
+            ImmutableHashSet.Create(
+                StringComparer.Ordinal,
+                "AZC0007",
+                "AZC0012",
+                "AZC0014",
+                "AZC0015",
+                "AZC0030",
+                "AZC0034",
+                "AZC0035",
+                "CS0618",
+                "AAIP001",
+                "AAIP002",
+                "OPENAI001",
+                "OPENAICUA001");
 
         private const string SuppressionIdPrefix = "AZSDKSP";
         private const string AllowListMetadataKey = "build_metadata.AdditionalFiles.AzureSdkAllowList";
@@ -309,7 +309,7 @@ namespace Azure.SdkAnalyzers
 
         private static ImmutableArray<SuppressionDescriptor> BuildSuppressionDescriptors()
         {
-            var builder = ImmutableArray.CreateBuilder<SuppressionDescriptor>(SupportedDiagnosticIds.Length);
+            var builder = ImmutableArray.CreateBuilder<SuppressionDescriptor>(SupportedDiagnosticIds.Count);
             foreach (string id in SupportedDiagnosticIds)
             {
                 builder.Add(new SuppressionDescriptor(
