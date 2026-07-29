@@ -102,17 +102,36 @@ namespace Azure.Generator.Provisioning.Utilities
         }
 
         /// <summary>
-        /// Gets the provisioning runtime format used to serialize a literal value.
+        /// Gets the format metadata used to serialize a provisioning literal value.
         /// </summary>
         public static string? GetLiteralFormat(SerializationFormat? serializationFormat)
         {
             return serializationFormat switch
             {
+                // Match the management generator's TypeFormatters contract. Some tokens, including D, U, and T,
+                // have generator-defined semantics and must not be passed directly to standard .NET formatters.
+                SerializationFormat.DateTime_RFC1123 or
+                SerializationFormat.DateTime_RFC7231 => "R",
                 SerializationFormat.DateTime_RFC3339 or
                 SerializationFormat.DateTime_ISO8601 => "O",
+                SerializationFormat.DateTime_Unix => "U",
+                SerializationFormat.Date_ISO8601 => "D",
                 SerializationFormat.Duration_ISO8601 => "P",
                 SerializationFormat.Duration_Constant => "c",
+                // Numeric durations have no .NET format specifier, so retain both the unit and wire precision.
+                SerializationFormat.Duration_Seconds => "seconds",
+                SerializationFormat.Duration_Seconds_Int64 => "seconds-int64",
+                SerializationFormat.Duration_Seconds_Float => "seconds-float",
+                SerializationFormat.Duration_Seconds_Double => "seconds-double",
+                SerializationFormat.Duration_Milliseconds => "milliseconds",
+                SerializationFormat.Duration_Milliseconds_Int64 => "milliseconds-int64",
+                SerializationFormat.Duration_Milliseconds_Float => "milliseconds-float",
+                SerializationFormat.Duration_Milliseconds_Double => "milliseconds-double",
+                SerializationFormat.Time_ISO8601 => "T",
                 SerializationFormat.Bytes_Base64 => "base64",
+                SerializationFormat.Bytes_Base64Url => "base64url",
+                SerializationFormat.Int_String => "string",
+                // Array delimiters describe HTTP parameter transport rather than ARM resource-body literals.
                 _ => null
             };
         }

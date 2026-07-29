@@ -541,31 +541,31 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [TestCase(SerializationFormat.Default, null)]
-        [TestCase(SerializationFormat.DateTime_RFC1123, null)]
+        [TestCase(SerializationFormat.DateTime_RFC1123, "R")]
         [TestCase(SerializationFormat.DateTime_RFC3339, "O")]
-        [TestCase(SerializationFormat.DateTime_RFC7231, null)]
+        [TestCase(SerializationFormat.DateTime_RFC7231, "R")]
         [TestCase(SerializationFormat.DateTime_ISO8601, "O")]
-        [TestCase(SerializationFormat.DateTime_Unix, null)]
-        [TestCase(SerializationFormat.Date_ISO8601, null)]
+        [TestCase(SerializationFormat.DateTime_Unix, "U")]
+        [TestCase(SerializationFormat.Date_ISO8601, "D")]
         [TestCase(SerializationFormat.Duration_ISO8601, "P")]
         [TestCase(SerializationFormat.Duration_Constant, "c")]
-        [TestCase(SerializationFormat.Time_ISO8601, null)]
+        [TestCase(SerializationFormat.Time_ISO8601, "T")]
         [TestCase(SerializationFormat.Bytes_Base64, "base64")]
-        [TestCase(SerializationFormat.Bytes_Base64Url, null)]
-        [TestCase(SerializationFormat.Duration_Seconds, null)]
-        [TestCase(SerializationFormat.Duration_Seconds_Int64, null)]
-        [TestCase(SerializationFormat.Duration_Seconds_Float, null)]
-        [TestCase(SerializationFormat.Duration_Seconds_Double, null)]
-        [TestCase(SerializationFormat.Duration_Milliseconds, null)]
-        [TestCase(SerializationFormat.Duration_Milliseconds_Int64, null)]
-        [TestCase(SerializationFormat.Duration_Milliseconds_Float, null)]
-        [TestCase(SerializationFormat.Duration_Milliseconds_Double, null)]
-        [TestCase(SerializationFormat.Int_String, null)]
+        [TestCase(SerializationFormat.Bytes_Base64Url, "base64url")]
+        [TestCase(SerializationFormat.Duration_Seconds, "seconds")]
+        [TestCase(SerializationFormat.Duration_Seconds_Int64, "seconds-int64")]
+        [TestCase(SerializationFormat.Duration_Seconds_Float, "seconds-float")]
+        [TestCase(SerializationFormat.Duration_Seconds_Double, "seconds-double")]
+        [TestCase(SerializationFormat.Duration_Milliseconds, "milliseconds")]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Int64, "milliseconds-int64")]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Float, "milliseconds-float")]
+        [TestCase(SerializationFormat.Duration_Milliseconds_Double, "milliseconds-double")]
+        [TestCase(SerializationFormat.Int_String, "string")]
         [TestCase(SerializationFormat.Array_CommaDelimited, null)]
         [TestCase(SerializationFormat.Array_SpaceDelimited, null)]
         [TestCase(SerializationFormat.Array_PipeDelimited, null)]
         [TestCase(SerializationFormat.Array_NewlineDelimited, null)]
-        public void LiteralFormatUsesProvisioningRuntimeFormat(SerializationFormat serializationFormat, string? expected)
+        public void LiteralFormatPreservesSerializationFormat(SerializationFormat serializationFormat, string? expected)
         {
             Assert.That(BicepTypeHelpers.GetLiteralFormat(serializationFormat), Is.EqualTo(expected));
         }
@@ -611,7 +611,7 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(properties["RetentionPeriod"].Format, Is.EqualTo("P"));
             Assert.That(properties["LastModified"].Format, Is.EqualTo("O"));
             Assert.That(properties["Blob"].Format, Is.EqualTo("base64"));
-            Assert.That(properties["UrlSafeBlob"].Format, Is.Null);
+            Assert.That(properties["UrlSafeBlob"].Format, Is.EqualTo("base64url"));
             Assert.That(properties["Metadata"].Format, Is.Null);
         }
 
