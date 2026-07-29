@@ -4,8 +4,8 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -21,6 +21,8 @@ namespace Azure.Identity
         internal CredentialPipeline Pipeline { get; set; }
 
         internal MsalConfidentialClient MsalClient { get; set; }
+
+        internal MsalConfidentialClient PopMsalClient { get; set; }
 
         /// <summary>
         /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.

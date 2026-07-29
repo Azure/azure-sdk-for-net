@@ -5,6 +5,7 @@
 ### Features Added
 
 - The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
+- Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. Set `DisableMtlsProofOfPossession` to `true` in the credential's JSON configuration to force bearer authentication for both exchanges.
 
 ### Breaking Changes
 
@@ -43,6 +44,7 @@
 ### Other Changes
 
 - Added `azure-deprecating` to the default list of allowed (non-redacted) headers in `DiagnosticsOptions` to support [deprecating behavior notification](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#deprecating-behavior-notification).
+- Updated `Microsoft.Identity.Client` dependency to `4.87.0`.
 
 ## 1.60.0 (2026-06-30)
 

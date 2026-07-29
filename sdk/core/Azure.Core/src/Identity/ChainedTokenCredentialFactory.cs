@@ -301,10 +301,18 @@ namespace Azure.Identity
             }
 
             string tokenScope = TranslateCloudToTokenScope(source.AzureCloud);
-            var managedIdentityCredential = new ManagedIdentityCredential(managedIdentityId);
-            var tokenContext = new TokenRequestContext(new[] { tokenScope });
+            var managedIdentityOptions = source.Clone<DefaultAzureCredentialOptions>();
+            managedIdentityOptions.IsChainedCredential = false;
+            var managedIdentityCredential = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions
+            {
+                ManagedIdentityId = managedIdentityId,
+                Pipeline = CredentialPipeline.GetInstance(managedIdentityOptions, IsManagedIdentityCredential: true),
+                Options = managedIdentityOptions,
+                IsForceRefreshEnabled = managedIdentityOptions.IsForceRefreshEnabled,
+                DisableMtlsProofOfPossession = managedIdentityOptions.DisableMtlsProofOfPossession,
+            }));
 
-            var assertionOptions = new ClientAssertionCredentialOptions();
+            var assertionOptions = source.Clone<ClientAssertionCredentialOptions>();
 
             if (source.AdditionallyAllowedTenants?.Count > 0)
             {
@@ -317,7 +325,8 @@ namespace Azure.Identity
             return new ClientAssertionCredential(
                 source.TenantId,
                 source.ClientId,
-                async _ => (await managedIdentityCredential.GetTokenAsync(tokenContext).ConfigureAwait(false)).Token,
+                managedIdentityCredential,
+                tokenScope,
                 assertionOptions);
         }
 
