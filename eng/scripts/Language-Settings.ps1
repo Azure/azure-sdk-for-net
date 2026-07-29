@@ -157,11 +157,20 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
     $checksumPath = "$dependencyGraphPath.sha256"
     $graphIsValid = $false
     if ((Test-Path $dependencyGraphPath) -and (Test-Path $checksumPath)) {
-      $expectedChecksum = (Get-Content $checksumPath -Raw).Trim()
-      $actualChecksum = (Get-FileHash $dependencyGraphPath -Algorithm SHA256).Hash
-      $graphIsValid = $expectedChecksum -eq $actualChecksum
-      if (!$graphIsValid) {
-        Write-Warning "The cached test dependency graph checksum is invalid. Regenerating it."
+      # A zero length sidecar is reachable: a previous run can be cancelled or time out
+      # part way through Set-Content, or restore partially. Get-Content -Raw returns
+      # $null for it and $null.Trim() is a terminating error, so read defensively -
+      # anything unreadable simply means the cache is not valid.
+      $expectedChecksum = Get-Content $checksumPath -Raw -ErrorAction SilentlyContinue
+      if ([string]::IsNullOrWhiteSpace($expectedChecksum)) {
+        Write-Warning "The cached test dependency graph checksum is empty. Regenerating it."
+      }
+      else {
+        $actualChecksum = (Get-FileHash $dependencyGraphPath -Algorithm SHA256).Hash
+        $graphIsValid = $expectedChecksum.Trim() -eq $actualChecksum
+        if (!$graphIsValid) {
+          Write-Warning "The cached test dependency graph checksum is invalid. Regenerating it."
+        }
       }
     }
 
@@ -184,14 +193,22 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
     }
 
     if (!(Test-Path $dependencyGraphPath) -or (Get-Item $dependencyGraphPath).Length -eq 0) {
-      throw "The test dependency graph '$dependencyGraphPath' is missing or empty."
+      # Never let a bad cache block a PR. The cache key does not change until a project
+      # file does, so failing here would fail every rerun of the same PR identically -
+      # the exact opposite of what this feature is for. Fall back to the query the
+      # pipeline used before the cache existed.
+      Write-Warning ("The test dependency graph '$dependencyGraphPath' is missing or empty; " +
+        'falling back to the per-package dependency query.')
+      $dependencyGraphPath = $null
     }
-
-    $dependentProjects = Get-DependentPackageRootsFromGraph `
-      -DependencyGraphPath $dependencyGraphPath `
-      -DependencyNames $TestDependsOnDependencySet.Name
+    else {
+      $dependentProjects = Get-DependentPackageRootsFromGraph `
+        -DependencyGraphPath $dependencyGraphPath `
+        -DependencyNames $TestDependsOnDependencySet.Name
+    }
   }
-  else {
+
+  if (-not $dependencyGraphPath) {
     $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
 
     $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +

@@ -41,13 +41,3 @@ extends:
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
-      # TEMP (draft only): this shared-infrastructure change otherwise selects
-      # Azure.Core and nearly every dependent package, exceeding the dynamic YAML
-      # size limit. Remove this block before marking the cache PR ready for review.
-      - eng/Directory.Build.Common.targets
-      - eng/service.proj
-      - eng/scripts/Language-Settings.ps1
-      - eng/scripts/tests/TestDependencyGraphCache.Tests.ps1
-      - eng/pipelines/templates/jobs/ci.yml
-      - eng/pipelines/templates/stages/archetype-sdk-client.yml
-      - eng/pipelines/templates/steps/pr-matrix-presteps.yml

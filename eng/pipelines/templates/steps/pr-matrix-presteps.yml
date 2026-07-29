@@ -26,15 +26,24 @@ steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
   - ${{ if eq(parameters.EnableTestDependencyGraphCache, true) }}:
+    # Hashed here and emitted as a literal key segment rather than written to a key file.
+    # Cache@2 resolves file-path key segments relative to $(System.DefaultWorkingDirectory),
+    # so a file staged elsewhere risks a permanent silent cache miss, and the feature would
+    # quietly do nothing while still paying the full regeneration cost.
     - pwsh: |
-        git ls-files -s -- global.json "*.csproj" "*.props" "*.targets" "*.proj" "*.projects" `
-          | Sort-Object `
-          | Set-Content "$(Build.ArtifactStagingDirectory)/test-dependency-graph-key.txt"
+        $manifest = git ls-files -s -- global.json "*.csproj" "*.props" "*.targets" "*.proj" "*.projects" |
+          Sort-Object |
+          Out-String
+        $bytes = [System.Text.Encoding]::UTF8.GetBytes($manifest)
+        $hash = [BitConverter]::ToString(
+          [System.Security.Cryptography.SHA256]::HashData($bytes)).Replace('-', '')
+        Write-Host "Test dependency graph cache key segment: $hash"
+        Write-Host "##vso[task.setvariable variable=TestDependencyGraphCacheKey;]$hash"
       displayName: Create test dependency graph cache key
 
     - task: Cache@2
       inputs:
-        key: 'dotnet-test-dependency-graph-v1 | "$(Agent.OS)" | $(Build.ArtifactStagingDirectory)/test-dependency-graph-key.txt'
+        key: 'dotnet-test-dependency-graph-v1 | "$(Agent.OS)" | "$(TestDependencyGraphCacheKey)"'
         path: $(Pipeline.Workspace)/dotnet-test-dependency-graph
         cacheHitVar: TEST_DEPENDENCY_GRAPH_CACHE_RESTORED
       continueOnError: true
@@ -42,7 +51,15 @@ steps:
 
     - pwsh: |
         $graphPath = "$(Pipeline.Workspace)/dotnet-test-dependency-graph/graph.txt"
-        Write-Host "Test dependency graph cache restored: $(TEST_DEPENDENCY_GRAPH_CACHE_RESTORED)"
+
+        # Read through the environment rather than an ADO macro: Cache@2 only sets
+        # cacheHitVar when it succeeds, and it runs with continueOnError so that a cache
+        # service outage stays soft. An undefined macro would be left as literal text and
+        # PowerShell would try to invoke it as a command, turning that outage into a
+        # matrix generation failure that blocks every PR.
+        $restored = $env:TEST_DEPENDENCY_GRAPH_CACHE_RESTORED
+        if (-not $restored) { $restored = 'false (cache step did not report a result)' }
+        Write-Host "Test dependency graph cache restored: $restored"
         Write-Host "##vso[task.setvariable variable=AZURESDK_TEST_DEPENDENCY_GRAPH_PATH;]$graphPath"
       displayName: Configure test dependency graph
 
