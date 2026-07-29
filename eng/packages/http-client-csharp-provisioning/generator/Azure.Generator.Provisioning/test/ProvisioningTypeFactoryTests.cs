@@ -204,6 +204,17 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(type.BaseType, Is.EqualTo(new CSharpType(typeof(ProvisionableConstruct))));
         }
 
+        [TestCase(null)]
+        [TestCase("derived")]
+        public void UnreachableModelIsNotCreated(string? discriminatorValue)
+        {
+            var input = CreateDerivedModel("UnreachableModel", discriminatorValue, _regularModel);
+
+            var provider = _factory.CreateModel(input);
+
+            Assert.That(provider, Is.Null);
+        }
+
         [Test]
         public void DiscriminatedBaseModelDescriptionListsDerivedModels()
         {
@@ -400,7 +411,7 @@ namespace Azure.Generator.Provisioning.Tests
                 new InputSerializationOptions(),
                 false);
 
-        private static InputModelType CreateDerivedModel(string name, string discriminatorValue, InputModelType baseModel)
+        private static InputModelType CreateDerivedModel(string name, string? discriminatorValue, InputModelType baseModel)
             => new(
                 name,
                 "Sample.Models",
