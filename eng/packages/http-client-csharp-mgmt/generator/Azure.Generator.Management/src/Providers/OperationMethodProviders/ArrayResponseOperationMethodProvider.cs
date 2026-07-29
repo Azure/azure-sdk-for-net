@@ -149,7 +149,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // These types implement IEnumerable and are not awaitable themselves
             var modifiers = _convenienceMethod.Signature.Modifiers & ~MethodSignatureModifiers.Async;
 
-            var generatedSignature = new MethodSignature(
+            return new MethodSignature(
                 _methodName,
                 _convenienceMethod.Signature.Description,
                 modifiers,
@@ -161,7 +161,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
-            return OperationMethodParameterHelper.ApplyPartialMethodCustomization(_enclosingType, generatedSignature);
         }
 
         protected (MethodBodyStatement[] Statements, ArrayResponseCollectionResultDefinition CollectionResult) BuildBodyStatements()
@@ -172,7 +171,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
             var collectionResult = CreateCollectionResultDefinition(scopeName);
 
-            statements.Add(ResourceMethodSnippets.CreateRequestContext(OperationMethodParameterHelper.GetCancellationTokenParameter(_signature.Parameters), out var contextVariable));
+            statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
 
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
 
