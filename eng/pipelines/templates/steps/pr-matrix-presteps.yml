@@ -42,16 +42,25 @@ steps:
 
   - ${{ if parameters.EnableTestCheckoutNarrowing }}:
     # Built here because this is the last point at which a full checkout is available.
-    # The map and the resolver itself both ship inside the PackageInfo artifact so each
-    # test job can resolve its own sparse checkout paths before it has a working tree.
+    # The map and the resolver both ship to the test jobs, which need them before they
+    # have a working tree. They go in their own artifact rather than alongside the
+    # PackageInfo documents: TestPackagesArtifact is downloaded wholesale into
+    # PackageInfo/ and several consumers there recursively glob '*.json' and assume every
+    # match is a PackageInfo document.
     - pwsh: |
         ./eng/scripts/Get-TestCheckoutPaths.ps1 `
           -BuildMap `
-          -OutputPath "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing/checkout-map.json"
+          -OutputPath "$(Build.ArtifactStagingDirectory)/TestCheckoutMap/checkout-map.json"
 
         Copy-Item -Path ./eng/scripts/Get-TestCheckoutPaths.ps1 `
-          -Destination "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing/Get-TestCheckoutPaths.ps1" -Force
+          -Destination "$(Build.ArtifactStagingDirectory)/TestCheckoutMap/Get-TestCheckoutPaths.ps1" -Force
       displayName: Build test checkout map
+
+    - ${{ if eq(parameters.PublishArtifact, true) }}:
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          ArtifactName: 'TestCheckoutMap'
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/TestCheckoutMap'
 
   - ${{ if eq(parameters.PublishArtifact, true) }}:
     - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml

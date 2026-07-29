@@ -26,7 +26,8 @@ BeforeAll {
             [string] $Path,
             [string[]] $ProjectReferences = @(),
             [string[]] $PackageReferences = @(),
-            [string[]] $CompileIncludes = @()
+            [string[]] $CompileIncludes = @(),
+            [string[]] $Imports = @()
         )
 
         $directory = Split-Path -Parent $Path
@@ -45,8 +46,14 @@ BeforeAll {
             $items += "    <Compile Include=`"$include`" />"
         }
 
+        $importLines = @()
+        foreach ($import in $Imports) {
+            $importLines += "  <Import Project=`"$import`" />"
+        }
+
         @(
             '<Project Sdk="Microsoft.NET.Sdk">'
+            $importLines
             '  <ItemGroup>'
             $items
             '  </ItemGroup>'
@@ -96,6 +103,24 @@ BeforeAll {
             -CompileIncludes @('..\..\..\shared\Contoso.Shared\Helpers\*.cs')
         $null = New-Item -ItemType Directory -Path (Join-Path $root 'sdk/shared/Contoso.Shared/Helpers') -Force
 
+        # A package that reaches another service through <Import Project="...">. A missing
+        # import is a hard MSBuild error, so it has to participate in the closure.
+        New-Project -Path (Join-Path $root 'sdk/iota/Contoso.Iota/src/Contoso.Iota.csproj') `
+            -Imports @('..\..\..\imported\Contoso.Imported\build\Common.props')
+        $null = New-Item -ItemType Directory -Path (Join-Path $root 'sdk/imported/Contoso.Imported/build') -Force
+
+        # Properties that cannot move a path into another service must not force a
+        # fallback: the ancestor Directory.Build.props import that nearly every project
+        # carries, and the project's own build output.
+        New-Project -Path (Join-Path $root 'sdk/theta/Contoso.Theta/src/Contoso.Theta.csproj') `
+            -Imports @('$([MSBuild]::GetDirectoryNameOfFileAbove(.., Directory.Build.props))\Directory.Build.props') `
+            -CompileIncludes @('$(OutputPath)netstandard2.0\$(AssemblyName).dll')
+
+        # An unknown property in a linked-source include is as untrustworthy as one in a
+        # ProjectReference, so it must also make the package unmappable.
+        New-Project -Path (Join-Path $root 'sdk/lambda/Contoso.Lambda/src/Contoso.Lambda.csproj') `
+            -CompileIncludes @('$(SomeOtherUnknownProperty)Shared\*.cs')
+
         return $root
     }
 
@@ -130,7 +155,8 @@ Describe 'Get-TestCheckoutPaths' {
             $map.PSObject.Properties.Name | Sort-Object | Should -Be @(
                 '$alwaysIncludedPaths',
                 'Contoso.Alpha', 'Contoso.Beta', 'Contoso.Delta', 'Contoso.Gamma',
-                'Contoso.Kappa', 'Contoso.Omega', 'Contoso.Sigma', 'Contoso.Zeta')
+                'Contoso.Iota', 'Contoso.Kappa', 'Contoso.Lambda', 'Contoso.Omega',
+                'Contoso.Sigma', 'Contoso.Theta', 'Contoso.Zeta')
         }
 
         It 'records the always-included paths in the map so consumers never duplicate the list' {
@@ -158,6 +184,15 @@ Describe 'Get-TestCheckoutPaths' {
             $pipeline | Should -Not -Match "'resourcemanager'"
         }
 
+        It 'ci.tests.yml defaults TestSparseCheckoutPaths to a full checkout' {
+            # The resolver overwrites this, but a run where it never executes must still
+            # leave sparse-checkout.yml a parseable JSON array rather than an undefined
+            # macro, which its ConvertFrom-Json would fail on.
+            $pipeline = Get-Content -LiteralPath (
+                Join-Path $PSScriptRoot '..' '..' 'pipelines' 'templates' 'jobs' 'ci.tests.yml') -Raw
+            $pipeline | Should -Match 'TestSparseCheckoutPaths:\s*.\["/\*"'
+        }
+
         It 'pr-matrix-presteps.yml publishes the resolver next to the map' {
             # The test job has no working tree when it resolves its paths, so the script
             # has to travel inside the artifact alongside checkout-map.json.
@@ -169,6 +204,26 @@ Describe 'Get-TestCheckoutPaths' {
         It 'follows PackageReference entries transitively, because the build converts them to project references' {
             $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
             @($map.'Contoso.Alpha') | Sort-Object | Should -Be @('alpha', 'beta', 'gamma')
+        }
+
+        It 'follows an Import element across service directories' {
+            # A cross-service import that is missing from the working tree is a hard
+            # MSBuild error, not a warning like an unresolved analyzer reference.
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            @($map.'Contoso.Iota') | Should -Contain 'imported'
+        }
+
+        It 'does not fall back for properties that cannot leave the project directory' {
+            # $([MSBuild]::GetDirectoryNameOfFileAbove(...)) only ever resolves to an
+            # ancestor, and $(OutputPath) to the project's own bin directory. Treating
+            # either as unresolvable would make most of the repository unmappable.
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            @($map.'Contoso.Theta') | Should -Not -BeNullOrEmpty
+        }
+
+        It 'treats an unknown property in a linked-source include as unmappable' {
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            @($map.'Contoso.Lambda') | Should -BeNullOrEmpty
         }
 
         It 'includes services reached only through linked shared sources' {
@@ -272,6 +327,20 @@ Describe 'Get-TestCheckoutPaths' {
         It 'falls back when the map file does not exist' {
             $paths = & $script:ScriptPath -MapPath (Join-Path $script:Root 'missing.json') -ArtifactNames 'Contoso.Alpha' -WarningAction SilentlyContinue
             $paths | Should -BeNullOrEmpty
+        }
+
+        It 'falls back when the map file is empty' {
+            $empty = Join-Path $TestDrive 'empty-map.json'
+            Set-Content -LiteralPath $empty -Value '' -NoNewline
+            & $script:ScriptPath -MapPath $empty -ArtifactNames 'Contoso.Alpha' -WarningAction SilentlyContinue |
+                Should -BeNullOrEmpty
+        }
+
+        It 'falls back when the map file is truncated rather than throwing' {
+            $truncated = Join-Path $TestDrive 'truncated-map.json'
+            Set-Content -LiteralPath $truncated -Value '{"Contoso.Alpha":["alpha","bet' -NoNewline
+            & $script:ScriptPath -MapPath $truncated -ArtifactNames 'Contoso.Alpha' -WarningAction SilentlyContinue |
+                Should -BeNullOrEmpty
         }
 
         It 'falls back when no package names are supplied' {

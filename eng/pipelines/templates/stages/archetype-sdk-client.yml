@@ -108,7 +108,6 @@ extends:
               BuildSnippets: ${{ parameters.BuildSnippets }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-              ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
               EnableTestRuntimeTrimming: ${{ parameters.EnableTestRuntimeTrimming }}
               MatrixConfigs:

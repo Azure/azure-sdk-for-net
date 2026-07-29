@@ -175,7 +175,7 @@ function Get-ProjectReferences {
         continue
       }
 
-      if ($UnresolvedProperties) {
+      if ($property -notmatch $script:ProjectLocalPropertyPattern -and $UnresolvedProperties) {
         $null = $UnresolvedProperties.Add($property)
       }
       continue
@@ -250,7 +250,8 @@ function Get-ServiceClosure {
 function Get-LinkedSourceServices {
   param(
     [string] $ProjectPath,
-    [string] $Root
+    [string] $Root,
+    [System.Collections.Generic.HashSet[string]] $UnresolvedProperties
   )
 
   # Projects also pull in shared sources via Compile/None globs that escape the
@@ -265,23 +266,56 @@ function Get-LinkedSourceServices {
   $services = [System.Collections.Generic.HashSet[string]]::new()
   $projectDir = Split-Path -Parent $ProjectPath
 
-  foreach ($match in [regex]::Matches($content, '<(?:Compile|None|EmbeddedResource|Content)[^>]*Include\s*=\s*"([^"]+)"', 'IgnoreCase')) {
-    $include = $match.Groups[1].Value
-    if ($include -notmatch '\.\.') {
-      continue
-    }
+  # <Import Project="..."> is resolved the same way. A cross-service import that lands
+  # outside the narrowed checkout is a hard MSBuild error, not a warning, so it has to
+  # participate in the closure just like a ProjectReference.
+  $patterns = @(
+    '<(?:Compile|None|EmbeddedResource|Content)[^>]*Include\s*=\s*"([^"]+)"'
+    '<Import[^>]*Project\s*=\s*"([^"]+)"'
+  )
 
-    # Strip the globbed tail so GetFullPath sees a plain directory path.
-    $directory = $include -replace '[\\/][^\\/]*[*?][^\\/]*$', ''
-    $directory = $directory -replace '\\', [System.IO.Path]::DirectorySeparatorChar
-    if ($directory -match '\$\(') {
-      continue
-    }
+  foreach ($pattern in $patterns) {
+    foreach ($match in [regex]::Matches($content, $pattern, 'IgnoreCase')) {
+      $include = $match.Groups[1].Value
 
-    $resolved = [System.IO.Path]::GetFullPath((Join-Path $projectDir $directory))
-    $service = Get-ServiceDirectoryName -ProjectPath $resolved -Root $Root
-    if ($service) {
-      $null = $services.Add($service)
+      # The project's own directory, so this expands exactly.
+      $include = $include -replace '(?i)\$\(MSBuildThisFileDirectory\)[\\/]*', ''
+
+      # Strip the globbed tail so GetFullPath sees a plain directory path.
+      $directory = $include -replace '[\\/][^\\/]*[*?][^\\/]*$', ''
+      $directory = $directory -replace '\\', [System.IO.Path]::DirectorySeparatorChar
+
+      $remaining = [regex]::Matches($directory, '\$\(([^)]+)\)')
+      if ($remaining.Count -eq 0 -and $include -notmatch '\.\.') {
+        # A plain relative path inside the package directory contributes nothing.
+        continue
+      }
+
+      if ($remaining.Count -gt 0) {
+        $property = $remaining[0].Groups[1].Value
+        if ($script:KnownProjectReferenceProperties.ContainsKey($property)) {
+          $known = [System.IO.Path]::GetFullPath(
+            (Join-Path $Root $script:KnownProjectReferenceProperties[$property]))
+          $service = Get-ServiceDirectoryName -ProjectPath $known -Root $Root
+          if ($service) {
+            $null = $services.Add($service)
+          }
+          continue
+        }
+
+        # Same rule as ProjectReference: an unexpandable property may point anywhere, so
+        # make the package unmappable rather than narrow past it.
+        if ($property -notmatch $script:ProjectLocalPropertyPattern -and $UnresolvedProperties) {
+          $null = $UnresolvedProperties.Add($property)
+        }
+        continue
+      }
+
+      $resolved = [System.IO.Path]::GetFullPath((Join-Path $projectDir $directory))
+      $service = Get-ServiceDirectoryName -ProjectPath $resolved -Root $Root
+      if ($service) {
+        $null = $services.Add($service)
+      }
     }
   }
 
@@ -331,7 +365,41 @@ $script:KnownProjectReferenceProperties = @{
   'AzureCoreTestFramework'  = 'sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj'
   'ExternalAzureCoreSource' = 'sdk/core/Azure.Core/src/Azure.Core.csproj'
   'ExternalOpenAISource'    = 'sdk/openai/external/OpenAI/src/OpenAI.csproj'
+
+  # Shared-source directories linked in through Compile/None globs. All are defined in
+  # eng/ or service level .props files, so they never appear as a literal path.
+  'AzureCoreSharedSources'                       = 'sdk/core/Azure.Core/src/Shared'
+  'AzureCoreSharedCodeDirectory'                 = 'sdk/core/Azure.Core/src/Shared'
+  'AzureCoreAmqpSharedSources'                   = 'sdk/core/Azure.Core.Amqp/src/Shared'
+  'TestFrameworkSupportFiles'                    = 'sdk/core/Azure.Core.TestFramework/src/Shared'
+  'AzureStorageSharedSources'                    = 'sdk/storage/Azure.Storage.Common/src/Shared'
+  'AzureStorageSharedTestSources'                = 'sdk/storage/Azure.Storage.Common/tests/Shared'
+  'AzureStorageStressTestSharedSources'          = 'sdk/storage/Azure.Storage.Common/src/stress/Shared'
+  'AzureStorageBlobsSharedSources'               = 'sdk/storage/Azure.Storage.Blobs/src/Shared'
+  'AzureStorageDataMovementSharedSources'        = 'sdk/storage/Azure.Storage.DataMovement/src/Shared'
+  'AzureStorageDataMovementTestSharedSources'    = 'sdk/storage/Azure.Storage.DataMovement/tests/Shared'
+  'AzureStorageWebjobsExtensionSharedSources'    = 'sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/src/Shared'
+  'AzureStorageWebjobsExtensionSharedTestSources' = 'sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/tests/Shared'
+  'MicrosoftAzureWebJobsExtensionsClientsSources' = 'sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared'
+  'AzureEventGridSharedSources'                  = 'sdk/eventgrid/Azure.Messaging.EventGrid/src/Shared'
+  'RepoEngPath'                                  = 'eng'
 }
+
+# Properties that cannot move a path into a different service directory, so leaving them
+# unexpanded is safe and must not force a full checkout.
+#
+#   [MSBuild]::GetDirectoryNameOfFileAbove / GetPathOfFileAbove walk *up* from the project
+#   (the standard Directory.Build.props import). They can only land on an ancestor, and
+#   every ancestor of a package is already in the checkout.
+#
+#   OutputPath and friends are relative to the referencing project itself - they name its
+#   own bin/ output or are plain tokens. The analyzer project injected into every package
+#   packs its build output this way, so treating these as unresolvable would make more
+#   than half the repository unmappable for no correctness gain.
+$script:ProjectLocalPropertyPattern =
+  '(?i)^(?:\[MSBuild\]::Get(?:DirectoryNameOfFileAbove|PathOfFileAbove)\b|' +
+  '(?:OutputPath|BaseOutputPath|IntermediateOutputPath|Configuration|Platform|' +
+  'AssemblyName|TargetFramework|MSBuildProjectName)$)'
 
 function New-CheckoutMap {
   param([string] $Root)
@@ -352,7 +420,7 @@ function New-CheckoutMap {
         $null = $services.Add($service)
       }
 
-      foreach ($linked in (Get-LinkedSourceServices -ProjectPath $project -Root $Root)) {
+      foreach ($linked in (Get-LinkedSourceServices -ProjectPath $project -Root $Root -UnresolvedProperties $unresolved)) {
         $null = $services.Add($linked)
       }
     }
@@ -462,9 +530,21 @@ if (-not (Test-Path $MapPath)) {
   return $null
 }
 
+# A truncated or empty map must degrade to a full checkout rather than throw: the
+# artifact download that produces it is deliberately non-fatal.
 $map = @{}
-foreach ($property in (Get-Content -LiteralPath $MapPath -Raw | ConvertFrom-Json).PSObject.Properties) {
-  $map[$property.Name] = @($property.Value)
+try {
+  $raw = Get-Content -LiteralPath $MapPath -Raw
+  if (-not $raw) {
+    throw 'the file is empty'
+  }
+  foreach ($property in ($raw | ConvertFrom-Json).PSObject.Properties) {
+    $map[$property.Name] = @($property.Value)
+  }
+}
+catch {
+  Write-Warning "Checkout map '$MapPath' could not be read ($_); falling back to a full checkout."
+  return $null
 }
 
 return Resolve-CheckoutPaths -Map $map -Artifacts $artifacts

@@ -60,6 +60,11 @@ jobs:
         ServiceDirectory: '*'
       ${{ else }}:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        # Defaults to the full checkout. The resolver below overwrites this when it can
+        # narrow the batch; without a default an undefined macro would reach
+        # sparse-checkout.yml as literal text and fail its ConvertFrom-Json.
+        TestSparseCheckoutPaths: '["/*","!SessionRecords","/sdk/*/**/SessionRecords/*"]'
 
     templateContext:
       outputs:
@@ -99,10 +104,7 @@ jobs:
           condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
           continueOnError: true
           inputs:
-            artifact: TestPackagesArtifact
-            patterns: |
-              **/checkout-map.json
-              **/Get-TestCheckoutPaths.ps1
+            artifact: TestCheckoutMap
             path: $(Agent.TempDirectory)/TestCheckoutMap
 
         - pwsh: |
@@ -136,7 +138,16 @@ jobs:
             # Get-TestCheckoutPaths.ps1 returns $null for anything it cannot narrow
             # exactly: an unknown or unmappable package, an empty batch, or a map
             # missing its always-included path list.
-            $paths = & $resolver.FullName -MapPath $map.FullName -ArtifactNames '$(ProjectNames)'
+            # The pwsh task defaults to errorActionPreference 'stop', so any throw inside
+            # the resolver would fail the job instead of falling back. A truncated or
+            # empty checkout-map.json is exactly what continueOnError above tolerates.
+            try {
+              $paths = & $resolver.FullName -MapPath $map.FullName -ArtifactNames '$(ProjectNames)'
+            }
+            catch {
+              Set-Paths $fallback "resolver failed: $_"
+              return
+            }
 
             if (-not $paths) {
               Set-Paths $fallback 'resolver could not narrow this batch'
@@ -144,8 +155,9 @@ jobs:
             }
 
             Set-Paths $paths 'resolved from checkout map'
+          # Deliberately not gated on Build.Reason: the map only exists for PR runs, but
+          # this step must still define TestSparseCheckoutPaths on every other run.
           displayName: Resolve test checkout paths
-          condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - ${{ if parameters.EnableTestCheckoutNarrowing }}:
