@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     Console.WriteLine($"  Tools: {retrievedMcp.McpServerParameters.Tools.Count}");
                     foreach (McpServerTool tool in retrievedMcp.McpServerParameters.Tools)
                     {
-                        Console.WriteLine($"    - {tool.Name} (inclusion: {tool.InclusionMode})");
+                        Console.WriteLine($"    - {tool.Name} (results processing: {tool.ResultsProcessing})");
                     }
                 }
 

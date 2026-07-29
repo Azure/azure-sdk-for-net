@@ -4,7 +4,25 @@
 
 ### Features Added
 
+- Added support for the `2026-08-01-preview` service version (now the default/latest version).
+- Added `ListingSearchType` along with `search`, `pageSize`, and `searchType` parameters on the resource listing methods (`GetIndexes`, `GetAliases`, `GetKnowledgeBases`, `GetKnowledgeSources`, `GetSynonymMaps`, `GetIndexers`, `GetDataSourceConnections`, and `GetSkillsets`).
+- Added Microsoft Entra application authentication for Work IQ knowledge sources via `WorkIQKnowledgeSourceParameters` and `EntraAppAuthentication`.
+- Added `SearchIndexKnowledgeSource` query-hint and boost configuration types: `SearchIndexKnowledgeSourceQueryHints`, `SearchIndexKnowledgeSourceFilterHint`, `SearchIndexKnowledgeSourceFieldValueBoost`, and `SearchIndexKnowledgeSourceMultiWordExpressionBoost`.
+- Added `KnowledgeSourceResultsProcessing` for controlling results processing on knowledge sources and `McpServerTool`.
+- Added `KnowledgeBaseRetrieveDefaults`, `KnowledgeBaseQueryHintProcessing`, `KnowledgeRetrievalAutoReasoningEffort`, and `ServedImage` for knowledge base retrieval.
+- Added `KnowledgeBaseActivityRecordModel`, exposing the model name and deployment id for model activity records.
+- Added knowledge source file management types `FileUploadMetadata`, `UploadKnowledgeSourceFileMultipartRequest`, and `UpdateKnowledgeSourceFileRequest`.
+- Added `KnowledgeSourceNetworkAccessMode` and `FileKnowledgeSourceExtractionMode`.
+
 ### Breaking Changes
+
+> These changes are relative to the previous preview release, `12.1.0-beta.1`.
+
+- The resource listing methods (`GetIndexes`, `GetAliases`, `GetKnowledgeBases`, `GetKnowledgeSources`, `GetSynonymMaps`, `GetIndexers`, `GetDataSourceConnections`, and `GetSkillsets`) replaced the `top`, `skip`, and `count` parameters with `search`, `pageSize`, and `searchType`.
+- `WorkIQKnowledgeSource` now requires a `WorkIQKnowledgeSourceParameters` argument (Entra application authentication) in its constructor.
+- The model activity records (`KnowledgeBaseModelQueryPlanningActivityRecord` and `KnowledgeBaseModelAnswerSynthesisActivityRecord`) now expose model information through the `Model` property (`KnowledgeBaseActivityRecordModel`) instead of the `ModelName` string.
+- Removed `McpServerToolInclusionMode` and the `McpServerTool.InclusionMode` property; MCP tool behavior is now configured through `ResultsProcessing` and `OutputParsing`.
+- Removed `WorkIQAttribution`.
 
 ### Bugs Fixed
 

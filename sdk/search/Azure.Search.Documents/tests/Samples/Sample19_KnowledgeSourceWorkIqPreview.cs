@@ -11,6 +11,7 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Namespaces
 using NUnit.Framework;
 
@@ -59,7 +60,14 @@ namespace Azure.Search.Documents.Tests.Samples
 #if !SNIPPET
                 knowledgeSourceName = testSourceName;
 #endif
-                WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName)
+                // Work IQ now authenticates to Microsoft 365 through an Entra
+                // application identity configured with a federated credential.
+                WorkIQKnowledgeSourceParameters workIqParameters = new WorkIQKnowledgeSourceParameters(
+                    new EntraAppAuthentication(
+                        applicationId: Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                        federatedCredentialId: Guid.Parse("00000000-0000-0000-0000-000000000000")));
+
+                WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName, workIqParameters)
                 {
                     Description = "Work IQ knowledge source for M365 content"
                 };
