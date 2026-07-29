@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetVirtualNetworkRules))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeter))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfiguration))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfigurationData))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation))]
@@ -100,6 +102,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetentionDescription))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupProperties))]
@@ -109,6 +112,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(UnknownApplicationGroupPolicy))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerEventHubsContext : ModelReaderWriterContext
     {
     }

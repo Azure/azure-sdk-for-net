@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The JSON object that contains the properties required to create an endpoint. </param>
+        /// <param name="name0"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FrontDoorEndpointProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FrontDoorEndpointProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The JSON object that contains the properties required to create an endpoint. </summary>
         [WirePath("properties")]
         internal FrontDoorEndpointProperties Properties { get; set; }
+
+        /// <summary> Name of the endpoint under the profile which is unique globally. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The name of the profile which holds the endpoint. </summary>
         [WirePath("properties.profileName")]

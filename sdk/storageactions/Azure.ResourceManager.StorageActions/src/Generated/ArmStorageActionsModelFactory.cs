@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,10 +25,11 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="name0"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="properties"> Properties of the storage task. </param>
         /// <returns> A new <see cref="StorageActions.StorageTaskData"/> instance for mocking. </returns>
-        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
+        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string name0 = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                name0,
                 identity,
                 properties,
                 default);
@@ -243,6 +246,32 @@ namespace Azure.ResourceManager.StorageActions.Models
                 taskId,
                 taskVersion,
                 runResult,
+                default);
+        }
+
+        /// <summary> Represents Storage Task. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identity of the resource. </param>
+        /// <param name="properties"> Properties of the storage task. </param>
+        /// <returns> A new <see cref="StorageActions.StorageTaskData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
+        {
+            return new StorageTaskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                name,
+                identity,
+                properties,
                 default);
         }
     }

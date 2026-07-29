@@ -24,9 +24,10 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Edge Action. </param>
         /// <param name="sku"> The sku type of the edge action. </param>
         /// <returns> A new <see cref="EdgeActions.EdgeActionData"/> instance for mocking. </returns>
-        public static EdgeActionData EdgeActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeActionProperties properties = default, EdgeActionSkuType sku = default)
+        public static EdgeActionData EdgeActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeActionProperties properties = default, string name0 = default, EdgeActionSkuType sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 sku,
                 default);
         }
@@ -100,8 +102,9 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Edge Action version. </param>
         /// <returns> A new <see cref="EdgeActions.EdgeActionVersionData"/> instance for mocking. </returns>
-        public static EdgeActionVersionData EdgeActionVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeActionVersionProperties properties = default)
+        public static EdgeActionVersionData EdgeActionVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeActionVersionProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -113,6 +116,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -166,8 +170,9 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the execution filter. </param>
         /// <returns> A new <see cref="EdgeActions.EdgeActionExecutionFilterData"/> instance for mocking. </returns>
-        public static EdgeActionExecutionFilterData EdgeActionExecutionFilterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeActionExecutionFilterProperties properties = default)
+        public static EdgeActionExecutionFilterData EdgeActionExecutionFilterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeActionExecutionFilterProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -179,6 +184,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

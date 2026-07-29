@@ -261,6 +261,7 @@ namespace Azure.ResourceManager.HealthBot
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 sku,
                 identity,
                 additionalBinaryDataProperties);

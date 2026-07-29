@@ -15,7 +15,19 @@ namespace Azure.ResourceManager.Consumption
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ArmResourceGetConsumptionReservationsSummariesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(BalanceProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.BillingAccountConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(BillingAccountConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.BillingAccountConsumptionResource is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.BillingCustomerConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(BillingCustomerConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.BillingCustomerConsumptionResource is obsolete and may be removed in future versions.
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.BillingProfileConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(BillingProfileConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.BillingProfileConsumptionResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(BudgetAssociatedNotification))]
     [ModelReaderWriterBuildable(typeof(BudgetComparisonExpression))]
     [ModelReaderWriterBuildable(typeof(BudgetCurrentSpend))]
@@ -36,6 +48,9 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(ConsumptionBudgetResource))]
     [ModelReaderWriterBuildable(typeof(ConsumptionCalculatedSavingsProperties))]
     [ModelReaderWriterBuildable(typeof(ConsumptionChargeSummary))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ConsumptionCreditSummary))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ConsumptionCreditSummaryData))]
     [ModelReaderWriterBuildable(typeof(ConsumptionCreditSummaryResource))]
     [ModelReaderWriterBuildable(typeof(ConsumptionEventSummary))]
@@ -76,6 +91,9 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(LotProperties))]
     [ModelReaderWriterBuildable(typeof(Models.Lots))]
     [ModelReaderWriterBuildable(typeof(ManagementGroupAggregatedCostProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.ManagementGroupBillingPeriodConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ManagementGroupBillingPeriodConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.ManagementGroupBillingPeriodConsumptionResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(MarketplaceProperties))]
     [ModelReaderWriterBuildable(typeof(MarketplacesListResult))]
     [ModelReaderWriterBuildable(typeof(ModernChargeSummaryProperties))]
@@ -90,18 +108,33 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(PriceSheetModel))]
     [ModelReaderWriterBuildable(typeof(PriceSheetProperties))]
     [ModelReaderWriterBuildable(typeof(PriceSheetResource))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.Models.PriceSheetResult is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(PriceSheetResult))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.Models.PriceSheetResult is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(PriceSheetResultData))]
     [ModelReaderWriterBuildable(typeof(PriceSheetResultResource))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.ReservationConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ReservationConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.ReservationConsumptionResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ReservationDetailProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationDetailsListResult))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.ReservationOrderConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ReservationOrderConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.ReservationOrderConsumptionResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ReservationRecommendationDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationRecommendationsListResult))]
     [ModelReaderWriterBuildable(typeof(ReservationSummariesListResult))]
     [ModelReaderWriterBuildable(typeof(ReservationSummaryProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationTransactionsListResult))]
     [ModelReaderWriterBuildable(typeof(SavingsPlan))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.SubscriptionBillingPeriodConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SubscriptionBillingPeriodConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.SubscriptionBillingPeriodConsumptionResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Consumption.TenantBillingPeriodConsumptionResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(TenantBillingPeriodConsumptionResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Consumption.TenantBillingPeriodConsumptionResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownConsumptionChargeSummary))]
     [ModelReaderWriterBuildable(typeof(UnknownConsumptionReservationRecommendation))]
     [ModelReaderWriterBuildable(typeof(UnknownConsumptionUsageDetail))]

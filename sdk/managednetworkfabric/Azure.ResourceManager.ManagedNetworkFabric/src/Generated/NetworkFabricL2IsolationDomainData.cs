@@ -39,17 +39,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The L2IsolationDomain properties. </param>
+        /// <param name="name0"> Name of the L2 Isolation Domain. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, L2IsolationDomainProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, L2IsolationDomainProperties properties, string name0, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The L2IsolationDomain properties. </summary>
         internal L2IsolationDomainProperties Properties { get; set; }
+
+        /// <summary> Name of the L2 Isolation Domain. </summary>
+        public string Name { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

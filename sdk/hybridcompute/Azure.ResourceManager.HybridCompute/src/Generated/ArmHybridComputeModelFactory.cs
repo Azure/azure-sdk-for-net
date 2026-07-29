@@ -131,8 +131,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tenantId"> Describes the tenant id. </param>
         /// <param name="licenseType"> The type of the license resource. </param>
         /// <param name="licenseDetails"> Describes the properties of a License. </param>
+        /// <param name="name0"> The name of the license. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseData"/> instance for mocking. </returns>
-        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, Guid? tenantId = default, HybridComputeLicenseType? licenseType = default, HybridComputeLicenseDetails licenseDetails = default)
+        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, Guid? tenantId = default, HybridComputeLicenseType? licenseType = default, HybridComputeLicenseDetails licenseDetails = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -144,6 +145,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 provisioningState is null && tenantId is null && licenseType is null && licenseDetails is null ? default : new LicenseProperties(provisioningState, tenantId, licenseType, licenseDetails, default),
+                name0,
                 default);
         }
 
@@ -253,11 +255,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="storageDisks"> The disks on the machine. </param>
         /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
+        /// <param name="name0"> The name of the hybrid machine. </param>
         /// <param name="resources"> The list of extensions affiliated to the machine. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
-        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, HybridComputeIdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, HybridComputeIdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, string name0 = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
@@ -308,6 +311,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
                     new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
                     default),
+                name0,
                 (resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>()).ToList(),
                 identity,
                 kind,
@@ -582,8 +586,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes Machine Extension Properties. </param>
+        /// <param name="name0"> The name of the machine extension. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineExtensionData"/> instance for mocking. </returns>
-        public static HybridComputeMachineExtensionData HybridComputeMachineExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineExtensionProperties properties = default)
+        public static HybridComputeMachineExtensionData HybridComputeMachineExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineExtensionProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -595,6 +600,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -787,8 +793,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
         /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
         /// <param name="productFeatures"> The list of product features. </param>
+        /// <param name="name0"></param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseProfileData"/> instance for mocking. </returns>
-        public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, bool? softwareAssuranceCustomer = default, Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, string assignedLicense = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default)
+        public static HybridComputeLicenseProfileData HybridComputeLicenseProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, bool? softwareAssuranceCustomer = default, Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, string assignedLicense = default, LicenseProfileSubscriptionStatus? subscriptionStatus = default, LicenseProfileProductType? productType = default, DateTimeOffset? enrollmentOn = default, DateTimeOffset? billingStartOn = default, DateTimeOffset? disenrollmentOn = default, DateTimeOffset? billingEndOn = default, ResponseError error = default, IEnumerable<HybridComputeProductFeature> productFeatures = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -816,6 +823,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     error,
                     (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
                     default), provisioningState, default),
+                name0,
                 default);
         }
 
@@ -886,8 +894,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="errorBlobManagedIdentity"> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine run command instance view. </param>
+        /// <param name="name0"> The name of the run command. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineRunCommandData"/> instance for mocking. </returns>
-        public static HybridComputeMachineRunCommandData HybridComputeMachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputContent> parameters = default, IEnumerable<RunCommandInputContent> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
+        public static HybridComputeMachineRunCommandData HybridComputeMachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputContent> parameters = default, IEnumerable<RunCommandInputContent> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -913,6 +922,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     provisioningState,
                     instanceView,
                     default),
+                name0,
                 default);
         }
 
@@ -995,8 +1005,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayType"> The type of the Gateway resource. </param>
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
+        /// <param name="name0"> The name of the Gateway. </param>
         /// <returns> A new <see cref="HybridCompute.ArcGatewayData"/> instance for mocking. </returns>
-        public static ArcGatewayData ArcGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, ResourceIdentifier gatewayId = default, ArcGatewayType? gatewayType = default, string gatewayEndpoint = default, IEnumerable<string> allowedFeatures = default)
+        public static ArcGatewayData ArcGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, ResourceIdentifier gatewayId = default, ArcGatewayType? gatewayType = default, string gatewayEndpoint = default, IEnumerable<string> allowedFeatures = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1014,6 +1025,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     gatewayEndpoint,
                     (allowedFeatures ?? new ChangeTrackingList<string>()).ToList(),
                     default),
+                name0,
                 default);
         }
 
@@ -1369,6 +1381,33 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeExtensionPublisher(id, name, default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="tenantId"> Describes the tenant id. </param>
+        /// <param name="licenseType"> The type of the license resource. </param>
+        /// <param name="licenseDetails"> Describes the properties of a License. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, Guid? tenantId = default, HybridComputeLicenseType? licenseType = default, HybridComputeLicenseDetails licenseDetails = default)
+        {
+            return new HybridComputeLicenseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && tenantId is null && licenseType is null && licenseDetails is null ? default : new LicenseProperties(provisioningState, tenantId, licenseType, licenseDetails, default),
+                name,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.LicenseProfileMachineInstanceView"/>. </summary>
         /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
         /// <param name="licenseChannel"> Indicates the license channel. </param>
@@ -1411,6 +1450,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputeNetworkInterface HybridComputeNetworkInterface(IEnumerable<HybridComputeIPAddress> ipAddresses = default)
         {
             return new HybridComputeNetworkInterface(default, default, default, (ipAddresses ?? new ChangeTrackingList<HybridComputeIPAddress>()).ToList(), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeMachineExtensionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Describes Machine Extension Properties. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeMachineExtensionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HybridComputeMachineExtensionData HybridComputeMachineExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineExtensionProperties properties = default)
+        {
+            return new HybridComputeMachineExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseProfileData"/>. </summary>
@@ -1464,6 +1527,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     error,
                     (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
                     default), provisioningState, default),
+                name,
                 default);
         }
     }

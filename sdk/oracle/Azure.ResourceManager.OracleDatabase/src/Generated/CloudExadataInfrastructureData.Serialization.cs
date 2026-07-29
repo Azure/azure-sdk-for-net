@@ -268,6 +268,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 zones,
                 additionalBinaryDataProperties);
         }

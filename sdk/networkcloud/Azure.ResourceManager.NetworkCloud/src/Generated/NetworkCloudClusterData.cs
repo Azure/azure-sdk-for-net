@@ -47,14 +47,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="name0"> The name of the cluster. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string name0, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudDeploymentType? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             ETag = eTag;
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -64,6 +66,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> The list of the resource properties. </summary>
         internal ClusterProperties Properties { get; set; }
+
+        /// <summary> The name of the cluster. </summary>
+        public string Name { get; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }

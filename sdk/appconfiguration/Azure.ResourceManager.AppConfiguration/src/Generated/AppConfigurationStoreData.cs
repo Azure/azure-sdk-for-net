@@ -27,12 +27,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of a configuration store. </param>
+        /// <param name="name0"> The name of the configuration store. </param>
         /// <param name="identity"> The managed identity information, if configured. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationStoreProperties properties, ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationStoreProperties properties, string name0, ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,6 +43,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The properties of a configuration store. </summary>
         [WirePath("properties")]
         internal ConfigurationStoreProperties Properties { get; set; }
+
+        /// <summary> The name of the configuration store. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The managed identity information, if configured. </summary>
         [WirePath("identity")]

@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
         /// <param name="zoneRedundant"> A value that indicates whether the cluster is zone redundant. </param>
         /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
+        /// <param name="name0"> The name of the Cluster. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
+        /// <param name="systemData0"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsClusterData"/> instance for mocking. </returns>
-        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, EventHubsClusterProvisioningState? provisioningState = default, DateTimeOffset? updatedOn = default, string metricId = default, string status = default, bool? supportsScaling = default, bool? zoneRedundant = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventHubsClusterSku sku = default)
+        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, EventHubsClusterProvisioningState? provisioningState = default, DateTimeOffset? updatedOn = default, string metricId = default, string status = default, bool? supportsScaling = default, bool? zoneRedundant = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, string name0 = default, EventHubsClusterSku sku = default, SystemData systemData0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -58,7 +60,9 @@ namespace Azure.ResourceManager.EventHubs.Models
                     new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
                     zoneRedundant,
                     default),
+                name0,
                 sku,
+                systemData0,
                 default);
         }
 
@@ -751,7 +755,9 @@ namespace Azure.ResourceManager.EventHubs.Models
                     default,
                     default,
                     default),
+                name,
                 sku,
+                systemData,
                 default);
         }
 

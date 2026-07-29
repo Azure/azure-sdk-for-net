@@ -38,13 +38,15 @@ namespace Azure.ResourceManager.Maps
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The map account properties. </param>
+        /// <param name="name0"> The name of the Maps Account. </param>
         /// <param name="sku"> The SKU of this account. </param>
         /// <param name="kind"> Get or Set Kind property. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsAccountProperties properties, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsAccountProperties properties, string name0, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             Kind = kind;
             Identity = identity;
@@ -53,6 +55,9 @@ namespace Azure.ResourceManager.Maps
 
         /// <summary> The map account properties. </summary>
         public MapsAccountProperties Properties { get; set; }
+
+        /// <summary> The name of the Maps Account. </summary>
+        public string Name { get; }
 
         /// <summary> The SKU of this account. </summary>
         public MapsSku Sku { get; set; }

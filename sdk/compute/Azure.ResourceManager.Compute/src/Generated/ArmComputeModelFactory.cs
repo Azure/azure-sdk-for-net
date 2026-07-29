@@ -1519,8 +1519,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
         /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
         /// <param name="error"> Error details for this upgrade, if there are any. </param>
+        /// <param name="name0"></param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetRollingUpgradeData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetRollingUpgradeData VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RollingUpgradePolicy policy = default, RollingUpgradeRunningStatus runningStatus = default, RollingUpgradeProgressInfo progress = default, ComputeApiError error = default)
+        public static VirtualMachineScaleSetRollingUpgradeData VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RollingUpgradePolicy policy = default, RollingUpgradeRunningStatus runningStatus = default, RollingUpgradeProgressInfo progress = default, ComputeApiError error = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1532,6 +1533,7 @@ namespace Azure.ResourceManager.Compute.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 policy is null && runningStatus is null && progress is null && error is null ? default : new VirtualMachineScaleSetRollingUpgradeProperties(policy, runningStatus, progress, error, default),
+                name0,
                 default);
         }
 
@@ -6597,6 +6599,32 @@ namespace Azure.ResourceManager.Compute.Models
             zones ??= new ChangeTrackingList<string>();
 
             return new ComputeResourceSkuRestrictionInfo((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="policy"> The rolling upgrade policies applied for this upgrade. </param>
+        /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
+        /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
+        /// <param name="error"> Error details for this upgrade, if there are any. </param>
+        /// <returns> A new <see cref="Compute.VirtualMachineScaleSetRollingUpgradeData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetRollingUpgradeData VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RollingUpgradePolicy policy = default, RollingUpgradeRunningStatus runningStatus = default, RollingUpgradeProgressInfo progress = default, ComputeApiError error = default)
+        {
+            return new VirtualMachineScaleSetRollingUpgradeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                policy is null && runningStatus is null && progress is null && error is null ? default : new VirtualMachineScaleSetRollingUpgradeProperties(policy, runningStatus, progress, error, default),
+                name,
+                default);
         }
 
         /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>

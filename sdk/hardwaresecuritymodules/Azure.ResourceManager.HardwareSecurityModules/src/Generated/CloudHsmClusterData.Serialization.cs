@@ -268,6 +268,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 sku,
                 additionalBinaryDataProperties);

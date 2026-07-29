@@ -25,9 +25,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the gallery image. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmGalleryImageData"/> instance for mocking. </returns>
-        public static HciVmGalleryImageData HciVmGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        public static HciVmGalleryImageData HciVmGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmGalleryImageProperties properties = default, string name0 = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }
@@ -136,9 +138,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the logical network. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmLogicalNetworkData"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkData HciVmLogicalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLogicalNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        public static HciVmLogicalNetworkData HciVmLogicalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLogicalNetworkProperties properties = default, string name0 = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -150,6 +153,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }
@@ -324,9 +328,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the marketplace gallery image. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmMarketplaceGalleryImageData"/> instance for mocking. </returns>
-        public static HciVmMarketplaceGalleryImageData HciVmMarketplaceGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmMarketplaceGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        public static HciVmMarketplaceGalleryImageData HciVmMarketplaceGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmMarketplaceGalleryImageProperties properties = default, string name0 = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -338,6 +343,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }
@@ -406,9 +412,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the network interface. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmNetworkInterfaceData"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceData HciVmNetworkInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkInterfaceProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        public static HciVmNetworkInterfaceData HciVmNetworkInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkInterfaceProperties properties = default, string name0 = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -420,6 +427,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }
@@ -517,10 +525,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the network security group. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="Vm.HciVmNetworkSecurityGroupData"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, ETag? eTag = default)
+        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, string name0 = default, HciVmExtendedLocation extendedLocation = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -532,6 +541,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 eTag,
                 default);

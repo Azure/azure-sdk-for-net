@@ -231,6 +231,7 @@ namespace Azure.ResourceManager.Confluent
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 additionalBinaryDataProperties);
         }
     }

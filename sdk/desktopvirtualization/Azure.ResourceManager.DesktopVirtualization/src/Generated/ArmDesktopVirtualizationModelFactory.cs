@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Detailed properties for App Attach Package. </param>
+        /// <param name="name0"> The name of the App Attach package. </param>
         /// <returns> A new <see cref="DesktopVirtualization.AppAttachPackageData"/> instance for mocking. </returns>
-        public static AppAttachPackageData AppAttachPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppAttachPackageProperties properties = default)
+        public static AppAttachPackageData AppAttachPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppAttachPackageProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -226,6 +228,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="deploymentScope"> DeploymentScope type for ApplicationGroup. </param>
+        /// <param name="name0"> The name of the application group. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -234,7 +237,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolId"/> is null. </exception>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
-        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, string oboTenantId = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, ResourceIdentifier hostPoolId = default, ResourceIdentifier workspaceId = default, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = default, bool? showInFeed = default, string oboTenantId = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, string name0 = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -257,6 +260,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name0,
                 identity,
                 eTag,
                 kind,
@@ -426,6 +430,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="allowRdpShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
         /// <param name="conditionalRdpProperty"> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </param>
+        /// <param name="name0"> The name of the host pool within the specified resource group. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -433,7 +438,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
-        public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationManagementType? managementType = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, string oboTenantId = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, string conditionalRdpProperty = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationManagementType? managementType = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, string oboTenantId = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, string conditionalRdpProperty = default, string name0 = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -479,6 +484,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name0,
                 identity,
                 eTag,
                 kind,
@@ -667,6 +673,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="exclusionTag"> Exclusion tag for scaling plan. </param>
         /// <param name="schedules"> List of ScalingPlanPooledSchedule definitions. </param>
         /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
+        /// <param name="name0"> The name of the scaling plan. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -675,7 +682,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanData"/> instance for mocking. </returns>
-        public static ScalingPlanData ScalingPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, string timeZone = default, ScalingHostPoolType? scalingHostPoolType = default, string exclusionTag = default, IEnumerable<ScalingSchedule> schedules = default, IEnumerable<ScalingHostPoolReference> hostPoolReferences = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static ScalingPlanData ScalingPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string description = default, string friendlyName = default, string timeZone = default, ScalingHostPoolType? scalingHostPoolType = default, string exclusionTag = default, IEnumerable<ScalingSchedule> schedules = default, IEnumerable<ScalingHostPoolReference> hostPoolReferences = default, string name0 = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -696,6 +703,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name0,
                 identity,
                 eTag,
                 kind,
@@ -1807,6 +1815,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 etag,
                 kind,
@@ -1902,6 +1911,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     (schedules ?? new ChangeTrackingList<ScalingSchedule>()).ToList(),
                     (hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>()).ToList(),
                     default),
+                name,
                 identity,
                 etag,
                 kind,
@@ -2067,6 +2077,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 etag,
                 kind,
@@ -2159,6 +2170,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 etag,
                 kind,
@@ -2290,6 +2302,30 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualization.AppAttachPackageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Detailed properties for App Attach Package. </param>
+        /// <returns> A new <see cref="DesktopVirtualization.AppAttachPackageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AppAttachPackageData AppAttachPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppAttachPackageProperties properties = default)
+        {
+            return new AppAttachPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AppAttachPackageProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the App Attach Package. </param>
         /// <param name="image"> Detailed properties for App Attach Package. </param>
@@ -2411,6 +2447,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 etag,
                 kind,
@@ -2524,6 +2561,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 etag,
                 kind,
@@ -2593,6 +2631,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 etag,
                 kind,
@@ -2684,6 +2723,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 etag,
                 kind,

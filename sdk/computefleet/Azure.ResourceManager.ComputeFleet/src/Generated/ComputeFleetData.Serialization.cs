@@ -305,6 +305,7 @@ namespace Azure.ResourceManager.ComputeFleet
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
                 plan,

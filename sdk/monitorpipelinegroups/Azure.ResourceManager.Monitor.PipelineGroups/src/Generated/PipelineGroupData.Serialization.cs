@@ -254,6 +254,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 extendedLocation,
                 additionalBinaryDataProperties);
         }

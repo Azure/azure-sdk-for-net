@@ -38,17 +38,22 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Asset name parameter. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryAssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AssetProperties properties, DeviceRegistryExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceRegistryAssetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AssetProperties properties, string name0, DeviceRegistryExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             ExtendedLocation = extendedLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public AssetProperties Properties { get; set; }
+
+        /// <summary> Asset name parameter. </summary>
+        public string Name { get; }
 
         /// <summary> The extended location. </summary>
         public DeviceRegistryExtendedLocation ExtendedLocation { get; set; }

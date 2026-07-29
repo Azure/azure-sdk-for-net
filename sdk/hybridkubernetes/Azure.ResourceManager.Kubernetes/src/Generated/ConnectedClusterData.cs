@@ -41,12 +41,14 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
+        /// <param name="name0"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <param name="kind"> The kind of connected cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, ManagedServiceIdentity identity, ConnectedClusterKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ConnectedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConnectedClusterProperties properties, string name0, ManagedServiceIdentity identity, ConnectedClusterKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,6 +56,9 @@ namespace Azure.ResourceManager.Kubernetes
 
         /// <summary> Describes the connected cluster resource properties. </summary>
         public ConnectedClusterProperties Properties { get; set; }
+
+        /// <summary> The name of the Kubernetes cluster on which get is called. </summary>
+        public string Name { get; }
 
         /// <summary> The identity of the connected cluster. </summary>
         public ManagedServiceIdentity Identity { get; set; }

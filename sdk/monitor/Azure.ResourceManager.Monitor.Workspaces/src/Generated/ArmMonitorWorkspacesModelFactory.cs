@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -26,10 +27,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Resource properties. </param>
+        /// <param name="name0"> The name of the Azure Monitor Workspace. The name is case insensitive. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="Workspaces.MonitorWorkspaceData"/> instance for mocking. </returns>
-        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 eTag,
                 default);
@@ -392,6 +395,33 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState = default, string version = default)
         {
             return new MonitorMetricsContainerProperties(provisioningState, version, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="Workspaces.MonitorWorkspaceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        {
+            return new MonitorWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                identity,
+                eTag,
+                default);
         }
     }
 }

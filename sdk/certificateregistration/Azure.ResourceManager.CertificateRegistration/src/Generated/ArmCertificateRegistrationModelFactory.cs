@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.CertificateRegistration;
@@ -44,9 +45,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
         /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
+        /// <param name="name0"> Name of the certificate order.. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="CertificateRegistration.AppServiceCertificateOrderData"/> instance for mocking. </returns>
-        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? certificateProductType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string kind = default)
+        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? certificateProductType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string name0 = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -79,6 +81,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     nextAutoRenewOn,
                     contact,
                     default),
+                name0,
                 kind,
                 default);
         }
@@ -276,9 +279,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
+        /// <param name="name0"> Name of the certificate. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="CertificateRegistration.AppServiceCertificateData"/> instance for mocking. </returns>
-        public static AppServiceCertificateData AppServiceCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default, string kind = default)
+        public static AppServiceCertificateData AppServiceCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default, string name0 = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -290,6 +294,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default),
+                name0,
                 kind,
                 default);
         }
@@ -473,6 +478,98 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             links ??= new ChangeTrackingList<string>();
 
             return new SampleUtterance(text, (links ?? new ChangeTrackingList<string>()).ToList(), qid, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="certificates"> State of the Key Vault secret. </param>
+        /// <param name="distinguishedName"> Certificate distinguished name. </param>
+        /// <param name="domainVerificationToken"> Domain verification token. </param>
+        /// <param name="validityInYears"> Duration in years (must be 1). </param>
+        /// <param name="keySize"> Certificate key size. </param>
+        /// <param name="certificateProductType"> Certificate product type. </param>
+        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="provisioningState"> Status of certificate order. </param>
+        /// <param name="status"> Current order status. </param>
+        /// <param name="signedCertificate"> Signed certificate. </param>
+        /// <param name="csr"> Last CSR that was created for this order. </param>
+        /// <param name="intermediate"> Intermediate certificate. </param>
+        /// <param name="root"> Root certificate. </param>
+        /// <param name="serialNumber"> Current serial number of the certificate. </param>
+        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
+        /// <param name="expireOn"> Certificate expiration time. </param>
+        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
+        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
+        /// <param name="contact"> Contact info. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="CertificateRegistration.AppServiceCertificateOrderData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? certificateProductType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string kind = default)
+        {
+            return new AppServiceCertificateOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderProperties(
+                    certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
+                    distinguishedName,
+                    domainVerificationToken,
+                    validityInYears,
+                    keySize,
+                    certificateProductType.GetValueOrDefault(),
+                    isAutoRenew,
+                    provisioningState,
+                    status,
+                    signedCertificate,
+                    csr,
+                    intermediate,
+                    root,
+                    serialNumber,
+                    lastCertificateIssuedOn,
+                    expireOn,
+                    isPrivateKeyExternal,
+                    (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
+                    nextAutoRenewOn,
+                    contact,
+                    default),
+                name,
+                kind,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="keyVaultId"> Key Vault resource Id. </param>
+        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
+        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="CertificateRegistration.AppServiceCertificateData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AppServiceCertificateData AppServiceCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default, string kind = default)
+        {
+            return new AppServiceCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default),
+                name,
+                kind,
+                default);
         }
     }
 }

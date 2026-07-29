@@ -38,11 +38,13 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Represents namespace properties. </param>
+        /// <param name="name0"> Namespace name. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubNamespaceProperties properties, NotificationHubSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubNamespaceProperties properties, string name0, NotificationHubSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

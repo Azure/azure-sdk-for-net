@@ -26,9 +26,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of Azure API Center service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ApiCenter.ApiCenterServiceData"/> instance for mocking. </returns>
-        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApiCenterServiceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApiCenterServiceProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }
@@ -494,6 +496,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 apiCenterServiceProvisioningState is null ? default : new ApiCenterServiceProperties(apiCenterServiceProvisioningState, default, default),
+                name,
                 identity,
                 default);
         }

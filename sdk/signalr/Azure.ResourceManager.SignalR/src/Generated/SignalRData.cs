@@ -33,13 +33,15 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> A class that describes the properties of the resource. </param>
+        /// <param name="name0"> The name of the resource. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRProperties properties, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRProperties properties, string name0, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             Kind = kind;
             Identity = identity;
@@ -49,6 +51,10 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> A class that describes the properties of the resource. </summary>
         [WirePath("properties")]
         internal SignalRProperties Properties { get; set; }
+
+        /// <summary> The name of the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The billing information of the resource. </summary>
         [WirePath("sku")]

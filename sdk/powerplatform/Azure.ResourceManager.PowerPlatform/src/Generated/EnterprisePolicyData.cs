@@ -35,12 +35,14 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties that define configuration for the enterprise policy. </param>
+        /// <param name="name0"> The EnterprisePolicy name. </param>
         /// <param name="identity"> The identity of the EnterprisePolicy. </param>
         /// <param name="kind"> The kind (type) of Enterprise Policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnterprisePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Properties properties, EnterprisePolicyIdentity identity, EnterprisePolicyKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal EnterprisePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Properties properties, string name0, EnterprisePolicyIdentity identity, EnterprisePolicyKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,6 +50,9 @@ namespace Azure.ResourceManager.PowerPlatform
 
         /// <summary> The properties that define configuration for the enterprise policy. </summary>
         internal Properties Properties { get; set; }
+
+        /// <summary> The EnterprisePolicy name. </summary>
+        public string Name { get; }
 
         /// <summary> The identity of the EnterprisePolicy. </summary>
         public EnterprisePolicyIdentity Identity { get; set; }

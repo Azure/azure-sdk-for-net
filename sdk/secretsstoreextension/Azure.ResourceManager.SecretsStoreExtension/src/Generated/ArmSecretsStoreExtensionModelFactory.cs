@@ -26,9 +26,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the AzureKeyVaultSecretProviderClass. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="SecretsStoreExtension.KeyVaultSecretProviderClassData"/> instance for mocking. </returns>
-        public static KeyVaultSecretProviderClassData KeyVaultSecretProviderClassData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KeyVaultSecretProviderClassProperties properties = default, ExtendedLocation extendedLocation = default)
+        public static KeyVaultSecretProviderClassData KeyVaultSecretProviderClassData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KeyVaultSecretProviderClassProperties properties = default, string name0 = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }
@@ -88,9 +90,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the SecretSync. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="SecretsStoreExtension.SecretSyncData"/> instance for mocking. </returns>
-        public static SecretSyncData SecretSyncData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecretSyncProperties properties = default, ExtendedLocation extendedLocation = default)
+        public static SecretSyncData SecretSyncData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecretSyncProperties properties = default, string name0 = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -102,6 +105,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }

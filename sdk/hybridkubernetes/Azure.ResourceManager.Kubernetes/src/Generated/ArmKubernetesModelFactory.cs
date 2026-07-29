@@ -24,10 +24,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the connected cluster resource properties. </param>
+        /// <param name="name0"> The name of the Kubernetes cluster on which get is called. </param>
         /// <param name="identity"> The identity of the connected cluster. </param>
         /// <param name="kind"> The kind of connected cluster. </param>
         /// <returns> A new <see cref="Kubernetes.ConnectedClusterData"/> instance for mocking. </returns>
-        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
+        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 kind,
                 default);

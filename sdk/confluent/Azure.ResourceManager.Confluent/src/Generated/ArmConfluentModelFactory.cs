@@ -102,9 +102,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
         /// <param name="linkOrganizationToken"> User auth token. </param>
+        /// <param name="name0"> Organization resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerDetail"/> or <paramref name="userDetail"/> is null. </exception>
         /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
-        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, ConfluentProvisionState? provisioningState = default, Guid? organizationId = default, Uri ssoUri = default, ConfluentOfferDetail offerDetail = default, ConfluentUserDetail userDetail = default, string linkOrganizationToken = default)
+        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, ConfluentProvisionState? provisioningState = default, Guid? organizationId = default, Uri ssoUri = default, ConfluentOfferDetail offerDetail = default, ConfluentUserDetail userDetail = default, string linkOrganizationToken = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     default,
                     new LinkOrganization(linkOrganizationToken, default),
                     default),
+                name0,
                 default);
         }
 
@@ -1050,6 +1052,44 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentOrganizationValidationResult(info ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Confluent.ConfluentOrganizationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="createdOn"> The creation time of the resource. </param>
+        /// <param name="provisioningState"> Provision states for confluent RP. </param>
+        /// <param name="organizationId"> Id of the Confluent organization. </param>
+        /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
+        /// <param name="offerDetail"> Confluent offer detail. </param>
+        /// <param name="userDetail"> Subscriber detail. </param>
+        /// <param name="linkOrganizationToken"> Link an existing Confluent organization. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, ConfluentProvisionState? provisioningState = default, Guid? organizationId = default, Uri ssoUri = default, ConfluentOfferDetail offerDetail = default, ConfluentUserDetail userDetail = default, string linkOrganizationToken = default)
+        {
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                    createdOn,
+                    provisioningState,
+                    organizationId,
+                    ssoUri,
+                    offerDetail,
+                    userDetail,
+                    new LinkOrganization(linkOrganizationToken, default),
+                    default),
+                name,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SCClusterSpecEntity"/>. </summary>
         /// <param name="name"> The name of the cluster. </param>
         /// <param name="availability"> The availability zone configuration of the cluster. </param>
@@ -1117,6 +1157,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     userDetail,
                     default,
                     default),
+                name,
                 default);
         }
     }

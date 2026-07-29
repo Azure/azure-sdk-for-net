@@ -246,6 +246,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 sku,
                 additionalBinaryDataProperties);
         }

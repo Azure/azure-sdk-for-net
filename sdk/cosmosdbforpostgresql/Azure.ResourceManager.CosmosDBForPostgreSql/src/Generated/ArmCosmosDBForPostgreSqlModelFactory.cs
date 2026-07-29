@@ -58,9 +58,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="databaseName"> The database name of the cluster. Only one database per cluster is supported. </param>
         /// <param name="enableGeoBackup"> If cluster backup is stored in another Azure region in addition to the copy of the backup stored in the cluster's region. Enabled only at the time of cluster creation. </param>
         /// <param name="authConfig"> Authentication configuration of a cluster. </param>
+        /// <param name="name0"> The name of the cluster. </param>
         /// <param name="identity"> Describes the identity of the cluster. </param>
         /// <returns> A new <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData"/> instance for mocking. </returns>
-        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AadEnabledEnum? aadAuthEnabled = default, string administratorLogin = default, string administratorLoginPassword = default, DataEncryption dataEncryption = default, string provisioningState = default, string state = default, string postgresqlVersion = default, string citusVersion = default, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = default, string preferredPrimaryZone = default, bool? isShardsOnCoordinatorEnabled = default, bool? isHAEnabled = default, string coordinatorServerEdition = default, int? coordinatorStorageQuotaInMb = default, int? coordinatorVCores = default, bool? isCoordinatorPublicIPAccessEnabled = default, string nodeServerEdition = default, int? nodeCount = default, int? nodeStorageQuotaInMb = default, int? nodeVCores = default, bool? isNodePublicIPAccessEnabled = default, IEnumerable<CosmosDBForPostgreSqlServerNameItem> serverNames = default, ResourceIdentifier sourceResourceId = default, AzureLocation? sourceLocation = default, PasswordEnabledEnum? passwordEnabled = default, DateTimeOffset? pointInTimeUTC = default, IEnumerable<string> readReplicas = default, DateTimeOffset? earliestRestoreOn = default, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = default, string databaseName = default, bool? enableGeoBackup = default, AuthConfig authConfig = default, IdentityProperties identity = default)
+        public static CosmosDBForPostgreSqlClusterData CosmosDBForPostgreSqlClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AadEnabledEnum? aadAuthEnabled = default, string administratorLogin = default, string administratorLoginPassword = default, DataEncryption dataEncryption = default, string provisioningState = default, string state = default, string postgresqlVersion = default, string citusVersion = default, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = default, string preferredPrimaryZone = default, bool? isShardsOnCoordinatorEnabled = default, bool? isHAEnabled = default, string coordinatorServerEdition = default, int? coordinatorStorageQuotaInMb = default, int? coordinatorVCores = default, bool? isCoordinatorPublicIPAccessEnabled = default, string nodeServerEdition = default, int? nodeCount = default, int? nodeStorageQuotaInMb = default, int? nodeVCores = default, bool? isNodePublicIPAccessEnabled = default, IEnumerable<CosmosDBForPostgreSqlServerNameItem> serverNames = default, ResourceIdentifier sourceResourceId = default, AzureLocation? sourceLocation = default, PasswordEnabledEnum? passwordEnabled = default, DateTimeOffset? pointInTimeUTC = default, IEnumerable<string> readReplicas = default, DateTimeOffset? earliestRestoreOn = default, IEnumerable<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> privateEndpointConnections = default, string databaseName = default, bool? enableGeoBackup = default, AuthConfig authConfig = default, string name0 = default, IdentityProperties identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     enableGeoBackup,
                     authConfig,
                     default),
+                name0,
                 identity,
                 default);
         }
@@ -526,6 +528,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     default,
                     default,
                     default),
+                name,
                 default,
                 default);
         }

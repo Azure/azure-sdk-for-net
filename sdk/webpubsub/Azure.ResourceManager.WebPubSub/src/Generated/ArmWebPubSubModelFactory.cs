@@ -68,11 +68,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// "Default": have your own backend Socket.IO server
         /// "Serverless": your application doesn't have a backend server
         /// </param>
+        /// <param name="name0"> The name of the resource. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
-        public static WebPubSubData WebPubSubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebPubSubProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources = default, string hostNamePrefix = default, LiveTraceConfiguration liveTraceConfiguration = default, WebPubSubNetworkAcls networkAcls = default, WebPubSubApplicationFirewallSettings applicationFirewall = default, string publicNetworkAccess = default, bool? isLocalAuthDisabled = default, bool? isAadAuthDisabled = default, string isRegionEndpointEnabled = default, string resourceStopped = default, bool? isClientCertEnabled = default, IEnumerable<ResourceLogCategory> resourceLogCategories = default, string socketIOServiceMode = default, BillingInfoSku sku = default, WebPubSubServiceKind? kind = default, ManagedServiceIdentity identity = default)
+        public static WebPubSubData WebPubSubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebPubSubProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources = default, string hostNamePrefix = default, LiveTraceConfiguration liveTraceConfiguration = default, WebPubSubNetworkAcls networkAcls = default, WebPubSubApplicationFirewallSettings applicationFirewall = default, string publicNetworkAccess = default, bool? isLocalAuthDisabled = default, bool? isAadAuthDisabled = default, string isRegionEndpointEnabled = default, string resourceStopped = default, bool? isClientCertEnabled = default, IEnumerable<ResourceLogCategory> resourceLogCategories = default, string socketIOServiceMode = default, string name0 = default, BillingInfoSku sku = default, WebPubSubServiceKind? kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     resourceStopped,
                     new WebPubSubSocketIOSettings(socketIOServiceMode, default),
                     default),
+                name0,
                 sku,
                 kind,
                 identity,
@@ -763,6 +765,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     default,
                     default,
                     default),
+                name,
                 sku,
                 default,
                 identity,

@@ -33,15 +33,20 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes Attestation service status. </param>
+        /// <param name="name0"> Name of the attestation provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StatusResult properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AttestationProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StatusResult properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes Attestation service status. </summary>
         internal StatusResult Properties { get; set; }
+
+        /// <summary> Name of the attestation provider. </summary>
+        public string Name { get; }
 
         /// <summary> Trust model for the attestation provider. </summary>
         public string TrustModel

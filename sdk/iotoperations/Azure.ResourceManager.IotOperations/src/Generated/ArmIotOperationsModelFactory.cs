@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.IotOperations;
@@ -25,10 +26,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of instance. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="IotOperations.IotOperationsInstanceData"/> instance for mocking. </returns>
-        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotOperationsInstanceProperties properties = default, IotOperationsExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotOperationsInstanceProperties properties = default, string name0 = default, IotOperationsExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +42,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 identity,
                 default);
@@ -1887,6 +1890,33 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static AkriConnectorAllocatedDevice AkriConnectorAllocatedDevice(string deviceInboundEndpointName = default, string deviceName = default)
         {
             return new AkriConnectorAllocatedDevice(deviceInboundEndpointName, deviceName, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> Edge location of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="IotOperations.IotOperationsInstanceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotOperationsInstanceProperties properties = default, IotOperationsExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        {
+            return new IotOperationsInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                extendedLocation,
+                identity,
+                default);
         }
     }
 }

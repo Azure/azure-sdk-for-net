@@ -34,12 +34,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Resource properties. </param>
+        /// <param name="name0"> The name of the Azure Monitor Workspace. The name is case insensitive. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MonitorWorkspaceProperties properties, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal MonitorWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MonitorWorkspaceProperties properties, string name0, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces
 
         /// <summary> Resource properties. </summary>
         public MonitorWorkspaceProperties Properties { get; set; }
+
+        /// <summary> The name of the Azure Monitor Workspace. The name is case insensitive. </summary>
+        public string Name { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

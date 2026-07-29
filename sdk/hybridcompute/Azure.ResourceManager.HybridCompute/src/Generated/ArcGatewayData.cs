@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Hybrid Compute Gateway properties. </param>
+        /// <param name="name0"> The name of the Gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GatewayProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ArcGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GatewayProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Hybrid Compute Gateway properties. </summary>
         [WirePath("properties")]
         internal GatewayProperties Properties { get; set; }
+
+        /// <summary> The name of the Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
         [WirePath("properties.provisioningState")]

@@ -261,6 +261,7 @@ namespace Azure.ResourceManager.PowerPlatform
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 kind,
                 additionalBinaryDataProperties);

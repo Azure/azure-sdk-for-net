@@ -27,11 +27,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Compute Fleet. </param>
         /// <param name="zones"> Zones in which the Compute Fleet is available. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <returns> A new <see cref="ComputeFleet.ComputeFleetData"/> instance for mocking. </returns>
-        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeFleetProperties properties = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeFleetProperties properties = default, string name0 = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 plan,
@@ -1513,6 +1515,36 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 vmSize,
                 zone,
                 priority,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComputeFleet.ComputeFleetData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="zones"> Zones in which the Compute Fleet is available. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="ComputeFleet.ComputeFleetData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeFleetProperties properties = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        {
+            return new ComputeFleetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                plan,
                 default);
         }
 

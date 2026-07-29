@@ -34,17 +34,22 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the SecretSync. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretSyncData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SecretSyncProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal SecretSyncData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SecretSyncProperties properties, string name0, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             ExtendedLocation = extendedLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public SecretSyncProperties Properties { get; set; }
+
+        /// <summary> The name of the SecretSync. </summary>
+        public string Name { get; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }

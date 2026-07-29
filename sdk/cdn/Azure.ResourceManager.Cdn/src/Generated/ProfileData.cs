@@ -27,13 +27,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The JSON object that contains the properties required to create a profile. </param>
+        /// <param name="name0"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
         /// <param name="sku"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
         /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProfileProperties properties, CdnSku sku, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProfileProperties properties, string name0, CdnSku sku, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             Kind = kind;
             Identity = identity;
@@ -43,6 +45,10 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The JSON object that contains the properties required to create a profile. </summary>
         [WirePath("properties")]
         internal ProfileProperties Properties { get; set; }
+
+        /// <summary> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </summary>
         [WirePath("sku")]

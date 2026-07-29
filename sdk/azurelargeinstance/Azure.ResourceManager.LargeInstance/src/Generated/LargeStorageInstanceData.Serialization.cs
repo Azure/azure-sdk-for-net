@@ -256,6 +256,7 @@ namespace Azure.ResourceManager.LargeInstance
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 additionalBinaryDataProperties);
         }

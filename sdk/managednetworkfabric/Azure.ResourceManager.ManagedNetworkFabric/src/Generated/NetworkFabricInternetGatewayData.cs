@@ -38,15 +38,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The Internet Gateway Properties. </param>
+        /// <param name="name0"> Name of the Internet Gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, InternetGatewayProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, InternetGatewayProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Internet Gateway Properties. </summary>
         internal InternetGatewayProperties Properties { get; set; }
+
+        /// <summary> Name of the Internet Gateway. </summary>
+        public string Name { get; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation

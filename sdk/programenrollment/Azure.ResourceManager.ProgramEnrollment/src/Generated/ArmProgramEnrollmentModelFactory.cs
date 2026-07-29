@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the edu enrollment. </param>
         /// <returns> A new <see cref="ProgramEnrollment.EduEnrollmentData"/> instance for mocking. </returns>
-        public static EduEnrollmentData EduEnrollmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EduEnrollmentProperties properties = default)
+        public static EduEnrollmentData EduEnrollmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EduEnrollmentProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

@@ -38,17 +38,22 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the provision operation request. </param>
+        /// <param name="name0"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedCapacityProperties properties, CapacitySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedCapacityProperties properties, string name0, CapacitySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the provision operation request. </summary>
         internal DedicatedCapacityProperties Properties { get; set; }
+
+        /// <summary> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </summary>
+        public string Name { get; }
 
         /// <summary> The SKU of the PowerBI Dedicated capacity resource. </summary>
         public CapacitySku Sku { get; set; }

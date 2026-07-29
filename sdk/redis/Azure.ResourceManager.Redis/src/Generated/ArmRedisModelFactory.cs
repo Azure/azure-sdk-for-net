@@ -51,11 +51,12 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="instances"> List of the Redis instances associated with the cache. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
         /// <param name="targetAmrResourceId"> The resource ID of the target Azure Managed Redis resource that this Azure Cache for Redis resource is being migrated to. </param>
+        /// <param name="name0"> The name of the Redis cache. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         /// <returns> A new <see cref="Redis.RedisData"/> instance for mocking. </returns>
-        public static RedisData RedisData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisCommonConfiguration redisConfiguration = default, string redisVersion = default, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default, RedisProvisioningState? provisioningState = default, string hostName = default, int? port = default, int? sslPort = default, RedisAccessKeys accessKeys = default, IEnumerable<SubResource> linkedServers = default, IEnumerable<RedisInstanceDetails> instances = default, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections = default, ResourceIdentifier targetAmrResourceId = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        public static RedisData RedisData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RedisCommonConfiguration redisConfiguration = default, string redisVersion = default, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default, RedisProvisioningState? provisioningState = default, string hostName = default, int? port = default, int? sslPort = default, RedisAccessKeys accessKeys = default, IEnumerable<SubResource> linkedServers = default, IEnumerable<RedisInstanceDetails> instances = default, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections = default, ResourceIdentifier targetAmrResourceId = default, string name0 = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.Redis.Models
                     default,
                     default,
                     default),
+                name0,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 default);
@@ -636,6 +638,7 @@ namespace Azure.ResourceManager.Redis.Models
                     (instances ?? new ChangeTrackingList<RedisInstanceDetails>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>()).ToList(),
                     default),
+                name,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 default);
@@ -813,6 +816,7 @@ namespace Azure.ResourceManager.Redis.Models
                     (instances ?? new ChangeTrackingList<RedisInstanceDetails>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>()).ToList(),
                     default),
+                name,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 default);
@@ -886,6 +890,7 @@ namespace Azure.ResourceManager.Redis.Models
                     (instances ?? new ChangeTrackingList<RedisInstanceDetails>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>()).ToList(),
                     default),
+                name,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 default);
@@ -1005,6 +1010,7 @@ namespace Azure.ResourceManager.Redis.Models
                     (instances ?? new ChangeTrackingList<RedisInstanceDetails>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>()).ToList(),
                     default),
+                name,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 default);

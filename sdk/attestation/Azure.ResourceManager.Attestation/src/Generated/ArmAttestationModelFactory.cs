@@ -30,8 +30,9 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
+        /// <param name="name0"> Name of the attestation provider. </param>
         /// <returns> A new <see cref="Attestation.AttestationProviderData"/> instance for mocking. </returns>
-        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string trustModel = default, AttestationServiceStatus? status = default, Uri attestUri = default, AttestationPublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
+        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string trustModel = default, AttestationServiceStatus? status = default, Uri attestUri = default, AttestationPublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>()).ToList(),
                     tpmAttestationAuthentication,
                     default),
+                name0,
                 default);
         }
 

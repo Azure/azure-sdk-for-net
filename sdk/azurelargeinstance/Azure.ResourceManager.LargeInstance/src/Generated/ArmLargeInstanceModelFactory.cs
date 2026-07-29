@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the AzureLargeInstance. </param>
         /// <returns> A new <see cref="LargeInstance.LargeInstanceData"/> instance for mocking. </returns>
-        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeInstanceProperties properties = default)
+        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeInstanceProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -150,9 +152,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="LargeInstance.LargeStorageInstanceData"/> instance for mocking. </returns>
-        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeStorageInstanceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeStorageInstanceProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -164,6 +167,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }

@@ -33,12 +33,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the Cloud HSM Cluster. </param>
+        /// <param name="name0"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CloudHsmClusterProperties properties, ManagedServiceIdentity identity, CloudHsmClusterSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal CloudHsmClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CloudHsmClusterProperties properties, string name0, ManagedServiceIdentity identity, CloudHsmClusterSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,6 +48,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> Properties of the Cloud HSM Cluster. </summary>
         public CloudHsmClusterProperties Properties { get; set; }
+
+        /// <summary> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </summary>
+        public string Name { get; }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public ManagedServiceIdentity Identity { get; set; }

@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="systemId"> The internally assigned unique identifier of the resource. </param>
         /// <param name="description"> The description of the account. </param>
+        /// <param name="name0"> Name of the account. </param>
         /// <returns> A new <see cref="PowerPlatform.PowerPlatformAccountData"/> instance for mocking. </returns>
-        public static PowerPlatformAccountData PowerPlatformAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, string description = default)
+        public static PowerPlatformAccountData PowerPlatformAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, string description = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 systemId is null && description is null ? default : new AccountProperties(systemId, description, default),
+                name0,
                 default);
         }
 
@@ -98,10 +100,11 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="healthStatus"> The health status of the resource. </param>
         /// <param name="lockboxState"> lockbox configuration. </param>
         /// <param name="networkInjectionVirtualNetworks"> Network injection configuration. </param>
+        /// <param name="name0"> The EnterprisePolicy name. </param>
         /// <param name="identity"> The identity of the EnterprisePolicy. </param>
         /// <param name="kind"> The kind (type) of Enterprise Policy. </param>
         /// <returns> A new <see cref="PowerPlatform.EnterprisePolicyData"/> instance for mocking. </returns>
-        public static EnterprisePolicyData EnterprisePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<PowerPlatformVirtualNetworkProperties> networkInjectionVirtualNetworks = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind kind = default)
+        public static EnterprisePolicyData EnterprisePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<PowerPlatformVirtualNetworkProperties> networkInjectionVirtualNetworks = default, string name0 = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -119,6 +122,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>()).ToList(), default),
                     healthStatus,
                     default),
+                name0,
                 identity,
                 kind,
                 default);

@@ -26,10 +26,11 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
+        /// <param name="name0"> Monitor resource name. </param>
         /// <param name="skuName"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
         /// <param name="identity"></param>
         /// <returns> A new <see cref="Datadog.DatadogMonitorData"/> instance for mocking. </returns>
-        public static DatadogMonitorData DatadogMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatadogMonitorProperties properties = default, string skuName = default, ManagedServiceIdentity identity = default)
+        public static DatadogMonitorData DatadogMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatadogMonitorProperties properties = default, string name0 = default, string skuName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 skuName is null ? default : new DatadogSku(skuName, default),
                 identity,
                 default);
@@ -512,6 +514,34 @@ namespace Azure.ResourceManager.Datadog.Models
         public static DatadogSubscriptionStatusProperties DatadogSubscriptionStatusProperties(string name = default, bool? isCreationSupported = default)
         {
             return new DatadogSubscriptionStatusProperties(name, isCreationSupported, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Datadog.DatadogMonitorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties specific to the monitor resource. </param>
+        /// <param name="skuName"></param>
+        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </param>
+        /// <returns> A new <see cref="Datadog.DatadogMonitorData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DatadogMonitorData DatadogMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatadogMonitorProperties properties = default, string skuName = default, ManagedServiceIdentity identity = default)
+        {
+            return new DatadogMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                skuName is null ? default : new DatadogSku(skuName, default),
+                identity,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogMonitorProperties"/>. </summary>

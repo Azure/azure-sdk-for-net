@@ -324,6 +324,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 eTag,
                 kind,

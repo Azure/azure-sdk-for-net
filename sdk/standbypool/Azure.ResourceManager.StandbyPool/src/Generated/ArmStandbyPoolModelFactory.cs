@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the standby virtual machine pool. </param>
         /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachinePoolData"/> instance for mocking. </returns>
-        public static StandbyVirtualMachinePoolData StandbyVirtualMachinePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StandbyVirtualMachinePoolProperties properties = default)
+        public static StandbyVirtualMachinePoolData StandbyVirtualMachinePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StandbyVirtualMachinePoolProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -298,6 +300,30 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static StandbyContainerGroupPoolPrediction StandbyContainerGroupPoolPrediction(IEnumerable<long> forecastValuesInstancesRequestedCount = default, DateTimeOffset forecastStartOn = default, string forecastInfo = default)
         {
             return new StandbyContainerGroupPoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), default), forecastStartOn, forecastInfo, default);
+        }
+
+        /// <summary> A StandbyVirtualMachinePoolResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachinePoolData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StandbyVirtualMachinePoolData StandbyVirtualMachinePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StandbyVirtualMachinePoolProperties properties = default)
+        {
+            return new StandbyVirtualMachinePoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/>. </summary>

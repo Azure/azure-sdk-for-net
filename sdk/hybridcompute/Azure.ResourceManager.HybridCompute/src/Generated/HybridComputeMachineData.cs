@@ -35,13 +35,15 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Hybrid Compute Machine properties. </param>
+        /// <param name="name0"> The name of the hybrid machine. </param>
         /// <param name="resources"> The list of extensions affiliated to the machine. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineProperties properties, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineProperties properties, string name0, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Resources = resources;
             Identity = identity;
             Kind = kind;
@@ -51,6 +53,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Hybrid Compute Machine properties. </summary>
         [WirePath("properties")]
         internal MachineProperties Properties { get; set; }
+
+        /// <summary> The name of the hybrid machine. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The list of extensions affiliated to the machine. </summary>
         [WirePath("resources")]

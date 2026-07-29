@@ -34,12 +34,14 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the network security group. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciVmNetworkSecurityGroupProperties properties, HciVmExtendedLocation extendedLocation, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HciVmNetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciVmNetworkSecurityGroupProperties properties, string name0, HciVmExtendedLocation extendedLocation, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             ExtendedLocation = extendedLocation;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.Hci.Vm
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public HciVmNetworkSecurityGroupProperties Properties { get; set; }
+
+        /// <summary> Name of the network security group. </summary>
+        public string Name { get; }
 
         /// <summary> The extendedLocation of the resource. </summary>
         public HciVmExtendedLocation ExtendedLocation { get; set; }

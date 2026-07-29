@@ -25,9 +25,10 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the Organization resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="PineconeVectorDB.PineconeVectorDBOrganizationData"/> instance for mocking. </returns>
-        public static PineconeVectorDBOrganizationData PineconeVectorDBOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PineconeVectorDBOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
+        public static PineconeVectorDBOrganizationData PineconeVectorDBOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PineconeVectorDBOrganizationProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }

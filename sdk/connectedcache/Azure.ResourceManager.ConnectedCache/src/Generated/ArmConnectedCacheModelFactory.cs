@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the Customer resource. </param>
         /// <returns> A new <see cref="ConnectedCache.IspCustomerData"/> instance for mocking. </returns>
-        public static IspCustomerData IspCustomerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCustomerProperty properties = default)
+        public static IspCustomerData IspCustomerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCustomerProperty properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -191,8 +193,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the ConnectedCache resource. </param>
         /// <returns> A new <see cref="ConnectedCache.IspCacheNodeData"/> instance for mocking. </returns>
-        public static IspCacheNodeData IspCacheNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCacheNodeProperty properties = default)
+        public static IspCacheNodeData IspCacheNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCacheNodeProperty properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -204,6 +207,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -661,8 +665,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the Customer resource. </param>
         /// <returns> A new <see cref="ConnectedCache.EnterpriseMccCustomerData"/> instance for mocking. </returns>
-        public static EnterpriseMccCustomerData EnterpriseMccCustomerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCustomerProperty properties = default)
+        public static EnterpriseMccCustomerData EnterpriseMccCustomerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCustomerProperty properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -674,6 +679,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -684,8 +690,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of the ConnectedCache resource. </param>
         /// <returns> A new <see cref="ConnectedCache.EnterpriseMccCacheNodeData"/> instance for mocking. </returns>
-        public static EnterpriseMccCacheNodeData EnterpriseMccCacheNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCacheNodeProperty properties = default)
+        public static EnterpriseMccCacheNodeData EnterpriseMccCacheNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCacheNodeProperty properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -697,6 +704,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

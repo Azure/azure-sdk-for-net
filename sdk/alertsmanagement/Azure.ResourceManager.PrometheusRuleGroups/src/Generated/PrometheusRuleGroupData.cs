@@ -40,15 +40,20 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The Prometheus rule group properties of the resource. </param>
+        /// <param name="name0"> The name of the rule group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrometheusRuleGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrometheusRuleGroupProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal PrometheusRuleGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrometheusRuleGroupProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Prometheus rule group properties of the resource. </summary>
         internal PrometheusRuleGroupProperties Properties { get; set; }
+
+        /// <summary> The name of the rule group. </summary>
+        public string Name { get; }
 
         /// <summary> Rule group description. </summary>
         public string Description

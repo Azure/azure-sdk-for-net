@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Migration properties. </param>
+        /// <param name="name0"> Name of migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MigrationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal PostgreSqlMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MigrationProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Migration properties. </summary>
         [WirePath("properties")]
         internal MigrationProperties Properties { get; set; }
+
+        /// <summary> Name of migration. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> Identifier of a migration. </summary>
         [WirePath("properties.migrationId")]

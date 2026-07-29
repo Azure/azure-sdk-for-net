@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ArtifactSigning;
@@ -27,8 +28,9 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         /// <param name="accountUri"> The URI of the artifact signing account which is used during signing files. </param>
         /// <param name="provisioningState"> Status of the current operation on artifact signing account. </param>
         /// <param name="skuName"> Name of the SKU. </param>
+        /// <param name="name0"> Artifact Signing account name. </param>
         /// <returns> A new <see cref="ArtifactSigning.ArtifactSigningAccountData"/> instance for mocking. </returns>
-        public static ArtifactSigningAccountData ArtifactSigningAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri accountUri = default, ArtifactSigningProvisioningState? provisioningState = default, ArtifactSigningSkuName? skuName = default)
+        public static ArtifactSigningAccountData ArtifactSigningAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri accountUri = default, ArtifactSigningProvisioningState? provisioningState = default, ArtifactSigningSkuName? skuName = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +42,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 accountUri is null && skuName is null && provisioningState is null ? default : new CodeSigningAccountProperties(accountUri, new ArtifactSigningAccountSku(skuName.GetValueOrDefault(), default), provisioningState, default),
+                name0,
                 default);
         }
 
@@ -128,6 +131,31 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 effectiveOn,
                 reason,
                 remarks,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="accountUri"> The URI of the artifact signing account which is used during signing files. </param>
+        /// <param name="provisioningState"> Status of the current operation on artifact signing account. </param>
+        /// <param name="skuName"> Name of the SKU. </param>
+        /// <returns> A new <see cref="ArtifactSigning.ArtifactSigningAccountData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArtifactSigningAccountData ArtifactSigningAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri accountUri = default, ArtifactSigningProvisioningState? provisioningState = default, ArtifactSigningSkuName? skuName = default)
+        {
+            return new ArtifactSigningAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                accountUri is null && skuName is null && provisioningState is null ? default : new CodeSigningAccountProperties(accountUri, new ArtifactSigningAccountSku(skuName.GetValueOrDefault(), default), provisioningState, default),
+                name,
                 default);
         }
     }

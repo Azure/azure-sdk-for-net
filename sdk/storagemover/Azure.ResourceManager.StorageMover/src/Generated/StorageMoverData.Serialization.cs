@@ -238,6 +238,7 @@ namespace Azure.ResourceManager.StorageMover
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 additionalBinaryDataProperties);
         }
     }

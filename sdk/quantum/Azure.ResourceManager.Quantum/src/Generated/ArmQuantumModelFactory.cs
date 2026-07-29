@@ -42,9 +42,10 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Gets or sets the properties. Define quantum workspace's specific properties. </param>
+        /// <param name="name0"> The name of the quantum workspace resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
-        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, QuantumWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, QuantumWorkspaceProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }

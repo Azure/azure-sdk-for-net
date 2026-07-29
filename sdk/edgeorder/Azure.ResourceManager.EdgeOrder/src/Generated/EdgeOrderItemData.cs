@@ -40,17 +40,22 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Order item properties. </param>
+        /// <param name="name0"> The name of the order item. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemProperties properties, EdgeOrderResourceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemProperties properties, string name0, EdgeOrderResourceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Order item properties. </summary>
         internal OrderItemProperties Properties { get; set; }
+
+        /// <summary> The name of the order item. </summary>
+        public string Name { get; }
 
         /// <summary> Msi identity of the resource. </summary>
         public EdgeOrderResourceIdentity Identity { get; set; }

@@ -27,15 +27,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The Access ControlList properties. </param>
+        /// <param name="name0"> Name of the Access Control List. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccessControlListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccessControlListProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Access ControlList properties. </summary>
         internal AccessControlListProperties Properties { get; set; }
+
+        /// <summary> Name of the Access Control List. </summary>
+        public string Name { get; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation

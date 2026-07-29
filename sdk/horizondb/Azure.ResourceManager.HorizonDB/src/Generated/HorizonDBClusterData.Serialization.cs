@@ -238,6 +238,7 @@ namespace Azure.ResourceManager.HorizonDB
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 additionalBinaryDataProperties);
         }
     }

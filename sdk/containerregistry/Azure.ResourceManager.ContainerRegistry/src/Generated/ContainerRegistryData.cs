@@ -38,12 +38,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the container registry. </param>
+        /// <param name="name0"> The name of the container registry. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <param name="identity"> The identity of the container registry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RegistryProperties properties, ContainerRegistrySku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RegistryProperties properties, string name0, ContainerRegistrySku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,6 +54,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The properties of the container registry. </summary>
         [WirePath("properties")]
         internal RegistryProperties Properties { get; set; }
+
+        /// <summary> The name of the container registry. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The SKU of the container registry. </summary>
         [WirePath("sku")]

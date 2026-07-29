@@ -19,6 +19,58 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public static partial class ArmElasticSanModelFactory
     {
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> resource sku. </param>
+        /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: ["1"]. </param>
+        /// <param name="provisioningState"> State of the operation on the resource. </param>
+        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
+        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
+        /// <param name="totalVolumeSizeGiB"> Total size of the provisioned Volumes in GiB. </param>
+        /// <param name="volumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
+        /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
+        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
+        /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
+        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="scaleUpProperties"> Scale up settings on Elastic San Appliance. </param>
+        /// <param name="name0"> The name of the ElasticSan. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        /// <returns> A new <see cref="ElasticSan.ElasticSanData"/> instance for mocking. </returns>
+        public static ElasticSanData ElasticSanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSanSku sku = default, IEnumerable<string> availabilityZones = default, ElasticSanProvisioningState? provisioningState = default, long baseSizeTiB = default, long extendedCapacitySizeTiB = default, long? totalVolumeSizeGiB = default, long? volumeGroupCount = default, long? totalIops = default, long? totalMbps = default, long? totalSizeTiB = default, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default, ElasticSanPublicNetworkAccess? publicNetworkAccess = default, ElasticSanScaleUpProperties scaleUpProperties = default, string name0 = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ElasticSanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                scaleUpProperties is null ? default : new ElasticSanProperties(
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    new AutoScaleProperties(scaleUpProperties, default),
+                    default),
+                name0,
+                default);
+        }
+
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
         /// <returns> A new <see cref="Models.ElasticSanSku"/> instance for mocking. </returns>
@@ -386,6 +438,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     publicNetworkAccess,
                     default,
                     default),
+                name,
                 default);
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -26,9 +27,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Asset name parameter. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetData"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetData DeviceRegistryAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        public static DeviceRegistryAssetData DeviceRegistryAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AssetProperties properties = default, string name0 = default, DeviceRegistryExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +42,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }
@@ -287,9 +290,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Asset Endpoint Profile name parameter. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryAssetEndpointProfileProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryAssetEndpointProfileProperties properties = default, string name0 = default, DeviceRegistryExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -301,6 +305,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation,
                 default);
         }
@@ -1853,6 +1858,58 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 schemaContent,
                 hash,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryAssetEndpointProfileProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            return new DeviceRegistryAssetEndpointProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                extendedLocation,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryAssetData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeviceRegistryAssetData DeviceRegistryAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            return new DeviceRegistryAssetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                extendedLocation,
                 default);
         }
     }

@@ -34,17 +34,22 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The cluster resource properties. </param>
+        /// <param name="name0"> The name of the cluster resource. </param>
         /// <param name="eTag"> Azure resource etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string name0, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The cluster resource properties. </summary>
         internal ClusterProperties Properties { get; set; }
+
+        /// <summary> The name of the cluster resource. </summary>
+        public string Name { get; }
 
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }

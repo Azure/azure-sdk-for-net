@@ -44,9 +44,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"> Authorization code for the domain. </param>
+        /// <param name="name0"> Name of the domain. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="DomainRegistration.AppServiceDomainData"/> instance for mocking. </returns>
-        public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default)
+        public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string name0 = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     targetDnsType,
                     authCode,
                     default),
+                name0,
                 kind,
                 default);
         }

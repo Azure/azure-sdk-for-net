@@ -34,9 +34,10 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
         /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
         /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
+        /// <param name="name0"> The name of the CommunicationService resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
-        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = default, string hostName = default, string dataLocation = default, ResourceIdentifier notificationHubId = default, string version = default, Guid? immutableResourceId = default, IEnumerable<string> linkedDomains = default, CommunicationPublicNetworkAccess? publicNetworkAccess = default, bool? isLocalAuthDisabled = default, ManagedServiceIdentity identity = default)
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = default, string hostName = default, string dataLocation = default, ResourceIdentifier notificationHubId = default, string version = default, Guid? immutableResourceId = default, IEnumerable<string> linkedDomains = default, CommunicationPublicNetworkAccess? publicNetworkAccess = default, bool? isLocalAuthDisabled = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -58,6 +59,7 @@ namespace Azure.ResourceManager.Communication.Models
                     publicNetworkAccess,
                     isLocalAuthDisabled,
                     default),
+                name0,
                 identity,
                 default);
         }
@@ -155,8 +157,9 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
         /// <param name="verificationRecords"> List of DnsRecord. </param>
         /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
+        /// <param name="name0"> The name of the Domains resource. </param>
         /// <returns> A new <see cref="Communication.CommunicationDomainResourceData"/> instance for mocking. </returns>
-        public static CommunicationDomainResourceData CommunicationDomainResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DomainProvisioningState? provisioningState = default, string dataLocation = default, string fromSenderDomain = default, string mailFromSenderDomain = default, DomainManagement? domainManagement = default, DomainPropertiesVerificationStates verificationStates = default, DomainPropertiesVerificationRecords verificationRecords = default, UserEngagementTracking? userEngagementTracking = default)
+        public static CommunicationDomainResourceData CommunicationDomainResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DomainProvisioningState? provisioningState = default, string dataLocation = default, string fromSenderDomain = default, string mailFromSenderDomain = default, DomainManagement? domainManagement = default, DomainPropertiesVerificationStates verificationStates = default, DomainPropertiesVerificationRecords verificationRecords = default, UserEngagementTracking? userEngagementTracking = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -177,6 +180,7 @@ namespace Azure.ResourceManager.Communication.Models
                     verificationRecords,
                     userEngagementTracking,
                     default),
+                name0,
                 default);
         }
 
@@ -257,8 +261,9 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="dataLocation"> The location where the email service stores its data at rest. </param>
+        /// <param name="name0"> The name of the EmailService resource. </param>
         /// <returns> A new <see cref="Communication.EmailServiceResourceData"/> instance for mocking. </returns>
-        public static EmailServiceResourceData EmailServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EmailServicesProvisioningState? provisioningState = default, string dataLocation = default)
+        public static EmailServiceResourceData EmailServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EmailServicesProvisioningState? provisioningState = default, string dataLocation = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -270,6 +275,7 @@ namespace Azure.ResourceManager.Communication.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 provisioningState is null && dataLocation is null ? default : new EmailServiceProperties(provisioningState, dataLocation, default),
+                name0,
                 default);
         }
 
@@ -409,7 +415,73 @@ namespace Azure.ResourceManager.Communication.Models
                     publicNetworkAccess,
                     isLocalAuthDisabled,
                     default),
+                name,
                 identity,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Communication.CommunicationDomainResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="dataLocation"> The location where the Domains resource data is stored at rest. </param>
+        /// <param name="fromSenderDomain"> P2 sender domain that is displayed to the email recipients [RFC 5322]. </param>
+        /// <param name="mailFromSenderDomain"> P1 sender domain that is present on the email envelope [RFC 5321]. </param>
+        /// <param name="domainManagement"> Describes how a Domains resource is being managed. </param>
+        /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
+        /// <param name="verificationRecords"> List of DnsRecord. </param>
+        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
+        /// <returns> A new <see cref="Communication.CommunicationDomainResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunicationDomainResourceData CommunicationDomainResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DomainProvisioningState? provisioningState = default, string dataLocation = default, string fromSenderDomain = default, string mailFromSenderDomain = default, DomainManagement? domainManagement = default, DomainPropertiesVerificationStates verificationStates = default, DomainPropertiesVerificationRecords verificationRecords = default, UserEngagementTracking? userEngagementTracking = default)
+        {
+            return new CommunicationDomainResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && dataLocation is null && fromSenderDomain is null && mailFromSenderDomain is null && domainManagement is null && verificationStates is null && verificationRecords is null && userEngagementTracking is null ? default : new DomainProperties(
+                    provisioningState,
+                    dataLocation,
+                    fromSenderDomain,
+                    mailFromSenderDomain,
+                    domainManagement.GetValueOrDefault(),
+                    verificationStates,
+                    verificationRecords,
+                    userEngagementTracking,
+                    default),
+                name,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Communication.EmailServiceResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="dataLocation"> The location where the email service stores its data at rest. </param>
+        /// <returns> A new <see cref="Communication.EmailServiceResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EmailServiceResourceData EmailServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EmailServicesProvisioningState? provisioningState = default, string dataLocation = default)
+        {
+            return new EmailServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && dataLocation is null ? default : new EmailServiceProperties(provisioningState, dataLocation, default),
+                name,
                 default);
         }
     }

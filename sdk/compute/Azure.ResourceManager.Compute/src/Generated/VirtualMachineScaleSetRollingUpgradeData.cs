@@ -33,15 +33,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The status of the latest virtual machine scale set rolling upgrade. </param>
+        /// <param name="name0"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetRollingUpgradeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetRollingUpgradeProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the latest virtual machine scale set rolling upgrade. </summary>
         internal VirtualMachineScaleSetRollingUpgradeProperties Properties { get; set; }
+
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
 
         /// <summary> The rolling upgrade policies applied for this upgrade. </summary>
         public RollingUpgradePolicy Policy

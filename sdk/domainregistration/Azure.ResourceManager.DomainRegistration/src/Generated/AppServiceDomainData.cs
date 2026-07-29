@@ -33,17 +33,22 @@ namespace Azure.ResourceManager.DomainRegistration
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Domain resource specific properties. </param>
+        /// <param name="name0"> Name of the domain. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProperties properties, string name0, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Domain resource specific properties. </summary>
         internal DomainProperties Properties { get; set; }
+
+        /// <summary> Name of the domain. </summary>
+        public string Name { get; }
 
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }

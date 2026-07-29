@@ -238,6 +238,7 @@ namespace Azure.ResourceManager.StorageActions
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                name,
                 identity,
                 properties,
                 additionalBinaryDataProperties);

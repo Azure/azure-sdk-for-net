@@ -254,6 +254,7 @@ namespace Azure.ResourceManager.DataBox
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 sku,
                 identity,
                 additionalBinaryDataProperties);

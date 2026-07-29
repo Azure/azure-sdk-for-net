@@ -24,8 +24,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties that define a Azure Arc PrivateLinkScope resource. </param>
+        /// <param name="name0"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopeData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkScopeData KubernetesConfigurationPrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KubernetesConfigurationPrivateLinkScopeProperties properties = default)
+        public static KubernetesConfigurationPrivateLinkScopeData KubernetesConfigurationPrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KubernetesConfigurationPrivateLinkScopeProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

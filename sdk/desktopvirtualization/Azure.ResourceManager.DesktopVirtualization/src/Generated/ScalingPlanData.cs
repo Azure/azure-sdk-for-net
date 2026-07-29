@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Detailed properties for scaling plan. </param>
+        /// <param name="name0"> The name of the scaling plan. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -46,9 +47,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScalingPlanProperties properties, ManagedServiceIdentity identity, ETag? eTag, string kind, ResourceIdentifier managedBy, ArmPlan plan, DesktopVirtualizationSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScalingPlanProperties properties, string name0, ManagedServiceIdentity identity, ETag? eTag, string kind, ResourceIdentifier managedBy, ArmPlan plan, DesktopVirtualizationSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             ETag = eTag;
             Kind = kind;

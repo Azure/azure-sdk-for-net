@@ -254,6 +254,7 @@ namespace Azure.ResourceManager.Kubernetes
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 kind,
                 additionalBinaryDataProperties);

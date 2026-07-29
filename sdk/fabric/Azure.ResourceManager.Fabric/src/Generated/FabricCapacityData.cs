@@ -41,17 +41,22 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FabricCapacityProperties properties, FabricSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal FabricCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FabricCapacityProperties properties, string name0, FabricSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public FabricCapacityProperties Properties { get; set; }
+
+        /// <summary> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </summary>
+        public string Name { get; }
 
         /// <summary> The SKU details. </summary>
         public FabricSku Sku { get; set; }

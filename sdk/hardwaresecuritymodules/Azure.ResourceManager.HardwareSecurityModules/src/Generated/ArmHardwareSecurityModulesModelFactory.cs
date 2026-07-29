@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -26,10 +27,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the Cloud HSM Cluster. </param>
+        /// <param name="name0"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> SKU details. </param>
         /// <returns> A new <see cref="HardwareSecurityModules.CloudHsmClusterData"/> instance for mocking. </returns>
-        public static CloudHsmClusterData CloudHsmClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CloudHsmClusterProperties properties = default, ManagedServiceIdentity identity = default, CloudHsmClusterSku sku = default)
+        public static CloudHsmClusterData CloudHsmClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CloudHsmClusterProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default, CloudHsmClusterSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 sku,
                 default);
@@ -355,6 +358,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
             return new CloudHsmClusterPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Resource information with extended details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the Cloud HSM Cluster. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <returns> A new <see cref="HardwareSecurityModules.CloudHsmClusterData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CloudHsmClusterData CloudHsmClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CloudHsmClusterProperties properties = default, ManagedServiceIdentity identity = default, CloudHsmClusterSku sku = default)
+        {
+            return new CloudHsmClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                identity,
+                sku,
+                default);
         }
     }
 }

@@ -26,10 +26,11 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentationWorkspaceData"/> instance for mocking. </returns>
-        public static OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OnlineExperimentationWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, OnlineExperimentationWorkspaceSku sku = default)
+        public static OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OnlineExperimentationWorkspaceProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default, OnlineExperimentationWorkspaceSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 sku,
                 default);

@@ -33,17 +33,22 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> AppServiceCertificateOrder resource specific properties. </param>
+        /// <param name="name0"> Name of the certificate order.. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceCertificateOrderProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceCertificateOrderProperties properties, string name0, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> AppServiceCertificateOrder resource specific properties. </summary>
         internal AppServiceCertificateOrderProperties Properties { get; set; }
+
+        /// <summary> Name of the certificate order.. </summary>
+        public string Name { get; }
 
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }

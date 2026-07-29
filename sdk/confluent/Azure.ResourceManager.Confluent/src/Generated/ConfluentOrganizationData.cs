@@ -40,15 +40,20 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Organization resource properties. </param>
+        /// <param name="name0"> Organization resource name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrganizationResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrganizationResourceProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Organization resource properties. </summary>
         internal OrganizationResourceProperties Properties { get; set; }
+
+        /// <summary> Organization resource name. </summary>
+        public string Name { get; }
 
         /// <summary> The creation time of the resource. </summary>
         public DateTimeOffset? CreatedOn

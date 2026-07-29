@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the workloadResource Resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveWorkloadData"/> instance for mocking. </returns>
-        public static VirtualEnclaveWorkloadData VirtualEnclaveWorkloadData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveWorkloadProperties properties = default)
+        public static VirtualEnclaveWorkloadData VirtualEnclaveWorkloadData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveWorkloadProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -76,9 +78,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the enclaveResource Resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveData"/> instance for mocking. </returns>
-        public static VirtualEnclaveData VirtualEnclaveData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveProperties properties = default, ManagedServiceIdentity identity = default)
+        public static VirtualEnclaveData VirtualEnclaveData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -90,6 +93,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }
@@ -414,9 +418,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the communityResource Resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveCommunityData"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityData VirtualEnclaveCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityProperties properties = default, ManagedServiceIdentity identity = default)
+        public static VirtualEnclaveCommunityData VirtualEnclaveCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -428,6 +433,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }
@@ -504,8 +510,9 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Dedicated Hub Resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveDedicatedHubData"/> instance for mocking. </returns>
-        public static VirtualEnclaveDedicatedHubData VirtualEnclaveDedicatedHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveDedicatedHubProperties properties = default)
+        public static VirtualEnclaveDedicatedHubData VirtualEnclaveDedicatedHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveDedicatedHubProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -517,6 +524,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -621,8 +629,9 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the TransitHub Resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveTransitHubData"/> instance for mocking. </returns>
-        public static VirtualEnclaveTransitHubData VirtualEnclaveTransitHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveTransitHubProperties properties = default)
+        public static VirtualEnclaveTransitHubData VirtualEnclaveTransitHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveTransitHubProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -634,6 +643,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -698,8 +708,9 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Enclave Connection Resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveConnectionData"/> instance for mocking. </returns>
-        public static VirtualEnclaveConnectionData VirtualEnclaveConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveConnectionProperties properties = default)
+        public static VirtualEnclaveConnectionData VirtualEnclaveConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveConnectionProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -711,6 +722,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -756,8 +768,9 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Enclave Endpoint Resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveEndpointData"/> instance for mocking. </returns>
-        public static VirtualEnclaveEndpointData VirtualEnclaveEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveEndpointProperties properties = default)
+        public static VirtualEnclaveEndpointData VirtualEnclaveEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveEndpointProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -769,6 +782,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -824,8 +838,9 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Community Endpoint Resource. </param>
         /// <returns> A new <see cref="Enclave.VirtualEnclaveCommunityEndpointData"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityEndpointData VirtualEnclaveCommunityEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityEndpointProperties properties = default)
+        public static VirtualEnclaveCommunityEndpointData VirtualEnclaveCommunityEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityEndpointProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -837,6 +852,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

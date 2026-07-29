@@ -33,13 +33,15 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the monitor resource. </param>
+        /// <param name="name0"> Monitor resource name. </param>
         /// <param name="kind"> The kind of the Elastic resource - observability, security, search etc. </param>
         /// <param name="sku"> SKU of the monitor resource. </param>
         /// <param name="identity"> Identity properties of the monitor resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticMonitorProperties properties, string kind, ElasticSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticMonitorProperties properties, string name0, string kind, ElasticSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Kind = kind;
             Sku = sku;
             Identity = identity;
@@ -48,6 +50,9 @@ namespace Azure.ResourceManager.Elastic
 
         /// <summary> Properties of the monitor resource. </summary>
         public ElasticMonitorProperties Properties { get; set; }
+
+        /// <summary> Monitor resource name. </summary>
+        public string Name { get; }
 
         /// <summary> The kind of the Elastic resource - observability, security, search etc. </summary>
         public string Kind { get; set; }

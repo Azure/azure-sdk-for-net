@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -30,9 +31,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="name0"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <returns> A new <see cref="PowerBIDedicated.DedicatedCapacityData"/> instance for mocking. </returns>
-        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, IEnumerable<string> administrationMembers = default, State? state = default, CapacityProvisioningState? provisioningState = default, CapacitySku sku = default)
+        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, IEnumerable<string> administrationMembers = default, State? state = default, CapacityProvisioningState? provisioningState = default, string name0 = default, CapacitySku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     default,
                     state,
                     provisioningState),
+                name0,
                 sku,
                 default);
         }
@@ -118,9 +121,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
         /// <param name="capacityObjectId"> The object ID of the capacity resource associated with the auto scale v-core resource. </param>
         /// <param name="provisioningState"> The current deployment state of an auto scale v-core resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="name0"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
         /// <returns> A new <see cref="PowerBIDedicated.AutoScaleVCoreData"/> instance for mocking. </returns>
-        public static AutoScaleVCoreData AutoScaleVCoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? capacityLimit = default, string capacityObjectId = default, VCoreProvisioningState? provisioningState = default, AutoScaleVCoreSku sku = default)
+        public static AutoScaleVCoreData AutoScaleVCoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? capacityLimit = default, string capacityObjectId = default, VCoreProvisioningState? provisioningState = default, string name0 = default, AutoScaleVCoreSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -132,6 +136,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 capacityLimit is null && capacityObjectId is null && provisioningState is null ? default : new AutoScaleVCoreProperties(capacityLimit, default, capacityObjectId, provisioningState),
+                name0,
                 sku,
                 default);
         }
@@ -154,6 +159,70 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AutoScaleVCorePatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), capacityLimit is null ? default : new AutoScaleVCoreMutableProperties(capacityLimit, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
+        /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
+        /// <param name="friendlyName"> Capacity name. </param>
+        /// <param name="administrationMembers"> An array of administrator user identities. </param>
+        /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
+        /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
+        /// <returns> A new <see cref="PowerBIDedicated.DedicatedCapacityData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, IEnumerable<string> administrationMembers = default, State? state = default, CapacityProvisioningState? provisioningState = default, CapacitySku sku = default)
+        {
+            return new DedicatedCapacityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                administrationMembers is null && mode is null && tenantId is null && friendlyName is null && state is null && provisioningState is null ? default : new DedicatedCapacityProperties(
+                    new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default),
+                    mode,
+                    tenantId,
+                    friendlyName,
+                    default,
+                    state,
+                    provisioningState),
+                name,
+                sku,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
+        /// <param name="capacityObjectId"> The object ID of the capacity resource associated with the auto scale v-core resource. </param>
+        /// <param name="provisioningState"> The current deployment state of an auto scale v-core resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
+        /// <returns> A new <see cref="PowerBIDedicated.AutoScaleVCoreData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutoScaleVCoreData AutoScaleVCoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? capacityLimit = default, string capacityObjectId = default, VCoreProvisioningState? provisioningState = default, AutoScaleVCoreSku sku = default)
+        {
+            return new AutoScaleVCoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                capacityLimit is null && capacityObjectId is null && provisioningState is null ? default : new AutoScaleVCoreProperties(capacityLimit, default, capacityObjectId, provisioningState),
+                name,
+                sku,
+                default);
         }
     }
 }

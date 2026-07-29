@@ -39,12 +39,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> BackupVaultResource properties. </param>
+        /// <param name="name0"> The name of the backup vault. </param>
         /// <param name="identity"> Input Managed Identity Details. </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, string name0, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,6 +54,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <summary> BackupVaultResource properties. </summary>
         public DataProtectionBackupVaultProperties Properties { get; set; }
+
+        /// <summary> The name of the backup vault. </summary>
+        public string Name { get; }
 
         /// <summary> Input Managed Identity Details. </summary>
         public ManagedServiceIdentity Identity { get; set; }

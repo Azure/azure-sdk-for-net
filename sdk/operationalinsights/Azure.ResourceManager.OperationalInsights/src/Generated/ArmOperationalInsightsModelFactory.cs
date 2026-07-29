@@ -37,10 +37,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
         /// <param name="replication"> Cluster's replication properties. </param>
+        /// <param name="name0"> Name of the Log Analytics Cluster. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The sku properties. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
-        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? clusterId = default, OperationalInsightsClusterEntityStatus? provisioningState = default, bool? isDoubleEncryptionEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsBillingType? billingType = default, OperationalInsightsKeyVaultProperties keyVaultProperties = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default, OperationalInsightsCapacityReservationProperties capacityReservationProperties = default, OperationalInsightsClusterReplicationProperties replication = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default)
+        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? clusterId = default, OperationalInsightsClusterEntityStatus? provisioningState = default, bool? isDoubleEncryptionEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsBillingType? billingType = default, OperationalInsightsKeyVaultProperties keyVaultProperties = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default, OperationalInsightsCapacityReservationProperties capacityReservationProperties = default, OperationalInsightsClusterReplicationProperties replication = default, string name0 = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     capacityReservationProperties,
                     replication,
                     default),
+                name0,
                 identity,
                 sku,
                 default);
@@ -1108,6 +1110,55 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="clusterId"> The ID associated with the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </param>
+        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
+        /// <param name="billingType"> The cluster's billing type. </param>
+        /// <param name="keyVaultProperties"> The associated key properties. </param>
+        /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
+        /// <param name="createdOn"> The cluster creation time. </param>
+        /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
+        /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
+        /// <param name="replication"> Cluster's replication properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The sku properties. </param>
+        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? clusterId = default, OperationalInsightsClusterEntityStatus? provisioningState = default, bool? isDoubleEncryptionEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsBillingType? billingType = default, OperationalInsightsKeyVaultProperties keyVaultProperties = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default, OperationalInsightsCapacityReservationProperties capacityReservationProperties = default, OperationalInsightsClusterReplicationProperties replication = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default)
+        {
+            return new OperationalInsightsClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                clusterId is null && provisioningState is null && isDoubleEncryptionEnabled is null && isAvailabilityZonesEnabled is null && billingType is null && keyVaultProperties is null && lastModifiedOn is null && createdOn is null && associatedWorkspaces is null && capacityReservationProperties is null && replication is null ? default : new ClusterProperties(
+                    clusterId,
+                    provisioningState,
+                    isDoubleEncryptionEnabled,
+                    isAvailabilityZonesEnabled,
+                    billingType,
+                    keyVaultProperties,
+                    lastModifiedOn,
+                    createdOn,
+                    (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
+                    capacityReservationProperties,
+                    replication,
+                    default),
+                name,
+                identity,
+                sku,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsTableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1195,6 +1246,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     capacityReservationProperties,
                     replication,
                     default),
+                name,
                 identity,
                 sku,
                 default);
@@ -1469,6 +1521,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         lastModifiedOn,
                         default),
                     default),
+                name,
                 identity,
                 sku,
                 default);

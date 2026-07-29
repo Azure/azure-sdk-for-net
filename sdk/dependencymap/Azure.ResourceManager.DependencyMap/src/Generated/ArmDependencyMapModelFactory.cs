@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="dependencyMapProvisioningState"> Provisioning state of Maps resource. </param>
+        /// <param name="name0"> Maps resource name. </param>
         /// <returns> A new <see cref="DependencyMap.DependencyMapData"/> instance for mocking. </returns>
-        public static DependencyMapData DependencyMapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DependencyMapProvisioningState? dependencyMapProvisioningState = default)
+        public static DependencyMapData DependencyMapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DependencyMapProvisioningState? dependencyMapProvisioningState = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 dependencyMapProvisioningState is null ? default : new DependencyMapProperties(dependencyMapProvisioningState, default),
+                name0,
                 default);
         }
 
@@ -179,8 +181,9 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> discovery source resource. </param>
         /// <returns> A new <see cref="DependencyMap.DependencyMapDiscoverySourceData"/> instance for mocking. </returns>
-        public static DependencyMapDiscoverySourceData DependencyMapDiscoverySourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DependencyMapDiscoverySourceProperties properties = default)
+        public static DependencyMapDiscoverySourceData DependencyMapDiscoverySourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DependencyMapDiscoverySourceProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -192,6 +195,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

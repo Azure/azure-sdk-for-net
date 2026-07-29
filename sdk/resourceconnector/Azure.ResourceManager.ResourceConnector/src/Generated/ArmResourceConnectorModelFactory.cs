@@ -31,9 +31,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="events"> A list of events that occurred on the Appliance to relay information to the user. </param>
         /// <param name="networkProfile"> Contains network information about the Appliance. </param>
         /// <param name="infrastructureConfigProvider"> Information about the connected appliance. </param>
+        /// <param name="name0"> Appliances name. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="ResourceConnector.ResourceConnectorApplianceData"/> instance for mocking. </returns>
-        public static ResourceConnectorApplianceData ResourceConnectorApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApplianceDistro? distro = default, string provisioningState = default, string publicKey = default, ApplianceStatus? status = default, string version = default, IEnumerable<ApplianceEvent> events = default, ApplianceNetworkProfile networkProfile = default, ApplianceProvider? infrastructureConfigProvider = default, ManagedServiceIdentity identity = default)
+        public static ResourceConnectorApplianceData ResourceConnectorApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApplianceDistro? distro = default, string provisioningState = default, string publicKey = default, ApplianceStatus? status = default, string version = default, IEnumerable<ApplianceEvent> events = default, ApplianceNetworkProfile networkProfile = default, ApplianceProvider? infrastructureConfigProvider = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     (events ?? new ChangeTrackingList<ApplianceEvent>()).ToList(),
                     networkProfile,
                     default),
+                name0,
                 identity,
                 default);
         }

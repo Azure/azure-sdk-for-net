@@ -75,11 +75,12 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
         /// <param name="corsAllowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </param>
         /// <param name="upstreamTemplates"> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </param>
+        /// <param name="name0"> The name of the resource. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. </param>
         /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
-        public static SignalRData SignalRData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SignalRProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = default, string hostNamePrefix = default, IEnumerable<SignalRFeature> features = default, SignalRLiveTraceConfiguration liveTraceConfiguration = default, SignalRServerlessSettings serverless = default, SignalRNetworkAcls networkACLs = default, SignalRApplicationFirewallSettings applicationFirewall = default, string publicNetworkAccess = default, bool? disableLocalAuth = default, bool? disableAadAuth = default, string regionEndpointEnabled = default, string resourceStopped = default, SignalRRouteSettings routeSettings = default, bool? isClientCertEnabled = default, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = default, IEnumerable<string> corsAllowedOrigins = default, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = default, SignalRResourceSku sku = default, SignalRServiceKind? kind = default, ManagedServiceIdentity identity = default)
+        public static SignalRData SignalRData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SignalRProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = default, string hostNamePrefix = default, IEnumerable<SignalRFeature> features = default, SignalRLiveTraceConfiguration liveTraceConfiguration = default, SignalRServerlessSettings serverless = default, SignalRNetworkAcls networkACLs = default, SignalRApplicationFirewallSettings applicationFirewall = default, string publicNetworkAccess = default, bool? disableLocalAuth = default, bool? disableAadAuth = default, string regionEndpointEnabled = default, string resourceStopped = default, SignalRRouteSettings routeSettings = default, bool? isClientCertEnabled = default, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = default, IEnumerable<string> corsAllowedOrigins = default, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = default, string name0 = default, SignalRResourceSku sku = default, SignalRServiceKind? kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -116,6 +117,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     resourceStopped,
                     routeSettings,
                     default),
+                name0,
                 sku,
                 kind,
                 identity,
@@ -770,6 +772,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     default,
                     default,
                     default),
+                name,
                 sku,
                 kind,
                 identity,

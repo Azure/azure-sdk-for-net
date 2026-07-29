@@ -29,9 +29,10 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
         /// <param name="interval"> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </param>
         /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
+        /// <param name="name0"> The name of the rule group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="rules"/> is null. </exception>
         /// <returns> A new <see cref="PrometheusRuleGroups.PrometheusRuleGroupData"/> instance for mocking. </returns>
-        public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, string clusterName = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default)
+        public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, string clusterName = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                     default,
                     default,
                     default),
+                name0,
                 default);
         }
 
