@@ -73,6 +73,22 @@ BeforeAll {
         # An unrelated service that must never be pulled in.
         New-Project -Path (Join-Path $root 'sdk/omega/Contoso.Omega/src/Contoso.Omega.csproj')
 
+        # A package that reaches another service through $(MSBuildThisFileDirectory),
+        # which the resolver expands because it is always the project's own directory.
+        New-Project -Path (Join-Path $root 'sdk/sigma/Contoso.Sigma/src/Contoso.Sigma.csproj')
+        New-Project -Path (Join-Path $root 'sdk/sigma/Contoso.Sigma/tests/Contoso.Sigma.Tests.csproj') `
+            -ProjectReferences @(
+                '..\src\Contoso.Sigma.csproj',
+                '$(MSBuildThisFileDirectory)..\..\..\kappa\Contoso.Kappa\src\Contoso.Kappa.csproj')
+        New-Project -Path (Join-Path $root 'sdk/kappa/Contoso.Kappa/src/Contoso.Kappa.csproj')
+
+        # A package that reaches another project through an MSBuild property the
+        # resolver cannot expand. Its closure is untrustworthy, so it must be recorded
+        # as unmappable and fall back to a full checkout.
+        New-Project -Path (Join-Path $root 'sdk/zeta/Contoso.Zeta/src/Contoso.Zeta.csproj')
+        New-Project -Path (Join-Path $root 'sdk/zeta/Contoso.Zeta/tests/Contoso.Zeta.Tests.csproj') `
+            -ProjectReferences @('..\src\Contoso.Zeta.csproj', '$(SomeUnknownProperty)')
+
         # A package that links shared sources from another service via '..'.
         New-Project -Path (Join-Path $root 'sdk/delta/Contoso.Delta/src/Contoso.Delta.csproj')
         New-Project -Path (Join-Path $root 'sdk/delta/Contoso.Delta/tests/Contoso.Delta.Tests.csproj') `
@@ -113,7 +129,8 @@ Describe 'Get-TestCheckoutPaths' {
             $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
             $map.PSObject.Properties.Name | Sort-Object | Should -Be @(
                 '$alwaysIncludedPaths',
-                'Contoso.Alpha', 'Contoso.Beta', 'Contoso.Delta', 'Contoso.Gamma', 'Contoso.Omega')
+                'Contoso.Alpha', 'Contoso.Beta', 'Contoso.Delta', 'Contoso.Gamma',
+                'Contoso.Kappa', 'Contoso.Omega', 'Contoso.Sigma', 'Contoso.Zeta')
         }
 
         It 'records the always-included paths in the map so consumers never duplicate the list' {
@@ -192,6 +209,12 @@ Describe 'Get-TestCheckoutPaths' {
             }
         }
 
+        It 'expands $(MSBuildThisFileDirectory) so cross-service references are followed' {
+            $services = Get-Services -Paths (& $script:ScriptPath -MapPath $script:MapPath -ArtifactNames 'Contoso.Sigma')
+            $services | Should -Contain 'sigma'
+            $services | Should -Contain 'kappa'
+        }
+
         It 'unions the closures of every package in the batch' {
             $services = Get-Services -Paths (& $script:ScriptPath -MapPath $script:MapPath -ArtifactNames 'Contoso.Alpha,Contoso.Omega')
             foreach ($expected in @('alpha', 'beta', 'gamma', 'omega')) {
@@ -219,6 +242,20 @@ Describe 'Get-TestCheckoutPaths' {
         It 'falls back when any package in the batch is missing from the map' {
             $paths = & $script:ScriptPath -MapPath $script:MapPath -ArtifactNames 'Contoso.Alpha,Contoso.Unknown' -WarningAction SilentlyContinue
             $paths | Should -BeNullOrEmpty
+        }
+
+        It 'falls back when a package references projects through an unexpandable property' {
+            # The closure cannot be trusted, so the map records an empty entry and the
+            # resolver must widen to a full checkout rather than narrow on bad data.
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            @($map.'Contoso.Zeta') | Should -HaveCount 0
+            & $script:ScriptPath -MapPath $script:MapPath -ArtifactNames 'Contoso.Zeta' -WarningAction SilentlyContinue |
+                Should -BeNullOrEmpty
+        }
+
+        It 'falls back when one package in the batch is unmappable even if others are fine' {
+            & $script:ScriptPath -MapPath $script:MapPath -ArtifactNames 'Contoso.Alpha,Contoso.Zeta' -WarningAction SilentlyContinue |
+                Should -BeNullOrEmpty
         }
 
         It 'falls back when the map file does not exist' {

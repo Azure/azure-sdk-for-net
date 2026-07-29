@@ -141,7 +141,9 @@ function Get-ProjectReferenceIndex {
 function Get-ProjectReferences {
   param(
     [string] $ProjectPath,
-    [hashtable] $Index
+    [hashtable] $Index,
+    [string] $Root,
+    [System.Collections.Generic.HashSet[string]] $UnresolvedProperties
   )
 
   $content = Get-Content -LiteralPath $ProjectPath -Raw -ErrorAction SilentlyContinue
@@ -153,7 +155,33 @@ function Get-ProjectReferences {
   $projectDir = Split-Path -Parent $ProjectPath
 
   foreach ($match in [regex]::Matches($content, '<ProjectReference[^>]*Include\s*=\s*"([^"]+)"', 'IgnoreCase')) {
-    $relative = $match.Groups[1].Value -replace '\\', [System.IO.Path]::DirectorySeparatorChar
+    $include = $match.Groups[1].Value
+
+    # $(MSBuildThisFileDirectory) is the directory of the project file itself, so it can
+    # be expanded exactly. About 90 references in the repository use it, several of them
+    # crossing service directories (for example the perf projects reaching the
+    # repository-root common/Perf/Azure.Test.Perf).
+    $include = $include -replace '(?i)\$\(MSBuildThisFileDirectory\)[\\/]*', ''
+
+    # Any property left over cannot be expanded without evaluating MSBuild. Rather than
+    # silently dropping the edge - which would narrow the checkout too far and break the
+    # build - record the property name so the caller can fall back to a full checkout.
+    $remaining = [regex]::Matches($include, '\$\(([^)]+)\)')
+    if ($remaining.Count -gt 0) {
+      $property = $remaining[0].Groups[1].Value
+      if ($script:KnownProjectReferenceProperties.ContainsKey($property)) {
+        $null = $results.Add([System.IO.Path]::GetFullPath(
+          (Join-Path $Root $script:KnownProjectReferenceProperties[$property])))
+        continue
+      }
+
+      if ($UnresolvedProperties) {
+        $null = $UnresolvedProperties.Add($property)
+      }
+      continue
+    }
+
+    $relative = $include -replace '\\', [System.IO.Path]::DirectorySeparatorChar
     $resolved = [System.IO.Path]::GetFullPath((Join-Path $projectDir $relative))
     $null = $results.Add($resolved)
   }
@@ -174,7 +202,9 @@ function Get-ServiceClosure {
   param(
     [string] $PackageRoot,
     [hashtable] $Index,
-    [hashtable] $ReferenceCache
+    [string] $Root,
+    [hashtable] $ReferenceCache,
+    [System.Collections.Generic.HashSet[string]] $UnresolvedProperties
   )
 
   $visited = [System.Collections.Generic.HashSet[string]]::new()
@@ -191,10 +221,23 @@ function Get-ServiceClosure {
     }
 
     if (-not $ReferenceCache.ContainsKey($current)) {
-      $ReferenceCache[$current] = Get-ProjectReferences -ProjectPath $current -Index $Index
+      # The cache is shared across artifacts, so the unresolved properties found while
+      # first visiting a project have to be cached with it. Otherwise only the artifact
+      # that happened to visit it first would learn about them.
+      $found = [System.Collections.Generic.HashSet[string]]::new()
+      $ReferenceCache[$current] = [pscustomobject]@{
+        References = Get-ProjectReferences -ProjectPath $current -Index $Index -Root $Root -UnresolvedProperties $found
+        Unresolved = @($found)
+      }
     }
 
-    foreach ($reference in $ReferenceCache[$current]) {
+    if ($UnresolvedProperties) {
+      foreach ($property in $ReferenceCache[$current].Unresolved) {
+        $null = $UnresolvedProperties.Add($property)
+      }
+    }
+
+    foreach ($reference in $ReferenceCache[$current].References) {
       if (-not $visited.Contains($reference)) {
         $pending.Push($reference)
       }
@@ -277,6 +320,19 @@ function Get-AlwaysIncludedPaths {
 # names can never collide with it because they are always valid assembly names.
 $script:AlwaysIncludedPathsKey = '$alwaysIncludedPaths'
 
+# ProjectReference Include values that are written as a bare MSBuild property. Each of
+# these is known to resolve inside a service that is always included, so the edge can be
+# dropped without narrowing the checkout too far:
+# Each maps to the repository-relative project it expands to, taken from the property
+# definition, so the edge is followed exactly rather than guessed at or dropped.
+# A property that is NOT listed here forces a full checkout for the affected package,
+# so adding a new one degrades performance rather than correctness.
+$script:KnownProjectReferenceProperties = @{
+  'AzureCoreTestFramework'  = 'sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj'
+  'ExternalAzureCoreSource' = 'sdk/core/Azure.Core/src/Azure.Core.csproj'
+  'ExternalOpenAISource'    = 'sdk/openai/external/OpenAI/src/OpenAI.csproj'
+}
+
 function New-CheckoutMap {
   param([string] $Root)
 
@@ -289,7 +345,8 @@ function New-CheckoutMap {
     $packageRoot = Split-Path -Parent (Split-Path -Parent $index[$artifact])
 
     $services = [System.Collections.Generic.SortedSet[string]]::new()
-    foreach ($project in (Get-ServiceClosure -PackageRoot $packageRoot -Index $index -ReferenceCache $referenceCache)) {
+    $unresolved = [System.Collections.Generic.HashSet[string]]::new()
+    foreach ($project in (Get-ServiceClosure -PackageRoot $packageRoot -Index $index -Root $Root -ReferenceCache $referenceCache -UnresolvedProperties $unresolved)) {
       $service = Get-ServiceDirectoryName -ProjectPath $project -Root $Root
       if ($service) {
         $null = $services.Add($service)
@@ -300,7 +357,18 @@ function New-CheckoutMap {
       }
     }
 
-    $map[$artifact] = @($services)
+    if ($unresolved.Count -gt 0) {
+      # An MSBuild property we cannot expand may point anywhere, so the closure for this
+      # package is not trustworthy. Record it as unmappable; Resolve-CheckoutPaths turns
+      # an empty entry into a full checkout, which is slow but always correct.
+      Write-Warning ("Package '$artifact' references projects through unexpanded MSBuild " +
+        "properties ($($unresolved -join ', ')); it will use a full checkout. Add them to " +
+        '$script:KnownProjectReferenceProperties to restore narrowing.')
+      $map[$artifact] = @()
+    }
+    else {
+      $map[$artifact] = @($services)
+    }
   }
 
   $map[$script:AlwaysIncludedPathsKey] = Get-AlwaysIncludedPaths
@@ -323,6 +391,13 @@ function Resolve-CheckoutPaths {
       # tested. Narrowing on incomplete data risks a build break, so signal the
       # caller to fall back to a full checkout.
       Write-Warning "No checkout map entry for '$artifact'; falling back to a full checkout."
+      return $null
+    }
+
+    if (@($Map[$artifact]).Count -eq 0) {
+      # New-CheckoutMap records an empty closure for a package it could not analyse
+      # exactly. Narrowing on it would drop services the build needs.
+      Write-Warning "Checkout map entry for '$artifact' is empty; falling back to a full checkout."
       return $null
     }
 

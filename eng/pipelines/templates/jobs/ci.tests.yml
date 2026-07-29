@@ -113,7 +113,16 @@ jobs:
               Write-Host "##vso[task.setvariable variable=TestSparseCheckoutPaths]$json"
             }
 
-            $map = Get-ChildItem -Path "$(Agent.TempDirectory)/TestCheckoutMap" -Filter checkout-map.json -Recurse -File |
+            # The map artifact download runs with continueOnError, so the directory may
+            # not exist at all. Test first and suppress non-terminating errors so the
+            # fallback stays quiet even if the task is configured to fail on stderr.
+            $mapDirectory = "$(Agent.TempDirectory)/TestCheckoutMap"
+            if (-not (Test-Path -LiteralPath $mapDirectory)) {
+              Set-Paths $fallback 'checkout map artifact was not downloaded'
+              return
+            }
+
+            $map = Get-ChildItem -Path $mapDirectory -Filter checkout-map.json -Recurse -File -ErrorAction SilentlyContinue |
               Select-Object -First 1
 
             if (-not $map) {
@@ -153,6 +162,12 @@ jobs:
                 # A stale map would silently drop a service and turn into a build error
                 # rather than a slow job, so fall back to checking out everything.
                 Set-Paths $fallback "no map entry for '$artifact'"
+                return
+              }
+              if (@($lookup[$artifact]).Count -eq 0) {
+                # An empty entry means the map builder could not analyse that package
+                # exactly, so narrowing on it would drop services the build needs.
+                Set-Paths $fallback "empty map entry for '$artifact'"
                 return
               }
               foreach ($service in $lookup[$artifact]) { $null = $services.Add($service) }
