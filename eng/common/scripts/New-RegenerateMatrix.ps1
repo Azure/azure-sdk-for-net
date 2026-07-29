@@ -40,7 +40,11 @@ function Split-Items([array]$Items) {
   }
   
   $itemsPerGroup = [math]::Floor($itemCount / $JobCount)
-  $largeJobCount = $itemCount % $itemsPerGroup
+  # The remainder has to be taken over the number of groups, not the size of a group.
+  # Taking it over $itemsPerGroup produces too few large groups whenever
+  # $itemCount % $itemsPerGroup -lt $itemCount % $JobCount, and the trailing items are
+  # then silently dropped from the matrix.
+  $largeJobCount = $itemCount % $JobCount
   $groups = [object[]]::new($JobCount)
 
   $i = 0
