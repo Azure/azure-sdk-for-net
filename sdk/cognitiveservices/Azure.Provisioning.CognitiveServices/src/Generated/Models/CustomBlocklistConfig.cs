@@ -6,16 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Gets or sets the source to which filter applies. </summary>
-    public partial class CustomBlocklistConfig : ProvisionableConstruct
+    public partial class CustomBlocklistConfig : RaiBlocklistConfig
     {
         private BicepValue<RaiPolicyContentSource> _source;
-        private BicepValue<string> _blocklistName;
-        private BicepValue<bool> _isBlocking;
 
         /// <summary> Creates a new CustomBlocklistConfig. </summary>
         public CustomBlocklistConfig()
@@ -37,43 +34,11 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the BlocklistName. </summary>
-        public BicepValue<string> BlocklistName
-        {
-            get
-            {
-                Initialize();
-                return _blocklistName;
-            }
-            set
-            {
-                Initialize();
-                _blocklistName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsBlocking. </summary>
-        public BicepValue<bool> IsBlocking
-        {
-            get
-            {
-                Initialize();
-                return _isBlocking;
-            }
-            set
-            {
-                Initialize();
-                _isBlocking.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CustomBlocklistConfig. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _source = DefineProperty<RaiPolicyContentSource>(nameof(Source), new string[] { "source" });
-            _blocklistName = DefineProperty<string>(nameof(BlocklistName), new string[] { "blocklistName" });
-            _isBlocking = DefineProperty<bool>(nameof(IsBlocking), new string[] { "blocking" });
             DefineAdditionalProperties();
         }
 

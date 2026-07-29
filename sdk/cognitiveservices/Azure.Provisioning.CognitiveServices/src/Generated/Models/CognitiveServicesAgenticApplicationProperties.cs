@@ -6,24 +6,21 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Resource type representing an agentic application as a management construct. </summary>
-    public partial class CognitiveServicesAgenticApplicationProperties : ProvisionableConstruct
+    public partial class CognitiveServicesAgenticApplicationProperties : CognitiveServicesResourceBase
     {
         private BicepValue<string> _displayName;
         private BicepValue<string> _baseUri;
         private BicepList<CognitiveServicesAgentReferenceProperties> _agents;
         private CognitiveServicesAssignedIdentity _agentIdentityBlueprint;
         private CognitiveServicesAssignedIdentity _defaultInstanceIdentity;
-        private ApplicationAuthorizationPolicy _authorizationPolicy;
-        private ApplicationTrafficRoutingPolicy _trafficRoutingPolicy;
+        private CognitiveServicesApplicationAuthorizationPolicy _authorizationPolicy;
+        private CognitiveServicesApplicationTrafficRoutingPolicy _trafficRoutingPolicy;
         private BicepValue<CognitiveServicesAgenticApplicationProvisioningState> _provisioningState;
         private BicepValue<bool> _isEnabled;
-        private BicepValue<string> _description;
-        private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new CognitiveServicesAgenticApplicationProperties. </summary>
         public CognitiveServicesAgenticApplicationProperties()
@@ -106,7 +103,7 @@ namespace Azure.Provisioning.CognitiveServices
         }
 
         /// <summary> Gets or sets the AuthorizationPolicy. </summary>
-        public ApplicationAuthorizationPolicy AuthorizationPolicy
+        public CognitiveServicesApplicationAuthorizationPolicy AuthorizationPolicy
         {
             get
             {
@@ -121,7 +118,7 @@ namespace Azure.Provisioning.CognitiveServices
         }
 
         /// <summary> Gets or sets the TrafficRoutingPolicy. </summary>
-        public ApplicationTrafficRoutingPolicy TrafficRoutingPolicy
+        public CognitiveServicesApplicationTrafficRoutingPolicy TrafficRoutingPolicy
         {
             get
             {
@@ -155,36 +152,6 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CognitiveServicesAgenticApplicationProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -194,12 +161,10 @@ namespace Azure.Provisioning.CognitiveServices
             _agents = DefineListProperty<CognitiveServicesAgentReferenceProperties>(nameof(Agents), new string[] { "agents" });
             _agentIdentityBlueprint = DefineModelProperty<CognitiveServicesAssignedIdentity>(nameof(AgentIdentityBlueprint), new string[] { "agentIdentityBlueprint" });
             _defaultInstanceIdentity = DefineModelProperty<CognitiveServicesAssignedIdentity>(nameof(DefaultInstanceIdentity), new string[] { "defaultInstanceIdentity" });
-            _authorizationPolicy = DefineModelProperty<ApplicationAuthorizationPolicy>(nameof(AuthorizationPolicy), new string[] { "authorizationPolicy" });
-            _trafficRoutingPolicy = DefineModelProperty<ApplicationTrafficRoutingPolicy>(nameof(TrafficRoutingPolicy), new string[] { "trafficRoutingPolicy" });
+            _authorizationPolicy = DefineModelProperty<CognitiveServicesApplicationAuthorizationPolicy>(nameof(AuthorizationPolicy), new string[] { "authorizationPolicy" });
+            _trafficRoutingPolicy = DefineModelProperty<CognitiveServicesApplicationTrafficRoutingPolicy>(nameof(TrafficRoutingPolicy), new string[] { "trafficRoutingPolicy" });
             _provisioningState = DefineProperty<CognitiveServicesAgenticApplicationProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isOutput: true);
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }
 

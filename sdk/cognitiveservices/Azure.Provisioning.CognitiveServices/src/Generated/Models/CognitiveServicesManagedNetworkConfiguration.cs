@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Managed Network settings for a cognitive services account. </summary>
-    internal partial class CognitiveServicesManagedNetworkConfiguration : ProvisionableConstruct
+    public partial class CognitiveServicesManagedNetworkConfiguration : ProvisionableConstruct
     {
         private BicepValue<CognitiveServicesIsolationMode> _isolationMode;
         private BicepValue<string> _networkId;

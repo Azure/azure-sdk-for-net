@@ -6,16 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Type modeling a reference to a version of an agent definition. </summary>
-    public partial class CognitiveServicesVersionedAgentReference : ProvisionableConstruct
+    public partial class CognitiveServicesVersionedAgentReference : CognitiveServicesAgentReferenceProperties
     {
         private BicepValue<string> _agentVersion;
-        private BicepValue<string> _agentId;
-        private BicepValue<string> _agentName;
 
         /// <summary> Creates a new CognitiveServicesVersionedAgentReference. </summary>
         public CognitiveServicesVersionedAgentReference()
@@ -37,43 +34,11 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the AgentId. </summary>
-        public BicepValue<string> AgentId
-        {
-            get
-            {
-                Initialize();
-                return _agentId;
-            }
-            set
-            {
-                Initialize();
-                _agentId.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AgentName. </summary>
-        public BicepValue<string> AgentName
-        {
-            get
-            {
-                Initialize();
-                return _agentName;
-            }
-            set
-            {
-                Initialize();
-                _agentName.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CognitiveServicesVersionedAgentReference. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _agentVersion = DefineProperty<string>(nameof(AgentVersion), new string[] { "agentVersion" });
-            _agentId = DefineProperty<string>(nameof(AgentId), new string[] { "agentId" });
-            _agentName = DefineProperty<string>(nameof(AgentName), new string[] { "agentName" });
             DefineAdditionalProperties();
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
@@ -14,7 +13,7 @@ namespace Azure.Provisioning.CognitiveServices
     /// Type representing an agent deployment as a management construct.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesManagedAgentDeployment"/> and <see cref="CognitiveServicesHostedAgentDeployment"/>.
     /// </summary>
-    public partial class CognitiveServicesAgentDeploymentProperties : ProvisionableConstruct
+    public partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase
     {
         private BicepValue<string> _displayName;
         private BicepValue<string> _deploymentId;
@@ -22,8 +21,6 @@ namespace Azure.Provisioning.CognitiveServices
         private BicepList<CognitiveServicesAgentProtocolVersion> _protocols;
         private BicepList<CognitiveServicesVersionedAgentReference> _agents;
         private BicepValue<CognitiveServicesAgentDeploymentProvisioningState> _provisioningState;
-        private BicepValue<string> _description;
-        private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new CognitiveServicesAgentDeploymentProperties. </summary>
         public CognitiveServicesAgentDeploymentProperties()
@@ -115,36 +112,6 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CognitiveServicesAgentDeploymentProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -155,8 +122,6 @@ namespace Azure.Provisioning.CognitiveServices
             _protocols = DefineListProperty<CognitiveServicesAgentProtocolVersion>(nameof(Protocols), new string[] { "protocols" });
             _agents = DefineListProperty<CognitiveServicesVersionedAgentReference>(nameof(Agents), new string[] { "agents" });
             _provisioningState = DefineProperty<CognitiveServicesAgentDeploymentProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }
 

@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Azure OpenAI RAI safety provider config. </summary>
-    internal partial class RaiSafetyProviderConfig : ProvisionableConstruct
+    public partial class RaiSafetyProviderConfig : ProvisionableConstruct
     {
         private BicepValue<string> _safetyProviderName;
         private BicepValue<bool> _isBlocking;

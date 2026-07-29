@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Azure OpenAI blocklist config. </summary>
-    internal partial class RaiBlocklistConfig : ProvisionableConstruct
+    public partial class RaiBlocklistConfig : ProvisionableConstruct
     {
         private BicepValue<string> _blocklistName;
         private BicepValue<bool> _isBlocking;

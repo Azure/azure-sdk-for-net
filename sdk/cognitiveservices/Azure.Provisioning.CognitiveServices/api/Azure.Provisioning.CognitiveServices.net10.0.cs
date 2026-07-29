@@ -51,16 +51,12 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<string> CredentialsKey { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ApplicationAuthorizationPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class BillingMeterInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public ApplicationAuthorizationPolicy() { }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ApplicationTrafficRoutingPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ApplicationTrafficRoutingPolicy() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesTrafficRoutingProtocol> Protocol { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesTrafficRoutingRule> Rules { get { throw null; } set { } }
+        public BillingMeterInfo() { }
+        public Azure.Provisioning.BicepValue<string> MeterId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Unit { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CapabilityHostKind
@@ -76,7 +72,7 @@ namespace Azure.Provisioning.CognitiveServices
         Updating = 4,
         Deleting = 5,
     }
-    public partial class ChannelsBuiltInAuthorizationPolicy : Azure.Provisioning.CognitiveServices.ApplicationAuthorizationPolicy
+    public partial class ChannelsBuiltInAuthorizationPolicy : Azure.Provisioning.CognitiveServices.CognitiveServicesApplicationAuthorizationPolicy
     {
         public ChannelsBuiltInAuthorizationPolicy() { }
         protected override void DefineProvisionableProperties() { }
@@ -204,6 +200,20 @@ namespace Azure.Provisioning.CognitiveServices
         Standard = 0,
         Manual = 1,
     }
+    public partial class CognitiveServicesAccountModel : Azure.Provisioning.CognitiveServices.CognitiveServicesAccountDeploymentModel
+    {
+        public CognitiveServicesAccountModel() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesAccountDeploymentModel BaseModel { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Capabilities { get { throw null; } set { } }
+        public Azure.Provisioning.CognitiveServices.ServiceAccountModelDeprecationInfo Deprecation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> FinetuneCapabilities { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsDefaultVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.ModelLifecycleStatus> LifecycleStatus { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxCapacity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesModelSku> Skus { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class CognitiveServicesAccountProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CognitiveServicesAccountProperties() { }
@@ -279,17 +289,15 @@ namespace Azure.Provisioning.CognitiveServices
             public static readonly string V2026_05_01;
         }
     }
-    public partial class CognitiveServicesAgentDeploymentProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CognitiveServicesAgentDeploymentProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesResourceBase
     {
         public CognitiveServicesAgentDeploymentProperties() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesVersionedAgentReference> Agents { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DeploymentId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesAgentProtocolVersion> Protocols { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesAgentDeploymentProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesAgentDeploymentState> State { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CognitiveServicesAgentDeploymentProvisioningState
@@ -312,20 +320,18 @@ namespace Azure.Provisioning.CognitiveServices
         Deleted = 6,
         Updating = 7,
     }
-    public partial class CognitiveServicesAgenticApplicationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CognitiveServicesAgenticApplicationProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesResourceBase
     {
         public CognitiveServicesAgenticApplicationProperties() { }
         public Azure.Provisioning.CognitiveServices.CognitiveServicesAssignedIdentity AgentIdentityBlueprint { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesAgentReferenceProperties> Agents { get { throw null; } set { } }
-        public Azure.Provisioning.CognitiveServices.ApplicationAuthorizationPolicy AuthorizationPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesApplicationAuthorizationPolicy AuthorizationPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> BaseUri { get { throw null; } set { } }
         public Azure.Provisioning.CognitiveServices.CognitiveServicesAssignedIdentity DefaultInstanceIdentity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesAgenticApplicationProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.CognitiveServices.ApplicationTrafficRoutingPolicy TrafficRoutingPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesApplicationTrafficRoutingPolicy TrafficRoutingPolicy { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CognitiveServicesAgenticApplicationProvisioningState
@@ -355,6 +361,18 @@ namespace Azure.Provisioning.CognitiveServices
         public CognitiveServicesAgentReferenceProperties() { }
         public Azure.Provisioning.BicepValue<string> AgentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AgentName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesApplicationAuthorizationPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesApplicationAuthorizationPolicy() { }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesApplicationTrafficRoutingPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesApplicationTrafficRoutingPolicy() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesTrafficRoutingProtocol> Protocol { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesTrafficRoutingRule> Rules { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class CognitiveServicesAssignedIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -422,19 +440,27 @@ namespace Azure.Provisioning.CognitiveServices
             public static readonly string V2026_05_01;
         }
     }
-    public partial class CognitiveServicesCapabilityHostProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CognitiveServicesCapabilityHostProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesResourceBase
     {
         public CognitiveServicesCapabilityHostProperties() { }
         public Azure.Provisioning.BicepList<string> AiServicesConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CapabilityHostKind> CapabilityHostKind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CustomerSubnet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePublicHostingEnvironment { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CapabilityHostProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<string> StorageConnections { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> ThreadStorageConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> VectorStoreConnections { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesCapacityConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesCapacityConfig() { }
+        public Azure.Provisioning.BicepList<int> AllowedValues { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Default { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Maximum { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Minimum { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Step { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class CognitiveServicesCommitmentPlan : Azure.Provisioning.Primitives.ProvisionableResource
@@ -830,10 +856,9 @@ namespace Azure.Provisioning.CognitiveServices
         public CognitiveServicesManagedAgentDeployment() { }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class CognitiveServicesManagedNetworkConfigurationExtended : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CognitiveServicesManagedNetworkConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public CognitiveServicesManagedNetworkConfigurationExtended() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesIsolationMode> ChangeableIsolationModes { get { throw null; } }
+        public CognitiveServicesManagedNetworkConfiguration() { }
         public Azure.Provisioning.BicepValue<string> FirewallPublicIpAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesFirewallSku> FirewallSku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesIsolationMode> IsolationMode { get { throw null; } set { } }
@@ -842,6 +867,12 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<string> NetworkId { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.CognitiveServices.CognitiveServicesOutboundRuleBasicProperties> OutboundRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesManagedNetworkProvisioningState> ProvisioningState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesManagedNetworkConfigurationExtended : Azure.Provisioning.CognitiveServices.CognitiveServicesManagedNetworkConfiguration
+    {
+        public CognitiveServicesManagedNetworkConfigurationExtended() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesIsolationMode> ChangeableIsolationModes { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CognitiveServicesManagedNetworkKind
@@ -887,6 +918,17 @@ namespace Azure.Provisioning.CognitiveServices
     {
         Inactive = 0,
         Active = 1,
+    }
+    public partial class CognitiveServicesModelSku : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesModelSku() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesCapacityConfig Capacity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.BillingMeterInfo> Cost { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeprecationOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.ServiceAccountCallRateLimit> RateLimits { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> UsageName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class CognitiveServicesMultiRegionSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1149,6 +1191,18 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<float> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class CognitiveServicesResourceBase : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesResourceBase() { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesRoleBasedBuiltInAuthorizationPolicy : Azure.Provisioning.CognitiveServices.CognitiveServicesApplicationAuthorizationPolicy
+    {
+        public CognitiveServicesRoleBasedBuiltInAuthorizationPolicy() { }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum CognitiveServicesRoutingMethod
     {
         Priority = 0,
@@ -1215,11 +1269,9 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<int> TrafficPercentage { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class CognitiveServicesVersionedAgentReference : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CognitiveServicesVersionedAgentReference : Azure.Provisioning.CognitiveServices.CognitiveServicesAgentReferenceProperties
     {
         public CognitiveServicesVersionedAgentReference() { }
-        public Azure.Provisioning.BicepValue<string> AgentId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AgentName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AgentVersion { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1336,13 +1388,11 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<string> Unit { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class CustomBlocklistConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CustomBlocklistConfig : Azure.Provisioning.CognitiveServices.RaiBlocklistConfig
     {
         public CustomBlocklistConfig() { }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use IsBlocking instead.")]
         public Azure.Provisioning.BicepValue<bool> Blocking { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> BlocklistName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsBlocking { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.RaiPolicyContentSource> Source { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1432,6 +1482,14 @@ namespace Azure.Provisioning.CognitiveServices
         Inactive = 0,
         Active = 1,
         NotApplicable = 2,
+    }
+    public enum ModelLifecycleStatus
+    {
+        GenerallyAvailable = 0,
+        Preview = 1,
+        Stable = 2,
+        Deprecating = 3,
+        Deprecated = 4,
     }
     public partial class NetworkSecurityPerimeterAccessRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1534,7 +1592,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionOAuth2 Credentials { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class OrganizationSharedBuiltInAuthorizationPolicy : Azure.Provisioning.CognitiveServices.ApplicationAuthorizationPolicy
+    public partial class OrganizationSharedBuiltInAuthorizationPolicy : Azure.Provisioning.CognitiveServices.CognitiveServicesApplicationAuthorizationPolicy
     {
         public OrganizationSharedBuiltInAuthorizationPolicy() { }
         protected override void DefineProvisionableProperties() { }
@@ -1600,6 +1658,13 @@ namespace Azure.Provisioning.CognitiveServices
             public static readonly string V2026_03_01;
             public static readonly string V2026_05_01;
         }
+    }
+    public partial class RaiBlocklistConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public RaiBlocklistConfig() { }
+        public Azure.Provisioning.BicepValue<string> BlocklistName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsBlocking { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class RaiBlocklistItem : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -1787,11 +1852,16 @@ namespace Azure.Provisioning.CognitiveServices
         UserManaged = 0,
         SystemManaged = 1,
     }
-    public partial class RaiSafetyProviderSourceConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RaiSafetyProviderConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public RaiSafetyProviderSourceConfig() { }
+        public RaiSafetyProviderConfig() { }
         public Azure.Provisioning.BicepValue<bool> IsBlocking { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SafetyProviderName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class RaiSafetyProviderSourceConfig : Azure.Provisioning.CognitiveServices.RaiSafetyProviderConfig
+    {
+        public RaiSafetyProviderSourceConfig() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.RaiPolicyContentSource> Source { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1863,11 +1933,6 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<string> TopicName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class RoleBasedBuiltInAuthorizationPolicy : Azure.Provisioning.CognitiveServices.ApplicationAuthorizationPolicy
-    {
-        public RoleBasedBuiltInAuthorizationPolicy() { }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class SASAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
     {
         public SASAuthTypeConnectionProperties() { }
@@ -1925,6 +1990,13 @@ namespace Azure.Provisioning.CognitiveServices
         ConnectedContainer = 1,
         DisconnectedContainer = 2,
         ProvisionedWeb = 3,
+    }
+    public partial class ServiceAccountModelDeprecationInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ServiceAccountModelDeprecationInfo() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> FineTuneOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> InferenceOn { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum ServiceAccountProvisioningState
     {

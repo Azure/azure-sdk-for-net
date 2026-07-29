@@ -8,14 +8,14 @@
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Built-in role-based authorization policy. </summary>
-    public partial class RoleBasedBuiltInAuthorizationPolicy : ApplicationAuthorizationPolicy
+    public partial class CognitiveServicesRoleBasedBuiltInAuthorizationPolicy : CognitiveServicesApplicationAuthorizationPolicy
     {
-        /// <summary> Creates a new RoleBasedBuiltInAuthorizationPolicy. </summary>
-        public RoleBasedBuiltInAuthorizationPolicy()
+        /// <summary> Creates a new CognitiveServicesRoleBasedBuiltInAuthorizationPolicy. </summary>
+        public CognitiveServicesRoleBasedBuiltInAuthorizationPolicy()
         {
         }
 
-        /// <summary> Define all the provisionable properties for RoleBasedBuiltInAuthorizationPolicy. </summary>
+        /// <summary> Define all the provisionable properties for CognitiveServicesRoleBasedBuiltInAuthorizationPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CognitiveServices
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for RoleBasedBuiltInAuthorizationPolicy that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CognitiveServicesRoleBasedBuiltInAuthorizationPolicy that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

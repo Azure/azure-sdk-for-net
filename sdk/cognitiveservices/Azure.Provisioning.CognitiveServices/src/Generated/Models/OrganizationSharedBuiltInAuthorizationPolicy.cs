@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Built-in authorization policy scoped to organization/tenant. </summary>
-    public partial class OrganizationSharedBuiltInAuthorizationPolicy : ApplicationAuthorizationPolicy
+    public partial class OrganizationSharedBuiltInAuthorizationPolicy : CognitiveServicesApplicationAuthorizationPolicy
     {
         /// <summary> Creates a new OrganizationSharedBuiltInAuthorizationPolicy. </summary>
         public OrganizationSharedBuiltInAuthorizationPolicy()

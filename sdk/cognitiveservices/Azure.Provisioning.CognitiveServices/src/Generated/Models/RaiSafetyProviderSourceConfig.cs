@@ -6,16 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Gets or sets the source to which safety providers applies. </summary>
-    public partial class RaiSafetyProviderSourceConfig : ProvisionableConstruct
+    public partial class RaiSafetyProviderSourceConfig : RaiSafetyProviderConfig
     {
         private BicepValue<RaiPolicyContentSource> _source;
-        private BicepValue<string> _safetyProviderName;
-        private BicepValue<bool> _isBlocking;
 
         /// <summary> Creates a new RaiSafetyProviderSourceConfig. </summary>
         public RaiSafetyProviderSourceConfig()
@@ -37,43 +34,11 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the SafetyProviderName. </summary>
-        public BicepValue<string> SafetyProviderName
-        {
-            get
-            {
-                Initialize();
-                return _safetyProviderName;
-            }
-            set
-            {
-                Initialize();
-                _safetyProviderName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsBlocking. </summary>
-        public BicepValue<bool> IsBlocking
-        {
-            get
-            {
-                Initialize();
-                return _isBlocking;
-            }
-            set
-            {
-                Initialize();
-                _isBlocking.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for RaiSafetyProviderSourceConfig. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _source = DefineProperty<RaiPolicyContentSource>(nameof(Source), new string[] { "source" });
-            _safetyProviderName = DefineProperty<string>(nameof(SafetyProviderName), new string[] { "safetyProviderName" });
-            _isBlocking = DefineProperty<bool>(nameof(IsBlocking), new string[] { "blocking" });
             DefineAdditionalProperties();
         }
 

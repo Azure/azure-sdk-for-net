@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Type representing an application traffic policy as a property of an agentic application. </summary>
-    public partial class ApplicationTrafficRoutingPolicy : ProvisionableConstruct
+    public partial class CognitiveServicesApplicationTrafficRoutingPolicy : ProvisionableConstruct
     {
         private BicepValue<CognitiveServicesTrafficRoutingProtocol> _protocol;
         private BicepList<CognitiveServicesTrafficRoutingRule> _rules;
 
-        /// <summary> Creates a new ApplicationTrafficRoutingPolicy. </summary>
-        public ApplicationTrafficRoutingPolicy()
+        /// <summary> Creates a new CognitiveServicesApplicationTrafficRoutingPolicy. </summary>
+        public CognitiveServicesApplicationTrafficRoutingPolicy()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Define all the provisionable properties for ApplicationTrafficRoutingPolicy. </summary>
+        /// <summary> Define all the provisionable properties for CognitiveServicesApplicationTrafficRoutingPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.CognitiveServices
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ApplicationTrafficRoutingPolicy that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CognitiveServicesApplicationTrafficRoutingPolicy that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

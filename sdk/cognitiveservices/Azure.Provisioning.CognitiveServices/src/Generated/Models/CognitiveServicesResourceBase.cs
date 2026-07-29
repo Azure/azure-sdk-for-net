@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> The CognitiveServicesResourceBase. </summary>
-    internal partial class CognitiveServicesResourceBase : ProvisionableConstruct
+    public partial class CognitiveServicesResourceBase : ProvisionableConstruct
     {
         private BicepValue<string> _description;
         private BicepDictionary<string> _tags;

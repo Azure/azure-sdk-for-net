@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Represents a built-in authorization policy specific to Azure Bot Service/Channels authentication. </summary>
-    public partial class ChannelsBuiltInAuthorizationPolicy : ApplicationAuthorizationPolicy
+    public partial class ChannelsBuiltInAuthorizationPolicy : CognitiveServicesApplicationAuthorizationPolicy
     {
         /// <summary> Creates a new ChannelsBuiltInAuthorizationPolicy. </summary>
         public ChannelsBuiltInAuthorizationPolicy()

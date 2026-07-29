@@ -12,7 +12,10 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
-    /// <summary> Connection property base schema. </summary>
+    /// <summary>
+    /// Connection property base schema.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PatAuthTypeConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="UsernamePasswordAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, and <see cref="AadAuthTypeConnectionProperties"/>.
+    /// </summary>
     public partial class CognitiveServicesConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<CognitiveServicesConnectionCategory> _category;
