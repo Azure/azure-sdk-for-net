@@ -4,9 +4,9 @@
 
 ### Features Added
 
-### Breaking Changes
+- The `ExecuteStartContent`, `ExecuteDeallocateContent`, `ExecuteHibernateContent`, and `ExecuteDeleteContent` models now expose a settable `Resources` property and a constructor overload that accepts only `executionParameters`, in addition to the existing `(executionParameters, resources)` constructor.
 
-- The `ExecuteStartContent`, `ExecuteDeallocateContent`, `ExecuteHibernateContent`, and `ExecuteDeleteContent` constructors no longer take a `resources` parameter. The public constructor now accepts only `executionParameters`; set the `Resources` property directly instead.
+### Breaking Changes
 
 ### Bugs Fixed
 

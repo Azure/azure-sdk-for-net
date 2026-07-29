@@ -1714,6 +1714,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class ExecuteDeallocateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeallocateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeallocateContent>
     {
         public ExecuteDeallocateContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters) { }
+        public ExecuteDeallocateContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources) { }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources Resources { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ResourcesWithContext ResourcesWithContext { get { throw null; } set { } }
@@ -1730,6 +1731,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class ExecuteDeleteContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeleteContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeleteContent>
     {
         public ExecuteDeleteContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters) { }
+        public ExecuteDeleteContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources) { }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public bool? IsForceDeletion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources Resources { get { throw null; } set { } }
@@ -1747,6 +1749,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class ExecuteHibernateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteHibernateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteHibernateContent>
     {
         public ExecuteHibernateContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters) { }
+        public ExecuteHibernateContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources) { }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources Resources { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ResourcesWithContext ResourcesWithContext { get { throw null; } set { } }
@@ -1763,6 +1766,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public partial class ExecuteStartContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteStartContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.BulkActions.Models.ExecuteStartContent>
     {
         public ExecuteStartContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters) { }
+        public ExecuteStartContent(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail executionParameters, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources resources) { }
         public Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources Resources { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.BulkActions.Models.ResourcesWithContext ResourcesWithContext { get { throw null; } set { } }
