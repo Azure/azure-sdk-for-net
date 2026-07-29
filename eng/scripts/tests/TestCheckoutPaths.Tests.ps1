@@ -153,8 +153,19 @@ Describe 'Get-TestCheckoutPaths' {
 
         It 'always includes the services projects reach without naming them' {
             $services = Get-Services -Paths (& $script:ScriptPath -MapPath $script:MapPath -ArtifactNames 'Contoso.Omega')
-            foreach ($expected in @('core', 'common', 'identity', 'resourcemanager', 'template')) {
+            foreach ($expected in @('core', 'common', 'identity', 'resourcemanager', 'template', 'tools')) {
                 $services | Should -Contain $expected
+            }
+        }
+
+        It 'always includes sdk/tools so the injected analyzer ProjectReferences resolve' {
+            # eng/Directory.Build.Common.targets injects ProjectReferences to
+            # $(RepoRoot)/sdk/tools/Azure.SdkAnalyzers[.CodeFixes] into every project.
+            # A missing analyzer project is only an MSB9008 warning, so the failure
+            # surfaces much later as unsuppressed analyzer errors. Regression guard.
+            foreach ($artifact in @('Contoso.Alpha', 'Contoso.Omega', 'Contoso.Alpha,Contoso.Omega')) {
+                $services = Get-Services -Paths (& $script:ScriptPath -MapPath $script:MapPath -ArtifactNames $artifact)
+                $services | Should -Contain 'tools'
             }
         }
 

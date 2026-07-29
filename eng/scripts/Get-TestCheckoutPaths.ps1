@@ -104,8 +104,15 @@ $script:AlwaysIncludedRootDirectories = @(
 #                     sub-library, so it never appears in the project file
 #   identity        - commonly pulled in by test setup rather than by a reference
 #   template        - the template package participates in repository-wide builds
-# These five services total about 2.1% of the files under sdk/.
-$script:AlwaysIncludedServices = @('core', 'common', 'identity', 'resourcemanager', 'template')
+#   tools           - eng/Directory.Build.Common.targets injects ProjectReferences to
+#                     $(RepoRoot)/sdk/tools/Azure.SdkAnalyzers[.CodeFixes] into every
+#                     project when EnableClientSdkAnalyzers is true. These are analyzer
+#                     references, so a missing project degrades to an MSB9008 *warning*
+#                     rather than an error, and the build then fails later with
+#                     confusing analyzer diagnostics (e.g. AAIP001) because the
+#                     analyzers that carry the suppressions never loaded. 138 files.
+# These six services total about 2.1% of the files under sdk/.
+$script:AlwaysIncludedServices = @('core', 'common', 'identity', 'resourcemanager', 'template', 'tools')
 
 function Get-ProjectReferenceIndex {
   param([string] $Root)
