@@ -25,20 +25,12 @@
     the version to be present for shipping client libraries with a prior stable release so that removal fails the build,
     including while preparing a new preview release.
 
-    A first GA (1.0.0) has no prior stable release to compare against, so ApiCompatVersion is legitimately absent there.
+    A first stable release has no prior stable release to compare against, so ApiCompatVersion is legitimately absent there.
     In the rare case the core team approves running without ApiCompat for an already-GA'd package, add the project name
     to eng/apicompatbaselines/ApiCompatVersionOptOut.txt, which is CODEOWNERS-protected and therefore requires core team review.
   -->
   <Target Name="ValidateApiCompatVersionPresent" BeforeTargets="Build"
-          Condition="'$(ValidateRunApiCompat)' == 'true' and '$(ApiCompatVersion)' == '' and '$(IsShippingClientLibrary)' == 'true' and '$(IncludeBuildOutput)' != 'false' and '$(_VersionInProject)' != '1.0.0'">
-    <PropertyGroup>
-      <_ApiCompatVersionRequired Condition="'$(HasReleaseVersion)' != 'false'">true</_ApiCompatVersionRequired>
-      <_ApiCompatChangelogPath>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '..', 'CHANGELOG.md'))</_ApiCompatChangelogPath>
-    </PropertyGroup>
-    <CheckApiCompatStableRelease ChangelogPath="$(_ApiCompatChangelogPath)"
-                                 Condition="'$(_ApiCompatVersionRequired)' != 'true' and Exists('$(_ApiCompatChangelogPath)')">
-      <Output TaskParameter="HasStableRelease" PropertyName="_ApiCompatHasStableRelease" />
-    </CheckApiCompatStableRelease>
+          Condition="'$(ValidateRunApiCompat)' == 'true' and '$(ApiCompatVersion)' == '' and '$(IsShippingClientLibrary)' == 'true' and '$(IncludeBuildOutput)' != 'false'">
     <ReadLinesFromFile File="$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt"
                        Condition="Exists('$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt')">
       <Output TaskParameter="Lines" ItemName="_ApiCompatVersionOptOutLine" />
@@ -48,9 +40,19 @@
                                     Condition="'%(Identity)' == '$(MSBuildProjectName)'" />
     </ItemGroup>
     <PropertyGroup>
-      <_ApiCompatVersionRequired Condition="'$(_ApiCompatHasStableRelease)' == 'true'">true</_ApiCompatVersionRequired>
+      <_ApiCompatChangelogPath>$(PackageRootDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
     </PropertyGroup>
-    <Error Condition="'$(_ApiCompatVersionRequired)' == 'true' and '@(_ApiCompatVersionOptOutMatch)' == ''"
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and !Exists('$(_ApiCompatChangelogPath)')"
+           Text="ApiCompat validation cannot determine release history for $(MSBuildProjectName): CHANGELOG.md was not found at $(_ApiCompatChangelogPath)." />
+    <CheckApiCompatStableRelease ChangelogPath="$(_ApiCompatChangelogPath)"
+                                 CurrentVersion="$(_VersionInProject)"
+                                 Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and Exists('$(_ApiCompatChangelogPath)')">
+      <Output TaskParameter="HasStableRelease" PropertyName="_ApiCompatHasStableRelease" />
+      <Output TaskParameter="ReadError" PropertyName="_ApiCompatChangelogReadError" />
+    </CheckApiCompatStableRelease>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatChangelogReadError)' != ''"
+           Text="ApiCompat validation could not read $(_ApiCompatChangelogPath): $(_ApiCompatChangelogReadError)" />
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatHasStableRelease)' == 'true'"
            Text="ApiCompatVersion is missing from $(MSBuildProjectName). It is required for libraries with a prior stable release and is managed automatically by eng/scripts/Update-PkgVersion.ps1 - do not delete it. If the core team has approved shipping this package without ApiCompat, add '$(MSBuildProjectName)' to eng/apicompatbaselines/ApiCompatVersionOptOut.txt (CODEOWNERS-protected)." />
   </Target>
 
@@ -60,17 +62,31 @@
     AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
       <ChangelogPath ParameterType="System.String" Required="true" />
+      <CurrentVersion ParameterType="System.String" Required="true" />
       <HasStableRelease ParameterType="System.Boolean" Output="true" />
+      <ReadError ParameterType="System.String" Output="true" />
     </ParameterGroup>
     <Task>
       <Code Type="Fragment" Language="cs"><![CDATA[
-        foreach (string line in System.IO.File.ReadLines(ChangelogPath))
+        try
         {
-          if (System.Text.RegularExpressions.Regex.IsMatch(line, @"^##\s+\d+\.\d+\.\d+\s+\("))
+          var releaseHeading = new System.Text.RegularExpressions.Regex(
+              @"^#+\s+(?<version>\d+\.\d+\.\d+)\s+\(\d{4}-\d{2}-\d{2}\)",
+              System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+          foreach (string line in System.IO.File.ReadLines(ChangelogPath))
           {
-            HasStableRelease = true;
-            break;
+            System.Text.RegularExpressions.Match match = releaseHeading.Match(line);
+            if (match.Success && match.Groups["version"].Value != CurrentVersion)
+            {
+              HasStableRelease = true;
+              break;
+            }
           }
+        }
+        catch (System.Exception ex)
+        {
+          ReadError = ex.Message;
         }
       ]]></Code>
     </Task>
