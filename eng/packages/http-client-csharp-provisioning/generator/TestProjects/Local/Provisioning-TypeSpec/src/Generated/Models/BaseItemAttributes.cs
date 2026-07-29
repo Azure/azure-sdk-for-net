@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public partial class BaseItemAttributes : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
+        private BicepValue<string> _displayName;
         private BicepValue<DateTimeOffset> _created;
         private BicepValue<DateTimeOffset> _updated;
 
@@ -35,6 +36,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _enabled.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
+        {
+            get
+            {
+                Initialize();
+                return _displayName;
+            }
+            set
+            {
+                Initialize();
+                _displayName.Assign(value);
             }
         }
 
@@ -63,6 +79,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
+            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
             _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true);
             _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true);
             DefineAdditionalProperties();

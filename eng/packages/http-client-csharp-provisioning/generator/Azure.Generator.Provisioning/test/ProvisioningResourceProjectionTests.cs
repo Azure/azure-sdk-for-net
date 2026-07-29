@@ -335,6 +335,23 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void DerivedModelPropertyHidingBasePropertyUsesNewModifier()
+        {
+            var baseProperty = CreateProperty("HostName");
+            var derivedProperty = CreateProperty("HostName", isRequired: true);
+            var baseModel = CreateModel("BaseOriginProperties", [baseProperty]);
+            var derivedModel = CreateModel("OriginProperties", [derivedProperty], baseModel);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+            var modelProvider = new ProvisioningModelProvider(derivedModel);
+
+            var property = modelProvider.Properties.Single(property => property.Name == "HostName");
+
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.New), Is.True);
+        }
+
+        [Test]
         public void ReadOnlyResourceModelReferencedByWritableParentBodyIsSettable()
         {
             var childNameProperty = CreateProperty("Name", isRequired: true);

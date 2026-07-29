@@ -97,9 +97,29 @@ namespace Azure.Generator.Provisioning.Providers
 
                 var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
                 if (property != null)
+                {
+                    if (HidesBaseProperty(property.Name))
+                    {
+                        property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
+                    }
                     properties.Add(property);
+                }
             }
             return [.. properties];
+        }
+
+        private bool HidesBaseProperty(string propertyName)
+        {
+            var baseModel = BaseModelProvider;
+            while (baseModel != null)
+            {
+                if (baseModel.CanonicalView.Properties.Any(property => string.Equals(property.Name, propertyName, StringComparison.Ordinal)))
+                {
+                    return true;
+                }
+                baseModel = baseModel.BaseModelProvider;
+            }
+            return false;
         }
 
         protected override ConstructorProvider[] BuildConstructors()

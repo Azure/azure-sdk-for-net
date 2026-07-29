@@ -14,6 +14,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public partial class ItemAttributes : BaseItemAttributes
     {
         private BicepValue<DateTimeOffset> _expires;
+        private BicepValue<string> _displayName;
 
         /// <summary> Creates a new ItemAttributes. </summary>
         public ItemAttributes()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public new BicepValue<string> DisplayName
+        {
+            get
+            {
+                Initialize();
+                return _displayName;
+            }
+            set
+            {
+                Initialize();
+                _displayName.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ItemAttributes. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "expires" });
+            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

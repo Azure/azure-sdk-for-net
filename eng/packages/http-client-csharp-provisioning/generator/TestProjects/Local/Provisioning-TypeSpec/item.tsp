@@ -18,6 +18,9 @@ model BaseItemAttributes {
   /** Whether the item is enabled. */
   enabled?: boolean;
 
+  /** The optional name inherited by item attributes. */
+  displayName?: string;
+
   /** The creation date. */
   @visibility(Lifecycle.Read)
   created?: utcDateTime;
@@ -31,6 +34,9 @@ model BaseItemAttributes {
 model ItemAttributes extends BaseItemAttributes {
   /** The expiry date. */
   expires?: utcDateTime;
+
+  /** The required item attribute name. */
+  displayName: string;
 }
 
 // ---- Output-only resource with separate create body (bug #57120) ----
