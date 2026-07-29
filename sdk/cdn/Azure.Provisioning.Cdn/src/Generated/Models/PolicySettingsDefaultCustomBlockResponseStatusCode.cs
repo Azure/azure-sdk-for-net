@@ -14,18 +14,18 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> TwoHundred. </summary>
         [DataMember(Name = "200")]
-        TwoHundred,
+        TwoHundred = 0,
         /// <summary> FourHundredThree. </summary>
         [DataMember(Name = "403")]
-        FourHundredThree,
+        FourHundredThree = 1,
         /// <summary> FourHundredFive. </summary>
         [DataMember(Name = "405")]
-        FourHundredFive,
+        FourHundredFive = 2,
         /// <summary> FourHundredSix. </summary>
         [DataMember(Name = "406")]
-        FourHundredSix,
+        FourHundredSix = 3,
         /// <summary> FourHundredTwentyNine. </summary>
         [DataMember(Name = "429")]
-        FourHundredTwentyNine
+        FourHundredTwentyNine = 4
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSiteReferenceResource.ResourceType, out string edgeSiteReferenceApiVersion);
             _siteReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSiteReferenceResource.ResourceType.Namespace, Diagnostics);
-            _siteReferencesRestClient = new SiteReferences(_siteReferencesClientDiagnostics, Pipeline, Endpoint, edgeSiteReferenceApiVersion ?? "2025-06-01");
+            _siteReferencesRestClient = new SiteReferences(_siteReferencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSiteReferenceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

@@ -21,18 +21,13 @@ namespace Azure.Provisioning.Search
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
                 return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
             }
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkSecurityGroupResource.ResourceType, out string networkSecurityGroupApiVersion);
             _networkSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Endpoint, networkSecurityGroupApiVersion ?? "2025-07-01");
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityGroupApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

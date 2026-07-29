@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(PrivateLinkServiceResource.ResourceType, out string privateLinkServiceApiVersion);
             _privateLinkServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateLinkServiceResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkServicesRestClient = new PrivateLinkServices(_privateLinkServicesClientDiagnostics, Pipeline, Endpoint, privateLinkServiceApiVersion ?? "2025-07-01");
+            _privateLinkServicesRestClient = new PrivateLinkServices(_privateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkServiceApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

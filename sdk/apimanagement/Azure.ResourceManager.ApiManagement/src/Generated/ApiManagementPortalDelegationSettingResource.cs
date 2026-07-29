@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementPortalDelegationSettingApiVersion);
             _delegationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _delegationSettingsRestClient = new DelegationSettings(_delegationSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementPortalDelegationSettingApiVersion ?? "2025-09-01-preview");
+            _delegationSettingsRestClient = new DelegationSettings(_delegationSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPortalDelegationSettingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

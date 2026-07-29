@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceIPFamily
     {
         /// <summary> IPv4 family. </summary>
-        IPv4,
+        IPv4 = 0,
         /// <summary> IPv6 family. </summary>
-        IPv6
+        IPv6 = 1
     }
 }

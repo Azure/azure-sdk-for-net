@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>
-        public IList<DevTestLabPort> AllowedPorts { get; }
+        public IList<DevTestLabPort> AllowedPorts { get; } = new ChangeTrackingList<DevTestLabPort>();
     }
 }

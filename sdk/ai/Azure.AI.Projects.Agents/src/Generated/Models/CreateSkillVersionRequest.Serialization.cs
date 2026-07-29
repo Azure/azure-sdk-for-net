@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateSkillVersionRequest. </summary>
     internal partial class CreateSkillVersionRequest : IJsonModel<CreateSkillVersionRequest>
     {
         /// <param name="data"> The data to parse. </param>

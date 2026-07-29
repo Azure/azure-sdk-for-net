@@ -400,6 +400,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(OperationEntityBaseContract))]
     [ModelReaderWriterBuildable(typeof(OperationResultContractProperties))]
     [ModelReaderWriterBuildable(typeof(OperationResultLogItemContract))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OperationUpdateContractProperties))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpoint))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointList))]

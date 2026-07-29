@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relay.Models;
 
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.Relay
     [ModelReaderWriterBuildable(typeof(RelayPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(RelayRegenerateAccessKeyContent))]
     [ModelReaderWriterBuildable(typeof(RelaySku))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WcfRelayAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(WcfRelayData))]

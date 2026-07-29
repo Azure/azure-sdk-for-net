@@ -1,6 +1,6 @@
 directory: specification/netapp/resource-manager/Microsoft.NetApp/NetApp
-commit: 048c7441c898e3067b00732016f853020ae7df5b
+commit: 941453aea62f3a5b283a5470cc38e51fb4124bdd
 repo: Azure/azure-rest-api-specs
-additionalDirectories:
+additionalDirectories: 
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

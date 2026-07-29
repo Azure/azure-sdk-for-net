@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsThreatIntelligenceIndicatorApiVersion);
             _threatIntelligenceIndicatorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _threatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicator(_threatIntelligenceIndicatorClientDiagnostics, Pipeline, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
+            _threatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicator(_threatIntelligenceIndicatorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

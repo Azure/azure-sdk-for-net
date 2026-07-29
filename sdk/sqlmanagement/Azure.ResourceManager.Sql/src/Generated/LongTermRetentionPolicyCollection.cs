@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(LongTermRetentionPolicyResource.ResourceType, out string longTermRetentionPolicyApiVersion);
             _longTermRetentionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LongTermRetentionPolicyResource.ResourceType.Namespace, Diagnostics);
-            _longTermRetentionPoliciesRestClient = new LongTermRetentionPolicies(_longTermRetentionPoliciesClientDiagnostics, Pipeline, Endpoint, longTermRetentionPolicyApiVersion ?? "2025-02-01-preview");
+            _longTermRetentionPoliciesRestClient = new LongTermRetentionPolicies(_longTermRetentionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, longTermRetentionPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -51,18 +51,13 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets or sets the MaintenanceStartOn. </summary>
+        /// <summary> Gets the MaintenanceStartOn. </summary>
         public BicepValue<DateTimeOffset> MaintenanceStartOn
         {
             get
             {
                 Initialize();
                 return _maintenanceStartOn;
-            }
-            set
-            {
-                Initialize();
-                _maintenanceStartOn.Assign(value);
             }
         }
 

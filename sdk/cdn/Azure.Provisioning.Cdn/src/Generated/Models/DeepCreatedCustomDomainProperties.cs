@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Cdn
         {
         }
 
-        /// <summary> Gets or sets the HostName. </summary>
+        /// <summary> Gets the HostName. </summary>
         public BicepValue<string> HostName
         {
             get
@@ -29,14 +29,9 @@ namespace Azure.Provisioning.Cdn
                 Initialize();
                 return _hostName;
             }
-            set
-            {
-                Initialize();
-                _hostName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ValidationData. </summary>
+        /// <summary> Gets the ValidationData. </summary>
         public BicepValue<string> ValidationData
         {
             get
@@ -44,18 +39,13 @@ namespace Azure.Provisioning.Cdn
                 Initialize();
                 return _validationData;
             }
-            set
-            {
-                Initialize();
-                _validationData.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for DeepCreatedCustomDomainProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" }, isRequired: true);
+            _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" });
             _validationData = DefineProperty<string>(nameof(ValidationData), new string[] { "validationData" });
             DefineAdditionalProperties();
         }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum HeaderAction
     {
         /// <summary> Append. </summary>
-        Append,
+        Append = 0,
         /// <summary> Overwrite. </summary>
-        Overwrite,
+        Overwrite = 1,
         /// <summary> Delete. </summary>
-        Delete
+        Delete = 2
     }
 }

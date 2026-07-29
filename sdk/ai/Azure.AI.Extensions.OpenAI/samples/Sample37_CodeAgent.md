@@ -5,22 +5,48 @@
 In this example we will use the code from the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
 
 ## Run the sample
-`Azure.AI.Projects` can be used only to create an `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
-1. Create a folder, containing agent code and dependencies. In our example, it should be located `Assets/AgentsCode` folder next to the sample itself (this folder is not provided).
-2. Copy the contents of a [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py) to the file main.py in the `Assets` folder.
-3. Create the `requirements.txt` in `Assets` folder with the next contents.
-
-```
-azure-ai-agentserver-core
-azure-ai-agentserver-invocations
-azure-ai-agentserver-responses
-```
-
-4. Change directory to `AgentsCode` folder and install all the required python dependencies. **This step is ONLY required if `CodeDependencyResolution.Bundled` dependency resolution is being used.**
+`Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
+1. Create a project and add `Azure.AI.AgentServer.Responses` package as a dependency.
 
 ```bash
-pip install -r requirements.txt --target packages --platform manylinux2014_x86_64 --python-version 3.14 --implementation cp --only-binary=:all:
+dotnet new console --name EchoAgent --output EchoAgent
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ```
+
+2. Populate the code in Program.cs
+
+```C#
+using Azure.AI.AgentServer.Responses;
+using Azure.AI.AgentServer.Responses.Models;
+
+ResponsesServer.Run<EchoHandler>();
+
+public class EchoHandler : ResponseHandler
+{
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
+            });
+    }
+}
+```
+
+3. Compile the application.
+
+```bash
+dotnet publish
+```
+
+This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
+4. Copy the contents of `publish` folder to `Assets/AgentsCode`.
+
 
 # Run the sample.
 
@@ -31,7 +57,7 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT
 AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. For brevity we will create the method, returning the `CreateAgentVersionFromCodeMetadata` object.
+2. For brevity we will create the method, returning the `AgentVersionFromCodeMetadata` object.
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
 private static AgentVersionFromCodeMetadata GetAgentMetadata()
@@ -43,9 +69,9 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
         CodeConfiguration = new(
-            runtime: "python_3_14",
-            entryPoint: ["python", "main.py"],
-            dependencyResolution: CodeDependencyResolution.RemoteBuild
+            runtime: "dotnet_10",
+            entryPoint: ["dotnet", "EchoAgent.dll"],
+            dependencyResolution: CodeDependencyResolution.Bundled
         ),
     };
     AgentVersionFromCodeMetadata metadata = new(agentDefinition);

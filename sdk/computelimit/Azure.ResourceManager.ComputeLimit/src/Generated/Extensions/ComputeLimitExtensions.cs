@@ -50,6 +50,24 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="TrustedHostSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetTrustedHostSubscriptionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrustedHostSubscriptionResource"/> object. </returns>
+        public static TrustedHostSubscriptionResource GetTrustedHostSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeLimitArmClient(client).GetTrustedHostSubscriptionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ComputeLimitSharedLimitResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -195,6 +213,64 @@ namespace Azure.ResourceManager.ComputeLimit
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitGuestSubscription(location, guestSubscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TrustedHostSubscriptions in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetTrustedHostSubscriptions(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of TrustedHostSubscriptions and their operations over a TrustedHostSubscriptionResource. </returns>
+        public static TrustedHostSubscriptionCollection GetTrustedHostSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetTrustedHostSubscriptions(location);
+        }
+
+        /// <summary>
+        /// Gets a host subscription that the guest subscription trusts.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetTrustedHostSubscriptionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="hostSubscriptionId"> The name of the TrustedHostSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TrustedHostSubscriptionResource>> GetTrustedHostSubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string hostSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetTrustedHostSubscriptionAsync(location, hostSubscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a host subscription that the guest subscription trusts.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetTrustedHostSubscription(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="hostSubscriptionId"> The name of the TrustedHostSubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TrustedHostSubscriptionResource> GetTrustedHostSubscription(this SubscriptionResource subscriptionResource, AzureLocation location, string hostSubscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetTrustedHostSubscription(location, hostSubscriptionId, cancellationToken);
         }
 
         /// <summary>

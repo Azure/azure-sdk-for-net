@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(BackupEngineResource.ResourceType, out string backupEngineApiVersion);
             _vaultName = vaultName;
             _backupEnginesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupEngineResource.ResourceType.Namespace, Diagnostics);
-            _backupEnginesRestClient = new BackupEngines(_backupEnginesClientDiagnostics, Pipeline, Endpoint, backupEngineApiVersion ?? "2026-01-31-preview");
+            _backupEnginesRestClient = new BackupEngines(_backupEnginesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupEngineApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> No bridge is created. Intra-VM Pod to Pod communication is through IP routes created by Azure CNI. See [Transparent Mode](https://docs.microsoft.com/azure/aks/faq#transparent-mode) for more information. </summary>
         [DataMember(Name = "transparent")]
-        Transparent,
+        Transparent = 0,
         /// <summary> This is no longer supported. </summary>
         [DataMember(Name = "bridge")]
-        Bridge
+        Bridge = 1
     }
 }

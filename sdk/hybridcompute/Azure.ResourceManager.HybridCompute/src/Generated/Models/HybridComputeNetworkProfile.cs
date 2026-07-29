@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The list of network interfaces. </summary>
         [WirePath("networkInterfaces")]
-        public IReadOnlyList<HybridComputeNetworkInterface> NetworkInterfaces { get; }
+        public IReadOnlyList<HybridComputeNetworkInterface> NetworkInterfaces { get; } = new ChangeTrackingList<HybridComputeNetworkInterface>();
     }
 }

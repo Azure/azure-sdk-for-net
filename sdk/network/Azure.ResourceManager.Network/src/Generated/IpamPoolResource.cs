@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string ipamPoolApiVersion);
             _ipamPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _ipamPoolsRestClient = new IpamPools(_ipamPoolsClientDiagnostics, Pipeline, Endpoint, ipamPoolApiVersion ?? "2025-07-01");
+            _ipamPoolsRestClient = new IpamPools(_ipamPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipamPoolApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

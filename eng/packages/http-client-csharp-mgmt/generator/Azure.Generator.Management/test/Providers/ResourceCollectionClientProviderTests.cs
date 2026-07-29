@@ -13,6 +13,28 @@ namespace Azure.Generator.Management.Tests.Providers
 {
     internal class ResourceCollectionClientProviderTests
     {
+        [TestCase]
+        public void Verify_BackCompatOverloadIsDecorated()
+        {
+            // The current spec adds an optional "expand" query parameter to Get; the previous contract (loaded from
+            // TestData) did not, so the upstream generator synthesizes a hidden back-compat overload preserving the old
+            // signature.
+            var (client, models) = InputResourceData.ClientWithResource(includeGetQueryParameter: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+            var provider = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().First();
+            Assert.That(provider.LastContractView, Is.Not.Null);
+
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(provider);
+
+            var backCompatMethods = new TestTypeProvider(
+                name: provider.Name,
+                ns: provider.Type.Namespace,
+                declarationModifiers: provider.DeclarationModifiers,
+                methods: provider.Methods.Where(m => m.Signature.Name == "Get" || m.Signature.Name == "GetAsync"));
+            var rendered = new TypeProviderWriter(backCompatMethods).Write().Content.Replace("\r\n", "\n");
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
         private static MethodProvider GetResourceCollectionClientProviderMethodByName(string methodName)
         {
             ResourceCollectionClientProvider resourceProvider = GetResourceCollectionClientProvider();
@@ -53,6 +75,37 @@ namespace Azure.Generator.Management.Tests.Providers
             var constructor = collection.Constructors.SingleOrDefault(c => c.Signature.Parameters.Any(p => p.Name == "id"));
             Assert.That(constructor, Is.Not.Null);
             Assert.That(constructor!.BodyStatements?.ToDisplayString(), Does.Contain("global::Samples.WatchlistItemCollection.ValidateResourceId(id);"));
+        }
+
+        [TestCase]
+        public void Verify_FixedChildResourceTypeIsNotPublicCollectionParameter()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithFixedChildResourceType();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .SingleOrDefault(p => p.Name == "AzureEndpointCollection");
+            Assert.That(collection, Is.Not.Null);
+            var azureEndpointCollection = collection!;
+
+            var getMethod = azureEndpointCollection.Methods.Single(m => m.Signature.Name == "Get");
+            Assert.That(getMethod.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("endpointType"));
+            Assert.That(getMethod.Signature.Parameters.Select(p => p.Name), Does.Contain("endpointName"));
+            Assert.That(getMethod.BodyStatements?.ToDisplayString(), Does.Contain("\"AzureEndpoints\""));
+            Assert.That(getMethod.BodyStatements?.ToDisplayString(), Does.Not.Contain("endpointType"));
+
+            var createMethod = azureEndpointCollection.Methods.Single(m => m.Signature.Name == "CreateOrUpdate");
+            Assert.That(createMethod.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("endpointType"));
+
+            var parentResource = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .SingleOrDefault(p => p.Name == "ProfileResource");
+            Assert.That(parentResource, Is.Not.Null);
+            var parentGetMethod = parentResource!.Methods.Single(m => m.Signature.Name == "GetAzureEndpoint");
+            Assert.That(parentGetMethod.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("endpointType"));
         }
 
         [TestCase]
@@ -200,6 +253,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(expected));
+            Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type));
+            Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.False);
         }
 
         [TestCase]

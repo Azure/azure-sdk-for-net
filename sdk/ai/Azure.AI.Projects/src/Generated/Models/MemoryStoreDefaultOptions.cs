@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store configurations. </summary>
+    [Experimental("AAIP001")]
     public partial class MemoryStoreDefaultOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

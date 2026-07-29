@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of next hop IP addresses for ECMP routing. Must contain between 2 and 64 IP addresses. </summary>
         [WirePath("nextHopIpAddresses")]
-        public IList<string> NextHopIpAddresses { get; }
+        public IList<string> NextHopIpAddresses { get; } = new ChangeTrackingList<string>();
     }
 }

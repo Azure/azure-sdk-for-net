@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
 
         private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
+        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
 
         /// <summary> Gets a collection of AgentPools in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="registryName"> The registryName for the resource. </param>

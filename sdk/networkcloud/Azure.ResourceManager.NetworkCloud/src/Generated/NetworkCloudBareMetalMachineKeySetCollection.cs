@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudBareMetalMachineKeySetResource.ResourceType, out string networkCloudBareMetalMachineKeySetApiVersion);
             _bareMetalMachineKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBareMetalMachineKeySetResource.ResourceType.Namespace, Diagnostics);
-            _bareMetalMachineKeySetsRestClient = new BareMetalMachineKeySets(_bareMetalMachineKeySetsClientDiagnostics, Pipeline, Endpoint, networkCloudBareMetalMachineKeySetApiVersion ?? "2026-05-01-preview");
+            _bareMetalMachineKeySetsRestClient = new BareMetalMachineKeySets(_bareMetalMachineKeySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBareMetalMachineKeySetApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> The allowed subscriptions. </summary>
-        public IList<string> AllowedSubscriptions { get; }
+        public IList<string> AllowedSubscriptions { get; } = new ChangeTrackingList<string>();
     }
 }
