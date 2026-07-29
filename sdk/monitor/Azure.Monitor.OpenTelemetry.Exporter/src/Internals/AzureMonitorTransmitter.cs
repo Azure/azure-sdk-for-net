@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         internal readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
-        private readonly AzureMonitorStatsbeat? _statsbeat;
+        internal readonly AzureMonitorStatsbeat? _statsbeat;
         private readonly ConnectionVars _connectionVars;
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
@@ -141,6 +141,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     var disableStatsbeat = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATSBEAT_DISABLED);
                     if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AzureMonitorExporterEventSource.Log.StatsbeatDisabled();
+
+                        return null;
+                    }
+
+                    var disableAllSdkStats = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL);
+                    if (string.Equals(disableAllSdkStats, "true", StringComparison.OrdinalIgnoreCase))
                     {
                         AzureMonitorExporterEventSource.Log.StatsbeatDisabled();
 
