@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
                 return null;
             }
             string name = default;
-            ExecutionPoint executionPoint = default;
-            ScriptType scriptType = default;
+            PreparedImageSpecificationExecutionPoint executionPoint = default;
+            PreparedImageSpecificationScriptType scriptType = default;
             string script = default;
             PostScriptAction? postScriptAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
                 }
                 if (prop.NameEquals("executionPoint"u8))
                 {
-                    executionPoint = new ExecutionPoint(prop.Value.GetString());
+                    executionPoint = new PreparedImageSpecificationExecutionPoint(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scriptType"u8))
                 {
-                    scriptType = new ScriptType(prop.Value.GetString());
+                    scriptType = new PreparedImageSpecificationScriptType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("script"u8))

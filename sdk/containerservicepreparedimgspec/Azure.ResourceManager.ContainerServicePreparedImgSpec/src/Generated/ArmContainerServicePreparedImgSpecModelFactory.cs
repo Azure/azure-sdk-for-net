@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServicePreparedImgSpec.PreparedImageSpecificationData"/> instance for mocking. </returns>
-        public static PreparedImageSpecificationData PreparedImageSpecificationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PreparedImageSpecificationProperties properties = default, string eTag = default)
+        public static PreparedImageSpecificationData PreparedImageSpecificationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PreparedImageSpecificationProperties properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         /// <param name="script"> The script content to be executed in plain text. Do not include secrets. </param>
         /// <param name="postScriptAction"> The action to take after successful script execution. </param>
         /// <returns> A new <see cref="Models.PreparedImageSpecificationScript"/> instance for mocking. </returns>
-        public static PreparedImageSpecificationScript PreparedImageSpecificationScript(string name = default, ExecutionPoint executionPoint = default, ScriptType scriptType = default, string script = default, PostScriptAction? postScriptAction = default)
+        public static PreparedImageSpecificationScript PreparedImageSpecificationScript(string name = default, PreparedImageSpecificationExecutionPoint executionPoint = default, PreparedImageSpecificationScriptType scriptType = default, string script = default, PostScriptAction? postScriptAction = default)
         {
             return new PreparedImageSpecificationScript(
                 name,

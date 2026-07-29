@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         /// </param>
         /// <param name="scriptType"> The runtime environment for the script (e.g. Bash). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PreparedImageSpecificationScript(string name, ExecutionPoint executionPoint, ScriptType scriptType)
+        public PreparedImageSpecificationScript(string name, PreparedImageSpecificationExecutionPoint executionPoint, PreparedImageSpecificationScriptType scriptType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         /// <param name="script"> The script content to be executed in plain text. Do not include secrets. </param>
         /// <param name="postScriptAction"> The action to take after successful script execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PreparedImageSpecificationScript(string name, ExecutionPoint executionPoint, ScriptType scriptType, string script, PostScriptAction? postScriptAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PreparedImageSpecificationScript(string name, PreparedImageSpecificationExecutionPoint executionPoint, PreparedImageSpecificationScriptType scriptType, string script, PostScriptAction? postScriptAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ExecutionPoint = executionPoint;
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         /// The stage at which the script is executed.
         /// Specifying `NodeImageBuildTime` will ensure changes are persisted into the node image.
         /// </summary>
-        public ExecutionPoint ExecutionPoint { get; set; }
+        public PreparedImageSpecificationExecutionPoint ExecutionPoint { get; set; }
 
         /// <summary> The runtime environment for the script (e.g. Bash). </summary>
-        public ScriptType ScriptType { get; set; }
+        public PreparedImageSpecificationScriptType ScriptType { get; set; }
 
         /// <summary> The script content to be executed in plain text. Do not include secrets. </summary>
         public string Script { get; set; }

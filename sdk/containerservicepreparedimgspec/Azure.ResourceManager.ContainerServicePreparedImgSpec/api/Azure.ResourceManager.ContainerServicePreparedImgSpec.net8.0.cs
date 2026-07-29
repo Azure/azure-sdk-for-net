@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
     public partial class PreparedImageSpecificationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.PreparedImageSpecificationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.PreparedImageSpecificationData>
     {
         public PreparedImageSpecificationData(Azure.Core.AzureLocation location) { }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -149,29 +149,12 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
 {
     public static partial class ArmContainerServicePreparedImgSpecModelFactory
     {
-        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.PreparedImageSpecificationData PreparedImageSpecificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationProperties properties = null, string eTag = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.PreparedImageSpecificationData PreparedImageSpecificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationManagedIdentityProfile PreparedImageSpecificationManagedIdentityProfile(Azure.Core.ResourceIdentifier resourceId = null, System.Guid? objectId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationPatch PreparedImageSpecificationPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationProperties PreparedImageSpecificationProperties(System.Collections.Generic.IEnumerable<string> containerImages = null, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationManagedIdentityProfile identityProfile = null, string version = null, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript> customizationScripts = null) { throw null; }
-        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript PreparedImageSpecificationScript(string name = null, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint executionPoint = default(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint), Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType scriptType = default(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType), string script = null, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction? postScriptAction = default(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction?)) { throw null; }
+        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript PreparedImageSpecificationScript(string name = null, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint executionPoint = default(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint), Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType scriptType = default(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType), string script = null, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction? postScriptAction = default(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction?)) { throw null; }
         public static Azure.ResourceManager.ContainerServicePreparedImgSpec.PreparedImageSpecificationVersionData PreparedImageSpecificationVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationProperties properties = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExecutionPoint : System.IEquatable<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExecutionPoint(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint NodeImageBuildTime { get { throw null; } }
-        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint NodeProvisionTime { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PostScriptAction : System.IEquatable<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction>
@@ -188,6 +171,23 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PreparedImageSpecificationExecutionPoint : System.IEquatable<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PreparedImageSpecificationExecutionPoint(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint NodeImageBuildTime { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint NodeProvisionTime { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PreparedImageSpecificationManagedIdentityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationManagedIdentityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationManagedIdentityProfile>
@@ -240,12 +240,12 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
     }
     public partial class PreparedImageSpecificationScript : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript>
     {
-        public PreparedImageSpecificationScript(string name, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint executionPoint, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType scriptType) { }
-        public Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ExecutionPoint ExecutionPoint { get { throw null; } set { } }
+        public PreparedImageSpecificationScript(string name, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint executionPoint, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType scriptType) { }
+        public Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationExecutionPoint ExecutionPoint { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PostScriptAction? PostScriptAction { get { throw null; } set { } }
         public string Script { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType ScriptType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType ScriptType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -255,6 +255,23 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScript>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PreparedImageSpecificationScriptType : System.IEquatable<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PreparedImageSpecificationScriptType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType Bash { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType PowerShell { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.PreparedImageSpecificationScriptType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ProvisioningState>
@@ -276,23 +293,6 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
         public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ProvisioningState (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ProvisioningState left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScriptType : System.IEquatable<Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScriptType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType Bash { get { throw null; } }
-        public static Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType PowerShell { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType left, Azure.ResourceManager.ContainerServicePreparedImgSpec.Models.ScriptType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
