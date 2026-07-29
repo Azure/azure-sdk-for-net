@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
 
@@ -46,7 +45,6 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(RegisteredServerCreateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(RegisteredServerProperties))]
     [ModelReaderWriterBuildable(typeof(RegisteredServerUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreFileSpec))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointArray))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointBackgroundDataDownloadActivity))]

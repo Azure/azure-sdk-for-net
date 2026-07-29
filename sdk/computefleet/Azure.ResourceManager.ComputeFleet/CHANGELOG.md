@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2026-08-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `VmSize`, `Zone`, and `Priority` properties to `ComputeFleetVirtualMachine`.
 
 ## 1.1.0-beta.2 (2026-06-18)
 
