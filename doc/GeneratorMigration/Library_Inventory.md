@@ -16,14 +16,14 @@
 
 ## Summary
 
-- Total libraries: 442
+- Total libraries: 443
 - Management Plane (MPG): 260
   - Autorest/Swagger: 43
   - New Emitter (TypeSpec): 217
   - Old TypeSpec: 0
-- Data Plane (DPG): 129
+- Data Plane (DPG): 130
   - Autorest/Swagger: 30
-  - New Emitter (TypeSpec): 51
+  - New Emitter (TypeSpec): 52
   - Old TypeSpec: 1
 - Provisioning: 53
   - Reflection-based generator: 25
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 51 / 52 (98.1%)
+**Migration Status**: 52 / 53 (98.1%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -92,6 +92,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | translation | Azure.AI.Translation.Text | ✅ |  |
 | vision | Azure.AI.Vision.ImageAnalysis | ✅ |  |
 | voicelive | Azure.AI.VoiceLive | ✅ |  |
+| webpubsub | Azure.Messaging.WebPubSub.Chat | ✅ |  |
 
 
 ## Data Plane Libraries (DPG) - Still on Swagger

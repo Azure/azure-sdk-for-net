@@ -28,35 +28,6 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubChatServiceClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="hub">
-        /// Target hub name, which should start with alphabetic characters and only contain
-        ///      alpha-numeric characters or underscore.
-        /// </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal WebPubSubChatServiceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string hub, WebPubSubChatServiceClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(hub, nameof(hub));
-
-            options ??= new WebPubSubChatServiceClientOptions();
-
-            _endpoint = endpoint;
-            _hub = hub;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
         /// <summary> Initializes a new instance of WebPubSubChatServiceClient from a <see cref="WebPubSubChatServiceClientSettings"/>. </summary>
         /// <param name="settings"> The settings for WebPubSubChatServiceClient. </param>
         [Experimental("SCME0002")]

@@ -5,6 +5,7 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.Messaging.WebPubSub.Chat</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,9 +19,22 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <!--
+      Shared source linked from the sibling Azure.Messaging.WebPubSub package's src/Shared folder.
+      Those files are the single source of truth (owned by Azure.Messaging.WebPubSub) and are
+      compiled into this package so the AzureKeyCredential auth flow stays identical between the two
+      clients. Do NOT copy/fork these files - edit them in Azure.Messaging.WebPubSub/src/Shared and
+      both packages pick up the change. (Linked rather than exposed via InternalsVisibleTo to avoid AZC0011.)
+    -->
+    <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\WebPubSubAuthenticationPolicy.cs" LinkBase="Shared/WebPubSub" />
+    <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\ReverseProxyPolicy.cs" LinkBase="Shared/WebPubSub" />
+    <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\JwtBuilder.cs" LinkBase="Shared/WebPubSub" />
+    <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\NS2Bridge.cs" LinkBase="Shared/WebPubSub" />
+    <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\ConnectionStringParser.cs" LinkBase="Shared/WebPubSub" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <ProjectReference Include="../../Azure.Messaging.WebPubSub/src/Azure.Messaging.WebPubSub.csproj" />
   </ItemGroup>
 </Project>
