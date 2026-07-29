@@ -46,6 +46,16 @@ namespace Azure.Messaging.ServiceBus.Administration
         public int SubscriptionCount { get; internal set; }
 
         /// <summary>
+        /// The total number of SQL filters across all subscriptions of the topic.
+        /// </summary>
+        public int SqlFilterCount { get; internal set; }
+
+        /// <summary>
+        /// The total number of correlation filters across all subscriptions of the topic.
+        /// </summary>
+        public int CorrelationFilterCount { get; internal set; }
+
+        /// <summary>
         /// The number of messages that are scheduled to be enqueued.
         /// </summary>
         public long ScheduledMessageCount { get; internal set; }

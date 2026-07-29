@@ -4,11 +4,16 @@
 
 ### Features Added
 
+- Added `SqlFilterCount` and `CorrelationFilterCount` properties to `TopicRuntimeProperties`, exposing the total number of SQL filters and correlation filters across all of a topic's subscriptions. These are populated by `GetTopicRuntimePropertiesAsync` and `GetTopicsRuntimePropertiesAsync`.
+- Added `ServiceBusAdministrationClientOptions.ServiceVersion.V2024_05` and made it the default service version. The topic filter counts above are served by the `2024-05` service API version, so the administration client now sends `api-version=2024-05` by default.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default `ServiceBusAdministrationClient` service version is now `2024-05` (previously `2021-05`). Existing operations are unaffected in behavior; the change is required to surface the new topic filter count properties.
 
 ## 7.20.2 (2026-07-08)
 
