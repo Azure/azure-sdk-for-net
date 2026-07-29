@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- The `ExecuteStartContent`, `ExecuteDeallocateContent`, `ExecuteHibernateContent`, and `ExecuteDeleteContent` constructors no longer take a `resources` parameter. The public constructor now accepts only `executionParameters`; set the `Resources` property directly instead.
+
 ### Bugs Fixed
 
 ### Other Changes
