@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityConnectorApplicationResource.ResourceType, out string securityConnectorApplicationApiVersion);
             _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
-            _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
             _securityConnectorApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
-            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 

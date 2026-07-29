@@ -1,0 +1,6 @@
+directory: specification/billingtrust/resource-manager/Microsoft.BillingTrust/BillingTrust
+commit: e9ab1308aa1e141278c625990cd49f77200b1a69
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

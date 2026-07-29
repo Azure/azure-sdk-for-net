@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
 
@@ -162,7 +161,6 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(RegionInfoResourceData))]
     [ModelReaderWriterBuildable(typeof(RelocateVolumeContent))]
     [ModelReaderWriterBuildable(typeof(RemotePath))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotPoliciesList))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyDailySchedule))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyData))]

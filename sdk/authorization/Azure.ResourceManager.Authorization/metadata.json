@@ -1,0 +1,13 @@
+{
+  "apiVersions": {
+    "Microsoft.AccessReview": "2025-12-01-preview",
+    "Microsoft.AttributeNamespaces": "2021-12-01-preview",
+    "Microsoft.Authorization": "2024-09-01-preview",
+    "Microsoft.ClassicAdmin": "2015-07-01",
+    "Microsoft.DenyAssignment": "2024-07-01-preview",
+    "Microsoft.ProviderOperations": "2022-04-01",
+    "Microsoft.RoleAssignment": "2022-04-01",
+    "Microsoft.RoleDefinitions": "2022-05-01-preview",
+    "Microsoft.RoleManagementAlerts": "2022-08-01-preview"
+  }
+}

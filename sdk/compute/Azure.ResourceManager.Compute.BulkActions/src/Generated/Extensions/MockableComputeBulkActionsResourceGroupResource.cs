@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
 
         private ClientDiagnostics VirtualMachineBulkOperationsClientDiagnostics => _virtualMachineBulkOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineBulkOperations VirtualMachineBulkOperationsRestClient => _virtualMachineBulkOperationsRestClient ??= new VirtualMachineBulkOperations(VirtualMachineBulkOperationsClientDiagnostics, Pipeline, Endpoint, "2026-06-06");
+        private VirtualMachineBulkOperations VirtualMachineBulkOperationsRestClient => _virtualMachineBulkOperationsRestClient ??= new VirtualMachineBulkOperations(VirtualMachineBulkOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-06");
 
         /// <summary>
         /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The list of storage accounts in the cluster. </summary>
-        public IList<HDInsightStorageAccountInfo> Accounts { get; }
+        public IList<HDInsightStorageAccountInfo> Accounts { get; } = new ChangeTrackingList<HDInsightStorageAccountInfo>();
     }
 }

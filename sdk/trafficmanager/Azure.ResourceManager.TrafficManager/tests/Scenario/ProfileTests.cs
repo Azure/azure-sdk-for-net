@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
-            ExternalEndpointTrafficManagerEndpointResource endpointResource = await profileResource.GetExternalEndpointTrafficManagerEndpointAsync(EndpointTypeEnum, EndpointName1);
+            ExternalEndpointTrafficManagerEndpointResource endpointResource = await profileResource.GetExternalEndpointTrafficManagerEndpointAsync(EndpointName1);
 
             Assert.IsNotNull(endpointResource);
             Assert.AreEqual(EndpointName1, endpointResource.Data.Name);

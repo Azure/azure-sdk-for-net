@@ -110,6 +110,50 @@ nowarn:AZC0102
         }
 
         [Test]
+        public void Parse_SourceGeneratedScope_Keyword()
+        {
+            var result = AllowListParser.Parse("nowarn:OPENAI001 SourceGenerated");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Code, Is.EqualTo("OPENAI001"));
+            Assert.That(result[0].Target, Is.Null);
+            Assert.That(result[0].Scope, Is.EqualTo(AllowListScopeKind.SourceGenerated));
+            Assert.That(result[0].IsScoped, Is.True);
+        }
+
+        [Test]
+        public void Parse_SourceGeneratedScope_IsCaseInsensitive()
+        {
+            var result = AllowListParser.Parse("nowarn:OPENAI001 sourcegenerated");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Scope, Is.EqualTo(AllowListScopeKind.SourceGenerated));
+        }
+
+        [Test]
+        public void Parse_SourceGeneratedScope_StripsTrailingInlineComment()
+        {
+            var result = AllowListParser.Parse("nowarn:OPENAICUA001 SourceGenerated # computer-use refs in generated context");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Code, Is.EqualTo("OPENAICUA001"));
+            Assert.That(result[0].Scope, Is.EqualTo(AllowListScopeKind.SourceGenerated));
+        }
+
+        [Test]
+        public void Parse_WholeAssembly_HasWholeAssemblyScope()
+        {
+            var result = AllowListParser.Parse("nowarn:AZC0034");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Scope, Is.EqualTo(AllowListScopeKind.WholeAssembly));
+        }
+
+        [Test]
+        public void Parse_SymbolTarget_HasSymbolScope()
+        {
+            var result = AllowListParser.Parse("nowarn:AZC0034 T:Azure.Foo.Bar");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Scope, Is.EqualTo(AllowListScopeKind.Symbol));
+        }
+
+        [Test]
         public void Parse_MultipleEntries_Mixed()
         {
             string text = @"

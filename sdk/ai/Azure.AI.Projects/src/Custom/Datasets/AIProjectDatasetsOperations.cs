@@ -4,6 +4,7 @@
 # nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,12 +19,13 @@ namespace Azure.AI.Projects
         private readonly AuthenticationTokenProvider _tokenProvider;
 
         /// <summary> Initializes a new instance of Datasets with TokenProvider. </summary>
+        /// <param name="clientDiagnostics"> The client diagnostics instance. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"> API version. </param>
         /// <param name="tokenProvider"> Token Provider for authentication. </param>
-        internal AIProjectDatasetsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
-            : this(pipeline, endpoint, apiVersion)
+        internal AIProjectDatasetsOperations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, AuthenticationTokenProvider tokenProvider)
+            : this(clientDiagnostics, pipeline, endpoint, apiVersion)
         {
             _tokenProvider = tokenProvider;
         }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesProjectConnectionApiVersion);
             _projectConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _projectConnectionsRestClient = new ProjectConnections(_projectConnectionsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectConnectionApiVersion ?? "2026-05-15-preview");
+            _projectConnectionsRestClient = new ProjectConnections(_projectConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectConnectionApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(TenantResourceHealthEventImpactedResource.ResourceType, out string tenantResourceHealthEventImpactedResourceApiVersion);
             _impactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventImpactedResource.ResourceType.Namespace, Diagnostics);
-            _impactedResourcesRestClient = new ImpactedResources(_impactedResourcesClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventImpactedResourceApiVersion ?? "2025-05-01");
+            _impactedResourcesRestClient = new ImpactedResources(_impactedResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventImpactedResourceApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 

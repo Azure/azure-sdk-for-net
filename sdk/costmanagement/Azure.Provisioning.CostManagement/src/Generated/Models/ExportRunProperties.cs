@@ -32,7 +32,7 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the ExecutionType. </summary>
+        /// <summary> Gets the ExecutionType. </summary>
         public BicepValue<ExportRunExecutionType> ExecutionType
         {
             get
@@ -40,14 +40,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _executionType;
             }
-            set
-            {
-                Initialize();
-                _executionType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<ExportRunExecutionStatus> Status
         {
             get
@@ -55,14 +50,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SubmittedBy. </summary>
+        /// <summary> Gets the SubmittedBy. </summary>
         public BicepValue<string> SubmittedBy
         {
             get
@@ -70,14 +60,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _submittedBy;
             }
-            set
-            {
-                Initialize();
-                _submittedBy.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SubmittedOn. </summary>
+        /// <summary> Gets the SubmittedOn. </summary>
         public BicepValue<DateTimeOffset> SubmittedOn
         {
             get
@@ -85,14 +70,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _submittedOn;
             }
-            set
-            {
-                Initialize();
-                _submittedOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ProcessingStartOn. </summary>
+        /// <summary> Gets the ProcessingStartOn. </summary>
         public BicepValue<DateTimeOffset> ProcessingStartOn
         {
             get
@@ -100,14 +80,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _processingStartOn;
             }
-            set
-            {
-                Initialize();
-                _processingStartOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ProcessingEndOn. </summary>
+        /// <summary> Gets the ProcessingEndOn. </summary>
         public BicepValue<DateTimeOffset> ProcessingEndOn
         {
             get
@@ -115,14 +90,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _processingEndOn;
             }
-            set
-            {
-                Initialize();
-                _processingEndOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
+        /// <summary> Gets the StartOn. </summary>
         public BicepValue<DateTimeOffset> StartOn
         {
             get
@@ -130,14 +100,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _startOn;
             }
-            set
-            {
-                Initialize();
-                _startOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
+        /// <summary> Gets the EndOn. </summary>
         public BicepValue<DateTimeOffset> EndOn
         {
             get
@@ -145,14 +110,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _endOn;
             }
-            set
-            {
-                Initialize();
-                _endOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the FileName. </summary>
+        /// <summary> Gets the FileName. </summary>
         public BicepValue<string> FileName
         {
             get
@@ -160,14 +120,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _fileName;
             }
-            set
-            {
-                Initialize();
-                _fileName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ManifestFile. </summary>
+        /// <summary> Gets the ManifestFile. </summary>
         public BicepValue<string> ManifestFile
         {
             get
@@ -175,14 +130,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _manifestFile;
             }
-            set
-            {
-                Initialize();
-                _manifestFile.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RunSettings. </summary>
+        /// <summary> Gets the RunSettings. </summary>
         public CommonExportProperties RunSettings
         {
             get
@@ -190,25 +140,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _runSettings;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _runSettings, value);
-            }
         }
 
-        /// <summary> Gets or sets the Error. </summary>
+        /// <summary> Gets the Error. </summary>
         public ExportRunErrorDetails Error
         {
             get
             {
                 Initialize();
                 return _error;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _error, value);
             }
         }
 

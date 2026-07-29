@@ -29,7 +29,7 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ExportRunProperties Properties
         {
             get
@@ -37,25 +37,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
             {
                 Initialize();
                 return _eTag;
-            }
-            set
-            {
-                Initialize();
-                _eTag.Assign(value);
             }
         }
 
@@ -99,207 +89,111 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the ExecutionType. </summary>
+        /// <summary> Gets the ExecutionType. </summary>
         public BicepValue<ExportRunExecutionType> ExecutionType
         {
             get
             {
-                return Properties is null ? default : Properties.ExecutionType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.ExecutionType = value;
+                return Properties.ExecutionType;
             }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<ExportRunExecutionStatus> Status
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.Status = value;
+                return Properties.Status;
             }
         }
 
-        /// <summary> Gets or sets the SubmittedBy. </summary>
+        /// <summary> Gets the SubmittedBy. </summary>
         public BicepValue<string> SubmittedBy
         {
             get
             {
-                return Properties is null ? default : Properties.SubmittedBy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.SubmittedBy = value;
+                return Properties.SubmittedBy;
             }
         }
 
-        /// <summary> Gets or sets the SubmittedOn. </summary>
+        /// <summary> Gets the SubmittedOn. </summary>
         public BicepValue<DateTimeOffset> SubmittedOn
         {
             get
             {
-                return Properties is null ? default : Properties.SubmittedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.SubmittedOn = value;
+                return Properties.SubmittedOn;
             }
         }
 
-        /// <summary> Gets or sets the ProcessingStartOn. </summary>
+        /// <summary> Gets the ProcessingStartOn. </summary>
         public BicepValue<DateTimeOffset> ProcessingStartOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingStartOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.ProcessingStartOn = value;
+                return Properties.ProcessingStartOn;
             }
         }
 
-        /// <summary> Gets or sets the ProcessingEndOn. </summary>
+        /// <summary> Gets the ProcessingEndOn. </summary>
         public BicepValue<DateTimeOffset> ProcessingEndOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.ProcessingEndOn = value;
+                return Properties.ProcessingEndOn;
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
+        /// <summary> Gets the StartOn. </summary>
         public BicepValue<DateTimeOffset> StartOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.StartOn = value;
+                return Properties.StartOn;
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
+        /// <summary> Gets the EndOn. </summary>
         public BicepValue<DateTimeOffset> EndOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.EndOn = value;
+                return Properties.EndOn;
             }
         }
 
-        /// <summary> Gets or sets the FileName. </summary>
+        /// <summary> Gets the FileName. </summary>
         public BicepValue<string> FileName
         {
             get
             {
-                return Properties is null ? default : Properties.FileName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.FileName = value;
+                return Properties.FileName;
             }
         }
 
-        /// <summary> Gets or sets the ManifestFile. </summary>
+        /// <summary> Gets the ManifestFile. </summary>
         public BicepValue<string> ManifestFile
         {
             get
             {
-                return Properties is null ? default : Properties.ManifestFile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.ManifestFile = value;
+                return Properties.ManifestFile;
             }
         }
 
-        /// <summary> Gets or sets the RunSettings. </summary>
+        /// <summary> Gets the RunSettings. </summary>
         public CommonExportProperties RunSettings
         {
             get
             {
-                return Properties is null ? default : Properties.RunSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.RunSettings = value;
+                return Properties.RunSettings;
             }
         }
 
-        /// <summary> Gets or sets the Error. </summary>
+        /// <summary> Gets the Error. </summary>
         public ExportRunErrorDetails Error
         {
             get
             {
-                return Properties is null ? default : Properties.Error;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportRunProperties();
-                }
-                Properties.Error = value;
+                return Properties.Error;
             }
         }
 

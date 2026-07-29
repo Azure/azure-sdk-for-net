@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string avsCloudLinkApiVersion);
             _cloudLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _cloudLinksRestClient = new CloudLinks(_cloudLinksClientDiagnostics, Pipeline, Endpoint, avsCloudLinkApiVersion ?? "2025-09-01");
+            _cloudLinksRestClient = new CloudLinks(_cloudLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsCloudLinkApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

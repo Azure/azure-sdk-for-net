@@ -14,7 +14,7 @@ Check the package `.csproj`, `CHANGELOG.md`, and compatibility files. Comment on
 Rules:
 - **No major version bump** unless .NET architects explicitly require a coordinated management-SDK major bump. Flag `1.x` -> `2.0.0` as Critical.
 - **Do not remove `ApiCompatVersion`**. It enforces compatibility against the last stable release. If removed, recover the prior value from base branch or latest released tag for later phases.
-- **No new ApiCompat baseline entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes. Exception: MPG migration `WirePathAttribute` removal diffs may use targeted entries in `eng/apicompatbaselines/<Project>.txt`.
+- **No new ApiCompat baseline entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes. Exception: MPG migration `WirePathAttribute` removal diffs may use targeted entries in `eng/apicompatbaselines/<Project>.xml`.
 
 Continue to Phase 2 unless the versioning issue makes the API-review scope impossible to determine, e.g. `ApiCompatVersion` was removed and no prior stable baseline can be recovered. In that narrow case, request changes and say API review was skipped because the baseline is unknown.
 
@@ -36,6 +36,7 @@ Review only new or changed public API relative to the latest stable release. Exi
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
    ```
    Omit `-BaselineApiFilePath` when there is no stable baseline. Use `-PackagePath` only for local/manual trusted reviews. In GitHub Agentic Workflow mode, run the scanner from the base branch against explicit API files fetched from PR/baseline; do not execute PR scripts.
+   When a baseline is supplied, the scanner also compares required/optional parameter metadata for every matching public method and constructor. Treat `OPTPARAM001` and `OPTPARAM002` as blocking source-compatibility findings; ApiCompat may not report them.
 3. Treat scanner API-file line numbers as symbol identifiers, not final comment targets. Resolve each finding to generated source, customization source, or TypeSpec customization files before commenting.
 4. Run contextual naming exhaustively using inventory mode:
    ```powershell
@@ -44,7 +45,7 @@ Review only new or changed public API relative to the latest stable release. Exi
    Evaluate every `NEW` class/struct/enum. Verdicts: `OK`, `Flag`, or `OK (low confidence)`. The number of verdicts must equal the number of `NEW` entries. Report `Contextual naming: evaluated N new public types, flagged M`.
 5. Review API files, `src/Generated/`, TypeSpec customizations (`client.tsp`, `main.tsp`, `tspconfig.yaml`), and SDK customizations for issues not covered by the scanner.
 
-Scanner rule families include `SUFFIX001`-`SUFFIX010`, `RESINFIX001`, `RESNAME001`, `ACRONYM001`, `ACRONYM002`, `ARMCOMMON001`, `BOOL001`, `DATETIME001`, and `TTL001`. Contextual naming is intentionally manual; the scanner only provides the bounded worklist.
+Scanner rule families include `OPTPARAM001`, `OPTPARAM002`, `SUFFIX001`-`SUFFIX010`, `RESINFIX001`, `RESNAME001`, `ACRONYM001`, `ACRONYM002`, `ARMCOMMON001`, `BOOL001`, `DATETIME001`, and `TTL001`. Contextual naming is intentionally manual; the scanner only provides the bounded worklist.
 
 ### Comment Targets
 
@@ -144,6 +145,8 @@ SDK migration method renames:
 If `ApiCompatVersion` exists, check breaking changes after Phase 2. Locally, build the project and inspect ApiCompat errors. In untrusted `pull_request_target` workflows, do not build PR code; rely on CI/check results and API diffs unless the workflow explicitly runs in a trusted context.
 
 For each ApiCompat error, list the removed/changed API and target the relevant source line when possible. Do not fix it during review; request mitigation through customization code, generator/spec features, or the `mitigate-breaking-changes` skill. Any unmitigated breaking change is blocking. If no `ApiCompatVersion` exists, skip this phase.
+
+ApiCompat passing is not sufficient for source compatibility. Before declaring this phase complete, confirm the scanner reported no `OPTPARAM001` or `OPTPARAM002` findings. Do not infer that a previously reported overload fix covers sibling overloads; compare every matching signature against the stable baseline.
 
 ## Output Format
 

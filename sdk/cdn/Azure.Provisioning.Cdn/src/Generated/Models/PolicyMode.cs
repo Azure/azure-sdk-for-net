@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum PolicyMode
     {
         /// <summary> Prevention. </summary>
-        Prevention,
+        Prevention = 0,
         /// <summary> Detection. </summary>
-        Detection
+        Detection = 1
     }
 }

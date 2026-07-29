@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(ResourceType, out string horizonDBParameterGroupApiVersion);
             _horizonDBParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Endpoint, horizonDBParameterGroupApiVersion ?? "2026-01-20-preview");
+            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBParameterGroupApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 

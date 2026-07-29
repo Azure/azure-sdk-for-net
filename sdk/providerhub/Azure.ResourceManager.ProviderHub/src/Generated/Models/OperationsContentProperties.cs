@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Operations content. </summary>
-        public IList<LocalizedOperationDefinition> Contents { get; }
+        public IList<LocalizedOperationDefinition> Contents { get; } = new ChangeTrackingList<LocalizedOperationDefinition>();
     }
 }

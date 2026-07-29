@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string platformUpdateApiVersion);
             _platformUpdatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _platformUpdatesRestClient = new PlatformUpdates(_platformUpdatesClientDiagnostics, Pipeline, Endpoint, platformUpdateApiVersion ?? "2026-05-01-preview");
+            _platformUpdatesRestClient = new PlatformUpdates(_platformUpdatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, platformUpdateApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
