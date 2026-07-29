@@ -58,6 +58,7 @@ AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvide
 ```
 
 2. For brevity we will create the method, returning the `AgentVersionFromCodeMetadata` object.
+**Note:** In this example we are uploading the  project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCode` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
 private static AgentVersionFromCodeMetadata GetAgentMetadata()
