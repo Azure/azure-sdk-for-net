@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added sealed, one-shot `AsyncStreamingClientResult<T>` for asynchronous streaming responses, with factories for custom producers, server-sent events, and newline-delimited JSON.
+
 ### Breaking Changes
 
 ### Bugs Fixed
