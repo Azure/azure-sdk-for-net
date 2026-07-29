@@ -35,31 +35,46 @@
       <_ApiCompatVersionRequired Condition="'$(HasReleaseVersion)' != 'false'">true</_ApiCompatVersionRequired>
       <_ApiCompatChangelogPath>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '..', 'CHANGELOG.md'))</_ApiCompatChangelogPath>
     </PropertyGroup>
-    <ReadLinesFromFile File="$(_ApiCompatChangelogPath)"
-                       Condition="'$(_ApiCompatVersionRequired)' != 'true' and Exists('$(_ApiCompatChangelogPath)')">
-      <Output TaskParameter="Lines" ItemName="_ApiCompatChangelogLine" />
-    </ReadLinesFromFile>
+    <CheckApiCompatStableRelease ChangelogPath="$(_ApiCompatChangelogPath)"
+                                 Condition="'$(_ApiCompatVersionRequired)' != 'true' and Exists('$(_ApiCompatChangelogPath)')">
+      <Output TaskParameter="HasStableRelease" PropertyName="_ApiCompatHasStableRelease" />
+    </CheckApiCompatStableRelease>
     <ReadLinesFromFile File="$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt"
                        Condition="Exists('$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt')">
       <Output TaskParameter="Lines" ItemName="_ApiCompatVersionOptOutLine" />
     </ReadLinesFromFile>
     <ItemGroup>
-      <_ApiCompatVersionHeading Include="@(_ApiCompatChangelogLine)"
-                                Condition="$([System.String]::new('%(_ApiCompatChangelogLine.Identity)').StartsWith('## '))" />
-      <_ApiCompatStableReleaseLine Include="@(_ApiCompatVersionHeading)" />
-      <_ApiCompatStableReleaseLine Remove="@(_ApiCompatStableReleaseLine)"
-                                   Condition="$([System.String]::new('%(_ApiCompatStableReleaseLine.Identity)').Contains('-beta'))" />
-      <_ApiCompatStableReleaseLine Remove="@(_ApiCompatStableReleaseLine)"
-                                   Condition="$([System.String]::new('%(_ApiCompatStableReleaseLine.Identity)').Contains('-preview'))" />
       <_ApiCompatVersionOptOutMatch Include="@(_ApiCompatVersionOptOutLine)"
                                     Condition="'%(Identity)' == '$(MSBuildProjectName)'" />
     </ItemGroup>
     <PropertyGroup>
-      <_ApiCompatVersionRequired Condition="'@(_ApiCompatStableReleaseLine)' != ''">true</_ApiCompatVersionRequired>
+      <_ApiCompatVersionRequired Condition="'$(_ApiCompatHasStableRelease)' == 'true'">true</_ApiCompatVersionRequired>
     </PropertyGroup>
     <Error Condition="'$(_ApiCompatVersionRequired)' == 'true' and '@(_ApiCompatVersionOptOutMatch)' == ''"
            Text="ApiCompatVersion is missing from $(MSBuildProjectName). It is required for libraries with a prior stable release and is managed automatically by eng/scripts/Update-PkgVersion.ps1 - do not delete it. If the core team has approved shipping this package without ApiCompat, add '$(MSBuildProjectName)' to eng/apicompatbaselines/ApiCompatVersionOptOut.txt (CODEOWNERS-protected)." />
   </Target>
+
+  <UsingTask
+    TaskName="CheckApiCompatStableRelease"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ChangelogPath ParameterType="System.String" Required="true" />
+      <HasStableRelease ParameterType="System.Boolean" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        foreach (string line in System.IO.File.ReadLines(ChangelogPath))
+        {
+          if (System.Text.RegularExpressions.Regex.IsMatch(line, @"^##\s+\d+\.\d+\.\d+\s+\("))
+          {
+            HasStableRelease = true;
+            break;
+          }
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
 
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
