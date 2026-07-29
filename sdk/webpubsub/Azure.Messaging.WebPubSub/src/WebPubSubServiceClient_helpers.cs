@@ -20,12 +20,7 @@ namespace Azure.Messaging.WebPubSub
     /// </summary>
     public partial class WebPubSubServiceClient
     {
-        private const string EndpointPropertyName = "Endpoint";
-        private const string AccessKeyPropertyName = "AccessKey";
-        private const string PortPropertyName = "Port";
         private const string ClientTokenResponseTokenPropertyName = "token";
-        private static readonly char[] KeyValueSeparator = { '=' };
-        private static readonly char[] PropertySeparator = { ';' };
 
         internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
         internal static byte[] s_group = Encoding.UTF8.GetBytes("webpubsub.group");
@@ -283,57 +278,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns></returns>
         internal static (Uri Endpoint, AzureKeyCredential Credential) ParseConnectionString(string connectionString)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
-            var properties = connectionString.Split(PropertySeparator, StringSplitOptions.RemoveEmptyEntries);
-
-            var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var property in properties)
-            {
-                var kvp = property.Split(KeyValueSeparator, 2);
-                if (kvp.Length != 2)
-                    continue;
-
-                var key = kvp[0].Trim();
-                if (dict.ContainsKey(key))
-                {
-                    throw new ArgumentException($"Duplicate properties found in connection string: {key}.");
-                }
-
-                dict.Add(key, kvp[1].Trim());
-            }
-
-            if (!dict.TryGetValue(EndpointPropertyName, out var endpoint))
-            {
-                throw new ArgumentException($"Required property not found in connection string: {EndpointPropertyName}.");
-            }
-            endpoint = endpoint.TrimEnd('/');
-
-            if (!dict.TryGetValue(AccessKeyPropertyName, out var accessKey))
-            {
-                throw new ArgumentException($"Required property not found in connection string: {AccessKeyPropertyName}.");
-            }
-
-            int? port = null;
-            if (dict.TryGetValue(PortPropertyName, out var rawPort))
-            {
-                if (int.TryParse(rawPort, out var portValue) && portValue > 0 && portValue <= 0xFFFF)
-                {
-                    port = portValue;
-                }
-                else
-                {
-                    throw new ArgumentException($"Invalid Port value: {rawPort}");
-                }
-            }
-
-            var uriBuilder = new UriBuilder(endpoint);
-            if (port.HasValue)
-            {
-                uriBuilder.Port = port.Value;
-            }
-
-            return (uriBuilder.Uri, new AzureKeyCredential(accessKey));
+            return ConnectionStringParser.Parse(connectionString);
         }
 
         internal static string PermissionToString(WebPubSubPermission permission)
