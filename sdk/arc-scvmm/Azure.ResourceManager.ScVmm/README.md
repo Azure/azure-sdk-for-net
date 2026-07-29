@@ -1,6 +1,7 @@
 # Microsoft Azure Arc ScVmm management client library for .NET
 
 Microsoft Azure Arc ScVmm empowers System Center customers to connect their VMM environment to Azure and perform VM self-service operations from Azure portal. With Azure Arc-enabled SCVMM, you get a consistent management experience across Azure.
+Add something start the pipeline.
 
 This library supports managing Microsoft Azure Arc ScVmm resources.
 
@@ -12,7 +13,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
