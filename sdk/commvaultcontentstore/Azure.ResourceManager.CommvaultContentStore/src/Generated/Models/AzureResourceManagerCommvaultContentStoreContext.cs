@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.CommvaultContentStore.Models;
 using Azure.ResourceManager.Models;
 
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.CommvaultContentStore
     [ModelReaderWriterBuildable(typeof(ProtectionGroupResource))]
     [ModelReaderWriterBuildable(typeof(ProtectionGroupResources))]
     [ModelReaderWriterBuildable(typeof(ProtectionGroupResourcesMatchRules))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorePoints))]
     [ModelReaderWriterBuildable(typeof(RestoreProtectionItemContent))]
     [ModelReaderWriterBuildable(typeof(RestoreProtectionItemResult))]
