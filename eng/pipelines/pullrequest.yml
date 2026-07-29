@@ -39,5 +39,11 @@ extends:
     ${{ else }}:
       ServiceDirectory: ${{ parameters.Service }}
     BuildSnippets: true
+    EnableTestCheckoutNarrowing: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
+      # TEMP (draft only, remove before this PR is marked ready for review):
+      # this branch only touches shared eng/ files, which would otherwise select
+      # nearly every package and exceed the dynamic YAML size limit. The A/B fixture
+      # commits add the specific packages under test on top of this.
+      - eng/

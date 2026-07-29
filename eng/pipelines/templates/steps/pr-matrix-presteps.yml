@@ -18,6 +18,9 @@ parameters:
   - name: PublishArtifact
     type: boolean
     default: true
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
@@ -36,6 +39,16 @@ steps:
       Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
         | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo/$($_.Name)" -Force
     displayName: Copy ArtifactInfo from Publishing Directory
+
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    # Built here because this is the last point at which a full checkout is available.
+    # It ships inside the PackageInfo artifact so each test job can resolve its own
+    # sparse checkout paths before it has a working tree.
+    - pwsh: |
+        ./eng/scripts/Get-TestCheckoutPaths.ps1 `
+          -BuildMap `
+          -OutputPath "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing/checkout-map.json"
+      displayName: Build test checkout map
 
   - ${{ if eq(parameters.PublishArtifact, true) }}:
     - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml

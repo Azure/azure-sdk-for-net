@@ -26,6 +26,9 @@ parameters:
     default: ''
   - name: OSName
     type: string
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
 
 jobs:
   - job:
@@ -82,22 +85,96 @@ jobs:
 
     steps:
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
-      
+
+      - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        # The checkout map has to be resolved before the repository exists on disk, so
+        # it travels in the same artifact as the batched PackageInfo files and the
+        # resolver is inlined here. This mirrors why sparse-checkout.yml inlines its
+        # own script. eng/scripts/Get-TestCheckoutPaths.ps1 does the real work during
+        # matrix generation, where a full checkout is available.
+        - task: DownloadPipelineArtifact@2
+          displayName: Download test checkout map
+          condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+          continueOnError: true
+          inputs:
+            artifact: TestPackagesArtifact
+            patterns: "**/checkout-map.json"
+            path: $(Agent.TempDirectory)/TestCheckoutMap
+
+        - pwsh: |
+            $fallback = @('/*', '!SessionRecords', '/sdk/*/**/SessionRecords/*')
+
+            function Set-Paths([string[]] $paths, [string] $reason) {
+              $json = $paths | ConvertTo-Json -Compress -AsArray
+              Write-Host "Sparse checkout paths ($reason): $($paths -join ' ')"
+              Write-Host "##vso[task.setvariable variable=TestSparseCheckoutPaths]$json"
+            }
+
+            $map = Get-ChildItem -Path "$(Agent.TempDirectory)/TestCheckoutMap" -Filter checkout-map.json -Recurse -File |
+              Select-Object -First 1
+
+            if (-not $map) {
+              Set-Paths $fallback 'no checkout map available'
+              return
+            }
+
+            $artifacts = @('$(ProjectNames)' -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+            if ($artifacts.Count -eq 0) {
+              Set-Paths $fallback 'no batch package names'
+              return
+            }
+
+            # Always included: the base patterns the sparse checkout step establishes,
+            # every non-sdk top level directory (about 5,200 of ~139,000 tracked files,
+            # and the home of the shared management test sources), and the services that
+            # projects reach without naming them in a .csproj.
+            $paths = [System.Collections.Generic.List[string]]@(
+              '/*', '!/*/', '/eng', '/.config',
+              '/.devcontainer', '/.github', '/.vscode', '/common', '/doc', '/samples')
+            $services = [System.Collections.Generic.SortedSet[string]]@(
+              'core', 'common', 'identity', 'resourcemanager', 'template')
+
+            $lookup = @{}
+            foreach ($property in (Get-Content -LiteralPath $map.FullName -Raw | ConvertFrom-Json).PSObject.Properties) {
+              $lookup[$property.Name] = @($property.Value)
+            }
+
+            foreach ($artifact in $artifacts) {
+              if (-not $lookup.ContainsKey($artifact)) {
+                # A stale map would silently drop a service and turn into a build error
+                # rather than a slow job, so fall back to checking out everything.
+                Set-Paths $fallback "no map entry for '$artifact'"
+                return
+              }
+              foreach ($service in $lookup[$artifact]) { $null = $services.Add($service) }
+            }
+
+            foreach ($service in $services) { $paths.Add("/sdk/$service/*") }
+            Set-Paths $paths "$($artifacts.Count) packages -> $($services.Count) services"
+          displayName: Resolve test checkout paths
+          condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-            # we only need to checkout all sdk directories for All PR builds OR the
-            # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
-            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-                - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
-            ${{ else }}:
-              Paths:
-                - "/*"
-                - "!SessionRecords"
-                - "/sdk/*/**/SessionRecords/*"
+        - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              Paths: $(TestSparseCheckoutPaths)
+
+        - ${{ if not(parameters.EnableTestCheckoutNarrowing) }}:
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              # we only need to checkout all sdk directories for All PR builds OR the
+              # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
+              ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
+                Paths:
+                  - "/*"
+                  - "!SessionRecords"
+                  - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
+              ${{ else }}:
+                Paths:
+                  - "/*"
+                  - "!SessionRecords"
+                  - "/sdk/*/**/SessionRecords/*"
 
       - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
         - task: DownloadPipelineArtifact@2

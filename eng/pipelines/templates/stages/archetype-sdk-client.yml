@@ -54,6 +54,9 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
   - name: PublicFeed
     type: string
     default: 'Nuget.org'
@@ -102,6 +105,8 @@ extends:
               BuildSnippets: ${{ parameters.BuildSnippets }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+              ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
               MatrixConfigs:
                 - ${{ each config in parameters.MatrixConfigs }}:
                     - ${{ config }}
