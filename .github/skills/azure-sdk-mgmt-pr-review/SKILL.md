@@ -38,7 +38,12 @@ Review only new or changed public API relative to the latest stable release. Exi
    Omit `-BaselineApiFilePath` when there is no stable baseline. Use `-PackagePath` only for local/manual trusted reviews. In GitHub Agentic Workflow mode, run the scanner from the base branch against explicit API files fetched from PR/baseline; do not execute PR scripts.
    When a baseline is supplied, the scanner also compares required/optional parameter metadata for every matching public method and constructor. Treat `OPTPARAM001` and `OPTPARAM002` as blocking source-compatibility findings; ApiCompat may not report them.
 
-   `OPTPARAM001` is automatically suppressed for *ambiguity-forced* shims: a binary-compatibility overload whose parameters would all be optional after restoring the baseline defaults, and which has a sibling overload that is already callable with zero arguments. Restoring the defaults there makes the argument-less call applicable to both overloads with no tie-breaker under C# 12.6.4.3, so it fails with `CS0121`. Keeping the parameters required is the only variant that compiles, so do not ask for defaults to be restored on that shape. Neither `[Obsolete]` nor `[EditorBrowsable]` changes this — they do not participate in overload resolution — and `[OverloadResolutionPriority]` only helps consumers compiling with C# 13 or later.
+   `OPTPARAM001` is automatically suppressed for two shapes that cannot honour it:
+
+   - *Declared GA-contract shims* — a member marked `[EditorBrowsable(EditorBrowsableState.Never)]` in the package source. That attribute is the repo-wide marker for a hand-written member whose signature is dictated by what already shipped rather than by current generator output, so whether it takes its arguments as optional or required is a deliberate authoring decision. The attribute is not written into `api/*.cs`, so this suppression only applies when the scanner can reach the package source; pass `-PackagePath` (it reads `src/**/*.cs` as text and never executes it) alongside the explicit API files.
+   - *Ambiguity-forced shims* — a compatibility overload whose parameters would all be optional after restoring the baseline defaults, and which has a sibling overload already callable with zero arguments. Restoring the defaults makes the argument-less call applicable to both overloads with no tie-breaker under C# 12.6.4.3, so it fails with `CS0121`. This one needs no source access and stays available in API-file-only runs.
+
+   Do not ask for defaults to be restored on either shape. Note that attributes cannot rescue the ambiguous case: neither `[Obsolete]` nor `[EditorBrowsable]` participates in overload resolution, and `[OverloadResolutionPriority]` only helps consumers compiling with C# 13 or later.
 3. Treat scanner API-file line numbers as symbol identifiers, not final comment targets. Resolve each finding to generated source, customization source, or TypeSpec customization files before commenting.
 4. Run contextual naming exhaustively using inventory mode:
    ```powershell
@@ -148,7 +153,7 @@ If `ApiCompatVersion` exists, check breaking changes after Phase 2. Locally, bui
 
 For each ApiCompat error, list the removed/changed API and target the relevant source line when possible. Do not fix it during review; request mitigation through customization code, generator/spec features, or the `mitigate-breaking-changes` skill. Any unmitigated breaking change is blocking. If no `ApiCompatVersion` exists, skip this phase.
 
-ApiCompat passing is not sufficient for source compatibility. Before declaring this phase complete, confirm the scanner reported no `OPTPARAM001` or `OPTPARAM002` findings. Do not infer that a previously reported overload fix covers sibling overloads; compare every matching signature against the stable baseline. The scanner already excludes ambiguity-forced shims from `OPTPARAM001`, so a remaining finding is always actionable.
+ApiCompat passing is not sufficient for source compatibility. Before declaring this phase complete, confirm the scanner reported no `OPTPARAM001` or `OPTPARAM002` findings. Do not infer that a previously reported overload fix covers sibling overloads; compare every matching signature against the stable baseline. The scanner already excludes declared GA-contract shims and ambiguity-forced shims from `OPTPARAM001`, so a remaining finding is always actionable.
 
 ## Output Format
 
