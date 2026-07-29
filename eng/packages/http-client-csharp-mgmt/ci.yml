@@ -85,18 +85,12 @@ extends:
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
         HasNugetPackages: true
-      # Keep regen groups small enough to avoid the public release pipeline's
-      # 1-hour timeout. Each job carries a fixed setup cost of roughly 7 minutes
-      # that is dominated by the repo checkout, so more jobs cost more agent
-      # minutes, but generation is sequential within a job so fewer jobs cost
-      # wall clock time. Measured at 9 jobs the stage took 54.4 minutes versus
-      # 35.7 minutes at 18, so wall clock wins out at this scale.
-      #
-      # 17 rather than 18: New-RegenerateMatrix.ps1 splits 230 packages across
-      # 18 jobs into groups that only sum to 218, silently dropping the last 12
-      # packages. Fixed in Azure/azure-sdk-tools#16621; until that mirrors into
-      # eng/common here, 17 is the largest count that covers every package.
-      RegenerationJobCount: 17
+      # Workaround: keep regen groups small enough to avoid the public release
+      # pipeline's 1-hour timeout. Azure.ResourceManager.Network takes much
+      # longer than most packages and should be optimized eventually; the shared
+      # matrix generator only supports count-based batching, not per-package
+      # isolation.
+      RegenerationJobCount: 18
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
       DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'
