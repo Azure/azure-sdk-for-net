@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SiteManager.Models;
 
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.SiteManager
     [ModelReaderWriterBuildable(typeof(EdgeSitePatchProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeSiteProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupEdgeSiteResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupEdgeSiteResource))]
     [ModelReaderWriterBuildable(typeof(SiteListResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionEdgeSiteResource))]

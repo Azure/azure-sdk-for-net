@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
 
@@ -79,7 +78,6 @@ namespace Azure.ResourceManager.Peering
     [ModelReaderWriterBuildable(typeof(PeeringServiceResource))]
     [ModelReaderWriterBuildable(typeof(PeeringServiceSku))]
     [ModelReaderWriterBuildable(typeof(PeeringSku))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoutingPreferenceUnbilledPrefix))]
     [ModelReaderWriterBuildable(typeof(RpUnbilledPrefixListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.CarbonOptimization.Models;
 
 namespace Azure.ResourceManager.CarbonOptimization
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.CarbonOptimization
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionItemDetail))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemMonthlySummary))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemsSummary))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAccessDecision))]
     [ModelReaderWriterBuildable(typeof(TopItemsMonthlySummaryReportQueryFilter))]
     [ModelReaderWriterBuildable(typeof(TopItemsSummaryReportQueryFilter))]
