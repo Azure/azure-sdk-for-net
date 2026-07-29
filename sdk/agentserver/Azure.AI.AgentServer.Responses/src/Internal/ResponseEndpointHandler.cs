@@ -34,7 +34,7 @@ internal sealed class ResponseEndpointHandler
     private readonly ResponseExecutionTracker _tracker;
     private readonly ResponsesProvider _provider;
     private readonly ResponsesCancellationSignalProvider _cancellationProvider;
-    private readonly IEventStreamRegistry _eventStreamRegistry;
+    private readonly EventStreamRegistry _eventStreamRegistry;
     private readonly IOptions<ResponsesServerOptions> _options;
     private readonly ILogger<ResponseEndpointHandler> _logger;
 
@@ -47,7 +47,7 @@ internal sealed class ResponseEndpointHandler
         ResponseExecutionTracker tracker,
         ResponsesProvider provider,
         ResponsesCancellationSignalProvider cancellationProvider,
-        IEventStreamRegistry eventStreamRegistry,
+        EventStreamRegistry eventStreamRegistry,
         IOptions<ResponsesServerOptions> options,
         ILogger<ResponseEndpointHandler> logger)
     {

@@ -23,7 +23,7 @@ public class FinalizeExecutionTests : IDisposable
     private readonly TestHandler _handler;
     private readonly InMemoryResponsesProvider _provider;
     private readonly ResponseExecutionTracker _tracker;
-    private readonly IEventStreamRegistry _eventStreamRegistry;
+    private readonly EventStreamRegistry _eventStreamRegistry;
     private readonly ResponseOrchestrator _orchestrator;
 
     public FinalizeExecutionTests()

@@ -13,13 +13,13 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// An <see cref="IResult"/> implementation that replays cached response events as SSE.
 /// Reads buffered events (replay) and live events (if the response is still in-flight) from the
-/// Core event-stream primitive (<see cref="IEventStreamRegistry"/> / <see cref="IEventStream"/>) —
+/// Core event-stream primitive (<see cref="EventStreamRegistry"/> / <see cref="EventStream"/>) —
 /// the same streaming primitive the orchestrator publishes onto. The Responses layer holds no
 /// event-stream store of its own, mirroring the Python implementation.
 /// </summary>
 internal sealed class SseReplayResult : IResult
 {
-    private readonly IEventStreamRegistry _eventStreamRegistry;
+    private readonly EventStreamRegistry _eventStreamRegistry;
     private readonly string _responseId;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly ILogger _logger;
@@ -27,7 +27,7 @@ internal sealed class SseReplayResult : IResult
     private readonly long? _startingAfter;
 
     public SseReplayResult(
-        IEventStreamRegistry eventStreamRegistry,
+        EventStreamRegistry eventStreamRegistry,
         string responseId,
         JsonSerializerOptions jsonOptions,
         ILogger logger,
@@ -50,7 +50,7 @@ internal sealed class SseReplayResult : IResult
         // response (e.g., non-background response, or the stream's replay TTL has expired and the
         // backing was evicted), the Core registry throws EventStreamNotFoundException and we return
         // a JSON error instead of an SSE body.
-        IEventStream stream;
+        EventStream stream;
         try
         {
             stream = await _eventStreamRegistry.GetAsync(_responseId, ct);

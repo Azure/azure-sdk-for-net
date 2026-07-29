@@ -140,12 +140,12 @@ public static class ResponsesServerServiceCollectionExtensions
         }
 
         // The Responses layer does not own an event-stream store. SSE events are published onto
-        // the Core event-stream primitive (IEventStreamRegistry/IEventStream) — matching Python,
+        // the Core event-stream primitive (EventStreamRegistry/EventStream) — matching Python,
         // which uses the core EventStream registry directly. Register it once here. The backing is
         // chosen eagerly: local + ResilientBackground uses a durable file-backed replay so a
         // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
         // otherwise an in-memory replay buffer is sufficient. TryAddSingleton in AddEventStreams
-        // preserves consumer precedence (a custom IEventStreamRegistry registered first wins).
+        // preserves consumer precedence (a custom EventStreamRegistry registered first wins).
         var eagerOptions = new ResponsesServerOptions();
         configure?.Invoke(eagerOptions);
         var useDurableStreams = eagerOptions.ResilientBackground && !FoundryEnvironment.IsHosted;
@@ -193,7 +193,7 @@ public static class ResponsesServerServiceCollectionExtensions
         // (→ HTTP 409 conversation_locked), which is exactly the concurrency protection a plain
         // conversation_id chain requires. Checkpoint/durable-stream backing stays resilient-only
         // (see the useDurableStreams gate above) — this registration does not change that.
-        IResilientTaskBuilder taskBuilder = resilientTaskCredential is null
+        ResilientTaskBuilder taskBuilder = resilientTaskCredential is null
             ? services.AddResilientTasks()
             : services.AddResilientTasks(resilientTaskCredential);
         taskBuilder.AddTask<ResponseTaskInput, ResponseTaskOutput>(
