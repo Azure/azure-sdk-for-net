@@ -928,9 +928,16 @@ function Get-SDKSolutionBuildPath()
     )
 
     if ($serviceType -eq "resource-manager") {
-        $solution = Get-ChildItem -Path $projectFolder -Filter "*.sln*" -File |
+        $packageName = Split-Path $projectFolder -Leaf
+        $solutions = @(Get-ChildItem -Path $projectFolder -Filter "*.sln*" -File |
             Where-Object { $_.Extension -in ".sln", ".slnx" } |
+            Sort-Object Name)
+        $solution = $solutions |
+            Where-Object { $_.BaseName -eq $packageName } |
             Select-Object -First 1
+        if (!$solution) {
+            $solution = $solutions | Select-Object -First 1
+        }
         if (!$solution) {
             throw "Management SDK solution not found in $projectFolder."
         }
@@ -1017,7 +1024,7 @@ function GeneratePackage()
                 dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $solutionBuildPath
             }
             if ( !$? ) {
-                Write-Host "[WARNING] Failed to build sdk solution:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Host "[WARNING] Failed to build sdk solution: $packageName. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "warning"
             }
             # pack

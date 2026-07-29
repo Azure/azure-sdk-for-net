@@ -184,6 +184,7 @@ Describe "Get-SDKSolutionBuildPath function" -Tag "UnitTest" {
 
     It "selects the management package solution" {
         $solutionPath = Join-Path $script:testProjectFolder "Azure.ResourceManager.Compute.slnx"
+        Set-Content -Path (Join-Path $script:testProjectFolder "A.Unrelated.sln") -Value ""
         Set-Content -Path $solutionPath -Value "<Solution />"
 
         $result = Get-SDKSolutionBuildPath `
@@ -192,6 +193,19 @@ Describe "Get-SDKSolutionBuildPath function" -Tag "UnitTest" {
             -serviceType "resource-manager"
 
         $result | Should -Be $solutionPath
+    }
+
+    It "selects the first solution by name when none matches the package" {
+        $expectedPath = Join-Path $script:testProjectFolder "A.Management.slnx"
+        Set-Content -Path (Join-Path $script:testProjectFolder "Z.Management.sln") -Value ""
+        Set-Content -Path $expectedPath -Value "<Solution />"
+
+        $result = Get-SDKSolutionBuildPath `
+            -projectFolder $script:testProjectFolder `
+            -sdkRootPath $script:testRootDir `
+            -serviceType "resource-manager"
+
+        $result | Should -Be $expectedPath
     }
 
     It "selects service.proj for data-plane packages" {
