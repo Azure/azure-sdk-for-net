@@ -15,58 +15,58 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Bootstrap configuration for a FlexNode pool. </summary>
-    public partial class PoolBootstrapData : IJsonModel<PoolBootstrapData>
+    public partial class PoolBootstrapInfo : IJsonModel<PoolBootstrapInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PoolBootstrapData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PoolBootstrapInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePoolBootstrapData(document.RootElement, options);
+                        return DeserializePoolBootstrapInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PoolBootstrapData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PoolBootstrapInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PoolBootstrapData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PoolBootstrapInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PoolBootstrapData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PoolBootstrapInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PoolBootstrapData IPersistableModel<PoolBootstrapData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PoolBootstrapInfo IPersistableModel<PoolBootstrapInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PoolBootstrapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PoolBootstrapInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PoolBootstrapData"/> from. </param>
-        internal static PoolBootstrapData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PoolBootstrapInfo"/> from. </param>
+        internal static PoolBootstrapInfo FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePoolBootstrapData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePoolBootstrapInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PoolBootstrapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PoolBootstrapInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolBootstrapData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PoolBootstrapInfo)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Azure))
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PoolBootstrapData IJsonModel<PoolBootstrapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PoolBootstrapInfo IJsonModel<PoolBootstrapInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PoolBootstrapData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PoolBootstrapInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PoolBootstrapInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolBootstrapData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PoolBootstrapInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePoolBootstrapData(document.RootElement, options);
+            return DeserializePoolBootstrapInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PoolBootstrapData DeserializePoolBootstrapData(JsonElement element, ModelReaderWriterOptions options)
+        internal static PoolBootstrapInfo DeserializePoolBootstrapInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PoolBootstrapData(azure, components, networking, node, additionalBinaryDataProperties);
+            return new PoolBootstrapInfo(azure, components, networking, node, additionalBinaryDataProperties);
         }
     }
 }

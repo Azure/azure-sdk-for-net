@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Bootstrap configuration for a FlexNode pool. </summary>
-    public partial class PoolBootstrapData
+    public partial class PoolBootstrapInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PoolBootstrapData"/>. </summary>
-        internal PoolBootstrapData()
+        /// <summary> Initializes a new instance of <see cref="PoolBootstrapInfo"/>. </summary>
+        internal PoolBootstrapInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolBootstrapData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PoolBootstrapInfo"/>. </summary>
         /// <param name="azure"> Azure environment and cluster identity information. </param>
         /// <param name="components"> Component versions for the node runtime. </param>
         /// <param name="networking"> Network configuration for the node. </param>
         /// <param name="node"> Node-level configuration for kubelet, labels, and taints. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolBootstrapData(BootstrapAzureConfig azure, BootstrapComponentVersions components, BootstrapNetworkingConfig networking, BootstrapNodeConfig node, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolBootstrapInfo(BootstrapAzureConfig azure, BootstrapComponentVersions components, BootstrapNetworkingConfig networking, BootstrapNodeConfig node, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Azure = azure;
             Components = components;

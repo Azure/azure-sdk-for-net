@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PoolBootstrapData>> GetBootstrapDataAsync(ListBootstrapDataRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PoolBootstrapInfo>> GetBootstrapDataAsync(ListBootstrapDataContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -628,9 +628,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ListBootstrapDataRequest.ToRequestContent(content), context);
+                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ListBootstrapDataContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PoolBootstrapData> response = Response.FromValue(PoolBootstrapData.FromResponse(result), result);
+                Response<PoolBootstrapInfo> response = Response.FromValue(PoolBootstrapInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PoolBootstrapData> GetBootstrapData(ListBootstrapDataRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<PoolBootstrapInfo> GetBootstrapData(ListBootstrapDataContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -680,9 +680,9 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ListBootstrapDataRequest.ToRequestContent(content), context);
+                HttpMessage message = _agentPoolsRestClient.CreateGetBootstrapDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ListBootstrapDataContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PoolBootstrapData> response = Response.FromValue(PoolBootstrapData.FromResponse(result), result);
+                Response<PoolBootstrapInfo> response = Response.FromValue(PoolBootstrapInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

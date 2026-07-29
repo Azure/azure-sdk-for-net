@@ -624,20 +624,20 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new AgentPoolDeleteMachinesContent((machineNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <returns> A new <see cref="Models.ListBootstrapDataRequest"/> instance for mocking. </returns>
-        public static ListBootstrapDataRequest ListBootstrapDataRequest()
+        /// <returns> A new <see cref="Models.ListBootstrapDataContent"/> instance for mocking. </returns>
+        public static ListBootstrapDataContent ListBootstrapDataContent()
         {
-            return new ListBootstrapDataRequest(default);
+            return new ListBootstrapDataContent(default);
         }
 
         /// <param name="azure"> Azure environment and cluster identity information. </param>
         /// <param name="components"> Component versions for the node runtime. </param>
         /// <param name="networking"> Network configuration for the node. </param>
         /// <param name="node"> Node-level configuration for kubelet, labels, and taints. </param>
-        /// <returns> A new <see cref="Models.PoolBootstrapData"/> instance for mocking. </returns>
-        public static PoolBootstrapData PoolBootstrapData(BootstrapAzureConfig azure = default, BootstrapComponentVersions components = default, BootstrapNetworkingConfig networking = default, BootstrapNodeConfig node = default)
+        /// <returns> A new <see cref="Models.PoolBootstrapInfo"/> instance for mocking. </returns>
+        public static PoolBootstrapInfo PoolBootstrapInfo(BootstrapAzureConfig azure = default, BootstrapComponentVersions components = default, BootstrapNetworkingConfig networking = default, BootstrapNodeConfig node = default)
         {
-            return new PoolBootstrapData(azure, components, networking, node, default);
+            return new PoolBootstrapInfo(azure, components, networking, node, default);
         }
 
         /// <param name="resourceManagerEndpoint"> Azure Resource Manager endpoint for the cloud environment. </param>

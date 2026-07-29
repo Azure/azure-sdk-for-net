@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Empty request body for listing FlexNode bootstrap data. </summary>
-    public partial class ListBootstrapDataRequest
+    public partial class ListBootstrapDataContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListBootstrapDataRequest"/>. </summary>
-        public ListBootstrapDataRequest()
+        /// <summary> Initializes a new instance of <see cref="ListBootstrapDataContent"/>. </summary>
+        public ListBootstrapDataContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListBootstrapDataRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBootstrapDataContent"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListBootstrapDataRequest(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListBootstrapDataContent(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
