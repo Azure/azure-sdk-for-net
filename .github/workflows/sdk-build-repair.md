@@ -91,6 +91,7 @@ permissions:
 
 # Authenticate the nested Copilot SDK used by azsdk with the workflow token.
 env:
+  AZSDK_COPILOT_CLI_PATH: /usr/local/bin/copilot
   AZSDK_COPILOT_GITHUB_TOKEN: ${{ github.token }}
 
 network:
