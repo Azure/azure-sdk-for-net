@@ -105,7 +105,7 @@
   <Target Name="InstallTspClient" Condition="'$(SkipTspClientInstall)' != 'true'">
     <ItemGroup>
       <_TypeSpecProjectReference Include="@(ProjectReference)"
-                                 Condition="$([System.String]::Copy('%(RootDir)%(Directory)').TrimEnd('\/').EndsWith('src')) and Exists('%(RootDir)%(Directory)../tsp-location.yaml')" />
+                                 Condition="$([System.String]::Copy('%(RootDir)%(Directory)').TrimEnd('/').TrimEnd('\').EndsWith('src')) and Exists('%(RootDir)%(Directory)../tsp-location.yaml')" />
     </ItemGroup>
     <Exec Command="npm ci --prefix $(MSBuildThisFileDirectory)common/tsp-client"
           Condition="'@(_TypeSpecProjectReference)' != ''" />
