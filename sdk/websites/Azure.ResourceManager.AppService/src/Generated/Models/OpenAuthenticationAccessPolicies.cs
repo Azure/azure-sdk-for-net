@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Open authentication policies. </summary>
         [WirePath("policies")]
-        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList { get; }
+        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList { get; } = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
     }
 }

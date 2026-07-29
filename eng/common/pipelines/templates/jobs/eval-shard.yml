@@ -101,7 +101,7 @@ jobs:
             patterns+=(--pattern "$tok")
           done
           set +f
-          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/init-eval-git-fixtures.js" \
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/init-eval-git-fixtures.ts" \
             --eval-root "$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}" \
             "${patterns[@]}"
         displayName: 'Prime eval git fixtures'

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DurableTask.Models;
 using Azure.ResourceManager.Models;
 
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.DurableTask
     [ModelReaderWriterBuildable(typeof(DurableTaskSchedulerSku))]
     [ModelReaderWriterBuildable(typeof(DurableTaskSchedulerSkuUpdate))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchedulerListResult))]
     [ModelReaderWriterBuildable(typeof(SchedulerPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

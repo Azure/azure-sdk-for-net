@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CostManagement
     public enum ScheduledActionStatus
     {
         /// <summary> Scheduled action is saved and will be run. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Scheduled action is expired. </summary>
-        Expired,
+        Expired = 1,
         /// <summary> Scheduled action is saved but will not be run. </summary>
-        Disabled
+        Disabled = 2
     }
 }

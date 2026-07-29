@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> Adapter-specific metadata for LoRA models. Drives serving engine configuration at deployment time. </summary>
     [Experimental("AAIP001")]
-    internal partial class LoraConfig
+    public partial class LoraConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

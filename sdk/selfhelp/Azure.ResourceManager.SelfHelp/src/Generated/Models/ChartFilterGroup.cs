@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> List of filters. </summary>
-        public IList<SelfHelpFilter> Filter { get; }
+        public IList<SelfHelpFilter> Filter { get; } = new ChangeTrackingList<SelfHelpFilter>();
     }
 }

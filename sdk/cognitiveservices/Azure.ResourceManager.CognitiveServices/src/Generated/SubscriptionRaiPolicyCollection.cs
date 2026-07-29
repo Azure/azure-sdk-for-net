@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(SubscriptionRaiPolicyResource.ResourceType, out string subscriptionRaiPolicyApiVersion);
             _subscriptionRaiPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", SubscriptionRaiPolicyResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionRaiPolicyRestClient = new SubscriptionRaiPolicy(_subscriptionRaiPolicyClientDiagnostics, Pipeline, Endpoint, subscriptionRaiPolicyApiVersion ?? "2026-05-15-preview");
+            _subscriptionRaiPolicyRestClient = new SubscriptionRaiPolicy(_subscriptionRaiPolicyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionRaiPolicyApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

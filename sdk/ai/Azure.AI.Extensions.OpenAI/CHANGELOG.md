@@ -4,11 +4,17 @@
 
 ### Features Added
 
+- Added distributed tracing support.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample Updates
+- Added sample for running responses in specific sessions.
+- Added sample for `ReminderPreviewToolboxTool`.
 
 ## 2.1.0-beta.4 (2026-06-30)
 

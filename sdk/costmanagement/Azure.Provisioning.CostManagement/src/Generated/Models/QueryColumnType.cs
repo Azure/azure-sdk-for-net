@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum QueryColumnType
     {
         /// <summary> The tag associated with the cost data. </summary>
-        TagKey,
+        TagKey = 0,
         /// <summary> The dimension of cost data. </summary>
-        Dimension
+        Dimension = 1
     }
 }

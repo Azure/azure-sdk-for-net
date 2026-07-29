@@ -18,7 +18,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             ResourceOperationKind methodKind,
             bool forceLro = false)
-            : base(resource, parameterMappings, restClientInfo, method, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind), forceLro: forceLro)
+        : base(resource, parameterMappings, restClientInfo, method, methodKind, isAsync, methodName: isAsync ? "UpdateAsync" : "Update", description: GetDescription(resource, methodKind), forceLro: forceLro)
         {
         }
 

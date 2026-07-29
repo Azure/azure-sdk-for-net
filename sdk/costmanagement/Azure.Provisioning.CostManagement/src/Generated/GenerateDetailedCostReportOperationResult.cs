@@ -38,13 +38,18 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -77,7 +82,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the ValidTill. </summary>
+        /// <summary> Gets the ValidTill. </summary>
         public BicepValue<DateTimeOffset> ValidTill
         {
             get
@@ -86,7 +91,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the DownloadUri. </summary>
+        /// <summary> Gets the DownloadUri. </summary>
         public BicepValue<Uri> DownloadUri
         {
             get

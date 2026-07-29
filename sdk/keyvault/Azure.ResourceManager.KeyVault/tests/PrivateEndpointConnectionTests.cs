@@ -12,7 +12,6 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.KeyVault.Tests
 {
     [NonParallelizable]
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     public class PrivateEndpointConnectionTests : VaultOperationsTestsBase
     {
         public PrivateEndpointConnectionTests(bool isAsync)
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [SetUp]
         public async Task ClearChallengeCacheforRecord()
         {
-                await Initialize().ConfigureAwait(false);
+            await Initialize().ConfigureAwait(false);
         }
 
         [RecordedTest]
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
+                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string edgeMachineDiskJobApiVersion);
             _edgeMachineDiskJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeMachineDiskJobsRestClient = new EdgeMachineDiskJobs(_edgeMachineDiskJobsClientDiagnostics, Pipeline, Endpoint, edgeMachineDiskJobApiVersion ?? "2026-05-01-preview");
+            _edgeMachineDiskJobsRestClient = new EdgeMachineDiskJobs(_edgeMachineDiskJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineDiskJobApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

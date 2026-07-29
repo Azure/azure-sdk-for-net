@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="backupStorageVersion"> Backup storage version. </param>
         /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="costManagementSettings"> Cost Management Settings of the vault. </param>
         /// <param name="restoreSettings"> Restore Settings of the vault. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, CostManagementSettings costManagementSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             BackupStorageVersion = backupStorageVersion;
             PublicNetworkAccess = publicNetworkAccess;
             MonitoringSettings = monitoringSettings;
+            CostManagementSettings = costManagementSettings;
             RestoreSettings = restoreSettings;
             RedundancySettings = redundancySettings;
             SecuritySettings = securitySettings;
@@ -98,6 +100,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Monitoring Settings of the vault. </summary>
         public VaultMonitoringSettings MonitoringSettings { get; set; }
 
+        /// <summary> Cost Management Settings of the vault. </summary>
+        internal CostManagementSettings CostManagementSettings { get; set; }
+
         /// <summary> Restore Settings of the vault. </summary>
         internal RestoreSettings RestoreSettings { get; set; }
 
@@ -115,6 +120,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
+
+        /// <summary> Settings for granularity level. </summary>
+        public GranularityLevel? CostManagementGranularityLevel
+        {
+            get
+            {
+                return CostManagementSettings is null ? default : CostManagementSettings.GranularityLevel;
+            }
+            set
+            {
+                if (CostManagementSettings is null)
+                {
+                    CostManagementSettings = new CostManagementSettings();
+                }
+                CostManagementSettings.GranularityLevel = value;
+            }
+        }
 
         /// <summary> Gets or sets the CrossSubscriptionRestoreState. </summary>
         public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState

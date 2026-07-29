@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerDatabaseRestorePointResource.ResourceType, out string sqlServerDatabaseRestorePointApiVersion);
             _restorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseRestorePointResource.ResourceType.Namespace, Diagnostics);
-            _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Endpoint, sqlServerDatabaseRestorePointApiVersion ?? "2025-02-01-preview");
+            _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseRestorePointApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

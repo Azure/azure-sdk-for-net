@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualRouterPeeringApiVersion);
             _virtualRouterPeeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualRouterPeeringsRestClient = new VirtualRouterPeerings(_virtualRouterPeeringsClientDiagnostics, Pipeline, Endpoint, virtualRouterPeeringApiVersion ?? "2025-07-01");
+            _virtualRouterPeeringsRestClient = new VirtualRouterPeerings(_virtualRouterPeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualRouterPeeringApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

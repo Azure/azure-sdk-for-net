@@ -463,13 +463,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ComputeScheduleManagedDiskConfig(id, default, storageAccountType, diskEncryptionSetId is null ? default : new ComputeScheduleDiskEncryptionSetConfig(diskEncryptionSetId, default), securityProfile);
         }
 
-        /// <param name="id"> The ID of the sub-resource. </param>
-        /// <returns> A new <see cref="Models.ComputeScheduleDiskEncryptionSetConfig"/> instance for mocking. </returns>
-        public static ComputeScheduleDiskEncryptionSetConfig ComputeScheduleDiskEncryptionSetConfig(ResourceIdentifier id = default)
-        {
-            return new ComputeScheduleDiskEncryptionSetConfig(id, default);
-        }
-
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>
         /// <param name="diskEncryptionSetId"> The ID of the sub-resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineDiskSecurityProfile"/> instance for mocking. </returns>

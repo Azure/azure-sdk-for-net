@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM. </summary>
-        public IList<ComputeBulkActionsVMGalleryApplication> GalleryApplications { get; }
+        public IList<ComputeBulkActionsVMGalleryApplication> GalleryApplications { get; } = new ChangeTrackingList<ComputeBulkActionsVMGalleryApplication>();
     }
 }
