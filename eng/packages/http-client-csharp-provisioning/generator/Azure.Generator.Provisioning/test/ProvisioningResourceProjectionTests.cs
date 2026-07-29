@@ -452,6 +452,8 @@ namespace Azure.Generator.Provisioning.Tests
             var writableProvider = providers[0];
             var readOnlySiblingProvider = providers[1];
 
+            Assert.That(writableProvider.Name, Is.EqualTo("Profile"));
+            Assert.That(readOnlySiblingProvider.Name, Is.EqualTo("ProfileRevision"));
             var writablePropertyInfo = ((IProvisioningPropertyInfo)writableProvider).GetProvisioningPropertyInfo(valueProperty);
             var readOnlySiblingPropertyInfo = ((IProvisioningPropertyInfo)readOnlySiblingProvider).GetProvisioningPropertyInfo(valueProperty);
 

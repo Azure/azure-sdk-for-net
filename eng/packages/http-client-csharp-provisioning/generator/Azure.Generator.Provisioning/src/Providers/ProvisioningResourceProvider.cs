@@ -113,6 +113,9 @@ namespace Azure.Generator.Provisioning.Providers
         {
             _inputModel = projection.ResourceModel;
             _resourceProjection = projection;
+            // ModelProvider can materialize Type during its constructor, before projection
+            // metadata is assigned. Reset that cache so shared models use the resource name.
+            base.Reset();
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
