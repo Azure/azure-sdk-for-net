@@ -580,20 +580,15 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
     $summaryArgs = $showSummary ? "/v:n /ds" : ""
 
-    # Opt-in knob for generating packages concurrently. Both /m and BuildInParallel are
-    # required; the MSBuild task in eng/service.proj stays sequential if either is missing.
-    #
-    # Defaults to 1 (sequential) because it does not currently pay off on the CI agents.
-    # Measured on the mgmt regeneration pipeline: 230 packages at /m:4 took 0.858 min per
-    # package versus 0.882 min per package sequentially, a 1.03x speedup. The agents are
-    # small and each package already saturates them via the spec clone, the per-package
-    # npm install and the tsp compile, so adding concurrency mostly adds contention.
-    # Reducing the per-package cost is the useful lever, not overlapping packages.
-    $parallelism = if ($env:SDK_GENERATION_PARALLELISM) { [int]$env:SDK_GENERATION_PARALLELISM } else { 1 }
-    $parallelArgs = $parallelism -gt 1 ? "/m:$parallelism /p:BuildInParallel=true" : ""
-    Write-Host "Generating with parallelism $parallelism (override with SDK_GENERATION_PARALLELISM)"
-
-    Invoke-LoggedCommand "dotnet msbuild /restore $parallelArgs /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
+    # Packages are generated one at a time on purpose; do not add /m and BuildInParallel here.
+    # A single package already consumes about 10.7 CPU cores on average (26.9s wall versus
+    # 286.6s CPU for Azure.ResourceManager.DataBox), so the generator saturates a CI agent by
+    # itself and overlapping packages only splits the same cores. Measured on the mgmt
+    # regeneration pipeline, 230 packages at /m:4 took 0.858 min per package versus 0.882 min
+    # sequentially, a 1.03x speedup that is within noise. Concurrency would only pay off on a
+    # much larger agent (roughly 32+ cores); until then the useful lever is reducing the
+    # per-package cost, not overlapping packages.
+    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
   }
   finally {
     Pop-Location
