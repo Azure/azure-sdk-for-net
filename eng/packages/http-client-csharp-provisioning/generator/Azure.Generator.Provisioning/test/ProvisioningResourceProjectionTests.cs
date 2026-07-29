@@ -5,6 +5,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -94,6 +95,29 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(projection.ReadableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup }));
             Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.Extension }));
             Assert.That(projection.IsExtensionResource, Is.True);
+        }
+
+        [Test]
+        public void ResourceVersionsAreRetainedAsNonRootType()
+        {
+            var model = CreateModel("TestResourceData");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(resource);
+
+            var resourceVersions = provider.NestedTypes.Single(type => type.Name == "ResourceVersions");
+            var nonRootTypes = (HashSet<string>)typeof(CodeModelGenerator)
+                .GetProperty("NonRootTypes", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .GetValue(ProvisioningGenerator.Instance)!;
+
+            Assert.That(resourceVersions.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public), Is.True);
+            Assert.That(nonRootTypes, Does.Contain(resourceVersions.Type.FullyQualifiedName));
         }
 
         [Test]
