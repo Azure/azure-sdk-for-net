@@ -443,10 +443,10 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<bool> IsActive { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryRule RuleDefinition { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsRuleType> RuleType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsStatusCode> StatusCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsProvisioningState> SummaryLogsProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsRuleType> SummaryLogsRuleType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsStatusCode> SummaryLogsStatusCode { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogs FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

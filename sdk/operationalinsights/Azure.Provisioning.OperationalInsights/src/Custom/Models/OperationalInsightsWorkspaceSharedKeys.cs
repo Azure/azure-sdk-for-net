@@ -12,8 +12,8 @@ namespace Azure.Provisioning.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsWorkspaceSharedKeys : ProvisionableConstruct
     {
-        private BicepValue<string>? _primarySharedKey;
-        private BicepValue<string>? _secondarySharedKey;
+        private BicepValue<string> _primarySharedKey;
+        private BicepValue<string> _secondarySharedKey;
 
         /// <summary>
         /// The primary shared key of a workspace.

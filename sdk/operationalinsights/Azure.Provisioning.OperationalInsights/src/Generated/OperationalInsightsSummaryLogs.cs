@@ -94,12 +94,12 @@ namespace Azure.Provisioning.OperationalInsights
             }
         }
 
-        /// <summary> Gets or sets the RuleType. </summary>
-        public BicepValue<OperationalInsightsSummaryLogsRuleType> RuleType
+        /// <summary> Gets or sets the SummaryLogsRuleType. </summary>
+        public BicepValue<OperationalInsightsSummaryLogsRuleType> SummaryLogsRuleType
         {
             get
             {
-                return Properties is null ? default : Properties.RuleType;
+                return Properties is null ? default : Properties.SummaryLogsRuleType;
             }
             set
             {
@@ -107,7 +107,7 @@ namespace Azure.Provisioning.OperationalInsights
                 {
                     Properties = new SummaryLogsProperties();
                 }
-                Properties.RuleType = value;
+                Properties.SummaryLogsRuleType = value;
             }
         }
 
@@ -158,8 +158,8 @@ namespace Azure.Provisioning.OperationalInsights
             }
         }
 
-        /// <summary> Gets the StatusCode. </summary>
-        public BicepValue<OperationalInsightsSummaryLogsStatusCode> StatusCode
+        /// <summary> Gets the SummaryLogsStatusCode. </summary>
+        public BicepValue<OperationalInsightsSummaryLogsStatusCode> SummaryLogsStatusCode
         {
             get
             {
@@ -167,12 +167,12 @@ namespace Azure.Provisioning.OperationalInsights
                 {
                     Properties = new SummaryLogsProperties();
                 }
-                return Properties.StatusCode;
+                return Properties.SummaryLogsStatusCode;
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<OperationalInsightsSummaryLogsProvisioningState> ProvisioningState
+        /// <summary> Gets the SummaryLogsProvisioningState. </summary>
+        public BicepValue<OperationalInsightsSummaryLogsProvisioningState> SummaryLogsProvisioningState
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Azure.Provisioning.OperationalInsights
                 {
                     Properties = new SummaryLogsProperties();
                 }
-                return Properties.ProvisioningState;
+                return Properties.SummaryLogsProvisioningState;
             }
         }
 
