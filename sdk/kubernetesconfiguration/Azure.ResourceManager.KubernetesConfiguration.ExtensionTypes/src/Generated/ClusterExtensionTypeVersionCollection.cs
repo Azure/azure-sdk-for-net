@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             TryGetApiVersion(ClusterExtensionTypeVersionResource.ResourceType, out string clusterExtensionTypeVersionApiVersion);
             _extensionTypeInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes", ClusterExtensionTypeVersionResource.ResourceType.Namespace, Diagnostics);
-            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Endpoint, clusterExtensionTypeVersionApiVersion ?? "2024-11-01-preview");
+            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, clusterExtensionTypeVersionApiVersion ?? "2024-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             if (id.ResourceType != ClusterExtensionTypeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ClusterExtensionTypeResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ClusterExtensionTypeResource.ResourceType), nameof(id));
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, versionNumber, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, versionNumber, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -185,13 +185,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.ResourceType.Namespace,
-                Id.Parent.Name,
                 Id.Parent.ResourceType.Type,
+                Id.Parent.Name,
                 Id.Name,
                 releaseTrain,
                 majorVersion,
                 showLatest,
-                context), data => new ClusterExtensionTypeVersionResource(Client, data));
+                context,
+                "ClusterExtensionTypeVersionCollection.GetAll"), data => new ClusterExtensionTypeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -227,13 +228,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.ResourceType.Namespace,
-                Id.Parent.Name,
                 Id.Parent.ResourceType.Type,
+                Id.Parent.Name,
                 Id.Name,
                 releaseTrain,
                 majorVersion,
                 showLatest,
-                context), data => new ClusterExtensionTypeVersionResource(Client, data));
+                context,
+                "ClusterExtensionTypeVersionCollection.GetAll"), data => new ClusterExtensionTypeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, versionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;
@@ -326,7 +328,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, versionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;
@@ -383,7 +385,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, versionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;
@@ -444,7 +446,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, versionNumber, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, versionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionTypeVersionForReleaseTrainData> response = default;

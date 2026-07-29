@@ -13,14 +13,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary>
     /// A class representing a ClusterExtensionType along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ClusterExtensionTypeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetClusterExtensionTypes method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetClusterExtensionTypes method.
     /// </summary>
     public partial class ClusterExtensionTypeResource : ArmResource
     {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             TryGetApiVersion(ResourceType, out string clusterExtensionTypeApiVersion);
             _extensionTypeInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes", ResourceType.Namespace, Diagnostics);
-            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Endpoint, clusterExtensionTypeApiVersion ?? "2024-11-01-preview");
+            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, clusterExtensionTypeApiVersion ?? "2024-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)

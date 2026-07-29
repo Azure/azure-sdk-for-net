@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private readonly string _releaseTrain;
         private readonly string _clusterType;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExtensionTypeInterfaceLocationListCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ExtensionTypeInterface client used to send requests. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="releaseTrain"> Filter results by release train (default value is stable). </param>
         /// <param name="clusterType"> Filter results by the cluster type for extension types. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ExtensionTypeInterfaceLocationListCollectionResultOfT(ExtensionTypeInterface client, string subscriptionId, string location, string publisherId, string offerId, string planId, string releaseTrain, string clusterType, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ExtensionTypeInterfaceLocationListCollectionResultOfT(ExtensionTypeInterface client, string subscriptionId, string location, string publisherId, string offerId, string planId, string releaseTrain, string clusterType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,6 +49,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             _releaseTrain = releaseTrain;
             _clusterType = clusterType;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ExtensionTypeInterfaceLocationListCollectionResultOfT as an enumerable collection. </summary>
@@ -64,8 +67,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                     yield break;
                 }
                 ExtensionTypesList result = ExtensionTypesList.FromResponse(response);
-                yield return Page<ExtensionTypeData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExtensionTypeData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextLocationListRequest(nextLink, _subscriptionId, _location, _publisherId, _offerId, _planId, _releaseTrain, _clusterType, _context) : _client.CreateLocationListRequest(_subscriptionId, _location, _publisherId, _offerId, _planId, _releaseTrain, _clusterType, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocationExtensionTypeCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

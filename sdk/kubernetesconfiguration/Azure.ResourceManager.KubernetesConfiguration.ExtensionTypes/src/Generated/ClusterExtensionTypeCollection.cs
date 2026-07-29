@@ -8,32 +8,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary>
     /// A class representing a collection of <see cref="ClusterExtensionTypeResource"/> and their operations.
-    /// Each <see cref="ClusterExtensionTypeResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ClusterExtensionTypeCollection"/> instance call the GetClusterExtensionTypes method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="ClusterExtensionTypeResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ClusterExtensionTypeCollection"/> instance call the GetClusterExtensionTypes method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ClusterExtensionTypeCollection : ArmCollection, IEnumerable<ClusterExtensionTypeResource>, IAsyncEnumerable<ClusterExtensionTypeResource>
     {
         private readonly ClientDiagnostics _extensionTypeInterfaceClientDiagnostics;
         private readonly ExtensionTypeInterface _extensionTypeInterfaceRestClient;
-        /// <summary> The clusterRp. </summary>
-        private readonly string _clusterRp;
-        /// <summary> The clusterResourceName. </summary>
-        private readonly string _clusterResourceName;
-        /// <summary> The clusterName. </summary>
-        private readonly string _clusterName;
 
         /// <summary> Initializes a new instance of ClusterExtensionTypeCollection for mocking. </summary>
         protected ClusterExtensionTypeCollection()
@@ -43,28 +35,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <summary> Initializes a new instance of <see cref="ClusterExtensionTypeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
-        internal ClusterExtensionTypeCollection(ArmClient client, ResourceIdentifier id, string clusterRp, string clusterResourceName, string clusterName) : base(client, id)
+        internal ClusterExtensionTypeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ClusterExtensionTypeResource.ResourceType, out string clusterExtensionTypeApiVersion);
-            _clusterRp = clusterRp;
-            _clusterResourceName = clusterResourceName;
-            _clusterName = clusterName;
             _extensionTypeInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes", ClusterExtensionTypeResource.ResourceType.Namespace, Diagnostics);
-            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Endpoint, clusterExtensionTypeApiVersion ?? "2024-11-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
-            }
+            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, clusterExtensionTypeApiVersion ?? "2024-11-01-preview");
         }
 
         /// <summary>
@@ -100,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, extensionTypeName, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -149,7 +124,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, extensionTypeName, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -198,14 +173,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _clusterRp,
-                _clusterResourceName,
-                _clusterName,
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
                 publisherId,
                 offerId,
                 planId,
                 releaseTrain,
-                context), data => new ClusterExtensionTypeResource(Client, data));
+                context,
+                "ClusterExtensionTypeCollection.GetAll"), data => new ClusterExtensionTypeResource(Client, data));
         }
 
         /// <summary>
@@ -241,14 +217,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _clusterRp,
-                _clusterResourceName,
-                _clusterName,
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
                 publisherId,
                 offerId,
                 planId,
                 releaseTrain,
-                context), data => new ClusterExtensionTypeResource(Client, data));
+                context,
+                "ClusterExtensionTypeCollection.GetAll"), data => new ClusterExtensionTypeResource(Client, data));
         }
 
         /// <summary>
@@ -284,7 +261,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, extensionTypeName, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionTypeData> response = default;
@@ -341,7 +318,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, extensionTypeName, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionTypeData> response = default;
@@ -398,7 +375,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, extensionTypeName, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtensionTypeData> response = default;
@@ -459,7 +436,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, extensionTypeName, context);
+                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtensionTypeData> response = default;

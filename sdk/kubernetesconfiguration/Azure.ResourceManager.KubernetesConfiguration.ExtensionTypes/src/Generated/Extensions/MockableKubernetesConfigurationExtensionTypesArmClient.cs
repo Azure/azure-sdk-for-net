@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes;
@@ -44,6 +48,42 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
             return new ClusterExtensionTypeResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="ClusterExtensionTypeCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ClusterExtensionTypeResource"/> objects. </returns>
+        public virtual ClusterExtensionTypeCollection GetClusterExtensionTypes(ResourceIdentifier scope)
+        {
+            return new ClusterExtensionTypeCollection(Client, scope);
+        }
+
+        /// <summary> Get an Extension Type installable to the cluster based region and type for the cluster. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="extensionTypeName"> Name of the Extension Type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ClusterExtensionTypeResource> GetClusterExtensionType(ResourceIdentifier scope, string extensionTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionTypeName, nameof(extensionTypeName));
+
+            return GetClusterExtensionTypes(scope).Get(extensionTypeName, cancellationToken);
+        }
+
+        /// <summary> Get an Extension Type installable to the cluster based region and type for the cluster. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="extensionTypeName"> Name of the Extension Type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ClusterExtensionTypeResource>> GetClusterExtensionTypeAsync(ResourceIdentifier scope, string extensionTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionTypeName, nameof(extensionTypeName));
+
+            return await GetClusterExtensionTypes(scope).GetAsync(extensionTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="LocationExtensionTypeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LocationExtensionTypeVersionResource"/> object. </returns>
@@ -60,6 +100,42 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Mocking
         {
             ClusterExtensionTypeVersionResource.ValidateResourceId(id);
             return new ClusterExtensionTypeVersionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ClusterExtensionTypeVersionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ClusterExtensionTypeVersionResource"/> objects. </returns>
+        public virtual ClusterExtensionTypeVersionCollection GetClusterExtensionTypeVersions(ResourceIdentifier scope)
+        {
+            return new ClusterExtensionTypeVersionCollection(Client, scope);
+        }
+
+        /// <summary> Get details of a version for an Extension Type installable to the cluster. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="versionNumber"> Version number of the Extension Type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionNumber"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ClusterExtensionTypeVersionResource> GetClusterExtensionTypeVersion(ResourceIdentifier scope, string versionNumber, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
+
+            return GetClusterExtensionTypeVersions(scope).Get(versionNumber, cancellationToken);
+        }
+
+        /// <summary> Get details of a version for an Extension Type installable to the cluster. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="versionNumber"> Version number of the Extension Type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionNumber"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ClusterExtensionTypeVersionResource>> GetClusterExtensionTypeVersionAsync(ResourceIdentifier scope, string versionNumber, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionNumber, nameof(versionNumber));
+
+            return await GetClusterExtensionTypeVersions(scope).GetAsync(versionNumber, cancellationToken).ConfigureAwait(false);
         }
     }
 }

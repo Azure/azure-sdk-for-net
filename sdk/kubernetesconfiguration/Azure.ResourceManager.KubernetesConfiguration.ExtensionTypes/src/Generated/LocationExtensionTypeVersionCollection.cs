@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             TryGetApiVersion(LocationExtensionTypeVersionResource.ResourceType, out string locationExtensionTypeVersionApiVersion);
             _extensionTypeInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes", LocationExtensionTypeVersionResource.ResourceType.Namespace, Diagnostics);
-            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Endpoint, locationExtensionTypeVersionApiVersion ?? "2024-11-01-preview");
+            _extensionTypeInterfaceRestClient = new ExtensionTypeInterface(_extensionTypeInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationExtensionTypeVersionApiVersion ?? "2024-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         {
             if (id.ResourceType != LocationExtensionTypeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocationExtensionTypeResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocationExtensionTypeResource.ResourceType), nameof(id));
             }
         }
 
@@ -190,7 +190,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 clusterType,
                 majorVersion,
                 showLatest,
-                context), data => new LocationExtensionTypeVersionResource(Client, data));
+                context,
+                "LocationExtensionTypeVersionCollection.GetAll"), data => new LocationExtensionTypeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -231,7 +232,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 clusterType,
                 majorVersion,
                 showLatest,
-                context), data => new LocationExtensionTypeVersionResource(Client, data));
+                context,
+                "LocationExtensionTypeVersionCollection.GetAll"), data => new LocationExtensionTypeVersionResource(Client, data));
         }
 
         /// <summary>

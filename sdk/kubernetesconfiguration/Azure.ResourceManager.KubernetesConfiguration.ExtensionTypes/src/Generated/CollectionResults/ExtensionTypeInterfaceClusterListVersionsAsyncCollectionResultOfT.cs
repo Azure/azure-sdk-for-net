@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private readonly string _majorVersion;
         private readonly bool? _showLatest;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ExtensionTypeInterfaceClusterListVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ExtensionTypeInterface client used to send requests. </param>
@@ -41,7 +42,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <param name="majorVersion"> Filter results by the major version of an extension type. </param>
         /// <param name="showLatest"> Filter results by only the latest version (based on other query parameters). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ExtensionTypeInterfaceClusterListVersionsAsyncCollectionResultOfT(ExtensionTypeInterface client, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, string releaseTrain, string majorVersion, bool? showLatest, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ExtensionTypeInterfaceClusterListVersionsAsyncCollectionResultOfT(ExtensionTypeInterface client, string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string extensionTypeName, string releaseTrain, string majorVersion, bool? showLatest, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             _majorVersion = majorVersion;
             _showLatest = showLatest;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ExtensionTypeInterfaceClusterListVersionsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,8 +74,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                     yield break;
                 }
                 ExtensionTypeVersionsList result = ExtensionTypeVersionsList.FromResponse(response);
-                yield return Page<ExtensionTypeVersionForReleaseTrainData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExtensionTypeVersionForReleaseTrainData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -86,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextClusterListVersionsRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _extensionTypeName, _releaseTrain, _majorVersion, _showLatest, _context) : _client.CreateClusterListVersionsRequest(_subscriptionId, _resourceGroupName, _clusterRp, _clusterResourceName, _clusterName, _extensionTypeName, _releaseTrain, _majorVersion, _showLatest, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ClusterExtensionTypeVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

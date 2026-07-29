@@ -4,6 +4,5 @@
     <PackageId>Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.KubernetesConfiguration ExtensionTypes.</Description>
     <PackageTags>azure;management;arm;resource manager;kubernetesconfiguration;extensiontypes</PackageTags>
-    <NoWarn>$(NoWarn);SA1402;CS1591</NoWarn>
   </PropertyGroup>
 </Project>

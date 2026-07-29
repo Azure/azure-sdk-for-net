@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models;
 using Azure.ResourceManager.Models;
 
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
     [ModelReaderWriterBuildable(typeof(ExtensionTypeVersionUnsupportedKubernetesMatrixItem))]
     [ModelReaderWriterBuildable(typeof(LocationExtensionTypeResource))]
     [ModelReaderWriterBuildable(typeof(LocationExtensionTypeVersionResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationExtensionTypesContext : ModelReaderWriterContext
     {
