@@ -105,6 +105,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("indexedSharePointArguments"u8);
                 writer.WriteObjectValue(IndexedSharePointArguments, options);
             }
+            if (Optional.IsDefined(QueryHintProcessing))
+            {
+                writer.WritePropertyName("queryHintProcessing"u8);
+                writer.WriteObjectValue(QueryHintProcessing, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -143,6 +148,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int? count = default;
             ImageServingStatistics imageServing = default;
             KnowledgeBaseIndexedSharePointActivityArguments indexedSharePointArguments = default;
+            KnowledgeBaseQueryHintProcessing queryHintProcessing = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -219,6 +225,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     indexedSharePointArguments = KnowledgeBaseIndexedSharePointActivityArguments.DeserializeKnowledgeBaseIndexedSharePointActivityArguments(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("queryHintProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryHintProcessing = KnowledgeBaseQueryHintProcessing.DeserializeKnowledgeBaseQueryHintProcessing(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -235,7 +250,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 queryTime,
                 count,
                 imageServing,
-                indexedSharePointArguments);
+                indexedSharePointArguments,
+                queryHintProcessing);
         }
     }
 }

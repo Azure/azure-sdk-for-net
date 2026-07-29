@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
         /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
-        /// <param name="modelName"> The name of the model used for the LLM web summarization activity. </param>
-        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        /// <param name="model"> The model used for the LLM web summarization activity. </param>
+        internal KnowledgeBaseModelWebSummarizationActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokensCount, int? outputTokensCount, KnowledgeBaseActivityRecordModel model) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             InputTokensCount = inputTokensCount;
             OutputTokensCount = outputTokensCount;
-            ModelName = modelName;
+            Model = model;
         }
 
         /// <summary> The number of input tokens for the LLM web summarization activity. </summary>
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> The number of output tokens for the LLM web summarization activity. </summary>
         public int? OutputTokensCount { get; }
 
-        /// <summary> The name of the model used for the LLM web summarization activity. </summary>
-        public string ModelName { get; }
+        /// <summary> The model used for the LLM web summarization activity. </summary>
+        public KnowledgeBaseActivityRecordModel Model { get; }
     }
 }

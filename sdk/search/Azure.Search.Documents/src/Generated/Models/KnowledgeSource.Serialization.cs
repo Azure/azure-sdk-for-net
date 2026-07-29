@@ -110,6 +110,11 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(ResultsProcessing))
+            {
+                writer.WritePropertyName("resultsProcessing"u8);
+                writer.WriteStringValue(ResultsProcessing.Value.ToString());
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);

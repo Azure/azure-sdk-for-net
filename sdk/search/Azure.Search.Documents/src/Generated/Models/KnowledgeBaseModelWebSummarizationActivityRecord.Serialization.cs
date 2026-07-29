@@ -90,10 +90,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("outputTokens"u8);
                 writer.WriteNumberValue(OutputTokensCount.Value);
             }
-            if (Optional.IsDefined(ModelName))
+            if (Optional.IsDefined(Model))
             {
-                writer.WritePropertyName("modelName"u8);
-                writer.WriteStringValue(ModelName);
+                writer.WritePropertyName("model"u8);
+                writer.WriteObjectValue(Model, options);
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? inputTokensCount = default;
             int? outputTokensCount = default;
-            string modelName = default;
+            KnowledgeBaseActivityRecordModel model = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -184,9 +184,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     outputTokensCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("modelName"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    modelName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = KnowledgeBaseActivityRecordModel.DeserializeKnowledgeBaseActivityRecordModel(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,7 +207,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 additionalBinaryDataProperties,
                 inputTokensCount,
                 outputTokensCount,
-                modelName);
+                model);
         }
     }
 }

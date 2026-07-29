@@ -164,7 +164,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SearchIndexerDataSourceConnection>> GetDataSourceConnections(
             CancellationToken cancellationToken = default)
         {
-            Response<ListDataSourcesResult> result = GetDataSourceConnections(new[] { Constants.All }, cancellationToken);
+            Response<ListDataSourcesResult> result = GetDataSourceConnections(new[] { Constants.All }, cancellationToken: cancellationToken);
             return Response.FromValue(result.Value.DataSources, result.GetRawResponse());
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSourceConnection>>> GetDataSourceConnectionsAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListDataSourcesResult> result = await GetDataSourceConnectionsAsync(new[] { Constants.All }, cancellationToken).ConfigureAwait(false);
+            Response<ListDataSourcesResult> result = await GetDataSourceConnectionsAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Response.FromValue(result.Value.DataSources, result.GetRawResponse());
         }
 
@@ -192,7 +192,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetDataSourceConnectionNames(
             CancellationToken cancellationToken = default)
         {
-            Response<ListDataSourcesResult> result = GetDataSourceConnections(new[] { Constants.NameKey }, cancellationToken);
+            Response<ListDataSourcesResult> result = GetDataSourceConnections(new[] { Constants.NameKey }, cancellationToken: cancellationToken);
             IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
             return Response.FromValue(names, result.GetRawResponse());
         }
@@ -207,7 +207,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetDataSourceConnectionNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListDataSourcesResult> result = await GetDataSourceConnectionsAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
+            Response<ListDataSourcesResult> result = await GetDataSourceConnectionsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ConfigureAwait(false);
             IReadOnlyList<string> names = result.Value.DataSources.Select(value => value.Name).ToArray();
             return Response.FromValue(names, result.GetRawResponse());
         }

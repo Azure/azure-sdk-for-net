@@ -177,7 +177,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.All }, cancellationToken);
+            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.All }, cancellationToken: cancellationToken);
             return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
         }
 
@@ -191,7 +191,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.All }, cancellationToken).ConfigureAwait(false);
+            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ConfigureAwait(false);
             return Response.FromValue(result.Value.Skillsets, result.GetRawResponse());
         }
 
@@ -205,7 +205,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetSkillsetNames(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.NameKey }, cancellationToken);
+            Response<ListSkillsetsResult> result = GetSkillsets(new[] { Constants.NameKey }, cancellationToken: cancellationToken);
             IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
             return Response.FromValue(names, result.GetRawResponse());
         }
@@ -220,7 +220,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetSkillsetNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
+            Response<ListSkillsetsResult> result = await GetSkillsetsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ConfigureAwait(false);
             IReadOnlyList<string> names = result.Value.Skillsets.Select(value => value.Name).ToArray();
             return Response.FromValue(names, result.GetRawResponse());
         }

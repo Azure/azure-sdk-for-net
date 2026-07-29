@@ -13,52 +13,52 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    /// <summary> Attribution information for a WorkIQ reference. </summary>
-    public partial class WorkIQAttribution : IJsonModel<WorkIQAttribution>
+    /// <summary> Describes a single image that the model selected to be served during a retrieval activity. </summary>
+    public partial class ServedImage : IJsonModel<ServedImage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkIQAttribution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ServedImage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServedImage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWorkIQAttribution(document.RootElement, options);
+                        return DeserializeServedImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServedImage)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServedImage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServedImage)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkIQAttribution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServedImage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkIQAttribution IPersistableModel<WorkIQAttribution>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ServedImage IPersistableModel<ServedImage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkIQAttribution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServedImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WorkIQAttribution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServedImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServedImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServedImage)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SeeMoreWebUrl))
+            if (Optional.IsDefined(ImageId))
             {
-                writer.WritePropertyName("seeMoreWebUrl"u8);
-                writer.WriteStringValue(SeeMoreWebUrl.AbsoluteUri);
+                writer.WritePropertyName("imageId"u8);
+                writer.WriteStringValue(ImageId);
+            }
+            if (Optional.IsDefined(ImagePath))
+            {
+                writer.WritePropertyName("imagePath"u8);
+                writer.WriteStringValue(ImagePath);
+            }
+            if (Optional.IsDefined(SizeBytes))
+            {
+                writer.WritePropertyName("sizeBytes"u8);
+                writer.WriteNumberValue(SizeBytes.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,40 +108,52 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkIQAttribution IJsonModel<WorkIQAttribution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ServedImage IJsonModel<ServedImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkIQAttribution JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ServedImage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServedImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServedImage)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkIQAttribution(document.RootElement, options);
+            return DeserializeServedImage(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkIQAttribution DeserializeWorkIQAttribution(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServedImage DeserializeServedImage(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri seeMoreWebUrl = default;
+            string imageId = default;
+            string imagePath = default;
+            long? sizeBytes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("seeMoreWebUrl"u8))
+                if (prop.NameEquals("imageId"u8))
+                {
+                    imageId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("imagePath"u8))
+                {
+                    imagePath = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sizeBytes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    seeMoreWebUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sizeBytes = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +161,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkIQAttribution(seeMoreWebUrl, additionalBinaryDataProperties);
+            return new ServedImage(imageId, imagePath, sizeBytes, additionalBinaryDataProperties);
         }
     }
 }

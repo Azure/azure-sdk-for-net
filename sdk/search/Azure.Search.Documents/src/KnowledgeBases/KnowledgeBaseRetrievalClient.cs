@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <returns>The response returned from the service.</returns>
         [ForwardsClientCalls]
         public virtual Response Retrieve(RequestContent content, RequestContext context) =>
-            Retrieve(content, querySourceAuthorization: null, context);
+            Retrieve(content, querySourceAuthorization: null, context: context);
 
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores.
@@ -76,6 +76,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <returns>The response returned from the service.</returns>
         [ForwardsClientCalls]
         public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
-            RetrieveAsync(content, querySourceAuthorization: null, context);
+            RetrieveAsync(content, querySourceAuthorization: null, context: context);
     }
 }

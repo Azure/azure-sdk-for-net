@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -322,16 +323,19 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetDataSourceConnections(IEnumerable<string> @select, RequestContext context)
+        internal virtual Response GetDataSourceConnections(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetDataSourceConnections");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, context);
+                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, search, pageSize, searchType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -350,16 +354,19 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetDataSourceConnectionsAsync(IEnumerable<string> @select, RequestContext context)
+        internal virtual async Task<Response> GetDataSourceConnectionsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetDataSourceConnections");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, context);
+                using HttpMessage message = CreateGetDataSourceConnectionsRequest(@select, search, pageSize, searchType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -371,21 +378,27 @@ namespace Azure.Search.Documents.Indexes
 
         /// <summary> Lists all datasources available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListDataSourcesResult> GetDataSourceConnections(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        internal virtual Response<ListDataSourcesResult> GetDataSourceConnections(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetDataSourceConnections(@select, cancellationToken.ToRequestContext());
+            Response result = GetDataSourceConnections(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((ListDataSourcesResult)result, result);
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListDataSourcesResult>> GetDataSourceConnectionsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ListDataSourcesResult>> GetDataSourceConnectionsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetDataSourceConnectionsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetDataSourceConnectionsAsync(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListDataSourcesResult)result, result);
         }
 
@@ -1140,16 +1153,19 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetIndexers(IEnumerable<string> @select, RequestContext context)
+        internal virtual Response GetIndexers(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetIndexers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetIndexersRequest(@select, context);
+                using HttpMessage message = CreateGetIndexersRequest(@select, search, pageSize, searchType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1168,16 +1184,19 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetIndexersAsync(IEnumerable<string> @select, RequestContext context)
+        internal virtual async Task<Response> GetIndexersAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetIndexers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetIndexersRequest(@select, context);
+                using HttpMessage message = CreateGetIndexersRequest(@select, search, pageSize, searchType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1189,21 +1208,27 @@ namespace Azure.Search.Documents.Indexes
 
         /// <summary> Lists all indexers available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListIndexersResult> GetIndexers(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        internal virtual Response<ListIndexersResult> GetIndexers(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetIndexers(@select, cancellationToken.ToRequestContext());
+            Response result = GetIndexers(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((ListIndexersResult)result, result);
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListIndexersResult>> GetIndexersAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ListIndexersResult>> GetIndexersAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetIndexersAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetIndexersAsync(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListIndexersResult)result, result);
         }
 
@@ -1674,16 +1699,19 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSkillsets(IEnumerable<string> @select, RequestContext context)
+        internal virtual Response GetSkillsets(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetSkillsets");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSkillsetsRequest(@select, context);
+                using HttpMessage message = CreateGetSkillsetsRequest(@select, search, pageSize, searchType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1702,16 +1730,19 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSkillsetsAsync(IEnumerable<string> @select, RequestContext context)
+        internal virtual async Task<Response> GetSkillsetsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexerClient.GetSkillsets");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSkillsetsRequest(@select, context);
+                using HttpMessage message = CreateGetSkillsetsRequest(@select, search, pageSize, searchType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1723,21 +1754,27 @@ namespace Azure.Search.Documents.Indexes
 
         /// <summary> List all skillsets in a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListSkillsetsResult> GetSkillsets(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        internal virtual Response<ListSkillsetsResult> GetSkillsets(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSkillsets(@select, cancellationToken.ToRequestContext());
+            Response result = GetSkillsets(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((ListSkillsetsResult)result, result);
         }
 
         /// <summary> List all skillsets in a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="search"> A string used to narrow down the listing so that fewer results need to be paged through. If omitted or an empty string is passed, no narrowing is applied. </param>
+        /// <param name="pageSize"> The maximum number of items to return in a single page. The server enforces a maximum; if omitted, the server determines a suitable default. </param>
+        /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListSkillsetsResult>> GetSkillsetsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ListSkillsetsResult>> GetSkillsetsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSkillsetsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSkillsetsAsync(@select, search, pageSize, searchType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListSkillsetsResult)result, result);
         }
 

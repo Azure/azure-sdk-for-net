@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
-        /// <param name="modelName"> The name of the model used for the LLM query planning activity. </param>
-        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens, string modelName) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        /// <param name="model"> The model used for the LLM query planning activity. </param>
+        internal KnowledgeBaseModelQueryPlanningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? inputTokens, int? outputTokens, KnowledgeBaseActivityRecordModel model) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             InputTokens = inputTokens;
             OutputTokens = outputTokens;
-            ModelName = modelName;
+            Model = model;
         }
 
         /// <summary> The number of input tokens for the LLM query planning activity. </summary>
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> The number of output tokens for the LLM query planning activity. </summary>
         public int? OutputTokens { get; }
 
-        /// <summary> The name of the model used for the LLM query planning activity. </summary>
-        public string ModelName { get; }
+        /// <summary> The model used for the LLM query planning activity. </summary>
+        public KnowledgeBaseActivityRecordModel Model { get; }
     }
 }
