@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Compute.BulkActions.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusContent))]
     [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(HibernateResourceOperationResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StartResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(UserRequestResources))]
     public partial class AzureResourceManagerComputeBulkActionsContext : ModelReaderWriterContext

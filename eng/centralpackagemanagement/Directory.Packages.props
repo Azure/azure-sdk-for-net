@@ -109,7 +109,7 @@
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
     <PackageVersion Include="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageVersion Include="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
-    <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.10.0"/>
+    <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.11.0"/>
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity.Broker" Version="1.7.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
@@ -117,7 +117,7 @@
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.2" />
     <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.6.0" />
-    <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.8.2" />
+    <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.8.3" />
     <PackageVersion Include="Azure.Monitor.Query.Logs" Version="1.0.0" />
     <PackageVersion Include="Azure.ResourceManager" Version="1.14.0" />
     <PackageVersion Include="Azure.ResourceManager.ApiManagement" Version="1.3.1" />
@@ -248,7 +248,6 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.3" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.3" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="All" />
-    <PackageVersion Include="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <!--

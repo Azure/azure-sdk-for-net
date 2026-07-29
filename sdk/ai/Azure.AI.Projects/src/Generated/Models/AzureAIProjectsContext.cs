@@ -631,6 +631,9 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.TaskGenerationDataGenerationJobOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(TaskGenerationDataGenerationJobOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.TaskGenerationDataGenerationJobOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.TaxonomyCategory is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TaxonomyCategory))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.TaxonomyCategory is experimental and may change in future versions.
@@ -744,9 +747,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(UserProfileMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.UserProfileMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WaitParam))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.WebIQPreviewTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(WebIQPreviewTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.WebIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebSearchActionSearchSources))]
     [ModelReaderWriterBuildable(typeof(WebSearchApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(WebSearchConfiguration))]

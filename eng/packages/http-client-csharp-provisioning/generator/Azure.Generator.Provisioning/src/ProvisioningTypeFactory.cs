@@ -132,6 +132,14 @@ namespace Azure.Generator.Provisioning
                 return canonical!;
             }
 
+            // The base generator can rediscover models through references such as derived-model
+            // hierarchies after the emitter has pruned them from the reachable model set. Do not
+            // create providers for those models because provisioning settable metadata is emitted
+            // only for reachable models. Keep this after resource lookup because resource providers
+            // are pre-created from projection metadata and must be returned through that canonical path.
+            if (!ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(model))
+                return null;
+
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
             if (model.DiscriminatorValue != null && IsBaseChainResource(model))
             {
