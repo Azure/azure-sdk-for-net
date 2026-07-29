@@ -110,11 +110,20 @@ BeforeAll {
         $null = New-Item -ItemType Directory -Path (Join-Path $root 'sdk/imported/Contoso.Imported/build') -Force
 
         # Properties that cannot move a path into another service must not force a
-        # fallback: the ancestor Directory.Build.props import that nearly every project
-        # carries, and the project's own build output.
+        # fallback: the project's own build output.
         New-Project -Path (Join-Path $root 'sdk/theta/Contoso.Theta/src/Contoso.Theta.csproj') `
-            -Imports @('$([MSBuild]::GetDirectoryNameOfFileAbove(.., Directory.Build.props))\Directory.Build.props') `
             -CompileIncludes @('$(OutputPath)netstandard2.0\$(AssemblyName).dll')
+
+        # A property whose name merely *ends* in an exempt token is a different property
+        # and must still force a fallback. This is what anchoring the pattern buys.
+        New-Project -Path (Join-Path $root 'sdk/psi/Contoso.Psi/src/Contoso.Psi.csproj') `
+            -CompileIncludes @('$(AzureCoreOutputPath)netstandard2.0\Contoso.Psi.dll')
+
+        # An MSBuild function call is not exempt. It would be safe in principle, but the
+        # script never evaluates its arguments, so it is treated as unmappable: a
+        # needlessly full checkout is correct, just slow.
+        New-Project -Path (Join-Path $root 'sdk/chi/Contoso.Chi/src/Contoso.Chi.csproj') `
+            -Imports @('$([MSBuild]::GetDirectoryNameOfFileAbove(.., Directory.Build.props))\Directory.Build.props')
 
         # An unknown property in a linked-source include is as untrustworthy as one in a
         # ProjectReference, so it must also make the package unmappable.
@@ -154,8 +163,9 @@ Describe 'Get-TestCheckoutPaths' {
             $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
             $map.PSObject.Properties.Name | Sort-Object | Should -Be @(
                 '$alwaysIncludedPaths',
-                'Contoso.Alpha', 'Contoso.Beta', 'Contoso.Delta', 'Contoso.Gamma',
-                'Contoso.Iota', 'Contoso.Kappa', 'Contoso.Lambda', 'Contoso.Omega',
+                'Contoso.Alpha', 'Contoso.Beta',
+                'Contoso.Chi', 'Contoso.Delta', 'Contoso.Gamma', 'Contoso.Iota',
+                'Contoso.Kappa', 'Contoso.Lambda', 'Contoso.Omega', 'Contoso.Psi',
                 'Contoso.Sigma', 'Contoso.Theta', 'Contoso.Zeta')
         }
 
@@ -214,11 +224,26 @@ Describe 'Get-TestCheckoutPaths' {
         }
 
         It 'does not fall back for properties that cannot leave the project directory' {
-            # $([MSBuild]::GetDirectoryNameOfFileAbove(...)) only ever resolves to an
-            # ancestor, and $(OutputPath) to the project's own bin directory. Treating
-            # either as unresolvable would make most of the repository unmappable.
+            # $(OutputPath) resolves to the project's own bin directory. Treating it as
+            # unresolvable would make most of the repository unmappable, because the
+            # analyzer project injected into every package uses it.
             $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
             @($map.'Contoso.Theta') | Should -Not -BeNullOrEmpty
+        }
+
+        It 'still falls back for a property whose name merely ends in an exempt token' {
+            # $(AzureCoreOutputPath) is not $(OutputPath). An unanchored pattern would
+            # exempt it and silently narrow the checkout, so this guards the anchoring.
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            @($map.'Contoso.Psi') | Should -BeNullOrEmpty
+        }
+
+        It 'falls back for an MSBuild function call it cannot evaluate' {
+            # Exempting a function whose arguments are never evaluated is the widest part
+            # of the blast radius, and no .csproj in the repo needs it. Staying
+            # conservative here costs a full checkout only for projects that use one.
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            @($map.'Contoso.Chi') | Should -BeNullOrEmpty
         }
 
         It 'treats an unknown property in a linked-source include as unmappable' {

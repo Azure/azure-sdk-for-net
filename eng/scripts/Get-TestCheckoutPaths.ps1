@@ -386,20 +386,24 @@ $script:KnownProjectReferenceProperties = @{
 }
 
 # Properties that cannot move a path into a different service directory, so leaving them
-# unexpanded is safe and must not force a full checkout.
+# unexpanded is safe and must not force a full checkout. They are relative to the
+# referencing project itself - they name its own bin/ output or are plain tokens. The
+# analyzer project injected into every package packs its build output this way, so
+# treating these as unresolvable would make more than half the repository unmappable for
+# no correctness gain.
 #
-#   [MSBuild]::GetDirectoryNameOfFileAbove / GetPathOfFileAbove walk *up* from the project
-#   (the standard Directory.Build.props import). They can only land on an ancestor, and
-#   every ancestor of a package is already in the checkout.
+# Deliberately anchored with ^...$ so only these exact property names match:
+# $(AzureCoreOutputPath) must still force a fallback.
 #
-#   OutputPath and friends are relative to the referencing project itself - they name its
-#   own bin/ output or are plain tokens. The analyzer project injected into every package
-#   packs its build output this way, so treating these as unresolvable would make more
-#   than half the repository unmappable for no correctness gain.
+# This list intentionally does not exempt [MSBuild]::GetDirectoryNameOfFileAbove or
+# similar function calls. Those would be safe in principle (they walk *up* to an ancestor,
+# which is always in the checkout), but no .csproj in the repo uses one - all occurrences
+# are in .props/.targets files, which this script never parses. Exempting an arbitrary
+# function whose arguments are never evaluated is the widest part of the blast radius, and
+# it currently buys nothing, so it stays out until something actually needs it.
 $script:ProjectLocalPropertyPattern =
-  '(?i)^(?:\[MSBuild\]::Get(?:DirectoryNameOfFileAbove|PathOfFileAbove)\b|' +
-  '(?:OutputPath|BaseOutputPath|IntermediateOutputPath|Configuration|Platform|' +
-  'AssemblyName|TargetFramework|MSBuildProjectName)$)'
+  '(?i)^(?:OutputPath|BaseOutputPath|IntermediateOutputPath|Configuration|Platform|' +
+  'AssemblyName|TargetFramework|MSBuildProjectName)$'
 
 function New-CheckoutMap {
   param([string] $Root)
