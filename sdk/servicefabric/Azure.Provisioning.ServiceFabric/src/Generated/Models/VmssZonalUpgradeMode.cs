@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabric
     public enum VmssZonalUpgradeMode
     {
         /// <summary> Updates will happen in all Availability Zones at once for the virtual machine scale sets. </summary>
-        Parallel,
+        Parallel = 0,
         /// <summary> VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone. </summary>
-        Hierarchical
+        Hierarchical = 1
     }
 }

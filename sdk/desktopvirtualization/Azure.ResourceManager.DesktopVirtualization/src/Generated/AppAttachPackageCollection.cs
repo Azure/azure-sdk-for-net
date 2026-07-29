@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(AppAttachPackageResource.ResourceType, out string appAttachPackageApiVersion);
             _appAttachPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", AppAttachPackageResource.ResourceType.Namespace, Diagnostics);
-            _appAttachPackageRestClient = new AppAttachPackage(_appAttachPackageClientDiagnostics, Pipeline, Endpoint, appAttachPackageApiVersion ?? "2026-03-01-preview");
+            _appAttachPackageRestClient = new AppAttachPackage(_appAttachPackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appAttachPackageApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

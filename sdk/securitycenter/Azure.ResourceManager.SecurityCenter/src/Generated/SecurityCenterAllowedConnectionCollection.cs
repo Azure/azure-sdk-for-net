@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityCenterAllowedConnectionResource.ResourceType, out string securityCenterAllowedConnectionApiVersion);
             _allowedConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterAllowedConnectionResource.ResourceType.Namespace, Diagnostics);
-            _allowedConnectionsRestClient = new AllowedConnections(_allowedConnectionsClientDiagnostics, Pipeline, Endpoint, securityCenterAllowedConnectionApiVersion ?? "2020-01-01");
+            _allowedConnectionsRestClient = new AllowedConnections(_allowedConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterAllowedConnectionApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 

@@ -11,16 +11,16 @@ namespace Azure.Provisioning.Communication
     public enum DomainRecordVerificationStatus
     {
         /// <summary> NotStarted. </summary>
-        NotStarted,
+        NotStarted = 0,
         /// <summary> VerificationRequested. </summary>
-        VerificationRequested,
+        VerificationRequested = 1,
         /// <summary> VerificationInProgress. </summary>
-        VerificationInProgress,
+        VerificationInProgress = 2,
         /// <summary> VerificationFailed. </summary>
-        VerificationFailed,
+        VerificationFailed = 3,
         /// <summary> Verified. </summary>
-        Verified,
+        Verified = 4,
         /// <summary> CancellationRequested. </summary>
-        CancellationRequested
+        CancellationRequested = 5
     }
 }

@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ServiceFabricProvisioningState
     {
         /// <summary> Cluster is updating. </summary>
-        Updating,
+        Updating = 0,
         /// <summary> Cluster provisioning succeeded. </summary>
-        Succeeded,
+        Succeeded = 1,
         /// <summary> Cluster provisioning failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Cluster provisioning was canceled. </summary>
-        Canceled
+        Canceled = 3
     }
 }

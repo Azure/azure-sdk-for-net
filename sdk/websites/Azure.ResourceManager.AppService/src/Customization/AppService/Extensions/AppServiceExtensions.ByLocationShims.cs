@@ -8,8 +8,8 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.AppService.Mocking;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
 // ROOT CAUSE: Extension-level companions to MockableAppServiceSubscriptionResource.ByLocationShims /

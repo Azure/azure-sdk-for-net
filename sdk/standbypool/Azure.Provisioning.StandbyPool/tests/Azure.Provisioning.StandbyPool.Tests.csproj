@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\containerinstance\Azure.Provisioning.ContainerInstance\src\Azure.Provisioning.ContainerInstance.csproj" />
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\..\network\Azure.Provisioning.Network\src\Azure.Provisioning.Network.csproj" />
+    <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning\src\Azure.Provisioning.csproj" />
+    <ProjectReference Include="..\src\Azure.Provisioning.StandbyPool.csproj" />
+    <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+  </ItemGroup>
+</Project>

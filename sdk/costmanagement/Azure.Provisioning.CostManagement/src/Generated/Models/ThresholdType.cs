@@ -14,8 +14,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ThresholdType
     {
         /// <summary> Actual costs budget alerts notify when the actual accrued cost exceeds the allocated budget. </summary>
-        Actual,
+        Actual = 0,
         /// <summary> Forecasted costs budget alerts provide advanced notification that your spending trends are likely to exceed your allocated budget, as it relies on forecasted cost predictions. </summary>
-        Forecasted
+        Forecasted = 1
     }
 }

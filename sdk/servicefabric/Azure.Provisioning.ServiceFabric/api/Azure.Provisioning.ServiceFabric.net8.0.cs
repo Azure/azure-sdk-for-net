@@ -276,9 +276,9 @@ namespace Azure.Provisioning.ServiceFabric
     public partial class ClusterVersionDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ClusterVersionDetails() { }
-        public Azure.Provisioning.BicepValue<string> CodeVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterEnvironment> Environment { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SupportExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CodeVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterEnvironment> Environment { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SupportExpireOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DiagnosticsStorageAccountConfig : Azure.Provisioning.Primitives.ProvisionableConstruct

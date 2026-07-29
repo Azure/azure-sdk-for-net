@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string connectivityConfigurationApiVersion);
             _connectivityConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _connectivityConfigurationsRestClient = new ConnectivityConfigurations(_connectivityConfigurationsClientDiagnostics, Pipeline, Endpoint, connectivityConfigurationApiVersion ?? "2025-07-01");
+            _connectivityConfigurationsRestClient = new ConnectivityConfigurations(_connectivityConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectivityConfigurationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

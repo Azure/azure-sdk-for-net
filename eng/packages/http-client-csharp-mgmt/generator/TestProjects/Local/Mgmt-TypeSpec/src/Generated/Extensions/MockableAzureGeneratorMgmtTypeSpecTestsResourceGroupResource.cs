@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of StorageSyncServices and their operations over a StorageSyncServiceResource. </returns>

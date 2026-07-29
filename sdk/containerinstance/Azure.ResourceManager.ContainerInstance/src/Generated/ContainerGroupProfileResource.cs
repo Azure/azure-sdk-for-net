@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             TryGetApiVersion(ResourceType, out string containerGroupProfileApiVersion);
             _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
+            _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

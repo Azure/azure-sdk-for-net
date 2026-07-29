@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             TryGetApiVersion(ResourceType, out string dedicatedHsmApiVersion);
             _dedicatedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Endpoint, dedicatedHsmApiVersion ?? "2025-03-31");
+            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion ?? "2025-03-31");
             ValidateResourceId(id);
         }
 

@@ -22,6 +22,10 @@ namespace Azure.Provisioning;
 // groups to help feel out whether we want to offer this experience, but we'd
 // also want to expand to subscriptions, management groups, tenants, etc.
 
+/// <summary>
+/// Provides extension methods for deploying and validating a <see cref="ProvisioningPlan"/>
+/// against Azure resource groups.
+/// </summary>
 public static class ProvisioningPlanExtensions
 {
     private static Lazy<ExternalBicepTool> BicepTool { get; } = new(ExternalBicepTool.FindBestTool);
@@ -51,6 +55,15 @@ public static class ProvisioningPlanExtensions
     // TODO: Take an optional Bicep path
     // TODO: Take an ARM template directly
 
+    /// <summary>
+    /// Compiles the plan to an ARM template, creates a new resource group, and deploys the template into it.
+    /// </summary>
+    /// <param name="plan">The provisioning plan to deploy.</param>
+    /// <param name="resourceGroupName">The name of the resource group to create.</param>
+    /// <param name="location">The location in which to create the resource group.</param>
+    /// <param name="options">Optional deployment options.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+    /// <returns>The completed <see cref="ProvisioningDeployment"/>.</returns>
     public static ProvisioningDeployment DeployToNewResourceGroup(
         this ProvisioningPlan plan,
         string resourceGroupName,
@@ -66,6 +79,15 @@ public static class ProvisioningPlanExtensions
                 cancellationToken)
             .EnsureCompleted();
 
+    /// <summary>
+    /// Compiles the plan to an ARM template, creates a new resource group, and deploys the template into it.
+    /// </summary>
+    /// <param name="plan">The provisioning plan to deploy.</param>
+    /// <param name="resourceGroupName">The name of the resource group to create.</param>
+    /// <param name="location">The location in which to create the resource group.</param>
+    /// <param name="options">Optional deployment options.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+    /// <returns>The completed <see cref="ProvisioningDeployment"/>.</returns>
     public static async Task<ProvisioningDeployment> DeployToNewResourceGroupAsync(
         this ProvisioningPlan plan,
         string resourceGroupName,
@@ -113,6 +135,14 @@ public static class ProvisioningPlanExtensions
         return ProcessDeploymentInternal(plan, options, deployment);
     }
 
+    /// <summary>
+    /// Compiles the plan to an ARM template and deploys it into an existing resource group.
+    /// </summary>
+    /// <param name="plan">The provisioning plan to deploy.</param>
+    /// <param name="resourceGroupName">The name of the existing resource group to deploy into.</param>
+    /// <param name="options">Optional deployment options.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+    /// <returns>The completed <see cref="ProvisioningDeployment"/>.</returns>
     public static ProvisioningDeployment DeployToResourceGroup(
         this ProvisioningPlan plan,
         string resourceGroupName,
@@ -126,6 +156,14 @@ public static class ProvisioningPlanExtensions
                 cancellationToken)
             .EnsureCompleted();
 
+    /// <summary>
+    /// Compiles the plan to an ARM template and deploys it into an existing resource group.
+    /// </summary>
+    /// <param name="plan">The provisioning plan to deploy.</param>
+    /// <param name="resourceGroupName">The name of the existing resource group to deploy into.</param>
+    /// <param name="options">Optional deployment options.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+    /// <returns>The completed <see cref="ProvisioningDeployment"/>.</returns>
     public static async Task<ProvisioningDeployment> DeployToResourceGroupAsync(
         this ProvisioningPlan plan,
         string resourceGroupName,
@@ -234,6 +272,14 @@ public static class ProvisioningPlanExtensions
         return new ProvisioningDeployment(plan, options, deployment, outputs);
     }
 
+    /// <summary>
+    /// Compiles the plan to an ARM template and validates it against an existing resource group without deploying.
+    /// </summary>
+    /// <param name="plan">The provisioning plan to validate.</param>
+    /// <param name="resourceGroupName">The name of the existing resource group to validate against.</param>
+    /// <param name="options">Optional deployment options.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+    /// <returns>The <see cref="ArmDeploymentValidateResult"/> describing the validation outcome.</returns>
     public static ArmDeploymentValidateResult ValidateInResourceGroup(
         this ProvisioningPlan plan,
         string resourceGroupName,
@@ -247,6 +293,14 @@ public static class ProvisioningPlanExtensions
                 cancellationToken)
             .EnsureCompleted();
 
+    /// <summary>
+    /// Compiles the plan to an ARM template and validates it against an existing resource group without deploying.
+    /// </summary>
+    /// <param name="plan">The provisioning plan to validate.</param>
+    /// <param name="resourceGroupName">The name of the existing resource group to validate against.</param>
+    /// <param name="options">Optional deployment options.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+    /// <returns>The <see cref="ArmDeploymentValidateResult"/> describing the validation outcome.</returns>
     public static async Task<ArmDeploymentValidateResult> ValidateInResourceGroupAsync(
         this ProvisioningPlan plan,
         string resourceGroupName,

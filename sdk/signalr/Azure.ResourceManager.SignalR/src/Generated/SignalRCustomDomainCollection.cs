@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRCustomDomainResource.ResourceType, out string signalRCustomDomainApiVersion);
             _customDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Endpoint, signalRCustomDomainApiVersion ?? "2025-01-01-preview");
+            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomDomainApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 

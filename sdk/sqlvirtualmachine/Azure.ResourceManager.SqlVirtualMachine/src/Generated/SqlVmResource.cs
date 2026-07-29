@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             TryGetApiVersion(ResourceType, out string sqlVmApiVersion);
             _sqlVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Endpoint, sqlVmApiVersion ?? "2023-10-01");
+            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmApiVersion ?? "2023-10-01");
             _sqlVirtualMachineTroubleshootClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachineTroubleshootRestClient = new SqlVirtualMachineTroubleshoot(_sqlVirtualMachineTroubleshootClientDiagnostics, Pipeline, Endpoint, sqlVmApiVersion ?? "2023-10-01");
+            _sqlVirtualMachineTroubleshootRestClient = new SqlVirtualMachineTroubleshoot(_sqlVirtualMachineTroubleshootClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 

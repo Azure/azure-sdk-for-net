@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
@@ -135,7 +134,6 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(ProvisionedNetworkListResult))]
     [ModelReaderWriterBuildable(typeof(PSCredentialExecutionParameterDetails))]
     [ModelReaderWriterBuildable(typeof(PureStoragePolicyListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletData))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletProperties))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletResource))]

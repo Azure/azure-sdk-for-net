@@ -613,17 +613,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new IssueTestResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), displayName is null && innerValue is null && innerFlag is null && status is null && updateOnlyValue is null ? default : new IssueTestUpdateProperties(displayName, new IssueTestNestedConfig(innerValue, innerFlag, default), status, default, updateOnlyValue), default);
         }
 
-        /// <param name="displayName"> Simple property. </param>
-        /// <param name="innerValue"> Inner value that gets flattened. </param>
-        /// <param name="innerFlag"> Inner flag that gets flattened. </param>
-        /// <param name="status"> Read-only property. </param>
-        /// <param name="updateOnlyValue"> Property specific to updates. </param>
-        /// <returns> A new <see cref="Models.IssueTestUpdateProperties"/> instance for mocking. </returns>
-        public static IssueTestUpdateProperties IssueTestUpdateProperties(string displayName = default, string innerValue = default, bool? innerFlag = default, string status = default, string updateOnlyValue = default)
-        {
-            return new IssueTestUpdateProperties(displayName, innerValue is null && innerFlag is null ? default : new IssueTestNestedConfig(innerValue, innerFlag, default), status, default, updateOnlyValue);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

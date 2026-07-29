@@ -12689,6 +12689,7 @@
           "kind": "property",
           "name": "optionalFlattenProperty",
           "serializedName": "optionalFlattenProperty",
+          "doc": "Optional single-property model used to verify generated flattened collection\ngetters initialize the nested collection wrapper instead of returning null.",
           "type": {
             "$id": "1079",
             "kind": "model",
@@ -12714,6 +12715,7 @@
                 "kind": "property",
                 "name": "randomCollectionProp",
                 "serializedName": "randomCollectionProp",
+                "doc": "Required collection used by the optional flattened model scenario.",
                 "type": {
                   "$ref": "815"
                 },
@@ -33593,13 +33595,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
-              "doc": "A long-running resource action.",
+              "doc": "",
               "operation": {
                 "$id": "2465",
                 "name": "fooAction",
                 "isExactName": false,
                 "resourceName": "Foos",
-                "doc": "A long-running resource action.",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -34511,13 +34513,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
-              "doc": "A long-running resource action.",
+              "doc": "",
               "operation": {
                 "$id": "2511",
                 "name": "splitDependencies",
                 "isExactName": false,
                 "resourceName": "Foos",
-                "doc": "A long-running resource action.",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -51050,11 +51052,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
+              "doc": "",
               "operation": {
                 "$id": "3340",
                 "name": "checkNameAvailability",
                 "isExactName": false,
                 "resourceName": "CheckNameAvailabilityOperationGroup",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(DataMaskingPolicyResource.ResourceType, out string dataMaskingPolicyApiVersion);
             _dataMaskingPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DataMaskingPolicyResource.ResourceType.Namespace, Diagnostics);
-            _dataMaskingPoliciesRestClient = new DataMaskingPolicies(_dataMaskingPoliciesClientDiagnostics, Pipeline, Endpoint, dataMaskingPolicyApiVersion ?? "2025-02-01-preview");
+            _dataMaskingPoliciesRestClient = new DataMaskingPolicies(_dataMaskingPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMaskingPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ApplicationRollingUpgradeMode
     {
         /// <summary> Indicates the upgrade mode is invalid. All Service Fabric enumerations have the invalid type. The value is zero. </summary>
-        Invalid,
+        Invalid = 0,
         /// <summary> The upgrade will proceed automatically without performing any health monitoring. The value is 1. </summary>
-        UnmonitoredAuto,
+        UnmonitoredAuto = 1,
         /// <summary> The upgrade will stop after completing each upgrade domain, giving the opportunity to manually monitor health before proceeding. The value is 2. </summary>
-        UnmonitoredManual,
+        UnmonitoredManual = 2,
         /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. The value is 3. </summary>
-        Monitored
+        Monitored = 3
     }
 }
