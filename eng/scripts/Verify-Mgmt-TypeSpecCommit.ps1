@@ -153,8 +153,10 @@ function Invoke-MgmtTypeSpecCommitVerification {
     return
   }
 
-  . (Join-Path $PSScriptRoot "../common/scripts/Helpers/PSModule-Helpers.ps1")
-  Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
+  if (-not (Get-Command ConvertFrom-Yaml -ErrorAction Ignore)) {
+    . (Join-Path $PSScriptRoot "../common/scripts/Helpers/PSModule-Helpers.ps1")
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
+  }
 
   $temporarySpecRepo = $null
   if (-not $SpecRepoPath) {
