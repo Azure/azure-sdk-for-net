@@ -1988,7 +1988,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.AlertConfigurationData AlertConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerService.Models.AlertConfigurationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AlertConfigurationProperties AlertConfigurationProperties(Azure.ResourceManager.ContainerService.Models.AlertConfigurationMode mode = default(Azure.ResourceManager.ContainerService.Models.AlertConfigurationMode), Azure.Core.ResourceIdentifier notificationActionGroupId = null, Azure.ResourceManager.ContainerService.Models.AlertConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerService.Models.AlertConfigurationProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AllowedSubject AllowedSubject(Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector namespaceSelector = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerLabelSelector serviceAccountSelector = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.BootstrapAzureConfig BootstrapAzureConfig(string resourceManagerEndpoint = null, Azure.Core.ResourceIdentifier targetClusterResourceId = null, string targetAgentPoolName = null, string bootstrapToken = null) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.BootstrapAzureConfig BootstrapAzureConfig(string resourceManagerEndpoint = null, Azure.Core.ResourceIdentifier targetClusterResourceId = null, string targetAgentPoolName = null, string token = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.BootstrapComponentVersions BootstrapComponentVersions(string kubernetes = null, string containerd = null, string runc = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.BootstrapKubeletConfig BootstrapKubeletConfig(string clusterFQDN = null, string caCertData = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.BootstrapNetworkingConfig BootstrapNetworkingConfig(string dnsServiceIP = null, string cniVersion = null) { throw null; }
@@ -2220,10 +2220,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class BootstrapAzureConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.BootstrapAzureConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.BootstrapAzureConfig>
     {
         internal BootstrapAzureConfig() { }
-        public string BootstrapToken { get { throw null; } }
         public string ResourceManagerEndpoint { get { throw null; } }
         public string TargetAgentPoolName { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetClusterResourceId { get { throw null; } }
+        public string Token { get { throw null; } }
         protected virtual Azure.ResourceManager.ContainerService.Models.BootstrapAzureConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.BootstrapAzureConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

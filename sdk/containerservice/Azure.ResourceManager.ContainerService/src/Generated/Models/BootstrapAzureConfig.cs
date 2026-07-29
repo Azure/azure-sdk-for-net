@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="resourceManagerEndpoint"> Azure Resource Manager endpoint for the cloud environment. </param>
         /// <param name="targetCluster"> Target cluster identity. </param>
         /// <param name="targetAgentPoolName"> Target agent pool name. </param>
-        /// <param name="bootstrapToken"> Bootstrap token for node enrollment. Do not cache or log. </param>
+        /// <param name="bootstrapTokenDetail"> Bootstrap token for node enrollment. Do not cache or log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootstrapAzureConfig(string resourceManagerEndpoint, BootstrapTargetCluster targetCluster, string targetAgentPoolName, BootstrapTokenInfo bootstrapToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BootstrapAzureConfig(string resourceManagerEndpoint, BootstrapTargetCluster targetCluster, string targetAgentPoolName, BootstrapTokenInfo bootstrapTokenDetail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceManagerEndpoint = resourceManagerEndpoint;
             TargetCluster = targetCluster;
             TargetAgentPoolName = targetAgentPoolName;
-            BootstrapTokenDetail = bootstrapToken;
+            BootstrapTokenDetail = bootstrapTokenDetail;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Short-lived bootstrap token for kubelet. Do not cache or log. </summary>
         [WirePath("bootstrapToken.token")]
-        public string BootstrapToken
+        public string Token
         {
             get
             {

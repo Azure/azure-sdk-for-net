@@ -643,11 +643,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="resourceManagerEndpoint"> Azure Resource Manager endpoint for the cloud environment. </param>
         /// <param name="targetClusterResourceId"> Azure resource ID of the target AKS cluster. </param>
         /// <param name="targetAgentPoolName"> Target agent pool name. </param>
-        /// <param name="bootstrapToken"> Short-lived bootstrap token for kubelet. Do not cache or log. </param>
+        /// <param name="token"> Short-lived bootstrap token for kubelet. Do not cache or log. </param>
         /// <returns> A new <see cref="Models.BootstrapAzureConfig"/> instance for mocking. </returns>
-        public static BootstrapAzureConfig BootstrapAzureConfig(string resourceManagerEndpoint = default, ResourceIdentifier targetClusterResourceId = default, string targetAgentPoolName = default, string bootstrapToken = default)
+        public static BootstrapAzureConfig BootstrapAzureConfig(string resourceManagerEndpoint = default, ResourceIdentifier targetClusterResourceId = default, string targetAgentPoolName = default, string token = default)
         {
-            return new BootstrapAzureConfig(resourceManagerEndpoint, targetClusterResourceId is null ? default : new BootstrapTargetCluster(targetClusterResourceId, default), targetAgentPoolName, bootstrapToken is null ? default : new BootstrapTokenInfo(bootstrapToken, default), default);
+            return new BootstrapAzureConfig(resourceManagerEndpoint, targetClusterResourceId is null ? default : new BootstrapTargetCluster(targetClusterResourceId, default), targetAgentPoolName, token is null ? default : new BootstrapTokenInfo(token, default), default);
         }
 
         /// <param name="kubernetes"> Kubernetes version. </param>

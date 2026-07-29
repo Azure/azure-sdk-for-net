@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(BootstrapTokenDetail))
             {
                 writer.WritePropertyName("bootstrapToken"u8);
-                writer.WriteObjectValue<BootstrapTokenInfo>(BootstrapTokenDetail, options);
+                writer.WriteObjectValue(BootstrapTokenDetail, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string resourceManagerEndpoint = default;
             BootstrapTargetCluster targetCluster = default;
             string targetAgentPoolName = default;
-            BootstrapTokenInfo bootstrapToken = default;
+            BootstrapTokenInfo bootstrapTokenDetail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    bootstrapToken = BootstrapTokenInfo.DeserializeBootstrapTokenInfo(prop.Value, options);
+                    bootstrapTokenDetail = BootstrapTokenInfo.DeserializeBootstrapTokenInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BootstrapAzureConfig(resourceManagerEndpoint, targetCluster, targetAgentPoolName, bootstrapToken, additionalBinaryDataProperties);
+            return new BootstrapAzureConfig(resourceManagerEndpoint, targetCluster, targetAgentPoolName, bootstrapTokenDetail, additionalBinaryDataProperties);
         }
     }
 }
