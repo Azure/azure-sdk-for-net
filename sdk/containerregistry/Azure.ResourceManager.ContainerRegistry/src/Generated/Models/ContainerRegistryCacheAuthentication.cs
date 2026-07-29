@@ -13,24 +13,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary>
     /// Authentication configuration used by a cache rule to access an upstream registry.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GarAuthenticationProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GoogleArtifactRegistryCacheAuthentication"/>.
     /// </summary>
-    public abstract partial class AdditionalAuthenticationProperties
+    public abstract partial class ContainerRegistryCacheAuthentication
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalAuthenticationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheAuthentication"/>. </summary>
         /// <param name="authenticationType"> Authentication type discriminator. </param>
-        private protected AdditionalAuthenticationProperties(AdditionalAuthenticationType authenticationType)
+        private protected ContainerRegistryCacheAuthentication(AdditionalAuthenticationType authenticationType)
         {
             AuthenticationType = authenticationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalAuthenticationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheAuthentication"/>. </summary>
         /// <param name="authenticationType"> Authentication type discriminator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalAuthenticationProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryCacheAuthentication(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationType = authenticationType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

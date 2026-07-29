@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPolicies policies = default;
             ContainerRegistryEncryption encryption = default;
             bool? isDataEndpointEnabled = default;
-            RegionalEndpoint? regionalEndpoints = default;
+            ContainerRegistryRegionalEndpointStatus? regionalEndpoints = default;
             ContainerRegistryEndpointProtocol? endpointProtocol = default;
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             bool? isNetworkRuleBypassAllowedForTasks = default;
             bool? isAnonymousPullEnabled = default;
             ContainerRegistryMetadataSearch? metadataSearch = default;
-            ContainerRegistryWritableCacheRepos? writableCacheRepos = default;
+            ContainerRegistryWritableCacheRepositories? writableCacheRepos = default;
             ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    regionalEndpoints = new RegionalEndpoint(prop.Value.GetString());
+                    regionalEndpoints = new ContainerRegistryRegionalEndpointStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpointProtocol"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    writableCacheRepos = new ContainerRegistryWritableCacheRepos(prop.Value.GetString());
+                    writableCacheRepos = new ContainerRegistryWritableCacheRepositories(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("roleAssignmentMode"u8))

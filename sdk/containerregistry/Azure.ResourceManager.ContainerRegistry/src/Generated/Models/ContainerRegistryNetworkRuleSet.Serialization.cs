@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
-                foreach (VirtualNetworkRule item in VirtualNetworkRules)
+                foreach (ContainerRegistryVirtualNetworkRule item in VirtualNetworkRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryNetworkRuleDefaultAction defaultAction = default;
-            IList<VirtualNetworkRule> virtualNetworkRules = default;
+            IList<ContainerRegistryVirtualNetworkRule> virtualNetworkRules = default;
             IList<ContainerRegistryIPRule> ipRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
+                    List<ContainerRegistryVirtualNetworkRule> array = new List<ContainerRegistryVirtualNetworkRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item, options));
+                        array.Add(ContainerRegistryVirtualNetworkRule.DeserializeContainerRegistryVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryNetworkRuleSet(defaultAction, virtualNetworkRules ?? new ChangeTrackingList<VirtualNetworkRule>(), ipRules ?? new ChangeTrackingList<ContainerRegistryIPRule>(), additionalBinaryDataProperties);
+            return new ContainerRegistryNetworkRuleSet(defaultAction, virtualNetworkRules ?? new ChangeTrackingList<ContainerRegistryVirtualNetworkRule>(), ipRules ?? new ChangeTrackingList<ContainerRegistryIPRule>(), additionalBinaryDataProperties);
         }
     }
 }

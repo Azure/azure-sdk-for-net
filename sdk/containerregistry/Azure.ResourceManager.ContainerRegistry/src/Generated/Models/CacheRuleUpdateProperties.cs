@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the Cache rule. </param>
         /// <param name="additionalAuthenticationProperties"> Authentication configuration used by the cache rule to access the upstream source repository. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheRuleUpdateProperties(ResourceIdentifier credentialSetResourceId, AdditionalAuthenticationProperties additionalAuthenticationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheRuleUpdateProperties(ResourceIdentifier credentialSetResourceId, ContainerRegistryCacheAuthentication additionalAuthenticationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialSetResourceId = credentialSetResourceId;
             AdditionalAuthenticationProperties = additionalAuthenticationProperties;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Authentication configuration used by the cache rule to access the upstream source repository. </summary>
         [WirePath("additionalAuthenticationProperties")]
-        public AdditionalAuthenticationProperties AdditionalAuthenticationProperties { get; set; }
+        public ContainerRegistryCacheAuthentication AdditionalAuthenticationProperties { get; set; }
     }
 }

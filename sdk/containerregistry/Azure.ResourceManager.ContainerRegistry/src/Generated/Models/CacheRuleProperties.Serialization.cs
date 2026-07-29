@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ResourceIdentifier credentialSetResourceId = default;
-            AdditionalAuthenticationProperties additionalAuthenticationProperties = default;
+            ContainerRegistryCacheAuthentication additionalAuthenticationProperties = default;
             string sourceRepository = default;
             string targetRepository = default;
             DateTimeOffset? createdOn = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    additionalAuthenticationProperties = AdditionalAuthenticationProperties.DeserializeAdditionalAuthenticationProperties(prop.Value, options);
+                    additionalAuthenticationProperties = ContainerRegistryCacheAuthentication.DeserializeContainerRegistryCacheAuthentication(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sourceRepository"u8))

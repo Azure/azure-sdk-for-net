@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="createdOn"> The creation date of the cache rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheRuleProperties(ResourceIdentifier credentialSetResourceId, AdditionalAuthenticationProperties additionalAuthenticationProperties, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheRuleProperties(ResourceIdentifier credentialSetResourceId, ContainerRegistryCacheAuthentication additionalAuthenticationProperties, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialSetResourceId = credentialSetResourceId;
             AdditionalAuthenticationProperties = additionalAuthenticationProperties;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Authentication configuration used by the cache rule to access the upstream source repository. </summary>
         [WirePath("additionalAuthenticationProperties")]
-        public AdditionalAuthenticationProperties AdditionalAuthenticationProperties { get; set; }
+        public ContainerRegistryCacheAuthentication AdditionalAuthenticationProperties { get; set; }
 
         /// <summary> Source repository pulled from upstream. </summary>
         [WirePath("sourceRepository")]

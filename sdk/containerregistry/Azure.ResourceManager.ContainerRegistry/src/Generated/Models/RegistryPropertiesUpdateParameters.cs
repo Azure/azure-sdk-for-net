@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="writableCacheRepos"> Whether to allow cache operations that write to repositories in this registry. </param>
         /// <param name="roleAssignmentMode"> Determines registry role assignment mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPropertiesUpdateParameters(bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, RegionalEndpoint? regionalEndpoints, ContainerRegistryEndpointProtocol? endpointProtocol, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, bool? isAnonymousPullEnabled, ContainerRegistryMetadataSearch? metadataSearch, ContainerRegistryWritableCacheRepos? writableCacheRepos, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegistryPropertiesUpdateParameters(bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryRegionalEndpointStatus? regionalEndpoints, ContainerRegistryEndpointProtocol? endpointProtocol, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, bool? isAnonymousPullEnabled, ContainerRegistryMetadataSearch? metadataSearch, ContainerRegistryWritableCacheRepositories? writableCacheRepos, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAdminUserEnabled = isAdminUserEnabled;
             NetworkRuleSet = networkRuleSet;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Enable per-region endpoints for accessing registry. </summary>
         [WirePath("regionalEndpoints")]
-        public RegionalEndpoint? RegionalEndpoints { get; set; }
+        public ContainerRegistryRegionalEndpointStatus? RegionalEndpoints { get; set; }
 
         /// <summary> The connectivity protocol for the registry, such as IPv4 or dual stack (IPv4 and IPv6). </summary>
         [WirePath("endpointProtocol")]
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Whether to allow cache operations that write to repositories in this registry. </summary>
         [WirePath("writableCacheRepos")]
-        public ContainerRegistryWritableCacheRepos? WritableCacheRepos { get; set; }
+        public ContainerRegistryWritableCacheRepositories? WritableCacheRepos { get; set; }
 
         /// <summary> Determines registry role assignment mode. </summary>
         [WirePath("roleAssignmentMode")]

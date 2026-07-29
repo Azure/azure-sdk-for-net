@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ResourceIdentifier credentialSetResourceId = default;
-            AdditionalAuthenticationProperties additionalAuthenticationProperties = default;
+            ContainerRegistryCacheAuthentication additionalAuthenticationProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    additionalAuthenticationProperties = AdditionalAuthenticationProperties.DeserializeAdditionalAuthenticationProperties(prop.Value, options);
+                    additionalAuthenticationProperties = ContainerRegistryCacheAuthentication.DeserializeContainerRegistryCacheAuthentication(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

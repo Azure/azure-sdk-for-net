@@ -12,9 +12,9 @@ using Azure.ResourceManager.ContainerRegistry;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Google Artifact Registry (GAR) authentication configuration. </summary>
-    public partial class GarAuthenticationProperties : AdditionalAuthenticationProperties
+    public partial class GoogleArtifactRegistryCacheAuthentication : ContainerRegistryCacheAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="GarAuthenticationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleArtifactRegistryCacheAuthentication"/>. </summary>
         /// <param name="projectNumber">
         /// The Google Cloud Platform project that is configured for authentication
         /// Permissions should be granted to principal://iam.googleapis.com/projects/{ProjectNumber}/locations/global/workloadIdentityPools/{WorkloadIdentityPool}/providers/{WorkloadIdentityProvider}/subject/{ManagedIdentityPrincipal}
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="workloadIdentityPool"> The Google Cloud platform workload identity pool used for authentication. </param>
         /// <param name="workloadIdentityProvider"> The Google Cloud Platform workload identity provider used for authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectNumber"/>, <paramref name="workloadIdentityPool"/> or <paramref name="workloadIdentityProvider"/> is null. </exception>
-        public GarAuthenticationProperties(string projectNumber, string workloadIdentityPool, string workloadIdentityProvider) : base(AdditionalAuthenticationType.GoogleArtifactRegistry)
+        public GoogleArtifactRegistryCacheAuthentication(string projectNumber, string workloadIdentityPool, string workloadIdentityProvider) : base(AdditionalAuthenticationType.GoogleArtifactRegistry)
         {
             Argument.AssertNotNull(projectNumber, nameof(projectNumber));
             Argument.AssertNotNull(workloadIdentityPool, nameof(workloadIdentityPool));
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             WorkloadIdentityProvider = workloadIdentityProvider;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GarAuthenticationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleArtifactRegistryCacheAuthentication"/>. </summary>
         /// <param name="authenticationType"> Authentication type discriminator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectNumber">
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <param name="workloadIdentityPool"> The Google Cloud platform workload identity pool used for authentication. </param>
         /// <param name="workloadIdentityProvider"> The Google Cloud Platform workload identity provider used for authentication. </param>
-        internal GarAuthenticationProperties(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectNumber, string workloadIdentityPool, string workloadIdentityProvider) : base(authenticationType, additionalBinaryDataProperties)
+        internal GoogleArtifactRegistryCacheAuthentication(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectNumber, string workloadIdentityPool, string workloadIdentityProvider) : base(authenticationType, additionalBinaryDataProperties)
         {
             ProjectNumber = projectNumber;
             WorkloadIdentityPool = workloadIdentityPool;

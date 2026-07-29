@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction)
         {
             DefaultAction = defaultAction;
-            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
+            VirtualNetworkRules = new ChangeTrackingList<ContainerRegistryVirtualNetworkRule>();
             IPRules = new ChangeTrackingList<ContainerRegistryIPRule>();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="virtualNetworkRules"> The virtual network rules. </param>
         /// <param name="ipRules"> The IP ACL rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<VirtualNetworkRule> virtualNetworkRules, IList<ContainerRegistryIPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<ContainerRegistryVirtualNetworkRule> virtualNetworkRules, IList<ContainerRegistryIPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The virtual network rules. </summary>
         [WirePath("virtualNetworkRules")]
-        public IList<VirtualNetworkRule> VirtualNetworkRules { get; }
+        public IList<ContainerRegistryVirtualNetworkRule> VirtualNetworkRules { get; }
 
         /// <summary> The IP ACL rules. </summary>
         [WirePath("ipRules")]

@@ -14,56 +14,56 @@ using Azure.ResourceManager.ContainerRegistry;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Google Artifact Registry (GAR) authentication configuration. </summary>
-    public partial class GarAuthenticationProperties : AdditionalAuthenticationProperties, IJsonModel<GarAuthenticationProperties>
+    public partial class GoogleArtifactRegistryCacheAuthentication : ContainerRegistryCacheAuthentication, IJsonModel<GoogleArtifactRegistryCacheAuthentication>
     {
-        /// <summary> Initializes a new instance of <see cref="GarAuthenticationProperties"/> for deserialization. </summary>
-        internal GarAuthenticationProperties()
+        /// <summary> Initializes a new instance of <see cref="GoogleArtifactRegistryCacheAuthentication"/> for deserialization. </summary>
+        internal GoogleArtifactRegistryCacheAuthentication()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AdditionalAuthenticationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ContainerRegistryCacheAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GarAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GoogleArtifactRegistryCacheAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGarAuthenticationProperties(document.RootElement, options);
+                        return DeserializeGoogleArtifactRegistryCacheAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GarAuthenticationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GoogleArtifactRegistryCacheAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GarAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GoogleArtifactRegistryCacheAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GarAuthenticationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GoogleArtifactRegistryCacheAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GarAuthenticationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GoogleArtifactRegistryCacheAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GarAuthenticationProperties IPersistableModel<GarAuthenticationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (GarAuthenticationProperties)PersistableModelCreateCore(data, options);
+        GoogleArtifactRegistryCacheAuthentication IPersistableModel<GoogleArtifactRegistryCacheAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => (GoogleArtifactRegistryCacheAuthentication)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GarAuthenticationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GoogleArtifactRegistryCacheAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GarAuthenticationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GoogleArtifactRegistryCacheAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GarAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GoogleArtifactRegistryCacheAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GarAuthenticationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GoogleArtifactRegistryCacheAuthentication)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("projectNumber"u8);
@@ -90,24 +90,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GarAuthenticationProperties IJsonModel<GarAuthenticationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GarAuthenticationProperties)JsonModelCreateCore(ref reader, options);
+        GoogleArtifactRegistryCacheAuthentication IJsonModel<GoogleArtifactRegistryCacheAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GoogleArtifactRegistryCacheAuthentication)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AdditionalAuthenticationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ContainerRegistryCacheAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GarAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GoogleArtifactRegistryCacheAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GarAuthenticationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GoogleArtifactRegistryCacheAuthentication)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGarAuthenticationProperties(document.RootElement, options);
+            return DeserializeGoogleArtifactRegistryCacheAuthentication(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GarAuthenticationProperties DeserializeGarAuthenticationProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static GoogleArtifactRegistryCacheAuthentication DeserializeGoogleArtifactRegistryCacheAuthentication(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GarAuthenticationProperties(authenticationType, additionalBinaryDataProperties, projectNumber, workloadIdentityPool, workloadIdentityProvider);
+            return new GoogleArtifactRegistryCacheAuthentication(authenticationType, additionalBinaryDataProperties, projectNumber, workloadIdentityPool, workloadIdentityProvider);
         }
     }
 }

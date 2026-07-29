@@ -13,26 +13,26 @@ using Azure.ResourceManager.ContainerRegistry;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Virtual network rule. </summary>
-    public partial class VirtualNetworkRule
+    public partial class ContainerRegistryVirtualNetworkRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryVirtualNetworkRule"/>. </summary>
         /// <param name="virtualNetworkSubnetResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkSubnetResourceId"/> is null. </exception>
-        public VirtualNetworkRule(ResourceIdentifier virtualNetworkSubnetResourceId)
+        public ContainerRegistryVirtualNetworkRule(ResourceIdentifier virtualNetworkSubnetResourceId)
         {
             Argument.AssertNotNull(virtualNetworkSubnetResourceId, nameof(virtualNetworkSubnetResourceId));
 
             VirtualNetworkSubnetResourceId = virtualNetworkSubnetResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryVirtualNetworkRule"/>. </summary>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="virtualNetworkSubnetResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkRule(ContainerRegistryIPRuleAction? action, ResourceIdentifier virtualNetworkSubnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryVirtualNetworkRule(ContainerRegistryIPRuleAction? action, ResourceIdentifier virtualNetworkSubnetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             VirtualNetworkSubnetResourceId = virtualNetworkSubnetResourceId;
