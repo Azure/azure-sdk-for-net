@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 throw new FormatException($"The model {nameof(DelayRequestContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("delay"u8);
-            writer.WriteStringValue(DelayOn, "O");
+            writer.WriteStringValue(DelayTo, "O");
             writer.WritePropertyName("resourceIds"u8);
             writer.WriteStartArray();
             foreach (ResourceIdentifier item in ResourceIds)
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            DateTimeOffset delayOn = default;
+            DateTimeOffset delayTo = default;
             IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("delay"u8))
                 {
-                    delayOn = prop.Value.GetDateTimeOffset("O");
+                    delayTo = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceIds"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DelayRequestContent(delayOn, resourceIds, additionalBinaryDataProperties);
+            return new DelayRequestContent(delayTo, resourceIds, additionalBinaryDataProperties);
         }
     }
 }
