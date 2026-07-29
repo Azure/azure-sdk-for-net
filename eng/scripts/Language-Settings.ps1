@@ -147,6 +147,13 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   $dependencyGraphPath = $env:AZURESDK_TEST_DEPENDENCY_GRAPH_PATH
 
   if ($dependencyGraphPath) {
+    # Normalize to a full path so Split-Path -Parent always yields a directory. A bare
+    # file name ('graph.txt') otherwise yields an empty parent and New-Item fails to
+    # bind, which would abort matrix generation instead of falling back to regenerating
+    # the graph. GetFullPath resolves against the current directory, which is the same
+    # location a relative path already resolved to.
+    $dependencyGraphPath = [System.IO.Path]::GetFullPath(
+      $dependencyGraphPath, (Get-Location).ProviderPath)
     $checksumPath = "$dependencyGraphPath.sha256"
     $graphIsValid = $false
     if ((Test-Path $dependencyGraphPath) -and (Test-Path $checksumPath)) {
