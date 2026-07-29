@@ -580,7 +580,17 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
     $summaryArgs = $showSummary ? "/v:n /ds" : ""
 
-    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
+    # Generate packages concurrently, mirroring the -Parallel switch in
+    # eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1. Each package spends
+    # most of its time in a network-bound spec sync and a single-threaded tsp compile, so
+    # those phases overlap well. Both /m and BuildInParallel are required: the MSBuild task
+    # in eng/service.proj stays sequential if either one is missing. Set
+    # SDK_GENERATION_PARALLELISM=1 to fall back to the previous sequential behavior.
+    $parallelism = if ($env:SDK_GENERATION_PARALLELISM) { [int]$env:SDK_GENERATION_PARALLELISM } else { 4 }
+    $parallelArgs = $parallelism -gt 1 ? "/m:$parallelism /p:BuildInParallel=true" : ""
+    Write-Host "Generating with parallelism $parallelism (override with SDK_GENERATION_PARALLELISM)"
+
+    Invoke-LoggedCommand "dotnet msbuild /restore $parallelArgs /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
   }
   finally {
     Pop-Location
