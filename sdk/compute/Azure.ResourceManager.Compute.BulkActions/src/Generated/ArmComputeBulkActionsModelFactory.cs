@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
         /// <param name="shouldAddProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <returns> A new <see cref="Models.ProxyAgentSettings"/> instance for mocking. </returns>
-        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, Mode? mode = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? shouldAddProxyAgentExtension = default)
+        public static ProxyAgentSettings ProxyAgentSettings(bool? enabled = default, ProxyAgentMode? mode = default, int? keyIncarnationId = default, HostEndpointSettings wireServer = default, HostEndpointSettings imds = default, bool? shouldAddProxyAgentExtension = default)
         {
             return new ProxyAgentSettings(
                 enabled,
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
         /// <param name="inVMAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <returns> A new <see cref="Models.HostEndpointSettings"/> instance for mocking. </returns>
-        public static HostEndpointSettings HostEndpointSettings(Modes? mode = default, string inVMAccessControlProfileReferenceId = default)
+        public static HostEndpointSettings HostEndpointSettings(ImdsAccessControlMode? mode = default, string inVMAccessControlProfileReferenceId = default)
         {
             return new HostEndpointSettings(mode, inVMAccessControlProfileReferenceId, default);
         }
@@ -1756,10 +1756,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="BulkActions.OccurrenceData"/> instance for mocking. </returns>
-        public static OccurrenceData OccurrenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceProperties properties = default)
+        /// <returns> A new <see cref="BulkActions.ScheduledActionOccurrenceData"/> instance for mocking. </returns>
+        public static ScheduledActionOccurrenceData ScheduledActionOccurrenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceProperties properties = default)
         {
-            return new OccurrenceData(
+            return new ScheduledActionOccurrenceData(
                 id,
                 name,
                 resourceType,
@@ -1869,14 +1869,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 default);
         }
 
-        /// <param name="delay"> The exact time to delay the operations to. </param>
+        /// <param name="delayOn"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
         /// <returns> A new <see cref="Models.DelayRequestContent"/> instance for mocking. </returns>
-        public static DelayRequestContent DelayRequestContent(DateTimeOffset delay = default, IEnumerable<ResourceIdentifier> resourceIds = default)
+        public static DelayRequestContent DelayRequestContent(DateTimeOffset delayOn = default, IEnumerable<ResourceIdentifier> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new DelayRequestContent(delay, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new DelayRequestContent(delayOn, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

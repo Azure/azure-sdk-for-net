@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (OccurrenceData item in Value)
+            foreach (ScheduledActionOccurrenceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            IList<OccurrenceData> value = default;
+            IList<ScheduledActionOccurrenceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<OccurrenceData> array = new List<OccurrenceData>();
+                    List<ScheduledActionOccurrenceData> array = new List<ScheduledActionOccurrenceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OccurrenceData.DeserializeOccurrenceData(item, options));
+                        array.Add(ScheduledActionOccurrenceData.DeserializeScheduledActionOccurrenceData(item, options));
                     }
                     value = array;
                     continue;

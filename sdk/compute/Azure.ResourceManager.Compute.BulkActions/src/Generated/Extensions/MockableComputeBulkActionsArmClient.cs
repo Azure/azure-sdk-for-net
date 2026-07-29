@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
             return new ScheduledActionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="OccurrenceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ScheduledActionOccurrenceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OccurrenceResource"/> object. </returns>
-        public virtual OccurrenceResource GetOccurrenceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScheduledActionOccurrenceResource"/> object. </returns>
+        public virtual ScheduledActionOccurrenceResource GetScheduledActionOccurrenceResource(ResourceIdentifier id)
         {
-            OccurrenceResource.ValidateResourceId(id);
-            return new OccurrenceResource(Client, id);
+            ScheduledActionOccurrenceResource.ValidateResourceId(id);
+            return new ScheduledActionOccurrenceResource(Client, id);
         }
 
         /// <summary>

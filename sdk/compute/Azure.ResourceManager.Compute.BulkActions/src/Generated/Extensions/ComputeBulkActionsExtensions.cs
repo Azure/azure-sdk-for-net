@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="OccurrenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ScheduledActionOccurrenceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetOccurrenceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetScheduledActionOccurrenceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OccurrenceResource"/> object. </returns>
-        public static OccurrenceResource GetOccurrenceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScheduledActionOccurrenceResource"/> object. </returns>
+        public static ScheduledActionOccurrenceResource GetScheduledActionOccurrenceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeBulkActionsArmClient(client).GetOccurrenceResource(id);
+            return GetMockableComputeBulkActionsArmClient(client).GetScheduledActionOccurrenceResource(id);
         }
 
         /// <summary>

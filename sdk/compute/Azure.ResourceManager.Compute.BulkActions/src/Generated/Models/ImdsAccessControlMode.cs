@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </summary>
-    public readonly partial struct Modes : IEquatable<Modes>
+    public readonly partial struct ImdsAccessControlMode : IEquatable<ImdsAccessControlMode>
     {
         private readonly string _value;
         /// <summary> Audit mode. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Disabled mode. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="Modes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImdsAccessControlMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Modes(string value)
+        public ImdsAccessControlMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Audit mode. </summary>
-        public static Modes Audit { get; } = new Modes(AuditValue);
+        public static ImdsAccessControlMode Audit { get; } = new ImdsAccessControlMode(AuditValue);
 
         /// <summary> Enforce mode. </summary>
-        public static Modes Enforce { get; } = new Modes(EnforceValue);
+        public static ImdsAccessControlMode Enforce { get; } = new ImdsAccessControlMode(EnforceValue);
 
         /// <summary> Disabled mode. </summary>
-        public static Modes Disabled { get; } = new Modes(DisabledValue);
+        public static ImdsAccessControlMode Disabled { get; } = new ImdsAccessControlMode(DisabledValue);
 
-        /// <summary> Determines if two <see cref="Modes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ImdsAccessControlMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Modes left, Modes right) => left.Equals(right);
+        public static bool operator ==(ImdsAccessControlMode left, ImdsAccessControlMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Modes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ImdsAccessControlMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Modes left, Modes right) => !left.Equals(right);
+        public static bool operator !=(ImdsAccessControlMode left, ImdsAccessControlMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Modes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ImdsAccessControlMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Modes(string value) => new Modes(value);
+        public static implicit operator ImdsAccessControlMode(string value) => new ImdsAccessControlMode(value);
 
-        /// <summary> Converts a string to a <see cref="Modes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ImdsAccessControlMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Modes?(string value) => value == null ? null : new Modes(value);
+        public static implicit operator ImdsAccessControlMode?(string value) => value == null ? null : new ImdsAccessControlMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Modes other && Equals(other);
+        public override bool Equals(object obj) => obj is ImdsAccessControlMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Modes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ImdsAccessControlMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

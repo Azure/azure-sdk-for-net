@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute.BulkActions
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OccurrenceResource"/> and their operations.
-    /// Each <see cref="OccurrenceResource"/> in the collection will belong to the same instance of <see cref="ScheduledActionResource"/>.
-    /// To get a <see cref="OccurrenceCollection"/> instance call the GetOccurrences method from an instance of <see cref="ScheduledActionResource"/>.
+    /// A class representing a collection of <see cref="ScheduledActionOccurrenceResource"/> and their operations.
+    /// Each <see cref="ScheduledActionOccurrenceResource"/> in the collection will belong to the same instance of <see cref="ScheduledActionResource"/>.
+    /// To get a <see cref="ScheduledActionOccurrenceCollection"/> instance call the GetScheduledActionOccurrences method from an instance of <see cref="ScheduledActionResource"/>.
     /// </summary>
-    public partial class OccurrenceCollection : ArmCollection, IEnumerable<OccurrenceResource>, IAsyncEnumerable<OccurrenceResource>
+    public partial class ScheduledActionOccurrenceCollection : ArmCollection, IEnumerable<ScheduledActionOccurrenceResource>, IAsyncEnumerable<ScheduledActionOccurrenceResource>
     {
         private readonly ClientDiagnostics _occurrencesClientDiagnostics;
         private readonly Occurrences _occurrencesRestClient;
 
-        /// <summary> Initializes a new instance of OccurrenceCollection for mocking. </summary>
-        protected OccurrenceCollection()
+        /// <summary> Initializes a new instance of ScheduledActionOccurrenceCollection for mocking. </summary>
+        protected ScheduledActionOccurrenceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionOccurrenceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OccurrenceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ScheduledActionOccurrenceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OccurrenceResource.ResourceType, out string occurrenceApiVersion);
-            _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", OccurrenceResource.ResourceType.Namespace, Diagnostics);
-            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, occurrenceApiVersion ?? "2026-07-06-preview");
+            TryGetApiVersion(ScheduledActionOccurrenceResource.ResourceType, out string scheduledActionOccurrenceApiVersion);
+            _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ScheduledActionOccurrenceResource.ResourceType.Namespace, Diagnostics);
+            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-07-06-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OccurrenceResource>> GetAsync(string occurrenceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledActionOccurrenceResource>> GetAsync(string occurrenceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceCollection.Get");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 };
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OccurrenceData> response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OccurrenceResource> Get(string occurrenceId, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledActionOccurrenceResource> Get(string occurrenceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceCollection.Get");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 };
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OccurrenceData> response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OccurrenceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionOccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionOccurrenceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OccurrenceData, OccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionAsyncCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "OccurrenceCollection.GetAll"), data => new OccurrenceResource(Client, data));
+                "ScheduledActionOccurrenceCollection.GetAll"), data => new ScheduledActionOccurrenceResource(Client, data));
         }
 
         /// <summary>
@@ -204,20 +204,20 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OccurrenceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionOccurrenceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionOccurrenceResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OccurrenceData, OccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(
+            return new PageableWrapper<ScheduledActionOccurrenceData, ScheduledActionOccurrenceResource>(new OccurrencesGetByScheduledActionCollectionResultOfT(
                 _occurrencesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "OccurrenceCollection.GetAll"), data => new OccurrenceResource(Client, data));
+                "ScheduledActionOccurrenceCollection.GetAll"), data => new ScheduledActionOccurrenceResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceCollection.Exists");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceCollection.Exists");
             scope.Start();
             try
             {
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<OccurrenceData> response = default;
+                Response<ScheduledActionOccurrenceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                        response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OccurrenceData)null, result);
+                        response = Response.FromValue((ScheduledActionOccurrenceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceCollection.Exists");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceCollection.Exists");
             scope.Start();
             try
             {
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<OccurrenceData> response = default;
+                Response<ScheduledActionOccurrenceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                        response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OccurrenceData)null, result);
+                        response = Response.FromValue((ScheduledActionOccurrenceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<OccurrenceResource>> GetIfExistsAsync(string occurrenceId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ScheduledActionOccurrenceResource>> GetIfExistsAsync(string occurrenceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceCollection.GetIfExists");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -370,23 +370,23 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<OccurrenceData> response = default;
+                Response<ScheduledActionOccurrenceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                        response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OccurrenceData)null, result);
+                        response = Response.FromValue((ScheduledActionOccurrenceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<OccurrenceResource>(response.GetRawResponse());
+                    return new NoValueResponse<ScheduledActionOccurrenceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<OccurrenceResource> GetIfExists(string occurrenceId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ScheduledActionOccurrenceResource> GetIfExists(string occurrenceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceCollection.GetIfExists");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -431,23 +431,23 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<OccurrenceData> response = default;
+                Response<ScheduledActionOccurrenceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                        response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OccurrenceData)null, result);
+                        response = Response.FromValue((ScheduledActionOccurrenceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<OccurrenceResource>(response.GetRawResponse());
+                    return new NoValueResponse<ScheduledActionOccurrenceResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             }
         }
 
-        IEnumerator<OccurrenceResource> IEnumerable<OccurrenceResource>.GetEnumerator()
+        IEnumerator<ScheduledActionOccurrenceResource> IEnumerable<ScheduledActionOccurrenceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<OccurrenceResource> IAsyncEnumerable<OccurrenceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ScheduledActionOccurrenceResource> IAsyncEnumerable<ScheduledActionOccurrenceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OccurrenceResource>> TriggerManualOccurrenceAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ScheduledActionOccurrenceResource>> TriggerManualOccurrenceAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.TriggerManualOccurrence");
             scope.Start();
@@ -1157,8 +1157,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 };
                 HttpMessage message = _scheduledActionsRestClient.CreateTriggerManualOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BulkActionsArmOperation<OccurrenceResource> operation = new BulkActionsArmOperation<OccurrenceResource>(
-                    new OccurrenceResourceOperationSource(Client),
+                BulkActionsArmOperation<ScheduledActionOccurrenceResource> operation = new BulkActionsArmOperation<ScheduledActionOccurrenceResource>(
+                    new ScheduledActionOccurrenceResourceOperationSource(Client),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OccurrenceResource> TriggerManualOccurrence(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ScheduledActionOccurrenceResource> TriggerManualOccurrence(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.TriggerManualOccurrence");
             scope.Start();
@@ -1212,8 +1212,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 };
                 HttpMessage message = _scheduledActionsRestClient.CreateTriggerManualOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BulkActionsArmOperation<OccurrenceResource> operation = new BulkActionsArmOperation<OccurrenceResource>(
-                    new OccurrenceResourceOperationSource(Client),
+                BulkActionsArmOperation<ScheduledActionOccurrenceResource> operation = new BulkActionsArmOperation<ScheduledActionOccurrenceResource>(
+                    new ScheduledActionOccurrenceResourceOperationSource(Client),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1232,11 +1232,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
             }
         }
 
-        /// <summary> Gets a collection of Occurrences in the <see cref="ScheduledActionResource"/>. </summary>
-        /// <returns> An object representing collection of Occurrences and their operations over a OccurrenceResource. </returns>
-        public virtual OccurrenceCollection GetOccurrences()
+        /// <summary> Gets a collection of ScheduledActionOccurrences in the <see cref="ScheduledActionResource"/>. </summary>
+        /// <returns> An object representing collection of ScheduledActionOccurrences and their operations over a ScheduledActionOccurrenceResource. </returns>
+        public virtual ScheduledActionOccurrenceCollection GetScheduledActionOccurrences()
         {
-            return GetCachedClient(client => new OccurrenceCollection(client, Id));
+            return GetCachedClient(client => new ScheduledActionOccurrenceCollection(client, Id));
         }
 
         /// <summary> Get a Occurrence. </summary>
@@ -1245,11 +1245,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OccurrenceResource>> GetOccurrenceAsync(string occurrenceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledActionOccurrenceResource>> GetScheduledActionOccurrenceAsync(string occurrenceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            return await GetOccurrences().GetAsync(occurrenceId, cancellationToken).ConfigureAwait(false);
+            return await GetScheduledActionOccurrences().GetAsync(occurrenceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Occurrence. </summary>
@@ -1258,11 +1258,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OccurrenceResource> GetOccurrence(string occurrenceId, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledActionOccurrenceResource> GetScheduledActionOccurrence(string occurrenceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
 
-            return GetOccurrences().Get(occurrenceId, cancellationToken);
+            return GetScheduledActionOccurrences().Get(occurrenceId, cancellationToken);
         }
     }
 }

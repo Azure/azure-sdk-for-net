@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute.BulkActions
 {
     /// <summary></summary>
-    internal partial class OccurrenceResourceOperationSource : IOperationSource<OccurrenceResource>
+    internal partial class ScheduledActionOccurrenceResourceOperationSource : IOperationSource<ScheduledActionOccurrenceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal OccurrenceResourceOperationSource(ArmClient client)
+        internal ScheduledActionOccurrenceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        OccurrenceResource IOperationSource<OccurrenceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ScheduledActionOccurrenceResource IOperationSource<ScheduledActionOccurrenceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            OccurrenceData data = OccurrenceData.DeserializeOccurrenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new OccurrenceResource(_client, data);
+            ScheduledActionOccurrenceData data = ScheduledActionOccurrenceData.DeserializeScheduledActionOccurrenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ScheduledActionOccurrenceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<OccurrenceResource> IOperationSource<OccurrenceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ScheduledActionOccurrenceResource> IOperationSource<ScheduledActionOccurrenceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            OccurrenceData data = OccurrenceData.DeserializeOccurrenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new OccurrenceResource(_client, data);
+            ScheduledActionOccurrenceData data = ScheduledActionOccurrenceData.DeserializeScheduledActionOccurrenceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ScheduledActionOccurrenceResource(_client, data);
         }
     }
 }

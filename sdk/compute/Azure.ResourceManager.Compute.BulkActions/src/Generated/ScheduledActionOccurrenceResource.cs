@@ -18,40 +18,40 @@ using Azure.ResourceManager.Compute.BulkActions.Models;
 namespace Azure.ResourceManager.Compute.BulkActions
 {
     /// <summary>
-    /// A class representing a Occurrence along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="OccurrenceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScheduledActionResource"/> using the GetOccurrences method.
+    /// A class representing a ScheduledActionOccurrence along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionOccurrenceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScheduledActionResource"/> using the GetScheduledActionOccurrences method.
     /// </summary>
-    public partial class OccurrenceResource : ArmResource
+    public partial class ScheduledActionOccurrenceResource : ArmResource
     {
         private readonly ClientDiagnostics _occurrencesClientDiagnostics;
         private readonly Occurrences _occurrencesRestClient;
-        private readonly OccurrenceData _data;
+        private readonly ScheduledActionOccurrenceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/scheduledActions/occurrences";
 
-        /// <summary> Initializes a new instance of OccurrenceResource for mocking. </summary>
-        protected OccurrenceResource()
+        /// <summary> Initializes a new instance of ScheduledActionOccurrenceResource for mocking. </summary>
+        protected ScheduledActionOccurrenceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionOccurrenceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OccurrenceResource(ArmClient client, OccurrenceData data) : this(client, data.Id)
+        internal ScheduledActionOccurrenceResource(ArmClient client, ScheduledActionOccurrenceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionOccurrenceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OccurrenceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ScheduledActionOccurrenceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string occurrenceApiVersion);
+            TryGetApiVersion(ResourceType, out string scheduledActionOccurrenceApiVersion);
             _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, occurrenceApiVersion ?? "2026-07-06-preview");
+            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-07-06-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual OccurrenceData Data
+        public virtual ScheduledActionOccurrenceData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OccurrenceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledActionOccurrenceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceResource.Get");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 };
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OccurrenceData> response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OccurrenceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledActionOccurrenceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceResource.Get");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 };
                 HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OccurrenceData> response = Response.FromValue(OccurrenceData.FromResponse(result), result);
+                Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OccurrenceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceResource.Cancel");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.Cancel");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceResource.Cancel");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.Cancel");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceResource.Delay");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.Delay");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("OccurrenceResource.Delay");
+            using DiagnosticScope scope = _occurrencesClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.Delay");
             scope.Start();
             try
             {
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "OccurrenceResource.GetResources");
+                "ScheduledActionOccurrenceResource.GetResources");
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="OccurrenceResource"/>. </description>
+        /// <description> <see cref="ScheduledActionOccurrenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "OccurrenceResource.GetResources");
+                "ScheduledActionOccurrenceResource.GetResources");
         }
     }
 }
