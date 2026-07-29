@@ -127,23 +127,29 @@ jobs:
               return
             }
 
-            # Always included: the base patterns the sparse checkout step establishes,
-            # every non-sdk top level directory (about 5,200 of ~139,000 tracked files,
-            # and the home of the shared management test sources), and the services that
-            # projects reach without naming them in a .csproj.
-            $paths = [System.Collections.Generic.List[string]]@(
-              '/*', '!/*/', '/eng', '/.config',
-              '/.devcontainer', '/.github', '/.vscode', '/common', '/doc', '/samples')
-            $services = [System.Collections.Generic.SortedSet[string]]@(
-              'core', 'common', 'identity', 'resourcemanager', 'template')
-
+            # The always-included paths (base sparse-checkout patterns, every non-sdk
+            # top level directory, and the services that projects reach without naming
+            # them in a .csproj) are recorded in the map by Get-TestCheckoutPaths.ps1.
+            # They are deliberately NOT repeated here: this resolver runs before the
+            # repository is on disk so it cannot dot-source that script, and keeping a
+            # second copy of the list previously caused a build break when only one
+            # copy was updated.
             $lookup = @{}
             foreach ($property in (Get-Content -LiteralPath $map.FullName -Raw | ConvertFrom-Json).PSObject.Properties) {
               $lookup[$property.Name] = @($property.Value)
             }
 
+            $alwaysKey = '$alwaysIncludedPaths'
+            if (-not $lookup.ContainsKey($alwaysKey)) {
+              Set-Paths $fallback 'checkout map has no always-included path list'
+              return
+            }
+
+            $paths = [System.Collections.Generic.List[string]]@($lookup[$alwaysKey])
+            $services = [System.Collections.Generic.SortedSet[string]]::new()
+
             foreach ($artifact in $artifacts) {
-              if (-not $lookup.ContainsKey($artifact)) {
+              if ($artifact -eq $alwaysKey -or -not $lookup.ContainsKey($artifact)) {
                 # A stale map would silently drop a service and turn into a build error
                 # rather than a slow job, so fall back to checking out everything.
                 Set-Paths $fallback "no map entry for '$artifact'"
@@ -152,7 +158,10 @@ jobs:
               foreach ($service in $lookup[$artifact]) { $null = $services.Add($service) }
             }
 
-            foreach ($service in $services) { $paths.Add("/sdk/$service/*") }
+            foreach ($service in $services) {
+              $candidate = "/sdk/$service/*"
+              if (-not $paths.Contains($candidate)) { $paths.Add($candidate) }
+            }
             Set-Paths $paths "$($artifacts.Count) packages -> $($services.Count) services"
           displayName: Resolve test checkout paths
           condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))

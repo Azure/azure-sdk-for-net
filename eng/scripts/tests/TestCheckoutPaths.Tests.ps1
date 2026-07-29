@@ -112,7 +112,30 @@ Describe 'Get-TestCheckoutPaths' {
         It 'creates an entry for every src project' {
             $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
             $map.PSObject.Properties.Name | Sort-Object | Should -Be @(
+                '$alwaysIncludedPaths',
                 'Contoso.Alpha', 'Contoso.Beta', 'Contoso.Delta', 'Contoso.Gamma', 'Contoso.Omega')
+        }
+
+        It 'records the always-included paths in the map so consumers never duplicate the list' {
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            $always = @($map.'$alwaysIncludedPaths')
+            $always | Should -Contain '/*'
+            $always | Should -Contain '/eng'
+            $always | Should -Contain '/common'
+            foreach ($service in @('core', 'common', 'identity', 'resourcemanager', 'template', 'tools')) {
+                $always | Should -Contain "/sdk/$service/*"
+            }
+        }
+
+        It 'the resolver inlined into ci.tests.yml does not keep its own copy of the list' {
+            # A second hardcoded copy of the always-included services in the pipeline
+            # caused a build break once already: sdk/tools was added here but not there,
+            # the injected Azure.SdkAnalyzers ProjectReference silently degraded to an
+            # MSB9008 warning, and the build failed later with AAIP001 errors.
+            $pipeline = Get-Content -LiteralPath (
+                Join-Path $PSScriptRoot '..' '..' 'pipelines' 'templates' 'jobs' 'ci.tests.yml') -Raw
+            $pipeline | Should -Match '\$alwaysIncludedPaths'
+            $pipeline | Should -Not -Match "'resourcemanager'"
         }
 
         It 'follows PackageReference entries transitively, because the build converts them to project references' {

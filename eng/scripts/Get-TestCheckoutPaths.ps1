@@ -260,6 +260,23 @@ function Get-ServiceDirectoryName {
   return $segments[1]
 }
 
+function Get-AlwaysIncludedPaths {
+  # The complete set of paths that every narrowed checkout needs regardless of which
+  # packages are in the batch. This is written into the map so that consumers - notably
+  # the resolver inlined into eng/pipelines/templates/jobs/ci.tests.yml, which cannot
+  # dot-source this script because it runs before the repository is on disk - never
+  # have to repeat the list. Duplicating it once already caused a build break.
+  $paths = [System.Collections.Generic.List[string]]::new()
+  foreach ($path in $script:BasePaths) { $paths.Add($path) }
+  foreach ($path in $script:AlwaysIncludedRootDirectories) { $paths.Add($path) }
+  foreach ($service in $script:AlwaysIncludedServices) { $paths.Add("/sdk/$service/*") }
+  return @($paths)
+}
+
+# Reserved map key holding the output of Get-AlwaysIncludedPaths. Package artifact
+# names can never collide with it because they are always valid assembly names.
+$script:AlwaysIncludedPathsKey = '$alwaysIncludedPaths'
+
 function New-CheckoutMap {
   param([string] $Root)
 
@@ -286,6 +303,8 @@ function New-CheckoutMap {
     $map[$artifact] = @($services)
   }
 
+  $map[$script:AlwaysIncludedPathsKey] = Get-AlwaysIncludedPaths
+
   return $map
 }
 
@@ -296,13 +315,10 @@ function Resolve-CheckoutPaths {
   )
 
   $services = [System.Collections.Generic.SortedSet[string]]::new()
-  foreach ($service in $script:AlwaysIncludedServices) {
-    $null = $services.Add($service)
-  }
 
   $contributed = 0
   foreach ($artifact in $Artifacts) {
-    if (-not $Map.ContainsKey($artifact)) {
+    if ($artifact -eq $script:AlwaysIncludedPathsKey -or -not $Map.ContainsKey($artifact)) {
       # An unknown artifact means the map is stale relative to the packages being
       # tested. Narrowing on incomplete data risks a build break, so signal the
       # caller to fall back to a full checkout.
@@ -322,15 +338,21 @@ function Resolve-CheckoutPaths {
     return $null
   }
 
+  # Prefer the always-included paths recorded in the map so that a map built by an
+  # older revision of this script still resolves exactly the way it was built.
   $paths = [System.Collections.Generic.List[string]]::new()
-  foreach ($path in $script:BasePaths) {
-    $paths.Add($path)
+  if ($Map.ContainsKey($script:AlwaysIncludedPathsKey)) {
+    foreach ($path in $Map[$script:AlwaysIncludedPathsKey]) { $paths.Add($path) }
   }
-  foreach ($path in $script:AlwaysIncludedRootDirectories) {
-    $paths.Add($path)
+  else {
+    foreach ($path in (Get-AlwaysIncludedPaths)) { $paths.Add($path) }
   }
+
   foreach ($service in $services) {
-    $paths.Add("/sdk/$service/*")
+    $candidate = "/sdk/$service/*"
+    if (-not $paths.Contains($candidate)) {
+      $paths.Add($candidate)
+    }
   }
 
   return @($paths)
@@ -350,7 +372,7 @@ if ($BuildMap) {
   }
 
   $map | ConvertTo-Json -Depth 5 -Compress | Set-Content -LiteralPath $OutputPath -NoNewline
-  Write-Host "Wrote checkout map for $($map.Keys.Count) artifacts to $OutputPath"
+  Write-Host "Wrote checkout map for $($map.Keys.Count - 1) artifacts to $OutputPath"
   return
 }
 
