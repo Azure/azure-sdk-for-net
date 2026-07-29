@@ -10,8 +10,8 @@ namespace Azure.IoT.DeviceUpdate
     {
         protected DeviceManagementClient() { }
         public DeviceManagementClient(Azure.IoT.DeviceUpdate.DeviceManagementClientSettings settings) { }
-        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
+        public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
+        public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdateDeployment(string groupId, string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateDeploymentAsync(string groupId, string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -27,16 +27,16 @@ namespace Azure.IoT.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteGroupAsync(string groupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetBestUpdatesForDeviceClassSubgroup(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetBestUpdatesForDeviceClassSubgroupAsync(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetBestUpdatesForGroup(string groupId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetBestUpdatesForGroupAsync(string groupId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetBestUpdatesForGroups(string groupId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetBestUpdatesForGroupsAsync(string groupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeployment(string groupId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeploymentAsync(string groupId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDeploymentsForDeviceClassSubgroup(string groupId, string deviceClassId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDeploymentsForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDeploymentsForGroup(string groupId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDeploymentsForGroupAsync(string groupId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDeploymentsForDeviceClassSubgroups(string groupId, string deviceClassId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDeploymentsForDeviceClassSubgroupsAsync(string groupId, string deviceClassId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDeploymentsForGroups(string groupId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDeploymentsForGroupsAsync(string groupId, string orderBy = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeploymentStatus(string groupId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeploymentStatusAsync(string groupId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDevice(string deviceId, Azure.RequestContext context = null) { throw null; }
@@ -49,24 +49,24 @@ namespace Azure.IoT.DeviceUpdate
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceClassSubgroupAsync(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceClassSubgroupDeploymentStatus(string groupId, string deviceClassId, string deploymentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceClassSubgroupDeploymentStatusAsync(string groupId, string deviceClassId, string deploymentId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDeviceClassSubgroupsForGroup(string groupId, string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceClassSubgroupsForGroupAsync(string groupId, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDeviceClassSubgroupsForGroups(string groupId, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceClassSubgroupsForGroupsAsync(string groupId, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceClassSubgroupUpdateCompliance(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceClassSubgroupUpdateComplianceAsync(string groupId, string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeviceModule(string deviceId, string moduleId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeviceModuleAsync(string deviceId, string moduleId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetDevices(string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetDevicesAsync(string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDeviceStatesForDeviceClassSubgroupDeployment(string groupId, string deviceClassId, string deploymentId, string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentAsync(string groupId, string deviceClassId, string deploymentId, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDeviceStatesForDeviceClassSubgroupDeployments(string groupId, string deviceClassId, string deploymentId, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync(string groupId, string deviceClassId, string deploymentId, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetGroup(string groupId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetGroupAsync(string groupId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetGroups(string orderBy = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetGroupsAsync(string orderBy = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetHealthOfDevices(string filter, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetHealthOfDevicesAsync(string filter, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetInstallableUpdatesForDeviceClass(string deviceClassId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetInstallableUpdatesForDeviceClassAsync(string deviceClassId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetInstallableUpdatesForDeviceClasses(string deviceClassId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetInstallableUpdatesForDeviceClassesAsync(string deviceClassId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetLogCollection(string logCollectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLogCollectionAsync(string logCollectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetLogCollectionDetailedStatus(string logCollectionId, Azure.RequestContext context = null) { throw null; }
@@ -75,8 +75,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetLogCollectionsAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetOperationStatus(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetOperationStatuses(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationStatusesAsync(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetOperationStatuses(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationStatusesAsync(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdateCompliance(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateComplianceAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdateComplianceForGroup(string groupId, Azure.RequestContext context = null) { throw null; }
@@ -111,8 +111,8 @@ namespace Azure.IoT.DeviceUpdate
     {
         protected DeviceUpdateClient() { }
         public DeviceUpdateClient(Azure.IoT.DeviceUpdate.DeviceUpdateClientSettings settings) { }
-        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
+        public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
+        public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation DeleteUpdate(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteUpdateAsync(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
@@ -124,8 +124,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetNamesAsync(string provider, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetOperationStatus(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string operationId, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetOperationStatuses(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationStatusesAsync(string filter = null, int? maxCount = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetOperationStatuses(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetOperationStatusesAsync(string filter = null, int? top = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetProviders(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetProvidersAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdate(string provider, string name, string version, Azure.ETag? ifNoneMatch = default(Azure.ETag?), Azure.RequestContext context = null) { throw null; }
@@ -134,8 +134,8 @@ namespace Azure.IoT.DeviceUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetUpdatesAsync(string search = null, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetVersions(string provider, string name, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetVersionsAsync(string provider, string name, string filter = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation ImportUpdate(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportUpdateAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation StartImportUpdate(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> StartImportUpdateAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public static partial class DeviceUpdateClientHostExtensions
     {
