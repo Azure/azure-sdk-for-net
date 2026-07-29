@@ -42,12 +42,15 @@ steps:
 
   - ${{ if parameters.EnableTestCheckoutNarrowing }}:
     # Built here because this is the last point at which a full checkout is available.
-    # It ships inside the PackageInfo artifact so each test job can resolve its own
-    # sparse checkout paths before it has a working tree.
+    # The map and the resolver itself both ship inside the PackageInfo artifact so each
+    # test job can resolve its own sparse checkout paths before it has a working tree.
     - pwsh: |
         ./eng/scripts/Get-TestCheckoutPaths.ps1 `
           -BuildMap `
           -OutputPath "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing/checkout-map.json"
+
+        Copy-Item -Path ./eng/scripts/Get-TestCheckoutPaths.ps1 `
+          -Destination "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing/Get-TestCheckoutPaths.ps1" -Force
       displayName: Build test checkout map
 
   - ${{ if eq(parameters.PublishArtifact, true) }}:

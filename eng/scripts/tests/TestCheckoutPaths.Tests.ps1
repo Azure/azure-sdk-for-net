@@ -144,15 +144,26 @@ Describe 'Get-TestCheckoutPaths' {
             }
         }
 
-        It 'the resolver inlined into ci.tests.yml does not keep its own copy of the list' {
-            # A second hardcoded copy of the always-included services in the pipeline
-            # caused a build break once already: sdk/tools was added here but not there,
-            # the injected Azure.SdkAnalyzers ProjectReference silently degraded to an
-            # MSB9008 warning, and the build failed later with AAIP001 errors.
+        It 'ci.tests.yml calls this script instead of reimplementing the resolver' {
+            # A second copy of the resolution logic in the pipeline caused a build break
+            # once already: sdk/tools was added to this script but not to the pipeline
+            # copy, the injected Azure.SdkAnalyzers ProjectReference silently degraded to
+            # an MSB9008 warning, and the build failed later with AAIP001 errors. The
+            # pipeline must therefore invoke the published script, not restate its rules.
             $pipeline = Get-Content -LiteralPath (
                 Join-Path $PSScriptRoot '..' '..' 'pipelines' 'templates' 'jobs' 'ci.tests.yml') -Raw
-            $pipeline | Should -Match '\$alwaysIncludedPaths'
+            $pipeline | Should -Match 'Get-TestCheckoutPaths\.ps1'
+            $pipeline | Should -Match '-MapPath'
+            $pipeline | Should -Not -Match '\$alwaysIncludedPaths'
             $pipeline | Should -Not -Match "'resourcemanager'"
+        }
+
+        It 'pr-matrix-presteps.yml publishes the resolver next to the map' {
+            # The test job has no working tree when it resolves its paths, so the script
+            # has to travel inside the artifact alongside checkout-map.json.
+            $presteps = Get-Content -LiteralPath (
+                Join-Path $PSScriptRoot '..' '..' 'pipelines' 'templates' 'steps' 'pr-matrix-presteps.yml') -Raw
+            $presteps | Should -Match 'Copy-Item[\s\S]*Get-TestCheckoutPaths\.ps1'
         }
 
         It 'follows PackageReference entries transitively, because the build converts them to project references' {
