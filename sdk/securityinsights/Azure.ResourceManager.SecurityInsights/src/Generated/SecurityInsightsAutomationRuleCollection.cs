@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsAutomationRuleResource.ResourceType, out string securityInsightsAutomationRuleApiVersion);
             _automationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsAutomationRuleResource.ResourceType.Namespace, Diagnostics);
-            _automationRulesRestClient = new AutomationRules(_automationRulesClientDiagnostics, Pipeline, Endpoint, securityInsightsAutomationRuleApiVersion ?? "2025-07-01-preview");
+            _automationRulesRestClient = new AutomationRules(_automationRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsAutomationRuleApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

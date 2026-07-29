@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string dataCollectionEndpointApiVersion);
             _dataCollectionEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
+            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
             _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
             _nspDataCollectionEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _nspDataCollectionEndpointRestClient = new NspDataCollectionEndpoint(_nspDataCollectionEndpointClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointApiVersion ?? "2021-10-01");
+            _nspDataCollectionEndpointRestClient = new NspDataCollectionEndpoint(_nspDataCollectionEndpointClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion ?? "2021-10-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudKubernetesClusterFeatureResource.ResourceType, out string networkCloudKubernetesClusterFeatureApiVersion);
             _kubernetesClusterFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesClusterFeatureResource.ResourceType.Namespace, Diagnostics);
-            _kubernetesClusterFeaturesRestClient = new KubernetesClusterFeatures(_kubernetesClusterFeaturesClientDiagnostics, Pipeline, Endpoint, networkCloudKubernetesClusterFeatureApiVersion ?? "2026-05-01-preview");
+            _kubernetesClusterFeaturesRestClient = new KubernetesClusterFeatures(_kubernetesClusterFeaturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudKubernetesClusterFeatureApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

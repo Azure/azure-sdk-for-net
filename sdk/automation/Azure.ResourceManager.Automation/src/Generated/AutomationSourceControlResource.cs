@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationSourceControlApiVersion);
             _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _sourceControlRestClient = new SourceControl(_sourceControlClientDiagnostics, Pipeline, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
+            _sourceControlRestClient = new SourceControl(_sourceControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
             _sourceControlSyncJobOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _sourceControlSyncJobOperationsRestClient = new SourceControlSyncJobOperations(_sourceControlSyncJobOperationsClientDiagnostics, Pipeline, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
+            _sourceControlSyncJobOperationsRestClient = new SourceControlSyncJobOperations(_sourceControlSyncJobOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
             _sourceControlSyncJobStreamsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _sourceControlSyncJobStreamsRestClient = new SourceControlSyncJobStreams(_sourceControlSyncJobStreamsClientDiagnostics, Pipeline, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
+            _sourceControlSyncJobStreamsRestClient = new SourceControlSyncJobStreams(_sourceControlSyncJobStreamsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Search
     public enum SearchServicePrivateLinkServiceConnectionStatus
     {
         /// <summary> The private endpoint connection has been created and is pending approval. </summary>
-        Pending,
+        Pending = 0,
         /// <summary> The private endpoint connection is approved and is ready for use. </summary>
-        Approved,
+        Approved = 1,
         /// <summary> The private endpoint connection has been rejected and cannot be used. </summary>
-        Rejected,
+        Rejected = 2,
         /// <summary> The private endpoint connection has been removed from the service. </summary>
-        Disconnected
+        Disconnected = 3
     }
 }

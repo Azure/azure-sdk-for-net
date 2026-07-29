@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum OriginResourceState
     {
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> Active. </summary>
-        Active,
+        Active = 1,
         /// <summary> Deleting. </summary>
-        Deleting
+        Deleting = 2
     }
 }

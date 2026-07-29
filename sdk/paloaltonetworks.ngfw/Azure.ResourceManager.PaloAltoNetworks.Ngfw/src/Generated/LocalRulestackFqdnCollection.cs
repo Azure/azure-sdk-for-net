@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(LocalRulestackFqdnResource.ResourceType, out string localRulestackFqdnApiVersion);
             _fqdnListLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackFqdnResource.ResourceType.Namespace, Diagnostics);
-            _fqdnListLocalRulestackRestClient = new FqdnListLocalRulestack(_fqdnListLocalRulestackClientDiagnostics, Pipeline, Endpoint, localRulestackFqdnApiVersion ?? "2025-10-08");
+            _fqdnListLocalRulestackRestClient = new FqdnListLocalRulestack(_fqdnListLocalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackFqdnApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(ResourceType, out string connectionMonitorTestApiVersion);
             _connectionMonitorTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _connectionMonitorTestsRestClient = new ConnectionMonitorTests(_connectionMonitorTestsClientDiagnostics, Pipeline, Endpoint, connectionMonitorTestApiVersion ?? "2025-05-01");
+            _connectionMonitorTestsRestClient = new ConnectionMonitorTests(_connectionMonitorTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectionMonitorTestApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Communication
     public enum UserEngagementTracking
     {
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 0,
         /// <summary> Enabled. </summary>
-        Enabled
+        Enabled = 1
     }
 }

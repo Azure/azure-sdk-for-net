@@ -48,7 +48,9 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             {
                 typeof(ProvisioningInputLibrary)
                     .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .SetValue(mockInputLibrary.Object, ProvisioningResourceProjection.Create(armProviderSchema().Resources));
+                    .SetValue(
+                        mockInputLibrary.Object,
+                        armProviderSchema().Resources.Select(CreateProjection).ToArray());
                 typeof(ProvisioningInputLibrary)
                     .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
                     .SetValue(
@@ -67,6 +69,30 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             codeModelInstance!.SetValue(null, mockGenerator.Object);
 
             return mockGenerator;
+        }
+
+        private static ProvisioningResourceProjection CreateProjection(ArmResourceMetadata metadata)
+        {
+            var readableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Read)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            var writableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Create)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            return new(
+                metadata.ResourceModel,
+                metadata.ResourceName,
+                metadata.ResourceType.SerializedResourceType,
+                metadata.SingletonResourceName,
+                metadata.ParentResourceId,
+                metadata.NameConstraints,
+                [metadata.ResourceIdPattern],
+                metadata.ApiVersions,
+                metadata.Methods,
+                metadata.RbacRoles,
+                readableScopes,
+                writableScopes,
+                writableScopes.Contains(ResourceScope.Extension));
         }
     }
 }

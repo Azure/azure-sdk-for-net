@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(PrimingJobContent))]
     [ModelReaderWriterBuildable(typeof(RequiredAmlFileSystemSubnetsSize))]
     [ModelReaderWriterBuildable(typeof(RequiredAmlFileSystemSubnetsSizeContent))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettings))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettingsCredentials))]
     [ModelReaderWriterBuildable(typeof(StorageCacheAscOperationError))]

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(EdgeMachineVolumeResource.ResourceType, out string edgeMachineVolumeApiVersion);
             _edgeMachineVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", EdgeMachineVolumeResource.ResourceType.Namespace, Diagnostics);
-            _edgeMachineVolumesRestClient = new EdgeMachineVolumes(_edgeMachineVolumesClientDiagnostics, Pipeline, Endpoint, edgeMachineVolumeApiVersion ?? "2026-05-01-preview");
+            _edgeMachineVolumesRestClient = new EdgeMachineVolumes(_edgeMachineVolumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineVolumeApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

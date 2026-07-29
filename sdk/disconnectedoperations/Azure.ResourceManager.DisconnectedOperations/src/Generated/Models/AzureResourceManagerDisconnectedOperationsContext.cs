@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DisconnectedOperations.Models;
 using Azure.ResourceManager.Models;
 
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.DisconnectedOperations
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(HardwareSettingListResult))]
     [ModelReaderWriterBuildable(typeof(ImageListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDisconnectedOperationsContext : ModelReaderWriterContext
     {

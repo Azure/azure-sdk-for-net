@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterDurabilityLevel
     {
         /// <summary> No privileges. This is the default. </summary>
-        Bronze,
+        Bronze = 0,
         /// <summary> The infrastructure jobs can be paused for a duration of 10 minutes per UD. </summary>
-        Silver,
+        Silver = 1,
         /// <summary> The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc. </summary>
-        Gold
+        Gold = 2
     }
 }

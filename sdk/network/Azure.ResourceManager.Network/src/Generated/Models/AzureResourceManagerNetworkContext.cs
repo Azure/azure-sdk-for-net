@@ -767,6 +767,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(O365BreakOutCategoryPolicies))]
     [ModelReaderWriterBuildable(typeof(O365PolicyProperties))]
     [ModelReaderWriterBuildable(typeof(Office365PolicyProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OutboundRuleData))]
     [ModelReaderWriterBuildable(typeof(OutboundRulePropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(OutboundRuleResource))]

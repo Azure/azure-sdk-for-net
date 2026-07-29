@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualNetworkPeeringApiVersion);
             _virtualNetworkPeeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualNetworkPeeringsRestClient = new VirtualNetworkPeerings(_virtualNetworkPeeringsClientDiagnostics, Pipeline, Endpoint, virtualNetworkPeeringApiVersion ?? "2025-07-01");
+            _virtualNetworkPeeringsRestClient = new VirtualNetworkPeerings(_virtualNetworkPeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkPeeringApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
