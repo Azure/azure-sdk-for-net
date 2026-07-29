@@ -1869,14 +1869,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 default);
         }
 
-        /// <param name="delayTo"> The exact time to delay the operations to. </param>
+        /// <param name="scheduleOn"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
         /// <returns> A new <see cref="Models.DelayRequestContent"/> instance for mocking. </returns>
-        public static DelayRequestContent DelayRequestContent(DateTimeOffset delayTo = default, IEnumerable<ResourceIdentifier> resourceIds = default)
+        public static DelayRequestContent DelayRequestContent(DateTimeOffset scheduleOn = default, IEnumerable<ResourceIdentifier> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new DelayRequestContent(delayTo, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new DelayRequestContent(scheduleOn, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
