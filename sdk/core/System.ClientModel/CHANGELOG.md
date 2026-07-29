@@ -6,10 +6,6 @@
 
 - Fixed credential resolver caching so chain-owning resolvers are rebuilt for each resolution while resolved leaf credentials remain shared across chains.
 
-### Other Changes
-
-- Added distributed tracing support used by generated unbranded client libraries.
-
 ## 1.14.0 (2026-06-03)
 
 ### Features Added
