@@ -57,6 +57,9 @@ parameters:
   - name: EnableTestCheckoutNarrowing
     type: boolean
     default: false
+  - name: EnableTestRuntimeTrimming
+    type: boolean
+    default: false
   - name: PublicFeed
     type: string
     default: 'Nuget.org'
@@ -107,6 +110,7 @@ extends:
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
+              EnableTestRuntimeTrimming: ${{ parameters.EnableTestRuntimeTrimming }}
               MatrixConfigs:
                 - ${{ each config in parameters.MatrixConfigs }}:
                     - ${{ config }}

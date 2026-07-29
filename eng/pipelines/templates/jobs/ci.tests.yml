@@ -29,6 +29,9 @@ parameters:
   - name: EnableTestCheckoutNarrowing
     type: boolean
     default: false
+  - name: EnableTestRuntimeTrimming
+    type: boolean
+    default: false
 
 jobs:
   - job:
@@ -208,6 +211,7 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+          SkipUnusedTestRuntimes: ${{ parameters.EnableTestRuntimeTrimming }}
 
       # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
       - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:

@@ -40,6 +40,7 @@ extends:
       ServiceDirectory: ${{ parameters.Service }}
     BuildSnippets: true
     EnableTestCheckoutNarrowing: true
+    EnableTestRuntimeTrimming: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
       # TEMP (draft only, remove before this PR is marked ready for review):

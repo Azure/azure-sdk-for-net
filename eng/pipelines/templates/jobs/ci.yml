@@ -45,6 +45,9 @@ parameters:
   - name: EnableTestCheckoutNarrowing
     type: boolean
     default: false
+  - name: EnableTestRuntimeTrimming
+    type: boolean
+    default: false
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
@@ -241,6 +244,7 @@ jobs:
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
           ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
             EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
+            EnableTestRuntimeTrimming: ${{ parameters.EnableTestRuntimeTrimming }}
 
   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
