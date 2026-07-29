@@ -35,11 +35,11 @@ the resolver explicitly first to get the same behavior:
 ```C# Snippet:Azure_Core_Samples_AzureClient_AddAzureClientEquivalence
 #pragma warning disable SCME0002
 
-// These two are equivalent:
-builder.AddAzureClient<MyClient, MyClientSettings>("MyClient");
+            // These two are equivalent:
+            builder.AddAzureClient<MyClient, MyClientSettings>("MyClient");
 
-builder.AddAzureCredentialResolver();
-builder.AddClient<MyClient, MyClientSettings>("MyClient");
+            builder.AddAzureCredentialResolver();
+            builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
 #pragma warning restore SCME0002
 ```

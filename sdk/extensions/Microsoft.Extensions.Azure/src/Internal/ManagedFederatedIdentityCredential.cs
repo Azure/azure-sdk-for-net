@@ -70,9 +70,9 @@ namespace Microsoft.Extensions.Azure.Internal
             _clientAssertionCredential = new ClientAssertionCredential(
                 tenantId,
                 clientId,
-                async _ =>
+                async cancellationToken =>
                     (await _managedIdentityCredential
-                        .GetTokenAsync(_tokenContext)
+                        .GetTokenAsync(_tokenContext, cancellationToken)
                         .ConfigureAwait(false))
                     .Token,
                 clientAssertionOptions
@@ -100,5 +100,5 @@ namespace Microsoft.Extensions.Azure.Internal
                 AzureCloud.China => "api://AzureADTokenExchangeChina/.default",
                 _ => throw new ArgumentException($"Unknown Azure cloud: {azureCloud}", nameof(azureCloud)),
             };
-        }
+    }
 }

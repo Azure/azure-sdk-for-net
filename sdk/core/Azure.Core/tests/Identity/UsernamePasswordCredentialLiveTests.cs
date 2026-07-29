@@ -3,9 +3,8 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class UsernamePasswordCredentialLiveTests : IdentityRecordedTestBase

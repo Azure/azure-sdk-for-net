@@ -5,9 +5,8 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.Identity.Client;
-
 using Azure.Identity;
+using Microsoft.Identity.Client;
 namespace Azure.Core.Tests.Identity
 {
     internal static class StaticCachesUtilities

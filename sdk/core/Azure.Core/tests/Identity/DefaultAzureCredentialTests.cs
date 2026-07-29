@@ -12,10 +12,9 @@ using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
 using Moq;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class DefaultAzureCredentialTests : ClientTestBase

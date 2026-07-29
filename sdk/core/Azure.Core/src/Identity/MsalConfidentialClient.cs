@@ -23,7 +23,9 @@ namespace Azure.Identity
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _clientAssertionCallback;
         private readonly Func<CancellationToken, Task<string>> _clientAssertionCallbackAsync;
+        private readonly Func<AssertionRequestOptions, CancellationToken, Task<ClientSignedAssertion>> _clientSignedAssertionCallbackAsync;
         private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
+        private readonly bool _enableMtlsProofOfPossession;
 
         internal string RedirectUrl { get; }
 
@@ -59,6 +61,13 @@ namespace Azure.Identity
             _clientAssertionCallbackAsync = assertionCallback;
         }
 
+        internal MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AssertionRequestOptions, CancellationToken, Task<ClientSignedAssertion>> assertionCallback, TokenCredentialOptions options)
+            : base(pipeline, tenantId, clientId, options)
+        {
+            _clientSignedAssertionCallbackAsync = assertionCallback;
+            _enableMtlsProofOfPossession = true;
+        }
+
         public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> appTokenProviderCallback, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, options)
         {
@@ -78,8 +87,12 @@ namespace Azure.Identity
                 enableCae ? cp1Capabilities : Array.Empty<string>();
 
             ConfidentialClientApplicationBuilder confClientBuilder = ConfidentialClientApplicationBuilder.Create(ClientId)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline), false)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
+
+            if (!_enableMtlsProofOfPossession)
+            {
+                confClientBuilder.WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline), false);
+            }
 
             // Special case for using appTokenProviderCallback, authority validation and instance metadata discovery should be disabled since we're not calling the STS
             // The authority matches the one configured in the CredentialOptions.
@@ -124,6 +137,11 @@ namespace Azure.Identity
                     throw new InvalidOperationException($"Cannot set both {nameof(_clientAssertionCallback)} and {nameof(_clientAssertionCallbackAsync)}");
                 }
                 confClientBuilder.WithClientAssertion(_clientAssertionCallbackAsync);
+            }
+
+            if (_clientSignedAssertionCallbackAsync != null)
+            {
+                confClientBuilder.WithClientAssertion(_clientSignedAssertionCallbackAsync);
             }
 
             if (_certificateProvider != null)
@@ -177,6 +195,11 @@ namespace Azure.Identity
             var builder = client
                 .AcquireTokenForClient(scopes)
                 .WithSendX5C(_includeX5CClaimHeader);
+
+            if (_enableMtlsProofOfPossession)
+            {
+                builder.WithMtlsProofOfPossession();
+            }
 
             if (!string.IsNullOrEmpty(tenantId))
             {

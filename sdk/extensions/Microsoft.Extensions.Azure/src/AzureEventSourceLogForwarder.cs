@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// A type used to forward log messages from Azure SDK <see cref="EventSource"/> to <see cref="ILoggerFactory"/>.
     /// </summary>
-    public sealed class AzureEventSourceLogForwarder: IDisposable
+    public sealed class AzureEventSourceLogForwarder : IDisposable
     {
         private readonly ILoggerFactory _loggerFactory;
 

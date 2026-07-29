@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Security;
 using Azure.Core;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     internal static class TestAccessorExtensions

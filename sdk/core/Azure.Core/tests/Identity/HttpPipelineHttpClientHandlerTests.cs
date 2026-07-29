@@ -11,9 +11,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests
 {
     public class HttpPipelineHttpClientHandlerTests

@@ -3,9 +3,8 @@
 
 using System;
 using Azure.Core;
-using Moq;
-
 using Azure.Identity;
+using Moq;
 namespace Azure.Core.Tests.Identity.Mock
 {
     internal class MockDefaultAzureCredentialFactory : DefaultAzureCredentialFactory

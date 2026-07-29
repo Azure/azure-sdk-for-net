@@ -5,12 +5,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.samples
 {
     public class CustomCredentialSnippets

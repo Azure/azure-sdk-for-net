@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `AzureAuthorityHosts.AzureBleuCloud` (`https://login.sovcloud-identity.fr/`), the Microsoft Entra authority host for Bleu Cloud, the national partner cloud for France. Interactive credentials' `Authenticate` methods now also resolve the default Azure Resource Manager scope for Bleu Cloud.
+- Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. Set `DisableMtlsProofOfPossession` to `true` in the credential's JSON configuration to force bearer authentication for both exchanges.
 
 ### Breaking Changes
 
@@ -16,6 +17,7 @@
 ### Other Changes
 
 - Added `azure-deprecating` to the default list of allowed (non-redacted) headers in `DiagnosticsOptions` to support [deprecating behavior notification](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#deprecating-behavior-notification).
+- Updated `Microsoft.Identity.Client` dependency to `4.87.0`.
 
 ## 1.60.0 (2026-06-30)
 

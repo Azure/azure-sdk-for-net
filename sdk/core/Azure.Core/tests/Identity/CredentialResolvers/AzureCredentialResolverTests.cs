@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;

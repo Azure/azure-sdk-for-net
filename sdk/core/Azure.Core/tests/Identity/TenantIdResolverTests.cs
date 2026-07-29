@@ -10,10 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 using static Azure.Core.Tests.Identity.CredentialTestBase<Azure.Identity.TokenCredentialOptions>;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class TenantIdResolverTests

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Identity.Client;
-
 using Azure.Identity;
+using Microsoft.Identity.Client;
 namespace Azure.Core.Tests.Identity.Mock
 {
     public class MockAccount : IAccount

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using Microsoft.Extensions.Configuration;
-
 using Azure.Identity;
+using Microsoft.Extensions.Configuration;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 {
     /// <summary>

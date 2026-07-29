@@ -5,9 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Tests.Identity.Mock;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class UsernamePasswordCredentialTests : CredentialTestBase<UsernamePasswordCredentialOptions>

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public sealed class TestVscAdapter : IVisualStudioCodeAdapter
