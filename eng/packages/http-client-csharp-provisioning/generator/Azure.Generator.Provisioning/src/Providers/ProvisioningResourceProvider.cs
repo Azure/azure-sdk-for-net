@@ -120,6 +120,7 @@ namespace Azure.Generator.Provisioning.Providers
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace Azure.Generator.Provisioning.Providers
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
         public override void Reset()
@@ -954,6 +956,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 _parent = parent;
                 _apiVersions = apiVersions;
+                ProvisioningGenerator.Instance.AddTypeToKeep(this, isRoot: false);
             }
 
             protected override string BuildName() => "ResourceVersions";
