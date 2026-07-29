@@ -347,14 +347,92 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
 
         $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
         $methods[$key] = [pscustomobject]@{
-            TypeName   = $typeName
-            MemberName = $memberName
-            Parameters = $parameters.ToArray()
-            Line       = $lineIndex + 1
+            TypeName    = $typeName
+            MemberName  = $memberName
+            OverloadKey = "$namespace|$typeName|$memberName"
+            Parameters  = $parameters.ToArray()
+            Line        = $lineIndex + 1
         }
     }
 
     return $methods
+}
+
+# Extension-method receivers ('this Foo foo') are always required and always bound by the
+# receiver expression, so they never participate in the ambiguity analysed below.
+function Get-BindableParameters($method) {
+    $parameters = @($method.Parameters)
+    if ($parameters.Count -gt 0 -and $parameters[0].Type -match '^this\s') {
+        return @($parameters | Select-Object -Skip 1)
+    }
+
+    return $parameters
+}
+
+# Returns true when restoring the baseline defaults on $method would make it ambiguous with a
+# sibling overload, so OPTPARAM001 cannot be satisfied without breaking compilation.
+#
+# Binary compatibility forces a shipped overload to stay in metadata even after the generator
+# adds new optional parameters to its replacement. That leaves two overloads of the same member:
+#
+#   GetAll(int? top = default, string skipToken = null, CancellationToken cancellationToken = default)
+#   GetAll(CancellationToken cancellationToken)   <- shim preserving the 1.3.1 signature
+#
+# If the shim's parameter is also optional, a zero-argument 'GetAll()' is applicable to both.
+# Neither is better under C# 12.6.4.3: both require default substitution for every parameter, so
+# the "all parameters have corresponding arguments" tie-breaker does not favour either, and there
+# is no general "fewer parameters wins" rule. The call fails with CS0121.
+#
+# Making the shim's parameters required is the only variant that compiles, so flagging it as
+# OPTPARAM001 asks for a change that cannot be made. Detect that shape and stay silent.
+#
+# Note that [Obsolete] and [EditorBrowsable] do not help: neither participates in overload
+# resolution. [OverloadResolutionPriority] does, but only for consumers compiling with C# 13+,
+# so it converts the finding into a hard break for older consumers.
+function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) {
+    if (-not $overloads) {
+        return $false
+    }
+
+    $bindable = @(Get-BindableParameters $method)
+    if ($bindable.Count -eq 0) {
+        return $false
+    }
+
+    # Restoring the baseline defaults has to leave every bindable parameter optional; otherwise
+    # the method still requires an argument and cannot collide with an all-optional sibling.
+    foreach ($parameter in $bindable) {
+        if (-not $parameter.IsOptional -and $optionalToRequired -notcontains $parameter.Name) {
+            return $false
+        }
+    }
+
+    # A sibling overload that is callable with zero arguments is what makes the collision
+    # unavoidable.
+    foreach ($overload in $overloads) {
+        if ($overload.Line -eq $method.Line) {
+            continue
+        }
+
+        $siblingBindable = @(Get-BindableParameters $overload)
+        if ($siblingBindable.Count -eq 0) {
+            continue
+        }
+
+        $allOptional = $true
+        foreach ($parameter in $siblingBindable) {
+            if (-not $parameter.IsOptional) {
+                $allOptional = $false
+                break
+            }
+        }
+
+        if ($allOptional) {
+            return $true
+        }
+    }
+
+    return $false
 }
 
 #endregion
@@ -418,6 +496,15 @@ if ($BaselineApiFilePath -and
     $currentMethods = Get-ApiMethodInfos $lines
     $baselineMethods = Get-ApiMethodInfos (Get-Content $BaselineApiFilePath)
 
+    # Group the current surface by member so a flagged method can see its sibling overloads.
+    $currentOverloads = @{}
+    foreach ($method in $currentMethods.Values) {
+        if (-not $currentOverloads.ContainsKey($method.OverloadKey)) {
+            $currentOverloads[$method.OverloadKey] = [System.Collections.Generic.List[object]]::new()
+        }
+        $currentOverloads[$method.OverloadKey].Add($method)
+    }
+
     foreach ($key in $currentMethods.Keys) {
         if (-not $baselineMethods.ContainsKey($key)) {
             continue
@@ -445,7 +532,8 @@ if ($BaselineApiFilePath -and
             }
         }
 
-        if ($optionalToRequired.Count -gt 0) {
+        if ($optionalToRequired.Count -gt 0 -and
+            -not (Test-AmbiguityForcedRequired $currentMethod $optionalToRequired $currentOverloads[$currentMethod.OverloadKey])) {
             $parameterNames = ($optionalToRequired | ForEach-Object { "'$_'" }) -join ', '
             $violations.Add([NamingViolation]::new(
                 'OPTPARAM001', 'Error', 'Source Compatibility',
