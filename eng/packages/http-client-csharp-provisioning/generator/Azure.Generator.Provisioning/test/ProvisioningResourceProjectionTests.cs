@@ -447,7 +447,18 @@ namespace Azure.Generator.Provisioning.Tests
                 resourceName: "ProfileRevision",
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)],
                 parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}");
-            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [sharedModel]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [sharedModel],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+
+                    public partial class Profile
+                    {
+                    }
+                    """
+                ]);
             var providers = CreateAndRegisterResourceProviders(writableResource, readOnlySiblingResource);
             var writableProvider = providers[0];
             var readOnlySiblingProvider = providers[1];
