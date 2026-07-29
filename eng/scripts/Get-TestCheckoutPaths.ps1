@@ -270,7 +270,11 @@ function Get-LinkedSourceServices {
   # outside the narrowed checkout is a hard MSBuild error, not a warning, so it has to
   # participate in the closure just like a ProjectReference.
   $patterns = @(
-    '<(?:Compile|None|EmbeddedResource|Content)[^>]*Include\s*=\s*"([^"]+)"'
+    # Update= must be matched alongside Include=, exactly as the PackageReference
+    # pattern above does. A path reached through <None Update="..\..\other\..."> is
+    # otherwise neither followed nor recorded as unresolved, which silently narrows the
+    # checkout instead of falling back - the one direction this script must never take.
+    '<(?:Compile|None|EmbeddedResource|Content)[^>]*(?:Include|Update)\s*=\s*"([^"]+)"'
     '<Import[^>]*Project\s*=\s*"([^"]+)"'
   )
 

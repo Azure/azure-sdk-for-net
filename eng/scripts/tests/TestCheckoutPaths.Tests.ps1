@@ -27,6 +27,7 @@ BeforeAll {
             [string[]] $ProjectReferences = @(),
             [string[]] $PackageReferences = @(),
             [string[]] $CompileIncludes = @(),
+            [string[]] $NoneUpdates = @(),
             [string[]] $Imports = @()
         )
 
@@ -44,6 +45,9 @@ BeforeAll {
         }
         foreach ($include in $CompileIncludes) {
             $items += "    <Compile Include=`"$include`" />"
+        }
+        foreach ($update in $NoneUpdates) {
+            $items += "    <None Update=`"$update`" />"
         }
 
         $importLines = @()
@@ -125,6 +129,13 @@ BeforeAll {
         New-Project -Path (Join-Path $root 'sdk/chi/Contoso.Chi/src/Contoso.Chi.csproj') `
             -Imports @('$([MSBuild]::GetDirectoryNameOfFileAbove(.., Directory.Build.props))\Directory.Build.props')
 
+        # Item metadata is reached through Update= as often as Include=, and a path that
+        # leaves the project directory must be followed either way.
+        New-Project -Path (Join-Path $root 'sdk/omicron/Contoso.Omicron/tests/Contoso.Omicron.Tests.csproj') `
+            -NoneUpdates @('..\..\..\updated\Contoso.Updated\TestData\**\*.json')
+        New-Project -Path (Join-Path $root 'sdk/omicron/Contoso.Omicron/src/Contoso.Omicron.csproj')
+        $null = New-Item -ItemType Directory -Path (Join-Path $root 'sdk/updated/Contoso.Updated/TestData') -Force
+
         # An unknown property in a linked-source include is as untrustworthy as one in a
         # ProjectReference, so it must also make the package unmappable.
         New-Project -Path (Join-Path $root 'sdk/lambda/Contoso.Lambda/src/Contoso.Lambda.csproj') `
@@ -165,8 +176,8 @@ Describe 'Get-TestCheckoutPaths' {
                 '$alwaysIncludedPaths',
                 'Contoso.Alpha', 'Contoso.Beta',
                 'Contoso.Chi', 'Contoso.Delta', 'Contoso.Gamma', 'Contoso.Iota',
-                'Contoso.Kappa', 'Contoso.Lambda', 'Contoso.Omega', 'Contoso.Psi',
-                'Contoso.Sigma', 'Contoso.Theta', 'Contoso.Zeta')
+                'Contoso.Kappa', 'Contoso.Lambda', 'Contoso.Omega', 'Contoso.Omicron',
+                'Contoso.Psi', 'Contoso.Sigma', 'Contoso.Theta', 'Contoso.Zeta')
         }
 
         It 'records the always-included paths in the map so consumers never duplicate the list' {
@@ -249,6 +260,13 @@ Describe 'Get-TestCheckoutPaths' {
         It 'treats an unknown property in a linked-source include as unmappable' {
             $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
             @($map.'Contoso.Lambda') | Should -BeNullOrEmpty
+        }
+
+        It 'follows an item reached through Update= as well as Include=' {
+            # Matching only Include= would neither follow this path nor mark the package
+            # unresolved - it would silently drop it and narrow the checkout.
+            $map = Get-Content -LiteralPath $script:MapPath -Raw | ConvertFrom-Json
+            @($map.'Contoso.Omicron') | Should -Contain 'updated'
         }
 
         It 'includes services reached only through linked shared sources' {
