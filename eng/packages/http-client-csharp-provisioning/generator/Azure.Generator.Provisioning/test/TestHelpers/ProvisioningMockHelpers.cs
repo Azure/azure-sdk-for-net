@@ -4,6 +4,8 @@
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.SourceInput;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
             Func<ArmProviderSchema>? armProviderSchema = null,
-            string? primaryNamespace = null)
+            string? primaryNamespace = null,
+            IEnumerable<string>? customizationSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -64,7 +67,14 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             var mockGenerator = new Mock<ProvisioningGenerator>(mockGeneratorContext.Object) { CallBase = true };
 
             mockGenerator.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
-            mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(null, null));
+            var customizationCompilation = customizationSources is null
+                ? null
+                : CSharpCompilation.Create(
+                    "Customizations",
+                    customizationSources.Select(source => CSharpSyntaxTree.ParseText(source)),
+                    [MetadataReference.CreateFromFile(typeof(object).Assembly.Location)],
+                    new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(customizationCompilation, null));
             var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             codeModelInstance!.SetValue(null, mockGenerator.Object);
 
