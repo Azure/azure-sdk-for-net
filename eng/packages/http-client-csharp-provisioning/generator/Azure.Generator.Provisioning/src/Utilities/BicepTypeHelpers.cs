@@ -118,7 +118,11 @@ namespace Azure.Generator.Provisioning.Utilities
             {
                 args.Add(new PositionalParameterReferenceExpression("defaultValue", Literal(defaultValue)));
             }
-            if (format is not null)
+            // TODO: Emit collection element formats after Azure.Provisioning supports them.
+            // https://github.com/Azure/azure-sdk-for-net/issues/61525
+            if (format is not null &&
+                !IsBicepListType(propertyType) &&
+                !IsBicepDictionaryType(propertyType))
             {
                 args.Add(new PositionalParameterReferenceExpression("format", Literal(format)));
             }

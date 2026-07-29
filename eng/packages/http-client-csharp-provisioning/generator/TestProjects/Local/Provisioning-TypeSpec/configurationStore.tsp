@@ -80,6 +80,9 @@ model ConfigurationStoreProperties {
   /** A date-time serialized using RFC 7231. */
   lastModified?: Rfc7231DateTime;
 
+  /** Date-times whose element format cannot yet be propagated by the provisioning runtime. */
+  auditTimestamps?: Rfc7231DateTime[];
+
   /** A date-time serialized as a Unix timestamp. */
   expirationTimestamp?: UnixDateTime;
 
