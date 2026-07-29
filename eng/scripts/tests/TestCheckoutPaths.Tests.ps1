@@ -214,6 +214,27 @@ Describe 'Get-TestCheckoutPaths' {
             $pipeline | Should -Match 'TestSparseCheckoutPaths:\s*.\["/\*"'
         }
 
+        It 'ci.tests.yml routes every fallback through the warning helper' {
+            # A fallback is always correct, just slow, so a permanent one would turn
+            # narrowing into a silent no-op while CI stayed green. Every fallback branch
+            # must therefore announce itself; only the success path may call Set-Paths.
+            $pipeline = Get-Content -LiteralPath (
+                Join-Path $PSScriptRoot '..' '..' 'pipelines' 'templates' 'jobs' 'ci.tests.yml') -Raw
+            $pipeline | Should -Match 'task\.logissue type=warning'
+            # Exactly one: the call inside Set-Fallback itself. Any additional one is a
+            # branch that took the fallback without announcing it.
+            @([regex]::Matches($pipeline, 'Set-Paths \$fallback')).Count | Should -Be 1
+        }
+
+        It 'ci.tests.yml only warns about a fallback on pull requests' {
+            # The map is published by PR matrix generation, so on every other run the
+            # artifact is absent by design. Warning there would be noise that trains
+            # people to ignore this warning.
+            $pipeline = Get-Content -LiteralPath (
+                Join-Path $PSScriptRoot '..' '..' 'pipelines' 'templates' 'jobs' 'ci.tests.yml') -Raw
+            $pipeline | Should -Match "BUILD_REASON -eq 'PullRequest'"
+        }
+
         It 'pr-matrix-presteps.yml publishes the resolver next to the map' {
             # The test job has no working tree when it resolves its paths, so the script
             # has to travel inside the artifact alongside checkout-map.json.

@@ -113,12 +113,26 @@ jobs:
               Write-Host "##vso[task.setvariable variable=TestSparseCheckoutPaths]$json"
             }
 
+            # A fallback is always correct, just slow, so a permanent one would turn
+            # narrowing into a silent no-op while CI stayed green. Surface it in the build
+            # summary instead of leaving it to be found by grepping job logs.
+            #
+            # Only on pull requests: the map is published by PR matrix generation, so on
+            # every other run the artifact is absent by design and a warning would be
+            # noise that trains people to ignore this one.
+            function Set-Fallback([string] $reason) {
+              if ($env:BUILD_REASON -eq 'PullRequest') {
+                Write-Host "##vso[task.logissue type=warning]Test checkout narrowing fell back to a full checkout ($reason). The job is correct but slower than intended."
+              }
+              Set-Paths $fallback $reason
+            }
+
             # The artifact download runs with continueOnError, so nothing here is
             # guaranteed to exist. Every missing piece falls back to a full checkout,
             # which is slow but always correct.
             $directory = '$(Agent.TempDirectory)/TestCheckoutMap'
             if (-not (Test-Path -LiteralPath $directory)) {
-              Set-Paths $fallback 'checkout map artifact was not downloaded'
+              Set-Fallback 'checkout map artifact was not downloaded'
               return
             }
 
@@ -128,7 +142,7 @@ jobs:
               Select-Object -First 1
 
             if (-not $resolver -or -not $map) {
-              Set-Paths $fallback 'checkout map or resolver script missing from the artifact'
+              Set-Fallback 'checkout map or resolver script missing from the artifact'
               return
             }
 
@@ -142,12 +156,12 @@ jobs:
               $paths = & $resolver.FullName -MapPath $map.FullName -ArtifactNames '$(ProjectNames)'
             }
             catch {
-              Set-Paths $fallback "resolver failed: $_"
+              Set-Fallback "resolver failed: $_"
               return
             }
 
             if (-not $paths) {
-              Set-Paths $fallback 'resolver could not narrow this batch'
+              Set-Fallback 'resolver could not narrow this batch'
               return
             }
 
