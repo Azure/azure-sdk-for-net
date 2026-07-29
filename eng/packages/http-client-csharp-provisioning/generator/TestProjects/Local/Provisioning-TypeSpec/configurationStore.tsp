@@ -7,6 +7,18 @@ using Azure.Core;
 
 namespace ProvisioningTypeSpec;
 
+@encode("rfc7231")
+scalar Rfc7231DateTime extends utcDateTime;
+
+@encode("unixTimestamp", int64)
+scalar UnixDateTime extends utcDateTime;
+
+@encode("seconds", int64)
+scalar DurationInSeconds extends duration;
+
+@encode("milliseconds", float64)
+scalar DurationInMilliseconds extends duration;
+
 /** A configuration store. */
 @resource("configurationStores")
 model ConfigurationStore is TrackedResource<ConfigurationStoreProperties> {
@@ -54,6 +66,41 @@ model ConfigurationStoreProperties {
 
   /** The linked resources of the configuration store. */
   linkedResources?: LinkedResource[];
+
+  /** The amount of time configuration data should be retained. */
+  retentionPeriod?: duration;
+
+  /** Byte-oriented content serialized as a base64 string. */
+  binaryContent?: bytes;
+
+  /** Byte-oriented content serialized as a base64url string. */
+  @encode("base64url")
+  urlSafeBinaryContent?: bytes;
+
+  /** A date-time serialized using RFC 7231. */
+  lastModified?: Rfc7231DateTime;
+
+  /** A date-time serialized as a Unix timestamp. */
+  expirationTimestamp?: UnixDateTime;
+
+  /** A calendar date without a time or timezone. */
+  activationDate?: plainDate;
+
+  /** A clock time without a date or timezone. */
+  activationTime?: plainTime;
+
+  /** A duration serialized as an integer number of seconds. */
+  retryAfter?: DurationInSeconds;
+
+  /** A duration serialized as a floating-point number of milliseconds. */
+  pollingInterval?: DurationInMilliseconds;
+
+  /** An integer serialized as a string. */
+  @encode(string)
+  encodedInteger?: int64;
+
+  /** Arbitrary JSON content that should keep JSON literal semantics. */
+  jsonMetadata?: unknown;
 }
 
 /** A linked resource reference. */

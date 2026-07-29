@@ -11,6 +11,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceBus
 {
+    /// <summary> The Topic Properties definition. </summary>
     internal partial class SBTopicProperties : ProvisionableConstruct
     {
         private BicepValue<long> _sizeInBytes;
@@ -282,20 +283,20 @@ namespace Azure.Provisioning.ServiceBus
         {
             base.DefineProvisionableProperties();
             _sizeInBytes = DefineProperty<long>(nameof(SizeInBytes), new string[] { "sizeInBytes" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true);
-            _accessedOn = DefineProperty<DateTimeOffset>(nameof(AccessedOn), new string[] { "accessedAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true, format: "O");
+            _accessedOn = DefineProperty<DateTimeOffset>(nameof(AccessedOn), new string[] { "accessedAt" }, isOutput: true, format: "O");
             _subscriptionCount = DefineProperty<int>(nameof(SubscriptionCount), new string[] { "subscriptionCount" }, isOutput: true);
             _countDetails = DefineModelProperty<MessageCountDetails>(nameof(CountDetails), new string[] { "countDetails" }, isOutput: true);
-            _defaultMessageTimeToLive = DefineProperty<TimeSpan>(nameof(DefaultMessageTimeToLive), new string[] { "defaultMessageTimeToLive" });
+            _defaultMessageTimeToLive = DefineProperty<TimeSpan>(nameof(DefaultMessageTimeToLive), new string[] { "defaultMessageTimeToLive" }, format: "P");
             _maxSizeInMegabytes = DefineProperty<int>(nameof(MaxSizeInMegabytes), new string[] { "maxSizeInMegabytes" });
             _maxMessageSizeInKilobytes = DefineProperty<long>(nameof(MaxMessageSizeInKilobytes), new string[] { "maxMessageSizeInKilobytes" });
             _requiresDuplicateDetection = DefineProperty<bool>(nameof(RequiresDuplicateDetection), new string[] { "requiresDuplicateDetection" });
-            _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>(nameof(DuplicateDetectionHistoryTimeWindow), new string[] { "duplicateDetectionHistoryTimeWindow" });
+            _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>(nameof(DuplicateDetectionHistoryTimeWindow), new string[] { "duplicateDetectionHistoryTimeWindow" }, format: "P");
             _enableBatchedOperations = DefineProperty<bool>(nameof(EnableBatchedOperations), new string[] { "enableBatchedOperations" });
             _status = DefineProperty<ServiceBusMessagingEntityStatus>(nameof(Status), new string[] { "status" });
             _supportOrdering = DefineProperty<bool>(nameof(SupportOrdering), new string[] { "supportOrdering" });
-            _autoDeleteOnIdle = DefineProperty<TimeSpan>(nameof(AutoDeleteOnIdle), new string[] { "autoDeleteOnIdle" });
+            _autoDeleteOnIdle = DefineProperty<TimeSpan>(nameof(AutoDeleteOnIdle), new string[] { "autoDeleteOnIdle" }, format: "P");
             _enablePartitioning = DefineProperty<bool>(nameof(EnablePartitioning), new string[] { "enablePartitioning" });
             _enableExpress = DefineProperty<bool>(nameof(EnableExpress), new string[] { "enableExpress" });
             _userMetadata = DefineProperty<string>(nameof(UserMetadata), new string[] { "userMetadata" });

@@ -11,6 +11,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceBus
 {
+    /// <summary> Description of Subscription Resource. </summary>
     internal partial class SBSubscriptionProperties : ProvisionableConstruct
     {
         private BicepValue<long> _messageCount;
@@ -319,20 +320,20 @@ namespace Azure.Provisioning.ServiceBus
         {
             base.DefineProvisionableProperties();
             _messageCount = DefineProperty<long>(nameof(MessageCount), new string[] { "messageCount" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
-            _accessedOn = DefineProperty<DateTimeOffset>(nameof(AccessedOn), new string[] { "accessedAt" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
+            _accessedOn = DefineProperty<DateTimeOffset>(nameof(AccessedOn), new string[] { "accessedAt" }, isOutput: true, format: "O");
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true, format: "O");
             _countDetails = DefineModelProperty<MessageCountDetails>(nameof(CountDetails), new string[] { "countDetails" }, isOutput: true);
-            _lockDuration = DefineProperty<TimeSpan>(nameof(LockDuration), new string[] { "lockDuration" });
+            _lockDuration = DefineProperty<TimeSpan>(nameof(LockDuration), new string[] { "lockDuration" }, format: "P");
             _requiresSession = DefineProperty<bool>(nameof(RequiresSession), new string[] { "requiresSession" });
-            _defaultMessageTimeToLive = DefineProperty<TimeSpan>(nameof(DefaultMessageTimeToLive), new string[] { "defaultMessageTimeToLive" });
+            _defaultMessageTimeToLive = DefineProperty<TimeSpan>(nameof(DefaultMessageTimeToLive), new string[] { "defaultMessageTimeToLive" }, format: "P");
             _deadLetteringOnFilterEvaluationExceptions = DefineProperty<bool>(nameof(DeadLetteringOnFilterEvaluationExceptions), new string[] { "deadLetteringOnFilterEvaluationExceptions" });
             _deadLetteringOnMessageExpiration = DefineProperty<bool>(nameof(DeadLetteringOnMessageExpiration), new string[] { "deadLetteringOnMessageExpiration" });
-            _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>(nameof(DuplicateDetectionHistoryTimeWindow), new string[] { "duplicateDetectionHistoryTimeWindow" });
+            _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>(nameof(DuplicateDetectionHistoryTimeWindow), new string[] { "duplicateDetectionHistoryTimeWindow" }, format: "P");
             _maxDeliveryCount = DefineProperty<int>(nameof(MaxDeliveryCount), new string[] { "maxDeliveryCount" });
             _status = DefineProperty<ServiceBusMessagingEntityStatus>(nameof(Status), new string[] { "status" });
             _enableBatchedOperations = DefineProperty<bool>(nameof(EnableBatchedOperations), new string[] { "enableBatchedOperations" });
-            _autoDeleteOnIdle = DefineProperty<TimeSpan>(nameof(AutoDeleteOnIdle), new string[] { "autoDeleteOnIdle" });
+            _autoDeleteOnIdle = DefineProperty<TimeSpan>(nameof(AutoDeleteOnIdle), new string[] { "autoDeleteOnIdle" }, format: "P");
             _forwardTo = DefineProperty<string>(nameof(ForwardTo), new string[] { "forwardTo" });
             _forwardDeadLetteredMessagesTo = DefineProperty<string>(nameof(ForwardDeadLetteredMessagesTo), new string[] { "forwardDeadLetteredMessagesTo" });
             _isClientAffine = DefineProperty<bool>(nameof(IsClientAffine), new string[] { "isClientAffine" });

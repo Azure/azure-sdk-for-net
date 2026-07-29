@@ -11,6 +11,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceBus
 {
+    /// <summary> The Queue Properties definition. </summary>
     internal partial class SBQueueProperties : ProvisionableConstruct
     {
         private MessageCountDetails _countDetails;
@@ -362,23 +363,23 @@ namespace Azure.Provisioning.ServiceBus
         {
             base.DefineProvisionableProperties();
             _countDetails = DefineModelProperty<MessageCountDetails>(nameof(CountDetails), new string[] { "countDetails" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true);
-            _accessedOn = DefineProperty<DateTimeOffset>(nameof(AccessedOn), new string[] { "accessedAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true, format: "O");
+            _accessedOn = DefineProperty<DateTimeOffset>(nameof(AccessedOn), new string[] { "accessedAt" }, isOutput: true, format: "O");
             _sizeInBytes = DefineProperty<long>(nameof(SizeInBytes), new string[] { "sizeInBytes" }, isOutput: true);
             _messageCount = DefineProperty<long>(nameof(MessageCount), new string[] { "messageCount" }, isOutput: true);
-            _lockDuration = DefineProperty<TimeSpan>(nameof(LockDuration), new string[] { "lockDuration" });
+            _lockDuration = DefineProperty<TimeSpan>(nameof(LockDuration), new string[] { "lockDuration" }, format: "P");
             _maxSizeInMegabytes = DefineProperty<int>(nameof(MaxSizeInMegabytes), new string[] { "maxSizeInMegabytes" });
             _maxMessageSizeInKilobytes = DefineProperty<long>(nameof(MaxMessageSizeInKilobytes), new string[] { "maxMessageSizeInKilobytes" });
             _requiresDuplicateDetection = DefineProperty<bool>(nameof(RequiresDuplicateDetection), new string[] { "requiresDuplicateDetection" });
             _requiresSession = DefineProperty<bool>(nameof(RequiresSession), new string[] { "requiresSession" });
-            _defaultMessageTimeToLive = DefineProperty<TimeSpan>(nameof(DefaultMessageTimeToLive), new string[] { "defaultMessageTimeToLive" });
+            _defaultMessageTimeToLive = DefineProperty<TimeSpan>(nameof(DefaultMessageTimeToLive), new string[] { "defaultMessageTimeToLive" }, format: "P");
             _deadLetteringOnMessageExpiration = DefineProperty<bool>(nameof(DeadLetteringOnMessageExpiration), new string[] { "deadLetteringOnMessageExpiration" });
-            _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>(nameof(DuplicateDetectionHistoryTimeWindow), new string[] { "duplicateDetectionHistoryTimeWindow" });
+            _duplicateDetectionHistoryTimeWindow = DefineProperty<TimeSpan>(nameof(DuplicateDetectionHistoryTimeWindow), new string[] { "duplicateDetectionHistoryTimeWindow" }, format: "P");
             _maxDeliveryCount = DefineProperty<int>(nameof(MaxDeliveryCount), new string[] { "maxDeliveryCount" });
             _status = DefineProperty<ServiceBusMessagingEntityStatus>(nameof(Status), new string[] { "status" });
             _enableBatchedOperations = DefineProperty<bool>(nameof(EnableBatchedOperations), new string[] { "enableBatchedOperations" });
-            _autoDeleteOnIdle = DefineProperty<TimeSpan>(nameof(AutoDeleteOnIdle), new string[] { "autoDeleteOnIdle" });
+            _autoDeleteOnIdle = DefineProperty<TimeSpan>(nameof(AutoDeleteOnIdle), new string[] { "autoDeleteOnIdle" }, format: "P");
             _enablePartitioning = DefineProperty<bool>(nameof(EnablePartitioning), new string[] { "enablePartitioning" });
             _enableExpress = DefineProperty<bool>(nameof(EnableExpress), new string[] { "enableExpress" });
             _forwardTo = DefineProperty<string>(nameof(ForwardTo), new string[] { "forwardTo" });
