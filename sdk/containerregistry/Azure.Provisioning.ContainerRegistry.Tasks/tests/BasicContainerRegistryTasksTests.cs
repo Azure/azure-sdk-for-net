@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Provisioning.ContainerRegistry;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
-using AsyncTask = System.Threading.Tasks.Task;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks.Tests;
 
@@ -53,7 +53,7 @@ public class BasicContainerRegistryTasksTests
 
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.resources/deployment-script-azcli-acr-build/main.bicep")]
-    public async AsyncTask CreateTask()
+    public async Task CreateTask()
     {
         await using Trycep test = CreateTaskTest();
         test.Compare(
