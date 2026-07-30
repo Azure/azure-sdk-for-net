@@ -21,5 +21,3 @@ namespace Azure.Core.Serialization
         public const string GeometriesPropertyName = "geometries";
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE

@@ -11,3 +11,5 @@ namespace Azure.ResourceManager.WebPubSub
     {
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

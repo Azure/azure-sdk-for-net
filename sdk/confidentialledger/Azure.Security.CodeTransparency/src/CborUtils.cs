@@ -123,3 +123,5 @@ namespace Azure.Security.CodeTransparency
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
