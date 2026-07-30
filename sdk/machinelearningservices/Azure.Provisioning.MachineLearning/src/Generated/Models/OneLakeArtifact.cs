@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// OneLake artifact (data source) configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LakeHouseArtifact"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
     /// </summary>
     internal partial class OneLakeArtifact : ProvisionableConstruct
     {
