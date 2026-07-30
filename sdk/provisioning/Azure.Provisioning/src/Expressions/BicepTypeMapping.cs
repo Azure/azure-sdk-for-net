@@ -126,7 +126,7 @@ internal static class BicepTypeMapping
         "D" => value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
         "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
         "O" => value.ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture),
-        "R" => value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture),
+        "R" => value.ToString("r", CultureInfo.InvariantCulture),
         _ => ThrowUnsupportedFormat(value, format)
     };
 
