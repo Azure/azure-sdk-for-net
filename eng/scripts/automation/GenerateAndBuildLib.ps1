@@ -919,34 +919,6 @@ function New-MgmtPackageScaffolding()
     Write-Host "Management SDK scaffolding complete for $packageName"
 }
 
-function Get-SDKSolutionBuildPath()
-{
-    param(
-        [string]$projectFolder,
-        [string]$sdkRootPath,
-        [string]$serviceType
-    )
-
-    if ($serviceType -eq "resource-manager") {
-        $packageName = Split-Path $projectFolder -Leaf
-        $solutions = @(Get-ChildItem -Path $projectFolder -Filter "*.sln*" -File |
-            Where-Object { $_.Extension -in ".sln", ".slnx" } |
-            Sort-Object Name)
-        $solution = $solutions |
-            Where-Object { $_.BaseName -eq $packageName } |
-            Select-Object -First 1
-        if (!$solution) {
-            $solution = $solutions | Select-Object -First 1
-        }
-        if (!$solution) {
-            throw "Management SDK solution not found in $projectFolder."
-        }
-        return $solution.FullName
-    }
-
-    return Join-Path $sdkRootPath 'eng' 'service.proj'
-}
-
 function GeneratePackage()
 {
     param(
@@ -1014,18 +986,16 @@ function GeneratePackage()
             Write-Host "[WARNING] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "warning"
         } else {
-            # Build the whole solution and generate artifacts if the project build successfully
-            # Build the whole solution
-            Write-Host "Start to build sdk solution: $projectFolder"
-            $solutionBuildPath = Get-SDKSolutionBuildPath -projectFolder $projectFolder -sdkRootPath $sdkRootPath -serviceType $serviceType
-            if ($serviceType -eq "resource-manager") {
-                dotnet build $solutionBuildPath /p:RunApiCompat=$false
-            } else {
-                dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $solutionBuildPath
-            }
-            if ( !$? ) {
-                Write-Host "[WARNING] Failed to build sdk solution: $packageName. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "warning"
+            # The management package source project was built above. Data-plane packages
+            # additionally use service.proj to validate the wider service project set.
+            if ($serviceType -ne "resource-manager") {
+                Write-Host "Start to build sdk solution: $projectFolder"
+                $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
+                dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
+                if ( !$? ) {
+                    Write-Host "[WARNING] Failed to build sdk solution: $packageName. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    $result = "warning"
+                }
             }
             # pack
             Write-Host "Start to pack sdk"
