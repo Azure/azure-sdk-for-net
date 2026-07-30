@@ -97,8 +97,8 @@ namespace Azure.Provisioning.CostManagement
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _details = DefineModelProperty<CostAllocationRuleDetails>(nameof(Details), new string[] { "details" }, isRequired: true);
             _status = DefineProperty<RuleStatus>(nameof(Status), new string[] { "status" }, isRequired: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true, format: "O");
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

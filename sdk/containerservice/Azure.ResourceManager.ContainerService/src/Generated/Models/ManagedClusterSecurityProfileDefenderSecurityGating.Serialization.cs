@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Microsoft Defender settings for security gating, validates container images eligibility for deployment based on Defender for Containers security findings. Using Admission Controller, it either audits or prevents the deployment of images that do not meet security standards. </summary>
+    /// <summary> Microsoft Defender settings for security gating. This validates container image eligibility for deployment based on Defender for Containers security findings. Using Admission Controller, it either audits or prevents deployment of images that do not meet security standards. </summary>
     public partial class ManagedClusterSecurityProfileDefenderSecurityGating : IJsonModel<ManagedClusterSecurityProfileDefenderSecurityGating>
     {
         /// <param name="data"> The data to parse. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
-                foreach (ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem item in Identities)
+                foreach (ManagedClusterSecurityProfileDefenderSecurityGatingIdentity item in Identities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isSecurityGatingEnabled = default;
-            IList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities = default;
+            IList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity> identities = default;
             bool? isSecretAccessAllowed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> array = new List<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>();
+                    List<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity> array = new List<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem.DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem(item, options));
+                        array.Add(ManagedClusterSecurityProfileDefenderSecurityGatingIdentity.DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentity(item, options));
                     }
                     identities = array;
                     continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterSecurityProfileDefenderSecurityGating(isSecurityGatingEnabled, identities ?? new ChangeTrackingList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>(), isSecretAccessAllowed, additionalBinaryDataProperties);
+            return new ManagedClusterSecurityProfileDefenderSecurityGating(isSecurityGatingEnabled, identities ?? new ChangeTrackingList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>(), isSecretAccessAllowed, additionalBinaryDataProperties);
         }
     }
 }

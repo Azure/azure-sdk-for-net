@@ -480,7 +480,6 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
-    [Ignore("Blocked by the ADO Item 5384172.")]
     [RecordedTest]
     public async Task TestPatchHostedAgent()
     {
@@ -567,6 +566,10 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session.AgentSessionId, Is.EqualTo(session1.AgentSessionId));
         Assert.That(session.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
         Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        // Stop
+        await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+        Assert.That(session.Status, Is.EqualTo(AgentSessionStatus.Idle));
         // List
         HashSet<string> sessions = [..await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
         Assert.That(sessions, Has.Count.EqualTo(2));

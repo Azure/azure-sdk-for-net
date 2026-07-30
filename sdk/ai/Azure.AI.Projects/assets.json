@@ -2,5 +2,9 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/ai/Azure.AI.Projects",
+<<<<<<< HEAD
   "Tag": "net/ai/Azure.AI.Projects_473f6befb8"
+=======
+  "Tag": "net/ai/Azure.AI.Projects_d8c767163d"
+>>>>>>> 190059d9f33b498b7c12b406c3e2f5c28530365b
 }

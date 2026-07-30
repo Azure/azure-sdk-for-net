@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The enrollment details for the subscription. Available for billing accounts with agreement type Enterprise Agreement. </summary>
-    public partial class BillingPropertyPropertiesEnrollmentDetails : SubscriptionEnrollmentDetails
+    internal partial class BillingPropertyPropertiesEnrollmentDetails : SubscriptionEnrollmentDetails
     {
         /// <summary> Initializes a new instance of <see cref="BillingPropertyPropertiesEnrollmentDetails"/>. </summary>
         public BillingPropertyPropertiesEnrollmentDetails()

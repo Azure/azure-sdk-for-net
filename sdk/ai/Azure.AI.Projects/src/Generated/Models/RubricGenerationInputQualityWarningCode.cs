@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Stable searchable machine-readable warning code for a rubric-generation input-quality warning. Values are `snake_case`; clients must tolerate additional service-defined identifiers. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct RubricGenerationInputQualityWarningCode : IEquatable<RubricGenerationInputQualityWarningCode>
     {
         private readonly string _value;

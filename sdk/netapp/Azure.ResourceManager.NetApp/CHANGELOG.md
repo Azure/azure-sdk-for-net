@@ -1,6 +1,6 @@
 # Release History
 
-## 1.18.0-beta.2 (Unreleased)
+## 1.19.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.18.0 (2026-07-15)
+
+### Features Added
+
+- Upgraded api-version to `2026-05-01`.
+- Added `BreakThroughMode` property to `VolumeProperties`.
 
 ## 1.18.0-beta.1 (2026-06-30)
 

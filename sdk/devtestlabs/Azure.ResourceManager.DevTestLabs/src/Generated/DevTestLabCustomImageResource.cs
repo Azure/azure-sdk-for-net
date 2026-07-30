@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(ResourceType, out string devTestLabCustomImageApiVersion);
             _customImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _customImagesRestClient = new CustomImages(_customImagesClientDiagnostics, Pipeline, Endpoint, devTestLabCustomImageApiVersion ?? "2018-09-15");
+            _customImagesRestClient = new CustomImages(_customImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabCustomImageApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

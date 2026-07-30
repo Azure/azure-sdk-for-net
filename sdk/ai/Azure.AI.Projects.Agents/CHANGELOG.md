@@ -10,6 +10,7 @@
 
 ### Bugs Fixed
 - Fixed listing of Agent Optimization Jobs.
+- Fixed the `StopSession` and `StopSessionAsync` calls.
 
 ### Other Changes
 

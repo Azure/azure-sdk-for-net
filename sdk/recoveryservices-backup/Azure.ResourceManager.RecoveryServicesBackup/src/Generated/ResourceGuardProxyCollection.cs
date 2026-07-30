@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(ResourceGuardProxyResource.ResourceType, out string resourceGuardProxyApiVersion);
             _vaultName = vaultName;
             _resourceGuardProxyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceGuardProxyResource.ResourceType.Namespace, Diagnostics);
-            _resourceGuardProxyRestClient = new ResourceGuardProxy(_resourceGuardProxyClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-31-preview");
+            _resourceGuardProxyRestClient = new ResourceGuardProxy(_resourceGuardProxyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-31-preview");
             _resourceGuardProxiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceGuardProxyResource.ResourceType.Namespace, Diagnostics);
-            _resourceGuardProxiesRestClient = new ResourceGuardProxies(_resourceGuardProxiesClientDiagnostics, Pipeline, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-31-preview");
+            _resourceGuardProxiesRestClient = new ResourceGuardProxies(_resourceGuardProxiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGuardProxyApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

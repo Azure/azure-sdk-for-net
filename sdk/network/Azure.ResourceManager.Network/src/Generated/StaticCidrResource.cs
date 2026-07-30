@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string staticCidrApiVersion);
             _staticCidrsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _staticCidrsRestClient = new StaticCidrs(_staticCidrsClientDiagnostics, Pipeline, Endpoint, staticCidrApiVersion ?? "2025-07-01");
+            _staticCidrsRestClient = new StaticCidrs(_staticCidrsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticCidrApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
