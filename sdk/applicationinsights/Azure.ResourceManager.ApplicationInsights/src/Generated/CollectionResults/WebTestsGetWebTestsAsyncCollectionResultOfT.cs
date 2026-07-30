@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class WebTestsGetWebTestsAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsWebTestData>
     {
         private readonly WebTests _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _componentName;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WebTestsGetWebTestsAsyncCollectionResultOfT(WebTests client, string subscriptionId, string componentName, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WebTestsGetWebTestsAsyncCollectionResultOfT(WebTests client, Guid subscriptionId, string componentName, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetExportConfigurationsRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateGetExportConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateCreateExportConfigurationsRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateExportConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateDeleteExportConfigurationRequest(string resourceGroupName, string subscriptionId, string resourceName, string exportId, RequestContext context)
+        internal HttpMessage CreateDeleteExportConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string exportId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateGetExportConfigurationRequest(string resourceGroupName, string subscriptionId, string resourceName, string exportId, RequestContext context)
+        internal HttpMessage CreateGetExportConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string exportId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateUpdateExportConfigurationRequest(string resourceGroupName, string subscriptionId, string resourceName, string exportId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateExportConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string exportId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);

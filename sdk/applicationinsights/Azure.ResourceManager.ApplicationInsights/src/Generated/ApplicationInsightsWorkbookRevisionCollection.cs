@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, context);
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, context);
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             };
             return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new WorkbooksRevisionsListAsyncCollectionResultOfT(
                 _workbooksRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             };
             return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new WorkbooksRevisionsListCollectionResultOfT(
                 _workbooksRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, context);
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, context);
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, context);
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, context);
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;

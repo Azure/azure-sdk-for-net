@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAnnotationsRequest(string subscriptionId, string resourceGroupName, string resourceName, string start, string end, RequestContext context)
+        internal HttpMessage CreateGetAnnotationsRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string start, string end, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetAnnotationsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string resourceName, string start, string end, RequestContext context)
+        internal HttpMessage CreateNextGetAnnotationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceName, string start, string end, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateCreateAnnotationsRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateAnnotationsRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateDeleteAnnotationRequest(string resourceGroupName, string subscriptionId, string resourceName, string annotationId, RequestContext context)
+        internal HttpMessage CreateDeleteAnnotationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string annotationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateGetAnnotationsRequest(string resourceGroupName, string subscriptionId, string resourceName, string annotationId, RequestContext context)
+        internal HttpMessage CreateGetAnnotationsRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string annotationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);

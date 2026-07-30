@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAnalyticsItemsRequest(string subscriptionId, string resourceGroupName, string resourceName, string scopePath, string scope, string @type, bool? includeContent, RequestContext context)
+        internal HttpMessage CreateGetAnalyticsItemsRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string scopePath, string scope, string @type, bool? includeContent, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/microsoft.insights/components/", false);
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateGetAnalyticsItemRequest(string subscriptionId, string resourceGroupName, string resourceName, string scopePath, string id, string name, RequestContext context)
+        internal HttpMessage CreateGetAnalyticsItemRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string scopePath, string id, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/microsoft.insights/components/", false);
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateAddOrUpdateAnalyticsItemRequest(string subscriptionId, string resourceGroupName, string resourceName, string scopePath, RequestContent content, bool? overrideItem, RequestContext context)
+        internal HttpMessage CreateAddOrUpdateAnalyticsItemRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string scopePath, RequestContent content, bool? overrideItem, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/microsoft.insights/components/", false);
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateDeleteAnalyticsItemRequest(string subscriptionId, string resourceGroupName, string resourceName, string scopePath, string id, string name, RequestContext context)
+        internal HttpMessage CreateDeleteAnalyticsItemRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string scopePath, string id, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/microsoft.insights/components/", false);

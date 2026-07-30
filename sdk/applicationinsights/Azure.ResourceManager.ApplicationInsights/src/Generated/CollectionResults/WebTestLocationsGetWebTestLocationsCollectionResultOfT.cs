@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class WebTestLocationsGetWebTestLocationsCollectionResultOfT : Pageable<ApplicationInsightsComponentWebTestLocation>
     {
         private readonly WebTestLocations _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly RequestContext _context;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WebTestLocationsGetWebTestLocationsCollectionResultOfT(WebTestLocations client, string subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WebTestLocationsGetWebTestLocationsCollectionResultOfT(WebTestLocations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

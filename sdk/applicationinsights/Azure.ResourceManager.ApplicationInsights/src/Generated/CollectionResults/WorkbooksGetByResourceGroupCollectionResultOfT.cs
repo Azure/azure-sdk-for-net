@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class WorkbooksGetByResourceGroupCollectionResultOfT : Pageable<ApplicationInsightsWorkbookData>
     {
         private readonly Workbooks _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _category;
         private readonly IEnumerable<string> _tags;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WorkbooksGetByResourceGroupCollectionResultOfT(Workbooks client, string subscriptionId, string resourceGroupName, string category, IEnumerable<string> tags, string sourceId, bool? canFetchContent, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WorkbooksGetByResourceGroupCollectionResultOfT(Workbooks client, Guid subscriptionId, string resourceGroupName, string category, IEnumerable<string> tags, string sourceId, bool? canFetchContent, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

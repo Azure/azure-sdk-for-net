@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetWorkItemConfigurationsRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateGetWorkItemConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetWorkItemConfigurationsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateNextGetWorkItemConfigurationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateCreateWorkItemConfigurationRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateWorkItemConfigurationRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultWorkItemConfigurationRequest(string subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateGetDefaultWorkItemConfigurationRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateDeleteWorkItemConfigurationRequest(string resourceGroupName, string subscriptionId, string resourceName, string workItemConfigId, RequestContext context)
+        internal HttpMessage CreateDeleteWorkItemConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string workItemConfigId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateGetItemWorkItemConfigurationRequest(string resourceGroupName, string subscriptionId, string resourceName, string workItemConfigId, RequestContext context)
+        internal HttpMessage CreateGetItemWorkItemConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string workItemConfigId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
@@ -191,12 +191,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             return message;
         }
 
-        internal HttpMessage CreateUpdateItemWorkItemConfigurationRequest(string resourceGroupName, string subscriptionId, string resourceName, string workItemConfigId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateItemWorkItemConfigurationRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string workItemConfigId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);

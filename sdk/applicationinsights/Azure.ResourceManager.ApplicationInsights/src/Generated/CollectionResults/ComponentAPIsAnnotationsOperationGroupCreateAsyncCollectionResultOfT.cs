@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class ComponentAPIsAnnotationsOperationGroupCreateAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsAnnotation>
     {
         private readonly Annotations _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly RequestContent _content;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentAPIsAnnotationsOperationGroupCreateAsyncCollectionResultOfT(Annotations client, string subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
+        public ComponentAPIsAnnotationsOperationGroupCreateAsyncCollectionResultOfT(Annotations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;

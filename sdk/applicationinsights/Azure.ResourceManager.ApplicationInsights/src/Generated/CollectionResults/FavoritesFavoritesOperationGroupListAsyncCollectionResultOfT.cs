@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsComponentFavorite>
     {
         private readonly Favorites _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly string _favoriteType;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT(Favorites client, string subscriptionId, string resourceGroupName, string resourceName, string favoriteType, string sourceType, bool? canFetchContent, IEnumerable<string> tags, RequestContext context, string diagnosticScope)
+        public FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT(Favorites client, Guid subscriptionId, string resourceGroupName, string resourceName, string favoriteType, string sourceType, bool? canFetchContent, IEnumerable<string> tags, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;

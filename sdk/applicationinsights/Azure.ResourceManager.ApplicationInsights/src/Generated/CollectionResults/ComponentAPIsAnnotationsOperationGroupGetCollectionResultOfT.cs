@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     {
         private readonly Annotations _client;
         private readonly string _resourceGroupName;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceName;
         private readonly string _annotationId;
         private readonly RequestContext _context;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT(Annotations client, string resourceGroupName, string subscriptionId, string resourceName, string annotationId, RequestContext context, string diagnosticScope)
+        public ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT(Annotations client, string resourceGroupName, Guid subscriptionId, string resourceName, string annotationId, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _resourceGroupName = resourceGroupName;

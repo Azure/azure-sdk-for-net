@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class DeletedWorkbooksGetBySubscriptionCollectionResultOfT : Pageable<DeletedWorkbook>
     {
         private readonly DeletedWorkbooks _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _category;
         private readonly IEnumerable<string> _tags;
         private readonly RequestContext _context;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="tags"> Tags presents on each workbook returned. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeletedWorkbooksGetBySubscriptionCollectionResultOfT(DeletedWorkbooks client, string subscriptionId, string category, IEnumerable<string> tags, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeletedWorkbooksGetBySubscriptionCollectionResultOfT(DeletedWorkbooks client, Guid subscriptionId, string category, IEnumerable<string> tags, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

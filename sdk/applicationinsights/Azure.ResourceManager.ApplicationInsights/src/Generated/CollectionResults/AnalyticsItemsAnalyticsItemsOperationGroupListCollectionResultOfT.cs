@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     internal partial class AnalyticsItemsAnalyticsItemsOperationGroupListCollectionResultOfT : Pageable<ApplicationInsightsComponentAnalyticsItem>
     {
         private readonly AnalyticsItems _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
         private readonly string _scopePath;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="includeContent"> Flag indicating whether or not to return the content of each applicable item. If false, only return the item information. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AnalyticsItemsAnalyticsItemsOperationGroupListCollectionResultOfT(AnalyticsItems client, string subscriptionId, string resourceGroupName, string resourceName, string scopePath, string scope, string @type, bool? includeContent, RequestContext context, string diagnosticScope)
+        public AnalyticsItemsAnalyticsItemsOperationGroupListCollectionResultOfT(AnalyticsItems client, Guid subscriptionId, string resourceGroupName, string resourceName, string scopePath, string scope, string @type, bool? includeContent, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, WebTestComponentTag.ToRequestContent(webTestTags), context);
+                HttpMessage message = _webTestsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebTestComponentTag.ToRequestContent(webTestTags), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, WebTestComponentTag.ToRequestContent(webTestTags), context);
+                HttpMessage message = _webTestsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebTestComponentTag.ToRequestContent(webTestTags), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
