@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Provisioning.Primitives;
@@ -46,6 +47,55 @@ public class BicepValueTests
         TestHelpers.AssertExpression("-2147483647", new BicepValue<double>(-2147483647d));
         TestHelpers.AssertExpression("-2147483648", new BicepValue<double>(-2147483648d));
         TestHelpers.AssertExpression("json('-2147483649')", new BicepValue<double>(-2147483649d));
+    }
+
+    [Test]
+    public void ValidateDateTimeOffsetBicepValueFormats()
+    {
+        DateTimeOffset value = new(2026, 7, 29, 9, 30, 0, TimeSpan.Zero);
+
+        TestHelpers.AssertExpression("'Wed, 29 Jul 2026 09:30:00 GMT'", Formatted(value, "R"));
+        TestHelpers.AssertExpression("'2026-07-29T09:30:00.0000000Z'", Formatted(value, "O"));
+        TestHelpers.AssertExpression("1785317400", Formatted(value, "U"));
+        TestHelpers.AssertExpression("'2026-07-29'", Formatted(value, "D"));
+    }
+
+    [Test]
+    public void ValidateTimeSpanBicepValueFormats()
+    {
+        TestHelpers.AssertExpression("'02:03:04.005'", Formatted(new TimeSpan(0, 2, 3, 4, 5), "T"));
+        TestHelpers.AssertExpression("'P1DT2H3M4S'", Formatted(new TimeSpan(1, 2, 3, 4), "P"));
+        TestHelpers.AssertExpression("'1.02:03:04'", Formatted(new TimeSpan(1, 2, 3, 4), "c"));
+        TestHelpers.AssertExpression("2", Formatted(new TimeSpan(0, 0, 0, 1, 500), "seconds"));
+        TestHelpers.AssertExpression("2", Formatted(new TimeSpan(0, 0, 0, 1, 500), "seconds-int64"));
+        TestHelpers.AssertExpression("json('1.5')", Formatted(new TimeSpan(0, 0, 0, 1, 500), "seconds-float"));
+        TestHelpers.AssertExpression("json('1.5')", Formatted(new TimeSpan(0, 0, 0, 1, 500), "seconds-double"));
+        TestHelpers.AssertExpression("1500", Formatted(new TimeSpan(0, 0, 0, 1, 500), "milliseconds"));
+        TestHelpers.AssertExpression("1500", Formatted(new TimeSpan(0, 0, 0, 1, 500), "milliseconds-int64"));
+        TestHelpers.AssertExpression("1500", Formatted(new TimeSpan(0, 0, 0, 1, 500), "milliseconds-float"));
+        TestHelpers.AssertExpression("1500", Formatted(new TimeSpan(0, 0, 0, 1, 500), "milliseconds-double"));
+    }
+
+    [Test]
+    public void ValidateIntegerBicepValueStringFormat()
+    {
+        TestHelpers.AssertExpression("'42'", Formatted(42, "string"));
+        TestHelpers.AssertExpression("'9007199254740991'", Formatted(9007199254740991, "string"));
+    }
+
+    [Test]
+    public void ValidateBicepValueFormatsAreIgnoredWhenTypeHasNoFormatContract()
+    {
+        TestHelpers.AssertExpression("true", Formatted(true, "R"));
+        TestHelpers.AssertExpression("'not-a-date'", Formatted("not-a-date", "R"));
+    }
+
+    [Test]
+    public void ValidateUnsupportedBicepValueFormatsFailForFormattedTypes()
+    {
+        Assert.Throws<InvalidOperationException>(() => Formatted(new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero), "base64").Compile());
+        Assert.Throws<InvalidOperationException>(() => Formatted(TimeSpan.FromSeconds(1), "R").Compile());
+        Assert.Throws<InvalidOperationException>(() => Formatted(42, "R").Compile());
     }
 
     [Test]
@@ -592,5 +642,12 @@ public class BicepValueTests
             _name = DefineProperty<string>("Name", ["name"], isRequired: true);
             _dateTime = DefineProperty<DateTimeOffset>("DateTime", ["properties", "dateTime"], format: "base64");
         }
+    }
+
+    private static BicepValue<T> Formatted<T>(T value, string format)
+    {
+        BicepValue<T> bicepValue = new(value);
+        typeof(BicepValue).GetProperty("Format", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(bicepValue, format);
+        return bicepValue;
     }
 }
