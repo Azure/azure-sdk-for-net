@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> FQDN(fully qualified domain name) value of the mcc cache node. </summary>
         public string FullyQualifiedDomainName { get; set; }
 
-        /// <summary> Auto Update Ring Type which is stable or beta as new values. slow or fast are legacy from version 2026-06-01. </summary>
+        /// <summary> Auto Update Ring Type for the cache node. Current supported values are Stable and Beta. Slow and Fast are legacy values used prior to 2026-06-01. </summary>
         public AutoUpdateRingType? AutoUpdateRingType { get; set; }
 
         /// <summary> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </summary>
