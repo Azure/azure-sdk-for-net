@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri"u8);
-                writer.WriteStringValue(StorageUri);
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Description))
             {
@@ -191,8 +192,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string category = default;
             IList<string> tagsPropertiesTags = default;
             string userId = default;
-            string sourceId = default;
-            string storageUri = default;
+            ResourceIdentifier sourceId = default;
+            Uri storageUri = default;
             string description = default;
             string revision = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -260,17 +261,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("sourceId"u8))
                 {
-                    sourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageUri"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        storageUri = null;
                         continue;
                     }
-                    storageUri = prop.Value.GetString();
+                    storageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

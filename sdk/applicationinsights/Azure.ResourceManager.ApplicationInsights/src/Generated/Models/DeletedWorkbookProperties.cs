@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="description"> The description of the workbook. </param>
         /// <param name="revision"> The unique revision id for this workbook definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedWorkbookProperties(string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, IList<string> tagsPropertiesTags, string userId, string sourceId, string storageUri, string description, string revision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedWorkbookProperties(string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, IList<string> tagsPropertiesTags, string userId, ResourceIdentifier sourceId, Uri storageUri, string description, string revision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             SerializedData = serializedData;
@@ -88,11 +89,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> ResourceId for a source resource. </summary>
         [WirePath("sourceId")]
-        public string SourceId { get; }
+        public ResourceIdentifier SourceId { get; }
 
         /// <summary> The resourceId to the storage account when bring your own storage is used. </summary>
         [WirePath("storageUri")]
-        public string StorageUri { get; }
+        public Uri StorageUri { get; }
 
         /// <summary> The description of the workbook. </summary>
         [WirePath("description")]

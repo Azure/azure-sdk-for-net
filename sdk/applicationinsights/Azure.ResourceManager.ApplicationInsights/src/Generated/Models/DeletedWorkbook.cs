@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> ResourceId for a source resource. </summary>
         [WirePath("properties.sourceId")]
-        public string SourceId
+        public ResourceIdentifier SourceId
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> The resourceId to the storage account when bring your own storage is used. </summary>
         [WirePath("properties.storageUri")]
-        public string StorageUri
+        public Uri StorageUri
         {
             get
             {
