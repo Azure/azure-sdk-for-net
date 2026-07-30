@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,86 +15,137 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VirtualNetworkGatewaySkuTier : IEquatable<VirtualNetworkGatewaySkuTier>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> HighPerformance. </summary>
+        private const string HighPerformanceValue = "HighPerformance";
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> UltraPerformance. </summary>
+        private const string UltraPerformanceValue = "UltraPerformance";
+        /// <summary> VpnGw1. </summary>
+        private const string VpnGw1Value = "VpnGw1";
+        /// <summary> VpnGw2. </summary>
+        private const string VpnGw2Value = "VpnGw2";
+        /// <summary> VpnGw3. </summary>
+        private const string VpnGw3Value = "VpnGw3";
+        /// <summary> VpnGw4. </summary>
+        private const string VpnGw4Value = "VpnGw4";
+        /// <summary> VpnGw5. </summary>
+        private const string VpnGw5Value = "VpnGw5";
+        /// <summary> VpnGw1AZ. </summary>
+        private const string VpnGw1AZValue = "VpnGw1AZ";
+        /// <summary> VpnGw2AZ. </summary>
+        private const string VpnGw2AZValue = "VpnGw2AZ";
+        /// <summary> VpnGw3AZ. </summary>
+        private const string VpnGw3AZValue = "VpnGw3AZ";
+        /// <summary> VpnGw4AZ. </summary>
+        private const string VpnGw4AZValue = "VpnGw4AZ";
+        /// <summary> VpnGw5AZ. </summary>
+        private const string VpnGw5AZValue = "VpnGw5AZ";
+        /// <summary> ErGw1AZ. </summary>
+        private const string ErGw1AZValue = "ErGw1AZ";
+        /// <summary> ErGw2AZ. </summary>
+        private const string ErGw2AZValue = "ErGw2AZ";
+        /// <summary> ErGw3AZ. </summary>
+        private const string ErGw3AZValue = "ErGw3AZ";
+        /// <summary> ErGwScale. </summary>
+        private const string ErGwScaleValue = "ErGwScale";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewaySkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkGatewaySkuTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string HighPerformanceValue = "HighPerformance";
-        private const string StandardValue = "Standard";
-        private const string UltraPerformanceValue = "UltraPerformance";
-        private const string VpnGw1Value = "VpnGw1";
-        private const string VpnGw2Value = "VpnGw2";
-        private const string VpnGw3Value = "VpnGw3";
-        private const string VpnGw4Value = "VpnGw4";
-        private const string VpnGw5Value = "VpnGw5";
-        private const string VpnGw1AZValue = "VpnGw1AZ";
-        private const string VpnGw2AZValue = "VpnGw2AZ";
-        private const string VpnGw3AZValue = "VpnGw3AZ";
-        private const string VpnGw4AZValue = "VpnGw4AZ";
-        private const string VpnGw5AZValue = "VpnGw5AZ";
-        private const string ErGw1AZValue = "ErGw1AZ";
-        private const string ErGw2AZValue = "ErGw2AZ";
-        private const string ErGw3AZValue = "ErGw3AZ";
-        private const string ErGwScaleValue = "ErGwScale";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static VirtualNetworkGatewaySkuTier Basic { get; } = new VirtualNetworkGatewaySkuTier(BasicValue);
+
         /// <summary> HighPerformance. </summary>
         public static VirtualNetworkGatewaySkuTier HighPerformance { get; } = new VirtualNetworkGatewaySkuTier(HighPerformanceValue);
+
         /// <summary> Standard. </summary>
         public static VirtualNetworkGatewaySkuTier Standard { get; } = new VirtualNetworkGatewaySkuTier(StandardValue);
+
         /// <summary> UltraPerformance. </summary>
         public static VirtualNetworkGatewaySkuTier UltraPerformance { get; } = new VirtualNetworkGatewaySkuTier(UltraPerformanceValue);
+
         /// <summary> VpnGw1. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw1 { get; } = new VirtualNetworkGatewaySkuTier(VpnGw1Value);
+
         /// <summary> VpnGw2. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw2 { get; } = new VirtualNetworkGatewaySkuTier(VpnGw2Value);
+
         /// <summary> VpnGw3. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw3 { get; } = new VirtualNetworkGatewaySkuTier(VpnGw3Value);
+
         /// <summary> VpnGw4. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw4 { get; } = new VirtualNetworkGatewaySkuTier(VpnGw4Value);
+
         /// <summary> VpnGw5. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw5 { get; } = new VirtualNetworkGatewaySkuTier(VpnGw5Value);
+
         /// <summary> VpnGw1AZ. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw1AZ { get; } = new VirtualNetworkGatewaySkuTier(VpnGw1AZValue);
+
         /// <summary> VpnGw2AZ. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw2AZ { get; } = new VirtualNetworkGatewaySkuTier(VpnGw2AZValue);
+
         /// <summary> VpnGw3AZ. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw3AZ { get; } = new VirtualNetworkGatewaySkuTier(VpnGw3AZValue);
+
         /// <summary> VpnGw4AZ. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw4AZ { get; } = new VirtualNetworkGatewaySkuTier(VpnGw4AZValue);
+
         /// <summary> VpnGw5AZ. </summary>
         public static VirtualNetworkGatewaySkuTier VpnGw5AZ { get; } = new VirtualNetworkGatewaySkuTier(VpnGw5AZValue);
+
         /// <summary> ErGw1AZ. </summary>
         public static VirtualNetworkGatewaySkuTier ErGw1AZ { get; } = new VirtualNetworkGatewaySkuTier(ErGw1AZValue);
+
         /// <summary> ErGw2AZ. </summary>
         public static VirtualNetworkGatewaySkuTier ErGw2AZ { get; } = new VirtualNetworkGatewaySkuTier(ErGw2AZValue);
+
         /// <summary> ErGw3AZ. </summary>
         public static VirtualNetworkGatewaySkuTier ErGw3AZ { get; } = new VirtualNetworkGatewaySkuTier(ErGw3AZValue);
+
         /// <summary> ErGwScale. </summary>
         public static VirtualNetworkGatewaySkuTier ErGwScale { get; } = new VirtualNetworkGatewaySkuTier(ErGwScaleValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewaySkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkGatewaySkuTier left, VirtualNetworkGatewaySkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewaySkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkGatewaySkuTier left, VirtualNetworkGatewaySkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkGatewaySkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewaySkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkGatewaySkuTier(string value) => new VirtualNetworkGatewaySkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewaySkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkGatewaySkuTier?(string value) => value == null ? null : new VirtualNetworkGatewaySkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkGatewaySkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkGatewaySkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

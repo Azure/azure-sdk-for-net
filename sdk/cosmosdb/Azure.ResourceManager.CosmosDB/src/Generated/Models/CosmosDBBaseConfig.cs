@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB options resource object. </summary>
     public partial class CosmosDBBaseConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBBaseConfig"/>. </summary>
         public CosmosDBBaseConfig()
@@ -53,28 +25,36 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBBaseConfig"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBBaseConfig(int? throughput, AutoscaleSettings autoscaleSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBBaseConfig(int? throughput, AutoscaleSettings autoscaleSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Throughput = throughput;
             AutoscaleSettings = autoscaleSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </summary>
         [WirePath("throughput")]
         public int? Throughput { get; set; }
+
         /// <summary> Specifies the Autoscale settings. </summary>
+        [WirePath("autoscaleSettings")]
         internal AutoscaleSettings AutoscaleSettings { get; set; }
+
         /// <summary> Represents maximum throughput, the resource can scale up to. </summary>
         [WirePath("autoscaleSettings.maxThroughput")]
         public int? AutoscaleMaxThroughput
         {
-            get => AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;
+            get
+            {
+                return AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;
+            }
             set
             {
                 if (AutoscaleSettings is null)
+                {
                     AutoscaleSettings = new AutoscaleSettings();
+                }
                 AutoscaleSettings.MaxThroughput = value;
             }
         }

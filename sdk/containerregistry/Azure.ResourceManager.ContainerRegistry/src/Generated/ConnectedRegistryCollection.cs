@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ConnectedRegistryResource.ResourceType, out string connectedRegistryApiVersion);
             _connectedRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ConnectedRegistryResource.ResourceType.Namespace, Diagnostics);
-            _connectedRegistriesRestClient = new ConnectedRegistries(_connectedRegistriesClientDiagnostics, Pipeline, Endpoint, connectedRegistryApiVersion ?? "2026-01-01-preview");
+            _connectedRegistriesRestClient = new ConnectedRegistries(_connectedRegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedRegistryApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _connectedRegistriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, ConnectedRegistryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ConnectedRegistryResource> operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(
-                    new ConnectedRegistryOperationSource(Client),
+                    new ConnectedRegistryResourceOperationSource(Client),
                     _connectedRegistriesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _connectedRegistriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectedRegistryName, ConnectedRegistryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ConnectedRegistryResource> operation = new ContainerRegistryArmOperation<ConnectedRegistryResource>(
-                    new ConnectedRegistryOperationSource(Client),
+                    new ConnectedRegistryResourceOperationSource(Client),
                     _connectedRegistriesClientDiagnostics,
                     Pipeline,
                     message.Request,

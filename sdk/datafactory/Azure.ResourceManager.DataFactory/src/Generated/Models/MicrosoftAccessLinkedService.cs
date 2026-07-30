@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,12 +18,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/>. </summary>
         /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public MicrosoftAccessLinkedService(DataFactoryElement<string> connectionString)
+        public MicrosoftAccessLinkedService(DataFactoryElement<string> connectionString) : base("MicrosoftAccess")
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
-            ConnectionString = connectionString;
-            LinkedServiceType = "MicrosoftAccess";
+            TypeProperties = new MicrosoftAccessLinkedServiceTypeProperties(connectionString);
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/>. </summary>
@@ -32,40 +32,84 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </param>
-        /// <param name="authenticationType"> Type of authentication used to connect to the Microsoft Access as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </param>
-        /// <param name="credential"> The access credential portion of the connection string specified in driver-specific property-value format. </param>
-        /// <param name="userName"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password for Basic authentication. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MicrosoftAccessLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> authenticationType, DataFactorySecret credential, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Microsoft Access linked service properties. </param>
+        /// <param name="password"></param>
+        internal MicrosoftAccessLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, MicrosoftAccessLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionString = connectionString;
-            AuthenticationType = authenticationType;
-            Credential = credential;
-            UserName = userName;
+            TypeProperties = typeProperties;
             Password = password;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "MicrosoftAccess";
         }
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/> for deserialization. </summary>
-        internal MicrosoftAccessLinkedService()
-        {
-        }
+        /// <summary> Microsoft Access linked service properties. </summary>
+        internal MicrosoftAccessLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MicrosoftAccessLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Type of authentication used to connect to the Microsoft Access as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AuthenticationType { get; set; }
-        /// <summary> The access credential portion of the connection string specified in driver-specific property-value format. </summary>
-        public DataFactorySecret Credential { get; set; }
+        public DataFactoryElement<string> AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MicrosoftAccessLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> Password for Basic authentication. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MicrosoftAccessLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MicrosoftAccessLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

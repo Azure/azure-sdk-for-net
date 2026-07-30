@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The ExtensionDataSourceStream. </summary>
+    /// <summary></summary>
     public readonly partial struct ExtensionDataSourceStream : IEquatable<ExtensionDataSourceStream>
     {
         private readonly string _value;
+        /// <summary> Microsoft-Event. </summary>
+        private const string MicrosoftEventValue = "Microsoft-Event";
+        /// <summary> Microsoft-InsightsMetrics. </summary>
+        private const string MicrosoftInsightsMetricsValue = "Microsoft-InsightsMetrics";
+        /// <summary> Microsoft-Perf. </summary>
+        private const string MicrosoftPerfValue = "Microsoft-Perf";
+        /// <summary> Microsoft-Syslog. </summary>
+        private const string MicrosoftSyslogValue = "Microsoft-Syslog";
+        /// <summary> Microsoft-WindowsEvent. </summary>
+        private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
 
         /// <summary> Initializes a new instance of <see cref="ExtensionDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExtensionDataSourceStream(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftEventValue = "Microsoft-Event";
-        private const string MicrosoftInsightsMetricsValue = "Microsoft-InsightsMetrics";
-        private const string MicrosoftPerfValue = "Microsoft-Perf";
-        private const string MicrosoftSyslogValue = "Microsoft-Syslog";
-        private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
+            _value = value;
+        }
 
         /// <summary> Microsoft-Event. </summary>
         public static ExtensionDataSourceStream MicrosoftEvent { get; } = new ExtensionDataSourceStream(MicrosoftEventValue);
+
         /// <summary> Microsoft-InsightsMetrics. </summary>
         public static ExtensionDataSourceStream MicrosoftInsightsMetrics { get; } = new ExtensionDataSourceStream(MicrosoftInsightsMetricsValue);
+
         /// <summary> Microsoft-Perf. </summary>
         public static ExtensionDataSourceStream MicrosoftPerf { get; } = new ExtensionDataSourceStream(MicrosoftPerfValue);
+
         /// <summary> Microsoft-Syslog. </summary>
         public static ExtensionDataSourceStream MicrosoftSyslog { get; } = new ExtensionDataSourceStream(MicrosoftSyslogValue);
+
         /// <summary> Microsoft-WindowsEvent. </summary>
         public static ExtensionDataSourceStream MicrosoftWindowsEvent { get; } = new ExtensionDataSourceStream(MicrosoftWindowsEventValue);
+
         /// <summary> Determines if two <see cref="ExtensionDataSourceStream"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExtensionDataSourceStream left, ExtensionDataSourceStream right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExtensionDataSourceStream"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExtensionDataSourceStream left, ExtensionDataSourceStream right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtensionDataSourceStream"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExtensionDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExtensionDataSourceStream(string value) => new ExtensionDataSourceStream(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExtensionDataSourceStream"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExtensionDataSourceStream?(string value) => value == null ? null : new ExtensionDataSourceStream(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExtensionDataSourceStream other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExtensionDataSourceStream other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

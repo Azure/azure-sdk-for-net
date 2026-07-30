@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Station Connection PATCH Properties. </summary>
     public partial class StationConnectionPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StationConnectionPatchProperties"/>. </summary>
         public StationConnectionPatchProperties()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="keepaliveIdleTime"> Connection keepalive idle time in seconds. </param>
         /// <param name="probeInterval"> Probe interval in seconds, default value is 60. </param>
         /// <param name="probeCount"> Probe count, default value is 10. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StationConnectionPatchProperties(int? keepaliveIdleTime, int? probeInterval, int? probeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StationConnectionPatchProperties(int? keepaliveIdleTime, int? probeInterval, int? probeCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeepaliveIdleTime = keepaliveIdleTime;
             ProbeInterval = probeInterval;
             ProbeCount = probeCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Connection keepalive idle time in seconds. </summary>
         public int? KeepaliveIdleTime { get; set; }
+
         /// <summary> Probe interval in seconds, default value is 60. </summary>
         public int? ProbeInterval { get; set; }
+
         /// <summary> Probe count, default value is 10. </summary>
         public int? ProbeCount { get; set; }
     }

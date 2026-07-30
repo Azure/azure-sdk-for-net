@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 EncryptionSetListResult result = EncryptionSetListResult.FromResponse(response);
-                yield return Page<DevCenterEncryptionSetData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevCenterEncryptionSetData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

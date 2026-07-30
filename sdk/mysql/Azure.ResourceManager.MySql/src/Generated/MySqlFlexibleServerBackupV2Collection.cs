@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(MySqlFlexibleServerBackupV2Resource.ResourceType, out string mySqlFlexibleServerBackupV2ApiVersion);
             _longRunningBackupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerBackupV2Resource.ResourceType.Namespace, Diagnostics);
-            _longRunningBackupRestClient = new LongRunningBackup(_longRunningBackupClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerBackupV2ApiVersion ?? "2024-12-30");
+            _longRunningBackupRestClient = new LongRunningBackup(_longRunningBackupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerBackupV2ApiVersion ?? "2024-12-30");
             _longRunningBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerBackupV2Resource.ResourceType.Namespace, Diagnostics);
-            _longRunningBackupsRestClient = new LongRunningBackups(_longRunningBackupsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerBackupV2ApiVersion ?? "2024-12-30");
+            _longRunningBackupsRestClient = new LongRunningBackups(_longRunningBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerBackupV2ApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _longRunningBackupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupName, MySqlFlexibleServerBackupV2Data.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource>(
-                    new MySqlFlexibleServerBackupV2OperationSource(Client),
+                    new MySqlFlexibleServerBackupV2ResourceOperationSource(Client),
                     _longRunningBackupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _longRunningBackupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupName, MySqlFlexibleServerBackupV2Data.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource>(
-                    new MySqlFlexibleServerBackupV2OperationSource(Client),
+                    new MySqlFlexibleServerBackupV2ResourceOperationSource(Client),
                     _longRunningBackupClientDiagnostics,
                     Pipeline,
                     message.Request,

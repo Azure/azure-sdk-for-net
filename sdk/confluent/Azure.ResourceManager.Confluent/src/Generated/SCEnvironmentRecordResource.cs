@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ResourceType, out string scEnvironmentRecordApiVersion);
             _scEnvironmentRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
+            _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
             _scEnvironmentRecordClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _scEnvironmentRecordClusterRestClient = new SCEnvironmentRecordCluster(_scEnvironmentRecordClusterClientDiagnostics, Pipeline, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
+            _scEnvironmentRecordClusterRestClient = new SCEnvironmentRecordCluster(_scEnvironmentRecordClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
         }
 

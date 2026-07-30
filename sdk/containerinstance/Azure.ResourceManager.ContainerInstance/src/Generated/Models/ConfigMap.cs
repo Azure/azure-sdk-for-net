@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The key value pairs dictionary in the config map. </summary>
-        public IDictionary<string, string> KeyValuePairs { get; }
+        public IDictionary<string, string> KeyValuePairs { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

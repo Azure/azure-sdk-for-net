@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(ResourceType, out string dynatraceSingleSignOnApiVersion);
             _singleSignOnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", ResourceType.Namespace, Diagnostics);
-            _singleSignOnRestClient = new SingleSignOn(_singleSignOnClientDiagnostics, Pipeline, Endpoint, dynatraceSingleSignOnApiVersion ?? "2024-04-24");
+            _singleSignOnRestClient = new SingleSignOn(_singleSignOnClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceSingleSignOnApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _singleSignOnRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DynatraceSingleSignOnData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceSingleSignOnResource> operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(
-                    new DynatraceSingleSignOnOperationSource(Client),
+                    new DynatraceSingleSignOnResourceOperationSource(Client),
                     _singleSignOnClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _singleSignOnRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DynatraceSingleSignOnData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceSingleSignOnResource> operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(
-                    new DynatraceSingleSignOnOperationSource(Client),
+                    new DynatraceSingleSignOnResourceOperationSource(Client),
                     _singleSignOnClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,20 +14,21 @@ namespace Microsoft.Azure.WebPubSub.Common
             using var jsonDocument = JsonDocument.ParseValue(ref reader);
             var element = jsonDocument.RootElement;
 
-            // tricky part to temp set null to context
-            return new DisconnectedEventRequest(null, element.ReadString(DisconnectedEventRequest.ReasonProperty));
+            // Tricky part to temp set null to context.
+            return new DisconnectedEventRequest(null, element.GetProperty(DisconnectedEventRequest.ReasonProperty).GetString());
         }
 
         public override void Write(Utf8JsonWriter writer, DisconnectedEventRequest value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName(DisconnectedEventRequest.ReasonProperty);
-            JsonSerializer.Serialize(writer, value.Reason, options);
+            writer.WriteString(DisconnectedEventRequest.ReasonProperty, value.Reason);
+
             if (value.ConnectionContext != null)
             {
                 writer.WritePropertyName(WebPubSubEventRequest.ConnectionContextProperty);
-                JsonSerializer.Serialize(writer, value.ConnectionContext, options);
+                JsonSerializationHelpers.WriteConnectionContext(writer, value.ConnectionContext);
             }
+
             writer.WriteEndObject();
         }
     }

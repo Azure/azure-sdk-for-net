@@ -46,10 +46,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the web search tool call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The status of the web search tool call. </summary>
-        public InputItemWebSearchToolCallStatus Status { get; }
+        public InputItemWebSearchToolCallStatus Status { get; set; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.
@@ -94,6 +94,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Action { get; }
+        public BinaryData Action { get; set; }
     }
 }

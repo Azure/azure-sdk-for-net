@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterCatalogResource.ResourceType, out string devCenterCatalogApiVersion);
             _catalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterCatalogResource.ResourceType.Namespace, Diagnostics);
-            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Endpoint, devCenterCatalogApiVersion ?? "2026-01-01-preview");
+            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, DevCenterCatalogData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterCatalogResource> operation = new DevCenterArmOperation<DevCenterCatalogResource>(
-                    new DevCenterCatalogOperationSource(Client),
+                    new DevCenterCatalogResourceOperationSource(Client),
                     _catalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, DevCenterCatalogData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterCatalogResource> operation = new DevCenterArmOperation<DevCenterCatalogResource>(
-                    new DevCenterCatalogOperationSource(Client),
+                    new DevCenterCatalogResourceOperationSource(Client),
                     _catalogsClientDiagnostics,
                     Pipeline,
                     message.Request,

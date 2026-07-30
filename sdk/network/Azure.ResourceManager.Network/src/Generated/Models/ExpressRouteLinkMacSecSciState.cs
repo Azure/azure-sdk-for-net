@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExpressRouteLinkMacSecSciState : IEquatable<ExpressRouteLinkMacSecSciState>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkMacSecSciState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressRouteLinkMacSecSciState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static ExpressRouteLinkMacSecSciState Disabled { get; } = new ExpressRouteLinkMacSecSciState(DisabledValue);
+
         /// <summary> Enabled. </summary>
         public static ExpressRouteLinkMacSecSciState Enabled { get; } = new ExpressRouteLinkMacSecSciState(EnabledValue);
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkMacSecSciState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressRouteLinkMacSecSciState left, ExpressRouteLinkMacSecSciState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkMacSecSciState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressRouteLinkMacSecSciState left, ExpressRouteLinkMacSecSciState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressRouteLinkMacSecSciState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressRouteLinkMacSecSciState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressRouteLinkMacSecSciState(string value) => new ExpressRouteLinkMacSecSciState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressRouteLinkMacSecSciState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressRouteLinkMacSecSciState?(string value) => value == null ? null : new ExpressRouteLinkMacSecSciState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressRouteLinkMacSecSciState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressRouteLinkMacSecSciState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

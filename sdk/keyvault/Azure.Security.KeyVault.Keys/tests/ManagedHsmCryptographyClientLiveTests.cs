@@ -12,6 +12,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V2026_01_01_Preview,
         KeyClientOptions.ServiceVersion.V2025_07_01,
         KeyClientOptions.ServiceVersion.V7_6,
         KeyClientOptions.ServiceVersion.V7_5,
@@ -227,6 +228,77 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public async Task SignVerifyDataStreamRoundTripHSM([EnumValues] SignatureAlgorithm algorithm)
         {
             await SignVerifyDataStreamRoundTripInternal(algorithm);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_01_01_Preview)]
+        [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // Service may transiently fail to verify a test attestation token in live runs.
+        public async Task SecureWrapUnwrapRoundTrip()
+        {
+            // Secure wrap/unwrap requires an HSM-backed key created with the secureWrapKey/secureUnwrapKey
+            // operations and a release policy that governs which target environments (TEEs) it may be released into.
+            string keyName = Recording.GenerateId();
+            CreateRsaKeyOptions options = new(keyName, hardwareProtected: true)
+            {
+                KeySize = 2048,
+                KeyOperations = { KeyOperation.SecureWrapKey, KeyOperation.SecureUnwrapKey },
+                ReleasePolicy = GetReleasePolicy(),
+            };
+
+            KeyVaultKey key = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(key.Name);
+
+            // Secure wrap is remote-only, so bind a remote crypto client to the wrapping key.
+            CryptographyClient cryptoClient = GetCryptoClient(key.Id, forceRemote: true);
+
+            // Securely wrap a key generated inside the HSM trusted execution environment.
+            SecureWrapResult wrapResult = await cryptoClient.SecureWrapKeyAsync(SecureKeyWrapAlgorithm.RsaOaep256);
+
+            Assert.AreEqual(key.Id.ToString(), wrapResult.KeyId);
+            Assert.AreEqual(SecureKeyWrapAlgorithm.RsaOaep256, wrapResult.Algorithm);
+            Assert.IsNotNull(wrapResult.EncryptedKey);
+
+            // Unwrap the key into a target TEE, proven by a Microsoft Azure Attestation (MAA) token.
+            string targetAttestationToken = await GetAttestationTokenAsync();
+            SecureUnwrapResult unwrapResult = await cryptoClient.SecureUnwrapKeyAsync(
+                wrapResult.Algorithm,
+                wrapResult.EncryptedKey,
+                targetAttestationToken);
+
+            Assert.AreEqual(key.Id.ToString(), unwrapResult.KeyId);
+            Assert.AreEqual(SecureKeyWrapAlgorithm.RsaOaep256, unwrapResult.Algorithm);
+            Assert.IsNotNull(unwrapResult.Key);
+        }
+
+        private KeyReleasePolicy GetReleasePolicy()
+        {
+            BinaryData releasePolicy = BinaryData.FromObjectAsJson(new
+            {
+                anyOf = new[]
+                {
+                    new
+                    {
+                        anyOf = new[]
+                        {
+                            new { claim = "sdk-test", equals = "true" },
+                        },
+                        authority = TestEnvironment.AttestationUri,
+                    },
+                },
+                version = "1.0.0",
+            });
+
+            return new KeyReleasePolicy(releasePolicy);
+        }
+
+        private async Task<string> GetAttestationTokenAsync()
+        {
+            AttestationClient attestationClient = InstrumentClient(
+                new AttestationClient(
+                    TestEnvironment.AttestationUri,
+                    InstrumentClientOptions(new KeyClientOptions(_serviceVersion))));
+
+            return await attestationClient.GetTokenAsync();
         }
 
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (Optional.IsDefined(VTpmEnabled))
+            if (Optional.IsDefined(IsVTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
-                writer.WriteBooleanValue(VTpmEnabled.Value);
+                writer.WriteBooleanValue(IsVTpmEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             DesktopVirtualizationVirtualMachineSecurityType? @type = default;
             bool? isSecureBootEnabled = default;
-            bool? vTpmEnabled = default;
+            bool? isVTpmEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    vTpmEnabled = prop.Value.GetBoolean();
+                    isVTpmEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DesktopVirtualizationSecurityInfoProperties(@type, isSecureBootEnabled, vTpmEnabled, additionalBinaryDataProperties);
+            return new DesktopVirtualizationSecurityInfoProperties(@type, isSecureBootEnabled, isVTpmEnabled, additionalBinaryDataProperties);
         }
     }
 }

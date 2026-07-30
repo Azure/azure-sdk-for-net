@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DataDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<DataDriftMonitoringSignal>
+    /// <summary> The DataDriftMonitoringSignal. </summary>
+    public partial class DataDriftMonitoringSignal : MonitoringSignalBase, IJsonModel<DataDriftMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDriftMonitoringSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataDriftMonitoringSignal"/> for deserialization. </summary>
+        internal DataDriftMonitoringSignal()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringSignalBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataDriftMonitoringSignal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataDriftMonitoringSignal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataDriftMonitoringSignal IPersistableModel<DataDriftMonitoringSignal>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataDriftMonitoringSignal)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataDriftMonitoringSignal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataDriftMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,40 +74,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Features))
+            if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
-                if (Features != null)
+                writer.WritePropertyName("featureDataTypeOverride"u8);
+                writer.WriteStartObject();
+                foreach (var item in FeatureDataTypeOverride)
                 {
-                    writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features, options);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("features");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(FeatureImportanceSettings))
             {
-                if (FeatureImportanceSettings != null)
-                {
-                    writer.WritePropertyName("featureImportanceSettings"u8);
-                    writer.WriteObjectValue(FeatureImportanceSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("featureImportanceSettings");
-                }
+                writer.WritePropertyName("featureImportanceSettings"u8);
+                writer.WriteObjectValue(FeatureImportanceSettings, options);
+            }
+            if (Optional.IsDefined(Features))
+            {
+                writer.WritePropertyName("features"u8);
+                writer.WriteObjectValue(Features, options);
             }
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
-            foreach (var item in MetricThresholds)
+            foreach (DataDriftMetricThresholdBase item in MetricThresholds)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -72,393 +112,155 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData, options);
-            if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
-            {
-                if (FeatureDataTypeOverride != null)
-                {
-                    writer.WritePropertyName("featureDataTypeOverride"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in FeatureDataTypeOverride)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value.ToString());
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("featureDataTypeOverride");
-                }
-            }
         }
 
-        DataDriftMonitoringSignal IJsonModel<DataDriftMonitoringSignal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataDriftMonitoringSignal IJsonModel<DataDriftMonitoringSignal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataDriftMonitoringSignal)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringSignalBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataDriftMonitoringSignal(document.RootElement, options);
         }
 
-        internal static DataDriftMonitoringSignal DeserializeDataDriftMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataDriftMonitoringSignal DeserializeDataDriftMonitoringSignal(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MonitoringFeatureFilterBase features = default;
+            IList<MonitoringNotificationType> notificationTypes = default;
+            IDictionary<string, string> properties = default;
+            MonitoringSignalType signalType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
             FeatureImportanceSettings featureImportanceSettings = default;
+            MonitoringFeatureFilterBase features = default;
             IList<DataDriftMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
-            MonitoringSignalType signalType = default;
-            IList<MonitoringNotificationType> notificationTypes = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("features"u8))
+                if (prop.NameEquals("notificationTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        features = null;
-                        continue;
-                    }
-                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("featureImportanceSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featureImportanceSettings = null;
-                        continue;
-                    }
-                    featureImportanceSettings = FeatureImportanceSettings.DeserializeFeatureImportanceSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("metricThresholds"u8))
-                {
-                    List<DataDriftMetricThresholdBase> array = new List<DataDriftMetricThresholdBase>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item, options));
-                    }
-                    metricThresholds = array;
-                    continue;
-                }
-                if (property.NameEquals("productionData"u8))
-                {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("referenceData"u8))
-                {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("featureDataTypeOverride"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featureDataTypeOverride = null;
-                        continue;
-                    }
-                    Dictionary<string, MonitoringFeatureDataType> dictionary = new Dictionary<string, MonitoringFeatureDataType>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, new MonitoringFeatureDataType(property0.Value.GetString()));
-                    }
-                    featureDataTypeOverride = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("signalType"u8))
-                {
-                    signalType = new MonitoringSignalType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("notificationTypes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        notificationTypes = null;
                         continue;
                     }
                     List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new MonitoringNotificationType(item.GetString()));
                     }
                     notificationTypes = array;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("signalType"u8))
+                {
+                    signalType = new MonitoringSignalType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("featureDataTypeOverride"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, MonitoringFeatureDataType> dictionary = new Dictionary<string, MonitoringFeatureDataType>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, new MonitoringFeatureDataType(prop0.Value.GetString()));
+                    }
+                    featureDataTypeOverride = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("featureImportanceSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featureImportanceSettings = null;
+                        continue;
+                    }
+                    featureImportanceSettings = FeatureImportanceSettings.DeserializeFeatureImportanceSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("features"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        features = null;
+                        continue;
+                    }
+                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("metricThresholds"u8))
+                {
+                    List<DataDriftMetricThresholdBase> array = new List<DataDriftMetricThresholdBase>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item, options));
+                    }
+                    metricThresholds = array;
+                    continue;
+                }
+                if (prop.NameEquals("productionData"u8))
+                {
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("referenceData"u8))
+                {
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataDriftMonitoringSignal(
-                signalType,
                 notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                features,
+                signalType,
+                additionalBinaryDataProperties,
+                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
                 featureImportanceSettings,
+                features,
                 metricThresholds,
                 productionData,
-                referenceData,
-                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>());
+                referenceData);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Features), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  features: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Features))
-                {
-                    builder.Append("  features: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Features, options, 2, false, "  features: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureImportanceSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  featureImportanceSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FeatureImportanceSettings))
-                {
-                    builder.Append("  featureImportanceSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, FeatureImportanceSettings, options, 2, false, "  featureImportanceSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricThresholds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  metricThresholds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(MetricThresholds))
-                {
-                    if (MetricThresholds.Any())
-                    {
-                        builder.Append("  metricThresholds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in MetricThresholds)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metricThresholds: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductionData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  productionData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProductionData))
-                {
-                    builder.Append("  productionData: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ProductionData, options, 2, false, "  productionData: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReferenceData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  referenceData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReferenceData))
-                {
-                    builder.Append("  referenceData: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ReferenceData, options, 2, false, "  referenceData: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureDataTypeOverride), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  featureDataTypeOverride: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
-                {
-                    if (FeatureDataTypeOverride.Any())
-                    {
-                        builder.Append("  featureDataTypeOverride: ");
-                        builder.AppendLine("{");
-                        foreach (var item in FeatureDataTypeOverride)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            builder.AppendLine($"'{item.Value.ToString()}'");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignalType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  signalType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  signalType: ");
-                builder.AppendLine($"'{SignalType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  notificationTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NotificationTypes))
-                {
-                    if (NotificationTypes.Any())
-                    {
-                        builder.Append("  notificationTypes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NotificationTypes)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  properties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Properties))
-                {
-                    if (Properties.Any())
-                    {
-                        builder.Append("  properties: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Properties)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DataDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataDriftMonitoringSignal IPersistableModel<DataDriftMonitoringSignal>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataDriftMonitoringSignal(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataDriftMonitoringSignal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

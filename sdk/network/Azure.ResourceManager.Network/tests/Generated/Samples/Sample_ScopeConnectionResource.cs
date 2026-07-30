@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             ScopeConnectionResource scopeConnection = client.GetScopeConnectionResource(scopeConnectionResourceId);
 
             // invoke the operation
-            await scopeConnection.DeleteAsync(WaitUntil.Completed);
+            await scopeConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
                 ResourceId = new ResourceIdentifier("subscriptions/f0dc2b34-dfad-40e4-83e0-2309fed8d00b"),
                 Description = "This is a scope connection to a cross tenant subscription.",
             };
-            ArmOperation<ScopeConnectionResource> lro = await scopeConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ScopeConnectionResource> lro = await scopeConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ScopeConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

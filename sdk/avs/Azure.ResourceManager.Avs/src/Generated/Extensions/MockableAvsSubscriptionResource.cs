@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Avs.Mocking
 
         private ClientDiagnostics PrivateCloudsClientDiagnostics => _privateCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateClouds PrivateCloudsRestClient => _privateCloudsRestClient ??= new PrivateClouds(PrivateCloudsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private PrivateClouds PrivateCloudsRestClient => _privateCloudsRestClient ??= new PrivateClouds(PrivateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary>
         /// List PrivateCloud resources by subscription ID

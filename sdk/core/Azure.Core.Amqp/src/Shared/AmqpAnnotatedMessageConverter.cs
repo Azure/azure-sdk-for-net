@@ -750,9 +750,13 @@ namespace Azure.Core.Amqp.Shared
                 return false;
             }
 
-            var bodyContent = new List<IList<object>>();
+            var sequenceBodySections = source.SequenceBody;
 
-            foreach (var item in source.SequenceBody)
+            var bodyContent = sequenceBodySections is IReadOnlyCollection<AmqpSequence> coll
+                ? new List<IList<object>>(coll.Count)
+                : new List<IList<object>>();
+
+            foreach (var item in sequenceBodySections)
             {
                 bodyContent.Add((IList<object>)item.List);
             }
@@ -847,7 +851,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns>The <see cref="ArraySegment{T}" /> containing the stream data.</returns>
         ///
-        private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
+        internal static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
             switch (stream)
             {
@@ -870,7 +874,9 @@ namespace Azure.Core.Amqp.Shared
 
                 default:
                     {
-                        using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                        long remaining = stream.CanSeek ? Math.Max(stream.Length - stream.Position, 0) : StreamBufferSizeInBytes;
+                        int capacity = remaining > 0 ? (int)Math.Min(remaining, int.MaxValue) : StreamBufferSizeInBytes;
+                        using var memStreamCopy = new MemoryStream(capacity);
                         stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
                         if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
                         {

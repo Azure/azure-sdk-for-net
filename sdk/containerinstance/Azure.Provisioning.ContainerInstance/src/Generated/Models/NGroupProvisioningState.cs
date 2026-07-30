@@ -11,18 +11,18 @@ namespace Azure.Provisioning.ContainerInstance
     public enum NGroupProvisioningState
     {
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 1,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> Canceled. </summary>
-        Canceled,
+        Canceled = 4,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 5,
         /// <summary> Migrating. </summary>
-        Migrating
+        Migrating = 6
     }
 }

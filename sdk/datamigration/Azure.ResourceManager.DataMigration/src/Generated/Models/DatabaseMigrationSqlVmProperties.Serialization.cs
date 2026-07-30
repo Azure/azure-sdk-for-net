@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseMigrationSqlVmProperties : IUtf8JsonSerializable, IJsonModel<DatabaseMigrationSqlVmProperties>
+    /// <summary> Database Migration Resource properties for SQL Virtual Machine. </summary>
+    public partial class DatabaseMigrationSqlVmProperties : DatabaseMigrationProperties, IJsonModel<DatabaseMigrationSqlVmProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseMigrationSqlVmProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseMigrationBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatabaseMigrationSqlVmProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlVmProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlVmProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatabaseMigrationSqlVmProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseMigrationSqlVmProperties IPersistableModel<DatabaseMigrationSqlVmProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatabaseMigrationSqlVmProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseMigrationSqlVmProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseMigrationSqlVmProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseMigrationSqlVmProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
             {
@@ -52,33 +93,31 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        DatabaseMigrationSqlVmProperties IJsonModel<DatabaseMigrationSqlVmProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseMigrationSqlVmProperties IJsonModel<DatabaseMigrationSqlVmProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DatabaseMigrationSqlVmProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatabaseMigrationBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseMigrationSqlVmProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatabaseMigrationSqlVmProperties(document.RootElement, options);
         }
 
-        internal static DatabaseMigrationSqlVmProperties DeserializeDatabaseMigrationSqlVmProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DatabaseMigrationSqlVmProperties DeserializeDatabaseMigrationSqlVmProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataMigrationStatusDetails migrationStatusDetails = default;
-            DataMigrationBackupConfiguration backupConfiguration = default;
-            DataMigrationOfflineConfiguration offlineConfiguration = default;
-            DataMigrationSqlConnectionInformation sourceSqlConnection = default;
-            string sourceDatabaseName = default;
-            string sourceServerName = default;
-            string targetDatabaseCollation = default;
             ResourceType kind = default;
             string scope = default;
             DataMigrationProvisioningState? provisioningState = default;
@@ -89,137 +128,148 @@ namespace Azure.ResourceManager.DataMigration.Models
             string migrationOperationId = default;
             SqlMigrationErrorInfo migrationFailureError = default;
             string provisioningError = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataMigrationSqlConnectionInformation sourceSqlConnection = default;
+            string sourceDatabaseName = default;
+            string sourceServerName = default;
+            string targetDatabaseCollation = default;
+            string sqlServerInstanceId = default;
+            DataMigrationStatusDetails migrationStatusDetails = default;
+            DataMigrationBackupConfiguration backupConfiguration = default;
+            DataMigrationOfflineConfiguration offlineConfiguration = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationStatusDetails"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    kind = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scope"u8))
+                {
+                    scope = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationStatusDetails = DataMigrationStatusDetails.DeserializeDataMigrationStatusDetails(property.Value, options);
+                    provisioningState = new DataMigrationProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupConfiguration"u8))
+                if (prop.NameEquals("migrationStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    migrationStatus = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("startedOn"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupConfiguration = DataMigrationBackupConfiguration.DeserializeDataMigrationBackupConfiguration(property.Value, options);
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("offlineConfiguration"u8))
+                if (prop.NameEquals("endedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    offlineConfiguration = DataMigrationOfflineConfiguration.DeserializeDataMigrationOfflineConfiguration(property.Value, options);
+                    endedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceSqlConnection"u8))
+                if (prop.NameEquals("migrationService"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceSqlConnection = DataMigrationSqlConnectionInformation.DeserializeDataMigrationSqlConnectionInformation(property.Value, options);
+                    migrationService = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceDatabaseName"u8))
+                if (prop.NameEquals("migrationOperationId"u8))
                 {
-                    sourceDatabaseName = property.Value.GetString();
+                    migrationOperationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerName"u8))
+                if (prop.NameEquals("migrationFailureError"u8))
                 {
-                    sourceServerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetDatabaseCollation"u8))
-                {
-                    targetDatabaseCollation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("scope"u8))
-                {
-                    scope = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DataMigrationProvisioningState(property.Value.GetString());
+                    migrationFailureError = SqlMigrationErrorInfo.DeserializeSqlMigrationErrorInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("migrationStatus"u8))
+                if (prop.NameEquals("provisioningError"u8))
                 {
-                    migrationStatus = property.Value.GetString();
+                    provisioningError = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"u8))
+                if (prop.NameEquals("sourceSqlConnection"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startedOn = property.Value.GetDateTimeOffset("O");
+                    sourceSqlConnection = DataMigrationSqlConnectionInformation.DeserializeDataMigrationSqlConnectionInformation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("endedOn"u8))
+                if (prop.NameEquals("sourceDatabaseName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    sourceDatabaseName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceServerName"u8))
+                {
+                    sourceServerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetDatabaseCollation"u8))
+                {
+                    targetDatabaseCollation = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sqlServerInstanceId"u8))
+                {
+                    sqlServerInstanceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("migrationStatusDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endedOn = property.Value.GetDateTimeOffset("O");
+                    migrationStatusDetails = DataMigrationStatusDetails.DeserializeDataMigrationStatusDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("migrationService"u8))
+                if (prop.NameEquals("backupConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationService = new ResourceIdentifier(property.Value.GetString());
+                    backupConfiguration = DataMigrationBackupConfiguration.DeserializeDataMigrationBackupConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("migrationOperationId"u8))
+                if (prop.NameEquals("offlineConfiguration"u8))
                 {
-                    migrationOperationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("migrationFailureError"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationFailureError = SqlMigrationErrorInfo.DeserializeSqlMigrationErrorInfo(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("provisioningError"u8))
-                {
-                    provisioningError = property.Value.GetString();
+                    offlineConfiguration = DataMigrationOfflineConfiguration.DeserializeDataMigrationOfflineConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DatabaseMigrationSqlVmProperties(
                 kind,
                 scope,
@@ -231,45 +281,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationOperationId,
                 migrationFailureError,
                 provisioningError,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 sourceSqlConnection,
                 sourceDatabaseName,
                 sourceServerName,
                 targetDatabaseCollation,
+                sqlServerInstanceId,
                 migrationStatusDetails,
                 backupConfiguration,
                 offlineConfiguration);
         }
-
-        BinaryData IPersistableModel<DatabaseMigrationSqlVmProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlVmProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DatabaseMigrationSqlVmProperties IPersistableModel<DatabaseMigrationSqlVmProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlVmProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatabaseMigrationSqlVmProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlVmProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DatabaseMigrationSqlVmProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

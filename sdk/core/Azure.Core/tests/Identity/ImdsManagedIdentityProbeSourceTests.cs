@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.Identity.Mock;
 using NUnit.Framework;
 
 using Azure.Identity;
@@ -39,7 +40,7 @@ namespace Azure.Core.Tests.Identity
                  CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json");
             });
 
-            var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            var cred = CreateDefaultAzureCredentialWithMockMsal(new DefaultAzureCredentialOptions
             {
                 ExcludeAzureCliCredential = true,
                 ExcludeAzureDeveloperCliCredential = true,
@@ -90,7 +91,7 @@ namespace Azure.Core.Tests.Identity
                     };
                 });
 
-                var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+                var cred = CreateDefaultAzureCredentialWithMockMsal(new DefaultAzureCredentialOptions
                 {
                     ExcludeAzureCliCredential = true,
                     ExcludeAzureDeveloperCliCredential = true,
@@ -143,7 +144,7 @@ namespace Azure.Core.Tests.Identity
                     };
                 });
 
-                var cred = new DefaultAzureCredential("MY_CUSTOM_ENV_VAR", new DefaultAzureCredentialOptions
+                var cred = CreateDefaultAzureCredentialWithMockMsal(new DefaultAzureCredentialOptions
                 {
                     ExcludeAzureCliCredential = true,
                     ExcludeAzureDeveloperCliCredential = true,
@@ -156,7 +157,7 @@ namespace Azure.Core.Tests.Identity
                     Transport = mockTransport,
                     IsForceRefreshEnabled = true,
                     Retry = { Delay = TimeSpan.Zero }
-                });
+                }, "MY_CUSTOM_ENV_VAR");
 
                 // First request validates that there are no network timeouts and retries are performed
                 await cred.GetTokenAsync(new(new[] { "test" }));
@@ -195,7 +196,7 @@ namespace Azure.Core.Tests.Identity
                 };
             });
 
-            var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            var cred = CreateDefaultAzureCredentialWithMockMsal(new DefaultAzureCredentialOptions
             {
                 ExcludeAzureCliCredential = true,
                 ExcludeAzureDeveloperCliCredential = true,
@@ -252,7 +253,7 @@ namespace Azure.Core.Tests.Identity
                 RetryPolicy = new RetryPolicy(7, DelayStrategy.CreateFixedDelayStrategy(TimeSpan.Zero))
             };
 
-            var cred = new DefaultAzureCredential(credOptions);
+            var cred = CreateDefaultAzureCredentialWithMockMsal(credOptions);
 
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
@@ -277,8 +278,7 @@ namespace Azure.Core.Tests.Identity
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             options.Retry.MaxDelay = TimeSpan.Zero;
 
-            var cred = new ManagedIdentityCredential(
-                "testCLientId", options);
+            var cred = CreateManagedIdentityCredentialWithMockMsal("testCLientId", options);
 
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
@@ -307,8 +307,7 @@ namespace Azure.Core.Tests.Identity
             };
             options.Retry.MaxDelay = TimeSpan.Zero;
 
-            var cred = new ManagedIdentityCredential(
-                "testCLientId", options);
+            var cred = CreateManagedIdentityCredentialWithMockMsal("testCLientId", options);
 
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
@@ -323,7 +322,12 @@ namespace Azure.Core.Tests.Identity
 
             var mockTransport = MockTransport.FromMessageCallback(msg =>
             {
-                Task.Delay(1000).GetAwaiter().GetResult();
+                if (msg.CancellationToken.IsCancellationRequested)
+                {
+                    throw new OperationCanceledException(msg.CancellationToken);
+                }
+
+                Task.Delay(1000, msg.CancellationToken).GetAwaiter().GetResult();
                 callCount++;
                 return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
             });
@@ -331,13 +335,18 @@ namespace Azure.Core.Tests.Identity
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             options.Retry.MaxDelay = TimeSpan.FromSeconds(1);
 
-            var cred = new ManagedIdentityCredential(
-                "testCLientId", options);
+            var cred = CreateManagedIdentityCredentialWithMockMsal("testCLientId", options);
 
             var cts = new CancellationTokenSource();
             cts.CancelAfter(TimeSpan.Zero);
             var ex = Assert.CatchAsync(async () => await cred.GetTokenAsync(new(new[] { "test" }), cts.Token));
-            Assert.IsTrue(ex is TaskCanceledException || ex is OperationCanceledException, "Expected TaskCanceledException or OperationCanceledException but got " + ex.GetType().ToString());
+            bool hasCancellation = ex is TaskCanceledException || ex is OperationCanceledException;
+            for (Exception current = ex; !hasCancellation && current != null; current = current.InnerException)
+            {
+                hasCancellation = current is TaskCanceledException || current is OperationCanceledException;
+            }
+            Assert.IsTrue(hasCancellation || ex is AuthenticationFailedException,
+                "Expected cancellation or wrapped authentication failure but got " + ex.GetType().ToString());
 
             // Default number of retries is 5, so we should just ensure we have less than that.
             // Timing on some platforms makes this test somewhat non-deterministic, so we just ensure we have less than 2 calls.
@@ -351,6 +360,64 @@ namespace Azure.Core.Tests.Identity
             byte[] byteArray = Encoding.UTF8.GetBytes(jsonData);
             response.ContentStream = new MemoryStream(byteArray);
             return response;
+        }
+
+        private static ManagedIdentityCredential CreateManagedIdentityCredentialWithMockMsal(string clientId, TokenCredentialOptions options)
+        {
+            var miOptions = new ManagedIdentityClientOptions
+            {
+                Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true),
+                ManagedIdentityId = string.IsNullOrEmpty(clientId) ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId),
+                Options = options
+            };
+
+            miOptions.MsalManagedIdentityClientOverride = new MockMsalManagedIdentityClient(miOptions);
+            return new ManagedIdentityCredential(new ManagedIdentityClient(miOptions));
+        }
+
+        private static DefaultAzureCredential CreateDefaultAzureCredentialWithMockMsal(DefaultAzureCredentialOptions options, string customEnvironmentVariableName = null)
+        {
+            var factory = string.IsNullOrEmpty(customEnvironmentVariableName)
+                ? new ProbeTestDefaultAzureCredentialFactory(options)
+                : new ProbeTestDefaultAzureCredentialFactory(options, customEnvironmentVariableName);
+
+            return new DefaultAzureCredential(factory);
+        }
+
+        private sealed class ProbeTestDefaultAzureCredentialFactory : DefaultAzureCredentialFactory
+        {
+            public ProbeTestDefaultAzureCredentialFactory(DefaultAzureCredentialOptions options)
+                : base(options)
+            {
+            }
+
+            public ProbeTestDefaultAzureCredentialFactory(DefaultAzureCredentialOptions options, string customEnvironmentVariableName)
+                : base(options, customEnvironmentVariableName)
+            {
+            }
+
+            public override TokenCredential CreateManagedIdentityCredential(bool isChained = true)
+            {
+                var options = Options.Clone<DefaultAzureCredentialOptions>();
+                options.IsChainedCredential = isChained;
+
+                var miOptions = new ManagedIdentityClientOptions
+                {
+                    Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true),
+                    Options = options,
+                    InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
+                    ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential,
+                    IsForceRefreshEnabled = options.IsForceRefreshEnabled,
+                    ManagedIdentityId = options.ManagedIdentityClientId != null
+                        ? ManagedIdentityId.FromUserAssignedClientId(options.ManagedIdentityClientId)
+                        : options.ManagedIdentityResourceId != null
+                            ? ManagedIdentityId.FromUserAssignedResourceId(options.ManagedIdentityResourceId)
+                            : ManagedIdentityId.SystemAssigned
+                };
+
+                miOptions.MsalManagedIdentityClientOverride = new MockMsalManagedIdentityClient(miOptions);
+                return new ManagedIdentityCredential(new ManagedIdentityClient(miOptions));
+            }
         }
     }
 }

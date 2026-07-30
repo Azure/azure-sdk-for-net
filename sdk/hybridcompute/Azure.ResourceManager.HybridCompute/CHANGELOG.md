@@ -4,11 +4,10 @@
 
 ### Features Added
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 ### Other Changes
+- Migrated SDK code generation from AutoRest to TypeSpec.
 
 ## 1.1.0-beta.2 (2026-04-27)
 

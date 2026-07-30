@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -114,6 +120,7 @@
           "name": "SafeintAsStringProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "14",
@@ -139,7 +146,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -156,6 +164,7 @@
           "name": "Uint32AsStringProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "17",
@@ -181,7 +190,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -198,6 +208,7 @@
           "name": "Uint8AsStringProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "20",
@@ -223,7 +234,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -233,6 +245,7 @@
       "$id": "22",
       "kind": "client",
       "name": "NumericClient",
+      "isExactName": false,
       "namespace": "Encode.Numeric",
       "doc": "Test for encode decorator on integer.",
       "methods": [],
@@ -265,7 +278,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Encode.Numeric.endpoint"
+          "crossLanguageDefinitionId": "Encode.Numeric.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -277,17 +291,20 @@
           "$id": "26",
           "kind": "client",
           "name": "Property",
+          "isExactName": false,
           "namespace": "Encode.Numeric.Property",
           "methods": [
             {
               "$id": "27",
               "kind": "basic",
               "name": "safeintAsString",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "28",
                 "name": "safeintAsString",
+                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -324,9 +341,11 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.safeintAsString.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "31",
@@ -359,9 +378,11 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.safeintAsString.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "33",
@@ -397,9 +418,16 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.safeintAsString.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "value"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -414,7 +442,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -455,11 +488,13 @@
               "$id": "35",
               "kind": "basic",
               "name": "uint32AsStringOptional",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "36",
                 "name": "uint32AsStringOptional",
+                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -496,9 +531,11 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.uint32AsStringOptional.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "39",
@@ -531,9 +568,11 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.uint32AsStringOptional.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "41",
@@ -569,9 +608,16 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.uint32AsStringOptional.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "value"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -586,7 +632,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -627,11 +678,13 @@
               "$id": "43",
               "kind": "basic",
               "name": "uint8AsString",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "44",
                 "name": "uint8AsString",
+                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -668,9 +721,11 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.uint8AsString.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "47",
@@ -703,9 +758,11 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.uint8AsString.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "49",
@@ -741,9 +798,16 @@
                         "crossLanguageDefinitionId": "Encode.Numeric.Property.uint8AsString.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "value"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -758,7 +822,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -825,7 +894,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Numeric.Property.endpoint"
+              "crossLanguageDefinitionId": "Encode.Numeric.Property.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

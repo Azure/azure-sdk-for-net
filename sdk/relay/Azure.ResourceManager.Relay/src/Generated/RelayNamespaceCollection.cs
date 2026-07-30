@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(RelayNamespaceResource.ResourceType, out string relayNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", RelayNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, relayNamespaceApiVersion ?? "2024-01-01");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayNamespaceApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Relay
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, RelayNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RelayArmOperation<RelayNamespaceResource> operation = new RelayArmOperation<RelayNamespaceResource>(
-                    new RelayNamespaceOperationSource(Client),
+                    new RelayNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Relay
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, RelayNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RelayArmOperation<RelayNamespaceResource> operation = new RelayArmOperation<RelayNamespaceResource>(
-                    new RelayNamespaceOperationSource(Client),
+                    new RelayNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,

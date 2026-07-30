@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The properties indicating whether a given service name is available. </summary>
     public partial class HealthcareApisNameAvailabilityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisNameAvailabilityResult"/>. </summary>
         internal HealthcareApisNameAvailabilityResult()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="reason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareApisNameAvailabilityResult(bool? isNameAvailable, HealthcareApisNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisNameAvailabilityResult(bool? isNameAvailable, HealthcareApisNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The value which indicates whether the provided name is available. </summary>
         public bool? IsNameAvailable { get; }
+
         /// <summary> The reason for unavailability. </summary>
         public HealthcareApisNameUnavailableReason? Reason { get; }
+
         /// <summary> The detailed reason message. </summary>
         public string Message { get; }
     }

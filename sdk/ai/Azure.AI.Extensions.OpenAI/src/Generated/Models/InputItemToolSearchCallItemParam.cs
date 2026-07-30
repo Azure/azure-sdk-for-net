@@ -47,7 +47,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ResponsesToolSearchExecutionType? Execution { get; set; }
 
         /// <summary> The arguments supplied to the tool search call. </summary>
-        public ResponsesEmptyModelParam Arguments { get; }
+        public ResponsesEmptyModelParam Arguments { get; set; }
 
         /// <summary> Gets or sets the Status. </summary>
         public FunctionCallItemStatus? Status { get; set; }

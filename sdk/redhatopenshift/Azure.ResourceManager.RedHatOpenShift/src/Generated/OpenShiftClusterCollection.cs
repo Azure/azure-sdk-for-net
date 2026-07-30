@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         {
             TryGetApiVersion(OpenShiftClusterResource.ResourceType, out string openShiftClusterApiVersion);
             _openShiftClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
-            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Endpoint, openShiftClusterApiVersion ?? "2025-07-25");
+            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftClusterApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
-                    new OpenShiftClusterOperationSource(Client),
+                    new OpenShiftClusterResourceOperationSource(Client),
                     _openShiftClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
-                    new OpenShiftClusterOperationSource(Client),
+                    new OpenShiftClusterResourceOperationSource(Client),
                     _openShiftClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

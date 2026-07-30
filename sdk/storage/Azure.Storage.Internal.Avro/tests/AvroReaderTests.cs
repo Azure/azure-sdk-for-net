@@ -92,5 +92,89 @@ namespace Azure.Storage.Internal.Avro.Tests
                 BlockOffset = blockOffset;
             }
         }
+
+        [Test]
+        public void ReadFixedBytesAsync_NegativeLength_ThrowsInvalidDataException()
+        {
+            using MemoryStream stream = new MemoryStream(new byte[10]);
+            Assert.ThrowsAsync<InvalidDataException>(
+                async () => await AvroParser.ReadFixedBytesAsync(stream, -1, async: true, default));
+        }
+
+        [Test]
+        public void ReadFixedBytesAsync_ExceedsMaxFieldSize_ThrowsInvalidDataException()
+        {
+            using MemoryStream stream = new MemoryStream(new byte[10]);
+            long oversized = (long)int.MaxValue + 1;
+            Assert.ThrowsAsync<InvalidDataException>(
+                async () => await AvroParser.ReadFixedBytesAsync(stream, (int)oversized, async: true, default));
+        }
+
+        [Test]
+        public async Task ReadFixedBytesAsync_ValidLength_ReturnsBytes()
+        {
+            byte[] expected = new byte[] { 1, 2, 3, 4, 5 };
+            using MemoryStream stream = new MemoryStream(expected);
+            byte[] result = await AvroParser.ReadFixedBytesAsync(stream, 5, async: true, default);
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void ReadBytesAsync_NegativeLength_ThrowsInvalidDataException()
+        {
+            // Encode -1 as zigzag: zigzag(-1) = 1, varint(1) = 0x01
+            byte[] encoded = new byte[] { 0x01 };
+            using MemoryStream stream = new MemoryStream(encoded);
+            Assert.ThrowsAsync<InvalidDataException>(
+                async () => await AvroParser.ReadBytesAsync(stream, async: true, default));
+        }
+
+        [Test]
+        public void ReadBytesAsync_ExceedsMaxFieldSize_ThrowsInvalidDataException()
+        {
+            // Encode (MaxFieldSize + 1) as zigzag varint.
+            // zigzag(n) = n * 2 for positive n
+            long value = (long)int.MaxValue + 1;
+            ulong zigzag = (ulong)(value << 1);
+            using MemoryStream stream = new MemoryStream(EncodeVarint(zigzag));
+            Assert.ThrowsAsync<InvalidDataException>(
+                async () => await AvroParser.ReadBytesAsync(stream, async: true, default));
+        }
+
+        [Test]
+        public void ReadBytesAsync_LongExceedingIntMax_ThrowsInvalidDataException()
+        {
+            // Encode a long value > int.MaxValue to verify it doesn't silently wrap.
+            long value = (long)int.MaxValue + 1;
+            ulong zigzag = (ulong)(value << 1);
+            using MemoryStream stream = new MemoryStream(EncodeVarint(zigzag));
+            Assert.ThrowsAsync<InvalidDataException>(
+                async () => await AvroParser.ReadBytesAsync(stream, async: true, default));
+        }
+
+        [Test]
+        public async Task ReadBytesAsync_ValidLength_ReturnsBytes()
+        {
+            // Encode length 5 as zigzag varint: zigzag(5) = 10, varint(10) = 0x0A
+            byte[] payload = new byte[] { 0x0A, 1, 2, 3, 4, 5 };
+            using MemoryStream stream = new MemoryStream(payload);
+            byte[] result = await AvroParser.ReadBytesAsync(stream, async: true, default);
+            Assert.AreEqual(new byte[] { 1, 2, 3, 4, 5 }, result);
+        }
+
+        /// <summary>
+        /// Encodes an unsigned value as a variable-length integer (varint).
+        /// </summary>
+        private static byte[] EncodeVarint(ulong value)
+        {
+            List<byte> bytes = new List<byte>();
+            while (value > 0x7F)
+            {
+                bytes.Add((byte)((value & 0x7F) | 0x80));
+                value >>= 7;
+            }
+            bytes.Add((byte)value);
+            return bytes.ToArray();
+        }
     }
 }

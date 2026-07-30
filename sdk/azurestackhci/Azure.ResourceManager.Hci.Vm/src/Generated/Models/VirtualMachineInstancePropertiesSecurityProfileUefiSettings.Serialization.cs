@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesSecurityProfileUefiSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SecureBootEnabled))
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            bool? secureBootEnabled = default;
+            bool? isSecureBootEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    secureBootEnabled = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(secureBootEnabled, additionalBinaryDataProperties);
+            return new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(isSecureBootEnabled, additionalBinaryDataProperties);
         }
     }
 }

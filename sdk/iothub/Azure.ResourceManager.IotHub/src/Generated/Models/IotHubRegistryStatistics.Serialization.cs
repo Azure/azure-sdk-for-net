@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubRegistryStatistics : IUtf8JsonSerializable, IJsonModel<IotHubRegistryStatistics>
+    /// <summary> Identity registry statistics. </summary>
+    public partial class IotHubRegistryStatistics : IJsonModel<IotHubRegistryStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubRegistryStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubRegistryStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotHubRegistryStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotHubRegistryStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubRegistryStatistics IPersistableModel<IotHubRegistryStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubRegistryStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotHubRegistryStatistics"/> from. </param>
+        internal static IotHubRegistryStatistics FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIotHubRegistryStatistics(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubRegistryStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(TotalDeviceCount))
             {
                 writer.WritePropertyName("totalDeviceCount"u8);
@@ -49,15 +97,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("disabledDeviceCount"u8);
                 writer.WriteNumberValue(DisabledDeviceCount.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +114,27 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        IotHubRegistryStatistics IJsonModel<IotHubRegistryStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubRegistryStatistics IJsonModel<IotHubRegistryStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubRegistryStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotHubRegistryStatistics(document.RootElement, options);
         }
 
-        internal static IotHubRegistryStatistics DeserializeIotHubRegistryStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotHubRegistryStatistics DeserializeIotHubRegistryStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,75 +142,42 @@ namespace Azure.ResourceManager.IotHub.Models
             long? totalDeviceCount = default;
             long? enabledDeviceCount = default;
             long? disabledDeviceCount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("totalDeviceCount"u8))
+                if (prop.NameEquals("totalDeviceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalDeviceCount = property.Value.GetInt64();
+                    totalDeviceCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("enabledDeviceCount"u8))
+                if (prop.NameEquals("enabledDeviceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabledDeviceCount = property.Value.GetInt64();
+                    enabledDeviceCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("disabledDeviceCount"u8))
+                if (prop.NameEquals("disabledDeviceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disabledDeviceCount = property.Value.GetInt64();
+                    disabledDeviceCount = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IotHubRegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount, serializedAdditionalRawData);
+            return new IotHubRegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<IotHubRegistryStatistics>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IotHubRegistryStatistics IPersistableModel<IotHubRegistryStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIotHubRegistryStatistics(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IotHubRegistryStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

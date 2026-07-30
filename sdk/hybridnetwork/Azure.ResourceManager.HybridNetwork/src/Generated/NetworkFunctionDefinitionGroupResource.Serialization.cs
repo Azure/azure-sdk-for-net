@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
+    /// <summary></summary>
     public partial class NetworkFunctionDefinitionGroupResource : IJsonModel<NetworkFunctionDefinitionGroupData>
     {
-        private static NetworkFunctionDefinitionGroupData s_dataDeserializationInstance;
-        private static NetworkFunctionDefinitionGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFunctionDefinitionGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFunctionDefinitionGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFunctionDefinitionGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFunctionDefinitionGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionGroupData>)Data).Write(writer, options);
 
-        NetworkFunctionDefinitionGroupData IJsonModel<NetworkFunctionDefinitionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFunctionDefinitionGroupData IJsonModel<NetworkFunctionDefinitionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFunctionDefinitionGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFunctionDefinitionGroupData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFunctionDefinitionGroupData IPersistableModel<NetworkFunctionDefinitionGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionDefinitionGroupData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<NetworkFunctionDefinitionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionDefinitionGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFunctionDefinitionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

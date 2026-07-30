@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct EnrollmentMarkupStatus : IEquatable<EnrollmentMarkupStatus>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Preview. </summary>
+        private const string PreviewValue = "Preview";
+        /// <summary> Published. </summary>
+        private const string PublishedValue = "Published";
+        /// <summary> Locked. </summary>
+        private const string LockedValue = "Locked";
 
         /// <summary> Initializes a new instance of <see cref="EnrollmentMarkupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnrollmentMarkupStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string DisabledValue = "Disabled";
-        private const string PreviewValue = "Preview";
-        private const string PublishedValue = "Published";
-        private const string LockedValue = "Locked";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static EnrollmentMarkupStatus Other { get; } = new EnrollmentMarkupStatus(OtherValue);
+
         /// <summary> Disabled. </summary>
         public static EnrollmentMarkupStatus Disabled { get; } = new EnrollmentMarkupStatus(DisabledValue);
+
         /// <summary> Preview. </summary>
         public static EnrollmentMarkupStatus Preview { get; } = new EnrollmentMarkupStatus(PreviewValue);
+
         /// <summary> Published. </summary>
         public static EnrollmentMarkupStatus Published { get; } = new EnrollmentMarkupStatus(PublishedValue);
+
         /// <summary> Locked. </summary>
         public static EnrollmentMarkupStatus Locked { get; } = new EnrollmentMarkupStatus(LockedValue);
+
         /// <summary> Determines if two <see cref="EnrollmentMarkupStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnrollmentMarkupStatus left, EnrollmentMarkupStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnrollmentMarkupStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnrollmentMarkupStatus left, EnrollmentMarkupStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnrollmentMarkupStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnrollmentMarkupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnrollmentMarkupStatus(string value) => new EnrollmentMarkupStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnrollmentMarkupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnrollmentMarkupStatus?(string value) => value == null ? null : new EnrollmentMarkupStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnrollmentMarkupStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnrollmentMarkupStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

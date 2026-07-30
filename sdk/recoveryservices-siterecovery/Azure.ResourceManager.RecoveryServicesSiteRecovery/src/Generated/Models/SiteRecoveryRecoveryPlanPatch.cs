@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update recovery plan input class. </summary>
     public partial class SiteRecoveryRecoveryPlanPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanPatch"/>. </summary>
         public SiteRecoveryRecoveryPlanPatch()
@@ -52,23 +23,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanPatch"/>. </summary>
         /// <param name="properties"> Recovery plan update properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryRecoveryPlanPatch(UpdateRecoveryPlanContentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryRecoveryPlanPatch(UpdateRecoveryPlanInputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Recovery plan update properties. </summary>
-        internal UpdateRecoveryPlanContentProperties Properties { get; set; }
+        internal UpdateRecoveryPlanInputProperties Properties { get; set; }
+
         /// <summary> The recovery plan groups. </summary>
         public IList<SiteRecoveryPlanGroup> UpdateRecoveryPlanContentGroups
         {
             get
             {
                 if (Properties is null)
-                    Properties = new UpdateRecoveryPlanContentProperties();
-                return Properties.Groups;
+                {
+                    Properties = new UpdateRecoveryPlanInputProperties();
+                }
+                return Properties.UpdateRecoveryPlanContentGroups;
             }
         }
     }

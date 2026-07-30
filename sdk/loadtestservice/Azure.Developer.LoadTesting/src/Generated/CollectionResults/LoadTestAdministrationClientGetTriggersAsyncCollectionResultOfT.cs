@@ -61,8 +61,8 @@ namespace Azure.Developer.LoadTesting
                     yield break;
                 }
                 PagedTrigger result = (PagedTrigger)response;
-                yield return Page<LoadTestingTrigger>.FromValues((IReadOnlyList<LoadTestingTrigger>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LoadTestingTrigger>.FromValues((IReadOnlyList<LoadTestingTrigger>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

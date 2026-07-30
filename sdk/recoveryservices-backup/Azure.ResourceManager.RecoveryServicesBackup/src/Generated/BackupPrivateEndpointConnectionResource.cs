@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionResourcesRestClient = new PrivateEndpointConnectionResources(_privateEndpointConnectionResourcesClientDiagnostics, Pipeline, Endpoint, backupPrivateEndpointConnectionApiVersion ?? "2026-01-31-preview");
+            _privateEndpointConnectionResourcesRestClient = new PrivateEndpointConnectionResources(_privateEndpointConnectionResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupPrivateEndpointConnectionApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(
-                    new BackupPrivateEndpointConnectionOperationSource(Client),
+                    new BackupPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(
-                    new BackupPrivateEndpointConnectionOperationSource(Client),
+                    new BackupPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

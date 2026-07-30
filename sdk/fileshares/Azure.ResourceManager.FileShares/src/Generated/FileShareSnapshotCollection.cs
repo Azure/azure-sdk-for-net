@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(FileShareSnapshotResource.ResourceType, out string fileShareSnapshotApiVersion);
             _fileShareSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", FileShareSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _fileShareSnapshotsRestClient = new FileShareSnapshots(_fileShareSnapshotsClientDiagnostics, Pipeline, Endpoint, fileShareSnapshotApiVersion ?? "2026-06-01");
+            _fileShareSnapshotsRestClient = new FileShareSnapshots(_fileShareSnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileShareSnapshotApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileShareSnapshotsRestClient.CreateCreateOrUpdateFileShareSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, FileShareSnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FileSharesArmOperation<FileShareSnapshotResource> operation = new FileSharesArmOperation<FileShareSnapshotResource>(
-                    new FileShareSnapshotOperationSource(Client),
+                    new FileShareSnapshotResourceOperationSource(Client),
                     _fileShareSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileShareSnapshotsRestClient.CreateCreateOrUpdateFileShareSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, FileShareSnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FileSharesArmOperation<FileShareSnapshotResource> operation = new FileSharesArmOperation<FileShareSnapshotResource>(
-                    new FileShareSnapshotOperationSource(Client),
+                    new FileShareSnapshotResourceOperationSource(Client),
                     _fileShareSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,

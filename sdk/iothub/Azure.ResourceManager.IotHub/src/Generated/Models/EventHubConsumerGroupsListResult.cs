@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The JSON-serialized array of Event Hub-compatible consumer group names with a next link. </summary>
+    /// <summary> The JSON-serialized list of consumer groups for the Event Hub-compatible endpoint. </summary>
     internal partial class EventHubConsumerGroupsListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupsListResult"/>. </summary>
-        internal EventHubConsumerGroupsListResult()
+        /// <param name="value"> The EventHubConsumerGroupInfo items on this page. </param>
+        internal EventHubConsumerGroupsListResult(IEnumerable<EventHubConsumerGroupInfoData> value)
         {
-            Value = new ChangeTrackingList<EventHubConsumerGroupInfoData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupsListResult"/>. </summary>
-        /// <param name="value"> List of consumer groups objects. </param>
-        /// <param name="nextLink"> The next link. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubConsumerGroupsListResult(IReadOnlyList<EventHubConsumerGroupInfoData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The EventHubConsumerGroupInfo items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubConsumerGroupsListResult(IList<EventHubConsumerGroupInfoData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of consumer groups objects. </summary>
-        public IReadOnlyList<EventHubConsumerGroupInfoData> Value { get; }
-        /// <summary> The next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The EventHubConsumerGroupInfo items on this page. </summary>
+        public IList<EventHubConsumerGroupInfoData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

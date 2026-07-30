@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteSlotDiagnosticResource : IJsonModel<DiagnosticCategoryData>
     {
-        private static DiagnosticCategoryData s_dataDeserializationInstance;
-        private static DiagnosticCategoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DiagnosticCategoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DiagnosticCategoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiagnosticCategoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiagnosticCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticCategoryData>)Data).Write(writer, options);
 
-        DiagnosticCategoryData IJsonModel<DiagnosticCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticCategoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiagnosticCategoryData IJsonModel<DiagnosticCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DiagnosticCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticCategoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DiagnosticCategoryData IPersistableModel<DiagnosticCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticCategoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<DiagnosticCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticCategoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiagnosticCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Error. </summary>
+        /// <summary> Gets the Error. </summary>
         internal ManagedClusterPodIdentityProvisioningError Error
         {
             get
@@ -27,27 +27,14 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _error;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _error, value);
-            }
         }
 
-        /// <summary> Gets or sets the ErrorDetail. </summary>
+        /// <summary> Gets the ErrorDetail. </summary>
         public ManagedClusterPodIdentityProvisioningErrorDetail ErrorDetail
         {
             get
             {
-                return Error is null ? default : Error.ErrorDetail;
-            }
-            set
-            {
-                if (Error is null)
-                {
-                    Error = new ManagedClusterPodIdentityProvisioningError();
-                }
-                Error.ErrorDetail = value;
+                return Error.ErrorDetail;
             }
         }
 
@@ -56,6 +43,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _error = DefineModelProperty<ManagedClusterPodIdentityProvisioningError>(nameof(Error), new string[] { "error" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentityProvisioningInfo that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

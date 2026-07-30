@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string postRulestackRuleApiVersion);
             _postRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _postRulesRestClient = new PostRules(_postRulesClientDiagnostics, Pipeline, Endpoint, postRulestackRuleApiVersion ?? "2025-10-08");
+            _postRulesRestClient = new PostRules(_postRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postRulestackRuleApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

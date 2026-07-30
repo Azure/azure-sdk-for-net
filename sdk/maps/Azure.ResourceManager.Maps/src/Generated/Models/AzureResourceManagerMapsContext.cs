@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Maps.Models;
 using Azure.ResourceManager.Models;
 
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.Maps
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceList))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMapsContext : ModelReaderWriterContext

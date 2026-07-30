@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 KubernetesVersionList result = KubernetesVersionList.FromResponse(response);
-                yield return Page<NetworkCloudKubernetesVersionData>.FromValues((IReadOnlyList<NetworkCloudKubernetesVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudKubernetesVersionData>.FromValues((IReadOnlyList<NetworkCloudKubernetesVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

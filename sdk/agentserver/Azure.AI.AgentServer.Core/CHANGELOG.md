@@ -1,12 +1,35 @@
 # Release History
 
+## 1.0.0-beta.27 (2026-07-29)
+
+### Features Added
+- Added a durable key-value **state store** client under `Azure.AI.AgentServer.Core.Storage`. `FoundryStateStore.GetOrCreateAsync` binds (creating if needed) a named, Foundry-backed store; instances expose async `GetAsync`/`UpdateAsync`/`DeleteAsync` for the store and `CreateItemAsync`/`SetItemAsync`/`GetItemAsync`/`DeleteItemAsync`/`ListKeysAsync` for its items, with optimistic concurrency (`If-Match`/`ETag`), optional per-user isolation, and store-level item TTL. The .NET analogue of the Python SDK's `FoundryStateStore`.
+- Added support for Microsoft Entra authentication when exporting telemetry to Azure Monitor. When `APPLICATIONINSIGHTS_AUTH_MODE` is set to `Entra`, the Azure Monitor exporter attempts to use a system-assigned managed identity credential (falling back to connection-string authentication if the credential cannot be created).
+
+## 1.0.0-beta.26 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: added the platform identity header constants `PlatformHeaders.UserId` (`x-agent-user-id`) and `PlatformHeaders.FoundryCallId` (`x-agent-foundry-call-id`).
+- Added `FoundryEnvironment.AgentId` exposing the agent's stable GUID from the `FOUNDRY_AGENT_ID` environment variable.
+- Added the request-scoped `FoundryAgentRequestContext` (`AsyncLocal`-backed, never-null `Current`) that captures the inbound `x-agent-foundry-call-id` / `x-agent-user-id` via an SDK middleware, and `FoundryCallIdHandler` (a `DelegatingHandler`) that echoes **only** the call ID on outbound Foundry-bound `HttpClient` calls (`x-agent-user-id` is never echoed). The .NET analogue of the Python SDK's `get_request_context()`.
+
+### Breaking Changes
+- Renamed `IsolationContext` to `PlatformContext`. Its members are now `UserIdKey` (from `x-agent-user-id`) and `CallId` (from `x-agent-foundry-call-id`), replacing `UserIsolationKey` / `ChatIsolationKey`.
+- Replaced the `PlatformHeaders.UserIsolationKey` / `PlatformHeaders.ChatIsolationKey` constants with `PlatformHeaders.UserId` and `PlatformHeaders.FoundryCallId` per container protocol version `2.0.0`.
+
+## 1.0.0-beta.25 (2026-05-25)
+
+### Bugs Fixed
+
+- Corrected `FoundryEnrichmentProcessor` to emit the Agent365 blueprint telemetry key as `microsoft.a365.agent.blueprint.id` (previously emitted as `gen_ai.agent.blueprint.id` in this code path).
+
 ## 1.0.0-beta.24 (2026-05-21)
 
 ### Features Added
 
 - Added Agent365 tracing export support with managed identity token acquisition when `FOUNDRY_AGENT365_TRACING_ENABLED` is set.
 - Added `AgentInstanceClientId`, `AgentBlueprintClientId`, `AgentTenantId`, and `IsAgent365TracingEnabled` properties to `FoundryEnvironment`.
-- Added `FoundryEnrichmentProcessor` attributes: `gen_ai.agent.blueprint.id`, `microsoft.tenant.id`, and `microsoft.foundry.agent.type` on telemetry spans.
+- Added `FoundryEnrichmentProcessor` attributes: `microsoft.a365.agent.blueprint.id`, `microsoft.tenant.id`, and `microsoft.foundry.agent.type` on telemetry spans.
 - Added `W3CBaggagePropagator` middleware that parses the W3C `baggage` header into `Activity.Baggage` on all target frameworks (net8.0, net9.0, net10.0).
 - Configured W3C Trace Context and Baggage propagators via `Sdk.SetDefaultTextMapPropagator` for outgoing request propagation.
 - Added conditional exporter registration: Azure Monitor, OTLP, and Agent365 exporters activate only when their respective environment variables are set.

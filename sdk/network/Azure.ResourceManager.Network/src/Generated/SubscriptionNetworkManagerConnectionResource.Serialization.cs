@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SubscriptionNetworkManagerConnectionResource : IJsonModel<NetworkManagerConnectionData>
+    /// <summary></summary>
+    public partial class SubscriptionNetworkManagerConnectionResource : IJsonModel<SubscriptionNetworkManagerConnectionData>
     {
-        private static NetworkManagerConnectionData s_dataDeserializationInstance;
-        private static NetworkManagerConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SubscriptionNetworkManagerConnectionData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetworkManagerConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerConnectionData>)Data).Write(writer, options);
+        private static IJsonModel<SubscriptionNetworkManagerConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SubscriptionNetworkManagerConnectionData();
 
-        NetworkManagerConnectionData IJsonModel<NetworkManagerConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<SubscriptionNetworkManagerConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionNetworkManagerConnectionData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<NetworkManagerConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionNetworkManagerConnectionData IJsonModel<SubscriptionNetworkManagerConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        NetworkManagerConnectionData IPersistableModel<NetworkManagerConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SubscriptionNetworkManagerConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionNetworkManagerConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkManagerConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionNetworkManagerConnectionData IPersistableModel<SubscriptionNetworkManagerConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionNetworkManagerConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SubscriptionNetworkManagerConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

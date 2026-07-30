@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.PipelineGroups.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -46,7 +45,6 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
     [ModelReaderWriterBuildable(typeof(PipelineGroupSyslogReceiver))]
     [ModelReaderWriterBuildable(typeof(PipelineGroupTlsConfiguration))]
     [ModelReaderWriterBuildable(typeof(PipelineGroupTransformLanguageProcessor))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerMonitorPipelineGroupsContext : ModelReaderWriterContext
     {

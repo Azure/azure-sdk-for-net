@@ -1,109 +1,92 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
-    [CodeGenSuppress("GetPublicIPAddressesAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetPublicIPAddresses", typeof(CancellationToken))]
-    [CodeGenSuppress("GetNetworkInterfacesAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetNetworkInterfaces", typeof(CancellationToken))]
-    public partial class VirtualMachineScaleSetNetworkResource
+    /// <summary>
+    /// A class representing an AutoRest-era Network VMSS parent resource.
+    /// </summary>
+    public partial class VirtualMachineScaleSetNetworkResource : ArmResource
     {
-        /// <summary>
-        /// Gets information about all public IP addresses on a virtual machine scale set level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/publicipaddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSets_ListPublicIPAddresses</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicIPAddressData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets";
+
+        /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkResource for mocking. </summary>
+        protected VirtualMachineScaleSetNetworkResource()
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PublicIPAddressData.DeserializePublicIPAddressData(e), _virtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetAllPublicIPAddressData", "value", "nextLink", cancellationToken);
         }
 
-        /// <summary>
-        /// Gets information about all public IP addresses on a virtual machine scale set level.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/publicipaddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSets_ListPublicIPAddresses</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublicIPAddressData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken = default)
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal VirtualMachineScaleSetNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PublicIPAddressData.DeserializePublicIPAddressData(e), _virtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetAllPublicIPAddressData", "value", "nextLink", cancellationToken);
+            ValidateResourceId(id);
         }
 
-        /// <summary>
-        /// Gets all network interfaces in a virtual machine scale set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSets_ListNetworkInterfaces</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken = default)
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName. </param>
+        /// <returns> A resource identifier for the virtual machine scale set. </returns>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListNetworkInterfacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListNetworkInterfacesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkInterfaceData.DeserializeNetworkInterfaceData(e), _virtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetAllNetworkInterfaceData", "value", "nextLink", cancellationToken);
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}";
+            return new ResourceIdentifier(resourceId);
         }
 
-        /// <summary>
-        /// Gets all network interfaces in a virtual machine scale set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSets_ListNetworkInterfaces</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken = default)
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListNetworkInterfacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListNetworkInterfacesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkInterfaceData.DeserializeNetworkInterfaceData(e), _virtualMachineScaleSetsClientDiagnostics, Pipeline, "VirtualMachineScaleSetNetworkResource.GetAllNetworkInterfaceData", "value", "nextLink", cancellationToken);
+            if (id.ResourceType != ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
+        }
+        /// <summary> Invokes the GetAllNetworkInterfaceDataAsync compatibility operation. </summary>
+
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return resourceGroup.GetVirtualMachineScaleSetNetworkInterfacesAsync(Id.Name, cancellationToken);
+        }
+        /// <summary> Invokes the GetAllNetworkInterfaceData compatibility operation. </summary>
+
+        [ForwardsClientCalls]
+        public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return resourceGroup.GetVirtualMachineScaleSetNetworkInterfaces(Id.Name, cancellationToken);
+        }
+        /// <summary> Invokes the GetAllPublicIPAddressDataAsync compatibility operation. </summary>
+
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return resourceGroup.GetVirtualMachineScaleSetPublicIPAddressesAsync(Id.Name, cancellationToken);
+        }
+        /// <summary> Invokes the GetAllPublicIPAddressData compatibility operation. </summary>
+
+        [ForwardsClientCalls]
+        public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken)
+        {
+            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
+            return resourceGroup.GetVirtualMachineScaleSetPublicIPAddresses(Id.Name, cancellationToken);
         }
     }
 }

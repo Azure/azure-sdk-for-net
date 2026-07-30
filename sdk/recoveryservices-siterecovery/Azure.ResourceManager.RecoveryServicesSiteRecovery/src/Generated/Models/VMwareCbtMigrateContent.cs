@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -16,39 +17,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrateContent"/>. </summary>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
-        public VMwareCbtMigrateContent(string performShutdown)
+        public VMwareCbtMigrateContent(string performShutdown) : base("VMwareCbt")
         {
             Argument.AssertNotNull(performShutdown, nameof(performShutdown));
 
             PerformShutdown = performShutdown;
             PostMigrationSteps = new ChangeTrackingList<ManagedRunCommandScriptContent>();
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrateContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
         /// <param name="postMigrationSteps"> The managed run command script input. </param>
-        internal VMwareCbtMigrateContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string performShutdown, string osUpgradeVersion, IList<ManagedRunCommandScriptContent> postMigrationSteps) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="targetCapacityReservationGroupId"> The target capacity reservation group ARM Id. </param>
+        internal VMwareCbtMigrateContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string performShutdown, string osUpgradeVersion, IList<ManagedRunCommandScriptContent> postMigrationSteps, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
         {
             PerformShutdown = performShutdown;
             OSUpgradeVersion = osUpgradeVersion;
             PostMigrationSteps = postMigrationSteps;
-            InstanceType = instanceType ?? "VMwareCbt";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrateContent"/> for deserialization. </summary>
-        internal VMwareCbtMigrateContent()
-        {
+            TargetCapacityReservationGroupId = targetCapacityReservationGroupId;
         }
 
         /// <summary> A value indicating whether VM is to be shutdown. </summary>
         public string PerformShutdown { get; }
+
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public string OSUpgradeVersion { get; set; }
+
         /// <summary> The managed run command script input. </summary>
         public IList<ManagedRunCommandScriptContent> PostMigrationSteps { get; }
+
+        /// <summary> The target capacity reservation group ARM Id. </summary>
+        public string TargetCapacityReservationGroupId { get; set; }
     }
 }

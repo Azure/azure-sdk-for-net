@@ -8,19 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class IPAllocationData : IUtf8JsonSerializable, IJsonModel<IPAllocationData>
+    /// <summary> IpAllocation resource. </summary>
+    public partial class IPAllocationData : NetworkTrackedResourceData, IJsonModel<IPAllocationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAllocationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIPAllocationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IPAllocationData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IPAllocationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IPAllocationData IPersistableModel<IPAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IPAllocationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IPAllocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="ipAllocationData"> The <see cref="IPAllocationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IPAllocationData ipAllocationData)
+        {
+            if (ipAllocationData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(ipAllocationData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IPAllocationData"/> from. </param>
+        internal static IPAllocationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIPAllocationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IPAllocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,597 +88,124 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IPAllocationData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Subnet))
-            {
-                writer.WritePropertyName("subnet"u8);
-                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VirtualNetwork))
-            {
-                writer.WritePropertyName("virtualNetwork"u8);
-                ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
-            }
-            if (Optional.IsDefined(IPAllocationType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IPAllocationType.Value.ToString());
-            }
-            if (Optional.IsDefined(Prefix))
-            {
-                writer.WritePropertyName("prefix"u8);
-                writer.WriteStringValue(Prefix);
-            }
-            if (Optional.IsDefined(PrefixLength))
-            {
-                if (PrefixLength != null)
-                {
-                    writer.WritePropertyName("prefixLength"u8);
-                    writer.WriteNumberValue(PrefixLength.Value);
-                }
-                else
-                {
-                    writer.WriteNull("prefixLength");
-                }
-            }
-            if (Optional.IsDefined(PrefixType))
-            {
-                writer.WritePropertyName("prefixType"u8);
-                writer.WriteStringValue(PrefixType.Value.ToString());
-            }
-            if (Optional.IsDefined(IpamAllocationId))
-            {
-                writer.WritePropertyName("ipamAllocationId"u8);
-                writer.WriteStringValue(IpamAllocationId);
-            }
-            if (Optional.IsCollectionDefined(AllocationTags))
-            {
-                writer.WritePropertyName("allocationTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in AllocationTags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
         }
 
-        IPAllocationData IJsonModel<IPAllocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IPAllocationData IJsonModel<IPAllocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IPAllocationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IPAllocationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIPAllocationData(document.RootElement, options);
         }
 
-        internal static IPAllocationData DeserializeIPAllocationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IPAllocationData DeserializeIPAllocationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string @type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            WritableSubResource subnet = default;
-            WritableSubResource virtualNetwork = default;
-            NetworkIPAllocationType? type0 = default;
-            string prefix = default;
-            int? prefixLength = default;
-            NetworkIPVersion? prefixType = default;
-            string ipamAllocationId = default;
-            IDictionary<string, string> allocationTags = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IpAllocationPropertiesFormat properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("subnet"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualNetwork"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("type"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            type0 = new NetworkIPAllocationType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("prefix"u8))
-                        {
-                            prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("prefixLength"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                prefixLength = null;
-                                continue;
-                            }
-                            prefixLength = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("prefixType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            prefixType = new NetworkIPVersion(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ipamAllocationId"u8))
-                        {
-                            ipamAllocationId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("allocationTags"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            allocationTags = dictionary;
-                            continue;
-                        }
-                    }
+                    properties = IpAllocationPropertiesFormat.DeserializeIpAllocationPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IPAllocationData(
                 id,
                 name,
-                type,
+                @type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                etag,
-                subnet,
-                virtualNetwork,
-                type0,
-                prefix,
-                prefixLength,
-                prefixType,
-                ipamAllocationId,
-                allocationTags ?? new ChangeTrackingDictionary<string, string>());
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SubnetId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    subnet: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      subnet: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Subnet))
-                {
-                    builder.Append("    subnet: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Subnet, options, 4, false, "    subnet: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VirtualNetworkId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualNetwork: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      virtualNetwork: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualNetwork))
-                {
-                    builder.Append("    virtualNetwork: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualNetwork, options, 4, false, "    virtualNetwork: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAllocationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPAllocationType))
-                {
-                    builder.Append("    type: ");
-                    builder.AppendLine($"'{IPAllocationType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Prefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    prefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Prefix))
-                {
-                    builder.Append("    prefix: ");
-                    if (Prefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Prefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Prefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixLength), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    prefixLength: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrefixLength))
-                {
-                    builder.Append("    prefixLength: ");
-                    builder.AppendLine($"{PrefixLength.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    prefixType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrefixType))
-                {
-                    builder.Append("    prefixType: ");
-                    builder.AppendLine($"'{PrefixType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IpamAllocationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipamAllocationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IpamAllocationId))
-                {
-                    builder.Append("    ipamAllocationId: ");
-                    if (IpamAllocationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IpamAllocationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IpamAllocationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocationTags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    allocationTags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AllocationTags))
-                {
-                    if (AllocationTags.Any())
-                    {
-                        builder.Append("    allocationTags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in AllocationTags)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(IPAllocationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IPAllocationData IPersistableModel<IPAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIPAllocationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IPAllocationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IPAllocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
