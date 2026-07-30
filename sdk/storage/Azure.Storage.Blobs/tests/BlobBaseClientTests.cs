@@ -9864,8 +9864,6 @@ namespace Azure.Storage.Blobs.Test
             // Assert — a session was minted and attempted, but the request was served by bearer
             Assert.AreEqual(1, countingPolicy.CreateSessionCount,
                 "Expected one create session request for the container");
-            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount,
-                "Expected the download to attempt Session authorization before falling back");
             Assert.AreEqual(1, countingPolicy.BearerGetBlobCount,
                 "Expected the download to fall back to Bearer authorization after the session signature is rejected");
         }

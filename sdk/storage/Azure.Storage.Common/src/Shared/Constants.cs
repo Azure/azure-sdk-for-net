@@ -243,6 +243,7 @@ namespace Azure.Storage
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
             public const string MetadataHeaderPrefix = "x-ms-meta-";
             public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
+            public const string ApacheArrowContentType = "application/vnd.apache.arrow.stream";
 
             internal static class Append
             {
