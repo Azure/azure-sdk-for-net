@@ -392,8 +392,8 @@ namespace Azure.Provisioning.Kubernetes
             _distributionVersion = DefineProperty<string>(nameof(DistributionVersion), new string[] { "distributionVersion" });
             _infrastructure = DefineProperty<string>(nameof(Infrastructure), new string[] { "infrastructure" });
             _offering = DefineProperty<string>(nameof(Offering), new string[] { "offering" }, isOutput: true);
-            _managedIdentityCertificateExpirationOn = DefineProperty<DateTimeOffset>(nameof(ManagedIdentityCertificateExpirationOn), new string[] { "managedIdentityCertificateExpirationTime" }, isOutput: true);
-            _lastConnectivityOn = DefineProperty<DateTimeOffset>(nameof(LastConnectivityOn), new string[] { "lastConnectivityTime" }, isOutput: true);
+            _managedIdentityCertificateExpirationOn = DefineProperty<DateTimeOffset>(nameof(ManagedIdentityCertificateExpirationOn), new string[] { "managedIdentityCertificateExpirationTime" }, isOutput: true, format: "O");
+            _lastConnectivityOn = DefineProperty<DateTimeOffset>(nameof(LastConnectivityOn), new string[] { "lastConnectivityTime" }, isOutput: true, format: "O");
             _connectivityStatus = DefineProperty<ConnectedClusterConnectivityStatus>(nameof(ConnectivityStatus), new string[] { "connectivityStatus" }, isOutput: true);
             _privateLinkState = DefineProperty<ConnectedClusterPrivateLinkState>(nameof(PrivateLinkState), new string[] { "privateLinkState" });
             _privateLinkScopeResourceId = DefineProperty<ResourceIdentifier>(nameof(PrivateLinkScopeResourceId), new string[] { "privateLinkScopeResourceId" });

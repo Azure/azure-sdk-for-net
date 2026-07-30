@@ -104,8 +104,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" }, isRequired: true);
-            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" }, isRequired: true);
+            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" }, isRequired: true, format: "c");
+            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" }, isRequired: true, format: "c");
             _healthCheckRetryTimeout = DefineProperty<string>(nameof(HealthCheckRetryTimeout), new string[] { "healthCheckRetryTimeout" }, isRequired: true);
             _upgradeTimeout = DefineProperty<string>(nameof(UpgradeTimeout), new string[] { "upgradeTimeout" }, isRequired: true);
             _upgradeDomainTimeout = DefineProperty<string>(nameof(UpgradeDomainTimeout), new string[] { "upgradeDomainTimeout" }, isRequired: true);

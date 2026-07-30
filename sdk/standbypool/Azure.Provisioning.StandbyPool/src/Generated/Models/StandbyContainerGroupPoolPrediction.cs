@@ -67,7 +67,7 @@ namespace Azure.Provisioning.StandbyPool
         {
             base.DefineProvisionableProperties();
             _forecastValues = DefineModelProperty<StandbyContainerGroupPoolForecastValues>(nameof(ForecastValues), new string[] { "forecastValues" }, isOutput: true);
-            _forecastStartOn = DefineProperty<DateTimeOffset>(nameof(ForecastStartOn), new string[] { "forecastStartTime" }, isOutput: true);
+            _forecastStartOn = DefineProperty<DateTimeOffset>(nameof(ForecastStartOn), new string[] { "forecastStartTime" }, isOutput: true, format: "O");
             _forecastInfo = DefineProperty<string>(nameof(ForecastInfo), new string[] { "forecastInfo" }, isOutput: true);
             DefineAdditionalProperties();
         }

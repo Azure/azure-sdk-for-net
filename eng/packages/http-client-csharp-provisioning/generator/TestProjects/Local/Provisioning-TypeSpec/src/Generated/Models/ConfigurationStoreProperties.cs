@@ -30,6 +30,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<BinaryData> _binaryContent;
         private BicepValue<BinaryData> _urlSafeBinaryContent;
         private BicepValue<DateTimeOffset> _lastModified;
+        private BicepList<DateTimeOffset> _auditTimestamps;
         private BicepValue<DateTimeOffset> _expirationTimestamp;
         private BicepValue<DateTimeOffset> _activationOn;
         private BicepValue<TimeSpan> _activationTime;
@@ -253,6 +254,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the AuditTimestamps. </summary>
+        public BicepList<DateTimeOffset> AuditTimestamps
+        {
+            get
+            {
+                Initialize();
+                return _auditTimestamps;
+            }
+            set
+            {
+                Initialize();
+                _auditTimestamps.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the ExpirationTimestamp. </summary>
         public BicepValue<DateTimeOffset> ExpirationTimestamp
         {
@@ -394,6 +410,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _binaryContent = DefineProperty<BinaryData>(nameof(BinaryContent), new string[] { "binaryContent" }, format: "base64");
             _urlSafeBinaryContent = DefineProperty<BinaryData>(nameof(UrlSafeBinaryContent), new string[] { "urlSafeBinaryContent" }, format: "base64url");
             _lastModified = DefineProperty<DateTimeOffset>(nameof(LastModified), new string[] { "lastModified" }, format: "R");
+            _auditTimestamps = DefineListProperty<DateTimeOffset>(nameof(AuditTimestamps), new string[] { "auditTimestamps" });
             _expirationTimestamp = DefineProperty<DateTimeOffset>(nameof(ExpirationTimestamp), new string[] { "expirationTimestamp" }, format: "U");
             _activationOn = DefineProperty<DateTimeOffset>(nameof(ActivationOn), new string[] { "activationDate" }, format: "D");
             _activationTime = DefineProperty<TimeSpan>(nameof(ActivationTime), new string[] { "activationTime" }, format: "T");

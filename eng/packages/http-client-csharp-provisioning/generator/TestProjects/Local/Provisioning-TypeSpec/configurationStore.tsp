@@ -7,18 +7,6 @@ using Azure.Core;
 
 namespace ProvisioningTypeSpec;
 
-@encode("rfc7231")
-scalar Rfc7231DateTime extends utcDateTime;
-
-@encode("unixTimestamp", int64)
-scalar UnixDateTime extends utcDateTime;
-
-@encode("seconds", int64)
-scalar DurationInSeconds extends duration;
-
-@encode("milliseconds", float64)
-scalar DurationInMilliseconds extends duration;
-
 /** A configuration store. */
 @resource("configurationStores")
 model ConfigurationStore is TrackedResource<ConfigurationStoreProperties> {
@@ -78,10 +66,15 @@ model ConfigurationStoreProperties {
   urlSafeBinaryContent?: bytes;
 
   /** A date-time serialized using RFC 7231. */
-  lastModified?: Rfc7231DateTime;
+  @encode("rfc7231")
+  lastModified?: utcDateTime;
+
+  /** Date-times whose element format cannot yet be propagated by the provisioning runtime. */
+  auditTimestamps?: utcDateTime[];
 
   /** A date-time serialized as a Unix timestamp. */
-  expirationTimestamp?: UnixDateTime;
+  @encode("unixTimestamp", int64)
+  expirationTimestamp?: utcDateTime;
 
   /** A calendar date without a time or timezone. */
   activationDate?: plainDate;
@@ -90,10 +83,12 @@ model ConfigurationStoreProperties {
   activationTime?: plainTime;
 
   /** A duration serialized as an integer number of seconds. */
-  retryAfter?: DurationInSeconds;
+  @encode("seconds", int64)
+  retryAfter?: duration;
 
   /** A duration serialized as a floating-point number of milliseconds. */
-  pollingInterval?: DurationInMilliseconds;
+  @encode("milliseconds", float64)
+  pollingInterval?: duration;
 
   /** An integer serialized as a string. */
   @encode(string)
