@@ -711,28 +711,33 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             var subscriptionName = Recording.Random.NewGuid().ToString("D").Substring(0, 8);
 
             await client.CreateTopicAsync(topicName);
-            await client.CreateSubscriptionAsync(topicName, subscriptionName);
-
-            // A new subscription carries a default $Default rule (a SQL TrueFilter). Add an
-            // explicit SQL rule and a correlation rule so the topic-level counts are non-zero.
-            await client.CreateRuleAsync(topicName, subscriptionName, new CreateRuleOptions
+            try
             {
-                Name = "sqlRule",
-                Filter = new SqlRuleFilter("1=1")
-            });
-            await client.CreateRuleAsync(topicName, subscriptionName, new CreateRuleOptions
+                await client.CreateSubscriptionAsync(topicName, subscriptionName);
+
+                // A new subscription carries a default $Default rule (a SQL TrueFilter). Add an
+                // explicit SQL rule and a correlation rule so the topic-level counts are non-zero.
+                await client.CreateRuleAsync(topicName, subscriptionName, new CreateRuleOptions
+                {
+                    Name = "sqlRule",
+                    Filter = new SqlRuleFilter("1=1")
+                });
+                await client.CreateRuleAsync(topicName, subscriptionName, new CreateRuleOptions
+                {
+                    Name = "correlationRule",
+                    Filter = new CorrelationRuleFilter { CorrelationId = "abc" }
+                });
+
+                TopicRuntimeProperties runtimeProperties = await client.GetTopicRuntimePropertiesAsync(topicName);
+
+                // $Default (TrueFilter) + sqlRule = 2 SQL filters; correlationRule = 1 correlation filter.
+                Assert.AreEqual(2, runtimeProperties.SqlFilterCount);
+                Assert.AreEqual(1, runtimeProperties.CorrelationFilterCount);
+            }
+            finally
             {
-                Name = "correlationRule",
-                Filter = new CorrelationRuleFilter { CorrelationId = "abc" }
-            });
-
-            TopicRuntimeProperties runtimeProperties = await client.GetTopicRuntimePropertiesAsync(topicName);
-
-            // $Default (TrueFilter) + sqlRule = 2 SQL filters; correlationRule = 1 correlation filter.
-            Assert.AreEqual(2, runtimeProperties.SqlFilterCount);
-            Assert.AreEqual(1, runtimeProperties.CorrelationFilterCount);
-
-            await client.DeleteTopicAsync(topicName);
+                await client.DeleteTopicAsync(topicName);
+            }
         }
 
         [RecordedTest]

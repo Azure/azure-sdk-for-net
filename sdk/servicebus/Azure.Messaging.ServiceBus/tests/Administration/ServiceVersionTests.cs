@@ -32,5 +32,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 fakeCredential,
                 new ServiceBusAdministrationClientOptions(ServiceBusAdministrationClientOptions.ServiceVersion.V2017_04));
         }
+
+        [Test]
+        public void DefaultServiceVersionIsLatest()
+        {
+            // The default admin api-version must be the newest (2024-05); a regression to an
+            // older default silently stops the topic filter counts from being served.
+            Assert.AreEqual(
+                ServiceBusAdministrationClientOptions.ServiceVersion.V2024_05,
+                new ServiceBusAdministrationClientOptions().Version);
+        }
     }
 }

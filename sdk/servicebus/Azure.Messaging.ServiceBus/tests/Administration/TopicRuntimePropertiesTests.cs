@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Xml.Linq;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
@@ -41,6 +42,36 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             Assert.AreEqual(4, properties.SubscriptionCount);
             Assert.AreEqual(5, properties.SqlFilterCount);
             Assert.AreEqual(6, properties.CorrelationFilterCount);
+        }
+
+        [Test]
+        public void CanCreateTopicRuntimePropertiesFromLegacyFactoryOverload()
+        {
+            // The 7-parameter overload predates the filter counts and is retained for binary
+            // compatibility. A 7-positional-argument call binds to it (not the extended
+            // overload), so the new counts must default to zero rather than being uninitialized.
+            var created = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+            var updated = new DateTimeOffset(2024, 1, 2, 0, 0, 0, TimeSpan.Zero);
+            var accessed = new DateTimeOffset(2024, 1, 3, 0, 0, 0, TimeSpan.Zero);
+
+            TopicRuntimeProperties properties = ServiceBusModelFactory.TopicRuntimeProperties(
+                "topicName",
+                3,
+                1024,
+                4,
+                created,
+                updated,
+                accessed);
+
+            Assert.AreEqual("topicName", properties.Name);
+            Assert.AreEqual(3, properties.ScheduledMessageCount);
+            Assert.AreEqual(1024, properties.SizeInBytes);
+            Assert.AreEqual(4, properties.SubscriptionCount);
+            Assert.AreEqual(created, properties.CreatedAt);
+            Assert.AreEqual(updated, properties.UpdatedAt);
+            Assert.AreEqual(accessed, properties.AccessedAt);
+            Assert.AreEqual(0, properties.SqlFilterCount);
+            Assert.AreEqual(0, properties.CorrelationFilterCount);
         }
 
         [Test]
