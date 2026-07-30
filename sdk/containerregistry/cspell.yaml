@@ -4,3 +4,5 @@ overrides:
   - filename: '**/sdk/containerregistry/Azure.Provisioning.ContainerRegistry.Tasks/**/*'
     words:
       - AZPROVISION
+      - Trycep
+      - Zhang
