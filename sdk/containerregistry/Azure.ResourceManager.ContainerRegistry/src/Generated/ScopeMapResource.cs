@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ResourceType, out string scopeMapApiVersion);
             _scopeMapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ResourceType.Namespace, Diagnostics);
-            _scopeMapsRestClient = new ScopeMaps(_scopeMapsClientDiagnostics, Pipeline, Endpoint, scopeMapApiVersion ?? "2026-01-01-preview");
+            _scopeMapsRestClient = new ScopeMaps(_scopeMapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeMapApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

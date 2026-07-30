@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string storageConnectorApiVersion);
             _connectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, storageConnectorApiVersion ?? "2025-08-01");
+            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageConnectorApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

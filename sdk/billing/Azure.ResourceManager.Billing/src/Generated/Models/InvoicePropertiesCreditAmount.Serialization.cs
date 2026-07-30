@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The total refund for returns and cancellations during the invoice billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesCreditAmount : BillingAmount, IJsonModel<InvoicePropertiesCreditAmount>
+    internal partial class InvoicePropertiesCreditAmount : BillingAmount, IJsonModel<InvoicePropertiesCreditAmount>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

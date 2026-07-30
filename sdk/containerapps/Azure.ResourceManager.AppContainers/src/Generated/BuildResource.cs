@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string buildApiVersion);
             _buildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Endpoint, buildApiVersion ?? "2025-10-02-preview");
+            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
             _buildAuthTokenClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _buildAuthTokenRestClient = new BuildAuthToken(_buildAuthTokenClientDiagnostics, Pipeline, Endpoint, buildApiVersion ?? "2025-10-02-preview");
+            _buildAuthTokenRestClient = new BuildAuthToken(_buildAuthTokenClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

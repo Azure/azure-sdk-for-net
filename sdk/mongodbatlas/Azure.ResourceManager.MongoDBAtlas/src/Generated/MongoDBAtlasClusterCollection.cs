@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
             TryGetApiVersion(MongoDBAtlasClusterResource.ResourceType, out string mongoDBAtlasClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", MongoDBAtlasClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasClusterApiVersion ?? "2026-03-01-preview");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBAtlasClusterApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(ResourceType, out string mongoClusterApiVersion);
             _mongoClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
-            _mongoClustersRestClient = new MongoClusters(_mongoClustersClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2026-06-01");
+            _mongoClustersRestClient = new MongoClusters(_mongoClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterApiVersion ?? "2026-06-01");
             _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2026-06-01");
+            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterApiVersion ?? "2026-06-01");
             _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2026-06-01");
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

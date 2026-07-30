@@ -33,6 +33,7 @@ nowarn:CS1591
 nowarn:AZC0034 T:Azure.Foo.Bar                       # all sites inside type Foo.Bar
 nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String)  # one specific member
 nowarn:CS0618 N:Azure.Foo.Models                     # everything in namespace + descendants
+nowarn:OPENAI001 SourceGenerated                     # only sites inside *.g.cs generator output
 ```
 
 ### `nowarn:CODE`
@@ -70,12 +71,41 @@ the entire assembly forever — including types that don't exist yet. A scoped
 entry keeps the analyzer live for every site except the specific symbol the
 SDK team has reviewed and approved.
 
-**Limitation:** scoped suppression only works for diagnostics whose descriptor
-declares `DiagnosticSeverity.Warning` (or lower). Diagnostics that ship as
-`DiagnosticSeverity.Error` (e.g., `AZC0034` in `azure-sdk-tools`) are skipped
-by Roslyn's `DiagnosticSuppressor` pipeline — for those, the underlying
-analyzer needs to ship the descriptor as Warning instead, with `/warnaserror+`
+### `nowarn:CODE SourceGenerated` — source-generator-output suppression
+
+A scoped entry whose target is the keyword `SourceGenerated` (case-insensitive)
+suppresses `CODE` only at sites inside **source-generator output** — files whose
+path ends with `.g.cs`. These are emitted by a source generator at build time and
+exist only in the compiler's view, so they cannot be edited or `#pragma`-annotated
+at the source (e.g. the compile-time `ModelReaderWriterContext` partial that
+references external experimental types).
+
+This scope deliberately does **not** cover checked-in generated code under a
+`Generated/` folder. That code is regenerable, so a diagnostic there should be
+fixed at its source — correct per-symbol `[Experimental]` attribution or a tight
+`#pragma` emitted by the code generator — rather than silenced by a blanket
+suppression. Example:
+
+```
+# OPENAI001 refs the source generator emits into the compile-time
+# ModelReaderWriterContext .g.cs (references to the external experimental
+# OpenAI.OpenAIContext) that we cannot annotate at the source. Hand-written and
+# checked-in generated code carry per-symbol [Experimental]/pragmas instead.
+nowarn:OPENAI001 SourceGenerated
+```
+
+**Limitation:** scoped suppression (both symbol- and `SourceGenerated`-scoped)
+only works for diagnostics whose descriptor declares `DiagnosticSeverity.Warning`
+(or lower). Roslyn's `DiagnosticSuppressor` pipeline dispatches on the
+descriptor's **default** severity, so a warning promoted to an error by
+`/warnaserror` is still suppressible; a diagnostic whose descriptor ships as
+`DiagnosticSeverity.Error` (e.g., `AZC0034` in `azure-sdk-tools`) is not. Note
+that `[Experimental("…")]` diagnostics such as `OPENAI001` have a **Warning**
+default severity (the attribute promotes them to errors), so they *can* be
+scoped-suppressed — for a genuine `Error`-descriptor diagnostic, the underlying
+analyzer must instead ship the descriptor as Warning with `/warnaserror+`
 elevating it back to Error globally.
+
 
 ## How It Works
 

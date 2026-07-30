@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string validatedSolutionRecipeApiVersion);
             _validatedSolutionRecipesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _validatedSolutionRecipesRestClient = new ValidatedSolutionRecipes(_validatedSolutionRecipesClientDiagnostics, Pipeline, Endpoint, validatedSolutionRecipeApiVersion ?? "2026-05-01-preview");
+            _validatedSolutionRecipesRestClient = new ValidatedSolutionRecipes(_validatedSolutionRecipesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, validatedSolutionRecipeApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

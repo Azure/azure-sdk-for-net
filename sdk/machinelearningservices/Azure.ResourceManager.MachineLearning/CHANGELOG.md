@@ -14,6 +14,8 @@
 
 ### Bugs Fixed
 
+- Corrected the `MachineLearnin*` typo in registry component container and version resource and collection type names. The misspelled types remain available as hidden, obsolete compatibility shims.
+
 ### Other Changes
 
 - Migrated Azure.ResourceManager.MachineLearning from Swagger/AutoRest to TypeSpec-based generation.

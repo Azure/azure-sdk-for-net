@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(PartnerNamespacePrivateLinkResource.ResourceType, out string apiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespacePrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, apiVersion ?? "2025-07-15-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

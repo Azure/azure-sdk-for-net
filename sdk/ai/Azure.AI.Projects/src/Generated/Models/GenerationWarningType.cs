@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Category of a warning surfaced on a generated evaluator version. Extensible so new warning categories (e.g., safety, output quality) can be introduced without a breaking change. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct GenerationWarningType : IEquatable<GenerationWarningType>
     {
         private readonly string _value;

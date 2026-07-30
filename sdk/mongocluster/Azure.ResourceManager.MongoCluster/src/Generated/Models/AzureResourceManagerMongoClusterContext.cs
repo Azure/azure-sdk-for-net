@@ -6,10 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MongoCluster.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
@@ -64,9 +62,7 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
     [ModelReaderWriterBuildable(typeof(PromoteReplicaContent))]
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShardingProperties))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownMongoClusterIdentityProvider))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

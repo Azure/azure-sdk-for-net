@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerProfileApiVersion);
             _profilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Endpoint, trafficManagerProfileApiVersion ?? "2024-04-01-preview");
+            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerProfileApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

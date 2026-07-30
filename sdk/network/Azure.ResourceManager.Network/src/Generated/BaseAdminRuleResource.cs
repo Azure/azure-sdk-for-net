@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string baseAdminRuleApiVersion);
             _adminRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _adminRulesRestClient = new AdminRules(_adminRulesClientDiagnostics, Pipeline, Endpoint, baseAdminRuleApiVersion ?? "2025-07-01");
+            _adminRulesRestClient = new AdminRules(_adminRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, baseAdminRuleApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

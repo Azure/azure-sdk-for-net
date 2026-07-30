@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServices.Models;
 
@@ -66,7 +65,6 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAadDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAcsDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreSettings))]
     [ModelReaderWriterBuildable(typeof(SourceScanConfiguration))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
