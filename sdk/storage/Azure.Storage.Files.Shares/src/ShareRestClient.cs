@@ -7,3 +7,5 @@ namespace Azure.Storage.Files.Shares
     {
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
