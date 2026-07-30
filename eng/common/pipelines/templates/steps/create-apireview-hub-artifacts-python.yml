@@ -1,0 +1,91 @@
+# Generate one Python API review artifact bundle for one ref. This template
+# supplies Python-specific generation and delegates shared artifact validation
+# and metadata writing to the base API Review Hub artifact template.
+parameters:
+  - name: requestMode
+    type: string
+  - name: operationId
+    type: string
+  - name: packageName
+    type: string
+  - name: ref
+    type: string
+  - name: kind
+    type: string
+  - name: outputDir
+    type: string
+  - name: workingDir
+    type: string
+steps:
+  - template: /eng/common/pipelines/templates/steps/create-apireview-hub-artifacts-base.yml
+    parameters:
+      requestMode: ${{ parameters.requestMode }}
+      operationId: ${{ parameters.operationId }}
+      packageName: ${{ parameters.packageName }}
+      ref: ${{ parameters.ref }}
+      kind: ${{ parameters.kind }}
+      outputDir: ${{ parameters.outputDir }}
+      workingDir: ${{ parameters.workingDir }}
+      sourceDir: $(ApiReviewSourceDir)
+      language: python
+      repositoryFullName: $(ApiReviewRepositoryFullName)
+      generationSteps:
+        - bash: |
+            set -Eeuo pipefail
+
+            source_repo="$(ApiReviewSourceDir)"
+            tooling_dir="$(ApiReviewToolingDir)"
+            output_dir="${{ parameters.outputDir }}"
+            state_dir="${{ parameters.workingDir }}/state"
+
+            mkdir -p "$source_repo" "$output_dir" "$state_dir"
+
+            find_package_dir() {
+              local repo="$1"
+              local package_name="$2"
+              local matches
+
+              matches=$(find "$repo/sdk" -mindepth 2 -maxdepth 2 -type d -name "$package_name" | sort)
+              if [ -z "$matches" ]; then
+                echo "Package '$package_name' was not found under sdk/*/." >&2
+                return 1
+              fi
+
+              if [ "$(printf '%s\n' "$matches" | wc -l)" -ne 1 ]; then
+                echo "Package '$package_name' matched multiple directories:" >&2
+                printf '%s\n' "$matches" >&2
+                return 1
+              fi
+
+              printf '%s' "$matches"
+            }
+
+            package_dir=$(find_package_dir "$source_repo" "${{ parameters.packageName }}")
+            package_relative_path=$(realpath --relative-to="$source_repo" "$package_dir")
+
+            echo "Generating ${{ parameters.kind }} API review artifact from ${{ parameters.ref }}"
+            common_tasks_dir="$source_repo/scripts/devops_tasks"
+            if [ ! -f "$common_tasks_dir/common_tasks.py" ]; then
+              echo "Expected Python SDK common_tasks.py was not found at $common_tasks_dir/common_tasks.py" >&2
+              exit 1
+            fi
+            install -D "$tooling_dir/eng/common/scripts/Export-APIViewMarkdown.ps1" "$source_repo/eng/common/scripts/Export-APIViewMarkdown.ps1"
+            install -D "$tooling_dir/eng/scripts/Extract-APIViewMetadata-Python.ps1" "$source_repo/eng/scripts/Extract-APIViewMetadata-Python.ps1"
+            (cd "$source_repo" && PYTHONPATH="$common_tasks_dir${PYTHONPATH:+:$PYTHONPATH}" python -m azpysdk.main apistub --dest-dir "$package_dir" "${{ parameters.packageName }}")
+
+            if [ ! -f "$package_dir/api.md" ]; then
+              echo "Expected api.md was not generated at $package_dir/api.md" >&2
+              exit 1
+            fi
+            if [ ! -f "$package_dir/api.metadata.yml" ]; then
+              echo "Expected api.metadata.yml was not generated at $package_dir/api.metadata.yml" >&2
+              exit 1
+            fi
+
+            cp "$package_dir/api.md" "$output_dir/api.md"
+            cp "$package_dir/api.metadata.yml" "$output_dir/api.metadata.yml"
+
+            version=$(python -c 'import pathlib, re, sys; package_dir = pathlib.Path(sys.argv[1]); pattern = re.compile(r"^\s*VERSION\s*[:=]\s*[\"'"'"']([^\"'"'"']+)[\"'"'"']", re.MULTILINE); candidates = sorted(package_dir.rglob("*_version.py")) + sorted(package_dir.rglob("version.py")); match = next((pattern.search(candidate.read_text(encoding="utf-8")) for candidate in candidates if "_generated" not in candidate.parts and pattern.search(candidate.read_text(encoding="utf-8"))), None); print(match.group(1) if match else "")' "$package_dir")
+            printf '%s' "$package_relative_path" > "$state_dir/package-relative-path.txt"
+            printf '%s' "$version" > "$state_dir/version.txt"
+          displayName: 'Generate ${{ parameters.kind }} Python API review bundle'
