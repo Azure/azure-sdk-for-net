@@ -60,3 +60,5 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

@@ -5,3 +5,5 @@
 // See https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-services-resource-providers
 // for the list of possible values.
 [assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.Purview")]
+
+// Test comment for batching validation - DO NOT MERGE
