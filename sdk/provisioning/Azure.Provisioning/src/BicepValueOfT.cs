@@ -177,7 +177,6 @@ public class BicepValue<T> : BicepValue
         Uri u => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(u, Format)),
         DateTimeOffset d => BicepTypeMapping.ToLiteralExpression(d, Format),
         TimeSpan t => BicepTypeMapping.ToLiteralExpression(t, Format),
-        byte[] b => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(b, null)),
         Guid g => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(g, Format)),
         IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, Format)),
         ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),

@@ -56,14 +56,16 @@ public class BicepValueTests
 
         TestHelpers.AssertExpression("'Wed, 29 Jul 2026 09:30:00 GMT'", Formatted(value, "R"));
         TestHelpers.AssertExpression("'2026-07-29T09:30:00.0000000Z'", Formatted(value, "O"));
+        TestHelpers.AssertExpression("'2026-07-29T09:30:00.0000000Z'", Formatted(value, "o"));
         TestHelpers.AssertExpression("1785317400", Formatted(value, "U"));
         TestHelpers.AssertExpression("'2026-07-29'", Formatted(value, "D"));
+        TestHelpers.AssertExpression("'09:30:00'", Formatted(value, "T"));
     }
 
     [Test]
     public void ValidateTimeSpanBicepValueFormats()
     {
-        TestHelpers.AssertExpression("'02:03:04.005'", Formatted(new TimeSpan(0, 2, 3, 4, 5), "T"));
+        TestHelpers.AssertExpression("'02:03:04.0050000'", Formatted(new TimeSpan(0, 2, 3, 4, 5), "T"));
         TestHelpers.AssertExpression("'P1DT2H3M4S'", Formatted(new TimeSpan(1, 2, 3, 4), "P"));
         TestHelpers.AssertExpression("'1.02:03:04'", Formatted(new TimeSpan(1, 2, 3, 4), "c"));
         TestHelpers.AssertExpression("2", Formatted(new TimeSpan(0, 0, 0, 1, 500), "seconds"));
@@ -91,11 +93,12 @@ public class BicepValueTests
     }
 
     [Test]
-    public void ValidateUnsupportedBicepValueFormatsFailForFormattedTypes()
+    public void ValidateUnknownBicepValueFormatsFallbackForFormattedTypes()
     {
-        Assert.Throws<InvalidOperationException>(() => Formatted(new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero), "base64").Compile());
-        Assert.Throws<InvalidOperationException>(() => Formatted(TimeSpan.FromSeconds(1), "R").Compile());
-        Assert.Throws<InvalidOperationException>(() => Formatted(42, "R").Compile());
+        TestHelpers.AssertExpression("'2026-07-29T09:30:00.0000000+00:00'", Formatted(new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero), "c"));
+        TestHelpers.AssertExpression("'00:00:01'", Formatted(TimeSpan.FromSeconds(1), "R"));
+        TestHelpers.AssertExpression("42", Formatted(42, "R"));
+        TestHelpers.AssertExpression("json('9007199254740991')", Formatted(9007199254740991, "R"));
     }
 
     [Test]
@@ -369,7 +372,7 @@ public class BicepValueTests
                     isoDateTime: '2026-07-29T09:30:00.0000000Z'
                     unixDateTime: 1785317400
                     plainDate: '2026-07-29'
-                    plainTime: '02:03:04.005'
+                    plainTime: '02:03:04.0050000'
                     isoDuration: 'P1DT2H3M4S'
                     constantDuration: '1.02:03:04'
                     secondsDuration: 2
@@ -417,23 +420,30 @@ public class BicepValueTests
     }
 
     [Test]
-    public async Task ValidateUnsupportedFormatTokenFailsForFormattedTypes()
+    public async Task ValidateUnknownFormatTokenFallsBackForFormattedTypes()
     {
         await using Trycep test = new();
-        Assert.Throws<InvalidOperationException>(
-            () => test.Define(
-                ctx =>
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new InvalidFormatResource("invalidFormat")
                 {
-                    var infra = new Infrastructure();
-                    var resource = new InvalidFormatResource("invalidFormat")
-                    {
-                        Name = "invalid-format",
-                        DateTime = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero)
-                    };
-                    infra.Add(resource);
-                    return infra;
-                })
-                .Compare(""));
+                    Name = "invalid-format",
+                    DateTime = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero)
+                };
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource invalidFormat 'Test.Provider/invalidFormats@2024-01-01' = {
+                  name: 'invalid-format'
+                  properties: {
+                    dateTime: 'invali29'
+                  }
+                }
+                """);
     }
 
     private class DateTimeCollectionResource : ProvisionableResource
@@ -640,7 +650,7 @@ public class BicepValueTests
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-            _dateTime = DefineProperty<DateTimeOffset>("DateTime", ["properties", "dateTime"], format: "base64");
+            _dateTime = DefineProperty<DateTimeOffset>("DateTime", ["properties", "dateTime"], format: "invalid");
         }
     }
 
