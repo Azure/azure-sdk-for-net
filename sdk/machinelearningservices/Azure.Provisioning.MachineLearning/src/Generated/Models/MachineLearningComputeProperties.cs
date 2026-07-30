@@ -150,8 +150,8 @@ namespace Azure.Provisioning.MachineLearning
             _computeLocation = DefineProperty<string>(nameof(ComputeLocation), new string[] { "computeLocation" });
             _provisioningState = DefineProperty<MachineLearningProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdOn" }, isOutput: true);
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedOn" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdOn" }, isOutput: true, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedOn" }, isOutput: true, format: "O");
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _provisioningErrors = DefineListProperty<MachineLearningError>(nameof(ProvisioningErrors), new string[] { "provisioningErrors" }, isOutput: true);
             _isAttachedCompute = DefineProperty<bool>(nameof(IsAttachedCompute), new string[] { "isAttachedCompute" }, isOutput: true);

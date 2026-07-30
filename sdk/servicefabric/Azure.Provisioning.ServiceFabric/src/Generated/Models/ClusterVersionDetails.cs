@@ -58,7 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         {
             base.DefineProvisionableProperties();
             _codeVersion = DefineProperty<string>(nameof(CodeVersion), new string[] { "codeVersion" });
-            _supportExpireOn = DefineProperty<DateTimeOffset>(nameof(SupportExpireOn), new string[] { "supportExpiryUtc" });
+            _supportExpireOn = DefineProperty<DateTimeOffset>(nameof(SupportExpireOn), new string[] { "supportExpiryUtc" }, format: "O");
             _environment = DefineProperty<ClusterEnvironment>(nameof(Environment), new string[] { "environment" });
             DefineAdditionalProperties();
         }
