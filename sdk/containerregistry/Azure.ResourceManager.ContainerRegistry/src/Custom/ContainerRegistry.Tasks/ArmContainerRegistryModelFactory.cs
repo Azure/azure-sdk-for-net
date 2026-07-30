@@ -66,6 +66,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <returns> A new <see cref="ContainerRegistryRunData"/> instance for mocking. </returns>
+        // Preserve the shipped 1.4.0 parameter names and order for named-argument source compatibility
+        // after the Task/Run/AgentPool types moved to Azure.ResourceManager.ContainerRegistry.Tasks.
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryRunData ContainerRegistryRunData(
@@ -264,11 +266,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <returns> A new <see cref="ContainerRegistryTaskStepProperties"/> instance for mocking. </returns>
+        // Preserve the shipped 1.4.0 parameter names and order for named-argument source compatibility
+        // after the Task/Run/AgentPool types moved to Azure.ResourceManager.ContainerRegistry.Tasks.
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(
-            string containerRegistryTaskStepType = null, IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null,
-            string contextPath = null, string contextAccessToken = null)
+            string containerRegistryTaskStepType = null,
+            IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null,
+            string contextPath = null,
+            string contextAccessToken = null)
             => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
 
         /// <summary> The properties for updating a timer trigger. </summary>
