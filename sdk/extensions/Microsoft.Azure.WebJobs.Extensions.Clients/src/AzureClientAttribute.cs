@@ -29,3 +29,5 @@ namespace Microsoft.Azure.WebJobs
         public string Connection { get; set; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

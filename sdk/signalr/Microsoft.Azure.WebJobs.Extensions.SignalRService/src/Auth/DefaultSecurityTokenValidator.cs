@@ -82,3 +82,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

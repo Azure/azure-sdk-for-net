@@ -45,3 +45,5 @@ namespace Azure.Core.Serialization
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

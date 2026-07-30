@@ -570,5 +570,3 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE

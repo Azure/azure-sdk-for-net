@@ -298,3 +298,5 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             => throw new NotSupportedException("Use the corresponding method in Azure.ResourceManager.ContainerRegistry instead.");
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
