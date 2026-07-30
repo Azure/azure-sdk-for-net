@@ -1,0 +1,84 @@
+# Code-analysis suppression-validation backlog
+#
+# Projects listed here temporarily skip AZC0041 enforcement. Their existing pragmas and
+# suppression attributes have not yet been migrated to central governance. An entry is not
+# an approval: this list is an unverified backlog that should be driven to empty.
+#
+# Format: one project name per line (matching $(MSBuildProjectName)). Lines starting with
+# `#` and blank lines are ignored. Keep the list alphabetical so diffs stay readable.
+#
+# To remove a project from this list, follow the workflow in eng/analyzerallowlist/README.md.
+Azure.AI.AgentServer.Responses
+Azure.AI.Agents.Persistent
+Azure.AI.ContentUnderstanding
+Azure.AI.DocumentIntelligence
+Azure.AI.Extensions.OpenAI
+Azure.AI.Inference
+Azure.AI.OpenAI
+Azure.AI.Projects
+Azure.AI.Projects.Agents
+Azure.AI.Speech.Transcription
+Azure.AI.Translation.Text
+Azure.AI.VoiceLive
+Azure.Analytics.Synapse.Artifacts
+Azure.Communication.Identity
+Azure.Communication.Messages
+Azure.Communication.PhoneNumbers
+Azure.Communication.Rooms
+Azure.Compute.Batch
+Azure.Core
+Azure.Core.Experimental
+Azure.Data.AppConfiguration
+Azure.Data.SchemaRegistry
+Azure.Data.Tables
+Azure.Developer.DevCenter
+Azure.Developer.Playwright
+Azure.Extensions.AspNetCore.DataProtection.Blobs
+Azure.Extensions.AspNetCore.DataProtection.Keys
+Azure.Health.Insights.RadiologyInsights
+Azure.IoT.ModelsRepository
+Azure.Messaging.EventHubs
+Azure.Messaging.EventHubs.Processor
+Azure.Messaging.ServiceBus
+Azure.Messaging.WebPubSub
+Azure.Messaging.WebPubSub.Client
+Azure.Monitor.OpenTelemetry.Exporter
+Azure.Projects
+Azure.Projects.AI
+Azure.Projects.Provisioning
+Azure.Provisioning.KubernetesConfiguration
+Azure.Provisioning.Redis
+Azure.Provisioning.Search
+Azure.ResourceManager
+Azure.ResourceManager.AppContainers
+Azure.ResourceManager.Batch
+Azure.ResourceManager.Billing
+Azure.ResourceManager.Chaos
+Azure.ResourceManager.ComputeSchedule
+Azure.ResourceManager.Hci.Vm
+Azure.ResourceManager.ManagedNetworkFabric
+Azure.ResourceManager.Monitor
+Azure.ResourceManager.NetApp
+Azure.ResourceManager.SecurityInsights
+Azure.ResourceManager.ServiceNetworking
+Azure.ResourceManager.Sql
+Azure.ResourceManager.Storage
+Azure.Search.Documents
+Azure.Security.KeyVault.Certificates
+Azure.Security.KeyVault.Keys
+Azure.Storage.Blobs
+Azure.Storage.Blobs.Batch
+Azure.Storage.Blobs.ChangeFeed
+Azure.Storage.Common
+Azure.Storage.Files.DataLake
+Azure.Storage.Files.Shares
+Azure.Storage.Queues
+Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
+Microsoft.Azure.WebJobs.Extensions.EventGrid
+Microsoft.Azure.WebJobs.Extensions.EventHubs
+Microsoft.Azure.WebJobs.Extensions.ServiceBus
+Microsoft.Azure.WebJobs.Extensions.SignalRService
+Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
+Microsoft.Azure.WebJobs.Extensions.WebPubSub
+Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
+System.ClientModel

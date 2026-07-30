@@ -4,16 +4,22 @@
 using System;
 using System.Collections.Immutable;
 using System.Globalization;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Azure.SdkAnalyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class CodeAnalysisSuppressionAnalyzer : DiagnosticAnalyzer
     {
+        private const string SkipListMarker =
+            "build_metadata.AdditionalFiles.AzureSdkCodeAnalysisSuppressionSkipValidation";
+        private const string ProjectNameProperty = "build_property.MSBuildProjectName";
+
         private static readonly ImmutableHashSet<string> s_suppressionAttributeNames =
             ImmutableHashSet.Create(
                 StringComparer.Ordinal,
@@ -27,8 +33,68 @@ namespace Azure.SdkAnalyzers
         {
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.RegisterSyntaxNodeAction(AnalyzePragma, SyntaxKind.PragmaWarningDirectiveTrivia);
-            context.RegisterSyntaxNodeAction(AnalyzeAttribute, SyntaxKind.Attribute);
+            context.RegisterCompilationStartAction(compilationContext =>
+            {
+                if (ShouldSkipProject(compilationContext.Options, compilationContext.CancellationToken))
+                {
+                    // Roslyn requires every compilation-start branch to register an action.
+                    // Keep skipped projects free of syntax analysis while satisfying that contract.
+                    compilationContext.RegisterCompilationEndAction(_ => { });
+                    return;
+                }
+
+                compilationContext.RegisterSyntaxNodeAction(AnalyzePragma, SyntaxKind.PragmaWarningDirectiveTrivia);
+                compilationContext.RegisterSyntaxNodeAction(AnalyzeAttribute, SyntaxKind.Attribute);
+            });
+        }
+
+        internal static bool ShouldSkipProject(AnalyzerOptions options, CancellationToken cancellationToken)
+        {
+            if (!options.AnalyzerConfigOptionsProvider.GlobalOptions.TryGetValue(
+                ProjectNameProperty,
+                out string projectName))
+            {
+                return false;
+            }
+
+            AdditionalText skipList = null;
+            foreach (AdditionalText file in options.AdditionalFiles)
+            {
+                if (!options.AnalyzerConfigOptionsProvider.GetOptions(file).TryGetValue(
+                    SkipListMarker,
+                    out string marker) ||
+                    !string.Equals(marker, "true", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                // Multiple marked files make the authoritative backlog ambiguous. Fail closed.
+                if (skipList != null)
+                {
+                    return false;
+                }
+
+                skipList = file;
+            }
+
+            SourceText text = skipList?.GetText(cancellationToken);
+            if (text == null)
+            {
+                return false;
+            }
+
+            foreach (TextLine line in text.Lines)
+            {
+                string entry = line.ToString().Trim();
+                if (entry.Length != 0 &&
+                    !entry.StartsWith("#", StringComparison.Ordinal) &&
+                    string.Equals(entry, projectName, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void AnalyzePragma(SyntaxNodeAnalysisContext context)

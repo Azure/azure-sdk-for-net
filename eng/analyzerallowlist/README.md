@@ -9,6 +9,11 @@ explicit, reviewed approval with a justification.
 > [`eng/NoWarnSkipValidation.txt`](../NoWarnSkipValidation.txt) — the temporary backlog — rather
 > than getting a file here. See [Workflow](#workflow) below.
 
+> **Inline suppression migration pending?** Projects whose existing pragmas and suppression
+> attributes have not yet been migrated are temporarily listed in
+> [`eng/CodeAnalysisSuppressionSkipValidation.txt`](../CodeAnalysisSuppressionSkipValidation.txt).
+> That backlog skips only `AZC0041` enforcement and does not approve the local suppressions.
+
 ## File Naming
 
 Files are named by `$(MSBuildProjectName)`:
@@ -136,9 +141,13 @@ cannot be fixed or narrowed:
 **Preferred alternatives:**
 
 - Fix the underlying warning so the suppression can be removed.
-- Use a scoped `#pragma warning disable CODE // justification` at the file or member level,
-  then remove the `<NoWarn>` entry from the csproj.
-- Use `[SuppressMessage]` with a `Justification` parameter for non-pragma-compatible scopes.
+- For diagnostics not governed by `AllowListDiagnosticSuppressor`, use a scoped
+  `#pragma warning disable CODE // justification` at the file or member level, then remove the
+  `<NoWarn>` entry from the csproj.
+- For diagnostics not governed by `AllowListDiagnosticSuppressor`, use `[SuppressMessage]` with
+  a `Justification` parameter for non-pragma-compatible scopes.
+- Governed diagnostics must be fixed or declared in this directory. `AZC0041` rejects local
+  pragmas and suppression attributes for those diagnostics.
 
 ### Removing a project from the skip list
 
@@ -156,11 +165,42 @@ When picking a project out of `eng/NoWarnSkipValidation.txt`:
      allow-list entry both records the approval and applies the suppression.
 4. Land in a per-project PR.
 
+### Removing a project from the code-analysis suppression skip list
+
+Projects in `eng/CodeAnalysisSuppressionSkipValidation.txt` retain their existing local
+suppressions while migration is pending. An entry temporarily prevents
+`CodeAnalysisSuppressionAnalyzer` from registering its `AZC0041` analysis actions for that
+project; it is not an approval and does not suppress any underlying diagnostic itself.
+
+When picking a project from the backlog:
+
+1. Delete the project's line from `eng/CodeAnalysisSuppressionSkipValidation.txt` locally to
+   activate `AZC0041`.
+2. Build every target framework for the project and inventory each reported pragma or suppression
+   attribute. Bare `#pragma warning disable` directives require particular care: remove the
+   directive and build to discover every warning it hid.
+3. For each reported suppression, choose one of:
+   - **Fix:** resolve the underlying warning and remove the local suppression.
+   - **Approve narrowly:** add a justified symbol-scoped `nowarn:CODE Target` entry to the
+     project's allow-list file and remove the local suppression.
+   - **Approve project-wide:** only when a symbol scope is impractical, add a justified bare
+     `nowarn:CODE` entry and remove the local suppression.
+4. Do not edit generated code. `AZC0041` excludes generated source from analysis.
+5. Account for linked shared source. Suppressions are governed by the consuming
+   `$(MSBuildProjectName)`, so each shipping project compiling the source may need its own scoped
+   approval.
+6. Build every target framework again, run relevant tests, and permanently remove the project
+   from the skip list in the same change.
+
+Prefer one project or a small, logically connected package family per migration change. Keep the
+skip list alphabetical and never add a new project merely to bypass a new `AZC0041` failure.
+
 ## Related
 
 - `eng/NoWarnValidation.targets` — The validation target that enforces NoWarn policy
 - `eng/AnalyzerAllowList.targets` — MSBuild logic that reads these files
 - `eng/NoWarnSkipValidation.txt` — Temporary backlog of unverified projects
+- `eng/CodeAnalysisSuppressionSkipValidation.txt` — Temporary backlog of projects with local
+  suppression migration pending
 - [Issue #55312](https://github.com/Azure/azure-sdk-for-net/issues/55312) — NoWarn visibility
 - [Issue #57586](https://github.com/Azure/azure-sdk-for-net/issues/57586) — Suppression validation
-
