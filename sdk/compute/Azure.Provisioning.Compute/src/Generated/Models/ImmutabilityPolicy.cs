@@ -81,8 +81,8 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _immutabilityDurationDays = DefineProperty<int>(nameof(ImmutabilityDurationDays), new string[] { "immutabilityDurationDays" }, isOutput: true);
             _type = DefineProperty<ImmutabilityPolicyType>(nameof(Type), new string[] { "type" }, isOutput: true);
-            _policyStartOn = DefineProperty<DateTimeOffset>(nameof(PolicyStartOn), new string[] { "policyStartTime" }, isOutput: true);
-            _policyExpirationOn = DefineProperty<DateTimeOffset>(nameof(PolicyExpirationOn), new string[] { "policyExpirationTime" }, isOutput: true);
+            _policyStartOn = DefineProperty<DateTimeOffset>(nameof(PolicyStartOn), new string[] { "policyStartTime" }, isOutput: true, format: "O");
+            _policyExpirationOn = DefineProperty<DateTimeOffset>(nameof(PolicyExpirationOn), new string[] { "policyExpirationTime" }, isOutput: true, format: "O");
             _isPolicyExpired = DefineProperty<bool>(nameof(IsPolicyExpired), new string[] { "isPolicyExpired" }, isOutput: true);
             DefineAdditionalProperties();
         }
