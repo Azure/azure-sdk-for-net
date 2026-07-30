@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsPrivateCloudResource.ResourceType, out string avsPrivateCloudApiVersion);
             _privateCloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
-            _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
+            _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudL3NetworkApiVersion);
             _l3NetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _l3NetworksRestClient = new L3Networks(_l3NetworksClientDiagnostics, Pipeline, Endpoint, networkCloudL3NetworkApiVersion ?? "2026-05-01-preview");
+            _l3NetworksRestClient = new L3Networks(_l3NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudL3NetworkApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

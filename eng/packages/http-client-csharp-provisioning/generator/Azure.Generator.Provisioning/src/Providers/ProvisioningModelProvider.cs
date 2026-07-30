@@ -45,17 +45,30 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
-        protected override CSharpType? BuildBaseType()
+        protected override FormattableString BuildDescription()
         {
-            // Derived discriminated types inherit from their base model type
-            if (_inputModel.DiscriminatorValue != null && _inputModel.BaseModel != null)
+            var description = base.BuildDescription();
+            if (_inputModel.DiscriminatedSubtypes.Count == 0)
+                return description;
+
+            // TODO https://github.com/microsoft/typespec/issues/11397: Remove this override when
+            // discriminator-derived models are retained without relying on XML documentation references.
+            var derivedModels = DerivedModels
+                .Where(model => model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public))
+                .ToList();
+            var derivedDescription = "Please note this is the abstract base class. The derived classes available for instantiation are: ";
+            var useOxfordComma = derivedModels.Count > 2;
+            for (var i = 0; i < derivedModels.Count; i++)
             {
-                var baseProvider = CodeModelGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
-                if (baseProvider != null)
-                    return baseProvider.Type;
+                derivedDescription = i != derivedModels.Count - 1
+                    ? derivedDescription + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>" + (useOxfordComma ? ", " : " ")
+                    : derivedDescription + (i > 0 ? "and " : string.Empty) + $"<see cref=\"{derivedModels[i].Type.FullyQualifiedName}\"/>.";
             }
-            return new CSharpType(typeof(ProvisionableConstruct));
+            return $"{description}\n{derivedDescription}";
         }
+
+        protected override CSharpType? BuildBaseType()
+            => base.BuildBaseType() ?? new CSharpType(typeof(ProvisionableConstruct));
 
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty property)
@@ -78,28 +91,35 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-            // Collect properties from the model and its base chain.
-            // Non-discriminated models use ProvisionableConstruct as C# base (not the TypeSpec base),
-            // so inherited properties must be explicitly collected here.
-            var model = _inputModel;
-            while (model != null)
+            foreach (var prop in _inputModel.Properties)
             {
-                foreach (var prop in model.Properties)
-                {
-                    if (prop.IsDiscriminator) continue;
-                    if (!seen.Add(prop.Name)) continue;
+                if (prop.IsDiscriminator) continue;
 
-                    var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
-                    if (property != null)
-                        properties.Add(property);
+                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
+                if (property != null)
+                {
+                    if (HidesBaseProperty(property.Name))
+                    {
+                        property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
+                    }
+                    properties.Add(property);
                 }
-                // Discriminated types use C# inheritance, so only collect own properties
-                if (_inputModel.DiscriminatorValue != null) break;
-                model = model.BaseModel;
             }
             return [.. properties];
+        }
+
+        private bool HidesBaseProperty(string propertyName)
+        {
+            var baseModel = BaseModelProvider;
+            while (baseModel != null)
+            {
+                if (baseModel.CanonicalView.Properties.Any(property => string.Equals(property.Name, propertyName, StringComparison.Ordinal)))
+                {
+                    return true;
+                }
+                baseModel = baseModel.BaseModelProvider;
+            }
+            return false;
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -183,7 +203,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(field.Type, provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
                         typeArgs,
                         false)
                 ).Terminate());

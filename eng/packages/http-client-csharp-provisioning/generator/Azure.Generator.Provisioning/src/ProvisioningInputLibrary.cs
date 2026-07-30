@@ -5,22 +5,21 @@ using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Generator.Provisioning
 {
     /// <summary>
-    /// Input library for provisioning generator. Prepares resource projections,
-    /// reachable input models/enums, and settable usage before output providers are created.
+    /// Input library for the provisioning generator.
     /// </summary>
     public class ProvisioningInputLibrary : ManagementInputLibrary
     {
+        private const string ProvisioningProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@provisioningProviderSchema";
         private IReadOnlyList<ProvisioningResourceProjection>? _resourceProjections;
-        private Dictionary<InputModelType, List<ProvisioningResourceProjection>>? _resourceProjectionsByModel;
-        private IReadOnlyList<InputModelType>? _reachableModels;
-        private IReadOnlyList<InputEnumType>? _reachableEnums;
-        private Dictionary<InputModelType, bool>? _modelSettableUsage;
+        private Dictionary<string, bool>? _modelSettableUsage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningInputLibrary"/> class.
@@ -34,33 +33,15 @@ namespace Azure.Generator.Provisioning
         {
             get
             {
-                EnsureProvisioningInput();
+                EnsureProvisioningMetadata();
                 return _resourceProjections!;
-            }
-        }
-
-        internal IReadOnlyList<InputModelType> ReachableModels
-        {
-            get
-            {
-                EnsureProvisioningInput();
-                return _reachableModels!;
-            }
-        }
-
-        internal IReadOnlyList<InputEnumType> ReachableEnums
-        {
-            get
-            {
-                EnsureProvisioningInput();
-                return _reachableEnums!;
             }
         }
 
         internal bool IsModelSettable(InputModelType model)
         {
-            EnsureProvisioningInput();
-            if (_modelSettableUsage!.TryGetValue(model, out var isSettable))
+            EnsureProvisioningMetadata();
+            if (_modelSettableUsage!.TryGetValue(model.CrossLanguageDefinitionId, out var isSettable))
             {
                 return isSettable;
             }
@@ -70,168 +51,62 @@ namespace Azure.Generator.Provisioning
 
         internal bool IsModelReachable(InputModelType model)
         {
-            EnsureProvisioningInput();
-            return _modelSettableUsage!.ContainsKey(model);
+            EnsureProvisioningMetadata();
+            return _modelSettableUsage!.ContainsKey(model.CrossLanguageDefinitionId);
         }
 
-        private void EnsureProvisioningInput()
+        private void EnsureProvisioningMetadata()
         {
             if (_resourceProjections != null && _modelSettableUsage != null)
+            {
                 return;
-
-            var resourceProjections = _resourceProjections
-                ?? ProvisioningResourceProjection.Create(ArmProviderSchema.Resources);
-            var resourceProjectionsByModel = _resourceProjectionsByModel ?? resourceProjections
-                .GroupBy(projection => projection.ResourceModel)
-                .ToDictionary(group => group.Key, group => group.ToList());
-            var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
-
-            _resourceProjections = resourceProjections;
-            _resourceProjectionsByModel = resourceProjectionsByModel;
-            _reachableModels = reachableModels;
-            _reachableEnums = reachableEnums;
-            _modelSettableUsage = modelSettableUsage;
-        }
-
-        /// <summary>
-        /// Collects the input models and enums reachable from the resource models'
-        /// property graphs. The same traversal dyes models reachable from settable
-        /// resources through non-output properties as settable.
-        /// Provisioning settable analysis is similar to TCGC usage analysis, but
-        /// provisioning emits only a subset of operations, so TCGC usage cannot be
-        /// used directly here.
-        /// </summary>
-        private static (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums, Dictionary<InputModelType, bool> ModelSettableUsage) CollectReachableTypes(
-            IReadOnlyList<ProvisioningResourceProjection> resourceProjections,
-            Dictionary<InputModelType, List<ProvisioningResourceProjection>> resourceProjectionsByModel)
-        {
-            var outputVisited = new HashSet<InputType>();
-            // Visit settable and non-settable paths independently. A model may be reached
-            // by a read-only resource first and by a writable resource later; the writable
-            // path must still propagate so the final modelSettableUsage value can be dyed true.
-            var traversalVisited = new HashSet<(InputType Type, bool IsSettable)>();
-            var models = new List<InputModelType>();
-            var enums = new List<InputEnumType>();
-            var modelSettableUsage = new Dictionary<InputModelType, bool>();
-            var queue = new Queue<(InputType Type, bool IsSettable)>();
-
-            foreach (var resource in resourceProjections)
-            {
-                queue.Enqueue((resource.ResourceModel, resource.WritableScopes.Count > 0));
             }
 
-            while (queue.Count > 0)
+            var rootClient = InputNamespace.RootClients.FirstOrDefault()
+                ?? throw new InvalidOperationException("The provisioning code model does not contain a root client.");
+            var decorator = rootClient.Decorators.SingleOrDefault(d => d.Name == ProvisioningProviderSchemaDecoratorName)
+                ?? throw new InvalidOperationException($"The provisioning code model does not contain the '{ProvisioningProviderSchemaDecoratorName}' decorator.");
+            var arguments = decorator.Arguments
+                ?? throw new InvalidOperationException($"The '{ProvisioningProviderSchemaDecoratorName}' decorator does not contain arguments.");
+
+            var modelsById = new Dictionary<string, InputModelType>(StringComparer.Ordinal);
+            foreach (var model in InputNamespace.Models)
             {
-                Visit(queue.Dequeue(), resourceProjectionsByModel, outputVisited, traversalVisited, models, enums, modelSettableUsage, queue);
+                modelsById.TryAdd(model.CrossLanguageDefinitionId, model);
             }
-
-            return (models, enums, modelSettableUsage);
-        }
-
-        private static void EnqueueResourceProperties(ProvisioningResourceProjection resource, bool isSettable, Queue<(InputType Type, bool IsSettable)> queue)
-        {
-            foreach (var property in GetResourceProperties(resource))
+            var methodsById = new Dictionary<string, ResourceMethod>(StringComparer.Ordinal);
+            foreach (var resource in ArmProviderSchema.Resources)
             {
-                queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
-            }
-        }
-
-        private static void Visit(
-            (InputType Type, bool IsSettable) item,
-            Dictionary<InputModelType, List<ProvisioningResourceProjection>> resourceProjectionInfosByModel,
-            HashSet<InputType> outputVisited,
-            HashSet<(InputType Type, bool IsSettable)> traversalVisited,
-            List<InputModelType> models,
-            List<InputEnumType> enums,
-            Dictionary<InputModelType, bool> modelSettableUsage,
-            Queue<(InputType Type, bool IsSettable)> queue)
-        {
-            if (!traversalVisited.Add(item))
-                return;
-
-            switch (item.Type)
-            {
-                case InputModelType model:
-                    if (resourceProjectionInfosByModel.TryGetValue(model, out var resources))
-                    {
-                        var isResourceSettable = resources.Any(r => r.WritableScopes.Count > 0);
-                        var isSettable = item.IsSettable || isResourceSettable;
-                        modelSettableUsage[model] = isSettable || (modelSettableUsage.TryGetValue(model, out var existingResourceUsage) && existingResourceUsage);
-                        foreach (var resource in resources)
-                        {
-                            EnqueueResourceProperties(resource, isSettable, queue);
-                        }
-                        if (model.BaseModel != null)
-                            queue.Enqueue((model.BaseModel, isSettable));
-                        EnqueueDiscriminatorDerivedModels(model, isSettable, queue);
-                        break;
-                    }
-
-                    if (outputVisited.Add(model))
-                    {
-                        models.Add(model);
-                    }
-                    modelSettableUsage[model] = item.IsSettable || (modelSettableUsage.TryGetValue(model, out var existing) && existing);
-                    if (model.BaseModel != null)
-                        queue.Enqueue((model.BaseModel, item.IsSettable));
-                    EnqueueDiscriminatorDerivedModels(model, item.IsSettable, queue);
-                    foreach (var property in model.Properties)
-                        queue.Enqueue((property.Type, item.IsSettable && !property.IsReadOnly));
-                    if (model.AdditionalProperties != null)
-                        queue.Enqueue((model.AdditionalProperties, item.IsSettable));
-                    break;
-                case InputArrayType arrayType:
-                    queue.Enqueue((arrayType.ValueType, item.IsSettable));
-                    break;
-                case InputDictionaryType dictType:
-                    queue.Enqueue((dictType.KeyType, item.IsSettable));
-                    queue.Enqueue((dictType.ValueType, item.IsSettable));
-                    break;
-                case InputNullableType nullableType:
-                    queue.Enqueue((nullableType.Type, item.IsSettable));
-                    break;
-                case InputLiteralType literalType:
-                    queue.Enqueue((literalType.ValueType, item.IsSettable));
-                    break;
-                case InputUnionType unionType:
-                    foreach (var variant in unionType.VariantTypes)
-                        queue.Enqueue((variant, item.IsSettable));
-                    break;
-                case InputEnumType enumType:
-                    if (outputVisited.Add(enumType))
-                    {
-                        enums.Add(enumType);
-                    }
-                    break;
-            }
-        }
-
-        private static void EnqueueDiscriminatorDerivedModels(InputModelType model, bool isSettable, Queue<(InputType Type, bool IsSettable)> queue)
-        {
-            foreach (var derived in model.DiscriminatedSubtypes.Values)
-            {
-                queue.Enqueue((derived, isSettable));
-            }
-        }
-
-        private static IEnumerable<InputModelProperty> GetResourceProperties(ProvisioningResourceProjection projection)
-        {
-            var chain = new Stack<InputModelType>();
-            chain.Push(projection.ResourceModel);
-            var baseModel = projection.ResourceModel.BaseModel;
-            while (baseModel != null)
-            {
-                chain.Push(baseModel);
-                baseModel = baseModel.BaseModel;
-            }
-
-            foreach (var model in chain)
-            {
-                foreach (var property in model.Properties)
+                foreach (var method in resource.Methods)
                 {
-                    yield return property;
+                    methodsById.TryAdd(method.InputMethod.CrossLanguageDefinitionId, method);
                 }
             }
+
+            var projections = new List<ProvisioningResourceProjection>();
+            if (arguments.TryGetValue("resourceProjections", out var projectionsData))
+            {
+                using var document = JsonDocument.Parse(projectionsData);
+                foreach (var projectionElement in document.RootElement.EnumerateArray())
+                {
+                    projections.Add(ProvisioningResourceProjection.Deserialize(projectionElement, modelsById, methodsById));
+                }
+            }
+
+            var modelSettableUsage = new Dictionary<string, bool>(StringComparer.Ordinal);
+            if (arguments.TryGetValue("modelSettableUsage", out var usageData))
+            {
+                using var document = JsonDocument.Parse(usageData);
+                foreach (var usageElement in document.RootElement.EnumerateArray())
+                {
+                    var modelId = usageElement.GetProperty("modelId").GetString()
+                        ?? throw new JsonException("A provisioning model ID cannot be null.");
+                    modelSettableUsage.Add(modelId, usageElement.GetProperty("isSettable").GetBoolean());
+                }
+            }
+
+            _resourceProjections = projections;
+            _modelSettableUsage = modelSettableUsage;
         }
     }
 }

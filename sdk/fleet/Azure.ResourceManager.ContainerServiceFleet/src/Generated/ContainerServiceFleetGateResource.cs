@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string containerServiceFleetGateApiVersion);
             _gatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _gatesRestClient = new Gates(_gatesClientDiagnostics, Pipeline, Endpoint, containerServiceFleetGateApiVersion ?? "2026-03-02-preview");
+            _gatesRestClient = new Gates(_gatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetGateApiVersion ?? "2026-03-02-preview");
             ValidateResourceId(id);
         }
 

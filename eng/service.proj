@@ -114,7 +114,7 @@
   <Target Name="GenerateCode" DependsOnTargets="InstallTspClient;BuildPlugin">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
-             Properties="SkipTspClientInstall=true"
+             Properties="SkipTspClientInstall=true;SkipBuildPlugin=true"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />

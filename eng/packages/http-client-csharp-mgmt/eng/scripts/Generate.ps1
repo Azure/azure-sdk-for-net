@@ -53,7 +53,7 @@ if ($null -eq $filter) {
     foreach ($project in $testProjects) {
         $specPath = "TestProjects/Local/$($project.Folder)"
         $mgmtLaunchSettings["profiles"].Add($project.FilterName, @{
-            "commandLineArgs" = "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$specPath -g MgmtClientGenerator"
+            "commandLineArgs" = "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$specPath -g ManagementClientGenerator"
             "commandName" = "Executable"
             "executablePath" = "dotnet"
         })

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             TryGetApiVersion(ConnectedClusterServiceResource.ResourceType, out string connectedClusterServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ConnectedClusterServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, connectedClusterServiceApiVersion ?? "2024-03-01");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterServiceApiVersion ?? "2024-03-01");
         }
 
         /// <summary>

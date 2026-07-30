@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VpnGatewayNatRuleResource.ResourceType, out string vpnGatewayNatRuleApiVersion);
             _natRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayNatRuleResource.ResourceType.Namespace, Diagnostics);
-            _natRulesRestClient = new NatRules(_natRulesClientDiagnostics, Pipeline, Endpoint, vpnGatewayNatRuleApiVersion ?? "2025-07-01");
+            _natRulesRestClient = new NatRules(_natRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnGatewayNatRuleApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

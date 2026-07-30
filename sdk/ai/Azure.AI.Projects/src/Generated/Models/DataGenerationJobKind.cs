@@ -19,6 +19,8 @@ namespace Azure.AI.Projects
         private const string TracesValue = "traces";
         /// <summary> Tool calling conversation between user and agent. </summary>
         private const string ToolUseValue = "tool_use";
+        /// <summary> Task generation for evaluation scenarios. </summary>
+        private const string TaskGenerationValue = "task_generation";
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -38,6 +40,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Tool calling conversation between user and agent. </summary>
         public static DataGenerationJobKind ToolUse { get; } = new DataGenerationJobKind(ToolUseValue);
+
+        /// <summary> Task generation for evaluation scenarios. </summary>
+        public static DataGenerationJobKind TaskGeneration { get; } = new DataGenerationJobKind(TaskGenerationValue);
 
         /// <summary> Determines if two <see cref="DataGenerationJobKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

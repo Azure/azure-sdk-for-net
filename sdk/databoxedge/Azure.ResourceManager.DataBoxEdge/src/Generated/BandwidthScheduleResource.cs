@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string bandwidthScheduleApiVersion);
             _bandwidthSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _bandwidthSchedulesRestClient = new BandwidthSchedules(_bandwidthSchedulesClientDiagnostics, Pipeline, Endpoint, bandwidthScheduleApiVersion ?? "2023-12-01");
+            _bandwidthSchedulesRestClient = new BandwidthSchedules(_bandwidthSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bandwidthScheduleApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

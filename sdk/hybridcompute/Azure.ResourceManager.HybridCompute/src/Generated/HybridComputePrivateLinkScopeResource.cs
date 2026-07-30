@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string hybridComputePrivateLinkScopeApiVersion);
             _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Endpoint, hybridComputePrivateLinkScopeApiVersion ?? "2025-09-16-preview");
+            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputePrivateLinkScopeApiVersion ?? "2025-09-16-preview");
             ValidateResourceId(id);
         }
 

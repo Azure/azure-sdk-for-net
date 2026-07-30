@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(WorkloadClassifierResource.ResourceType, out string workloadClassifierApiVersion);
             _workloadClassifiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadClassifierResource.ResourceType.Namespace, Diagnostics);
-            _workloadClassifiersRestClient = new WorkloadClassifiers(_workloadClassifiersClientDiagnostics, Pipeline, Endpoint, workloadClassifierApiVersion ?? "2025-02-01-preview");
+            _workloadClassifiersRestClient = new WorkloadClassifiers(_workloadClassifiersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadClassifierApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

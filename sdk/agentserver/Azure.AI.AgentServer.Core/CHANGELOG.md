@@ -3,6 +3,7 @@
 ## 1.0.0-beta.27 (Unreleased)
 
 ### Features Added
+- Added a durable key-value **state store** client under `Azure.AI.AgentServer.Core.Storage`. `FoundryStateStore.GetOrCreateAsync` binds (creating if needed) a named, Foundry-backed store; instances expose async `GetAsync`/`UpdateAsync`/`DeleteAsync` for the store and `CreateItemAsync`/`SetItemAsync`/`GetItemAsync`/`DeleteItemAsync`/`ListKeysAsync` for its items, with optimistic concurrency (`If-Match`/`ETag`), optional per-user isolation, and store-level item TTL. The .NET analogue of the Python SDK's `FoundryStateStore`.
 
 ### Breaking Changes
 

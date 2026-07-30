@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string firewallPolicyApiVersion);
             _firewallPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPoliciesRestClient = new FirewallPolicies(_firewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
             _firewallPolicyDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyDeploymentsRestClient = new FirewallPolicyDeployments(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyDeploymentsRestClient = new FirewallPolicyDeployments(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
             _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesFilterValuesRestClient = new FirewallPolicyIdpsSignaturesFilterValues(_firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyIdpsSignaturesFilterValuesRestClient = new FirewallPolicyIdpsSignaturesFilterValues(_firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
             _firewallPolicyIdpsSignaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesRestClient = new FirewallPolicyIdpsSignatures(_firewallPolicyIdpsSignaturesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyIdpsSignaturesRestClient = new FirewallPolicyIdpsSignatures(_firewallPolicyIdpsSignaturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
             _firewallPolicyIdpsSignaturesOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
+            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

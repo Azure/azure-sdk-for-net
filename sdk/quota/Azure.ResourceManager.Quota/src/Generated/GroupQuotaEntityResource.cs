@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string groupQuotaEntityApiVersion);
             _groupQuotasEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
+            _groupQuotasEntitiesRestClient = new GroupQuotasEntities(_groupQuotasEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaEntityApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

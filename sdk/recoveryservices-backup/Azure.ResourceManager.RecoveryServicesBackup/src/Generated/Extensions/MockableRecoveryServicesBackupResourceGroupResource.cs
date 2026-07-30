@@ -60,51 +60,51 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         private ClientDiagnostics BackupProtectionIntentClientDiagnostics => _backupProtectionIntentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectionIntent BackupProtectionIntentRestClient => _backupProtectionIntentRestClient ??= new BackupProtectionIntent(BackupProtectionIntentClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectionIntent BackupProtectionIntentRestClient => _backupProtectionIntentRestClient ??= new BackupProtectionIntent(BackupProtectionIntentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics BackupUsageSummariesClientDiagnostics => _backupUsageSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupUsageSummaries BackupUsageSummariesRestClient => _backupUsageSummariesRestClient ??= new BackupUsageSummaries(BackupUsageSummariesClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupUsageSummaries BackupUsageSummariesRestClient => _backupUsageSummariesRestClient ??= new BackupUsageSummaries(BackupUsageSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics JobsClientDiagnostics => _jobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Jobs JobsRestClient => _jobsRestClient ??= new Jobs(JobsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private Jobs JobsRestClient => _jobsRestClient ??= new Jobs(JobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics BackupProtectedItemsClientDiagnostics => _backupProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectedItems BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItems(BackupProtectedItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectedItems BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItems(BackupProtectedItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics ProtectableContainersClientDiagnostics => _protectableContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProtectableContainers ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainers(ProtectableContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private ProtectableContainers ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainers(ProtectableContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics ProtectionContainersOperationGroupClientDiagnostics => _protectionContainersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProtectionContainersOperationGroup ProtectionContainersOperationGroupRestClient => _protectionContainersOperationGroupRestClient ??= new ProtectionContainersOperationGroup(ProtectionContainersOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private ProtectionContainersOperationGroup ProtectionContainersOperationGroupRestClient => _protectionContainersOperationGroupRestClient ??= new ProtectionContainersOperationGroup(ProtectionContainersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics BackupProtectableItemsClientDiagnostics => _backupProtectableItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectableItems BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItems(BackupProtectableItemsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectableItems BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItems(BackupProtectableItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics BackupProtectionContainersClientDiagnostics => _backupProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupProtectionContainers BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainers(BackupProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupProtectionContainers BackupProtectionContainersRestClient => _backupProtectionContainersRestClient ??= new BackupProtectionContainers(BackupProtectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics DeletedProtectionContainersClientDiagnostics => _deletedProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedProtectionContainers DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainers(DeletedProtectionContainersClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private DeletedProtectionContainers DeletedProtectionContainersRestClient => _deletedProtectionContainersRestClient ??= new DeletedProtectionContainers(DeletedProtectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics SecurityPINsClientDiagnostics => _securityPINsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityPINs SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINs(SecurityPINsClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private SecurityPINs SecurityPINsRestClient => _securityPINsRestClient ??= new SecurityPINs(SecurityPINsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics FetchTieringCostClientDiagnostics => _fetchTieringCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FetchTieringCost FetchTieringCostRestClient => _fetchTieringCostRestClient ??= new FetchTieringCost(FetchTieringCostClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private FetchTieringCost FetchTieringCostRestClient => _fetchTieringCostRestClient ??= new FetchTieringCost(FetchTieringCostClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics GetTieringCostOperationResultClientDiagnostics => _getTieringCostOperationResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GetTieringCostOperationResult GetTieringCostOperationResultRestClient => _getTieringCostOperationResultRestClient ??= new GetTieringCostOperationResult(GetTieringCostOperationResultClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private GetTieringCostOperationResult GetTieringCostOperationResultRestClient => _getTieringCostOperationResultRestClient ??= new GetTieringCostOperationResult(GetTieringCostOperationResultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         /// <summary>
         /// Fetches resource storage config.
