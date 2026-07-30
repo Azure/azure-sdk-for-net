@@ -2216,7 +2216,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Restricts the set of operations returned. Only one specific filter is
         /// supported: "status eq 'NotStarted' or status eq 'Running'"
         /// </param>
-        /// <param name="maxCount">
+        /// <param name="top">
         /// Specifies a non-negative integer n that limits the number of items returned
         /// from a collection. The service returns the number of available items up to but
         /// not greater than the specified value n.
@@ -2242,7 +2242,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Restricts the set of operations returned. Only one specific filter is
         /// supported: "status eq 'NotStarted' or status eq 'Running'"
         /// </param>
-        /// <param name="maxCount">
+        /// <param name="top">
         /// Specifies a non-negative integer n that limits the number of items returned
         /// from a collection. The service returns the number of available items up to but
         /// not greater than the specified value n.
