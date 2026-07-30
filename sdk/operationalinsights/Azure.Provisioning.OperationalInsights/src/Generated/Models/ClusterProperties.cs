@@ -186,8 +186,8 @@ namespace Azure.Provisioning.OperationalInsights
             _isAvailabilityZonesEnabled = DefineProperty<bool>(nameof(IsAvailabilityZonesEnabled), new string[] { "isAvailabilityZonesEnabled" });
             _billingType = DefineProperty<OperationalInsightsBillingType>(nameof(BillingType), new string[] { "billingType" });
             _keyVaultProperties = DefineModelProperty<OperationalInsightsKeyVaultProperties>(nameof(KeyVaultProperties), new string[] { "keyVaultProperties" });
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true);
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" }, isOutput: true, format: "O");
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true, format: "O");
             _associatedWorkspaces = DefineListProperty<OperationalInsightsClusterAssociatedWorkspace>(nameof(AssociatedWorkspaces), new string[] { "associatedWorkspaces" });
             _capacityReservationProperties = DefineModelProperty<OperationalInsightsCapacityReservationProperties>(nameof(CapacityReservationProperties), new string[] { "capacityReservationProperties" });
             _replication = DefineModelProperty<OperationalInsightsClusterReplicationProperties>(nameof(Replication), new string[] { "replication" });

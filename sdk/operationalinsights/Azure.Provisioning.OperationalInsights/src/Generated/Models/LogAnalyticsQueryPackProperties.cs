@@ -69,8 +69,8 @@ namespace Azure.Provisioning.OperationalInsights
         {
             base.DefineProvisionableProperties();
             _queryPackId = DefineProperty<Guid>(nameof(QueryPackId), new string[] { "queryPackId" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "timeCreated" }, isOutput: true);
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "timeModified" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "timeCreated" }, isOutput: true, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "timeModified" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }
