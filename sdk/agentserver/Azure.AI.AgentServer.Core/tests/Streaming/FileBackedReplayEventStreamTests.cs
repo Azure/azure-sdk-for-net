@@ -43,8 +43,8 @@ public sealed class FileBackedReplayEventStreamTests
             _dir,
             cursor: p => (int)p,
             ttl: TimeSpan.FromHours(1),
-            serializer: p => Encoding.UTF8.GetBytes(p.ToString()!),
-            deserializer: b => int.Parse(Encoding.UTF8.GetString(b)));
+            serializer: p => p.ToString()!,
+            deserializer: s => int.Parse(s));
         return new InMemoryEventStreamRegistry(options);
     }
 
@@ -288,8 +288,8 @@ public sealed class FileBackedReplayEventStreamTests
             _dir,
             cursor: p => (int)p,
             ttl: TimeSpan.FromMilliseconds(1),
-            serializer: p => Encoding.UTF8.GetBytes(p.ToString()!),
-            deserializer: b => int.Parse(Encoding.UTF8.GetString(b)));
+            serializer: p => p.ToString()!,
+            deserializer: s => int.Parse(s));
         var registry = new InMemoryEventStreamRegistry(options);
 
         EventStream stream = await registry.GetOrCreateAsync("compact-1");

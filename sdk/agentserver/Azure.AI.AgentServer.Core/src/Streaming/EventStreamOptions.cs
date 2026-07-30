@@ -60,8 +60,8 @@ public sealed class EventStreamOptions
         string? storageDirectory = null)
     {
         Func<object, int>? objectCursor = cursor is null ? null : payload => cursor((TPayload)payload);
-        Func<object, byte[]> serializer = payload => JsonSerializer.SerializeToUtf8Bytes((TPayload)payload);
-        Func<byte[], object> deserializer = bytes => JsonSerializer.Deserialize<TPayload>(bytes)!;
+        Func<object, string> serializer = payload => JsonSerializer.Serialize((TPayload)payload);
+        Func<string, object> deserializer = s => JsonSerializer.Deserialize<TPayload>(s)!;
 
         _factory = (id, onDestroy) => new FileBackedReplayEventStream(
             id, ResolveStreamDirectory(storageDirectory), objectCursor, ttl ?? DefaultFileBackedTtl,
@@ -89,8 +89,8 @@ public sealed class EventStreamOptions
         string? storageDirectory = null,
         Func<object, int>? cursor = null,
         TimeSpan? ttl = null,
-        Func<object, byte[]>? serializer = null,
-        Func<byte[], object>? deserializer = null)
+        Func<object, string>? serializer = null,
+        Func<string, object>? deserializer = null)
     {
         // The encode/decode paths assume a matched pair: a custom serializer without a matching
         // deserializer (or vice versa) silently corrupts payloads on rehydrate, and the failure

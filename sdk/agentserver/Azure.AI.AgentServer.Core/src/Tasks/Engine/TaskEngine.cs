@@ -757,20 +757,40 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
                 if (!multiTurn)
                 {
-                    // One-shot terminal: best-effort store write so a transient failure can't
-                    // turn a completed run into a failure.
-                    try
+                    // One-shot terminal. The durable completion write must succeed before the caller
+                    // observes success: if CompleteAsync fails the record stays in_progress and a
+                    // later recovery scan could re-run the turn, so surface the failure to the caller
+                    // instead of reporting a completion that is not durable.
+                    if (outcome.Kind == TurnOutcomeKind.Completed)
                     {
-                        if (outcome.Kind == TurnOutcomeKind.Completed)
+                        try
                         {
                             await CompleteAsync(taskId, CancellationToken.None).ConfigureAwait(false);
                         }
+                        catch (Exception completionEx)
+                        {
+                            _logger.HandlerFailure(taskId, 0, completionEx.GetType().Name);
+                            FinishTurn(taskId, multiTurn);
+                            currentRun.SetException(new TaskFailedException(
+                                new TaskFailureDetail(
+                                    TaskFailureKind.HandlerError,
+                                    completionEx.GetType().Name,
+                                    $"Task '{taskId}' completed its handler but the durable completion write failed."),
+                                completionEx));
+                            return;
+                        }
+                    }
 
+                    // The record is now durably completed (or the outcome was not a completion). The
+                    // delete is best-effort cleanup — a failure here leaves a completed record that
+                    // recovery will not re-run, so it must not fail the caller.
+                    try
+                    {
                         await TryDeleteAsync(taskId).ConfigureAwait(false);
                     }
-                    catch (Exception completionEx)
+                    catch (Exception deleteEx)
                     {
-                        _logger.HandlerFailure(taskId, 0, completionEx.GetType().Name);
+                        _logger.HandlerFailure(taskId, 0, deleteEx.GetType().Name);
                     }
 
                     FinishTurn(taskId, multiTurn);
@@ -812,7 +832,18 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 }
                 catch (Exception suspendEx)
                 {
+                    // Durable suspend failed: the record stays in_progress, so a recovery scan could
+                    // re-run this turn. Surface the failure rather than reporting the turn outcome as
+                    // durably suspended.
                     _logger.HandlerFailure(taskId, 0, suspendEx.GetType().Name);
+                    FinishTurn(taskId, multiTurn);
+                    currentRun.SetException(new TaskFailedException(
+                        new TaskFailureDetail(
+                            TaskFailureKind.HandlerError,
+                            suspendEx.GetType().Name,
+                            $"Task '{taskId}' finished its turn but the durable suspend write failed."),
+                        suspendEx));
+                    return;
                 }
 
                 FinishTurn(taskId, multiTurn);

@@ -58,8 +58,8 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 storageDirectory: "/var/streams",
                 cursor: payload => ((MyEvent)payload).Sequence,
                 ttl: TimeSpan.FromHours(1),
-                serializer: payload => System.Text.Json.JsonSerializer.SerializeToUtf8Bytes((MyEvent)payload),
-                deserializer: bytes => System.Text.Json.JsonSerializer.Deserialize<MyEvent>(bytes)!));
+                serializer: payload => System.Text.Json.JsonSerializer.Serialize((MyEvent)payload),
+                deserializer: json => System.Text.Json.JsonSerializer.Deserialize<MyEvent>(json)!));
         }
 
         // Subscribe-before-start — Pattern 1.

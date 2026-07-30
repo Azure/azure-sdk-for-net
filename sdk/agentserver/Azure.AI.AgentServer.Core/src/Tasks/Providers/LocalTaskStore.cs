@@ -189,12 +189,6 @@ internal sealed class LocalTaskStore : ITaskStore
                 "Lease parameters must not be provided when status is pending.", taskId);
         }
 
-        if (FindTaskPath(taskId) is not null)
-        {
-            throw new TaskStoreException(
-                TaskStoreException.CodeTaskAlreadyExists, 409, $"Task '{taskId}' already exists.", taskId);
-        }
-
         Lease? lease = null;
         string? startedAt = null;
         string? completedAt = status == TaskWireKeys.StatusCompleted ? now : null;
@@ -243,7 +237,20 @@ internal sealed class LocalTaskStore : ITaskStore
             }
         }
 
-        WriteTask(record);
+        // Serialize the existence check and the write under the same lock as Patch/Delete so two
+        // concurrent creates for the same id cannot both pass the check and have the later write
+        // truncate the earlier record; the second caller observes the 409 instead.
+        lock (_ioLock)
+        {
+            if (FindTaskPath(taskId) is not null)
+            {
+                throw new TaskStoreException(
+                    TaskStoreException.CodeTaskAlreadyExists, 409, $"Task '{taskId}' already exists.", taskId);
+            }
+
+            WriteTask(record);
+        }
+
         return Task.FromResult(record);
     }
 

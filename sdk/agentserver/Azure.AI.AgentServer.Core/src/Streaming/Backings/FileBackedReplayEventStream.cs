@@ -26,8 +26,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     private readonly object _fileGate = new();
     private readonly string _filePath;
     private readonly string _lockPath;
-    private readonly Func<object, byte[]>? _serializer;
-    private readonly Func<byte[], object>? _deserializer;
+    private readonly Func<object, string>? _serializer;
+    private readonly Func<string, object>? _deserializer;
     private FileStream? _lock;
     private int _evictionsSinceCompaction;
     private bool _disposed;
@@ -37,8 +37,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         string storageDirectory,
         Func<object, int>? cursor,
         TimeSpan? ttl,
-        Func<object, byte[]>? serializer,
-        Func<byte[], object>? deserializer,
+        Func<object, string>? serializer,
+        Func<string, object>? deserializer,
         Action onDestroy)
         : base(id, cursor, ttl, onDestroy)
     {
@@ -321,12 +321,12 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
 
     // Custom-serializer payloads are stored as a UTF-8 JSON string (NOT base64) so the on-disk
     // format is byte-compatible with the Python file-backed replay backing and the two runtimes
-    // can read each other's stream files.
+    // can read each other's stream files. The serializer therefore returns the JSON text directly.
     private JsonNode? EncodePayload(object payload)
     {
         if (_serializer is not null)
         {
-            return Encoding.UTF8.GetString(_serializer(payload));
+            return _serializer(payload);
         }
 
         return JsonSerializer.SerializeToNode(payload);
@@ -339,7 +339,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             string serialized = node is JsonValue value && value.TryGetValue(out string? s)
                 ? s
                 : node?.ToJsonString() ?? string.Empty;
-            return _deserializer(Encoding.UTF8.GetBytes(serialized));
+            return _deserializer(serialized);
         }
 
         return Normalize(node);

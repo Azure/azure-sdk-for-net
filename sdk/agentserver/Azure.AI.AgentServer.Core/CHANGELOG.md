@@ -18,6 +18,9 @@
 
 - Kept the task lease renewed across retry backoff delays so a long inter-attempt backoff cannot let the lease lapse and allow a concurrent re-invocation of the same task turn.
 - Hardened the resilient-task engine shutdown signalling against a benign race between a completing turn and host disposal.
+- A one-shot task whose durable completion write fails, and a multi-turn task whose durable suspend write fails, now surface the failure to the caller instead of reporting success while the record remains `in_progress` (which a later recovery scan could re-run).
+- The local file-backed task store now serializes its existence check and record write under the same lock as patch/delete, so two concurrent creates for the same id can no longer both succeed with the later write silently overwriting the earlier record.
+- The file-backed event-stream custom serializer/deserializer are now `Func<object, string>` / `Func<string, object>` (previously `byte[]`), matching the UTF-8 JSON-string on-disk format so a custom codec cannot silently corrupt non-UTF-8 payloads.
 
 ### Other Changes
 

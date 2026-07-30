@@ -346,7 +346,7 @@ namespace Azure.AI.AgentServer.Core.Streaming
     public sealed partial class EventStreamOptions
     {
         public EventStreamOptions() { }
-        public void UseFileBackedReplay(string? storageDirectory = null, System.Func<object, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?), System.Func<object, byte[]>? serializer = null, System.Func<byte[], object>? deserializer = null) { }
+        public void UseFileBackedReplay(string? storageDirectory = null, System.Func<object, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?), System.Func<object, string>? serializer = null, System.Func<string, object>? deserializer = null) { }
         public void UseFileBackedReplay<TPayload>(System.Func<TPayload, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?), string? storageDirectory = null) { }
         public void UseInMemoryLive() { }
         public void UseInMemoryReplay(System.Func<object, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?)) { }
