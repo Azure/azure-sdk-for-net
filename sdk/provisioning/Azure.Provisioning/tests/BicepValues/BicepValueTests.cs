@@ -278,6 +278,118 @@ public class BicepValueTests
                 """);
     }
 
+    [Test]
+    public async Task ValidateScalarFormatTokens()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new ScalarFormatResource("formatTokens")
+                {
+                    Name = "format-tokens",
+                    RfcDateTime = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero),
+                    IsoDateTime = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero),
+                    UnixDateTime = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero),
+                    PlainDate = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero),
+                    PlainTime = new TimeSpan(0, 2, 3, 4, 5),
+                    IsoDuration = new TimeSpan(1, 2, 3, 4),
+                    ConstantDuration = new TimeSpan(1, 2, 3, 4),
+                    SecondsDuration = new TimeSpan(0, 0, 0, 1, 500),
+                    SecondsInt64Duration = new TimeSpan(0, 0, 0, 1, 500),
+                    SecondsFloatDuration = new TimeSpan(0, 0, 0, 1, 500),
+                    SecondsDoubleDuration = new TimeSpan(0, 0, 0, 1, 500),
+                    MillisecondsDuration = new TimeSpan(0, 0, 0, 1, 500),
+                    MillisecondsInt64Duration = new TimeSpan(0, 0, 0, 1, 500),
+                    MillisecondsFloatDuration = new TimeSpan(0, 0, 0, 1, 500),
+                    MillisecondsDoubleDuration = new TimeSpan(0, 0, 0, 1, 500),
+                    Base64Bytes = new byte[] { 1, 2, 251, 255 },
+                    Base64UrlBytes = new byte[] { 1, 2, 251, 255 },
+                    StringInt = 42,
+                    StringLong = 9007199254740991
+                };
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource formatTokens 'Test.Provider/formatTokens@2024-01-01' = {
+                  name: 'format-tokens'
+                  properties: {
+                    rfcDateTime: 'Wed, 29 Jul 2026 09:30:00 GMT'
+                    isoDateTime: '2026-07-29T09:30:00.0000000Z'
+                    unixDateTime: 1785317400
+                    plainDate: '2026-07-29'
+                    plainTime: '02:03:04.005'
+                    isoDuration: 'P1DT2H3M4S'
+                    constantDuration: '1.02:03:04'
+                    secondsDuration: 2
+                    secondsInt64Duration: 2
+                    secondsFloatDuration: json('1.5')
+                    secondsDoubleDuration: json('1.5')
+                    millisecondsDuration: 1500
+                    millisecondsInt64Duration: 1500
+                    millisecondsFloatDuration: 1500
+                    millisecondsDoubleDuration: 1500
+                    base64Bytes: 'AQL7/w=='
+                    base64UrlBytes: 'AQL7_w'
+                    stringInt: '42'
+                    stringLong: '9007199254740991'
+                  }
+                }
+                """);
+    }
+
+    [Test]
+    public async Task ValidateUnsupportedFormatsAreIgnoredWhenTypeHasNoFormatContract()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new IgnoredFormatResource("ignoredFormat")
+                {
+                    Name = "ignored-format",
+                    Enabled = true,
+                    Text = "not-a-date"
+                };
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource ignoredFormat 'Test.Provider/ignoredFormats@2024-01-01' = {
+                  name: 'ignored-format'
+                  properties: {
+                    enabled: true
+                    text: 'not-a-date'
+                  }
+                }
+                """);
+    }
+
+    [Test]
+    public async Task ValidateUnsupportedFormatTokenFailsForFormattedTypes()
+    {
+        await using Trycep test = new();
+        Assert.Throws<InvalidOperationException>(
+            () => test.Define(
+                ctx =>
+                {
+                    var infra = new Infrastructure();
+                    var resource = new InvalidFormatResource("invalidFormat")
+                    {
+                        Name = "invalid-format",
+                        DateTime = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero)
+                    };
+                    infra.Add(resource);
+                    return infra;
+                })
+                .Compare(""));
+    }
+
     private class DateTimeCollectionResource : ProvisionableResource
     {
         public BicepValue<string> Name
@@ -328,6 +440,169 @@ public class BicepValueTests
             _rfc7231DateTimes = DefineListProperty<DateTimeOffset>("Rfc7231DateTimes", ["properties", "rfc7231DateTimes"], isOutput: false, isRequired: false, format: "R");
             _rfc7231DateTimeMap = DefineDictionaryProperty<DateTimeOffset>("Rfc7231DateTimeMap", ["properties", "rfc7231DateTimeMap"], isOutput: false, isRequired: false, format: "R");
             _durations = DefineListProperty<TimeSpan>("Durations", ["properties", "durations"], isOutput: false, isRequired: false, format: "P");
+        }
+    }
+
+    private class ScalarFormatResource : ProvisionableResource
+    {
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+        private BicepValue<string>? _name;
+
+        public BicepValue<DateTimeOffset> RfcDateTime { get { Initialize(); return _rfcDateTime!; } set { Initialize(); _rfcDateTime!.Assign(value); } }
+        private BicepValue<DateTimeOffset>? _rfcDateTime;
+
+        public BicepValue<DateTimeOffset> IsoDateTime { get { Initialize(); return _isoDateTime!; } set { Initialize(); _isoDateTime!.Assign(value); } }
+        private BicepValue<DateTimeOffset>? _isoDateTime;
+
+        public BicepValue<DateTimeOffset> UnixDateTime { get { Initialize(); return _unixDateTime!; } set { Initialize(); _unixDateTime!.Assign(value); } }
+        private BicepValue<DateTimeOffset>? _unixDateTime;
+
+        public BicepValue<DateTimeOffset> PlainDate { get { Initialize(); return _plainDate!; } set { Initialize(); _plainDate!.Assign(value); } }
+        private BicepValue<DateTimeOffset>? _plainDate;
+
+        public BicepValue<TimeSpan> PlainTime { get { Initialize(); return _plainTime!; } set { Initialize(); _plainTime!.Assign(value); } }
+        private BicepValue<TimeSpan>? _plainTime;
+
+        public BicepValue<TimeSpan> IsoDuration { get { Initialize(); return _isoDuration!; } set { Initialize(); _isoDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _isoDuration;
+
+        public BicepValue<TimeSpan> ConstantDuration { get { Initialize(); return _constantDuration!; } set { Initialize(); _constantDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _constantDuration;
+
+        public BicepValue<TimeSpan> SecondsDuration { get { Initialize(); return _secondsDuration!; } set { Initialize(); _secondsDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _secondsDuration;
+
+        public BicepValue<TimeSpan> SecondsInt64Duration { get { Initialize(); return _secondsInt64Duration!; } set { Initialize(); _secondsInt64Duration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _secondsInt64Duration;
+
+        public BicepValue<TimeSpan> SecondsFloatDuration { get { Initialize(); return _secondsFloatDuration!; } set { Initialize(); _secondsFloatDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _secondsFloatDuration;
+
+        public BicepValue<TimeSpan> SecondsDoubleDuration { get { Initialize(); return _secondsDoubleDuration!; } set { Initialize(); _secondsDoubleDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _secondsDoubleDuration;
+
+        public BicepValue<TimeSpan> MillisecondsDuration { get { Initialize(); return _millisecondsDuration!; } set { Initialize(); _millisecondsDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _millisecondsDuration;
+
+        public BicepValue<TimeSpan> MillisecondsInt64Duration { get { Initialize(); return _millisecondsInt64Duration!; } set { Initialize(); _millisecondsInt64Duration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _millisecondsInt64Duration;
+
+        public BicepValue<TimeSpan> MillisecondsFloatDuration { get { Initialize(); return _millisecondsFloatDuration!; } set { Initialize(); _millisecondsFloatDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _millisecondsFloatDuration;
+
+        public BicepValue<TimeSpan> MillisecondsDoubleDuration { get { Initialize(); return _millisecondsDoubleDuration!; } set { Initialize(); _millisecondsDoubleDuration!.Assign(value); } }
+        private BicepValue<TimeSpan>? _millisecondsDoubleDuration;
+
+        public BicepValue<byte[]> Base64Bytes { get { Initialize(); return _base64Bytes!; } set { Initialize(); _base64Bytes!.Assign(value); } }
+        private BicepValue<byte[]>? _base64Bytes;
+
+        public BicepValue<byte[]> Base64UrlBytes { get { Initialize(); return _base64UrlBytes!; } set { Initialize(); _base64UrlBytes!.Assign(value); } }
+        private BicepValue<byte[]>? _base64UrlBytes;
+
+        public BicepValue<int> StringInt { get { Initialize(); return _stringInt!; } set { Initialize(); _stringInt!.Assign(value); } }
+        private BicepValue<int>? _stringInt;
+
+        public BicepValue<long> StringLong { get { Initialize(); return _stringLong!; } set { Initialize(); _stringLong!.Assign(value); } }
+        private BicepValue<long>? _stringLong;
+
+        public ScalarFormatResource(string bicepIdentifier)
+            : base(bicepIdentifier, "Test.Provider/formatTokens", "2024-01-01")
+        {
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+            _rfcDateTime = DefineProperty<DateTimeOffset>("RfcDateTime", ["properties", "rfcDateTime"], format: "R");
+            _isoDateTime = DefineProperty<DateTimeOffset>("IsoDateTime", ["properties", "isoDateTime"], format: "O");
+            _unixDateTime = DefineProperty<DateTimeOffset>("UnixDateTime", ["properties", "unixDateTime"], format: "U");
+            _plainDate = DefineProperty<DateTimeOffset>("PlainDate", ["properties", "plainDate"], format: "D");
+            _plainTime = DefineProperty<TimeSpan>("PlainTime", ["properties", "plainTime"], format: "T");
+            _isoDuration = DefineProperty<TimeSpan>("IsoDuration", ["properties", "isoDuration"], format: "P");
+            _constantDuration = DefineProperty<TimeSpan>("ConstantDuration", ["properties", "constantDuration"], format: "c");
+            _secondsDuration = DefineProperty<TimeSpan>("SecondsDuration", ["properties", "secondsDuration"], format: "seconds");
+            _secondsInt64Duration = DefineProperty<TimeSpan>("SecondsInt64Duration", ["properties", "secondsInt64Duration"], format: "seconds-int64");
+            _secondsFloatDuration = DefineProperty<TimeSpan>("SecondsFloatDuration", ["properties", "secondsFloatDuration"], format: "seconds-float");
+            _secondsDoubleDuration = DefineProperty<TimeSpan>("SecondsDoubleDuration", ["properties", "secondsDoubleDuration"], format: "seconds-double");
+            _millisecondsDuration = DefineProperty<TimeSpan>("MillisecondsDuration", ["properties", "millisecondsDuration"], format: "milliseconds");
+            _millisecondsInt64Duration = DefineProperty<TimeSpan>("MillisecondsInt64Duration", ["properties", "millisecondsInt64Duration"], format: "milliseconds-int64");
+            _millisecondsFloatDuration = DefineProperty<TimeSpan>("MillisecondsFloatDuration", ["properties", "millisecondsFloatDuration"], format: "milliseconds-float");
+            _millisecondsDoubleDuration = DefineProperty<TimeSpan>("MillisecondsDoubleDuration", ["properties", "millisecondsDoubleDuration"], format: "milliseconds-double");
+            _base64Bytes = DefineProperty<byte[]>("Base64Bytes", ["properties", "base64Bytes"], format: "base64");
+            _base64UrlBytes = DefineProperty<byte[]>("Base64UrlBytes", ["properties", "base64UrlBytes"], format: "base64url");
+            _stringInt = DefineProperty<int>("StringInt", ["properties", "stringInt"], format: "string");
+            _stringLong = DefineProperty<long>("StringLong", ["properties", "stringLong"], format: "string");
+        }
+    }
+
+    private class IgnoredFormatResource : ProvisionableResource
+    {
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+        private BicepValue<string>? _name;
+
+        public BicepValue<bool> Enabled
+        {
+            get { Initialize(); return _enabled!; }
+            set { Initialize(); _enabled!.Assign(value); }
+        }
+        private BicepValue<bool>? _enabled;
+
+        public BicepValue<string> Text
+        {
+            get { Initialize(); return _text!; }
+            set { Initialize(); _text!.Assign(value); }
+        }
+        private BicepValue<string>? _text;
+
+        public IgnoredFormatResource(string bicepIdentifier)
+            : base(bicepIdentifier, "Test.Provider/ignoredFormats", "2024-01-01")
+        {
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+            _enabled = DefineProperty<bool>("Enabled", ["properties", "enabled"], format: "R");
+            _text = DefineProperty<string>("Text", ["properties", "text"], format: "R");
+        }
+    }
+
+    private class InvalidFormatResource : ProvisionableResource
+    {
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+        private BicepValue<string>? _name;
+
+        public BicepValue<DateTimeOffset> DateTime
+        {
+            get { Initialize(); return _dateTime!; }
+            set { Initialize(); _dateTime!.Assign(value); }
+        }
+        private BicepValue<DateTimeOffset>? _dateTime;
+
+        public InvalidFormatResource(string bicepIdentifier)
+            : base(bicepIdentifier, "Test.Provider/invalidFormats", "2024-01-01")
+        {
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+            _dateTime = DefineProperty<DateTimeOffset>("DateTime", ["properties", "dateTime"], format: "base64");
         }
     }
 }
