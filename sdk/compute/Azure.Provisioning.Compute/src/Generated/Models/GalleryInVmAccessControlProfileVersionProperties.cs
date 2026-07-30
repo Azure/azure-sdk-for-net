@@ -142,7 +142,7 @@ namespace Azure.Provisioning.Compute
             _rules = DefineModelProperty<GalleryInVmAccessControlRules>(nameof(Rules), new string[] { "rules" });
             _targetLocations = DefineListProperty<TargetRegion>(nameof(TargetLocations), new string[] { "targetLocations" });
             _excludeFromLatest = DefineProperty<bool>(nameof(ExcludeFromLatest), new string[] { "excludeFromLatest" });
-            _publishedOn = DefineProperty<DateTimeOffset>(nameof(PublishedOn), new string[] { "publishedDate" }, isOutput: true);
+            _publishedOn = DefineProperty<DateTimeOffset>(nameof(PublishedOn), new string[] { "publishedDate" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<GalleryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _replicationStatus = DefineModelProperty<ReplicationStatus>(nameof(ReplicationStatus), new string[] { "replicationStatus" }, isOutput: true);
             DefineAdditionalProperties();
