@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.1.0"
   distribution: shared
-description: 'Ensure to generate a high quality SDKs from TypeSpec. WHEN: "generate SDK locally", "generate SDK local", "build SDK", "run SDK tests", "update changelog", "fix SDK build errors", "detect and mitigate SDK breaking changes", "resolve SDK generation errors". INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version, azsdk_package_detect_breaking_change.'
+description: 'Ensure to generate a high quality SDKs from TypeSpec. WHEN: "assure the quality of an SDK package", "assure the quality of SDK packages for an service", "Detect and mitigate SDK breaking changes for an service", "Detect and mitigate SDK breaking changes for an SDK package". INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version, azsdk_package_detect_breaking_change.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
@@ -45,13 +45,14 @@ customizationRequest - resolve the 'breakingChanges' chosen in step 10, it is an
 tspProjectPath - the typespec project path
 editScope: 2 if in `azure-rest-api-specs`; 1 if in an SDK language repo
 
+If any SDK breaking changes are mitigated through TypeSpec customization, return to step 5 and repeat the quality assurance workflow.
 
 [SDK repos](references/sdk-repos.md) | [Customization workflow](references/customization-workflow.md) | [Detailed workflow](references/detailed-workflow.md)
 
 ## Examples
 
-- "Detect SDK breaking changes for the service"
-- "assurrance the SDK quality for the service project"
+- "Detect and mitigate SDK breaking changes for the service"
+- "assurance the SDK quality for the service project"
 
 ## Troubleshooting
 
