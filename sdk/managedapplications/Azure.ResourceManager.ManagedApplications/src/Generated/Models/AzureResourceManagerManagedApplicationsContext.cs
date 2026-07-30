@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ManagedApplications.Models;
 using Azure.ResourceManager.Models;
 
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.ManagedApplications
     [ModelReaderWriterBuildable(typeof(RegistryPackageLinks))]
     [ModelReaderWriterBuildable(typeof(RegistryPackagePlan))]
     [ModelReaderWriterBuildable(typeof(Resource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateAccessContent))]
     [ModelReaderWriterBuildable(typeof(UserAssignedResourceIdentity))]
