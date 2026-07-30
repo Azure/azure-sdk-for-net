@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-07-30 08:31:26 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-07-30 08:41:48 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -26,8 +26,8 @@
   - New Emitter (TypeSpec): 50
   - Old TypeSpec: 0
 - Provisioning: 52
-  - Reflection-based generator: 26
-  - TypeSpec-based generator: 24
+  - Reflection-based generator: 25
+  - TypeSpec-based generator: 25
   - No generator: 2
 - No generator: 47
 
@@ -408,7 +408,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 46
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 24 / 52 migrated to TypeSpec-based generator
+**Migration Status**: 25 / 52 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -432,7 +432,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | domainregistration | Azure.Provisioning.DomainRegistration | Azure.ResourceManager.DomainRegistration ✅ | TypeSpec ✅ |
 | durabletask | Azure.Provisioning.DurableTask | Azure.ResourceManager.DurableTask ✅ | TypeSpec ✅ |
 | eventgrid | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid ✅ | Reflection |
-| eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | Reflection |
+| eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | TypeSpec ✅ |
 | frontdoor | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor ✅ | TypeSpec ✅ |
 | hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | TypeSpec ✅ |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
