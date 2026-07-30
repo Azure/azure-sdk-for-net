@@ -78,4 +78,4 @@ gh run view <run-id> --log
 
 Successful repairs also produce a commit on the pull request branch and an `Auto Build Repair` summary comment. Unsuccessful runs report their stop reason in the pull request comment or workflow logs.
 
-The workflow uses per-pull-request concurrency, so a newer run for the same pull request supersedes an older in-progress run.
+The workflow uses per-pull-request concurrency, so a newer run for the same pull request queues until the in-progress run finishes.
