@@ -74,7 +74,7 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _maxConcurrentTrials = DefineProperty<int>(nameof(MaxConcurrentTrials), new string[] { "maxConcurrentTrials" });
             _maxTrials = DefineProperty<int>(nameof(MaxTrials), new string[] { "maxTrials" });
-            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" });
+            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" }, format: "P");
             DefineAdditionalProperties();
         }
 
