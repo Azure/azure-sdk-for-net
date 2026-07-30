@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The parameters for updating a task. </summary>
-    public partial class TaskPatch
+    public partial class ContainerRegistryTaskPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaskPatch"/>. </summary>
-        public TaskPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskPatch"/>. </summary>
+        public ContainerRegistryTaskPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskPatch"/>. </summary>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> The properties for updating a task. </param>
         /// <param name="tags"> The ARM resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskPatch(ContainerRegistryTaskIdentityProperties identity, TaskPropertiesUpdateParameters properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskPatch(ContainerRegistryTaskIdentityProperties identity, TaskPropertiesUpdateParameters properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Properties = properties;

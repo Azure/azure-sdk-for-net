@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
-    /// A class representing a Run along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RunResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRuns method.
+    /// A class representing a ContainerRegistryRun along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerRegistryRunResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerRegistryRuns method.
     /// </summary>
-    public partial class RunResource : ArmResource
+    public partial class ContainerRegistryRunResource : ArmResource
     {
         private readonly ClientDiagnostics _runsClientDiagnostics;
         private readonly Runs _runsRestClient;
-        private readonly RunData _data;
+        private readonly ContainerRegistryRunData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/runs";
 
-        /// <summary> Initializes a new instance of RunResource for mocking. </summary>
-        protected RunResource()
+        /// <summary> Initializes a new instance of ContainerRegistryRunResource for mocking. </summary>
+        protected ContainerRegistryRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RunResource(ArmClient client, RunData data) : this(client, data.Id)
+        internal ContainerRegistryRunResource(ArmClient client, ContainerRegistryRunData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerRegistryRunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string runApiVersion);
+            TryGetApiVersion(ResourceType, out string containerRegistryRunApiVersion);
             _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", ResourceType.Namespace, Diagnostics);
-            _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, runApiVersion ?? "2025-03-01-preview");
+            _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryRunApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual RunData Data
+        public virtual ContainerRegistryRunData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RunResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryRunResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.Get");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RunData> response = Response.FromValue(RunData.FromResponse(result), result);
+                Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RunResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryRunResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.Get");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RunData> response = Response.FromValue(RunData.FromResponse(result), result);
+                Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,18 +206,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The run update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<RunResource>> UpdateAsync(RunPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.Update");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.Update");
             scope.Start();
             try
             {
@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RunPatch.ToRequestContent(patch), context);
+                HttpMessage message = _runsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryRunPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RunData> response = Response.FromValue(RunData.FromResponse(result), result);
+                Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The run update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<RunResource> Update(RunPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.Update");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.Update");
             scope.Start();
             try
             {
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RunPatch.ToRequestContent(patch), context);
+                HttpMessage message = _runsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryRunPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RunData> response = Response.FromValue(RunData.FromResponse(result), result);
+                Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -310,14 +310,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.Cancel");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.Cancel");
             scope.Start();
             try
             {
@@ -353,14 +353,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.Cancel");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.Cancel");
             scope.Start();
             try
             {
@@ -396,14 +396,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerRegistryTaskRunLogResult>> GetLogSasUrlAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.GetLogSasUrl");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.GetLogSasUrl");
             scope.Start();
             try
             {
@@ -444,14 +444,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="RunResource"/>. </description>
+        /// <description> <see cref="ContainerRegistryRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerRegistryTaskRunLogResult> GetLogSasUrl(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.GetLogSasUrl");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunResource.GetLogSasUrl");
             scope.Start();
             try
             {

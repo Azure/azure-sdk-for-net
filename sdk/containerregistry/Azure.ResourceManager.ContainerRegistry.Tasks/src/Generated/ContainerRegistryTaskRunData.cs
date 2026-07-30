@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
     /// The task run that has the ARM resource and properties.
     /// The task run will have the information of request and result of a run.
     /// </summary>
-    public partial class TaskRunData : ResourceData
+    public partial class ContainerRegistryTaskRunData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaskRunData"/>. </summary>
-        public TaskRunData()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunData"/>. </summary>
+        public ContainerRegistryTaskRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskRunData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TaskRunProperties properties, ContainerRegistryTaskIdentityProperties identity, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryTaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TaskRunProperties properties, ContainerRegistryTaskIdentityProperties identity, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The result of this task run. </summary>
-        public RunData RunResult
+        public ContainerRegistryRunData RunResult
         {
             get
             {

@@ -1,6 +1,6 @@
 directory: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks
-commit: 7107a29fe3f722033fb6631e732b3f201d96650f
-repo: Azure/azure-rest-api-specs
+commit: 1fc3c6c4bb99b1ba1f370b3a92770398a78f6fc2
+repo: ArcturusZhang/azure-rest-api-specs
 additionalDirectories: 
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="os"> The OS of agent machine. </param>
         /// <param name="virtualNetworkSubnetResourceId"> The Virtual Network Subnet Resource Id of the agent machine. </param>
         /// <param name="provisioningState"> The provisioning state of this agent pool. </param>
-        /// <returns> A new <see cref="Tasks.AgentPoolData"/> instance for mocking. </returns>
-        public static AgentPoolData AgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? count = default, string tier = default, ContainerRegistryTaskOS? os = default, ResourceIdentifier virtualNetworkSubnetResourceId = default, ContainerRegistryTaskProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Tasks.ContainerRegistryAgentPoolData"/> instance for mocking. </returns>
+        public static ContainerRegistryAgentPoolData ContainerRegistryAgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? count = default, string tier = default, ContainerRegistryTaskOS? os = default, ResourceIdentifier virtualNetworkSubnetResourceId = default, ContainerRegistryTaskProvisioningState? provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgentPoolData(
+            return new ContainerRegistryAgentPoolData(
                 id,
                 name,
                 resourceType,
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <param name="count"> The count of agent machine. </param>
         /// <param name="tags"> The ARM resource tags. </param>
-        /// <returns> A new <see cref="Models.AgentPoolPatch"/> instance for mocking. </returns>
-        public static AgentPoolPatch AgentPoolPatch(int? count = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryAgentPoolPatch"/> instance for mocking. </returns>
+        public static ContainerRegistryAgentPoolPatch ContainerRegistryAgentPoolPatch(int? count = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgentPoolPatch(count is null ? default : new AgentPoolPropertiesUpdateParameters(count, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ContainerRegistryAgentPoolPatch(count is null ? default : new AgentPoolPropertiesUpdateParameters(count, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="count"> The number of pending runs in the queue. </param>
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
-        /// <returns> A new <see cref="Tasks.RunData"/> instance for mocking. </returns>
-        public static RunData RunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
+        /// <returns> A new <see cref="Tasks.ContainerRegistryRunData"/> instance for mocking. </returns>
+        public static ContainerRegistryRunData ContainerRegistryRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
         {
-            return new RunData(
+            return new ContainerRegistryRunData(
                 id,
                 name,
                 resourceType,
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
-        /// <returns> A new <see cref="Models.RunPatch"/> instance for mocking. </returns>
-        public static RunPatch RunPatch(bool? isArchiveEnabled = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryRunPatch"/> instance for mocking. </returns>
+        public static ContainerRegistryRunPatch ContainerRegistryRunPatch(bool? isArchiveEnabled = default)
         {
-            return new RunPatch(isArchiveEnabled, default);
+            return new ContainerRegistryRunPatch(isArchiveEnabled, default);
         }
 
         /// <param name="logLink"> The link to logs for a run on a azure container registry. </param>
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <returns> A new <see cref="Tasks.TaskRunData"/> instance for mocking. </returns>
-        public static TaskRunData TaskRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryTaskProvisioningState? provisioningState = default, RunContent runRequest = default, RunData runResult = default, string forceUpdateTag = default, ContainerRegistryTaskIdentityProperties identity = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="Tasks.ContainerRegistryTaskRunData"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskRunData ContainerRegistryTaskRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryTaskProvisioningState? provisioningState = default, RunContent runRequest = default, ContainerRegistryRunData runResult = default, string forceUpdateTag = default, ContainerRegistryTaskIdentityProperties identity = default, AzureLocation? location = default)
         {
-            return new TaskRunData(
+            return new ContainerRegistryTaskRunData(
                 id,
                 name,
                 resourceType,
@@ -502,12 +502,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The ARM resource tags. </param>
-        /// <returns> A new <see cref="Models.TaskRunPatch"/> instance for mocking. </returns>
-        public static TaskRunPatch TaskRunPatch(ContainerRegistryTaskIdentityProperties identity = default, RunContent runRequest = default, string forceUpdateTag = default, string location = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskRunPatch"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskRunPatch ContainerRegistryTaskRunPatch(ContainerRegistryTaskIdentityProperties identity = default, RunContent runRequest = default, string forceUpdateTag = default, string location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TaskRunPatch(identity, runRequest is null && forceUpdateTag is null ? default : new TaskRunPropertiesUpdateParameters(runRequest, forceUpdateTag, default), location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ContainerRegistryTaskRunPatch(identity, runRequest is null && forceUpdateTag is null ? default : new TaskRunPropertiesUpdateParameters(runRequest, forceUpdateTag, default), location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -529,12 +529,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="Tasks.TaskData"/> instance for mocking. </returns>
-        public static TaskData TaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryTaskProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformProperties platform = default, string agentPoolName = default, int? timeoutInSeconds = default, TaskStepProperties step = default, ContainerRegistryTaskTriggerProperties trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, bool? isSystemTask = default, int? agentCpu = default, ContainerRegistryTaskIdentityProperties identity = default)
+        /// <returns> A new <see cref="Tasks.ContainerRegistryTaskData"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskData ContainerRegistryTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryTaskProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformProperties platform = default, string agentPoolName = default, int? timeoutInSeconds = default, TaskStepProperties step = default, ContainerRegistryTaskTriggerProperties trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, bool? isSystemTask = default, int? agentCpu = default, ContainerRegistryTaskIdentityProperties identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TaskData(
+            return new ContainerRegistryTaskData(
                 id,
                 name,
                 resourceType,
@@ -755,12 +755,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
         /// <param name="tags"> The ARM resource tags. </param>
-        /// <returns> A new <see cref="Models.TaskPatch"/> instance for mocking. </returns>
-        public static TaskPatch TaskPatch(ContainerRegistryTaskIdentityProperties identity = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformUpdateContent platform = default, string agentPoolName = default, int? timeoutInSeconds = default, TaskStepUpdateContent step = default, ContainerRegistryTaskTriggerUpdateContent trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, int? agentCpu = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskPatch"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskPatch ContainerRegistryTaskPatch(ContainerRegistryTaskIdentityProperties identity = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformUpdateContent platform = default, string agentPoolName = default, int? timeoutInSeconds = default, TaskStepUpdateContent step = default, ContainerRegistryTaskTriggerUpdateContent trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, int? agentCpu = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TaskPatch(identity, status is null && platform is null && agentCpu is null && agentPoolName is null && timeoutInSeconds is null && step is null && trigger is null && credentials is null && logTemplate is null ? default : new TaskPropertiesUpdateParameters(
+            return new ContainerRegistryTaskPatch(identity, status is null && platform is null && agentCpu is null && agentPoolName is null && timeoutInSeconds is null && step is null && trigger is null && credentials is null && logTemplate is null ? default : new TaskPropertiesUpdateParameters(
                 status,
                 platform,
                 new AgentProperties(agentCpu, default),

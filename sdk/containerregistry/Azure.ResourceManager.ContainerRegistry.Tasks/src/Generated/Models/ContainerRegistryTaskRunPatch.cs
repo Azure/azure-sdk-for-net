@@ -12,24 +12,24 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The parameters for updating a task run. </summary>
-    public partial class TaskRunPatch
+    public partial class ContainerRegistryTaskRunPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaskRunPatch"/>. </summary>
-        public TaskRunPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunPatch"/>. </summary>
+        public ContainerRegistryTaskRunPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskRunPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunPatch"/>. </summary>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> The properties for updating a task run. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The ARM resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskRunPatch(ContainerRegistryTaskIdentityProperties identity, TaskRunPropertiesUpdateParameters properties, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskRunPatch(ContainerRegistryTaskIdentityProperties identity, TaskRunPropertiesUpdateParameters properties, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Properties = properties;

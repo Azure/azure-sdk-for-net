@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AgentPoolResource"/> and their operations.
-    /// Each <see cref="AgentPoolResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AgentPoolCollection"/> instance call the GetAgentPools method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ContainerRegistryAgentPoolResource"/> and their operations.
+    /// Each <see cref="ContainerRegistryAgentPoolResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ContainerRegistryAgentPoolCollection"/> instance call the GetContainerRegistryAgentPools method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AgentPoolCollection : ArmCollection, IEnumerable<AgentPoolResource>, IAsyncEnumerable<AgentPoolResource>
+    public partial class ContainerRegistryAgentPoolCollection : ArmCollection, IEnumerable<ContainerRegistryAgentPoolResource>, IAsyncEnumerable<ContainerRegistryAgentPoolResource>
     {
         private readonly ClientDiagnostics _agentPoolsClientDiagnostics;
         private readonly AgentPools _agentPoolsRestClient;
         /// <summary> The registryName. </summary>
         private readonly string _registryName;
 
-        /// <summary> Initializes a new instance of AgentPoolCollection for mocking. </summary>
-        protected AgentPoolCollection()
+        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolCollection for mocking. </summary>
+        protected ContainerRegistryAgentPoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="registryName"> The registryName for the resource. </param>
-        internal AgentPoolCollection(ArmClient client, ResourceIdentifier id, string registryName) : base(client, id)
+        internal ContainerRegistryAgentPoolCollection(ArmClient client, ResourceIdentifier id, string registryName) : base(client, id)
         {
-            TryGetApiVersion(AgentPoolResource.ResourceType, out string agentPoolApiVersion);
+            TryGetApiVersion(ContainerRegistryAgentPoolResource.ResourceType, out string containerRegistryAgentPoolApiVersion);
             _registryName = registryName;
-            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", AgentPoolResource.ResourceType.Namespace, Diagnostics);
-            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolApiVersion ?? "2025-03-01-preview");
+            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", ContainerRegistryAgentPoolResource.ResourceType.Namespace, Diagnostics);
+            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryAgentPoolApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, AgentPoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerRegistryAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, ContainerRegistryAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, AgentPoolData.ToRequestContent(data), context);
+                HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, ContainerRegistryAgentPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
-                    new AgentPoolResourceOperationSource(Client),
+                TasksArmOperation<ContainerRegistryAgentPoolResource> operation = new TasksArmOperation<ContainerRegistryAgentPoolResource>(
+                    new ContainerRegistryAgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, AgentPoolData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerRegistryAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, ContainerRegistryAgentPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, AgentPoolData.ToRequestContent(data), context);
+                HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, ContainerRegistryAgentPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
-                    new AgentPoolResourceOperationSource(Client),
+                TasksArmOperation<ContainerRegistryAgentPoolResource> operation = new TasksArmOperation<ContainerRegistryAgentPoolResource>(
+                    new ContainerRegistryAgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AgentPoolResource>> GetAsync(string agentPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryAgentPoolResource>> GetAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.Get");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Get");
             scope.Start();
             try
             {
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AgentPoolData> response = Response.FromValue(AgentPoolData.FromResponse(result), result);
+                Response<ContainerRegistryAgentPoolData> response = Response.FromValue(ContainerRegistryAgentPoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AgentPoolResource> Get(string agentPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryAgentPoolResource> Get(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.Get");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Get");
             scope.Start();
             try
             {
@@ -259,12 +259,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AgentPoolData> response = Response.FromValue(AgentPoolData.FromResponse(result), result);
+                Response<ContainerRegistryAgentPoolData> response = Response.FromValue(ContainerRegistryAgentPoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,20 +291,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerRegistryAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerRegistryAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentPoolData, AgentPoolResource>(new AgentPoolsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerRegistryAgentPoolData, ContainerRegistryAgentPoolResource>(new AgentPoolsGetAllAsyncCollectionResultOfT(
                 _agentPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 _registryName,
                 context,
-                "AgentPoolCollection.GetAll"), data => new AgentPoolResource(Client, data));
+                "ContainerRegistryAgentPoolCollection.GetAll"), data => new ContainerRegistryAgentPoolResource(Client, data));
         }
 
         /// <summary>
@@ -325,20 +325,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AgentPoolResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerRegistryAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerRegistryAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentPoolData, AgentPoolResource>(new AgentPoolsGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerRegistryAgentPoolData, ContainerRegistryAgentPoolResource>(new AgentPoolsGetAllCollectionResultOfT(
                 _agentPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 _registryName,
                 context,
-                "AgentPoolCollection.GetAll"), data => new AgentPoolResource(Client, data));
+                "ContainerRegistryAgentPoolCollection.GetAll"), data => new ContainerRegistryAgentPoolResource(Client, data));
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.Exists");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -377,14 +377,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AgentPoolData> response = default;
+                Response<ContainerRegistryAgentPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AgentPoolData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerRegistryAgentPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AgentPoolData)null, result);
+                        response = Response.FromValue((ContainerRegistryAgentPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.Exists");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Exists");
             scope.Start();
             try
             {
@@ -434,14 +434,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AgentPoolData> response = default;
+                Response<ContainerRegistryAgentPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AgentPoolData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerRegistryAgentPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AgentPoolData)null, result);
+                        response = Response.FromValue((ContainerRegistryAgentPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -476,11 +476,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AgentPoolResource>> GetIfExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ContainerRegistryAgentPoolResource>> GetIfExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -491,23 +491,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AgentPoolData> response = default;
+                Response<ContainerRegistryAgentPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AgentPoolData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerRegistryAgentPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AgentPoolData)null, result);
+                        response = Response.FromValue((ContainerRegistryAgentPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AgentPoolResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerRegistryAgentPoolResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -537,11 +537,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AgentPoolResource> GetIfExists(string agentPoolName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ContainerRegistryAgentPoolResource> GetIfExists(string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
-            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("AgentPoolCollection.GetIfExists");
+            using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -552,23 +552,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AgentPoolData> response = default;
+                Response<ContainerRegistryAgentPoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AgentPoolData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerRegistryAgentPoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AgentPoolData)null, result);
+                        response = Response.FromValue((ContainerRegistryAgentPoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AgentPoolResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerRegistryAgentPoolResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AgentPoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryAgentPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             }
         }
 
-        IEnumerator<AgentPoolResource> IEnumerable<AgentPoolResource>.GetEnumerator()
+        IEnumerator<ContainerRegistryAgentPoolResource> IEnumerable<ContainerRegistryAgentPoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AgentPoolResource> IAsyncEnumerable<AgentPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ContainerRegistryAgentPoolResource> IAsyncEnumerable<ContainerRegistryAgentPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
