@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ContainerServicePreparedImgSpec.Models;
 using Azure.ResourceManager.Models;
 
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationVersionData))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationVersionListResult))]
     [ModelReaderWriterBuildable(typeof(PreparedImageSpecificationVersionResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerContainerServicePreparedImgSpecContext : ModelReaderWriterContext
     {

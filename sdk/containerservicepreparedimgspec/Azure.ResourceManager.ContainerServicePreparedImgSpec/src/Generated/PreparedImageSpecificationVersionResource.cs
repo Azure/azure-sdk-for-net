@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
         {
             TryGetApiVersion(ResourceType, out string preparedImageSpecificationVersionApiVersion);
             _preparedImageSpecificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServicePreparedImgSpec", ResourceType.Namespace, Diagnostics);
-            _preparedImageSpecificationsRestClient = new PreparedImageSpecifications(_preparedImageSpecificationsClientDiagnostics, Pipeline, Endpoint, preparedImageSpecificationVersionApiVersion ?? "2026-05-02-preview");
+            _preparedImageSpecificationsRestClient = new PreparedImageSpecifications(_preparedImageSpecificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, preparedImageSpecificationVersionApiVersion ?? "2026-05-02-preview");
             ValidateResourceId(id);
         }
 
