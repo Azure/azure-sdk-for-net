@@ -73,8 +73,8 @@ namespace Azure.Provisioning.MachineLearning
         {
             base.DefineProvisionableProperties();
             _maxConcurrentRequestsPerInstance = DefineProperty<int>(nameof(MaxConcurrentRequestsPerInstance), new string[] { "maxConcurrentRequestsPerInstance" });
-            _maxQueueWait = DefineProperty<TimeSpan>(nameof(MaxQueueWait), new string[] { "maxQueueWait" });
-            _requestTimeout = DefineProperty<TimeSpan>(nameof(RequestTimeout), new string[] { "requestTimeout" });
+            _maxQueueWait = DefineProperty<TimeSpan>(nameof(MaxQueueWait), new string[] { "maxQueueWait" }, format: "P");
+            _requestTimeout = DefineProperty<TimeSpan>(nameof(RequestTimeout), new string[] { "requestTimeout" }, format: "P");
             DefineAdditionalProperties();
         }
 

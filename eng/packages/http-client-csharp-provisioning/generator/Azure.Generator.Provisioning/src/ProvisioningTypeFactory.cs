@@ -203,6 +203,7 @@ namespace Azure.Generator.Provisioning
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
                     info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    BicepTypeHelpers.GetLiteralFormat(baseProperty?.SerializationFormat),
                     enclosingType);
             }
 
