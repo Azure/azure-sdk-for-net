@@ -6,7 +6,7 @@ The workflow source is [`.github/workflows/sdk-build-repair.md`](https://github.
 
 ## Eligibility and triggers
 
-The workflow only processes pull requests that:
+The workflow only checks out, builds, or repairs pull requests that:
 
 - originate from this repository, not a fork;
 - target `main`;
