@@ -20,7 +20,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public string ConnectionToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the new authentication lifetime, in seconds, applied to the connection.
+        /// Gets or sets the maximum lifetime, in seconds, of the refreshed service access token.
+        /// Values less than one use the one-hour default.
         /// </summary>
         public int TokenLifetimeSeconds { get; set; }
     }

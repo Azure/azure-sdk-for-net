@@ -4,13 +4,19 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal interface IAzureSignalRSender
     {
-        Task<SignalRConnectionInfo> RefreshConnectionInfoAsync(string connectionToken, DateTimeOffset expireTime, IList<Claim> claims);
+        Task<SignalRConnectionInfo> RefreshConnectionInfoAsync(
+            string connectionToken,
+            DateTimeOffset? authenticationExpiresOn,
+            IList<Claim> claims,
+            int tokenLifetimeSeconds,
+            CancellationToken cancellationToken = default);
 
         Task<IList<Claim>> GetConnectionClaimsAsync(string connectionToken);
 

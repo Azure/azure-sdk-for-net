@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host.Bindings;
@@ -32,45 +33,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         }
 
         protected override async Task<IValueProvider> BuildAsync(SignalRRefreshAttribute attrResolved,
-            IReadOnlyDictionary<string, object> bindingData)
+            IReadOnlyDictionary<string, object> bindingData,
+            CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(attrResolved.ConnectionToken))
             {
                 return new SignalRConnectionInfoValueProvider(null, _userType, "");
             }
 
-            var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, _managerStore).ConfigureAwait(false);
-            bindingData.TryGetValue(HttpRequestName, out var requestObj);
-            var request = requestObj as HttpRequest;
-
-            var lifetimeSeconds = attrResolved.TokenLifetimeSeconds > 0
-                ? attrResolved.TokenLifetimeSeconds
-                : Constants.DefaultAccessTokenLifetimeSeconds;
-            var expireTime = DateTimeOffset.UtcNow.AddSeconds(lifetimeSeconds);
-
-            if (bindingData.ContainsKey(HttpRequestName) && _securityTokenValidator != null)
+            if (!bindingData.ContainsKey(HttpRequestName) || _securityTokenValidator == null)
             {
-                var tokenResult = _securityTokenValidator.ValidateToken(request);
-
-                if (tokenResult.Status != SecurityTokenStatus.Valid)
-                {
-                    return new SignalRConnectionInfoValueProvider(null, _userType, "");
-                }
-
-                var signalRConnectionDetail = new SignalRConnectionDetail
-                {
-                    UserId = attrResolved.UserId,
-                    Claims = azureSignalRClient.GetCustomClaims(attrResolved.IdToken, attrResolved.ClaimTypeList),
-                };
-                _signalRConnectionInfoConfigurer?.Configure(tokenResult, request, signalRConnectionDetail);
-                var customizedInfo = await azureSignalRClient.RefreshConnectionInfoAsync(
-                    attrResolved.ConnectionToken, expireTime, signalRConnectionDetail.Claims).ConfigureAwait(false);
-                return new SignalRConnectionInfoValueProvider(customizedInfo, _userType, "");
+                return new SignalRConnectionInfoValueProvider(null, _userType, "");
             }
 
-            var claims = azureSignalRClient.GetCustomClaims(attrResolved.IdToken, attrResolved.ClaimTypeList);
+            bindingData.TryGetValue(HttpRequestName, out var requestObj);
+            var request = requestObj as HttpRequest;
+            var tokenResult = _securityTokenValidator.ValidateToken(request);
+            if (tokenResult.Status != SecurityTokenStatus.Valid)
+            {
+                return new SignalRConnectionInfoValueProvider(null, _userType, "");
+            }
+
+            var azureSignalRClient = await Utils.GetAzureSignalRClientAsync(attrResolved.ConnectionStringSetting, attrResolved.HubName, _managerStore).ConfigureAwait(false);
+            var customClaims = azureSignalRClient.GetCustomClaims(attrResolved.IdToken, attrResolved.ClaimTypeList);
+            var signalRConnectionDetail = new SignalRConnectionDetail
+            {
+                UserId = attrResolved.UserId,
+                Claims = customClaims.Count > 0 ? customClaims : null,
+                AuthenticationExpiresOn = tokenResult.ExpiresOn,
+            };
+            signalRConnectionDetail = _signalRConnectionInfoConfigurer?.Configure?.Invoke(tokenResult, request, signalRConnectionDetail)
+                ?? signalRConnectionDetail;
             var info = await azureSignalRClient.RefreshConnectionInfoAsync(
-                attrResolved.ConnectionToken, expireTime, claims).ConfigureAwait(false);
+                attrResolved.ConnectionToken, signalRConnectionDetail.AuthenticationExpiresOn,
+                signalRConnectionDetail.Claims, attrResolved.TokenLifetimeSeconds, cancellationToken).ConfigureAwait(false);
             return new SignalRConnectionInfoValueProvider(info, _userType, "");
         }
     }

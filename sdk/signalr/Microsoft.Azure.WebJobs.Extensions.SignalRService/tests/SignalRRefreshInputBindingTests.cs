@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
@@ -22,6 +24,7 @@ namespace SignalRServiceExtension.Tests
     /// <summary>
     /// Behavioral tests for the [SignalRRefresh] input binding (<see cref="SignalRRefreshInputBinding"/>)
     /// </summary>
+    [Collection("SignalR input binding tests")]
     public class SignalRRefreshInputBindingTests
     {
         private const string HttpRequestName = "$request";
@@ -30,6 +33,13 @@ namespace SignalRServiceExtension.Tests
         private const string ConnectionString = "Endpoint=http://localhost;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;Version=1.0;";
         private const string RefreshedToken = "refreshed-access-token";
         private const int RefreshedLifetime = 111;
+
+        private static readonly string IdToken = new JwtSecurityTokenHandler().WriteToken(
+            new JwtSecurityToken(claims: new[]
+            {
+                new Claim("name", "John Doe"),
+                new Claim("iat", "1516239022"),
+            }));
 
         private static class ParameterHolder
         {
@@ -64,18 +74,26 @@ namespace SignalRServiceExtension.Tests
 
             Assert.Null(value);
             hubContext.Verify(
-                c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<IEnumerable<Claim>>(), It.IsAny<CancellationToken>()),
+                c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
                 Times.Never);
         }
 
         [Fact]
-        public async Task BuildAsync_ValidToken_RefreshesAndReturnsInfo()
+        public async Task BuildAsync_ValidToken_PropagatesValidatedAuthenticationOptions()
         {
+            var expectedExpiresOn = new DateTimeOffset(2030, 1, 2, 3, 4, 5, TimeSpan.Zero);
             var validator = new Mock<ISecurityTokenValidator>();
             validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
-                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity())));
-            var (binding, hubContext) = CreateBinding(out _, validator.Object);
-            var attr = new SignalRRefreshAttribute { ConnectionToken = "ct", HubName = HubName, ConnectionStringSetting = ConnectionStringSetting };
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity()), expectedExpiresOn));
+            var (binding, hubContext) = CreateBinding(out var capturedOptions, validator.Object);
+            var attr = new SignalRRefreshAttribute
+            {
+                ConnectionToken = "ct",
+                HubName = HubName,
+                ConnectionStringSetting = ConnectionStringSetting,
+                IdToken = IdToken,
+                ClaimTypeList = new[] { "name", "iat" },
+            };
             var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
 
             var provider = await binding.InvokeBuildAsync(attr, bindingData);
@@ -84,50 +102,167 @@ namespace SignalRServiceExtension.Tests
             var info = Assert.IsType<SignalRConnectionInfo>(value);
             Assert.Equal(RefreshedToken, info.AccessToken);
             Assert.Equal(RefreshedLifetime, info.TokenLifetimeSeconds);
+            Assert.Equal(expectedExpiresOn, capturedOptions.Value.AuthenticationExpiresOn);
+            Assert.Equal(TimeSpan.FromHours(1), capturedOptions.Value.TokenLifetime);
+            Assert.Equal("John Doe", capturedOptions.Value.Claims.Single(c => c.Type == "name").Value);
+            Assert.Equal("1516239022", capturedOptions.Value.Claims.Single(c => c.Type == $"{AzureSignalRClient.AzureSignalRUserPrefix}iat").Value);
             hubContext.Verify(
-                c => c.RefreshConnectionAuthenticationAsync("ct", It.IsAny<DateTimeOffset>(), It.IsAny<IEnumerable<Claim>>(), It.IsAny<CancellationToken>()),
+                c => c.RefreshConnectionAuthenticationAsync("ct", It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
         [Fact]
-        public async Task BuildAsync_NoTokenLifetime_UsesDefaultLifetime()
+        public async Task BuildAsync_ConfigurerReturnsReplacement_UsesReplacementClaimsAndExpiration()
         {
-            var (binding, _) = CreateBinding(out var capturedExpireTime);
-            var attr = new SignalRRefreshAttribute { ConnectionToken = "ct", HubName = HubName, ConnectionStringSetting = ConnectionStringSetting, TokenLifetimeSeconds = 0 };
+            var originalExpiresOn = new DateTimeOffset(2030, 1, 2, 3, 4, 5, TimeSpan.Zero);
+            var replacementExpiresOn = originalExpiresOn.AddHours(1);
+            var validator = new Mock<ISecurityTokenValidator>();
+            validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity()), originalExpiresOn));
+            var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
+            configurer.SetupGet(c => c.Configure).Returns((_, _, _) => new SignalRConnectionDetail
+            {
+                UserId = "replacement-user",
+                Claims = new List<Claim> { new Claim("replacement", "claim") },
+                AuthenticationExpiresOn = replacementExpiresOn,
+            });
+            var (binding, _) = CreateBinding(out var capturedOptions, validator.Object, configurer.Object);
+            var attr = new SignalRRefreshAttribute
+            {
+                ConnectionToken = "ct",
+                HubName = HubName,
+                ConnectionStringSetting = ConnectionStringSetting,
+                UserId = "original-user",
+                IdToken = IdToken,
+                ClaimTypeList = new[] { "name" },
+            };
+            var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
 
-            var before = DateTimeOffset.UtcNow;
-            var provider = await binding.InvokeBuildAsync(attr, new Dictionary<string, object>());
-            _ = await provider.GetValueAsync();
-            var after = DateTimeOffset.UtcNow;
+            var provider = await binding.InvokeBuildAsync(attr, bindingData);
+            var value = await provider.GetValueAsync();
 
-            Assert.NotNull(capturedExpireTime.Value);
-            Assert.InRange(
-                capturedExpireTime.Value.Value,
-                before.AddSeconds(Constants.DefaultAccessTokenLifetimeSeconds),
-                after.AddSeconds(Constants.DefaultAccessTokenLifetimeSeconds));
+            var info = Assert.IsType<SignalRConnectionInfo>(value);
+            Assert.Equal(RefreshedToken, info.AccessToken);
+            Assert.Equal(replacementExpiresOn, capturedOptions.Value.AuthenticationExpiresOn);
+            var claim = Assert.Single(capturedOptions.Value.Claims);
+            Assert.Equal("replacement", claim.Type);
+            Assert.Equal("claim", claim.Value);
         }
 
         [Fact]
-        public async Task BuildAsync_ExplicitTokenLifetime_UsesProvidedLifetime()
+        public async Task BuildAsync_ConfigurerReturnsNull_RetainsOriginalClaimsAndExpiration()
+        {
+            var originalExpiresOn = new DateTimeOffset(2030, 1, 2, 3, 4, 5, TimeSpan.Zero);
+            var validator = new Mock<ISecurityTokenValidator>();
+            validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity()), originalExpiresOn));
+            var configurer = new Mock<ISignalRConnectionInfoConfigurer>();
+            configurer.SetupGet(c => c.Configure).Returns((_, _, _) => null);
+            var (binding, _) = CreateBinding(out var capturedOptions, validator.Object, configurer.Object);
+            var attr = new SignalRRefreshAttribute
+            {
+                ConnectionToken = "ct",
+                HubName = HubName,
+                ConnectionStringSetting = ConnectionStringSetting,
+                IdToken = IdToken,
+                ClaimTypeList = new[] { "name" },
+            };
+            var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
+
+            var provider = await binding.InvokeBuildAsync(attr, bindingData);
+            var value = await provider.GetValueAsync();
+
+            Assert.IsType<SignalRConnectionInfo>(value);
+            Assert.Equal(originalExpiresOn, capturedOptions.Value.AuthenticationExpiresOn);
+            var claim = Assert.Single(capturedOptions.Value.Claims);
+            Assert.Equal("name", claim.Type);
+            Assert.Equal("John Doe", claim.Value);
+        }
+
+        [Fact]
+        public async Task BuildAsync_WithoutRequest_ReturnsNullInfo()
+        {
+            var validator = new Mock<ISecurityTokenValidator>();
+            validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity())));
+            var (binding, hubContext) = CreateBinding(out _, validator.Object);
+            var attr = new SignalRRefreshAttribute { ConnectionToken = "ct", HubName = HubName, ConnectionStringSetting = ConnectionStringSetting };
+
+            var provider = await binding.InvokeBuildAsync(attr, new Dictionary<string, object>());
+            var value = await provider.GetValueAsync();
+
+            Assert.Null(value);
+            hubContext.Verify(
+                c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
+        public async Task BuildAsync_WithoutValidator_ReturnsNullInfo()
+        {
+            var (binding, hubContext) = CreateBinding(out _);
+            var attr = new SignalRRefreshAttribute { ConnectionToken = "ct", HubName = HubName, ConnectionStringSetting = ConnectionStringSetting };
+            var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
+
+            var provider = await binding.InvokeBuildAsync(attr, bindingData);
+            var value = await provider.GetValueAsync();
+
+            Assert.Null(value);
+            hubContext.Verify(
+                c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
+        public async Task BuildAsync_NoCustomClaims_PreservesExistingClaimsAndUsesDefaultTokenLifetime()
+        {
+            var validator = new Mock<ISecurityTokenValidator>();
+            validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity())));
+            var (binding, hubContext) = CreateBinding(out var capturedOptions, validator.Object);
+            var attr = new SignalRRefreshAttribute { ConnectionToken = "ct", HubName = HubName, ConnectionStringSetting = ConnectionStringSetting, TokenLifetimeSeconds = 0 };
+            var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
+
+            var provider = await binding.InvokeBuildAsync(attr, bindingData);
+            _ = await provider.GetValueAsync();
+
+            Assert.Null(capturedOptions.Value.AuthenticationExpiresOn);
+            Assert.Null(capturedOptions.Value.Claims);
+            Assert.Equal(TimeSpan.FromHours(1), capturedOptions.Value.TokenLifetime);
+            hubContext.Verify(
+                c => c.RefreshConnectionAuthenticationAsync("ct", It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task BuildAsync_WithExplicitTokenLifetime_UsesConfiguredMaximum()
         {
             const int lifetime = 300;
-            var (binding, _) = CreateBinding(out var capturedExpireTime);
+            var validator = new Mock<ISecurityTokenValidator>();
+            validator.Setup(v => v.ValidateToken(It.IsAny<HttpRequest>()))
+                .Returns(SecurityTokenResult.Success(new ClaimsPrincipal(new ClaimsIdentity())));
+            var (binding, hubContext) = CreateBinding(out var capturedOptions, validator.Object);
             var attr = new SignalRRefreshAttribute { ConnectionToken = "ct", HubName = HubName, ConnectionStringSetting = ConnectionStringSetting, TokenLifetimeSeconds = lifetime };
+            var bindingData = new Dictionary<string, object> { [HttpRequestName] = new DefaultHttpContext().Request };
 
-            var before = DateTimeOffset.UtcNow;
-            var provider = await binding.InvokeBuildAsync(attr, new Dictionary<string, object>());
+            var provider = await binding.InvokeBuildAsync(attr, bindingData);
             _ = await provider.GetValueAsync();
-            var after = DateTimeOffset.UtcNow;
 
-            Assert.NotNull(capturedExpireTime.Value);
-            Assert.InRange(capturedExpireTime.Value.Value, before.AddSeconds(lifetime), after.AddSeconds(lifetime));
+            Assert.Null(capturedOptions.Value.AuthenticationExpiresOn);
+            Assert.Null(capturedOptions.Value.Claims);
+            Assert.Equal(TimeSpan.FromSeconds(lifetime), capturedOptions.Value.TokenLifetime);
+            hubContext.Verify(
+                c => c.RefreshConnectionAuthenticationAsync("ct", It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Once);
         }
 
         private static (TestableRefreshBinding Binding, Mock<ServiceHubContext> HubContext) CreateBinding(
-            out StrongBox<DateTimeOffset?> capturedExpireTime, ISecurityTokenValidator validator = null)
+            out StrongBox<RefreshConnectionAuthenticationOptions> capturedOptions,
+            ISecurityTokenValidator validator = null,
+            ISignalRConnectionInfoConfigurer configurer = null)
         {
-            var expireBox = new StrongBox<DateTimeOffset?>();
-            capturedExpireTime = expireBox;
+            var optionsBox = new StrongBox<RefreshConnectionAuthenticationOptions>();
+            capturedOptions = optionsBox;
 
             var refreshResult = (RefreshConnectionAuthenticationResult)Activator.CreateInstance(
                 typeof(RefreshConnectionAuthenticationResult),
@@ -138,8 +273,8 @@ namespace SignalRServiceExtension.Tests
 
             var hubContextMock = new Mock<ServiceHubContext>();
             hubContextMock
-                .Setup(c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<IEnumerable<Claim>>(), It.IsAny<CancellationToken>()))
-                .Callback<string, DateTimeOffset, IEnumerable<Claim>, CancellationToken>((_, expireTime, _, _) => expireBox.Value = expireTime)
+                .Setup(c => c.RefreshConnectionAuthenticationAsync(It.IsAny<string>(), It.IsAny<RefreshConnectionAuthenticationOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<string, RefreshConnectionAuthenticationOptions, CancellationToken>((_, options, _) => optionsBox.Value = options)
                 .ReturnsAsync(refreshResult);
 
             StaticServiceHubContextStore.ServiceManagerStore = Mock.Of<IServiceManagerStore>(s =>
@@ -153,7 +288,7 @@ namespace SignalRServiceExtension.Tests
             var parameter = typeof(ParameterHolder).GetMethod(nameof(ParameterHolder.Method)).GetParameters()[0];
             var context = new BindingProviderContext(parameter, new Dictionary<string, Type>(), CancellationToken.None);
 
-            var binding = new TestableRefreshBinding(context, configuration, Mock.Of<INameResolver>(), validator, signalRConnectionInfoConfigurer: null);
+            var binding = new TestableRefreshBinding(context, configuration, Mock.Of<INameResolver>(), validator, configurer);
             return (binding, hubContextMock);
         }
 
@@ -170,7 +305,7 @@ namespace SignalRServiceExtension.Tests
             }
 
             public Task<IValueProvider> InvokeBuildAsync(SignalRRefreshAttribute attr, IReadOnlyDictionary<string, object> bindingData) =>
-                BuildAsync(attr, bindingData);
+                BuildAsync(attr, bindingData, CancellationToken.None);
         }
     }
 }
