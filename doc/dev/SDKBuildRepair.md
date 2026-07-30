@@ -23,7 +23,7 @@ The manual path rechecks the same eligibility requirements before checking out o
 
 ## Enabling and disabling
 
-The repository Actions variable `SDK_BUILD_REPAIR_ENABLED` is the master kill switch. The workflow runs only when its value is exactly `true`.
+The repository Actions variable `SDK_BUILD_REPAIR_ENABLED` is the authoritative control. The workflow runs only when its value is exactly `true`.
 
 ```bash
 # Enable
