@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.0.0-beta.3 (2026-06-03)
+## 1.0.0 (2026-07-30)
 
 ### Other Changes
 
