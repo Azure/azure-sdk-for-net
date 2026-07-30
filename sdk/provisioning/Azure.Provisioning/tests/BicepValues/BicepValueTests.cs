@@ -304,6 +304,8 @@ public class BicepValueTests
                     MillisecondsInt64Duration = new TimeSpan(0, 0, 0, 1, 500),
                     MillisecondsFloatDuration = new TimeSpan(0, 0, 0, 1, 500),
                     MillisecondsDoubleDuration = new TimeSpan(0, 0, 0, 1, 500),
+                    StringInt = 42,
+                    StringLong = 9007199254740991
                 };
                 infra.Add(resource);
                 return infra;
@@ -328,6 +330,8 @@ public class BicepValueTests
                     millisecondsInt64Duration: 1500
                     millisecondsFloatDuration: 1500
                     millisecondsDoubleDuration: 1500
+                    stringInt: '42'
+                    stringLong: '9007199254740991'
                   }
                 }
                 """);
@@ -345,9 +349,7 @@ public class BicepValueTests
                 {
                     Name = "ignored-format",
                     Enabled = true,
-                    Text = "not-a-date",
-                    Count = 42,
-                    BigCount = 9007199254740991
+                    Text = "not-a-date"
                 };
                 infra.Add(resource);
                 return infra;
@@ -359,8 +361,6 @@ public class BicepValueTests
                   properties: {
                     enabled: true
                     text: 'not-a-date'
-                    count: 42
-                    bigCount: json('9007199254740991')
                   }
                 }
                 """);
@@ -493,6 +493,12 @@ public class BicepValueTests
         public BicepValue<TimeSpan> MillisecondsDoubleDuration { get { Initialize(); return _millisecondsDoubleDuration!; } set { Initialize(); _millisecondsDoubleDuration!.Assign(value); } }
         private BicepValue<TimeSpan>? _millisecondsDoubleDuration;
 
+        public BicepValue<int> StringInt { get { Initialize(); return _stringInt!; } set { Initialize(); _stringInt!.Assign(value); } }
+        private BicepValue<int>? _stringInt;
+
+        public BicepValue<long> StringLong { get { Initialize(); return _stringLong!; } set { Initialize(); _stringLong!.Assign(value); } }
+        private BicepValue<long>? _stringLong;
+
         public ScalarFormatResource(string bicepIdentifier)
             : base(bicepIdentifier, "Test.Provider/formatTokens", "2024-01-01")
         {
@@ -517,6 +523,8 @@ public class BicepValueTests
             _millisecondsInt64Duration = DefineProperty<TimeSpan>("MillisecondsInt64Duration", ["properties", "millisecondsInt64Duration"], format: "milliseconds-int64");
             _millisecondsFloatDuration = DefineProperty<TimeSpan>("MillisecondsFloatDuration", ["properties", "millisecondsFloatDuration"], format: "milliseconds-float");
             _millisecondsDoubleDuration = DefineProperty<TimeSpan>("MillisecondsDoubleDuration", ["properties", "millisecondsDoubleDuration"], format: "milliseconds-double");
+            _stringInt = DefineProperty<int>("StringInt", ["properties", "stringInt"], format: "string");
+            _stringLong = DefineProperty<long>("StringLong", ["properties", "stringLong"], format: "string");
         }
     }
 
@@ -543,20 +551,6 @@ public class BicepValueTests
         }
         private BicepValue<string>? _text;
 
-        public BicepValue<int> Count
-        {
-            get { Initialize(); return _count!; }
-            set { Initialize(); _count!.Assign(value); }
-        }
-        private BicepValue<int>? _count;
-
-        public BicepValue<long> BigCount
-        {
-            get { Initialize(); return _bigCount!; }
-            set { Initialize(); _bigCount!.Assign(value); }
-        }
-        private BicepValue<long>? _bigCount;
-
         public IgnoredFormatResource(string bicepIdentifier)
             : base(bicepIdentifier, "Test.Provider/ignoredFormats", "2024-01-01")
         {
@@ -568,8 +562,6 @@ public class BicepValueTests
             _name = DefineProperty<string>("Name", ["name"], isRequired: true);
             _enabled = DefineProperty<bool>("Enabled", ["properties", "enabled"], format: "R");
             _text = DefineProperty<string>("Text", ["properties", "text"], format: "R");
-            _count = DefineProperty<int>("Count", ["properties", "count"], format: "string");
-            _bigCount = DefineProperty<long>("BigCount", ["properties", "bigCount"], format: "string");
         }
     }
 
