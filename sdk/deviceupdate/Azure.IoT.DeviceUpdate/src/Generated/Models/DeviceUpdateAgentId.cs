@@ -11,18 +11,15 @@ using System.Collections.Generic;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Device Update agent id. </summary>
-    public partial class DeviceUpdateAgentId
+    internal partial class DeviceUpdateAgentId
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceUpdateAgentId"/>. </summary>
         /// <param name="deviceId"> Device Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
-        public DeviceUpdateAgentId(string deviceId)
+        internal DeviceUpdateAgentId(string deviceId)
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
-
             DeviceId = deviceId;
         }
 
@@ -38,9 +35,9 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Device Id. </summary>
-        public string DeviceId { get; set; }
+        public string DeviceId { get; }
 
         /// <summary> Module Id. </summary>
-        public string ModuleId { get; set; }
+        public string ModuleId { get; }
     }
 }

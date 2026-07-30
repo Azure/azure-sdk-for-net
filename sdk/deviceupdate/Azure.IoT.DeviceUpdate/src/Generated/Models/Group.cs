@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Group details. </summary>
-    public partial class Group
+    internal partial class Group
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

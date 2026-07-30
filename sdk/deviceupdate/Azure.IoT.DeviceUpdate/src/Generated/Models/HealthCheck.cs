@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Health check. </summary>
-    public partial class HealthCheck
+    internal partial class HealthCheck
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

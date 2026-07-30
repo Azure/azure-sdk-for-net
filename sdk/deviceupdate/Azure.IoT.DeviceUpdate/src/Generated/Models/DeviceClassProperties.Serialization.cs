@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The device class properties that are used to calculate the device class Id. </summary>
-    public partial class DeviceClassProperties : IJsonModel<DeviceClassProperties>
+    internal partial class DeviceClassProperties : IJsonModel<DeviceClassProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DeviceClassProperties"/> for deserialization. </summary>
         internal DeviceClassProperties()

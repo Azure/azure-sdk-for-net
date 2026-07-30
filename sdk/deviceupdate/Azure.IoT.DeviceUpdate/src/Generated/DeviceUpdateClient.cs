@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -102,7 +100,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetUpdates(string search, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetUpdates(string search = default, string filter = default, RequestContext context = null)
         {
             return new DeviceUpdateClientGetUpdatesCollectionResult(this, search, filter, context, "DeviceUpdateClient.GetUpdates");
         }
@@ -120,29 +118,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetUpdatesAsync(string search = default, string filter = default, RequestContext context = null)
         {
             return new DeviceUpdateClientGetUpdatesAsyncCollectionResult(this, search, filter, context, "DeviceUpdateClient.GetUpdates");
-        }
-
-        /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
-        /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Update> GetUpdates(string search = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceUpdateClientGetUpdatesCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetUpdates");
-        }
-
-        /// <summary> Get a list of all updates that have been imported to Device Update for IoT Hub. </summary>
-        /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Update> GetUpdatesAsync(string search = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceUpdateClientGetUpdatesAsyncCollectionResultOfT(this, search, filter, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetUpdates");
         }
 
         /// <summary>
@@ -200,46 +178,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Import new update version. This is a long-running-operation; use
-        /// Operation-Location response header value to check for operation status.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="updateToImport">
-        /// The update to be imported (see schema
-        /// https://json.schemastore.org/azure-deviceupdate-import-manifest-5.0.json for
-        /// details).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateToImport"/> is null. </exception>
-        public virtual Operation ImportUpdate(WaitUntil waitUntil, IEnumerable<ImportUpdateInputItem> updateToImport, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(updateToImport, nameof(updateToImport));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(updateToImport);
-            return ImportUpdate(waitUntil, content, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary>
-        /// Import new update version. This is a long-running-operation; use
-        /// Operation-Location response header value to check for operation status.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="updateToImport">
-        /// The update to be imported (see schema
-        /// https://json.schemastore.org/azure-deviceupdate-import-manifest-5.0.json for
-        /// details).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateToImport"/> is null. </exception>
-        public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, IEnumerable<ImportUpdateInputItem> updateToImport, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(updateToImport, nameof(updateToImport));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(updateToImport);
-            return await ImportUpdateAsync(waitUntil, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// [Protocol Method] Get a specific update version.
         /// <list type="bullet">
         /// <item>
@@ -259,7 +197,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
+        public virtual Response GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
@@ -299,7 +237,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetUpdate");
             scope.Start();
@@ -319,50 +257,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Get a specific update version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Update> GetUpdate(string provider, string name, string version, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            Response result = GetUpdate(provider, name, version, ifNoneMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((Update)result, result);
-        }
-
-        /// <summary> Get a specific update version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Update>> GetUpdateAsync(string provider, string name, string version, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            Response result = await GetUpdateAsync(provider, name, version, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Update)result, result);
-        }
-
         /// <summary>
         /// Delete a specific update version. This is a long-running-operation; use
         /// Operation-Location response header value to check for operation status.
@@ -375,7 +269,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, RequestContext context)
+        public virtual Operation DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();
@@ -407,7 +301,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, RequestContext context)
+        public virtual async Task<Operation> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.DeleteUpdate");
             scope.Start();
@@ -428,46 +322,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Delete a specific update version. This is a long-running-operation; use
-        /// Operation-Location response header value to check for operation status.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation DeleteUpdate(WaitUntil waitUntil, string provider, string name, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return DeleteUpdate(waitUntil, provider, name, version, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary>
-        /// Delete a specific update version. This is a long-running-operation; use
-        /// Operation-Location response header value to check for operation status.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> DeleteUpdateAsync(WaitUntil waitUntil, string provider, string name, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return await DeleteUpdateAsync(waitUntil, provider, name, version, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// [Protocol Method] Get a list of all update providers that have been imported to Device Update for
         /// IoT Hub.
         /// <list type="bullet">
@@ -479,7 +333,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetProviders(RequestContext context)
+        public virtual Pageable<BinaryData> GetProviders(RequestContext context = null)
         {
             return new DeviceUpdateClientGetProvidersCollectionResult(this, context, "DeviceUpdateClient.GetProviders");
         }
@@ -496,31 +350,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetProvidersAsync(RequestContext context = null)
         {
             return new DeviceUpdateClientGetProvidersAsyncCollectionResult(this, context, "DeviceUpdateClient.GetProviders");
-        }
-
-        /// <summary>
-        /// Get a list of all update providers that have been imported to Device Update for
-        /// IoT Hub.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<string> GetProviders(CancellationToken cancellationToken = default)
-        {
-            return new DeviceUpdateClientGetProvidersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetProviders");
-        }
-
-        /// <summary>
-        /// Get a list of all update providers that have been imported to Device Update for
-        /// IoT Hub.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<string> GetProvidersAsync(CancellationToken cancellationToken = default)
-        {
-            return new DeviceUpdateClientGetProvidersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetProviders");
         }
 
         /// <summary>
@@ -537,7 +369,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context)
+        public virtual Pageable<BinaryData> GetNames(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
@@ -558,37 +390,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetNamesAsync(string provider, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
 
             return new DeviceUpdateClientGetNamesAsyncCollectionResult(this, provider, context, "DeviceUpdateClient.GetNames");
-        }
-
-        /// <summary> Get a list of all update names that match the specified provider. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<string> GetNames(string provider, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-
-            return new DeviceUpdateClientGetNamesCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetNames");
-        }
-
-        /// <summary> Get a list of all update names that match the specified provider. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<string> GetNamesAsync(string provider, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-
-            return new DeviceUpdateClientGetNamesAsyncCollectionResultOfT(this, provider, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetNames");
         }
 
         /// <summary>
@@ -607,7 +413,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetVersions(string provider, string name, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -637,7 +443,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string provider, string name, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -648,50 +454,6 @@ namespace Azure.IoT.DeviceUpdate
                 name,
                 filter,
                 context,
-                "DeviceUpdateClient.GetVersions");
-        }
-
-        /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<string> GetVersions(string provider, string name, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return new DeviceUpdateClientGetVersionsCollectionResultOfT(
-                this,
-                provider,
-                name,
-                filter,
-                cancellationToken.ToRequestContext(),
-                "DeviceUpdateClient.GetVersions");
-        }
-
-        /// <summary> Get a list of all update versions that match the specified provider and name. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<string> GetVersionsAsync(string provider, string name, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return new DeviceUpdateClientGetVersionsAsyncCollectionResultOfT(
-                this,
-                provider,
-                name,
-                filter,
-                cancellationToken.ToRequestContext(),
                 "DeviceUpdateClient.GetVersions");
         }
 
@@ -711,7 +473,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context)
+        public virtual Pageable<BinaryData> GetFiles(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -742,7 +504,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetFilesAsync(string provider, string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(provider, nameof(provider));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -754,52 +516,6 @@ namespace Azure.IoT.DeviceUpdate
                 name,
                 version,
                 context,
-                "DeviceUpdateClient.GetFiles");
-        }
-
-        /// <summary> Get a list of all update file identifiers for the specified version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<string> GetFiles(string provider, string name, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return new DeviceUpdateClientGetFilesCollectionResultOfT(
-                this,
-                provider,
-                name,
-                version,
-                cancellationToken.ToRequestContext(),
-                "DeviceUpdateClient.GetFiles");
-        }
-
-        /// <summary> Get a list of all update file identifiers for the specified version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<string> GetFilesAsync(string provider, string name, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            return new DeviceUpdateClientGetFilesAsyncCollectionResultOfT(
-                this,
-                provider,
-                name,
-                version,
-                cancellationToken.ToRequestContext(),
                 "DeviceUpdateClient.GetFiles");
         }
 
@@ -824,7 +540,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
+        public virtual Response GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
@@ -866,7 +582,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetFile");
             scope.Start();
@@ -885,54 +601,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get a specific update file from the version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="fileId"> File identifier. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UpdateFile> GetFile(string provider, string name, string version, string fileId, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            Response result = GetFile(provider, name, version, fileId, ifNoneMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((UpdateFile)result, result);
-        }
-
-        /// <summary> Get a specific update file from the version. </summary>
-        /// <param name="provider"> Update provider. </param>
-        /// <param name="name"> Update name. </param>
-        /// <param name="version"> Update version. </param>
-        /// <param name="fileId"> File identifier. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="provider"/>, <paramref name="name"/>, <paramref name="version"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UpdateFile>> GetFileAsync(string provider, string name, string version, string fileId, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            Response result = await GetFileAsync(provider, name, version, fileId, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UpdateFile)result, result);
         }
 
         /// <summary>
@@ -957,7 +625,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperationStatuses(string filter, int? maxCount, RequestContext context)
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? maxCount = default, RequestContext context = null)
         {
             return new DeviceUpdateClientGetOperationStatusesCollectionResult(this, filter, maxCount, context, "DeviceUpdateClient.GetOperationStatuses");
         }
@@ -984,51 +652,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter, int? maxCount, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? maxCount = default, RequestContext context = null)
         {
             return new DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(this, filter, maxCount, context, "DeviceUpdateClient.GetOperationStatuses");
-        }
-
-        /// <summary>
-        /// Get a list of all import update operations. Completed operations are kept for 7
-        /// days before auto-deleted. Delete operations are not returned by this API
-        /// version.
-        /// </summary>
-        /// <param name="filter">
-        /// Optional to filter operations by status property. Only one specific filter is
-        /// supported: "status eq 'NotStarted' or status eq 'Running'"
-        /// </param>
-        /// <param name="maxCount">
-        /// Specifies a non-negative integer n that limits the number of items returned
-        /// from a collection. The service returns the number of available items up to but
-        /// not greater than the specified value n.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<UpdateOperation> GetOperationStatuses(string filter = default, int? maxCount = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceUpdateClientGetOperationStatusesCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetOperationStatuses");
-        }
-
-        /// <summary>
-        /// Get a list of all import update operations. Completed operations are kept for 7
-        /// days before auto-deleted. Delete operations are not returned by this API
-        /// version.
-        /// </summary>
-        /// <param name="filter">
-        /// Optional to filter operations by status property. Only one specific filter is
-        /// supported: "status eq 'NotStarted' or status eq 'Running'"
-        /// </param>
-        /// <param name="maxCount">
-        /// Specifies a non-negative integer n that limits the number of items returned
-        /// from a collection. The service returns the number of available items up to but
-        /// not greater than the specified value n.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<UpdateOperation> GetOperationStatusesAsync(string filter = default, int? maxCount = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceUpdateClientGetOperationStatusesAsyncCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceUpdateClient.GetOperationStatuses");
         }
 
         /// <summary>
@@ -1049,7 +675,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch, RequestContext context)
+        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
@@ -1085,7 +711,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
             scope.Start();
@@ -1101,42 +727,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Retrieve operation status. </summary>
-        /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UpdateOperation> GetOperationStatus(string operationId, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            Response result = GetOperationStatus(operationId, ifNoneMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((UpdateOperation)result, result);
-        }
-
-        /// <summary> Retrieve operation status. </summary>
-        /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UpdateOperation>> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            Response result = await GetOperationStatusAsync(operationId, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UpdateOperation)result, result);
         }
     }
 }

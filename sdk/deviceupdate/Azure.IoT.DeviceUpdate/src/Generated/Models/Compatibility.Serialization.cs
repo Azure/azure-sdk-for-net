@@ -14,7 +14,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Key-value pairs representing update compatibility information. </summary>
-    public partial class Compatibility : IJsonModel<Compatibility>
+    internal partial class Compatibility : IJsonModel<Compatibility>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

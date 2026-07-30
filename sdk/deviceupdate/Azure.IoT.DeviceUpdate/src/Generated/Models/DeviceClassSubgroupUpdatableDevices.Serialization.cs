@@ -17,7 +17,7 @@ namespace Azure.IoT.DeviceUpdate
     /// Device class subgroup, update information, and the number of devices for which
     /// the update is applicable.
     /// </summary>
-    public partial class DeviceClassSubgroupUpdatableDevices : IJsonModel<DeviceClassSubgroupUpdatableDevices>
+    internal partial class DeviceClassSubgroupUpdatableDevices : IJsonModel<DeviceClassSubgroupUpdatableDevices>
     {
         /// <summary> Initializes a new instance of <see cref="DeviceClassSubgroupUpdatableDevices"/> for deserialization. </summary>
         internal DeviceClassSubgroupUpdatableDevices()

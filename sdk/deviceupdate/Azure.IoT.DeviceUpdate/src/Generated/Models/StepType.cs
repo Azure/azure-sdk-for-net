@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Step type. </summary>
-    public readonly partial struct StepType : IEquatable<StepType>
+    internal readonly partial struct StepType : IEquatable<StepType>
     {
         private readonly string _value;
         /// <summary> Step type that performs code execution. </summary>

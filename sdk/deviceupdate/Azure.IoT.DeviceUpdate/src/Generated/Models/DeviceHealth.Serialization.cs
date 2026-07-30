@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Device Health. </summary>
-    public partial class DeviceHealth : IJsonModel<DeviceHealth>
+    internal partial class DeviceHealth : IJsonModel<DeviceHealth>
     {
         /// <summary> Initializes a new instance of <see cref="DeviceHealth"/> for deserialization. </summary>
         internal DeviceHealth()

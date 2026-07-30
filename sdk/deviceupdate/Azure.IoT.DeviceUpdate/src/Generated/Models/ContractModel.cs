@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Device Update agent contract model. </summary>
-    public partial class ContractModel
+    internal partial class ContractModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

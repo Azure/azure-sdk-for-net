@@ -7,7 +7,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -103,7 +102,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeviceClasses(string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeviceClasses(string filter = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetDeviceClassesCollectionResult(this, filter, context, "DeviceManagementClient.GetDeviceClasses");
         }
@@ -123,37 +122,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(string filter = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetDeviceClassesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetDeviceClasses");
-        }
-
-        /// <summary>
-        /// Gets a list of all device classes (sets of devices compatible with the same
-        /// updates based on the model Id and compat properties reported in the Device
-        /// Update PnP interface in IoT Hub) for all devices connected to Device Update for
-        /// IoT Hub.
-        /// </summary>
-        /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeviceClass> GetDeviceClasses(string filter = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetDeviceClassesCollectionResultOfT(this, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDeviceClasses");
-        }
-
-        /// <summary>
-        /// Gets a list of all device classes (sets of devices compatible with the same
-        /// updates based on the model Id and compat properties reported in the Device
-        /// Update PnP interface in IoT Hub) for all devices connected to Device Update for
-        /// IoT Hub.
-        /// </summary>
-        /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeviceClass> GetDeviceClassesAsync(string filter = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetDeviceClassesAsyncCollectionResultOfT(this, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDeviceClasses");
         }
 
         /// <summary>
@@ -170,7 +141,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeviceClass(string deviceClassId, RequestContext context)
+        public virtual Response GetDeviceClass(string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClass");
             scope.Start();
@@ -202,7 +173,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeviceClassAsync(string deviceClassId, RequestContext context)
+        public virtual async Task<Response> GetDeviceClassAsync(string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClass");
             scope.Start();
@@ -218,34 +189,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the properties of a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeviceClass> GetDeviceClass(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = GetDeviceClass(deviceClassId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeviceClass)result, result);
-        }
-
-        /// <summary> Gets the properties of a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeviceClass>> GetDeviceClassAsync(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = await GetDeviceClassAsync(deviceClassId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeviceClass)result, result);
         }
 
         /// <summary>
@@ -336,7 +279,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteDeviceClass(string deviceClassId, RequestContext context)
+        public virtual Response DeleteDeviceClass(string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeviceClass");
             scope.Start();
@@ -374,7 +317,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDeviceClassAsync(string deviceClassId, RequestContext context)
+        public virtual async Task<Response> DeleteDeviceClassAsync(string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeviceClass");
             scope.Start();
@@ -393,48 +336,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Deletes a device class. Device classes are created automatically when Device
-        /// Update-enabled devices are connected to the hub but are not automatically
-        /// cleaned up since they are referenced by DeviceClassSubgroups. If the user has
-        /// deleted all DeviceClassSubgroups for a device class they can also delete the
-        /// device class to remove the records from the system and to stop checking the
-        /// compatibility of this device class with new updates. If a device is ever
-        /// reconnected for this device class it will be re-created.
-        /// </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteDeviceClass(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return DeleteDeviceClass(deviceClassId, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary>
-        /// Deletes a device class. Device classes are created automatically when Device
-        /// Update-enabled devices are connected to the hub but are not automatically
-        /// cleaned up since they are referenced by DeviceClassSubgroups. If the user has
-        /// deleted all DeviceClassSubgroups for a device class they can also delete the
-        /// device class to remove the records from the system and to stop checking the
-        /// compatibility of this device class with new updates. If a device is ever
-        /// reconnected for this device class it will be re-created.
-        /// </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDeviceClassAsync(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return await DeleteDeviceClassAsync(deviceClassId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// [Protocol Method] Gets a list of installable updates for a device class.
         /// <list type="bullet">
         /// <item>
@@ -448,7 +349,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetInstallableUpdatesForDeviceClass(string deviceClassId, RequestContext context)
+        public virtual Pageable<BinaryData> GetInstallableUpdatesForDeviceClass(string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
@@ -469,37 +370,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetInstallableUpdatesForDeviceClassAsync(string deviceClassId, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetInstallableUpdatesForDeviceClassAsync(string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
             return new DeviceManagementClientGetInstallableUpdatesForDeviceClassAsyncCollectionResult(this, deviceClassId, context, "DeviceManagementClient.GetInstallableUpdatesForDeviceClass");
-        }
-
-        /// <summary> Gets a list of installable updates for a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<UpdateInfo> GetInstallableUpdatesForDeviceClass(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassCollectionResultOfT(this, deviceClassId, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetInstallableUpdatesForDeviceClass");
-        }
-
-        /// <summary> Gets a list of installable updates for a device class. </summary>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<UpdateInfo> GetInstallableUpdatesForDeviceClassAsync(string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return new DeviceManagementClientGetInstallableUpdatesForDeviceClassAsyncCollectionResultOfT(this, deviceClassId, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetInstallableUpdatesForDeviceClass");
         }
 
         /// <summary>
@@ -518,7 +393,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDevices(string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetDevices(string filter = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetDevicesCollectionResult(this, filter, context, "DeviceManagementClient.GetDevices");
         }
@@ -539,35 +414,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDevicesAsync(string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDevicesAsync(string filter = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetDevicesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetDevices");
-        }
-
-        /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="filter">
-        /// Restricts the set of devices returned. You can filter on GroupId,
-        /// DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to
-        /// query for devices with no deployment status (that have never been deployed to).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Device> GetDevices(string filter = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetDevicesCollectionResultOfT(this, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDevices");
-        }
-
-        /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
-        /// <param name="filter">
-        /// Restricts the set of devices returned. You can filter on GroupId,
-        /// DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to
-        /// query for devices with no deployment status (that have never been deployed to).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Device> GetDevicesAsync(string filter = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetDevicesAsyncCollectionResultOfT(this, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDevices");
         }
 
         /// <summary>
@@ -625,34 +474,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Import existing devices from IoT Hub. This is a long-running-operation; use
-        /// Operation-Location response header value to check for operation status.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="importType"> The types of devices to import. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Operation ImportDevices(WaitUntil waitUntil, ImportType importType, CancellationToken cancellationToken = default)
-        {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(importType.ToString());
-            return ImportDevices(waitUntil, content, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary>
-        /// Import existing devices from IoT Hub. This is a long-running-operation; use
-        /// Operation-Location response header value to check for operation status.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="importType"> The types of devices to import. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual async Task<Operation> ImportDevicesAsync(WaitUntil waitUntil, ImportType importType, CancellationToken cancellationToken = default)
-        {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteStringValue(importType.ToString());
-            return await ImportDevicesAsync(waitUntil, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// [Protocol Method] Gets the device properties and latest deployment status for a device connected
         /// to Device Update for IoT Hub.
         /// <list type="bullet">
@@ -667,7 +488,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDevice(string deviceId, RequestContext context)
+        public virtual Response GetDevice(string deviceId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDevice");
             scope.Start();
@@ -700,7 +521,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeviceAsync(string deviceId, RequestContext context)
+        public virtual async Task<Response> GetDeviceAsync(string deviceId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDevice");
             scope.Start();
@@ -719,40 +540,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Gets the device properties and latest deployment status for a device connected
-        /// to Device Update for IoT Hub.
-        /// </summary>
-        /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Device> GetDevice(string deviceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-
-            Response result = GetDevice(deviceId, cancellationToken.ToRequestContext());
-            return Response.FromValue((Device)result, result);
-        }
-
-        /// <summary>
-        /// Gets the device properties and latest deployment status for a device connected
-        /// to Device Update for IoT Hub.
-        /// </summary>
-        /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Device>> GetDeviceAsync(string deviceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-
-            Response result = await GetDeviceAsync(deviceId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Device)result, result);
-        }
-
-        /// <summary>
         /// [Protocol Method] Gets the device module properties and latest deployment status for a device
         /// module connected to Device Update for IoT Hub.
         /// <list type="bullet">
@@ -768,7 +555,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeviceModule(string deviceId, string moduleId, RequestContext context)
+        public virtual Response GetDeviceModule(string deviceId, string moduleId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceModule");
             scope.Start();
@@ -803,7 +590,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeviceModuleAsync(string deviceId, string moduleId, RequestContext context)
+        public virtual async Task<Response> GetDeviceModuleAsync(string deviceId, string moduleId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceModule");
             scope.Start();
@@ -823,44 +610,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Gets the device module properties and latest deployment status for a device
-        /// module connected to Device Update for IoT Hub.
-        /// </summary>
-        /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
-        /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Device> GetDeviceModule(string deviceId, string moduleId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-            Argument.AssertNotNullOrEmpty(moduleId, nameof(moduleId));
-
-            Response result = GetDeviceModule(deviceId, moduleId, cancellationToken.ToRequestContext());
-            return Response.FromValue((Device)result, result);
-        }
-
-        /// <summary>
-        /// Gets the device module properties and latest deployment status for a device
-        /// module connected to Device Update for IoT Hub.
-        /// </summary>
-        /// <param name="deviceId"> Device identifier in Azure IoT Hub. </param>
-        /// <param name="moduleId"> Device module identifier in Azure IoT Hub. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Device>> GetDeviceModuleAsync(string deviceId, string moduleId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deviceId, nameof(deviceId));
-            Argument.AssertNotNullOrEmpty(moduleId, nameof(moduleId));
-
-            Response result = await GetDeviceModuleAsync(deviceId, moduleId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Device)result, result);
-        }
-
-        /// <summary>
         /// [Protocol Method] Gets the breakdown of how many devices are on their latest update, have new
         /// updates available, or are in progress receiving new updates.
         /// <list type="bullet">
@@ -872,7 +621,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUpdateCompliance(RequestContext context)
+        public virtual Response GetUpdateCompliance(RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateCompliance");
             scope.Start();
@@ -900,7 +649,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUpdateComplianceAsync(RequestContext context)
+        public virtual async Task<Response> GetUpdateComplianceAsync(RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateCompliance");
             scope.Start();
@@ -914,30 +663,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets the breakdown of how many devices are on their latest update, have new
-        /// updates available, or are in progress receiving new updates.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UpdateCompliance> GetUpdateCompliance(CancellationToken cancellationToken = default)
-        {
-            Response result = GetUpdateCompliance(cancellationToken.ToRequestContext());
-            return Response.FromValue((UpdateCompliance)result, result);
-        }
-
-        /// <summary>
-        /// Gets the breakdown of how many devices are on their latest update, have new
-        /// updates available, or are in progress receiving new updates.
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UpdateCompliance>> GetUpdateComplianceAsync(CancellationToken cancellationToken = default)
-        {
-            Response result = await GetUpdateComplianceAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UpdateCompliance)result, result);
         }
 
         /// <summary>
@@ -957,7 +682,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetGroups(string orderBy, RequestContext context)
+        public virtual Pageable<BinaryData> GetGroups(string orderBy = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetGroupsCollectionResult(this, orderBy, context, "DeviceManagementClient.GetGroups");
         }
@@ -979,44 +704,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetGroupsAsync(string orderBy, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetGroupsAsync(string orderBy = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetGroupsAsyncCollectionResult(this, orderBy, context, "DeviceManagementClient.GetGroups");
         }
 
         /// <summary>
-        /// Gets a list of all device groups.  The $default group will always be returned
-        /// first.
-        /// </summary>
-        /// <param name="orderBy">
-        /// Orders the set of groups returned. You can order by groupId, deviceCount,
-        /// createdDate, subgroupsWithNewUpdatesAvailableCount,
-        /// subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Group> GetGroups(string orderBy = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetGroupsCollectionResultOfT(this, orderBy, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetGroups");
-        }
-
-        /// <summary>
-        /// Gets a list of all device groups.  The $default group will always be returned
-        /// first.
-        /// </summary>
-        /// <param name="orderBy">
-        /// Orders the set of groups returned. You can order by groupId, deviceCount,
-        /// createdDate, subgroupsWithNewUpdatesAvailableCount,
-        /// subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Group> GetGroupsAsync(string orderBy = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetGroupsAsyncCollectionResultOfT(this, orderBy, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetGroups");
-        }
-
-        /// <summary>
         /// [Protocol Method] Gets the device group properties.
         /// <list type="bullet">
         /// <item>
@@ -1030,7 +723,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetGroup(string groupId, RequestContext context)
+        public virtual Response GetGroup(string groupId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroup");
             scope.Start();
@@ -1062,7 +755,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetGroupAsync(string groupId, RequestContext context)
+        public virtual async Task<Response> GetGroupAsync(string groupId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroup");
             scope.Start();
@@ -1078,34 +771,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the device group properties. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Group> GetGroup(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            Response result = GetGroup(groupId, cancellationToken.ToRequestContext());
-            return Response.FromValue((Group)result, result);
-        }
-
-        /// <summary> Gets the device group properties. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Group>> GetGroupAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            Response result = await GetGroupAsync(groupId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Group)result, result);
         }
 
         /// <summary>
@@ -1128,7 +793,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteGroup(string groupId, RequestContext context)
+        public virtual Response DeleteGroup(string groupId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteGroup");
             scope.Start();
@@ -1166,7 +831,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteGroupAsync(string groupId, RequestContext context)
+        public virtual async Task<Response> DeleteGroupAsync(string groupId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteGroup");
             scope.Start();
@@ -1185,48 +850,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Deletes a device group. This group is automatically created when a Device
-        /// Update-enabled device is connected to the hub and reports its properties.
-        /// Groups, subgroups, and deployments are not automatically cleaned up but are
-        /// retained for history purposes. Users can call this method to delete a group if
-        /// they do not need to retain any of the history of the group and no longer need
-        /// it. If a device is ever connected again for this group after the group was
-        /// deleted it will be automatically re-created but there will be no history.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteGroup(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return DeleteGroup(groupId, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary>
-        /// Deletes a device group. This group is automatically created when a Device
-        /// Update-enabled device is connected to the hub and reports its properties.
-        /// Groups, subgroups, and deployments are not automatically cleaned up but are
-        /// retained for history purposes. Users can call this method to delete a group if
-        /// they do not need to retain any of the history of the group and no longer need
-        /// it. If a device is ever connected again for this group after the group was
-        /// deleted it will be automatically re-created but there will be no history.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteGroupAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return await DeleteGroupAsync(groupId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// [Protocol Method] Get device group update compliance information such as how many devices are on
         /// their latest update, how many need new updates, and how many are in progress on
         /// receiving a new update.
@@ -1242,7 +865,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUpdateComplianceForGroup(string groupId, RequestContext context)
+        public virtual Response GetUpdateComplianceForGroup(string groupId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateComplianceForGroup");
             scope.Start();
@@ -1276,7 +899,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUpdateComplianceForGroupAsync(string groupId, RequestContext context)
+        public virtual async Task<Response> GetUpdateComplianceForGroupAsync(string groupId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateComplianceForGroup");
             scope.Start();
@@ -1292,42 +915,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get device group update compliance information such as how many devices are on
-        /// their latest update, how many need new updates, and how many are in progress on
-        /// receiving a new update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UpdateCompliance> GetUpdateComplianceForGroup(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            Response result = GetUpdateComplianceForGroup(groupId, cancellationToken.ToRequestContext());
-            return Response.FromValue((UpdateCompliance)result, result);
-        }
-
-        /// <summary>
-        /// Get device group update compliance information such as how many devices are on
-        /// their latest update, how many need new updates, and how many are in progress on
-        /// receiving a new update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UpdateCompliance>> GetUpdateComplianceForGroupAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            Response result = await GetUpdateComplianceForGroupAsync(groupId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UpdateCompliance)result, result);
         }
 
         /// <summary>
@@ -1345,7 +932,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetBestUpdatesForGroup(string groupId, RequestContext context)
+        public virtual Pageable<BinaryData> GetBestUpdatesForGroup(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1367,43 +954,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupAsync(string groupId, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupAsync(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             return new DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResult(this, groupId, context, "DeviceManagementClient.GetBestUpdatesForGroup");
-        }
-
-        /// <summary>
-        /// Get the best available updates for a device group and a count of how many
-        /// devices need each update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeviceClassSubgroupUpdatableDevices> GetBestUpdatesForGroup(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return new DeviceManagementClientGetBestUpdatesForGroupCollectionResultOfT(this, groupId, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetBestUpdatesForGroup");
-        }
-
-        /// <summary>
-        /// Get the best available updates for a device group and a count of how many
-        /// devices need each update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeviceClassSubgroupUpdatableDevices> GetBestUpdatesForGroupAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return new DeviceManagementClientGetBestUpdatesForGroupAsyncCollectionResultOfT(this, groupId, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetBestUpdatesForGroup");
         }
 
         /// <summary>
@@ -1421,7 +976,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeploymentsForGroup(string groupId, string orderBy, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeploymentsForGroup(string groupId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1443,39 +998,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupAsync(string groupId, string orderBy, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupAsync(string groupId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             return new DeviceManagementClientGetDeploymentsForGroupAsyncCollectionResult(this, groupId, orderBy, context, "DeviceManagementClient.GetDeploymentsForGroup");
-        }
-
-        /// <summary> Gets a list of deployments for a device group. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Deployment> GetDeploymentsForGroup(string groupId, string orderBy = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return new DeviceManagementClientGetDeploymentsForGroupCollectionResultOfT(this, groupId, orderBy, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDeploymentsForGroup");
-        }
-
-        /// <summary> Gets a list of deployments for a device group. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Deployment> GetDeploymentsForGroupAsync(string groupId, string orderBy = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return new DeviceManagementClientGetDeploymentsForGroupAsyncCollectionResultOfT(this, groupId, orderBy, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDeploymentsForGroup");
         }
 
         /// <summary>
@@ -1493,7 +1020,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeployment(string groupId, string deploymentId, RequestContext context)
+        public virtual Response GetDeployment(string groupId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeployment");
             scope.Start();
@@ -1527,7 +1054,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentAsync(string groupId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> GetDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeployment");
             scope.Start();
@@ -1544,38 +1071,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Deployment> GetDeployment(string groupId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = GetDeployment(groupId, deploymentId, cancellationToken.ToRequestContext());
-            return Response.FromValue((Deployment)result, result);
-        }
-
-        /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Deployment>> GetDeploymentAsync(string groupId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = await GetDeploymentAsync(groupId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Deployment)result, result);
         }
 
         /// <summary>
@@ -1650,42 +1145,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Creates or updates a deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="deployment"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="deployment"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Deployment> CreateOrUpdateDeployment(string groupId, string deploymentId, Deployment deployment, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(deployment, nameof(deployment));
-
-            Response result = CreateOrUpdateDeployment(groupId, deploymentId, deployment, cancellationToken.ToRequestContext());
-            return Response.FromValue((Deployment)result, result);
-        }
-
-        /// <summary> Creates or updates a deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="deployment"> The deployment properties. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="deployment"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Deployment>> CreateOrUpdateDeploymentAsync(string groupId, string deploymentId, Deployment deployment, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(deployment, nameof(deployment));
-
-            Response result = await CreateOrUpdateDeploymentAsync(groupId, deploymentId, deployment, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Deployment)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Deletes a deployment.
         /// <list type="bullet">
@@ -1701,7 +1160,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteDeployment(string groupId, string deploymentId, RequestContext context)
+        public virtual Response DeleteDeployment(string groupId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeployment");
             scope.Start();
@@ -1735,7 +1194,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDeploymentAsync(string groupId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> DeleteDeploymentAsync(string groupId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeployment");
             scope.Start();
@@ -1754,36 +1213,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Deletes a deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteDeployment(string groupId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            return DeleteDeployment(groupId, deploymentId, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes a deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDeploymentAsync(string groupId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            return await DeleteDeploymentAsync(groupId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the status of a deployment including a breakdown of how many devices in
         /// the deployment are in progress, completed, or failed.
@@ -1800,7 +1229,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeploymentStatus(string groupId, string deploymentId, RequestContext context)
+        public virtual Response GetDeploymentStatus(string groupId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentStatus");
             scope.Start();
@@ -1835,7 +1264,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentStatusAsync(string groupId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> GetDeploymentStatusAsync(string groupId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentStatus");
             scope.Start();
@@ -1852,44 +1281,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets the status of a deployment including a breakdown of how many devices in
-        /// the deployment are in progress, completed, or failed.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeploymentStatus> GetDeploymentStatus(string groupId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = GetDeploymentStatus(groupId, deploymentId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeploymentStatus)result, result);
-        }
-
-        /// <summary>
-        /// Gets the status of a deployment including a breakdown of how many devices in
-        /// the deployment are in progress, completed, or failed.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeploymentStatus>> GetDeploymentStatusAsync(string groupId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = await GetDeploymentStatusAsync(groupId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeploymentStatus)result, result);
         }
 
         /// <summary>
@@ -1913,7 +1304,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeviceClassSubgroupsForGroup(string groupId, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeviceClassSubgroupsForGroup(string groupId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1941,7 +1332,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeviceClassSubgroupsForGroupAsync(string groupId, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeviceClassSubgroupsForGroupAsync(string groupId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -1949,50 +1340,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Get the device class subgroups for the group. A device class subgroup is the
-        /// set of devices within the group that share the same device class. All devices
-        /// within the same device class are compatible with the same updates.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="filter">
-        /// Restricts the set of device class subgroups returned. You can filter on compat
-        /// properties by name and value. (i.e. filter=compatProperties/propertyName1 eq
-        /// 'value1' and compatProperties/propertyName2 eq 'value2')
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeviceClassSubgroup> GetDeviceClassSubgroupsForGroup(string groupId, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupCollectionResultOfT(this, groupId, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDeviceClassSubgroupsForGroup");
-        }
-
-        /// <summary>
-        /// Get the device class subgroups for the group. A device class subgroup is the
-        /// set of devices within the group that share the same device class. All devices
-        /// within the same device class are compatible with the same updates.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="filter">
-        /// Restricts the set of device class subgroups returned. You can filter on compat
-        /// properties by name and value. (i.e. filter=compatProperties/propertyName1 eq
-        /// 'value1' and compatProperties/propertyName2 eq 'value2')
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeviceClassSubgroup> GetDeviceClassSubgroupsForGroupAsync(string groupId, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            return new DeviceManagementClientGetDeviceClassSubgroupsForGroupAsyncCollectionResultOfT(this, groupId, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetDeviceClassSubgroupsForGroup");
-        }
-
-        /// <summary>
         /// [Protocol Method] Gets device class subgroup details. A device class subgroup is the set of
         /// devices within the group that share the same device class. All devices within
         /// the same device class are compatible with the same updates.
@@ -2009,7 +1356,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context)
+        public virtual Response GetDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroup");
             scope.Start();
@@ -2045,7 +1392,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context)
+        public virtual async Task<Response> GetDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroup");
             scope.Start();
@@ -2062,46 +1409,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets device class subgroup details. A device class subgroup is the set of
-        /// devices within the group that share the same device class. All devices within
-        /// the same device class are compatible with the same updates.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeviceClassSubgroup> GetDeviceClassSubgroup(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = GetDeviceClassSubgroup(groupId, deviceClassId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeviceClassSubgroup)result, result);
-        }
-
-        /// <summary>
-        /// Gets device class subgroup details. A device class subgroup is the set of
-        /// devices within the group that share the same device class. All devices within
-        /// the same device class are compatible with the same updates.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeviceClassSubgroup>> GetDeviceClassSubgroupAsync(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = await GetDeviceClassSubgroupAsync(groupId, deviceClassId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeviceClassSubgroup)result, result);
         }
 
         /// <summary>
@@ -2126,7 +1433,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context)
+        public virtual Response DeleteDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeviceClassSubgroup");
             scope.Start();
@@ -2167,7 +1474,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context)
+        public virtual async Task<Response> DeleteDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeviceClassSubgroup");
             scope.Start();
@@ -2187,54 +1494,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Deletes a device class subgroup. This subgroup is automatically created when a
-        /// Device Update-enabled device is connected to the hub and reports its
-        /// properties. Groups, subgroups, and deployments are not automatically cleaned up
-        /// but are retained for history purposes. Users can call this method to delete a
-        /// subgroup if they do not need to retain any of the history of the subgroup and
-        /// no longer need it. If a device is ever connected again for this subgroup after
-        /// the subgroup was deleted it will be automatically re-created but there will be
-        /// no history.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteDeviceClassSubgroup(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return DeleteDeviceClassSubgroup(groupId, deviceClassId, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary>
-        /// Deletes a device class subgroup. This subgroup is automatically created when a
-        /// Device Update-enabled device is connected to the hub and reports its
-        /// properties. Groups, subgroups, and deployments are not automatically cleaned up
-        /// but are retained for history purposes. Users can call this method to delete a
-        /// subgroup if they do not need to retain any of the history of the subgroup and
-        /// no longer need it. If a device is ever connected again for this subgroup after
-        /// the subgroup was deleted it will be automatically re-created but there will be
-        /// no history.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDeviceClassSubgroupAsync(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return await DeleteDeviceClassSubgroupAsync(groupId, deviceClassId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// [Protocol Method] Get device class subgroup update compliance information such as how many
         /// devices are on their latest update, how many need new updates, and how many are
         /// in progress on receiving a new update.
@@ -2251,7 +1510,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeviceClassSubgroupUpdateCompliance(string groupId, string deviceClassId, RequestContext context)
+        public virtual Response GetDeviceClassSubgroupUpdateCompliance(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupUpdateCompliance");
             scope.Start();
@@ -2287,7 +1546,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeviceClassSubgroupUpdateComplianceAsync(string groupId, string deviceClassId, RequestContext context)
+        public virtual async Task<Response> GetDeviceClassSubgroupUpdateComplianceAsync(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupUpdateCompliance");
             scope.Start();
@@ -2307,46 +1566,6 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// Get device class subgroup update compliance information such as how many
-        /// devices are on their latest update, how many need new updates, and how many are
-        /// in progress on receiving a new update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UpdateCompliance> GetDeviceClassSubgroupUpdateCompliance(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = GetDeviceClassSubgroupUpdateCompliance(groupId, deviceClassId, cancellationToken.ToRequestContext());
-            return Response.FromValue((UpdateCompliance)result, result);
-        }
-
-        /// <summary>
-        /// Get device class subgroup update compliance information such as how many
-        /// devices are on their latest update, how many need new updates, and how many are
-        /// in progress on receiving a new update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UpdateCompliance>> GetDeviceClassSubgroupUpdateComplianceAsync(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = await GetDeviceClassSubgroupUpdateComplianceAsync(groupId, deviceClassId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((UpdateCompliance)result, result);
-        }
-
-        /// <summary>
         /// [Protocol Method] Get the best available update for a device class subgroup and a count of how
         /// many devices need this update.
         /// <list type="bullet">
@@ -2362,7 +1581,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBestUpdatesForDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context)
+        public virtual Response GetBestUpdatesForDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetBestUpdatesForDeviceClassSubgroup");
             scope.Start();
@@ -2397,7 +1616,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBestUpdatesForDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context)
+        public virtual async Task<Response> GetBestUpdatesForDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetBestUpdatesForDeviceClassSubgroup");
             scope.Start();
@@ -2414,44 +1633,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get the best available update for a device class subgroup and a count of how
-        /// many devices need this update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeviceClassSubgroupUpdatableDevices> GetBestUpdatesForDeviceClassSubgroup(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = GetBestUpdatesForDeviceClassSubgroup(groupId, deviceClassId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeviceClassSubgroupUpdatableDevices)result, result);
-        }
-
-        /// <summary>
-        /// Get the best available update for a device class subgroup and a count of how
-        /// many devices need this update.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeviceClassSubgroupUpdatableDevices>> GetBestUpdatesForDeviceClassSubgroupAsync(string groupId, string deviceClassId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            Response result = await GetBestUpdatesForDeviceClassSubgroupAsync(groupId, deviceClassId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeviceClassSubgroupUpdatableDevices)result, result);
         }
 
         /// <summary>
@@ -2470,7 +1651,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeploymentsForDeviceClassSubgroup(string groupId, string deviceClassId, string orderBy, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeploymentsForDeviceClassSubgroup(string groupId, string deviceClassId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
@@ -2500,7 +1681,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeploymentsForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string orderBy, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string orderBy = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
@@ -2514,50 +1695,6 @@ namespace Azure.IoT.DeviceUpdate
                 "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroup");
         }
 
-        /// <summary> Gets a list of deployments for a device class subgroup. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<Deployment> GetDeploymentsForDeviceClassSubgroup(string groupId, string deviceClassId, string orderBy = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupCollectionResultOfT(
-                this,
-                groupId,
-                deviceClassId,
-                orderBy,
-                cancellationToken.ToRequestContext(),
-                "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroup");
-        }
-
-        /// <summary> Gets a list of deployments for a device class subgroup. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<Deployment> GetDeploymentsForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string orderBy = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            return new DeviceManagementClientGetDeploymentsForDeviceClassSubgroupAsyncCollectionResultOfT(
-                this,
-                groupId,
-                deviceClassId,
-                orderBy,
-                cancellationToken.ToRequestContext(),
-                "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroup");
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the deployment properties.
         /// <list type="bullet">
@@ -2574,7 +1711,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual Response GetDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentForDeviceClassSubgroup");
             scope.Start();
@@ -2610,7 +1747,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> GetDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeploymentForDeviceClassSubgroup");
             scope.Start();
@@ -2630,42 +1767,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Deployment> GetDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = GetDeploymentForDeviceClassSubgroup(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext());
-            return Response.FromValue((Deployment)result, result);
-        }
-
-        /// <summary> Gets the deployment properties. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Deployment>> GetDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = await GetDeploymentForDeviceClassSubgroupAsync(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Deployment)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Deletes a device class subgroup deployment.
         /// <list type="bullet">
@@ -2682,7 +1783,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual Response DeleteDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeploymentForDeviceClassSubgroup");
             scope.Start();
@@ -2718,7 +1819,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> DeleteDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeploymentForDeviceClassSubgroup");
             scope.Start();
@@ -2738,40 +1839,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Deletes a device class subgroup deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            return DeleteDeploymentForDeviceClassSubgroup(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes a device class subgroup deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            return await DeleteDeploymentForDeviceClassSubgroupAsync(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// [Protocol Method] Stops a deployment.
         /// <list type="bullet">
@@ -2788,7 +1855,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response StopDeployment(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual Response StopDeployment(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.StopDeployment");
             scope.Start();
@@ -2824,7 +1891,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StopDeploymentAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> StopDeploymentAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.StopDeployment");
             scope.Start();
@@ -2844,42 +1911,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Stops a deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Deployment> StopDeployment(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = StopDeployment(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext());
-            return Response.FromValue((Deployment)result, result);
-        }
-
-        /// <summary> Stops a deployment. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Deployment>> StopDeploymentAsync(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = await StopDeploymentAsync(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Deployment)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Retries a deployment with failed devices.
         /// <list type="bullet">
@@ -2896,7 +1927,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response RetryDeployment(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual Response RetryDeployment(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.RetryDeployment");
             scope.Start();
@@ -2932,7 +1963,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RetryDeploymentAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> RetryDeploymentAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.RetryDeployment");
             scope.Start();
@@ -2950,42 +1981,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Retries a deployment with failed devices. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Deployment> RetryDeployment(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = RetryDeployment(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext());
-            return Response.FromValue((Deployment)result, result);
-        }
-
-        /// <summary> Retries a deployment with failed devices. </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Deployment>> RetryDeploymentAsync(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = await RetryDeploymentAsync(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Deployment)result, result);
         }
 
         /// <summary>
@@ -3005,7 +2000,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDeviceClassSubgroupDeploymentStatus(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual Response GetDeviceClassSubgroupDeploymentStatus(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupDeploymentStatus");
             scope.Start();
@@ -3042,7 +2037,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDeviceClassSubgroupDeploymentStatusAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        public virtual async Task<Response> GetDeviceClassSubgroupDeploymentStatusAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupDeploymentStatus");
             scope.Start();
@@ -3060,48 +2055,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets the status of a deployment including a breakdown of how many devices in
-        /// the deployment are in progress, completed, or failed.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeviceClassSubgroupDeploymentStatus> GetDeviceClassSubgroupDeploymentStatus(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = GetDeviceClassSubgroupDeploymentStatus(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeviceClassSubgroupDeploymentStatus)result, result);
-        }
-
-        /// <summary>
-        /// Gets the status of a deployment including a breakdown of how many devices in
-        /// the deployment are in progress, completed, or failed.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeviceClassSubgroupDeploymentStatus>> GetDeviceClassSubgroupDeploymentStatusAsync(string groupId, string deviceClassId, string deploymentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            Response result = await GetDeviceClassSubgroupDeploymentStatusAsync(groupId, deviceClassId, deploymentId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeviceClassSubgroupDeploymentStatus)result, result);
         }
 
         /// <summary>
@@ -3125,7 +2078,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeployment(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeployment(string groupId, string deviceClassId, string deploymentId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
@@ -3162,7 +2115,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentAsync(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentAsync(string groupId, string deviceClassId, string deploymentId, string filter = default, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
@@ -3175,68 +2128,6 @@ namespace Azure.IoT.DeviceUpdate
                 deploymentId,
                 filter,
                 context,
-                "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployment");
-        }
-
-        /// <summary>
-        /// Gets a list of devices in a deployment along with their state. Useful for
-        /// getting a list of failed devices.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="filter">
-        /// Restricts the set of deployment device states returned. You can filter on
-        /// deviceId and moduleId and/or deviceState.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeploymentDeviceState> GetDeviceStatesForDeviceClassSubgroupDeployment(string groupId, string deviceClassId, string deploymentId, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentCollectionResultOfT(
-                this,
-                groupId,
-                deviceClassId,
-                deploymentId,
-                filter,
-                cancellationToken.ToRequestContext(),
-                "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployment");
-        }
-
-        /// <summary>
-        /// Gets a list of devices in a deployment along with their state. Useful for
-        /// getting a list of failed devices.
-        /// </summary>
-        /// <param name="groupId"> Group identifier. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="deploymentId"> Deployment identifier. </param>
-        /// <param name="filter">
-        /// Restricts the set of deployment device states returned. You can filter on
-        /// deviceId and moduleId and/or deviceState.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeploymentDeviceState> GetDeviceStatesForDeviceClassSubgroupDeploymentAsync(string groupId, string deviceClassId, string deploymentId, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
-
-            return new DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentAsyncCollectionResultOfT(
-                this,
-                groupId,
-                deviceClassId,
-                deploymentId,
-                filter,
-                cancellationToken.ToRequestContext(),
                 "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployment");
         }
 
@@ -3258,7 +2149,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch, RequestContext context)
+        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperationStatus");
             scope.Start();
@@ -3294,7 +2185,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperationStatus");
             scope.Start();
@@ -3310,42 +2201,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Retrieve operation status. </summary>
-        /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeviceOperation> GetOperationStatus(string operationId, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            Response result = GetOperationStatus(operationId, ifNoneMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((DeviceOperation)result, result);
-        }
-
-        /// <summary> Retrieve operation status. </summary>
-        /// <param name="operationId"> Operation identifier. </param>
-        /// <param name="ifNoneMatch">
-        /// Defines the If-None-Match condition. The operation will be performed only if
-        /// the ETag on the server does not match this value.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeviceOperation>> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            Response result = await GetOperationStatusAsync(operationId, ifNoneMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DeviceOperation)result, result);
         }
 
         /// <summary>
@@ -3369,7 +2224,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperationStatuses(string filter, int? maxCount, RequestContext context)
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? maxCount = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetOperationStatusesCollectionResult(this, filter, maxCount, context, "DeviceManagementClient.GetOperationStatuses");
         }
@@ -3395,49 +2250,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter, int? maxCount, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? maxCount = default, RequestContext context = null)
         {
             return new DeviceManagementClientGetOperationStatusesAsyncCollectionResult(this, filter, maxCount, context, "DeviceManagementClient.GetOperationStatuses");
-        }
-
-        /// <summary>
-        /// Get a list of all device import operations. Completed operations are kept for 7
-        /// days before auto-deleted.
-        /// </summary>
-        /// <param name="filter">
-        /// Restricts the set of operations returned. Only one specific filter is
-        /// supported: "status eq 'NotStarted' or status eq 'Running'"
-        /// </param>
-        /// <param name="maxCount">
-        /// Specifies a non-negative integer n that limits the number of items returned
-        /// from a collection. The service returns the number of available items up to but
-        /// not greater than the specified value n.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeviceOperation> GetOperationStatuses(string filter = default, int? maxCount = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetOperationStatusesCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetOperationStatuses");
-        }
-
-        /// <summary>
-        /// Get a list of all device import operations. Completed operations are kept for 7
-        /// days before auto-deleted.
-        /// </summary>
-        /// <param name="filter">
-        /// Restricts the set of operations returned. Only one specific filter is
-        /// supported: "status eq 'NotStarted' or status eq 'Running'"
-        /// </param>
-        /// <param name="maxCount">
-        /// Specifies a non-negative integer n that limits the number of items returned
-        /// from a collection. The service returns the number of available items up to but
-        /// not greater than the specified value n.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeviceOperation> GetOperationStatusesAsync(string filter = default, int? maxCount = default, CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetOperationStatusesAsyncCollectionResultOfT(this, filter, maxCount, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetOperationStatuses");
         }
 
         /// <summary>
@@ -3508,38 +2323,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Start the device diagnostics log collection on specified devices. </summary>
-        /// <param name="logCollectionId"> Log collection identifier. </param>
-        /// <param name="logCollection"> The log collection properties. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> or <paramref name="logCollection"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LogCollection> StartLogCollection(string logCollectionId, LogCollection logCollection, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
-            Argument.AssertNotNull(logCollection, nameof(logCollection));
-
-            Response result = StartLogCollection(logCollectionId, logCollection, cancellationToken.ToRequestContext());
-            return Response.FromValue((LogCollection)result, result);
-        }
-
-        /// <summary> Start the device diagnostics log collection on specified devices. </summary>
-        /// <param name="logCollectionId"> Log collection identifier. </param>
-        /// <param name="logCollection"> The log collection properties. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> or <paramref name="logCollection"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LogCollection>> StartLogCollectionAsync(string logCollectionId, LogCollection logCollection, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
-            Argument.AssertNotNull(logCollection, nameof(logCollection));
-
-            Response result = await StartLogCollectionAsync(logCollectionId, logCollection, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LogCollection)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Get the device diagnostics log collection
         /// <list type="bullet">
@@ -3554,7 +2337,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetLogCollection(string logCollectionId, RequestContext context)
+        public virtual Response GetLogCollection(string logCollectionId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollection");
             scope.Start();
@@ -3586,7 +2369,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLogCollectionAsync(string logCollectionId, RequestContext context)
+        public virtual async Task<Response> GetLogCollectionAsync(string logCollectionId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollection");
             scope.Start();
@@ -3604,34 +2387,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Get the device diagnostics log collection. </summary>
-        /// <param name="logCollectionId"> Log collection identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LogCollection> GetLogCollection(string logCollectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
-
-            Response result = GetLogCollection(logCollectionId, cancellationToken.ToRequestContext());
-            return Response.FromValue((LogCollection)result, result);
-        }
-
-        /// <summary> Get the device diagnostics log collection. </summary>
-        /// <param name="logCollectionId"> Log collection identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LogCollection>> GetLogCollectionAsync(string logCollectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
-
-            Response result = await GetLogCollectionAsync(logCollectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LogCollection)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Get all device diagnostics log collections
         /// <list type="bullet">
@@ -3643,7 +2398,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetLogCollections(RequestContext context)
+        public virtual Pageable<BinaryData> GetLogCollections(RequestContext context = null)
         {
             return new DeviceManagementClientGetLogCollectionsCollectionResult(this, context, "DeviceManagementClient.GetLogCollections");
         }
@@ -3659,25 +2414,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetLogCollectionsAsync(RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetLogCollectionsAsync(RequestContext context = null)
         {
             return new DeviceManagementClientGetLogCollectionsAsyncCollectionResult(this, context, "DeviceManagementClient.GetLogCollections");
-        }
-
-        /// <summary> Get all device diagnostics log collections. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<LogCollection> GetLogCollections(CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetLogCollectionsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetLogCollections");
-        }
-
-        /// <summary> Get all device diagnostics log collections. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<LogCollection> GetLogCollectionsAsync(CancellationToken cancellationToken = default)
-        {
-            return new DeviceManagementClientGetLogCollectionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetLogCollections");
         }
 
         /// <summary>
@@ -3694,7 +2433,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetLogCollectionDetailedStatus(string logCollectionId, RequestContext context)
+        public virtual Response GetLogCollectionDetailedStatus(string logCollectionId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionDetailedStatus");
             scope.Start();
@@ -3726,7 +2465,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLogCollectionDetailedStatusAsync(string logCollectionId, RequestContext context)
+        public virtual async Task<Response> GetLogCollectionDetailedStatusAsync(string logCollectionId, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionDetailedStatus");
             scope.Start();
@@ -3742,34 +2481,6 @@ namespace Azure.IoT.DeviceUpdate
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get log collection with detailed status. </summary>
-        /// <param name="logCollectionId"> Log collection identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LogCollectionOperationDetailedStatus> GetLogCollectionDetailedStatus(string logCollectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
-
-            Response result = GetLogCollectionDetailedStatus(logCollectionId, cancellationToken.ToRequestContext());
-            return Response.FromValue((LogCollectionOperationDetailedStatus)result, result);
-        }
-
-        /// <summary> Get log collection with detailed status. </summary>
-        /// <param name="logCollectionId"> Log collection identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LogCollectionOperationDetailedStatus>> GetLogCollectionDetailedStatusAsync(string logCollectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
-
-            Response result = await GetLogCollectionDetailedStatusAsync(logCollectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LogCollectionOperationDetailedStatus)result, result);
         }
 
         /// <summary>
@@ -3789,7 +2500,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetHealthOfDevices(string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetHealthOfDevices(string filter, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -3813,43 +2524,11 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetHealthOfDevicesAsync(string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetHealthOfDevicesAsync(string filter, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
             return new DeviceManagementClientGetHealthOfDevicesAsyncCollectionResult(this, filter, context, "DeviceManagementClient.GetHealthOfDevices");
-        }
-
-        /// <summary> Get list of device health. </summary>
-        /// <param name="filter">
-        /// Restricts the set of devices for which device health is returned. You can
-        /// filter on status, device id and module id.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeviceHealth> GetHealthOfDevices(string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
-
-            return new DeviceManagementClientGetHealthOfDevicesCollectionResultOfT(this, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetHealthOfDevices");
-        }
-
-        /// <summary> Get list of device health. </summary>
-        /// <param name="filter">
-        /// Restricts the set of devices for which device health is returned. You can
-        /// filter on status, device id and module id.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeviceHealth> GetHealthOfDevicesAsync(string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
-
-            return new DeviceManagementClientGetHealthOfDevicesAsyncCollectionResultOfT(this, filter, cancellationToken.ToRequestContext(), "DeviceManagementClient.GetHealthOfDevices");
         }
     }
 }

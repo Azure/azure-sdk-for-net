@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Update identifier. </summary>
-    public partial class UpdateId
+    internal partial class UpdateId
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,13 +20,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
         /// <param name="version"> Update version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        public UpdateId(string provider, string name, string version)
+        internal UpdateId(string provider, string name, string version)
         {
-            Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
-
             Provider = provider;
             Name = name;
             Version = version;
@@ -46,12 +41,12 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Update provider. </summary>
-        public string Provider { get; set; }
+        public string Provider { get; }
 
         /// <summary> Update name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Update version. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
     }
 }

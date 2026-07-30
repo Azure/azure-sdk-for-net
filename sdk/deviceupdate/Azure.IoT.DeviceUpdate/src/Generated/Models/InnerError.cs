@@ -14,7 +14,7 @@ namespace Azure.IoT.DeviceUpdate
     /// An object containing more specific information than the current object about
     /// the error.
     /// </summary>
-    public partial class InnerError
+    internal partial class InnerError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

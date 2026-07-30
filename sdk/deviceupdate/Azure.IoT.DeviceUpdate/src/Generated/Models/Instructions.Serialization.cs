@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Update install instructions container. </summary>
-    public partial class Instructions : IJsonModel<Instructions>
+    internal partial class Instructions : IJsonModel<Instructions>
     {
         /// <summary> Initializes a new instance of <see cref="Instructions"/> for deserialization. </summary>
         internal Instructions()

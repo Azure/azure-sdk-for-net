@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Device Health. </summary>
-    public partial class DeviceHealth
+    internal partial class DeviceHealth
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

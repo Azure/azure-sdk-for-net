@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The step result under an update. </summary>
-    public partial class StepResult : IJsonModel<StepResult>
+    internal partial class StepResult : IJsonModel<StepResult>
     {
         /// <summary> Initializes a new instance of <see cref="StepResult"/> for deserialization. </summary>
         internal StepResult()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Deployment metadata. </summary>
-    public partial class Deployment
+    internal partial class Deployment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -27,13 +27,8 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="startDateTime"> The deployment start datetime. </param>
         /// <param name="update"> Update information for the update in the deployment. </param>
         /// <param name="groupId"> The group identity for the devices the deployment is intended to update. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/>, <paramref name="update"/> or <paramref name="groupId"/> is null. </exception>
-        public Deployment(string deploymentId, DateTimeOffset startDateTime, UpdateInfo update, string groupId)
+        internal Deployment(string deploymentId, DateTimeOffset startDateTime, UpdateInfo update, string groupId)
         {
-            Argument.AssertNotNull(deploymentId, nameof(deploymentId));
-            Argument.AssertNotNull(update, nameof(update));
-            Argument.AssertNotNull(groupId, nameof(groupId));
-
             DeploymentId = deploymentId;
             StartDateTime = startDateTime;
             Update = update;
@@ -88,16 +83,16 @@ namespace Azure.IoT.DeviceUpdate
         /// in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you
         /// create a deployment.
         /// </summary>
-        public string DeploymentId { get; set; }
+        public string DeploymentId { get; }
 
         /// <summary> The deployment start datetime. </summary>
-        public DateTimeOffset StartDateTime { get; set; }
+        public DateTimeOffset StartDateTime { get; }
 
         /// <summary> Update information for the update in the deployment. </summary>
-        public UpdateInfo Update { get; set; }
+        public UpdateInfo Update { get; }
 
         /// <summary> The group identity for the devices the deployment is intended to update. </summary>
-        public string GroupId { get; set; }
+        public string GroupId { get; }
 
         /// <summary>
         /// The device class subgroups the deployment is compatible with and subgroup
@@ -107,21 +102,21 @@ namespace Azure.IoT.DeviceUpdate
         public IList<string> DeviceClassSubgroups { get; }
 
         /// <summary> Boolean flag indicating whether the deployment was canceled. </summary>
-        public bool? IsCanceled { get; set; }
+        public bool? IsCanceled { get; }
 
         /// <summary> Boolean flag indicating whether the deployment has been retried. </summary>
-        public bool? IsRetried { get; set; }
+        public bool? IsRetried { get; }
 
         /// <summary> The rollback policy for the deployment. </summary>
-        public CloudInitiatedRollbackPolicy RollbackPolicy { get; set; }
+        public CloudInitiatedRollbackPolicy RollbackPolicy { get; }
 
         /// <summary> Boolean flag indicating whether the deployment is a rollback deployment. </summary>
-        public bool? IsCloudInitiatedRollback { get; set; }
+        public bool? IsCloudInitiatedRollback { get; }
 
         /// <summary>
         /// The protocol the device should use when downloading the update payload.
         /// Defaults to "https".
         /// </summary>
-        public DownloadSecurity? DownloadSecurity { get; set; }
+        public DownloadSecurity? DownloadSecurity { get; }
     }
 }

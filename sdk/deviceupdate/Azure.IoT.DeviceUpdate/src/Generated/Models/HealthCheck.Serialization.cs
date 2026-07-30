@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Health check. </summary>
-    public partial class HealthCheck : IJsonModel<HealthCheck>
+    internal partial class HealthCheck : IJsonModel<HealthCheck>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

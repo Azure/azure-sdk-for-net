@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Failure conditions to initiate rollback policy. </summary>
-    public partial class CloudInitiatedRollbackPolicyFailure : IJsonModel<CloudInitiatedRollbackPolicyFailure>
+    internal partial class CloudInitiatedRollbackPolicyFailure : IJsonModel<CloudInitiatedRollbackPolicyFailure>
     {
         /// <summary> Initializes a new instance of <see cref="CloudInitiatedRollbackPolicyFailure"/> for deserialization. </summary>
         internal CloudInitiatedRollbackPolicyFailure()

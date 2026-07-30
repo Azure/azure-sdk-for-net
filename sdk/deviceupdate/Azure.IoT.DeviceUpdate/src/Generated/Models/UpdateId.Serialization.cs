@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Update identifier. </summary>
-    public partial class UpdateId : IJsonModel<UpdateId>
+    internal partial class UpdateId : IJsonModel<UpdateId>
     {
         /// <summary> Initializes a new instance of <see cref="UpdateId"/> for deserialization. </summary>
         internal UpdateId()

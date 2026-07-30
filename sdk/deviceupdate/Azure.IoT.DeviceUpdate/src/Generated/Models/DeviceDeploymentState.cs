@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Deployment state. </summary>
-    public readonly partial struct DeviceDeploymentState : IEquatable<DeviceDeploymentState>
+    internal readonly partial struct DeviceDeploymentState : IEquatable<DeviceDeploymentState>
     {
         private readonly string _value;
         /// <summary> Deployment has completed with success. </summary>

@@ -12,18 +12,15 @@ using System.Linq;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Diagnostics request body. </summary>
-    public partial class LogCollection
+    internal partial class LogCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogCollection"/>. </summary>
         /// <param name="deviceList"> Array of Device Update agent ids. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceList"/> is null. </exception>
-        public LogCollection(IEnumerable<DeviceUpdateAgentId> deviceList)
+        internal LogCollection(IEnumerable<DeviceUpdateAgentId> deviceList)
         {
-            Argument.AssertNotNull(deviceList, nameof(deviceList));
-
             DeviceList = deviceList.ToList();
         }
 
@@ -47,13 +44,13 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> The log collection id. </summary>
-        public string LogCollectionId { get; set; }
+        public string LogCollectionId { get; }
 
         /// <summary> Array of Device Update agent ids. </summary>
         public IList<DeviceUpdateAgentId> DeviceList { get; }
 
         /// <summary> Description of the diagnostics operation. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary> The timestamp when the operation was created. </summary>
         public string CreatedDateTime { get; }

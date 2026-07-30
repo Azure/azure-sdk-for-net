@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The install result of an update and any step results under it. </summary>
-    public partial class InstallResult : IJsonModel<InstallResult>
+    internal partial class InstallResult : IJsonModel<InstallResult>
     {
         /// <summary> Initializes a new instance of <see cref="InstallResult"/> for deserialization. </summary>
         internal InstallResult()

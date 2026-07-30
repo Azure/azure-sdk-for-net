@@ -10,12 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Deployment metadata. </summary>
-    public partial class Deployment : IJsonModel<Deployment>
+    internal partial class Deployment : IJsonModel<Deployment>
     {
         /// <summary> Initializes a new instance of <see cref="Deployment"/> for deserialization. </summary>
         internal Deployment()
@@ -61,16 +60,6 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<Deployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deployment"> The <see cref="Deployment"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Deployment deployment)
-        {
-            if (deployment == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(deployment, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="Deployment"/> from. </param>
         public static explicit operator Deployment(Response response)

@@ -16,7 +16,7 @@ namespace Azure.IoT.DeviceUpdate
     /// An object containing more specific information than the current object about
     /// the error.
     /// </summary>
-    public partial class InnerError : IJsonModel<InnerError>
+    internal partial class InnerError : IJsonModel<InnerError>
     {
         /// <summary> Initializes a new instance of <see cref="InnerError"/> for deserialization. </summary>
         internal InnerError()

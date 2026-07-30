@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Supported group types. </summary>
-    public readonly partial struct GroupType : IEquatable<GroupType>
+    internal readonly partial struct GroupType : IEquatable<GroupType>
     {
         private readonly string _value;
         /// <summary> IoT Hub tag based group, all devices in the group share an ADUGroup tag value. </summary>

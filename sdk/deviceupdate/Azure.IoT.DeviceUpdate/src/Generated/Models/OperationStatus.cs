@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Operation status. </summary>
-    public readonly partial struct OperationStatus : IEquatable<OperationStatus>
+    internal readonly partial struct OperationStatus : IEquatable<OperationStatus>
     {
         private readonly string _value;
         /// <summary> Background operation created but not started yet. </summary>

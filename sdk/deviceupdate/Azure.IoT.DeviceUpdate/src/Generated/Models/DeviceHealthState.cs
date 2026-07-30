@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Device health states. </summary>
-    public readonly partial struct DeviceHealthState : IEquatable<DeviceHealthState>
+    internal readonly partial struct DeviceHealthState : IEquatable<DeviceHealthState>
     {
         private readonly string _value;
         /// <summary> Agent is healthy. </summary>

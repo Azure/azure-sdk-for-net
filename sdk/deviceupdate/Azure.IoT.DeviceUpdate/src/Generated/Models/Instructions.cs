@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Update install instructions container. </summary>
-    public partial class Instructions
+    internal partial class Instructions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

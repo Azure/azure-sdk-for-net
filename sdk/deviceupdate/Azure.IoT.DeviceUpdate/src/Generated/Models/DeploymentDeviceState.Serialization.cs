@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Deployment device status. </summary>
-    public partial class DeploymentDeviceState : IJsonModel<DeploymentDeviceState>
+    internal partial class DeploymentDeviceState : IJsonModel<DeploymentDeviceState>
     {
         /// <summary> Initializes a new instance of <see cref="DeploymentDeviceState"/> for deserialization. </summary>
         internal DeploymentDeviceState()

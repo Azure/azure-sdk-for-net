@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Update install instruction step. </summary>
-    public partial class Step : IJsonModel<Step>
+    internal partial class Step : IJsonModel<Step>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

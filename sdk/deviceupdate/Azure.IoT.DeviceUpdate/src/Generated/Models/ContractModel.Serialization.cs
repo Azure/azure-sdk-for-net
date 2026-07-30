@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Device Update agent contract model. </summary>
-    public partial class ContractModel : IJsonModel<ContractModel>
+    internal partial class ContractModel : IJsonModel<ContractModel>
     {
         /// <summary> Initializes a new instance of <see cref="ContractModel"/> for deserialization. </summary>
         internal ContractModel()

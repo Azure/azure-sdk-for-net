@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Key-value pairs representing update compatibility information. </summary>
-    public partial class Compatibility
+    internal partial class Compatibility
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

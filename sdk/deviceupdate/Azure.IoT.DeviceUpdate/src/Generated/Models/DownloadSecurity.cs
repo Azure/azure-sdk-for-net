@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The protocol the device should use when downloading the update payload. </summary>
-    public readonly partial struct DownloadSecurity : IEquatable<DownloadSecurity>
+    internal readonly partial struct DownloadSecurity : IEquatable<DownloadSecurity>
     {
         private readonly string _value;
         /// <summary> Download update payload over HTTPS. </summary>

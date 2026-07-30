@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Group details. </summary>
-    public partial class Group : IJsonModel<Group>
+    internal partial class Group : IJsonModel<Group>
     {
         /// <summary> Initializes a new instance of <see cref="Group"/> for deserialization. </summary>
         internal Group()

@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Update metadata. </summary>
-    public partial class Update : IJsonModel<Update>
+    internal partial class Update : IJsonModel<Update>
     {
         /// <summary> Initializes a new instance of <see cref="Update"/> for deserialization. </summary>
         internal Update()

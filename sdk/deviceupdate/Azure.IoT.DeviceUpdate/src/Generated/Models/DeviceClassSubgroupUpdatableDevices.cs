@@ -14,7 +14,7 @@ namespace Azure.IoT.DeviceUpdate
     /// Device class subgroup, update information, and the number of devices for which
     /// the update is applicable.
     /// </summary>
-    public partial class DeviceClassSubgroupUpdatableDevices
+    internal partial class DeviceClassSubgroupUpdatableDevices
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

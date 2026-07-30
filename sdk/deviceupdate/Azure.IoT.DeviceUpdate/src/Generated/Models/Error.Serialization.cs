@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Error details. </summary>
-    public partial class Error : IJsonModel<Error>
+    internal partial class Error : IJsonModel<Error>
     {
         /// <summary> Initializes a new instance of <see cref="Error"/> for deserialization. </summary>
         internal Error()

@@ -10,12 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Diagnostics request body. </summary>
-    public partial class LogCollection : IJsonModel<LogCollection>
+    internal partial class LogCollection : IJsonModel<LogCollection>
     {
         /// <summary> Initializes a new instance of <see cref="LogCollection"/> for deserialization. </summary>
         internal LogCollection()
@@ -62,16 +61,6 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LogCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="logCollection"> The <see cref="LogCollection"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(LogCollection logCollection)
-        {
-            if (logCollection == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(logCollection, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LogCollection"/> from. </param>
         public static explicit operator LogCollection(Response response)
         {
@@ -99,7 +88,7 @@ namespace Azure.IoT.DeviceUpdate
             }
             if (Optional.IsDefined(LogCollectionId))
             {
-                writer.WritePropertyName("operationId"u8);
+                writer.WritePropertyName("logCollectionId"u8);
                 writer.WriteStringValue(LogCollectionId);
             }
             writer.WritePropertyName("deviceList"u8);
@@ -180,7 +169,7 @@ namespace Azure.IoT.DeviceUpdate
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("operationId"u8))
+                if (prop.NameEquals("logCollectionId"u8))
                 {
                     logCollectionId = prop.Value.GetString();
                     continue;

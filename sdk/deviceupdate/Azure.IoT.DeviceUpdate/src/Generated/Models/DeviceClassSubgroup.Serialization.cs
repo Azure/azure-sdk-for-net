@@ -17,7 +17,7 @@ namespace Azure.IoT.DeviceUpdate
     /// Device class subgroup details. A device class subgroup is a subset of devices
     /// in a group that share the same device class id.
     /// </summary>
-    public partial class DeviceClassSubgroup : IJsonModel<DeviceClassSubgroup>
+    internal partial class DeviceClassSubgroup : IJsonModel<DeviceClassSubgroup>
     {
         /// <summary> Initializes a new instance of <see cref="DeviceClassSubgroup"/> for deserialization. </summary>
         internal DeviceClassSubgroup()
