@@ -69,7 +69,7 @@ namespace Azure.Provisioning.OperationalInsights
             base.DefineProvisionableProperties();
             _name = DefineProperty<OperationalInsightsWorkspaceSkuName>(nameof(Name), new string[] { "name" }, isRequired: true);
             _capacityReservationLevel = DefineProperty<OperationalInsightsWorkspaceCapacityReservationLevel>(nameof(CapacityReservationLevel), new string[] { "capacityReservationLevel" });
-            _lastSkuUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastSkuUpdatedOn), new string[] { "lastSkuUpdate" }, isOutput: true);
+            _lastSkuUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastSkuUpdatedOn), new string[] { "lastSkuUpdate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

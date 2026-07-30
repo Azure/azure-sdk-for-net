@@ -47,7 +47,7 @@ namespace Azure.Provisioning.OperationalInsights
         {
             base.DefineProvisionableProperties();
             _state = DefineProperty<OperationalInsightsWorkspaceFailoverState>(nameof(State), new string[] { "state" }, isOutput: true);
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" }, isOutput: true);
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

@@ -72,7 +72,7 @@ namespace Azure.Provisioning.OperationalInsights
             _workspaceId = DefineProperty<Guid>(nameof(WorkspaceId), new string[] { "workspaceId" }, isOutput: true);
             _workspaceName = DefineProperty<string>(nameof(WorkspaceName), new string[] { "workspaceName" }, isOutput: true);
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isOutput: true);
-            _associatedOn = DefineProperty<DateTimeOffset>(nameof(AssociatedOn), new string[] { "associateDate" }, isOutput: true);
+            _associatedOn = DefineProperty<DateTimeOffset>(nameof(AssociatedOn), new string[] { "associateDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

@@ -46,7 +46,7 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _lastSkuUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastSkuUpdatedOn), new string[] { "lastSkuUpdate" }, isOutput: true);
+            _lastSkuUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastSkuUpdatedOn), new string[] { "lastSkuUpdate" }, isOutput: true, format: "O");
             _minCapacity = DefineProperty<long>(nameof(MinCapacity), new string[] { "minCapacity" }, isOutput: true);
             DefineAdditionalProperties();
         }

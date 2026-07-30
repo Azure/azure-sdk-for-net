@@ -123,7 +123,7 @@ namespace Azure.Provisioning.OperationalInsights
             _query = DefineProperty<string>(nameof(Query), new string[] { "query" });
             _binSize = DefineProperty<int>(nameof(BinSize), new string[] { "binSize" });
             _binDelay = DefineProperty<int>(nameof(BinDelay), new string[] { "binDelay" });
-            _binStartOn = DefineProperty<DateTimeOffset>(nameof(BinStartOn), new string[] { "binStartTime" });
+            _binStartOn = DefineProperty<DateTimeOffset>(nameof(BinStartOn), new string[] { "binStartTime" }, format: "O");
             _timeSelector = DefineProperty<OperationalInsightsSummaryTimeSelector>(nameof(TimeSelector), new string[] { "timeSelector" });
             _destinationTable = DefineProperty<string>(nameof(DestinationTable), new string[] { "destinationTable" });
             DefineAdditionalProperties();

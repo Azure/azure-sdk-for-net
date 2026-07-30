@@ -172,8 +172,8 @@ namespace Azure.Provisioning.OperationalInsights
             _tableNames = DefineListProperty<string>(nameof(TableNames), new string[] { "tableNames" }, isRequired: true);
             _destination = DefineModelProperty<Destination>(nameof(Destination), new string[] { "destination" });
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enable" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" });
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, format: "O");
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" }, format: "O");
             DefineAdditionalProperties();
         }
 
