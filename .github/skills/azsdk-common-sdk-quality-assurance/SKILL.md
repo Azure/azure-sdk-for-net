@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.1.0"
   distribution: shared
-description: 'Ensure to generate a high quality SDKs from TypeSpec. WHEN: "assure the quality of an SDK package", "assure the quality of SDK packages for an service", "Detect and mitigate SDK breaking changes for an service", "Detect and mitigate SDK breaking changes for an SDK package". INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version, azsdk_package_detect_breaking_change.'
+description: 'Ensure high-quality SDKs are generated from TypeSpec. WHEN: "assure the quality of an SDK package", "assure the quality of SDK packages for a service", "Detect and mitigate SDK breaking changes for a service", "Detect and mitigate SDK breaking changes for an SDK package". INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_customized_code_update, azsdk_package_detect_breaking_change.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
