@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary></summary>
-    internal partial class StorageContainerResourceOperationSource : IOperationSource<StorageContainerResource>
+    internal partial class DiscoveryStorageAssetResourceOperationSource : IOperationSource<DiscoveryStorageAssetResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal StorageContainerResourceOperationSource(ArmClient client)
+        internal DiscoveryStorageAssetResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        StorageContainerResource IOperationSource<StorageContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiscoveryStorageAssetResource IOperationSource<DiscoveryStorageAssetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StorageContainerData data = StorageContainerData.DeserializeStorageContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageContainerResource(_client, data);
+            DiscoveryStorageAssetData data = DiscoveryStorageAssetData.DeserializeDiscoveryStorageAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiscoveryStorageAssetResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<StorageContainerResource> IOperationSource<StorageContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiscoveryStorageAssetResource> IOperationSource<DiscoveryStorageAssetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            StorageContainerData data = StorageContainerData.DeserializeStorageContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageContainerResource(_client, data);
+            DiscoveryStorageAssetData data = DiscoveryStorageAssetData.DeserializeDiscoveryStorageAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiscoveryStorageAssetResource(_client, data);
         }
     }
 }

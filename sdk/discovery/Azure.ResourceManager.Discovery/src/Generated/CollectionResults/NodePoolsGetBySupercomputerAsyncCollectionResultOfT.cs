@@ -15,7 +15,7 @@ using Azure.ResourceManager.Discovery.Models;
 
 namespace Azure.ResourceManager.Discovery
 {
-    internal partial class NodePoolsGetBySupercomputerAsyncCollectionResultOfT : AsyncPageable<NodePoolData>
+    internal partial class NodePoolsGetBySupercomputerAsyncCollectionResultOfT : AsyncPageable<DiscoveryNodePoolData>
     {
         private readonly NodePools _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of NodePoolsGetBySupercomputerAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NodePoolData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DiscoveryNodePoolData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Discovery
                 }
                 NodePoolListResult result = NodePoolListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<NodePoolData>.FromValues((IReadOnlyList<NodePoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DiscoveryNodePoolData>.FromValues((IReadOnlyList<DiscoveryNodePoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

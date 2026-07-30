@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private StorageContainerCollection GetStorageContainerCollection()
+        private DiscoveryStorageContainerCollection GetStorageContainerCollection()
             => GetResourceGroupReference(ResourceGroupName).GetStorageContainers();
 
-        private StorageContainerResource GetStorageContainerReference()
-            => Client.GetStorageContainerResource(StorageContainerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, StorageContainerName));
+        private DiscoveryStorageContainerResource GetStorageContainerReference()
+            => Client.GetDiscoveryStorageContainerResource(DiscoveryStorageContainerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, StorageContainerName));
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ArmOperation<StorageContainerResource> operation = await GetStorageContainerCollection().CreateOrUpdateAsync(WaitUntil.Completed, StorageContainerName, new StorageContainerData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryStorageContainerResource> operation = await GetStorageContainerCollection().CreateOrUpdateAsync(WaitUntil.Completed, StorageContainerName, new DiscoveryStorageContainerData(AzureLocation.UKSouth));
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(StorageContainerName));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<StorageContainerResource> response = await GetStorageContainerCollection().GetAsync(StorageContainerName);
+            Response<DiscoveryStorageContainerResource> response = await GetStorageContainerCollection().GetAsync(StorageContainerName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(StorageContainerName));
         }
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListByResourceGroup()
         {
-            List<StorageContainerResource> items = new List<StorageContainerResource>();
-            await foreach (StorageContainerResource item in GetStorageContainerCollection().GetAllAsync())
+            List<DiscoveryStorageContainerResource> items = new List<DiscoveryStorageContainerResource>();
+            await foreach (DiscoveryStorageContainerResource item in GetStorageContainerCollection().GetAllAsync())
             {
                 items.Add(item);
             }
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListBySubscription()
         {
-            List<StorageContainerResource> items = new List<StorageContainerResource>();
-            await foreach (StorageContainerResource item in GetSubscriptionReference().GetStorageContainersAsync())
+            List<DiscoveryStorageContainerResource> items = new List<DiscoveryStorageContainerResource>();
+            await foreach (DiscoveryStorageContainerResource item in GetSubscriptionReference().GetStorageContainersAsync())
             {
                 items.Add(item);
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            ArmOperation<StorageContainerResource> operation = await GetStorageContainerReference().UpdateAsync(WaitUntil.Completed, new StorageContainerData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryStorageContainerResource> operation = await GetStorageContainerReference().UpdateAsync(WaitUntil.Completed, new DiscoveryStorageContainerData(AzureLocation.UKSouth));
 
             Assert.That(operation.Value.Data.Name, Is.EqualTo(StorageContainerName));
         }

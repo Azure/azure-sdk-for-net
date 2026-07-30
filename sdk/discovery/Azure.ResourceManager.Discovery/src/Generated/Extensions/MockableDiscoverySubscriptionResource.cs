@@ -304,14 +304,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageContainerResource> GetStorageContainersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveryStorageContainerResource> GetStorageContainersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageContainerData, StorageContainerResource>(new StorageContainersGetBySubscriptionAsyncCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetStorageContainers"), data => new StorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetBySubscriptionAsyncCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetStorageContainers"), data => new DiscoveryStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -332,14 +332,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageContainerResource> GetStorageContainers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveryStorageContainerResource> GetStorageContainers(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageContainerData, StorageContainerResource>(new StorageContainersGetBySubscriptionCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetStorageContainers"), data => new StorageContainerResource(Client, data));
+            return new PageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetBySubscriptionCollectionResultOfT(StorageContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetStorageContainers"), data => new DiscoveryStorageContainerResource(Client, data));
         }
     }
 }

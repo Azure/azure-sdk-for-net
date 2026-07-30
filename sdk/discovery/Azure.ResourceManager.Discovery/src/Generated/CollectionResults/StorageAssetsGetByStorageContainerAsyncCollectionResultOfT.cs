@@ -15,7 +15,7 @@ using Azure.ResourceManager.Discovery.Models;
 
 namespace Azure.ResourceManager.Discovery
 {
-    internal partial class StorageAssetsGetByStorageContainerAsyncCollectionResultOfT : AsyncPageable<StorageAssetData>
+    internal partial class StorageAssetsGetByStorageContainerAsyncCollectionResultOfT : AsyncPageable<DiscoveryStorageAssetData>
     {
         private readonly StorageAssets _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StorageAssetsGetByStorageContainerAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<StorageAssetData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DiscoveryStorageAssetData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Discovery
                 }
                 StorageAssetListResult result = StorageAssetListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<StorageAssetData>.FromValues((IReadOnlyList<StorageAssetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DiscoveryStorageAssetData>.FromValues((IReadOnlyList<DiscoveryStorageAssetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

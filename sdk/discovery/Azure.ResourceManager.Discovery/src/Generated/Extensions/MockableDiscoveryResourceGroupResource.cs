@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Discovery.Mocking
         }
 
         /// <summary> Gets a collection of StorageContainers in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of StorageContainers and their operations over a StorageContainerResource. </returns>
-        public virtual StorageContainerCollection GetStorageContainers()
+        /// <returns> An object representing collection of StorageContainers and their operations over a DiscoveryStorageContainerResource. </returns>
+        public virtual DiscoveryStorageContainerCollection GetStorageContainers()
         {
-            return GetCachedClient(client => new StorageContainerCollection(client, Id));
+            return GetCachedClient(client => new DiscoveryStorageContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StorageContainerResource>> GetStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageContainerResource>> GetStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StorageContainerResource> GetStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageContainerResource> GetStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 

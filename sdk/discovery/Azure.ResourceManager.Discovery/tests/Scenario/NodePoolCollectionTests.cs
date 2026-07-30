@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private NodePoolCollection GetNodePoolCollection()
+        private DiscoveryNodePoolCollection GetNodePoolCollection()
             => Client.GetDiscoverySupercomputerResource(DiscoverySupercomputerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName)).GetNodePools();
 
-        private NodePoolResource GetNodePoolReference()
-            => Client.GetNodePoolResource(NodePoolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName, NodePoolName));
+        private DiscoveryNodePoolResource GetNodePoolReference()
+            => Client.GetDiscoveryNodePoolResource(DiscoveryNodePoolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName, NodePoolName));
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ArmOperation<NodePoolResource> operation = await GetNodePoolCollection().CreateOrUpdateAsync(WaitUntil.Completed, NodePoolName, new NodePoolData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryNodePoolResource> operation = await GetNodePoolCollection().CreateOrUpdateAsync(WaitUntil.Completed, NodePoolName, new DiscoveryNodePoolData(AzureLocation.UKSouth));
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(NodePoolName));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<NodePoolResource> response = await GetNodePoolCollection().GetAsync(NodePoolName);
+            Response<DiscoveryNodePoolResource> response = await GetNodePoolCollection().GetAsync(NodePoolName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(NodePoolName));
         }
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListBySupercomputer()
         {
-            List<NodePoolResource> items = new List<NodePoolResource>();
-            await foreach (NodePoolResource item in GetNodePoolCollection().GetAllAsync())
+            List<DiscoveryNodePoolResource> items = new List<DiscoveryNodePoolResource>();
+            await foreach (DiscoveryNodePoolResource item in GetNodePoolCollection().GetAllAsync())
             {
                 items.Add(item);
             }

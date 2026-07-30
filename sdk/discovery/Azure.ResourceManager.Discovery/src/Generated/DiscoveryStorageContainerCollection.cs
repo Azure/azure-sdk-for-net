@@ -20,27 +20,27 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageContainerResource"/> and their operations.
-    /// Each <see cref="StorageContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="StorageContainerCollection"/> instance call the GetStorageContainers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="DiscoveryStorageContainerResource"/> and their operations.
+    /// Each <see cref="DiscoveryStorageContainerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiscoveryStorageContainerCollection"/> instance call the GetStorageContainers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class StorageContainerCollection : ArmCollection, IEnumerable<StorageContainerResource>, IAsyncEnumerable<StorageContainerResource>
+    public partial class DiscoveryStorageContainerCollection : ArmCollection, IEnumerable<DiscoveryStorageContainerResource>, IAsyncEnumerable<DiscoveryStorageContainerResource>
     {
         private readonly ClientDiagnostics _storageContainersClientDiagnostics;
         private readonly StorageContainers _storageContainersRestClient;
 
-        /// <summary> Initializes a new instance of StorageContainerCollection for mocking. </summary>
-        protected StorageContainerCollection()
+        /// <summary> Initializes a new instance of DiscoveryStorageContainerCollection for mocking. </summary>
+        protected DiscoveryStorageContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryStorageContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiscoveryStorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StorageContainerResource.ResourceType, out string storageContainerApiVersion);
-            _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", StorageContainerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DiscoveryStorageContainerResource.ResourceType, out string storageContainerApiVersion);
+            _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryStorageContainerResource.ResourceType.Namespace, Diagnostics);
             _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageContainerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<StorageContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageContainerName, StorageContainerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiscoveryStorageContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageContainerName, DiscoveryStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, StorageContainerData.ToRequestContent(data), context);
+                HttpMessage message = _storageContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, DiscoveryStorageContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DiscoveryArmOperation<StorageContainerResource> operation = new DiscoveryArmOperation<StorageContainerResource>(
-                    new StorageContainerResourceOperationSource(Client),
+                DiscoveryArmOperation<DiscoveryStorageContainerResource> operation = new DiscoveryArmOperation<DiscoveryStorageContainerResource>(
+                    new DiscoveryStorageContainerResourceOperationSource(Client),
                     _storageContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<StorageContainerResource> CreateOrUpdate(WaitUntil waitUntil, string storageContainerName, StorageContainerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiscoveryStorageContainerResource> CreateOrUpdate(WaitUntil waitUntil, string storageContainerName, DiscoveryStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, StorageContainerData.ToRequestContent(data), context);
+                HttpMessage message = _storageContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, DiscoveryStorageContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DiscoveryArmOperation<StorageContainerResource> operation = new DiscoveryArmOperation<StorageContainerResource>(
-                    new StorageContainerResourceOperationSource(Client),
+                DiscoveryArmOperation<DiscoveryStorageContainerResource> operation = new DiscoveryArmOperation<DiscoveryStorageContainerResource>(
+                    new DiscoveryStorageContainerResourceOperationSource(Client),
                     _storageContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<StorageContainerResource>> GetAsync(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageContainerResource>> GetAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.Get");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.Get");
             scope.Start();
             try
             {
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.Discovery
                 };
                 HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageContainerData> response = Response.FromValue(StorageContainerData.FromResponse(result), result);
+                Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<StorageContainerResource> Get(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageContainerResource> Get(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.Get");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.Get");
             scope.Start();
             try
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Discovery
                 };
                 HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageContainerData> response = Response.FromValue(StorageContainerData.FromResponse(result), result);
+                Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.Discovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveryStorageContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageContainerData, StorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageContainerCollection.GetAll"), data => new StorageContainerResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetByResourceGroupAsyncCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.Discovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageContainerResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveryStorageContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageContainerData, StorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageContainerCollection.GetAll"), data => new StorageContainerResource(Client, data));
+            return new PageableWrapper<DiscoveryStorageContainerData, DiscoveryStorageContainerResource>(new StorageContainersGetByResourceGroupCollectionResultOfT(_storageContainersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryStorageContainerCollection.GetAll"), data => new DiscoveryStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Discovery
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.Exists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StorageContainerData> response = default;
+                Response<DiscoveryStorageContainerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StorageContainerData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StorageContainerData)null, result);
+                        response = Response.FromValue((DiscoveryStorageContainerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Discovery
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.Exists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -418,14 +418,14 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StorageContainerData> response = default;
+                Response<DiscoveryStorageContainerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StorageContainerData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StorageContainerData)null, result);
+                        response = Response.FromValue((DiscoveryStorageContainerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<StorageContainerResource>> GetIfExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DiscoveryStorageContainerResource>> GetIfExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -475,23 +475,23 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StorageContainerData> response = default;
+                Response<DiscoveryStorageContainerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StorageContainerData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StorageContainerData)null, result);
+                        response = Response.FromValue((DiscoveryStorageContainerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<StorageContainerResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiscoveryStorageContainerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<StorageContainerResource> GetIfExists(string storageContainerName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DiscoveryStorageContainerResource> GetIfExists(string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
-            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("StorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -536,23 +536,23 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StorageContainerData> response = default;
+                Response<DiscoveryStorageContainerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StorageContainerData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StorageContainerData)null, result);
+                        response = Response.FromValue((DiscoveryStorageContainerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<StorageContainerResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiscoveryStorageContainerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Discovery
             }
         }
 
-        IEnumerator<StorageContainerResource> IEnumerable<StorageContainerResource>.GetEnumerator()
+        IEnumerator<DiscoveryStorageContainerResource> IEnumerable<DiscoveryStorageContainerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<StorageContainerResource> IAsyncEnumerable<StorageContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DiscoveryStorageContainerResource> IAsyncEnumerable<DiscoveryStorageContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

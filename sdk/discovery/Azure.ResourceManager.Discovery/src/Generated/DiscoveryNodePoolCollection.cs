@@ -19,27 +19,27 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NodePoolResource"/> and their operations.
-    /// Each <see cref="NodePoolResource"/> in the collection will belong to the same instance of <see cref="DiscoverySupercomputerResource"/>.
-    /// To get a <see cref="NodePoolCollection"/> instance call the GetNodePools method from an instance of <see cref="DiscoverySupercomputerResource"/>.
+    /// A class representing a collection of <see cref="DiscoveryNodePoolResource"/> and their operations.
+    /// Each <see cref="DiscoveryNodePoolResource"/> in the collection will belong to the same instance of <see cref="DiscoverySupercomputerResource"/>.
+    /// To get a <see cref="DiscoveryNodePoolCollection"/> instance call the GetNodePools method from an instance of <see cref="DiscoverySupercomputerResource"/>.
     /// </summary>
-    public partial class NodePoolCollection : ArmCollection, IEnumerable<NodePoolResource>, IAsyncEnumerable<NodePoolResource>
+    public partial class DiscoveryNodePoolCollection : ArmCollection, IEnumerable<DiscoveryNodePoolResource>, IAsyncEnumerable<DiscoveryNodePoolResource>
     {
         private readonly ClientDiagnostics _nodePoolsClientDiagnostics;
         private readonly NodePools _nodePoolsRestClient;
 
-        /// <summary> Initializes a new instance of NodePoolCollection for mocking. </summary>
-        protected NodePoolCollection()
+        /// <summary> Initializes a new instance of DiscoveryNodePoolCollection for mocking. </summary>
+        protected DiscoveryNodePoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NodePoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryNodePoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NodePoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiscoveryNodePoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NodePoolResource.ResourceType, out string nodePoolApiVersion);
-            _nodePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", NodePoolResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DiscoveryNodePoolResource.ResourceType, out string nodePoolApiVersion);
+            _nodePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryNodePoolResource.ResourceType.Namespace, Diagnostics);
             _nodePoolsRestClient = new NodePools(_nodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nodePoolApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NodePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string nodePoolName, NodePoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiscoveryNodePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string nodePoolName, DiscoveryNodePoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, NodePoolData.ToRequestContent(data), context);
+                HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, DiscoveryNodePoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DiscoveryArmOperation<NodePoolResource> operation = new DiscoveryArmOperation<NodePoolResource>(
-                    new NodePoolResourceOperationSource(Client),
+                DiscoveryArmOperation<DiscoveryNodePoolResource> operation = new DiscoveryArmOperation<DiscoveryNodePoolResource>(
+                    new DiscoveryNodePoolResourceOperationSource(Client),
                     _nodePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NodePoolResource> CreateOrUpdate(WaitUntil waitUntil, string nodePoolName, NodePoolData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiscoveryNodePoolResource> CreateOrUpdate(WaitUntil waitUntil, string nodePoolName, DiscoveryNodePoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, NodePoolData.ToRequestContent(data), context);
+                HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, DiscoveryNodePoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DiscoveryArmOperation<NodePoolResource> operation = new DiscoveryArmOperation<NodePoolResource>(
-                    new NodePoolResourceOperationSource(Client),
+                DiscoveryArmOperation<DiscoveryNodePoolResource> operation = new DiscoveryArmOperation<DiscoveryNodePoolResource>(
+                    new DiscoveryNodePoolResourceOperationSource(Client),
                     _nodePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NodePoolResource>> GetAsync(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryNodePoolResource>> GetAsync(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.Get");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.Discovery
                 };
                 HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                Response<DiscoveryNodePoolData> response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryNodePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NodePoolResource> Get(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryNodePoolResource> Get(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.Get");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.Discovery
                 };
                 HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                Response<DiscoveryNodePoolData> response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryNodePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.Discovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NodePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NodePoolResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryNodePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveryNodePoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NodePoolData, NodePoolResource>(new NodePoolsGetBySupercomputerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiscoveryNodePoolData, DiscoveryNodePoolResource>(new NodePoolsGetBySupercomputerAsyncCollectionResultOfT(
                 _nodePoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "NodePoolCollection.GetAll"), data => new NodePoolResource(Client, data));
+                "DiscoveryNodePoolCollection.GetAll"), data => new DiscoveryNodePoolResource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.Discovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NodePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NodePoolResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryNodePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveryNodePoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NodePoolData, NodePoolResource>(new NodePoolsGetBySupercomputerCollectionResultOfT(
+            return new PageableWrapper<DiscoveryNodePoolData, DiscoveryNodePoolResource>(new NodePoolsGetBySupercomputerCollectionResultOfT(
                 _nodePoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "NodePoolCollection.GetAll"), data => new NodePoolResource(Client, data));
+                "DiscoveryNodePoolCollection.GetAll"), data => new DiscoveryNodePoolResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Discovery
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.Exists");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NodePoolData> response = default;
+                Response<DiscoveryNodePoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NodePoolData)null, result);
+                        response = Response.FromValue((DiscoveryNodePoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Discovery
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.Exists");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NodePoolData> response = default;
+                Response<DiscoveryNodePoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NodePoolData)null, result);
+                        response = Response.FromValue((DiscoveryNodePoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<NodePoolResource>> GetIfExistsAsync(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DiscoveryNodePoolResource>> GetIfExistsAsync(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.GetIfExists");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +486,23 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NodePoolData> response = default;
+                Response<DiscoveryNodePoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NodePoolData)null, result);
+                        response = Response.FromValue((DiscoveryNodePoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<NodePoolResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiscoveryNodePoolResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryNodePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<NodePoolResource> GetIfExists(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DiscoveryNodePoolResource> GetIfExists(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolCollection.GetIfExists");
+            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("DiscoveryNodePoolCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +547,23 @@ namespace Azure.ResourceManager.Discovery
                 HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NodePoolData> response = default;
+                Response<DiscoveryNodePoolData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                        response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NodePoolData)null, result);
+                        response = Response.FromValue((DiscoveryNodePoolData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<NodePoolResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiscoveryNodePoolResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryNodePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Discovery
             }
         }
 
-        IEnumerator<NodePoolResource> IEnumerable<NodePoolResource>.GetEnumerator()
+        IEnumerator<DiscoveryNodePoolResource> IEnumerable<DiscoveryNodePoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<NodePoolResource> IAsyncEnumerable<NodePoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DiscoveryNodePoolResource> IAsyncEnumerable<DiscoveryNodePoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Discovery.Models;
 using Azure.ResourceManager.Models;
 
@@ -35,12 +34,18 @@ namespace Azure.ResourceManager.Discovery
     [ModelReaderWriterBuildable(typeof(DiscoveryBookshelfResource))]
     [ModelReaderWriterBuildable(typeof(DiscoveryKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(DiscoveryManagedIdentityReference))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryNodePoolData))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryNodePoolResource))]
     [ModelReaderWriterBuildable(typeof(DiscoveryPrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(DiscoveryPrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(DiscoveryPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(DiscoveryPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(DiscoveryProjectData))]
     [ModelReaderWriterBuildable(typeof(DiscoveryProjectResource))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryStorageAssetData))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryStorageAssetResource))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryStorageContainerData))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryStorageContainerResource))]
     [ModelReaderWriterBuildable(typeof(DiscoveryStorageStore))]
     [ModelReaderWriterBuildable(typeof(DiscoverySupercomputerData))]
     [ModelReaderWriterBuildable(typeof(DiscoverySupercomputerResource))]
@@ -50,23 +55,16 @@ namespace Azure.ResourceManager.Discovery
     [ModelReaderWriterBuildable(typeof(DiscoveryWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(DiscoveryWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(MoboBrokerResource))]
-    [ModelReaderWriterBuildable(typeof(NodePoolData))]
     [ModelReaderWriterBuildable(typeof(NodePoolListResult))]
     [ModelReaderWriterBuildable(typeof(NodePoolProperties))]
-    [ModelReaderWriterBuildable(typeof(NodePoolResource))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(ProjectListResult))]
     [ModelReaderWriterBuildable(typeof(ProjectProperties))]
     [ModelReaderWriterBuildable(typeof(ProjectSettings))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(StorageAssetData))]
     [ModelReaderWriterBuildable(typeof(StorageAssetListResult))]
     [ModelReaderWriterBuildable(typeof(StorageAssetProperties))]
-    [ModelReaderWriterBuildable(typeof(StorageAssetResource))]
-    [ModelReaderWriterBuildable(typeof(StorageContainerData))]
     [ModelReaderWriterBuildable(typeof(StorageContainerListResult))]
     [ModelReaderWriterBuildable(typeof(StorageContainerProperties))]
-    [ModelReaderWriterBuildable(typeof(StorageContainerResource))]
     [ModelReaderWriterBuildable(typeof(SupercomputerIdentities))]
     [ModelReaderWriterBuildable(typeof(SupercomputerListResult))]
     [ModelReaderWriterBuildable(typeof(SupercomputerProperties))]

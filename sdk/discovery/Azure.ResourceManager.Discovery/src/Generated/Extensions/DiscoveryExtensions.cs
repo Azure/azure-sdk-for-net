@@ -200,21 +200,21 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NodePoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoveryNodePoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetNodePoolResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoveryNodePoolResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NodePoolResource"/> object. </returns>
-        public static NodePoolResource GetNodePoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryNodePoolResource"/> object. </returns>
+        public static DiscoveryNodePoolResource GetDiscoveryNodePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetNodePoolResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoveryNodePoolResource(id);
         }
 
         /// <summary>
@@ -236,39 +236,39 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageAssetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoveryStorageAssetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetStorageAssetResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoveryStorageAssetResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageAssetResource"/> object. </returns>
-        public static StorageAssetResource GetStorageAssetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryStorageAssetResource"/> object. </returns>
+        public static DiscoveryStorageAssetResource GetDiscoveryStorageAssetResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetStorageAssetResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoveryStorageAssetResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoveryStorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetStorageContainerResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoveryStorageContainerResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageContainerResource"/> object. </returns>
-        public static StorageContainerResource GetStorageContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryStorageContainerResource"/> object. </returns>
+        public static DiscoveryStorageContainerResource GetDiscoveryStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetStorageContainerResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoveryStorageContainerResource(id);
         }
 
         /// <summary>
@@ -500,8 +500,8 @@ namespace Azure.ResourceManager.Discovery
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of StorageContainers and their operations over a StorageContainerResource. </returns>
-        public static StorageContainerCollection GetStorageContainers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of StorageContainers and their operations over a DiscoveryStorageContainerResource. </returns>
+        public static DiscoveryStorageContainerCollection GetStorageContainers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StorageContainerResource>> GetStorageContainerAsync(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiscoveryStorageContainerResource>> GetStorageContainerAsync(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<StorageContainerResource> GetStorageContainer(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
+        public static Response<DiscoveryStorageContainerResource> GetStorageContainer(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -700,8 +700,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageContainerResource> GetStorageContainersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscoveryStorageContainerResource> GetStorageContainersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -718,8 +718,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageContainerResource> GetStorageContainers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscoveryStorageContainerResource> GetStorageContainers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

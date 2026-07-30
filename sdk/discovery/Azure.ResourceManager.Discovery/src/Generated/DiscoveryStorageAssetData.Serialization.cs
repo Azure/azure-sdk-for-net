@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary> Storage Asset tracked resource. </summary>
-    public partial class StorageAssetData : TrackedResourceData, IJsonModel<StorageAssetData>
+    public partial class DiscoveryStorageAssetData : TrackedResourceData, IJsonModel<DiscoveryStorageAssetData>
     {
-        /// <summary> Initializes a new instance of <see cref="StorageAssetData"/> for deserialization. </summary>
-        internal StorageAssetData()
+        /// <summary> Initializes a new instance of <see cref="DiscoveryStorageAssetData"/> for deserialization. </summary>
+        internal DiscoveryStorageAssetData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageAssetData(document.RootElement, options);
+                        return DeserializeDiscoveryStorageAssetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAssetData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryStorageAssetData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAssetData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryStorageAssetData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageAssetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DiscoveryStorageAssetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageAssetData IPersistableModel<StorageAssetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageAssetData)PersistableModelCreateCore(data, options);
+        DiscoveryStorageAssetData IPersistableModel<DiscoveryStorageAssetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiscoveryStorageAssetData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscoveryStorageAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="storageAssetData"> The <see cref="StorageAssetData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StorageAssetData storageAssetData)
+        /// <param name="discoveryStorageAssetData"> The <see cref="DiscoveryStorageAssetData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DiscoveryStorageAssetData discoveryStorageAssetData)
         {
-            if (storageAssetData == null)
+            if (discoveryStorageAssetData == null)
             {
                 return null;
             }
-            return RequestContent.Create(storageAssetData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(discoveryStorageAssetData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageAssetData"/> from. </param>
-        internal static StorageAssetData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiscoveryStorageAssetData"/> from. </param>
+        internal static DiscoveryStorageAssetData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStorageAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDiscoveryStorageAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageAssetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscoveryStorageAssetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAssetData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryStorageAssetData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Discovery
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageAssetData IJsonModel<StorageAssetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageAssetData)JsonModelCreateCore(ref reader, options);
+        DiscoveryStorageAssetData IJsonModel<DiscoveryStorageAssetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiscoveryStorageAssetData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageAssetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAssetData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryStorageAssetData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageAssetData(document.RootElement, options);
+            return DeserializeDiscoveryStorageAssetData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageAssetData DeserializeStorageAssetData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DiscoveryStorageAssetData DeserializeDiscoveryStorageAssetData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageAssetData(
+            return new DiscoveryStorageAssetData(
                 id,
                 name,
                 resourceType,

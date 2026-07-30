@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
-    /// A class representing a NodePool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NodePoolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DiscoverySupercomputerResource"/> using the GetNodePools method.
+    /// A class representing a StorageContainer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryStorageContainerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageContainers method.
     /// </summary>
-    public partial class NodePoolResource : ArmResource
+    public partial class DiscoveryStorageContainerResource : ArmResource
     {
-        private readonly ClientDiagnostics _nodePoolsClientDiagnostics;
-        private readonly NodePools _nodePoolsRestClient;
-        private readonly NodePoolData _data;
+        private readonly ClientDiagnostics _storageContainersClientDiagnostics;
+        private readonly StorageContainers _storageContainersRestClient;
+        private readonly DiscoveryStorageContainerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Discovery/supercomputers/nodePools";
+        public static readonly ResourceType ResourceType = "Microsoft.Discovery/storageContainers";
 
-        /// <summary> Initializes a new instance of NodePoolResource for mocking. </summary>
-        protected NodePoolResource()
+        /// <summary> Initializes a new instance of DiscoveryStorageContainerResource for mocking. </summary>
+        protected DiscoveryStorageContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NodePoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryStorageContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NodePoolResource(ArmClient client, NodePoolData data) : this(client, data.Id)
+        internal DiscoveryStorageContainerResource(ArmClient client, DiscoveryStorageContainerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NodePoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryStorageContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NodePoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiscoveryStorageContainerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string nodePoolApiVersion);
-            _nodePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _nodePoolsRestClient = new NodePools(_nodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nodePoolApiVersion ?? "2026-06-01");
+            TryGetApiVersion(ResourceType, out string storageContainerApiVersion);
+            _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageContainerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Discovery
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual NodePoolData Data
+        public virtual DiscoveryStorageContainerData Data
         {
             get
             {
@@ -75,11 +75,10 @@ namespace Azure.ResourceManager.Discovery
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="supercomputerName"> The supercomputerName. </param>
-        /// <param name="nodePoolName"> The nodePoolName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string supercomputerName, string nodePoolName)
+        /// <param name="storageContainerName"> The storageContainerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageContainerName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/supercomputers/{supercomputerName}/nodePools/{nodePoolName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/storageContainers/{storageContainerName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +93,15 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Get a NodePool
+        /// Get a StorageContainer
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/supercomputers/{supercomputerName}/nodePools/{nodePoolName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/storageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NodePools_Get. </description>
+        /// <description> StorageContainers_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +109,14 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NodePoolResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NodePoolResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageContainerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.Get");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +124,14 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +141,15 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Get a NodePool
+        /// Get a StorageContainer
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/supercomputers/{supercomputerName}/nodePools/{nodePoolName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/storageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NodePools_Get. </description>
+        /// <description> StorageContainers_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +157,14 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NodePoolResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NodePoolResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageContainerResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.Get");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +172,14 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
+                Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +189,15 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Update a NodePool
+        /// Update a StorageContainer
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/supercomputers/{supercomputerName}/nodePools/{nodePoolName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/storageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NodePools_Update. </description>
+        /// <description> StorageContainers_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NodePoolResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +213,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NodePoolResource>> UpdateAsync(WaitUntil waitUntil, NodePoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiscoveryStorageContainerResource>> UpdateAsync(WaitUntil waitUntil, DiscoveryStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.Update");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +225,11 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodePoolData.ToRequestContent(data), context);
+                HttpMessage message = _storageContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscoveryStorageContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DiscoveryArmOperation<NodePoolResource> operation = new DiscoveryArmOperation<NodePoolResource>(
-                    new NodePoolResourceOperationSource(Client),
-                    _nodePoolsClientDiagnostics,
+                DiscoveryArmOperation<DiscoveryStorageContainerResource> operation = new DiscoveryArmOperation<DiscoveryStorageContainerResource>(
+                    new DiscoveryStorageContainerResourceOperationSource(Client),
+                    _storageContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -249,15 +248,15 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Update a NodePool
+        /// Update a StorageContainer
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/supercomputers/{supercomputerName}/nodePools/{nodePoolName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/storageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NodePools_Update. </description>
+        /// <description> StorageContainers_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NodePoolResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +272,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NodePoolResource> Update(WaitUntil waitUntil, NodePoolData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiscoveryStorageContainerResource> Update(WaitUntil waitUntil, DiscoveryStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.Update");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +284,11 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodePoolData.ToRequestContent(data), context);
+                HttpMessage message = _storageContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscoveryStorageContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DiscoveryArmOperation<NodePoolResource> operation = new DiscoveryArmOperation<NodePoolResource>(
-                    new NodePoolResourceOperationSource(Client),
-                    _nodePoolsClientDiagnostics,
+                DiscoveryArmOperation<DiscoveryStorageContainerResource> operation = new DiscoveryArmOperation<DiscoveryStorageContainerResource>(
+                    new DiscoveryStorageContainerResourceOperationSource(Client),
+                    _storageContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -308,15 +307,15 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Delete a NodePool
+        /// Delete a StorageContainer
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/supercomputers/{supercomputerName}/nodePools/{nodePoolName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/storageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NodePools_Delete. </description>
+        /// <description> StorageContainers_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NodePoolResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.Delete");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +339,9 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _storageContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DiscoveryArmOperation operation = new DiscoveryArmOperation(_nodePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DiscoveryArmOperation operation = new DiscoveryArmOperation(_storageContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -357,15 +356,15 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Delete a NodePool
+        /// Delete a StorageContainer
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/supercomputers/{supercomputerName}/nodePools/{nodePoolName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Discovery/storageContainers/{storageContainerName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NodePools_Delete. </description>
+        /// <description> StorageContainers_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -373,7 +372,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NodePoolResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageContainerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.Delete");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +388,9 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _storageContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DiscoveryArmOperation operation = new DiscoveryArmOperation(_nodePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DiscoveryArmOperation operation = new DiscoveryArmOperation(_storageContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -410,12 +409,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<NodePoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageContainerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.AddTag");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.AddTag");
             scope.Start();
             try
             {
@@ -428,21 +427,21 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
-                    return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NodePoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NodePoolData patch = new NodePoolData(current.Location);
+                    DiscoveryStorageContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiscoveryStorageContainerData patch = new DiscoveryStorageContainerData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<NodePoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiscoveryStorageContainerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -458,12 +457,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<NodePoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageContainerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.AddTag");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.AddTag");
             scope.Start();
             try
             {
@@ -476,21 +475,21 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
-                    return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NodePoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NodePoolData patch = new NodePoolData(current.Location);
+                    DiscoveryStorageContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiscoveryStorageContainerData patch = new DiscoveryStorageContainerData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<NodePoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiscoveryStorageContainerResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -505,11 +504,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<NodePoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageContainerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.SetTags");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.SetTags");
             scope.Start();
             try
             {
@@ -523,17 +522,17 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
-                    return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NodePoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NodePoolData patch = new NodePoolData(current.Location);
+                    DiscoveryStorageContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiscoveryStorageContainerData patch = new DiscoveryStorageContainerData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<NodePoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiscoveryStorageContainerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -548,11 +547,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<NodePoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageContainerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.SetTags");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.SetTags");
             scope.Start();
             try
             {
@@ -566,17 +565,17 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
-                    return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NodePoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NodePoolData patch = new NodePoolData(current.Location);
+                    DiscoveryStorageContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiscoveryStorageContainerData patch = new DiscoveryStorageContainerData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<NodePoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiscoveryStorageContainerResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -591,11 +590,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<NodePoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageContainerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.RemoveTag");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -608,21 +607,21 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
-                    return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NodePoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NodePoolData patch = new NodePoolData(current.Location);
+                    DiscoveryStorageContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiscoveryStorageContainerData patch = new DiscoveryStorageContainerData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<NodePoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiscoveryStorageContainerResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -637,11 +636,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<NodePoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageContainerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _nodePoolsClientDiagnostics.CreateScope("NodePoolResource.RemoveTag");
+            using DiagnosticScope scope = _storageContainersClientDiagnostics.CreateScope("DiscoveryStorageContainerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -654,21 +653,21 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _storageContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NodePoolData> response = Response.FromValue(NodePoolData.FromResponse(result), result);
-                    return Response.FromValue(new NodePoolResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageContainerData> response = Response.FromValue(DiscoveryStorageContainerData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NodePoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NodePoolData patch = new NodePoolData(current.Location);
+                    DiscoveryStorageContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiscoveryStorageContainerData patch = new DiscoveryStorageContainerData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<NodePoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiscoveryStorageContainerResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -677,6 +676,39 @@ namespace Azure.ResourceManager.Discovery
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of StorageAssets in the <see cref="DiscoveryStorageContainerResource"/>. </summary>
+        /// <returns> An object representing collection of StorageAssets and their operations over a DiscoveryStorageAssetResource. </returns>
+        public virtual DiscoveryStorageAssetCollection GetStorageAssets()
+        {
+            return GetCachedClient(client => new DiscoveryStorageAssetCollection(client, Id));
+        }
+
+        /// <summary> Get a StorageAsset. </summary>
+        /// <param name="storageAssetName"> The name of the StorageAsset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAssetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAssetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DiscoveryStorageAssetResource>> GetStorageAssetAsync(string storageAssetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageAssetName, nameof(storageAssetName));
+
+            return await GetStorageAssets().GetAsync(storageAssetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a StorageAsset. </summary>
+        /// <param name="storageAssetName"> The name of the StorageAsset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageAssetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAssetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DiscoveryStorageAssetResource> GetStorageAsset(string storageAssetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageAssetName, nameof(storageAssetName));
+
+            return GetStorageAssets().Get(storageAssetName, cancellationToken);
         }
     }
 }

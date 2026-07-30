@@ -20,35 +20,35 @@ namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
     /// A class representing a StorageAsset along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageAssetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageContainerResource"/> using the GetStorageAssets method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiscoveryStorageAssetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoveryStorageContainerResource"/> using the GetStorageAssets method.
     /// </summary>
-    public partial class StorageAssetResource : ArmResource
+    public partial class DiscoveryStorageAssetResource : ArmResource
     {
         private readonly ClientDiagnostics _storageAssetsClientDiagnostics;
         private readonly StorageAssets _storageAssetsRestClient;
-        private readonly StorageAssetData _data;
+        private readonly DiscoveryStorageAssetData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Discovery/storageContainers/storageAssets";
 
-        /// <summary> Initializes a new instance of StorageAssetResource for mocking. </summary>
-        protected StorageAssetResource()
+        /// <summary> Initializes a new instance of DiscoveryStorageAssetResource for mocking. </summary>
+        protected DiscoveryStorageAssetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageAssetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryStorageAssetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageAssetResource(ArmClient client, StorageAssetData data) : this(client, data.Id)
+        internal DiscoveryStorageAssetResource(ArmClient client, DiscoveryStorageAssetData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageAssetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryStorageAssetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StorageAssetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiscoveryStorageAssetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string storageAssetApiVersion);
             _storageAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Discovery
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual StorageAssetData Data
+        public virtual DiscoveryStorageAssetData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageAssetResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageAssetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAssetResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageAssetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.Get");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Discovery
                 };
                 HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
+                Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageAssetResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageAssetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAssetResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageAssetResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.Get");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Discovery
                 };
                 HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
+                Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageAssetResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageAssetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageAssetResource>> UpdateAsync(WaitUntil waitUntil, StorageAssetData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiscoveryStorageAssetResource>> UpdateAsync(WaitUntil waitUntil, DiscoveryStorageAssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.Update");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.Update");
             scope.Start();
             try
             {
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageAssetData.ToRequestContent(data), context);
+                HttpMessage message = _storageAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiscoveryStorageAssetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DiscoveryArmOperation<StorageAssetResource> operation = new DiscoveryArmOperation<StorageAssetResource>(
-                    new StorageAssetResourceOperationSource(Client),
+                DiscoveryArmOperation<DiscoveryStorageAssetResource> operation = new DiscoveryArmOperation<DiscoveryStorageAssetResource>(
+                    new DiscoveryStorageAssetResourceOperationSource(Client),
                     _storageAssetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageAssetResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageAssetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StorageAssetResource> Update(WaitUntil waitUntil, StorageAssetData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiscoveryStorageAssetResource> Update(WaitUntil waitUntil, DiscoveryStorageAssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.Update");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.Update");
             scope.Start();
             try
             {
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageAssetData.ToRequestContent(data), context);
+                HttpMessage message = _storageAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiscoveryStorageAssetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DiscoveryArmOperation<StorageAssetResource> operation = new DiscoveryArmOperation<StorageAssetResource>(
-                    new StorageAssetResourceOperationSource(Client),
+                DiscoveryArmOperation<DiscoveryStorageAssetResource> operation = new DiscoveryArmOperation<DiscoveryStorageAssetResource>(
+                    new DiscoveryStorageAssetResourceOperationSource(Client),
                     _storageAssetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageAssetResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageAssetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.Delete");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.Delete");
             scope.Start();
             try
             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Discovery
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StorageAssetResource"/>. </description>
+        /// <description> <see cref="DiscoveryStorageAssetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.Delete");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.Delete");
             scope.Start();
             try
             {
@@ -410,12 +410,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<StorageAssetResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageAssetResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.AddTag");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.AddTag");
             scope.Start();
             try
             {
@@ -430,19 +430,19 @@ namespace Azure.ResourceManager.Discovery
                     };
                     HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
-                    return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StorageAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    StorageAssetData patch = new StorageAssetData(current.Location);
+                    DiscoveryStorageAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiscoveryStorageAssetData patch = new DiscoveryStorageAssetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<StorageAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiscoveryStorageAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -458,12 +458,12 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<StorageAssetResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageAssetResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.AddTag");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.AddTag");
             scope.Start();
             try
             {
@@ -478,19 +478,19 @@ namespace Azure.ResourceManager.Discovery
                     };
                     HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
-                    return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StorageAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    StorageAssetData patch = new StorageAssetData(current.Location);
+                    DiscoveryStorageAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiscoveryStorageAssetData patch = new DiscoveryStorageAssetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<StorageAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiscoveryStorageAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<StorageAssetResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageAssetResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.SetTags");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.SetTags");
             scope.Start();
             try
             {
@@ -525,15 +525,15 @@ namespace Azure.ResourceManager.Discovery
                     };
                     HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
-                    return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StorageAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    StorageAssetData patch = new StorageAssetData(current.Location);
+                    DiscoveryStorageAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiscoveryStorageAssetData patch = new DiscoveryStorageAssetData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<StorageAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiscoveryStorageAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<StorageAssetResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageAssetResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.SetTags");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.SetTags");
             scope.Start();
             try
             {
@@ -568,15 +568,15 @@ namespace Azure.ResourceManager.Discovery
                     };
                     HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
-                    return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StorageAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    StorageAssetData patch = new StorageAssetData(current.Location);
+                    DiscoveryStorageAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiscoveryStorageAssetData patch = new DiscoveryStorageAssetData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<StorageAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiscoveryStorageAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -591,11 +591,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<StorageAssetResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryStorageAssetResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.RemoveTag");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.RemoveTag");
             scope.Start();
             try
             {
@@ -610,19 +610,19 @@ namespace Azure.ResourceManager.Discovery
                     };
                     HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
-                    return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StorageAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    StorageAssetData patch = new StorageAssetData(current.Location);
+                    DiscoveryStorageAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiscoveryStorageAssetData patch = new DiscoveryStorageAssetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<StorageAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DiscoveryStorageAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -637,11 +637,11 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<StorageAssetResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryStorageAssetResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("StorageAssetResource.RemoveTag");
+            using DiagnosticScope scope = _storageAssetsClientDiagnostics.CreateScope("DiscoveryStorageAssetResource.RemoveTag");
             scope.Start();
             try
             {
@@ -656,19 +656,19 @@ namespace Azure.ResourceManager.Discovery
                     };
                     HttpMessage message = _storageAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<StorageAssetData> response = Response.FromValue(StorageAssetData.FromResponse(result), result);
-                    return Response.FromValue(new StorageAssetResource(Client, response.Value), response.GetRawResponse());
+                    Response<DiscoveryStorageAssetData> response = Response.FromValue(DiscoveryStorageAssetData.FromResponse(result), result);
+                    return Response.FromValue(new DiscoveryStorageAssetResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StorageAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    StorageAssetData patch = new StorageAssetData(current.Location);
+                    DiscoveryStorageAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiscoveryStorageAssetData patch = new DiscoveryStorageAssetData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<StorageAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DiscoveryStorageAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

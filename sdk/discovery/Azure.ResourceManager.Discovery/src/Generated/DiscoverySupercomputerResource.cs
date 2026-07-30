@@ -679,10 +679,10 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary> Gets a collection of NodePools in the <see cref="DiscoverySupercomputerResource"/>. </summary>
-        /// <returns> An object representing collection of NodePools and their operations over a NodePoolResource. </returns>
-        public virtual NodePoolCollection GetNodePools()
+        /// <returns> An object representing collection of NodePools and their operations over a DiscoveryNodePoolResource. </returns>
+        public virtual DiscoveryNodePoolCollection GetNodePools()
         {
-            return GetCachedClient(client => new NodePoolCollection(client, Id));
+            return GetCachedClient(client => new DiscoveryNodePoolCollection(client, Id));
         }
 
         /// <summary> Get a NodePool. </summary>
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NodePoolResource>> GetNodePoolAsync(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryNodePoolResource>> GetNodePoolAsync(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NodePoolResource> GetNodePool(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryNodePoolResource> GetNodePool(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 

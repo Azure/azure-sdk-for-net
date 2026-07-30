@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Discovery
 {
     /// <summary></summary>
-    internal partial class StorageAssetResourceOperationSource : IOperationSource<StorageAssetResource>
+    internal partial class DiscoveryNodePoolResourceOperationSource : IOperationSource<DiscoveryNodePoolResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal StorageAssetResourceOperationSource(ArmClient client)
+        internal DiscoveryNodePoolResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        StorageAssetResource IOperationSource<StorageAssetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiscoveryNodePoolResource IOperationSource<DiscoveryNodePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StorageAssetData data = StorageAssetData.DeserializeStorageAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageAssetResource(_client, data);
+            DiscoveryNodePoolData data = DiscoveryNodePoolData.DeserializeDiscoveryNodePoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiscoveryNodePoolResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<StorageAssetResource> IOperationSource<StorageAssetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiscoveryNodePoolResource> IOperationSource<DiscoveryNodePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            StorageAssetData data = StorageAssetData.DeserializeStorageAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageAssetResource(_client, data);
+            DiscoveryNodePoolData data = DiscoveryNodePoolData.DeserializeDiscoveryNodePoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiscoveryNodePoolResource(_client, data);
         }
     }
 }

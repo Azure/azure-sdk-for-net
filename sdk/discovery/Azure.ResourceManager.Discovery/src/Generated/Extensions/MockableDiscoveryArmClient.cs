@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.Discovery.Mocking
             return new WorkspacePrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NodePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryNodePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NodePoolResource"/> object. </returns>
-        public virtual NodePoolResource GetNodePoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryNodePoolResource"/> object. </returns>
+        public virtual DiscoveryNodePoolResource GetDiscoveryNodePoolResource(ResourceIdentifier id)
         {
-            NodePoolResource.ValidateResourceId(id);
-            return new NodePoolResource(Client, id);
+            DiscoveryNodePoolResource.ValidateResourceId(id);
+            return new DiscoveryNodePoolResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DiscoverySupercomputerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -125,22 +125,22 @@ namespace Azure.ResourceManager.Discovery.Mocking
             return new DiscoverySupercomputerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="StorageAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryStorageAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageAssetResource"/> object. </returns>
-        public virtual StorageAssetResource GetStorageAssetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryStorageAssetResource"/> object. </returns>
+        public virtual DiscoveryStorageAssetResource GetDiscoveryStorageAssetResource(ResourceIdentifier id)
         {
-            StorageAssetResource.ValidateResourceId(id);
-            return new StorageAssetResource(Client, id);
+            DiscoveryStorageAssetResource.ValidateResourceId(id);
+            return new DiscoveryStorageAssetResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="StorageContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryStorageContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageContainerResource"/> object. </returns>
-        public virtual StorageContainerResource GetStorageContainerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryStorageContainerResource"/> object. </returns>
+        public virtual DiscoveryStorageContainerResource GetDiscoveryStorageContainerResource(ResourceIdentifier id)
         {
-            StorageContainerResource.ValidateResourceId(id);
-            return new StorageContainerResource(Client, id);
+            DiscoveryStorageContainerResource.ValidateResourceId(id);
+            return new DiscoveryStorageContainerResource(Client, id);
         }
     }
 }

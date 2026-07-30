@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Discovery
 {
-    /// <summary> NodePool tracked resource. </summary>
-    public partial class NodePoolData : TrackedResourceData, IJsonModel<NodePoolData>
+    /// <summary> Storage Container tracked resource. </summary>
+    public partial class DiscoveryStorageContainerData : TrackedResourceData, IJsonModel<DiscoveryStorageContainerData>
     {
-        /// <summary> Initializes a new instance of <see cref="NodePoolData"/> for deserialization. </summary>
-        internal NodePoolData()
+        /// <summary> Initializes a new instance of <see cref="DiscoveryStorageContainerData"/> for deserialization. </summary>
+        internal DiscoveryStorageContainerData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NodePoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageContainerData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNodePoolData(document.RootElement, options);
+                        return DeserializeDiscoveryStorageContainerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NodePoolData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryStorageContainerData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NodePoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageContainerData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NodePoolData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryStorageContainerData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NodePoolData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DiscoveryStorageContainerData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NodePoolData IPersistableModel<NodePoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NodePoolData)PersistableModelCreateCore(data, options);
+        DiscoveryStorageContainerData IPersistableModel<DiscoveryStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiscoveryStorageContainerData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NodePoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscoveryStorageContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="nodePoolData"> The <see cref="NodePoolData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NodePoolData nodePoolData)
+        /// <param name="discoveryStorageContainerData"> The <see cref="DiscoveryStorageContainerData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DiscoveryStorageContainerData discoveryStorageContainerData)
         {
-            if (nodePoolData == null)
+            if (discoveryStorageContainerData == null)
             {
                 return null;
             }
-            return RequestContent.Create(nodePoolData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(discoveryStorageContainerData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NodePoolData"/> from. </param>
-        internal static NodePoolData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiscoveryStorageContainerData"/> from. </param>
+        internal static DiscoveryStorageContainerData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNodePoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDiscoveryStorageContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NodePoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscoveryStorageContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NodePoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageContainerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodePoolData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryStorageContainerData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Discovery
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NodePoolData IJsonModel<NodePoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NodePoolData)JsonModelCreateCore(ref reader, options);
+        DiscoveryStorageContainerData IJsonModel<DiscoveryStorageContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiscoveryStorageContainerData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NodePoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageContainerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodePoolData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryStorageContainerData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNodePoolData(document.RootElement, options);
+            return DeserializeDiscoveryStorageContainerData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NodePoolData DeserializeNodePoolData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DiscoveryStorageContainerData DeserializeDiscoveryStorageContainerData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Discovery
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            NodePoolProperties properties = default;
+            StorageContainerProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         continue;
                     }
-                    properties = NodePoolProperties.DeserializeNodePoolProperties(prop.Value, options);
+                    properties = StorageContainerProperties.DeserializeStorageContainerProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NodePoolData(
+            return new DiscoveryStorageContainerData(
                 id,
                 name,
                 resourceType,

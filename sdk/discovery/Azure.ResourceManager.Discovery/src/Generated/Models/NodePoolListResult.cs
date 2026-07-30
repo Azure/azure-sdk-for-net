@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Initializes a new instance of <see cref="NodePoolListResult"/>. </summary>
         /// <param name="value"> The NodePool items on this page. </param>
-        internal NodePoolListResult(IEnumerable<NodePoolData> value)
+        internal NodePoolListResult(IEnumerable<DiscoveryNodePoolData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="value"> The NodePool items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodePoolListResult(IList<NodePoolData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodePoolListResult(IList<DiscoveryNodePoolData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The NodePool items on this page. </summary>
-        public IList<NodePoolData> Value { get; }
+        public IList<DiscoveryNodePoolData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

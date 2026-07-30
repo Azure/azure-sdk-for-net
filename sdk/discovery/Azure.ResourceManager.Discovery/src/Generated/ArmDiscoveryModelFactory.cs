@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Discovery;
 using Azure.ResourceManager.Models;
@@ -412,12 +411,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.NodePoolData"/> instance for mocking. </returns>
-        public static NodePoolData NodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NodePoolProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryNodePoolData"/> instance for mocking. </returns>
+        public static DiscoveryNodePoolData DiscoveryNodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NodePoolProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NodePoolData(
+            return new DiscoveryNodePoolData(
                 id,
                 name,
                 resourceType,
@@ -548,12 +547,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.StorageAssetData"/> instance for mocking. </returns>
-        public static StorageAssetData StorageAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageAssetProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryStorageAssetData"/> instance for mocking. </returns>
+        public static DiscoveryStorageAssetData DiscoveryStorageAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageAssetProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageAssetData(
+            return new DiscoveryStorageAssetData(
                 id,
                 name,
                 resourceType,
@@ -580,12 +579,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.StorageContainerData"/> instance for mocking. </returns>
-        public static StorageContainerData StorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageContainerProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryStorageContainerData"/> instance for mocking. </returns>
+        public static DiscoveryStorageContainerData DiscoveryStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageContainerProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageContainerData(
+            return new DiscoveryStorageContainerData(
                 id,
                 name,
                 resourceType,
