@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("timeModified"u8);
-                writer.WriteStringValue(TimeModified.Value, "O");
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string displayName = default;
             string serializedData = default;
             string version = default;
-            DateTimeOffset? timeModified = default;
+            DateTimeOffset? modifiedOn = default;
             string category = default;
             IList<string> tagsPropertiesTags = default;
             string userId = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    timeModified = prop.Value.GetDateTimeOffset("O");
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("category"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 displayName,
                 serializedData,
                 version,
-                timeModified,
+                modifiedOn,
                 category,
                 tagsPropertiesTags ?? new ChangeTrackingList<string>(),
                 userId,

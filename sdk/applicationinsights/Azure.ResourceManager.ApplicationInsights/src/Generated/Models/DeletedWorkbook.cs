@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Date and time in UTC of the last modification that was made to this workbook definition. </summary>
         [WirePath("properties.timeModified")]
-        public DateTimeOffset? TimeModified
+        public DateTimeOffset? ModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.TimeModified;
+                return Properties is null ? default : Properties.ModifiedOn;
             }
         }
 
