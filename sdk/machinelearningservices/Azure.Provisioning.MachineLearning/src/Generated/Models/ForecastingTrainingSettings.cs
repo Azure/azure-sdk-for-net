@@ -175,7 +175,7 @@ namespace Azure.Provisioning.MachineLearning
             _enableOnnxCompatibleModels = DefineProperty<bool>(nameof(EnableOnnxCompatibleModels), new string[] { "enableOnnxCompatibleModels" });
             _enableStackEnsemble = DefineProperty<bool>(nameof(EnableStackEnsemble), new string[] { "enableStackEnsemble" });
             _enableVoteEnsemble = DefineProperty<bool>(nameof(EnableVoteEnsemble), new string[] { "enableVoteEnsemble" });
-            _ensembleModelDownloadTimeout = DefineProperty<TimeSpan>(nameof(EnsembleModelDownloadTimeout), new string[] { "ensembleModelDownloadTimeout" });
+            _ensembleModelDownloadTimeout = DefineProperty<TimeSpan>(nameof(EnsembleModelDownloadTimeout), new string[] { "ensembleModelDownloadTimeout" }, format: "P");
             _stackEnsembleSettings = DefineModelProperty<MachineLearningStackEnsembleSettings>(nameof(StackEnsembleSettings), new string[] { "stackEnsembleSettings" });
             DefineAdditionalProperties();
         }

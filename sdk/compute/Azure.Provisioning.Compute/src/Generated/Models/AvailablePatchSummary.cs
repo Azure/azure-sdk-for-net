@@ -117,8 +117,8 @@ namespace Azure.Provisioning.Compute
             _rebootPending = DefineProperty<bool>(nameof(RebootPending), new string[] { "rebootPending" }, isOutput: true);
             _criticalAndSecurityPatchCount = DefineProperty<int>(nameof(CriticalAndSecurityPatchCount), new string[] { "criticalAndSecurityPatchCount" }, isOutput: true);
             _otherPatchCount = DefineProperty<int>(nameof(OtherPatchCount), new string[] { "otherPatchCount" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true);
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedTime" }, isOutput: true);
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedTime" }, isOutput: true, format: "O");
             _error = DefineModelProperty<ComputeApiError>(nameof(Error), new string[] { "error" }, isOutput: true);
             DefineAdditionalProperties();
         }

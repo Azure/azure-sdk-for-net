@@ -534,7 +534,7 @@ namespace Azure.Provisioning.Compute
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             _osType = DefineProperty<SupportedOperatingSystemType>(nameof(OSType), new string[] { "osType" });
             _hyperVGeneration = DefineProperty<HyperVGeneration>(nameof(HyperVGeneration), new string[] { "hyperVGeneration" });
             _purchasePlan = DefineModelProperty<DiskPurchasePlan>(nameof(PurchasePlan), new string[] { "purchasePlan" });
@@ -555,7 +555,7 @@ namespace Azure.Provisioning.Compute
             _shareInfo = DefineListProperty<ShareInfoElement>(nameof(ShareInfo), new string[] { "shareInfo" }, isOutput: true);
             _networkAccessPolicy = DefineProperty<NetworkAccessPolicy>(nameof(NetworkAccessPolicy), new string[] { "networkAccessPolicy" });
             _diskAccessId = DefineProperty<ResourceIdentifier>(nameof(DiskAccessId), new string[] { "diskAccessId" });
-            _burstingEnabledOn = DefineProperty<DateTimeOffset>(nameof(BurstingEnabledOn), new string[] { "burstingEnabledTime" }, isOutput: true);
+            _burstingEnabledOn = DefineProperty<DateTimeOffset>(nameof(BurstingEnabledOn), new string[] { "burstingEnabledTime" }, isOutput: true, format: "O");
             _tier = DefineProperty<string>(nameof(Tier), new string[] { "tier" });
             _burstingEnabled = DefineProperty<bool>(nameof(BurstingEnabled), new string[] { "burstingEnabled" });
             _propertyUpdatesInProgress = DefineModelProperty<PropertyUpdatesInProgress>(nameof(PropertyUpdatesInProgress), new string[] { "propertyUpdatesInProgress" }, isOutput: true);
@@ -565,7 +565,7 @@ namespace Azure.Provisioning.Compute
             _publicNetworkAccess = DefineProperty<DiskPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _dataAccessAuthMode = DefineProperty<DataAccessAuthMode>(nameof(DataAccessAuthMode), new string[] { "dataAccessAuthMode" });
             _isOptimizedForFrequentAttach = DefineProperty<bool>(nameof(IsOptimizedForFrequentAttach), new string[] { "optimizedForFrequentAttach" });
-            _lastOwnershipUpdateOn = DefineProperty<DateTimeOffset>(nameof(LastOwnershipUpdateOn), new string[] { "LastOwnershipUpdateTime" }, isOutput: true);
+            _lastOwnershipUpdateOn = DefineProperty<DateTimeOffset>(nameof(LastOwnershipUpdateOn), new string[] { "LastOwnershipUpdateTime" }, isOutput: true, format: "O");
             _availabilityPolicy = DefineModelProperty<AvailabilityPolicy>(nameof(AvailabilityPolicy), new string[] { "availabilityPolicy" });
             DefineAdditionalProperties();
         }
