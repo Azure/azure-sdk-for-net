@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The properties for updating a task step. </summary>
-        public TaskStepUpdateContent Step
+        public ContainerRegistryTaskStepUpdateContent Step
         {
             get
             {

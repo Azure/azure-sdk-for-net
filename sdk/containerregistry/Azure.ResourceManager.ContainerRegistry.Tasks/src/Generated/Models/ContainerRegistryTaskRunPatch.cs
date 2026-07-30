@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The request (parameters) for the new run. </summary>
-        public RunContent RunRequest
+        public ContainerRegistryRunContent RunRequest
         {
             get
             {

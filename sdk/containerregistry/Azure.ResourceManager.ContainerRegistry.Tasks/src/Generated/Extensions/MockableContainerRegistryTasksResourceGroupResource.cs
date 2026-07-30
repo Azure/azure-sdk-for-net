@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, RunContent.ToRequestContent(content), context);
+                HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryRunContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ContainerRegistryRunResource> ScheduleRun(string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryRunResource> ScheduleRun(string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, RunContent.ToRequestContent(content), context);
+                HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryRunContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)

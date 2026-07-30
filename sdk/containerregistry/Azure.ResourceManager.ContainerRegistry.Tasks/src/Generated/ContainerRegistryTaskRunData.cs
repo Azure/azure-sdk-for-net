@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The request (parameters) for the run. </summary>
-        public RunContent RunRequest
+        public ContainerRegistryRunContent RunRequest
         {
             get
             {

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The properties of a task step. </summary>
-        public TaskStepProperties Step
+        public ContainerRegistryTaskStepProperties Step
         {
             get
             {

@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AgentPoolQueueStatus>> GetQueueStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryAgentPoolQueueStatus>> GetQueueStatusAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolResource.GetQueueStatus");
             scope.Start();
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateGetQueueStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AgentPoolQueueStatus> response = Response.FromValue(AgentPoolQueueStatus.FromResponse(result), result);
+                Response<ContainerRegistryAgentPoolQueueStatus> response = Response.FromValue(ContainerRegistryAgentPoolQueueStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AgentPoolQueueStatus> GetQueueStatus(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryAgentPoolQueueStatus> GetQueueStatus(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _agentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolResource.GetQueueStatus");
             scope.Start();
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateGetQueueStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AgentPoolQueueStatus> response = Response.FromValue(AgentPoolQueueStatus.FromResponse(result), result);
+                Response<ContainerRegistryAgentPoolQueueStatus> response = Response.FromValue(ContainerRegistryAgentPoolQueueStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

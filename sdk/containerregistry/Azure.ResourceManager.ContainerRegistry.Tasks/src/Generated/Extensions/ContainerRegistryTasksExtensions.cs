@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRunAsync(string, RunContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRunAsync(string, ContainerRegistryRunContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRun(string, RunContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRun(string, ContainerRegistryRunContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ContainerRegistryRunResource> ScheduleRun(this ResourceGroupResource resourceGroupResource, string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryRunResource> ScheduleRun(this ResourceGroupResource resourceGroupResource, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

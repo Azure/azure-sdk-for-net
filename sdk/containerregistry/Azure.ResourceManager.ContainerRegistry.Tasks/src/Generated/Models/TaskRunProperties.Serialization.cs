@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             ContainerRegistryTaskProvisioningState? provisioningState = default;
-            RunContent runRequest = default;
+            ContainerRegistryRunContent runRequest = default;
             ContainerRegistryRunData runResult = default;
             string forceUpdateTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    runRequest = RunContent.DeserializeRunContent(prop.Value, options);
+                    runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("runResult"u8))
