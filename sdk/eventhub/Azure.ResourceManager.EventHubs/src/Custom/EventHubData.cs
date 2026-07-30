@@ -35,3 +35,5 @@ namespace Azure.ResourceManager.EventHubs
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
