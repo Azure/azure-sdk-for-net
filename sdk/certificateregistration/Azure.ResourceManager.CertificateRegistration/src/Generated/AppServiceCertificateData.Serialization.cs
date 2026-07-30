@@ -249,6 +249,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 kind,
                 additionalBinaryDataProperties);
         }

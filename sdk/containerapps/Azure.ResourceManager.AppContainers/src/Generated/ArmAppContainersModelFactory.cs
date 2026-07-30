@@ -40,9 +40,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="mcpServerSettings"> The MCP (Model Context Protocol) server settings of the session pool. </param>
         /// <param name="dynamicPoolLifecycleConfiguration"> The lifecycle configuration of a session in the dynamic session pool. </param>
         /// <param name="sessionNetworkStatus"> Network status for the sessions. </param>
+        /// <param name="name0"> Name of the session pool. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="AppContainers.SessionPoolData"/> instance for mocking. </returns>
-        public static SessionPoolData SessionPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier environmentId = default, ContainerType? containerType = default, PoolManagementType? poolManagementType = default, int? nodeCount = default, SessionPoolScaleConfiguration scaleConfiguration = default, IEnumerable<SessionPoolSecret> secrets = default, CustomContainerTemplate customContainerTemplate = default, TemplateUpdateStatus templateUpdateStatus = default, Uri poolManagementEndpoint = default, SessionPoolProvisioningState? provisioningState = default, IEnumerable<SessionPoolManagedIdentitySetting> managedIdentitySettings = default, McpServerSettings mcpServerSettings = default, SessionPoolLifecycleConfiguration dynamicPoolLifecycleConfiguration = default, SessionNetworkStatus? sessionNetworkStatus = default, ManagedServiceIdentity identity = default)
+        public static SessionPoolData SessionPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier environmentId = default, ContainerType? containerType = default, PoolManagementType? poolManagementType = default, int? nodeCount = default, SessionPoolScaleConfiguration scaleConfiguration = default, IEnumerable<SessionPoolSecret> secrets = default, CustomContainerTemplate customContainerTemplate = default, TemplateUpdateStatus templateUpdateStatus = default, Uri poolManagementEndpoint = default, SessionPoolProvisioningState? provisioningState = default, IEnumerable<SessionPoolManagedIdentitySetting> managedIdentitySettings = default, McpServerSettings mcpServerSettings = default, SessionPoolLifecycleConfiguration dynamicPoolLifecycleConfiguration = default, SessionNetworkStatus? sessionNetworkStatus = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     (managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>()).ToList(),
                     mcpServerSettings,
                     default),
+                name0,
                 identity,
                 default);
         }
@@ -4303,6 +4305,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     (managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>()).ToList(),
                     default,
                     default),
+                name,
                 identity,
                 default);
         }

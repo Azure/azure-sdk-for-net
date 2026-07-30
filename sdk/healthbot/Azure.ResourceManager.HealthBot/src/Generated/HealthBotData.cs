@@ -27,12 +27,14 @@ namespace Azure.ResourceManager.HealthBot
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
+        /// <param name="name0"> The name of the Bot resource. </param>
         /// <param name="sku"> SKU of the Azure Health Bot. </param>
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthBotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthBotProperties properties, HealthBotSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HealthBotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthBotProperties properties, string name0, HealthBotSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.HealthBot
 
         /// <summary> The set of properties specific to Azure Health Bot resource. </summary>
         public HealthBotProperties Properties { get; set; }
+
+        /// <summary> The name of the Bot resource. </summary>
+        public string Name { get; }
 
         /// <summary> SKU of the Azure Health Bot. </summary>
         internal HealthBotSku Sku { get; set; }

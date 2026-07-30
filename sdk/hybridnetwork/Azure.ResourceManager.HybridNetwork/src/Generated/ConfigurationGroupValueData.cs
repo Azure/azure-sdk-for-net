@@ -33,14 +33,19 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Hybrid configuration group value properties. </param>
+        /// <param name="name0"> The name of the configuration group value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationGroupValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationGroupValuePropertiesFormat properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ConfigurationGroupValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationGroupValuePropertiesFormat properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Hybrid configuration group value properties. </summary>
         public ConfigurationGroupValuePropertiesFormat Properties { get; set; }
+
+        /// <summary> The name of the configuration group value. </summary>
+        public string Name { get; }
     }
 }

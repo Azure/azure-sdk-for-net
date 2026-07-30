@@ -45,9 +45,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
         /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
+        /// <param name="name0"> Custom Locations name. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="ExtendedLocations.CustomLocationData"/> instance for mocking. </returns>
-        public static CustomLocationData CustomLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default, ManagedServiceIdentity identity = default)
+        public static CustomLocationData CustomLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     @namespace,
                     provisioningState,
                     default),
+                name0,
                 identity,
                 default);
         }
@@ -159,8 +161,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="provisioningState"> Provisioning State for the Resource Sync Rule. </param>
         /// <param name="selector"> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </param>
         /// <param name="targetResourceGroup"> For an unmapped custom resource, its labels will be used to find matching resource sync rules. If this resource sync rule is one of the matching rules with highest priority, then the unmapped custom resource will be projected to the target resource group associated with this resource sync rule. The user creating this resource sync rule should have write permissions on the target resource group and this write permission will be validated when creating the resource sync rule. </param>
+        /// <param name="name0"> Resource Sync Rule name. </param>
         /// <returns> A new <see cref="ExtendedLocations.ResourceSyncRuleData"/> instance for mocking. </returns>
-        public static ResourceSyncRuleData ResourceSyncRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? priority = default, string provisioningState = default, ResourceSyncRulePropertiesSelector selector = default, string targetResourceGroup = default)
+        public static ResourceSyncRuleData ResourceSyncRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? priority = default, string provisioningState = default, ResourceSyncRulePropertiesSelector selector = default, string targetResourceGroup = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -172,6 +175,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, default),
+                name0,
                 default);
         }
 
@@ -245,6 +249,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     @namespace,
                     provisioningState,
                     default),
+                name,
                 identity,
                 default);
         }

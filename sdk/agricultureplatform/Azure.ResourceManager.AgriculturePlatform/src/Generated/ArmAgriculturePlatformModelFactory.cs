@@ -26,10 +26,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the AgriService resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="AgriculturePlatform.AgricultureServiceData"/> instance for mocking. </returns>
-        public static AgricultureServiceData AgricultureServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgricultureServiceProperties properties = default, ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default)
+        public static AgricultureServiceData AgricultureServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgricultureServiceProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 sku,
                 default);

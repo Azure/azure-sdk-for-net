@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="description"> A description for the Storage Mover. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="name0"> The name of the Storage Mover resource. </param>
         /// <returns> A new <see cref="StorageMover.StorageMoverData"/> instance for mocking. </returns>
-        public static StorageMoverData StorageMoverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, StorageMoverProvisioningState? provisioningState = default)
+        public static StorageMoverData StorageMoverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, StorageMoverProvisioningState? provisioningState = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 description is null && provisioningState is null ? default : new StorageMoverProperties(description, provisioningState, default),
+                name0,
                 default);
         }
 
@@ -575,6 +577,30 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunWarning JobRunWarning(string code = default, string message = default, string target = default)
         {
             return new JobRunWarning(code, message, target, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> A description for the Storage Mover. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <returns> A new <see cref="StorageMover.StorageMoverData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageMoverData StorageMoverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, StorageMoverProvisioningState? provisioningState = default)
+        {
+            return new StorageMoverData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description is null && provisioningState is null ? default : new StorageMoverProperties(description, provisioningState, default),
+                name,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

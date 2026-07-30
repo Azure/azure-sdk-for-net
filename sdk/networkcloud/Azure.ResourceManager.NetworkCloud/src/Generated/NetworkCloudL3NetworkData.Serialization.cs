@@ -254,6 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 eTag,
                 extendedLocation,
                 additionalBinaryDataProperties);

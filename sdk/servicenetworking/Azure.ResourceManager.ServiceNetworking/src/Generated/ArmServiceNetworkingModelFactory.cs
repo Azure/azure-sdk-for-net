@@ -39,8 +39,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
         /// <param name="securityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
+        /// <param name="name0"> Frontends. </param>
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerFrontendData"/> instance for mocking. </returns>
-        public static TrafficControllerFrontendData TrafficControllerFrontendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string fqdn = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? provisioningState = default)
+        public static TrafficControllerFrontendData TrafficControllerFrontendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string fqdn = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? provisioningState = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 fqdn is null && securityPolicyConfigurations is null && provisioningState is null ? default : new FrontendProperties(fqdn, securityPolicyConfigurations, provisioningState, default),
+                name0,
                 default);
         }
 
@@ -83,8 +85,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="wafPolicyId"> Resource ID of the WAF. </param>
         /// <param name="rules"> Ip Access Policy Rules List. </param>
+        /// <param name="name0"> SecurityPolicy. </param>
         /// <returns> A new <see cref="ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData"/> instance for mocking. </returns>
-        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApplicationGatewayForContainersSecurityPolicyType? policyType = default, ServiceNetworkingProvisioningState? provisioningState = default, ResourceIdentifier wafPolicyId = default, IEnumerable<ServiceNetworkingIPAccessRule> rules = default)
+        public static ApplicationGatewayForContainersSecurityPolicyData ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApplicationGatewayForContainersSecurityPolicyType? policyType = default, ServiceNetworkingProvisioningState? provisioningState = default, ResourceIdentifier wafPolicyId = default, IEnumerable<ServiceNetworkingIPAccessRule> rules = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -96,6 +99,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 policyType is null && wafPolicyId is null && rules is null && provisioningState is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, default), new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), default), provisioningState, default),
+                name0,
                 default);
         }
 
@@ -141,8 +145,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="securityPolicies"> Security Policies References List. </param>
         /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
         /// <param name="trafficControllerProvisioningState"> The status of the last operation. </param>
+        /// <param name="name0"> traffic controller name for path. </param>
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerData"/> instance for mocking. </returns>
-        public static TrafficControllerData TrafficControllerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> configurationEndpoints = default, IEnumerable<SubResource> frontends = default, IEnumerable<SubResource> associations = default, IEnumerable<SubResource> securityPolicies = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default)
+        public static TrafficControllerData TrafficControllerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> configurationEndpoints = default, IEnumerable<SubResource> frontends = default, IEnumerable<SubResource> associations = default, IEnumerable<SubResource> securityPolicies = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     securityPolicyConfigurations,
                     trafficControllerProvisioningState,
                     default),
+                name0,
                 default);
         }
 

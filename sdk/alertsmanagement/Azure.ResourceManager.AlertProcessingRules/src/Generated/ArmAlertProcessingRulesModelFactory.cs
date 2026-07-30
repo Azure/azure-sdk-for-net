@@ -24,8 +24,9 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Alert processing rule properties. </param>
+        /// <param name="name0"> The name of the alert processing rule that needs to be fetched. </param>
         /// <returns> A new <see cref="AlertProcessingRules.AlertProcessingRuleData"/> instance for mocking. </returns>
-        public static AlertProcessingRuleData AlertProcessingRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AlertProcessingRuleProperties properties = default)
+        public static AlertProcessingRuleData AlertProcessingRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AlertProcessingRuleProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

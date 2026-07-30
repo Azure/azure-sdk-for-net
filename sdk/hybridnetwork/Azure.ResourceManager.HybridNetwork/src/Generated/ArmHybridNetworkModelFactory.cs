@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Configuration group schema properties. </param>
+        /// <param name="name0"> The name of the configuration group schema. </param>
         /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupSchemaData"/> instance for mocking. </returns>
-        public static ConfigurationGroupSchemaData ConfigurationGroupSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupSchemaPropertiesFormat properties = default)
+        public static ConfigurationGroupSchemaData ConfigurationGroupSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupSchemaPropertiesFormat properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -75,9 +77,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Publisher properties. </param>
+        /// <param name="name0"> The name of the publisher. </param>
         /// <param name="identity"> The managed identity of the publisher, if configured. </param>
         /// <returns> A new <see cref="HybridNetwork.PublisherData"/> instance for mocking. </returns>
-        public static PublisherData PublisherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PublisherPropertiesFormat properties = default, ManagedServiceIdentity identity = default)
+        public static PublisherData PublisherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PublisherPropertiesFormat properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -89,6 +92,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }
@@ -108,8 +112,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Hybrid configuration group value properties. </param>
+        /// <param name="name0"> The name of the configuration group value. </param>
         /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupValueData"/> instance for mocking. </returns>
-        public static ConfigurationGroupValueData ConfigurationGroupValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupValuePropertiesFormat properties = default)
+        public static ConfigurationGroupValueData ConfigurationGroupValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupValuePropertiesFormat properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -217,10 +223,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Network function properties. </param>
+        /// <param name="name0"> Resource name for the network function resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The managed identity of the network function. </param>
         /// <returns> A new <see cref="HybridNetwork.NetworkFunctionData"/> instance for mocking. </returns>
-        public static NetworkFunctionData NetworkFunctionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkFunctionPropertiesFormat properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        public static NetworkFunctionData NetworkFunctionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkFunctionPropertiesFormat properties = default, string name0 = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -232,6 +239,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 eTag,
                 identity,
                 default);

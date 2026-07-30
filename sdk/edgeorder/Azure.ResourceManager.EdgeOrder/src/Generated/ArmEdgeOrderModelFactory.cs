@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="name0"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderAddressData"/> instance for mocking. </returns>
-        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeOrderAddressClassification? addressClassification = default, EdgeOrderShippingAddress shippingAddress = default, EdgeOrderAddressContactDetails contactDetails = default, EdgeOrderAddressValidationStatus? addressValidationStatus = default, EdgeOrderProvisioningState? provisioningState = default)
+        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeOrderAddressClassification? addressClassification = default, EdgeOrderShippingAddress shippingAddress = default, EdgeOrderAddressContactDetails contactDetails = default, EdgeOrderAddressValidationStatus? addressValidationStatus = default, EdgeOrderProvisioningState? provisioningState = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     addressValidationStatus,
                     default,
                     default),
+                name0,
                 default);
         }
 
@@ -139,10 +141,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="startOn"> Start time of order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="name0"> The name of the order item. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/> or <paramref name="orderId"/> is null. </exception>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderItemData"/> instance for mocking. </returns>
-        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeOrderItemDetails orderItemDetails = default, EdgeOrderItemAddressDetails addressDetails = default, DateTimeOffset? startOn = default, ResourceIdentifier orderId = default, EdgeOrderProvisioningState? provisioningState = default, EdgeOrderResourceIdentity identity = default)
+        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeOrderItemDetails orderItemDetails = default, EdgeOrderItemAddressDetails addressDetails = default, DateTimeOffset? startOn = default, ResourceIdentifier orderId = default, EdgeOrderProvisioningState? provisioningState = default, string name0 = default, EdgeOrderResourceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -160,6 +163,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     orderId,
                     default,
                     default),
+                name0,
                 identity,
                 default);
         }
@@ -938,6 +942,74 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 (resourceProviderDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>()).ToList()), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="addressClassification"> Type of address based on its usage context. </param>
+        /// <param name="shippingAddress"> Shipping details for the address. </param>
+        /// <param name="contactDetails"> Contact details for the address. </param>
+        /// <param name="addressValidationStatus"> Status of address validation. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <returns> A new <see cref="EdgeOrder.EdgeOrderAddressData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeOrderAddressClassification? addressClassification = default, EdgeOrderShippingAddress shippingAddress = default, EdgeOrderAddressContactDetails contactDetails = default, EdgeOrderAddressValidationStatus? addressValidationStatus = default, EdgeOrderProvisioningState? provisioningState = default)
+        {
+            return new EdgeOrderAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                addressClassification is null && shippingAddress is null && contactDetails is null && addressValidationStatus is null && provisioningState is null ? default : new EdgeOrderItemAddressProperties(
+                    addressClassification,
+                    shippingAddress,
+                    contactDetails,
+                    addressValidationStatus,
+                    provisioningState,
+                    default),
+                name,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="orderItemDetails"> Represents order item details. </param>
+        /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
+        /// <param name="startOn"> Start time of order item. </param>
+        /// <param name="orderId"> Id of the order to which order item belongs to. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="EdgeOrder.EdgeOrderItemData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EdgeOrderItemDetails orderItemDetails = default, EdgeOrderItemAddressDetails addressDetails = default, DateTimeOffset? startOn = default, ResourceIdentifier orderId = default, EdgeOrderProvisioningState? provisioningState = default, EdgeOrderResourceIdentity identity = default)
+        {
+            return new EdgeOrderItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                orderItemDetails is null && addressDetails is null && startOn is null && orderId is null && provisioningState is null ? default : new OrderItemProperties(
+                    orderItemDetails,
+                    addressDetails,
+                    startOn,
+                    orderId,
+                    provisioningState,
+                    default),
+                name,
+                identity,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderAddressData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -966,6 +1038,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     addressValidationStatus,
                     default,
                     default),
+                name,
                 default);
         }
 
@@ -1208,6 +1281,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     orderId,
                     default,
                     default),
+                name,
                 default,
                 default);
         }

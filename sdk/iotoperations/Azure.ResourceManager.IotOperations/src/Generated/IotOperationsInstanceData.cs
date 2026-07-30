@@ -38,12 +38,14 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> Name of instance. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotOperationsInstanceProperties properties, IotOperationsExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal IotOperationsInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotOperationsInstanceProperties properties, string name0, IotOperationsExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             ExtendedLocation = extendedLocation;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -51,6 +53,9 @@ namespace Azure.ResourceManager.IotOperations
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public IotOperationsInstanceProperties Properties { get; set; }
+
+        /// <summary> Name of instance. </summary>
+        public string Name { get; }
 
         /// <summary> Edge location of the resource. </summary>
         public IotOperationsExtendedLocation ExtendedLocation { get; set; }

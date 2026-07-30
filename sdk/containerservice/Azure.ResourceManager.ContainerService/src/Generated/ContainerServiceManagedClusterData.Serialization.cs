@@ -310,6 +310,7 @@ namespace Azure.ResourceManager.ContainerService
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 eTag,
                 sku,
                 extendedLocation,

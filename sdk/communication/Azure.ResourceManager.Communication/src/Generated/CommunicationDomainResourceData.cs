@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.Communication
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of a Domains resource. </param>
+        /// <param name="name0"> The name of the Domains resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of a Domains resource. </summary>
         [WirePath("properties")]
         internal DomainProperties Properties { get; set; }
+
+        /// <summary> The name of the Domains resource. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]

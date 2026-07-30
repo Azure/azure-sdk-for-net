@@ -34,12 +34,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Network function properties. </param>
+        /// <param name="name0"> Resource name for the network function resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The managed identity of the network function. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkFunctionPropertiesFormat properties, ETag? eTag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkFunctionPropertiesFormat properties, string name0, ETag? eTag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             ETag = eTag;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.HybridNetwork
 
         /// <summary> Network function properties. </summary>
         public NetworkFunctionPropertiesFormat Properties { get; set; }
+
+        /// <summary> Resource name for the network function resource. </summary>
+        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; set; }

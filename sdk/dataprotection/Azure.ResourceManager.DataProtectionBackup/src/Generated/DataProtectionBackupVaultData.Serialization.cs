@@ -261,6 +261,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 eTag,
                 additionalBinaryDataProperties);

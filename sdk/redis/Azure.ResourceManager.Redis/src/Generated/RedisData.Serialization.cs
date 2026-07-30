@@ -273,6 +273,7 @@ namespace Azure.ResourceManager.Redis
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
                 additionalBinaryDataProperties);

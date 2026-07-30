@@ -241,6 +241,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 additionalBinaryDataProperties);
         }
     }

@@ -33,14 +33,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Confidential Ledger Resource. </param>
+        /// <param name="name0"> Name of the Confidential Ledger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialLedgerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfidentialLedgerProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ConfidentialLedgerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfidentialLedgerProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of Confidential Ledger Resource. </summary>
         public ConfidentialLedgerProperties Properties { get; set; }
+
+        /// <summary> Name of the Confidential Ledger. </summary>
+        public string Name { get; }
     }
 }

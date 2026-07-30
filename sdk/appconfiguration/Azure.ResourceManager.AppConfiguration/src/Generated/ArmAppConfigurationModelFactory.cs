@@ -40,11 +40,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="telemetryResourceId"> Resource ID of a resource enabling telemetry collection. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="azureFrontDoorResourceId"> Resource ID of an Azure Front Door profile. </param>
+        /// <param name="name0"> The name of the configuration store. </param>
         /// <param name="identity"> The managed identity information, if configured. </param>
         /// <param name="skuName"> The SKU name of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationStoreData"/> instance for mocking. </returns>
-        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppConfigurationProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, string endpoint = default, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default, AppConfigurationPublicNetworkAccess? publicNetworkAccess = default, bool? disableLocalAuth = default, int? softDeleteRetentionInDays = default, long? defaultKeyValueRevisionRetentionPeriodInSeconds = default, bool? enablePurgeProtection = default, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default, AppConfigurationCreateMode? createMode = default, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = default, ResourceIdentifier telemetryResourceId = default, IEnumerable<AppConfigurationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier azureFrontDoorResourceId = default, ManagedServiceIdentity identity = default, string skuName = default)
+        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppConfigurationProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, string endpoint = default, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default, AppConfigurationPublicNetworkAccess? publicNetworkAccess = default, bool? disableLocalAuth = default, int? softDeleteRetentionInDays = default, long? defaultKeyValueRevisionRetentionPeriodInSeconds = default, bool? enablePurgeProtection = default, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default, AppConfigurationCreateMode? createMode = default, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = default, ResourceIdentifier telemetryResourceId = default, IEnumerable<AppConfigurationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier azureFrontDoorResourceId = default, string name0 = default, ManagedServiceIdentity identity = default, string skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     new AppConfigurationManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>()).ToList(), default),
                     new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
                     default),
+                name0,
                 identity,
                 skuName is null ? default : new AppConfigurationSku(skuName, default),
                 default);
@@ -566,6 +568,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 skuName is null ? default : new AppConfigurationSku(skuName, default),
                 default);
@@ -724,6 +727,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     default,
                     default,
                     default),
+                name,
                 identity,
                 skuName is null ? default : new AppConfigurationSku(skuName, default),
                 default);

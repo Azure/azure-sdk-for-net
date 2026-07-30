@@ -30,10 +30,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <param name="name0"> The name of the DNS resolver. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverData"/> instance for mocking. </returns>
-        public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier virtualNetworkId = default, ETag? eTag = default)
+        public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier virtualNetworkId = default, string name0 = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 virtualNetworkId is null && dnsResolverState is null ? default : new DnsResolverProperties(new SubResource(virtualNetworkId, default), dnsResolverState, default, default, default),
+                name0,
                 eTag,
                 default);
         }
@@ -67,10 +69,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
+        /// <param name="name0"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverInboundEndpointData"/> instance for mocking. </returns>
-        public static DnsResolverInboundEndpointData DnsResolverInboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? eTag = default)
+        public static DnsResolverInboundEndpointData DnsResolverInboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name0 = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -82,6 +85,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 default,
+                name0,
                 eTag,
                 default);
         }
@@ -114,10 +118,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
         /// <param name="subnetId"> Resource ID. </param>
+        /// <param name="name0"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverOutboundEndpointData"/> instance for mocking. </returns>
-        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier subnetId = default, ETag? eTag = default)
+        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier subnetId = default, string name0 = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 subnetId is null ? default : new OutboundEndpointProperties(new SubResource(subnetId, default), default, default, default),
+                name0,
                 eTag,
                 default);
         }

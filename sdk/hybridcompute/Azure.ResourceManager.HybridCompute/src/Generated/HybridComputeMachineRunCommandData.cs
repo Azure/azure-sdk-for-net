@@ -33,16 +33,22 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes Run Command Properties. </param>
+        /// <param name="name0"> The name of the run command. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeMachineRunCommandData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineRunCommandProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineRunCommandData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineRunCommandProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes Run Command Properties. </summary>
         [WirePath("properties")]
         internal MachineRunCommandProperties Properties { get; set; }
+
+        /// <summary> The name of the run command. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The source of the run command script. </summary>
         [WirePath("properties.source")]

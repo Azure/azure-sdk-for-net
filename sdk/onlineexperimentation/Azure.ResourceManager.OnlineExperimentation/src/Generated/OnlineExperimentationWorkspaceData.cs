@@ -33,12 +33,14 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentationWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OnlineExperimentationWorkspaceProperties properties, ManagedServiceIdentity identity, OnlineExperimentationWorkspaceSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal OnlineExperimentationWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OnlineExperimentationWorkspaceProperties properties, string name0, ManagedServiceIdentity identity, OnlineExperimentationWorkspaceSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,6 +48,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public OnlineExperimentationWorkspaceProperties Properties { get; set; }
+
+        /// <summary> The name of the OnlineExperimentationWorkspace. </summary>
+        public string Name { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

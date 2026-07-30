@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The map account properties. </param>
+        /// <param name="name0"> The name of the Maps Account. </param>
         /// <param name="sku"> The SKU of this account. </param>
         /// <param name="kind"> Get or Set Kind property. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Maps.MapsAccountData"/> instance for mocking. </returns>
-        public static MapsAccountData MapsAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MapsAccountProperties properties = default, MapsSku sku = default, MapsAccountKind? kind = default, ManagedServiceIdentity identity = default)
+        public static MapsAccountData MapsAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MapsAccountProperties properties = default, string name0 = default, MapsSku sku = default, MapsAccountKind? kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Maps.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 sku,
                 kind,
                 identity,
@@ -253,8 +255,9 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The Creator resource properties. </param>
+        /// <param name="name0"> The name of the Maps Creator instance. </param>
         /// <returns> A new <see cref="Maps.MapsCreatorData"/> instance for mocking. </returns>
-        public static MapsCreatorData MapsCreatorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MapsCreatorProperties properties = default)
+        public static MapsCreatorData MapsCreatorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MapsCreatorProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -266,6 +269,7 @@ namespace Azure.ResourceManager.Maps.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 
@@ -334,6 +338,7 @@ namespace Azure.ResourceManager.Maps.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 sku,
                 kind,
                 identity,
@@ -395,6 +400,30 @@ namespace Azure.ResourceManager.Maps.Models
                     default,
                     default,
                     default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Maps.MapsCreatorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The Creator resource properties. </param>
+        /// <returns> A new <see cref="Maps.MapsCreatorData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MapsCreatorData MapsCreatorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MapsCreatorProperties properties = default)
+        {
+            return new MapsCreatorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
                 default);
         }
 

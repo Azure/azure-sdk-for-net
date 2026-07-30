@@ -111,6 +111,11 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -240,6 +245,15 @@ namespace Azure.ResourceManager.EventHubs
                     sku = EventHubsClusterSku.DeserializeEventHubsClusterSku(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData0 = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEventHubsContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -253,7 +267,9 @@ namespace Azure.ResourceManager.EventHubs
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 sku,
+                systemData,
                 additionalBinaryDataProperties);
         }
     }

@@ -268,6 +268,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 sku,
                 additionalBinaryDataProperties);

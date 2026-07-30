@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Fabric;
@@ -24,9 +25,10 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Microsoft Fabric capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
-        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FabricCapacityProperties properties = default, FabricSku sku = default)
+        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FabricCapacityProperties properties = default, string name0 = default, FabricSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 sku,
                 default);
         }
@@ -139,6 +142,32 @@ namespace Azure.ResourceManager.Fabric.Models
         public static FabricCapacitiesQuotaName FabricCapacitiesQuotaName(string value = default, string localizedValue = default)
         {
             return new FabricCapacitiesQuotaName(value, localizedValue, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Fabric.FabricCapacityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="sku"> The SKU details. </param>
+        /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FabricCapacityProperties properties = default, FabricSku sku = default)
+        {
+            return new FabricCapacityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                sku,
+                default);
         }
     }
 }

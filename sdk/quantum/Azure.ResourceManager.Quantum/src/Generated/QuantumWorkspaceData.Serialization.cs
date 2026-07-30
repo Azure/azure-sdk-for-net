@@ -253,6 +253,7 @@ namespace Azure.ResourceManager.Quantum
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 additionalBinaryDataProperties);
         }

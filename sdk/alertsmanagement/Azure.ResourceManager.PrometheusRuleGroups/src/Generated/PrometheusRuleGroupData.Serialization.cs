@@ -231,6 +231,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 additionalBinaryDataProperties);
         }
     }

@@ -25,11 +25,12 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the monitor resource. </param>
+        /// <param name="name0"> Monitor resource name. </param>
         /// <param name="kind"> The kind of the Elastic resource - observability, security, search etc. </param>
         /// <param name="skuName"> The name of the SKU. </param>
         /// <param name="identity"> Identity properties of the monitor resource. </param>
         /// <returns> A new <see cref="Elastic.ElasticMonitorData"/> instance for mocking. </returns>
-        public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticMonitorProperties properties = default, string kind = default, string skuName = default, ManagedServiceIdentity identity = default)
+        public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticMonitorProperties properties = default, string name0 = default, string kind = default, string skuName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 kind,
                 skuName is null ? default : new ElasticSku(skuName, default),
                 identity,
@@ -588,6 +590,35 @@ namespace Azure.ResourceManager.Elastic.Models
             return new ElasticOrganizationToAzureSubscriptionMappingProperties(billedAzureSubscriptionId, marketplaceSaasInfo, elasticOrganizationId, elasticOrganizationName, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the monitor resource. </param>
+        /// <param name="kind"> The kind of the Elastic resource - observability, security, search etc. </param>
+        /// <param name="skuName"> The name of the SKU. </param>
+        /// <param name="identity"> Identity properties of the monitor resource. </param>
+        /// <returns> A new <see cref="Elastic.ElasticMonitorData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticMonitorProperties properties = default, string kind = default, string skuName = default, ManagedServiceIdentity identity = default)
+        {
+            return new ElasticMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                kind,
+                skuName is null ? default : new ElasticSku(skuName, default),
+                identity,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription. </param>
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
@@ -631,6 +662,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 default,
                 skuName is null ? default : new ElasticSku(skuName, default),
                 identity,

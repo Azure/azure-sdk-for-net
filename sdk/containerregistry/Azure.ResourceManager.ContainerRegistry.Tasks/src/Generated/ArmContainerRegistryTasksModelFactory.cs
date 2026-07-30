@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="os"> The OS of agent machine. </param>
         /// <param name="virtualNetworkSubnetResourceId"> The Virtual Network Subnet Resource Id of the agent machine. </param>
         /// <param name="provisioningState"> The provisioning state of this agent pool. </param>
+        /// <param name="name0"> The name of the agent pool. </param>
         /// <returns> A new <see cref="Tasks.AgentPoolData"/> instance for mocking. </returns>
-        public static AgentPoolData AgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? count = default, string tier = default, ContainerRegistryTaskOS? os = default, ResourceIdentifier virtualNetworkSubnetResourceId = default, ContainerRegistryTaskProvisioningState? provisioningState = default)
+        public static AgentPoolData AgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? count = default, string tier = default, ContainerRegistryTaskOS? os = default, ResourceIdentifier virtualNetworkSubnetResourceId = default, ContainerRegistryTaskProvisioningState? provisioningState = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     virtualNetworkSubnetResourceId,
                     provisioningState,
                     default),
+                name0,
                 default);
         }
 

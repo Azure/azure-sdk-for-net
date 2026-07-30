@@ -38,9 +38,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
         /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
         /// <param name="dailyMaxActiveDevices"> Gets the DailyMaxActiveDevices. </param>
+        /// <param name="name0"> Notification Hub name. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubData"/> instance for mocking. </returns>
-        public static NotificationHubData NotificationHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string notificationHubName = default, TimeSpan? registrationTtl = default, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubWnsCredential wnsCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubAdmCredential admCredential = default, NotificationHubBaiduCredential baiduCredential = default, BrowserCredential browserCredential = default, XiaomiCredential xiaomiCredential = default, FcmV1Credential fcmV1Credential = default, long? dailyMaxActiveDevices = default, NotificationHubSku sku = default)
+        public static NotificationHubData NotificationHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string notificationHubName = default, TimeSpan? registrationTtl = default, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubWnsCredential wnsCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubAdmCredential admCredential = default, NotificationHubBaiduCredential baiduCredential = default, BrowserCredential browserCredential = default, XiaomiCredential xiaomiCredential = default, FcmV1Credential fcmV1Credential = default, long? dailyMaxActiveDevices = default, string name0 = default, NotificationHubSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     fcmV1Credential,
                     dailyMaxActiveDevices,
                     default),
+                name0,
                 sku,
                 default);
         }
@@ -499,9 +501,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
+        /// <param name="name0"> Namespace name. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
         /// <returns> A new <see cref="NotificationHubs.NotificationHubNamespaceData"/> instance for mocking. </returns>
-        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string namespaceName = default, OperationProvisioningState? operationProvisioningState = default, NotificationHubNamespaceStatus? namespaceStatus = default, bool? isEnabled = default, bool? isCritical = default, string subscriptionId = default, string region = default, string metricId = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, NotificationHubNamespaceTypeExt? hubNamespaceType = default, AllowedReplicationRegion? replicationRegion = default, ZoneRedundancyPreference? zoneRedundancy = default, NotificationHubNetworkAcls networkAcls = default, PnsCredentials pnsCredentials = default, Uri serviceBusEndpoint = default, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default, string scaleUnit = default, string dataCenter = default, NotificationHubPublicNetworkAccess? publicNetworkAccess = default, NotificationHubSku sku = default)
+        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string namespaceName = default, OperationProvisioningState? operationProvisioningState = default, NotificationHubNamespaceStatus? namespaceStatus = default, bool? isEnabled = default, bool? isCritical = default, string subscriptionId = default, string region = default, string metricId = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, NotificationHubNamespaceTypeExt? hubNamespaceType = default, AllowedReplicationRegion? replicationRegion = default, ZoneRedundancyPreference? zoneRedundancy = default, NotificationHubNetworkAcls networkAcls = default, PnsCredentials pnsCredentials = default, Uri serviceBusEndpoint = default, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default, string scaleUnit = default, string dataCenter = default, NotificationHubPublicNetworkAccess? publicNetworkAccess = default, string name0 = default, NotificationHubSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -534,6 +537,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     dataCenter,
                     publicNetworkAccess,
                     default),
+                name0,
                 sku,
                 default);
         }
@@ -802,6 +806,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     dataCenter,
                     default,
                     default),
+                name,
                 sku,
                 default);
         }
@@ -918,6 +923,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     default,
                     default,
                     default),
+                name,
                 sku,
                 default);
         }

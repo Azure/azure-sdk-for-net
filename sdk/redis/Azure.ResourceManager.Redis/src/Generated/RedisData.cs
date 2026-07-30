@@ -41,12 +41,14 @@ namespace Azure.ResourceManager.Redis
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Redis cache properties. </param>
+        /// <param name="name0"> The name of the Redis cache. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisProperties properties, IList<string> zones, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisProperties properties, string name0, IList<string> zones, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Zones = zones;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,6 +57,10 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Redis cache properties. </summary>
         [WirePath("properties")]
         internal RedisProperties Properties { get; set; }
+
+        /// <summary> The name of the Redis cache. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The availability zones. </summary>
         [WirePath("zones")]

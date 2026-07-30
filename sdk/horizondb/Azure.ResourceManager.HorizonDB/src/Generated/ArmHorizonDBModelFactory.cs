@@ -25,8 +25,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the HorizonDB cluster. </param>
         /// <returns> A new <see cref="HorizonDB.HorizonDBClusterData"/> instance for mocking. </returns>
-        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default)
+        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 default);
         }
 

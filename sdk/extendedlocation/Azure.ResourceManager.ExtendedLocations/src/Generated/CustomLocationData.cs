@@ -33,17 +33,22 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The set of properties specific to a Custom Location. </param>
+        /// <param name="name0"> Custom Locations name. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CustomLocationProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CustomLocationProperties properties, string name0, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The set of properties specific to a Custom Location. </summary>
         internal CustomLocationProperties Properties { get; set; }
+
+        /// <summary> Custom Locations name. </summary>
+        public string Name { get; }
 
         /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

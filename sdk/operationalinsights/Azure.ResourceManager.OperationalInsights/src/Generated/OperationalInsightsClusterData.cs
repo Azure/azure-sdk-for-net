@@ -33,12 +33,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Log Analytics cluster properties. </param>
+        /// <param name="name0"> Name of the Log Analytics Cluster. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The sku properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string name0, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,6 +49,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Log Analytics cluster properties. </summary>
         [WirePath("properties")]
         internal ClusterProperties Properties { get; set; }
+
+        /// <summary> Name of the Log Analytics Cluster. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]

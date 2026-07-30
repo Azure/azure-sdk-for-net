@@ -33,15 +33,20 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties that define configuration for the account. </param>
+        /// <param name="name0"> Name of the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PowerPlatformAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal PowerPlatformAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties that define configuration for the account. </summary>
         internal AccountProperties Properties { get; set; }
+
+        /// <summary> Name of the account. </summary>
+        public string Name { get; }
 
         /// <summary> The internally assigned unique identifier of the resource. </summary>
         public string SystemId

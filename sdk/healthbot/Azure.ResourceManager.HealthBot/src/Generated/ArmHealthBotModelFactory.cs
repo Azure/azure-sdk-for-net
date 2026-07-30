@@ -26,10 +26,11 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
+        /// <param name="name0"> The name of the Bot resource. </param>
         /// <param name="skuName"> The name of the Azure Health Bot SKU. </param>
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
         /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
-        public static HealthBotData HealthBotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthBotProperties properties = default, HealthBotSkuName skuName = default, ManagedServiceIdentity identity = default)
+        public static HealthBotData HealthBotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthBotProperties properties = default, string name0 = default, HealthBotSkuName skuName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 new HealthBotSku(skuName, default),
                 identity,
                 default);
@@ -109,6 +111,33 @@ namespace Azure.ResourceManager.HealthBot.Models
             return new HealthBotKey(keyName, value, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
+        /// <param name="skuName"> The name of the Azure Health Bot SKU. </param>
+        /// <param name="identity"> The identity of the Azure Health Bot. </param>
+        /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HealthBotData HealthBotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthBotProperties properties = default, HealthBotSkuName skuName = 0, ManagedServiceIdentity identity = default)
+        {
+            return new HealthBotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                new HealthBotSku(skuName, default),
+                identity,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="HealthBot.HealthBotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -131,6 +160,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 skuName is null ? default : new HealthBotSku(skuName.GetValueOrDefault(), default),
                 identity,
                 default);

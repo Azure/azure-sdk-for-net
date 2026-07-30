@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -26,8 +27,9 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tenantId"> The Azure Sphere tenant ID associated with the catalog. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="name0"> Name of catalog. </param>
         /// <returns> A new <see cref="Sphere.SphereCatalogData"/> instance for mocking. </returns>
-        public static SphereCatalogData SphereCatalogData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, SphereProvisioningState? provisioningState = default)
+        public static SphereCatalogData SphereCatalogData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, SphereProvisioningState? provisioningState = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 tenantId is null && provisioningState is null ? default : new CatalogProperties(tenantId, provisioningState, default),
+                name0,
                 default);
         }
 
@@ -371,6 +374,30 @@ namespace Azure.ResourceManager.Sphere.Models
         public static SignedCapabilityImageResponse SignedCapabilityImageResponse(string image = default)
         {
             return new SignedCapabilityImageResponse(image, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tenantId"> The Azure Sphere tenant ID associated with the catalog. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereCatalogData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SphereCatalogData SphereCatalogData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, SphereProvisioningState? provisioningState = default)
+        {
+            return new SphereCatalogData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                tenantId is null && provisioningState is null ? default : new CatalogProperties(tenantId, provisioningState, default),
+                name,
+                default);
         }
     }
 }

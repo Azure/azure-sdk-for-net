@@ -33,15 +33,20 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The set of properties specific to a Resource Sync Rule. </param>
+        /// <param name="name0"> Resource Sync Rule name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSyncRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSyncRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ResourceSyncRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSyncRuleProperties properties, string name0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The set of properties specific to a Resource Sync Rule. </summary>
         internal ResourceSyncRuleProperties Properties { get; set; }
+
+        /// <summary> Resource Sync Rule name. </summary>
+        public string Name { get; }
 
         /// <summary> Priority represents a priority of the Resource Sync Rule. </summary>
         public int? Priority

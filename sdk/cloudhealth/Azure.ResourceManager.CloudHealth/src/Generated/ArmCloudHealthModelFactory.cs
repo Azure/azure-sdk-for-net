@@ -25,9 +25,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="healthModelProvisioningState"> The status of the last operation. </param>
+        /// <param name="name0"> Name of health model resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="CloudHealth.HealthModelData"/> instance for mocking. </returns>
-        public static HealthModelData HealthModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthModelProvisioningState? healthModelProvisioningState = default, ManagedServiceIdentity identity = default)
+        public static HealthModelData HealthModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthModelProvisioningState? healthModelProvisioningState = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 healthModelProvisioningState is null ? default : new HealthModelProperties(healthModelProvisioningState, default),
+                name0,
                 identity,
                 default);
         }

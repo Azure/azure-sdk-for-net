@@ -33,12 +33,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the Cluster. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
+        /// <param name="systemData0"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, EventHubsClusterSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string name0, EventHubsClusterSku sku, SystemData systemData0, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
+            SystemData = systemData0;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,9 +50,17 @@ namespace Azure.ResourceManager.EventHubs
         [WirePath("properties")]
         internal ClusterProperties Properties { get; set; }
 
+        /// <summary> The name of the Cluster. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+
         /// <summary> Properties of the cluster SKU. </summary>
         [WirePath("sku")]
         public EventHubsClusterSku Sku { get; set; }
+
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        [WirePath("systemData")]
+        public SystemData SystemData { get; }
 
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
         [WirePath("properties.createdAt")]

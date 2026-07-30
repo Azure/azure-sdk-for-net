@@ -261,6 +261,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 sku,
                 additionalBinaryDataProperties);

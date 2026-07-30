@@ -231,6 +231,7 @@ namespace Azure.ResourceManager.Maps
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 additionalBinaryDataProperties);
         }
     }

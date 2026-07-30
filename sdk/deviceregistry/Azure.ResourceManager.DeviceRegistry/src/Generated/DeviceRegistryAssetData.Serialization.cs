@@ -246,6 +246,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 extendedLocation,
                 additionalBinaryDataProperties);
         }

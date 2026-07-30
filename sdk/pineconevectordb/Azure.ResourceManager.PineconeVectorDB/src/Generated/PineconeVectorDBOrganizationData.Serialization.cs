@@ -253,6 +253,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 additionalBinaryDataProperties);
         }

@@ -33,17 +33,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the cluster. </param>
+        /// <param name="name0"> The name of the cluster. </param>
         /// <param name="identity"> Describes the identity of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, IdentityProperties identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBForPostgreSqlClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, string name0, IdentityProperties identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the cluster. </summary>
         internal ClusterProperties Properties { get; set; }
+
+        /// <summary> The name of the cluster. </summary>
+        public string Name { get; }
 
         /// <summary> Describes the identity of the cluster. </summary>
         public IdentityProperties Identity { get; set; }

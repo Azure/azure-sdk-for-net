@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
@@ -342,6 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(ResolveHealthError))]
     [ModelReaderWriterBuildable(typeof(ResolveHealthInputProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthSummary))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationContent))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationProviderSpecificContent))]
@@ -370,7 +372,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(SiteRecoveryApplyRecoveryPointProperties))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryApplyRecoveryPointProviderSpecificContent))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPoint))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointData is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPointData))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointData is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPointProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(SiteRecoveryClusterRecoveryPointResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(SiteRecoveryComputeSizeErrorDetails))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryConfigureAlertProperties))]
     [ModelReaderWriterBuildable(typeof(SiteRecoveryCreatePolicyProperties))]

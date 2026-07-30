@@ -228,6 +228,7 @@ namespace Azure.ResourceManager.Attestation
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 additionalBinaryDataProperties);
         }
     }

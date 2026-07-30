@@ -372,10 +372,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> BackupVaultResource properties. </param>
+        /// <param name="name0"> The name of the backup vault. </param>
         /// <param name="identity"> Input Managed Identity Details. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupVaultData"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultData DataProtectionBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataProtectionBackupVaultProperties properties = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static DataProtectionBackupVaultData DataProtectionBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataProtectionBackupVaultProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -387,8 +388,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
-                etag,
+                eTag,
                 default);
         }
 
@@ -1829,6 +1831,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static CrossRegionRestoreJobsContent CrossRegionRestoreJobsContent(AzureLocation sourceRegion = default, ResourceIdentifier sourceBackupVaultId = default)
         {
             return new CrossRegionRestoreJobsContent(sourceRegion, sourceBackupVaultId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> BackupVaultResource properties. </param>
+        /// <param name="identity"> Input Managed Identity Details. </param>
+        /// <param name="etag"> Optional ETag. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupVaultData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupVaultData DataProtectionBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataProtectionBackupVaultProperties properties = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        {
+            return new DataProtectionBackupVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                name,
+                identity,
+                etag,
+                default);
         }
 
         /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>

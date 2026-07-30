@@ -33,11 +33,13 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Container App session pool resource specific properties. </param>
+        /// <param name="name0"> Name of the session pool. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SessionPoolProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SessionPoolProperties properties, string name0, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,6 +47,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Container App session pool resource specific properties. </summary>
         [WirePath("properties")]
         internal SessionPoolProperties Properties { get; set; }
+
+        /// <summary> Name of the session pool. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]

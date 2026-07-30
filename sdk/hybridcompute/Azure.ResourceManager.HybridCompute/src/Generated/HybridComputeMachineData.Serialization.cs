@@ -293,6 +293,7 @@ namespace Azure.ResourceManager.HybridCompute
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>(),
                 identity,
                 kind,

@@ -261,6 +261,7 @@ namespace Azure.ResourceManager.IotOperations
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 extendedLocation,
                 identity,
                 additionalBinaryDataProperties);

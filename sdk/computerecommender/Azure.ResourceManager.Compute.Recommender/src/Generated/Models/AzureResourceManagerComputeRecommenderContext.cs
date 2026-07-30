@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Models;
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Compute.Recommender
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderGenerateResult))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderPlacementScore))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderResourceSize))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerComputeRecommenderContext : ModelReaderWriterContext
     {

@@ -29,9 +29,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="dataPlaneUri"> Resource data plane URI. </param>
         /// <param name="encryption"> CMK Encryption property. </param>
+        /// <param name="name0"> Load Test name. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="LoadTesting.LoadTestingResourceData"/> instance for mocking. </returns>
-        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, LoadTestingProvisioningState? provisioningState = default, string dataPlaneUri = default, LoadTestingCmkEncryptionProperties encryption = default, ManagedServiceIdentity identity = default)
+        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, LoadTestingProvisioningState? provisioningState = default, string dataPlaneUri = default, LoadTestingCmkEncryptionProperties encryption = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 description is null && provisioningState is null && dataPlaneUri is null && encryption is null ? default : new LoadTestProperties(description, provisioningState, dataPlaneUri, encryption, default),
+                name0,
                 identity,
                 default);
         }
@@ -309,6 +311,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 description is null && provisioningState is null && dataPlaneUri is null && encryption is null ? default : new LoadTestProperties(description, provisioningState, dataPlaneUri, encryption, default),
+                name,
                 identity,
                 default);
         }

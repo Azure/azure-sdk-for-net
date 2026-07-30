@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -36,9 +37,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="managedResourceGroupName"> Managed resource group name. </param>
         /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <param name="name0"> The name of the Virtual Instances for SAP solutions resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapVirtualInstanceData"/> instance for mocking. </returns>
-        public static SapVirtualInstanceData SapVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SapEnvironmentType? environment = default, SapProductType? sapProduct = default, ManagedResourcesNetworkAccessType? managedResourcesNetworkAccessType = default, SapConfiguration configuration = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceState? state = default, SapVirtualInstanceProvisioningState? provisioningState = default, string managedResourceGroupName = default, SapVirtualInstanceErrorDetail errorsProperties = default, SapVirtualInstanceIdentity identity = default)
+        public static SapVirtualInstanceData SapVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SapEnvironmentType? environment = default, SapProductType? sapProduct = default, ManagedResourcesNetworkAccessType? managedResourcesNetworkAccessType = default, SapConfiguration configuration = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceState? state = default, SapVirtualInstanceProvisioningState? provisioningState = default, string managedResourceGroupName = default, SapVirtualInstanceErrorDetail errorsProperties = default, string name0 = default, SapVirtualInstanceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -61,6 +63,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     provisioningState,
                     new SapVirtualInstanceError(errorsProperties, default),
                     default),
+                name0,
                 identity,
                 default);
         }
@@ -745,8 +748,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="loadBalancerDetailsId"> Fully qualified resource ID for the load balancer. </param>
         /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <param name="name0"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapCentralServerInstanceData"/> instance for mocking. </returns>
-        public static SapCentralServerInstanceData SapCentralServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string instanceNo = default, ResourceIdentifier subnetId = default, MessageServerProperties messageServerProperties = default, EnqueueServerProperties enqueueServerProperties = default, GatewayServerProperties gatewayServerProperties = default, EnqueueReplicationServerProperties enqueueReplicationServerProperties = default, string kernelVersion = default, string kernelPatch = default, IEnumerable<CentralServerVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default)
+        public static SapCentralServerInstanceData SapCentralServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string instanceNo = default, ResourceIdentifier subnetId = default, MessageServerProperties messageServerProperties = default, EnqueueServerProperties enqueueServerProperties = default, GatewayServerProperties gatewayServerProperties = default, EnqueueReplicationServerProperties enqueueReplicationServerProperties = default, string kernelVersion = default, string kernelPatch = default, IEnumerable<CentralServerVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -773,6 +777,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     provisioningState,
                     new SapVirtualInstanceError(errorsProperties, default),
                     default),
+                name0,
                 default);
         }
 
@@ -871,8 +876,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="loadBalancerDetailsId"> Fully qualified resource ID for the load balancer. </param>
         /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <param name="name0"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapDatabaseInstanceData"/> instance for mocking. </returns>
-        public static SapDatabaseInstanceData SapDatabaseInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier subnetId = default, string databaseSid = default, string databaseType = default, IPAddress ipAddress = default, IEnumerable<DatabaseVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default)
+        public static SapDatabaseInstanceData SapDatabaseInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier subnetId = default, string databaseSid = default, string databaseType = default, IPAddress ipAddress = default, IEnumerable<DatabaseVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -894,6 +900,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     provisioningState,
                     new SapVirtualInstanceError(errorsProperties, default),
                     default),
+                name0,
                 default);
         }
 
@@ -939,8 +946,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="loadBalancerDetailsId"> Fully qualified resource ID for the load balancer. </param>
         /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <param name="name0"> The name of SAP Application Server instance resource. </param>
         /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapApplicationServerInstanceData"/> instance for mocking. </returns>
-        public static SapApplicationServerInstanceData SapApplicationServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string instanceNo = default, ResourceIdentifier subnetId = default, string hostname = default, string kernelVersion = default, string kernelPatch = default, IPAddress ipAddress = default, long? gatewayPort = default, long? icmHttpPort = default, long? icmHttpsPort = default, string dispatcherStatus = default, IEnumerable<ApplicationServerVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default)
+        public static SapApplicationServerInstanceData SapApplicationServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string instanceNo = default, ResourceIdentifier subnetId = default, string hostname = default, string kernelVersion = default, string kernelPatch = default, IPAddress ipAddress = default, long? gatewayPort = default, long? icmHttpPort = default, long? icmHttpsPort = default, string dispatcherStatus = default, IEnumerable<ApplicationServerVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default, string name0 = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -969,6 +977,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     provisioningState,
                     new SapVirtualInstanceError(errorsProperties, default),
                     default),
+                name0,
                 default);
         }
 
@@ -990,6 +999,198 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SapApplicationServerInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
+        /// <param name="sapProduct"> Defines the SAP Product type. </param>
+        /// <param name="managedResourcesNetworkAccessType"> Specifies the network access configuration for the resources that will be deployed in the Managed Resource Group. The options to choose from are Public and Private. If 'Private' is chosen, the Storage Account service tag should be enabled on the subnets in which the SAP VMs exist. This is required for establishing connectivity between VM extensions and the managed resource group storage account. This setting is currently applicable only to Storage Account. Learn more here https://go.microsoft.com/fwlink/?linkid=2247228. </param>
+        /// <param name="configuration"> Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS. </param>
+        /// <param name="status"> Defines the SAP Instance status. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
+        /// <param name="state"> Defines the Virtual Instance for SAP state. </param>
+        /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="managedResourceGroupName"> Managed resource group name. </param>
+        /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapVirtualInstanceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SapVirtualInstanceData SapVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SapEnvironmentType? environment = default, SapProductType? sapProduct = default, ManagedResourcesNetworkAccessType? managedResourcesNetworkAccessType = default, SapConfiguration configuration = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceState? state = default, SapVirtualInstanceProvisioningState? provisioningState = default, string managedResourceGroupName = default, SapVirtualInstanceErrorDetail errorsProperties = default, SapVirtualInstanceIdentity identity = default)
+        {
+            return new SapVirtualInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                environment is null && sapProduct is null && managedResourcesNetworkAccessType is null && configuration is null && managedResourceGroupName is null && status is null && health is null && state is null && provisioningState is null && errorsProperties is null ? default : new SapVirtualInstanceProperties(
+                    environment.GetValueOrDefault(),
+                    sapProduct.GetValueOrDefault(),
+                    managedResourcesNetworkAccessType,
+                    configuration,
+                    new ManagedRGConfiguration(managedResourceGroupName, default),
+                    status,
+                    health,
+                    state,
+                    provisioningState,
+                    new SapVirtualInstanceError(errorsProperties, default),
+                    default),
+                name,
+                identity,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="instanceNo"> The central services instance number. </param>
+        /// <param name="subnetId"> The central services instance subnet. </param>
+        /// <param name="messageServerProperties"> Defines the SAP message server properties. </param>
+        /// <param name="enqueueServerProperties"> Defines the SAP Enqueue Server properties. </param>
+        /// <param name="gatewayServerProperties"> Defines the SAP Gateway Server properties. </param>
+        /// <param name="enqueueReplicationServerProperties"> Defines the SAP Enqueue Replication Server (ERS) properties. </param>
+        /// <param name="kernelVersion"> The central services instance Kernel Version. </param>
+        /// <param name="kernelPatch"> The central services instance Kernel Patch level. </param>
+        /// <param name="vmDetails"> The list of virtual machines corresponding to the Central Services instance. </param>
+        /// <param name="status"> Defines the SAP Instance status. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
+        /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="loadBalancerDetailsId"> Fully qualified resource ID for the load balancer. </param>
+        /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapCentralServerInstanceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SapCentralServerInstanceData SapCentralServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string instanceNo = default, ResourceIdentifier subnetId = default, MessageServerProperties messageServerProperties = default, EnqueueServerProperties enqueueServerProperties = default, GatewayServerProperties gatewayServerProperties = default, EnqueueReplicationServerProperties enqueueReplicationServerProperties = default, string kernelVersion = default, string kernelPatch = default, IEnumerable<CentralServerVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default)
+        {
+            return new SapCentralServerInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                instanceNo is null && subnetId is null && messageServerProperties is null && enqueueServerProperties is null && gatewayServerProperties is null && enqueueReplicationServerProperties is null && kernelVersion is null && kernelPatch is null && loadBalancerDetailsId is null && vmDetails is null && status is null && health is null && provisioningState is null && errorsProperties is null ? default : new SapCentralServerProperties(
+                    instanceNo,
+                    subnetId,
+                    messageServerProperties,
+                    enqueueServerProperties,
+                    gatewayServerProperties,
+                    enqueueReplicationServerProperties,
+                    kernelVersion,
+                    kernelPatch,
+                    new LoadBalancerDetails(loadBalancerDetailsId, default),
+                    (vmDetails ?? new ChangeTrackingList<CentralServerVmDetails>()).ToList(),
+                    status,
+                    health,
+                    provisioningState,
+                    new SapVirtualInstanceError(errorsProperties, default),
+                    default),
+                name,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="subnetId"> Database subnet. </param>
+        /// <param name="databaseSid"> Database SID name. </param>
+        /// <param name="databaseType"> Database type, that is if the DB is HANA, DB2, Oracle, SAP ASE, Max DB or MS SQL Server. </param>
+        /// <param name="ipAddress"> Database IP Address. </param>
+        /// <param name="vmDetails"> The list of virtual machines corresponding to the Database resource. </param>
+        /// <param name="status"> Defines the SAP Instance status. </param>
+        /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="loadBalancerDetailsId"> Fully qualified resource ID for the load balancer. </param>
+        /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapDatabaseInstanceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SapDatabaseInstanceData SapDatabaseInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier subnetId = default, string databaseSid = default, string databaseType = default, IPAddress ipAddress = default, IEnumerable<DatabaseVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default)
+        {
+            return new SapDatabaseInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                subnetId is null && databaseSid is null && databaseType is null && ipAddress is null && loadBalancerDetailsId is null && vmDetails is null && status is null && provisioningState is null && errorsProperties is null ? default : new SapDatabaseProperties(
+                    subnetId,
+                    databaseSid,
+                    databaseType,
+                    ipAddress,
+                    new LoadBalancerDetails(loadBalancerDetailsId, default),
+                    (vmDetails ?? new ChangeTrackingList<DatabaseVmDetails>()).ToList(),
+                    status,
+                    provisioningState,
+                    new SapVirtualInstanceError(errorsProperties, default),
+                    default),
+                name,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="instanceNo"> Application server Instance Number. </param>
+        /// <param name="subnetId"> Application server Subnet. </param>
+        /// <param name="hostname"> Application server instance SAP hostname. </param>
+        /// <param name="kernelVersion"> Application server instance SAP Kernel Version. </param>
+        /// <param name="kernelPatch"> Application server instance SAP Kernel Patch level. </param>
+        /// <param name="ipAddress"> Application server instance SAP IP Address. </param>
+        /// <param name="gatewayPort"> Application server instance gateway Port. </param>
+        /// <param name="icmHttpPort"> Application server instance ICM HTTP Port. </param>
+        /// <param name="icmHttpsPort"> Application server instance ICM HTTPS Port. </param>
+        /// <param name="dispatcherStatus"> Application server instance dispatcher status. </param>
+        /// <param name="vmDetails"> The list of virtual machines. </param>
+        /// <param name="status"> Defines the SAP Instance status. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
+        /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="loadBalancerDetailsId"> Fully qualified resource ID for the load balancer. </param>
+        /// <param name="errorsProperties"> The Virtual Instance for SAP error body. </param>
+        /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapApplicationServerInstanceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SapApplicationServerInstanceData SapApplicationServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string instanceNo = default, ResourceIdentifier subnetId = default, string hostname = default, string kernelVersion = default, string kernelPatch = default, IPAddress ipAddress = default, long? gatewayPort = default, long? icmHttpPort = default, long? icmHttpsPort = default, string dispatcherStatus = default, IEnumerable<ApplicationServerVmDetails> vmDetails = default, SapVirtualInstanceStatus? status = default, SapHealthState? health = default, SapVirtualInstanceProvisioningState? provisioningState = default, ResourceIdentifier loadBalancerDetailsId = default, SapVirtualInstanceErrorDetail errorsProperties = default)
+        {
+            return new SapApplicationServerInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                instanceNo is null && subnetId is null && hostname is null && kernelVersion is null && kernelPatch is null && ipAddress is null && gatewayPort is null && icmHttpPort is null && icmHttpsPort is null && dispatcherStatus is null && loadBalancerDetailsId is null && vmDetails is null && status is null && health is null && provisioningState is null && errorsProperties is null ? default : new SapApplicationServerProperties(
+                    instanceNo,
+                    subnetId,
+                    hostname,
+                    kernelVersion,
+                    kernelPatch,
+                    ipAddress,
+                    gatewayPort,
+                    icmHttpPort,
+                    icmHttpsPort,
+                    dispatcherStatus,
+                    new LoadBalancerDetails(loadBalancerDetailsId, default),
+                    (vmDetails ?? new ChangeTrackingList<ApplicationServerVmDetails>()).ToList(),
+                    status,
+                    health,
+                    provisioningState,
+                    new SapVirtualInstanceError(errorsProperties, default),
+                    default),
+                name,
+                default);
         }
     }
 }

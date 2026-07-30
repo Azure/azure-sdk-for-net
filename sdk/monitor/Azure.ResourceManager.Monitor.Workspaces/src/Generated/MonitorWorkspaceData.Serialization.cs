@@ -268,6 +268,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 identity,
                 eTag,
                 additionalBinaryDataProperties);

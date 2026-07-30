@@ -33,12 +33,14 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
+        /// <param name="name0"> Monitor resource name. </param>
         /// <param name="sku"></param>
         /// <param name="identity"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatadogMonitorProperties properties, DatadogSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DatadogMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DatadogMonitorProperties properties, string name0, DatadogSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,6 +48,9 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary> Properties specific to the monitor resource. </summary>
         public DatadogMonitorProperties Properties { get; set; }
+
+        /// <summary> Monitor resource name. </summary>
+        public string Name { get; }
 
         /// <summary> Gets or sets the Sku. </summary>
         internal DatadogSku Sku { get; set; }

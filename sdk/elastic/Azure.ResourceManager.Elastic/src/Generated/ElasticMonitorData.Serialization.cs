@@ -279,6 +279,7 @@ namespace Azure.ResourceManager.Elastic
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 kind,
                 sku,
                 identity,

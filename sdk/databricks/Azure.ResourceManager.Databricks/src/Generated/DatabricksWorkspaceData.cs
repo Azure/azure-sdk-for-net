@@ -36,17 +36,22 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The workspace properties. </param>
+        /// <param name="name0"> The name of the workspace. </param>
         /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabricksWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, DatabricksSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DatabricksWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkspaceProperties properties, string name0, DatabricksSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            Name = name0;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The workspace properties. </summary>
         internal WorkspaceProperties Properties { get; set; }
+
+        /// <summary> The name of the workspace. </summary>
+        public string Name { get; }
 
         /// <summary> The SKU of the resource. </summary>
         public DatabricksSku Sku { get; set; }

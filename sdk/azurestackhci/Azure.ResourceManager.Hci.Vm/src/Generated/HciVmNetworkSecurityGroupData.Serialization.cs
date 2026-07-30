@@ -268,6 +268,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 extendedLocation,
                 eTag,
                 additionalBinaryDataProperties);

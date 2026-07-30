@@ -25,9 +25,10 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name0"> The name of the PlaywrightWorkspace. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceData"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PlaywrightWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static PlaywrightWorkspaceData PlaywrightWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PlaywrightWorkspaceProperties properties = default, string name0 = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 identity,
                 default);
         }
@@ -197,6 +199,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 default,
                 default);
         }
