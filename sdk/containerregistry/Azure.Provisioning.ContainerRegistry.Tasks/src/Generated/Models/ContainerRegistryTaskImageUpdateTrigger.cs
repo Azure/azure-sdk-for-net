@@ -58,7 +58,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
-            _occurredOn = DefineProperty<DateTimeOffset>(nameof(OccurredOn), new string[] { "timestamp" });
+            _occurredOn = DefineProperty<DateTimeOffset>(nameof(OccurredOn), new string[] { "timestamp" }, format: "O");
             _images = DefineListProperty<ContainerRegistryTaskImageDescriptor>(nameof(Images), new string[] { "images" });
             DefineAdditionalProperties();
         }

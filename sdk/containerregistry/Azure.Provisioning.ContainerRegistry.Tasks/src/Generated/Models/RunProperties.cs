@@ -277,12 +277,12 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             base.DefineProvisionableProperties();
             _runId = DefineProperty<string>(nameof(RunId), new string[] { "runId" });
             _status = DefineProperty<ContainerRegistryTaskRunStatus>(nameof(Status), new string[] { "status" });
-            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" });
+            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, format: "O");
             _runType = DefineProperty<ContainerRegistryTaskRunType>(nameof(RunType), new string[] { "runType" });
             _agentPoolName = DefineProperty<string>(nameof(AgentPoolName), new string[] { "agentPoolName" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createTime" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
-            _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createTime" }, format: "O");
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" }, format: "O");
             _outputImages = DefineListProperty<ContainerRegistryTaskImageDescriptor>(nameof(OutputImages), new string[] { "outputImages" });
             _task = DefineProperty<string>(nameof(Task), new string[] { "task" });
             _imageUpdateTrigger = DefineModelProperty<ContainerRegistryTaskImageUpdateTrigger>(nameof(ImageUpdateTrigger), new string[] { "imageUpdateTrigger" });

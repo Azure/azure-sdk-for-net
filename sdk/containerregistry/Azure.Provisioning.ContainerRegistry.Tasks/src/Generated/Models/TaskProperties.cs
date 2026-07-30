@@ -224,7 +224,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ContainerRegistryTaskProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _status = DefineProperty<ContainerRegistryTaskStatus>(nameof(Status), new string[] { "status" });
             _platform = DefineModelProperty<ContainerRegistryTaskPlatformProperties>(nameof(Platform), new string[] { "platform" });
             _agentConfiguration = DefineModelProperty<AgentProperties>(nameof(AgentConfiguration), new string[] { "agentConfiguration" });
