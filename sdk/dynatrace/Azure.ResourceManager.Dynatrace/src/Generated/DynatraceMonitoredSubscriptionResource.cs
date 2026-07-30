@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(ResourceType, out string dynatraceMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, dynatraceMonitoredSubscriptionApiVersion ?? "2024-04-24");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceMonitoredSubscriptionApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
-                    new DynatraceMonitoredSubscriptionOperationSource(Client),
+                    new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
-                    new DynatraceMonitoredSubscriptionOperationSource(Client),
+                    new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
-                    new DynatraceMonitoredSubscriptionOperationSource(Client),
+                    new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
-                    new DynatraceMonitoredSubscriptionOperationSource(Client),
+                    new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

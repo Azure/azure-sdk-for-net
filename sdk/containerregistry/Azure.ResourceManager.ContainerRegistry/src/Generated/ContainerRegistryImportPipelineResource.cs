@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ResourceType, out string containerRegistryImportPipelineApiVersion);
             _importPipelinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ResourceType.Namespace, Diagnostics);
-            _importPipelinesRestClient = new ImportPipelines(_importPipelinesClientDiagnostics, Pipeline, Endpoint, containerRegistryImportPipelineApiVersion ?? "2026-01-01-preview");
+            _importPipelinesRestClient = new ImportPipelines(_importPipelinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryImportPipelineApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(
-                    new ContainerRegistryImportPipelineOperationSource(Client),
+                    new ContainerRegistryImportPipelineResourceOperationSource(Client),
                     _importPipelinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(
-                    new ContainerRegistryImportPipelineOperationSource(Client),
+                    new ContainerRegistryImportPipelineResourceOperationSource(Client),
                     _importPipelinesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of the input item. Always `input_file`. </summary>
-        internal string Type { get; } = "input_file";
+        public string Type { get; } = "input_file";
 
         /// <summary> Gets or sets the FileId. </summary>
         public string FileId { get; set; }

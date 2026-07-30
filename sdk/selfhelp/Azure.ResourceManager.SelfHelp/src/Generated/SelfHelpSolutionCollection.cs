@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             TryGetApiVersion(SelfHelpSolutionResource.ResourceType, out string selfHelpSolutionApiVersion);
             _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpSolutionResource.ResourceType.Namespace, Diagnostics);
-            _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpSolutionApiVersion ?? "2024-03-01-preview");
+            _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSolutionApiVersion ?? "2024-03-01-preview");
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id.ToString(), solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
-                    new SelfHelpSolutionOperationSource(Client),
+                    new SelfHelpSolutionResourceOperationSource(Client),
                     _solutionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _solutionResourcesRestClient.CreateCreateRequest(Id.ToString(), solutionResourceName, SelfHelpSolutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
-                    new SelfHelpSolutionOperationSource(Client),
+                    new SelfHelpSolutionResourceOperationSource(Client),
                     _solutionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

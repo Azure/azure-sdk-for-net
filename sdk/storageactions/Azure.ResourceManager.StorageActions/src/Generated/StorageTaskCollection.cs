@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             TryGetApiVersion(StorageTaskResource.ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
-            _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageActions
                 HttpMessage message = _storageTasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, StorageTaskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
-                    new StorageTaskOperationSource(Client),
+                    new StorageTaskResourceOperationSource(Client),
                     _storageTasksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StorageActions
                 HttpMessage message = _storageTasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageTaskName, StorageTaskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageActionsArmOperation<StorageTaskResource> operation = new StorageActionsArmOperation<StorageTaskResource>(
-                    new StorageTaskOperationSource(Client),
+                    new StorageTaskResourceOperationSource(Client),
                     _storageTasksClientDiagnostics,
                     Pipeline,
                     message.Request,

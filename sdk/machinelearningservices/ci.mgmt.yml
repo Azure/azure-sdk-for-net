@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.MachineLearning
       safeName: AzureResourceManagerMachineLearning
+    - name: Azure.Provisioning.MachineLearning
+      safeName: AzureProvisioningMachineLearning

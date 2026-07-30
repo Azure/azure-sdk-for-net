@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.BillingBenefits
                     yield break;
                 }
                 ConditionalCreditList result = ConditionalCreditList.FromResponse(response);
-                yield return Page<ConditionalCreditData>.FromValues((IReadOnlyList<ConditionalCreditData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConditionalCreditData>.FromValues((IReadOnlyList<ConditionalCreditData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -1,0 +1,231 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
+
+namespace Azure.ResourceManager.ManagedNetworkFabric.Models
+{
+    /// <summary> The Network Bootstrap Device Patch Parameters defines the patch parameters of the resource. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This compatibility type is obsolete and will be removed in a future version. Use NetworkBootstrapDevicePatchContent instead.")]
+    public partial class NetworkBootstrapDevicePatch : TagsUpdate, IJsonModel<NetworkBootstrapDevicePatch>, IPersistableModel<NetworkBootstrapDevicePatch>
+    {
+        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatch"/>. </summary>
+        public NetworkBootstrapDevicePatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDevicePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Network Bootstrap Device Patch properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetworkBootstrapDevicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkBootstrapDevicePatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        {
+            Properties = properties;
+            Identity = identity;
+        }
+
+        /// <summary> Network Bootstrap Device Patch properties. </summary>
+        internal NetworkBootstrapDevicePatchProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation
+        {
+            get => Properties is null ? default : Properties.Annotation;
+            set
+            {
+                Properties ??= new NetworkBootstrapDevicePatchProperties();
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> The host name of the device. </summary>
+        public string HostName
+        {
+            get => Properties is null ? default : Properties.HostName;
+            set
+            {
+                Properties ??= new NetworkBootstrapDevicePatchProperties();
+                Properties.HostName = value;
+            }
+        }
+
+        /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
+        public string SerialNumber
+        {
+            get => Properties is null ? default : Properties.SerialNumber;
+            set
+            {
+                Properties ??= new NetworkBootstrapDevicePatchProperties();
+                Properties.SerialNumber = value;
+            }
+        }
+
+        internal NetworkBootstrapDevicePatchContent ToContent()
+            => new NetworkBootstrapDevicePatchContent(Tags, _additionalBinaryDataProperties, Properties, Identity);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedNetworkFabricResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkBootstrapDevicePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkBootstrapDevicePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkBootstrapDevicePatch IPersistableModel<NetworkBootstrapDevicePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkBootstrapDevicePatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkBootstrapDevicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkBootstrapDevicePatch"> The <see cref="NetworkBootstrapDevicePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkBootstrapDevicePatch networkBootstrapDevicePatch)
+        {
+            if (networkBootstrapDevicePatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkBootstrapDevicePatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<NetworkBootstrapDevicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkBootstrapDevicePatch IJsonModel<NetworkBootstrapDevicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkBootstrapDevicePatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ManagedNetworkFabricResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkBootstrapDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkBootstrapDevicePatch)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkBootstrapDevicePatch(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkBootstrapDevicePatch DeserializeNetworkBootstrapDevicePatch(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NetworkBootstrapDevicePatchProperties properties = default;
+            NetworkFabricManagedServiceIdentityPatch identity = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, prop0.Value.ValueKind == JsonValueKind.Null ? null : prop0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NetworkBootstrapDevicePatchProperties.DeserializeNetworkBootstrapDevicePatchProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new NetworkBootstrapDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
+        }
+    }
+}

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct RestServiceAuthenticationType : IEquatable<RestServiceAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> AadServicePrincipal. </summary>
+        private const string AadServicePrincipalValue = "AadServicePrincipal";
+        /// <summary> ManagedServiceIdentity. </summary>
+        private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
+        /// <summary> OAuth2ClientCredential. </summary>
+        private const string OAuth2ClientCredentialValue = "OAuth2ClientCredential";
 
         /// <summary> Initializes a new instance of <see cref="RestServiceAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RestServiceAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnonymousValue = "Anonymous";
-        private const string BasicValue = "Basic";
-        private const string AadServicePrincipalValue = "AadServicePrincipal";
-        private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
-        private const string OAuth2ClientCredentialValue = "OAuth2ClientCredential";
+            _value = value;
+        }
 
         /// <summary> Anonymous. </summary>
         public static RestServiceAuthenticationType Anonymous { get; } = new RestServiceAuthenticationType(AnonymousValue);
+
         /// <summary> Basic. </summary>
         public static RestServiceAuthenticationType Basic { get; } = new RestServiceAuthenticationType(BasicValue);
+
         /// <summary> AadServicePrincipal. </summary>
         public static RestServiceAuthenticationType AadServicePrincipal { get; } = new RestServiceAuthenticationType(AadServicePrincipalValue);
+
         /// <summary> ManagedServiceIdentity. </summary>
         public static RestServiceAuthenticationType ManagedServiceIdentity { get; } = new RestServiceAuthenticationType(ManagedServiceIdentityValue);
+
         /// <summary> OAuth2ClientCredential. </summary>
         public static RestServiceAuthenticationType OAuth2ClientCredential { get; } = new RestServiceAuthenticationType(OAuth2ClientCredentialValue);
+
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RestServiceAuthenticationType left, RestServiceAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RestServiceAuthenticationType left, RestServiceAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RestServiceAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RestServiceAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RestServiceAuthenticationType(string value) => new RestServiceAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RestServiceAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RestServiceAuthenticationType?(string value) => value == null ? null : new RestServiceAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RestServiceAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RestServiceAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

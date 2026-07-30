@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class ApiManagementProductStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ApiManagementProductState value) => value switch
         {
             ApiManagementProductState.NotPublished => "notPublished",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementProductState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ApiManagementProductState ToApiManagementProductState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notPublished")) return ApiManagementProductState.NotPublished;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "published")) return ApiManagementProductState.Published;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notPublished"))
+            {
+                return ApiManagementProductState.NotPublished;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "published"))
+            {
+                return ApiManagementProductState.Published;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementProductState value.");
         }
     }

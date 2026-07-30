@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal static partial class DefaultConsistencyLevelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DefaultConsistencyLevel value) => value switch
         {
             DefaultConsistencyLevel.Eventual => "Eventual",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DefaultConsistencyLevel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DefaultConsistencyLevel ToDefaultConsistencyLevel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Eventual")) return DefaultConsistencyLevel.Eventual;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Session")) return DefaultConsistencyLevel.Session;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BoundedStaleness")) return DefaultConsistencyLevel.BoundedStaleness;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Strong")) return DefaultConsistencyLevel.Strong;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ConsistentPrefix")) return DefaultConsistencyLevel.ConsistentPrefix;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Eventual"))
+            {
+                return DefaultConsistencyLevel.Eventual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Session"))
+            {
+                return DefaultConsistencyLevel.Session;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BoundedStaleness"))
+            {
+                return DefaultConsistencyLevel.BoundedStaleness;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Strong"))
+            {
+                return DefaultConsistencyLevel.Strong;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ConsistentPrefix"))
+            {
+                return DefaultConsistencyLevel.ConsistentPrefix;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DefaultConsistencyLevel value.");
         }
     }

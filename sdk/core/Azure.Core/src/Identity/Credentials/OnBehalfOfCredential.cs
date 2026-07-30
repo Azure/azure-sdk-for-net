@@ -209,7 +209,7 @@ namespace Azure.Identity
                 not null => client,
                 _ when clientAssertionCallback is not null => new MsalConfidentialClient(_pipeline, _tenantId, _clientId, clientAssertionCallback, options),
                 _ when clientAssertionCallbackAsync is not null => new MsalConfidentialClient(_pipeline, _tenantId, _clientId, clientAssertionCallbackAsync, options),
-                _ => throw new ArgumentNullException($"nameof(clientAssertionCallback)")
+                _ => throw new ArgumentNullException(nameof(clientAssertionCallback))
             };
 
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;

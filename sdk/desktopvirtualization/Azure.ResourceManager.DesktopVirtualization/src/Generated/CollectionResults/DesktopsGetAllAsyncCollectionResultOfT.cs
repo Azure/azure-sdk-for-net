@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     yield break;
                 }
                 DesktopList result = DesktopList.FromResponse(response);
-                yield return Page<VirtualDesktopData>.FromValues((IReadOnlyList<VirtualDesktopData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualDesktopData>.FromValues((IReadOnlyList<VirtualDesktopData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Models
@@ -106,6 +107,68 @@ namespace Azure.Search.Documents.Tests.Models
                 typeof(CorsOptions),
                 @"{""allowedOrigins"":[""https://example.com""],""maxAgeInSeconds"":300}")
                 .SetName("Roundtrip_CorsOptions");
+
+#if AZURE_SEARCH_PREVIEW
+            // --- 2026-05-01-preview: new knowledge source polymorphic subtypes ---
+            // Each carries the discriminator ("kind") and a nested parameters object; roundtrip exercises
+            // the polymorphic dispatch in the KnowledgeSource base type plus the subtype's own serializer.
+
+            // McpServerKnowledgeSource — MCP server with stored-headers auth and a tool that uses auto output parsing.
+            yield return new TestCaseData(
+                typeof(McpServerKnowledgeSource),
+                @"{""name"":""mcp-ks"",""kind"":""mcpServer"",""mcpServerParameters"":{""serverURL"":""https://learn.microsoft.com/api/mcp"",""authentication"":{""kind"":""storedHeaders"",""storedHeadersParameters"":{""headers"":{""Authorization"":""Bearer fake""}}},""tools"":[{""name"":""microsoft_docs_search"",""outputParsing"":{""kind"":""auto""},""inclusionMode"":""always""}]}}")
+                .SetName("Roundtrip_McpServerKnowledgeSource");
+
+            // FabricDataAgentKnowledgeSource
+            yield return new TestCaseData(
+                typeof(FabricDataAgentKnowledgeSource),
+                @"{""name"":""fda-ks"",""kind"":""fabricDataAgent"",""fabricDataAgentParameters"":{""workspaceId"":""ws-123"",""dataAgentId"":""agent-456""}}")
+                .SetName("Roundtrip_FabricDataAgentKnowledgeSource");
+
+            // FabricOntologyKnowledgeSource
+            yield return new TestCaseData(
+                typeof(FabricOntologyKnowledgeSource),
+                @"{""name"":""fo-ks"",""kind"":""fabricOntology"",""fabricOntologyParameters"":{""workspaceId"":""ws-123"",""ontologyId"":""ont-789""}}")
+                .SetName("Roundtrip_FabricOntologyKnowledgeSource");
+
+            // FileKnowledgeSource — parameterless parameters object, but kind must roundtrip.
+            yield return new TestCaseData(
+                typeof(FileKnowledgeSource),
+                @"{""name"":""file-ks"",""kind"":""file"",""fileParameters"":{}}")
+                .SetName("Roundtrip_FileKnowledgeSource");
+
+            // IndexedSqlKnowledgeSource — content/embedding column mappings exercise ContentColumnMapping + EmbeddingColumnMapping serializers.
+            yield return new TestCaseData(
+                typeof(IndexedSqlKnowledgeSource),
+                @"{""name"":""sql-ks"",""kind"":""indexedSql"",""indexedSqlParameters"":{""connectionString"":""Server=fake;Database=fake;"",""tableOrView"":""dbo.Articles"",""highWaterMarkColumnName"":""rowVersion"",""contentColumns"":[{""name"":""body""}],""embeddingColumns"":[{""name"":""embedding"",""sourceField"":""field""}]}}")
+                .SetName("Roundtrip_IndexedSqlKnowledgeSource");
+
+            // WorkIQKnowledgeSource — no parameters object, exercises base-only payload with new kind.
+            yield return new TestCaseData(
+                typeof(WorkIQKnowledgeSource),
+                @"{""name"":""wiq-ks"",""kind"":""workIQ""}")
+                .SetName("Roundtrip_WorkIQKnowledgeSource");
+
+            // FreshnessPolicy — new knowledge-base-level retrieval policy.
+            yield return new TestCaseData(
+                typeof(FreshnessPolicy),
+                @"{""boostingDuration"":""P90D""}")
+                .SetName("Roundtrip_FreshnessPolicy");
+
+            // KnowledgeBaseImageContent — newly given a public constructor + settable Url property in 12.1.0-beta.1.
+            yield return new TestCaseData(
+                typeof(KnowledgeBaseImageContent),
+                @"{""url"":""https://example.com/img.png""}")
+                .SetName("Roundtrip_KnowledgeBaseImageContent");
+
+            // SearchIndexKnowledgeSourceParams — exercises the three new KnowledgeSourceParams properties
+            // (failOnError, maxOutputDocuments, enableImageServing) added in 12.1.0-beta.1. The structural
+            // comparison fails if any of these are dropped during serialization.
+            yield return new TestCaseData(
+                typeof(SearchIndexKnowledgeSourceParams),
+                @"{""knowledgeSourceName"":""idx-ks"",""kind"":""searchIndex"",""failOnError"":true,""maxOutputDocuments"":25,""enableImageServing"":true}")
+                .SetName("Roundtrip_KnowledgeSourceParams_NewProperties");
+#endif
         }
 
         /// <summary>

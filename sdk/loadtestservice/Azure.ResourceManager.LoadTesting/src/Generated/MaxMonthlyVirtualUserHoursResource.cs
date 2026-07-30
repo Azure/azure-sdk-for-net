@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary>
     /// A class representing a MaxMonthlyVirtualUserHours along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaxMonthlyVirtualUserHoursResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LoadTestingResource"/> using the GetAllMaxMonthlyVirtualUserHours method.
+    /// Otherwise you can get one from its parent resource <see cref="LoadTestingResource"/> using the GetMaxMonthlyVirtualUserHours method.
     /// </summary>
     public partial class MaxMonthlyVirtualUserHoursResource : ArmResource
     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(ResourceType, out string maxMonthlyVirtualUserHoursApiVersion);
             _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Endpoint, maxMonthlyVirtualUserHoursApiVersion ?? "2024-12-01-preview");
+            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maxMonthlyVirtualUserHoursApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 

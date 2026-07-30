@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string buildApiVersion);
             _buildsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Endpoint, buildApiVersion ?? "2025-10-02-preview");
+            _buildsRestClient = new Builds(_buildsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
             _buildAuthTokenClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _buildAuthTokenRestClient = new BuildAuthToken(_buildAuthTokenClientDiagnostics, Pipeline, Endpoint, buildApiVersion ?? "2025-10-02-preview");
+            _buildAuthTokenRestClient = new BuildAuthToken(_buildAuthTokenClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, buildApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BuildData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildOperationSource(Client),
+                    new BuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BuildData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildOperationSource(Client),
+                    new BuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,

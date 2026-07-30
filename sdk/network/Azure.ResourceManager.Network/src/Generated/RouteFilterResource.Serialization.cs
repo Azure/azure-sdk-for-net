@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class RouteFilterResource : IJsonModel<RouteFilterData>
     {
-        private static RouteFilterData s_dataDeserializationInstance;
-        private static RouteFilterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RouteFilterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RouteFilterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RouteFilterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RouteFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterData>)Data).Write(writer, options);
 
-        RouteFilterData IJsonModel<RouteFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RouteFilterData IJsonModel<RouteFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RouteFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteFilterData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RouteFilterData IPersistableModel<RouteFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteFilterData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RouteFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteFilterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RouteFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

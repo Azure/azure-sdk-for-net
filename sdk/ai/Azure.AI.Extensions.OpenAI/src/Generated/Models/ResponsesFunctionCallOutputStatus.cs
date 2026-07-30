@@ -2,16 +2,68 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public enum ResponsesFunctionCallOutputStatus
+    public readonly partial struct ResponsesFunctionCallOutputStatus : IEquatable<ResponsesFunctionCallOutputStatus>
     {
-        /// <summary> InProgress. </summary>
-        InProgress,
-        /// <summary> Completed. </summary>
-        Completed,
-        /// <summary> Incomplete. </summary>
-        Incomplete
+        private readonly string _value;
+        private const string InProgressValue = "in_progress";
+        private const string CompletedValue = "completed";
+        private const string IncompleteValue = "incomplete";
+
+        /// <summary> Initializes a new instance of <see cref="ResponsesFunctionCallOutputStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResponsesFunctionCallOutputStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the InProgress. </summary>
+        public static ResponsesFunctionCallOutputStatus InProgress { get; } = new ResponsesFunctionCallOutputStatus(InProgressValue);
+
+        /// <summary> Gets the Completed. </summary>
+        public static ResponsesFunctionCallOutputStatus Completed { get; } = new ResponsesFunctionCallOutputStatus(CompletedValue);
+
+        /// <summary> Gets the Incomplete. </summary>
+        public static ResponsesFunctionCallOutputStatus Incomplete { get; } = new ResponsesFunctionCallOutputStatus(IncompleteValue);
+
+        /// <summary> Determines if two <see cref="ResponsesFunctionCallOutputStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ResponsesFunctionCallOutputStatus left, ResponsesFunctionCallOutputStatus right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ResponsesFunctionCallOutputStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ResponsesFunctionCallOutputStatus left, ResponsesFunctionCallOutputStatus right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ResponsesFunctionCallOutputStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponsesFunctionCallOutputStatus(string value) => new ResponsesFunctionCallOutputStatus(value);
+
+        /// <summary> Converts a string to a <see cref="ResponsesFunctionCallOutputStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResponsesFunctionCallOutputStatus?(string value) => value == null ? null : new ResponsesFunctionCallOutputStatus(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ResponsesFunctionCallOutputStatus other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ResponsesFunctionCallOutputStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

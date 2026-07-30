@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> adds data disks to the virtual machine instance for the update call. </summary>
-        public IList<HciVmVirtualHardDiskArmReference> DataDisks { get; }
+        public IList<HciVmVirtualHardDiskArmReference> DataDisks { get; } = new ChangeTrackingList<HciVmVirtualHardDiskArmReference>();
     }
 }

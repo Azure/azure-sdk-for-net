@@ -7,56 +7,77 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function app site update strategy type. Available options: Recreate, RollingUpdate
-    /// Serialized Name: SiteUpdateStrategyType
-    /// </summary>
+    /// <summary> Function app site update strategy type. Available options: Recreate, RollingUpdate. </summary>
     public readonly partial struct SiteUpdateStrategyType : IEquatable<SiteUpdateStrategyType>
     {
         private readonly string _value;
+        /// <summary>
+        /// If the app is under load and a deployment or site state update occurs, all pods will be removed
+        /// and will need to be Recreated all at once. This is the default behavior.
+        /// </summary>
+        private const string RecreateValue = "Recreate";
+        /// <summary>
+        /// If the app is under load and a deployment or site state update occurs, pods will be drained in
+        /// batches and gradually replaced, thus minimizing impact to throughput.
+        /// </summary>
+        private const string RollingUpdateValue = "RollingUpdate";
 
         /// <summary> Initializes a new instance of <see cref="SiteUpdateStrategyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteUpdateStrategyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RecreateValue = "Recreate";
-        private const string RollingUpdateValue = "RollingUpdate";
+            _value = value;
+        }
 
         /// <summary>
         /// If the app is under load and a deployment or site state update occurs, all pods will be removed
         /// and will need to be Recreated all at once. This is the default behavior.
-        /// Serialized Name: SiteUpdateStrategyType.Recreate
         /// </summary>
         public static SiteUpdateStrategyType Recreate { get; } = new SiteUpdateStrategyType(RecreateValue);
+
         /// <summary>
         /// If the app is under load and a deployment or site state update occurs, pods will be drained in
         /// batches and gradually replaced, thus minimizing impact to throughput.
-        /// Serialized Name: SiteUpdateStrategyType.RollingUpdate
         /// </summary>
         public static SiteUpdateStrategyType RollingUpdate { get; } = new SiteUpdateStrategyType(RollingUpdateValue);
+
         /// <summary> Determines if two <see cref="SiteUpdateStrategyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteUpdateStrategyType left, SiteUpdateStrategyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteUpdateStrategyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteUpdateStrategyType left, SiteUpdateStrategyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteUpdateStrategyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteUpdateStrategyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteUpdateStrategyType(string value) => new SiteUpdateStrategyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteUpdateStrategyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteUpdateStrategyType?(string value) => value == null ? null : new SiteUpdateStrategyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteUpdateStrategyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteUpdateStrategyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

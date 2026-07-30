@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Gets the DnsZones. </summary>
-        public IList<DnsZone> DnsZones { get; }
+        public IList<DnsZone> DnsZones { get; } = new ChangeTrackingList<DnsZone>();
     }
 }

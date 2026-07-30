@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.WebPubSub
                     yield break;
                 }
                 CustomCertificateList result = CustomCertificateList.FromResponse(response);
-                yield return Page<WebPubSubCustomCertificateData>.FromValues((IReadOnlyList<WebPubSubCustomCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebPubSubCustomCertificateData>.FromValues((IReadOnlyList<WebPubSubCustomCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

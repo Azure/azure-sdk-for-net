@@ -15,14 +15,16 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     public readonly partial struct SliSamplingType : IEquatable<SliSamplingType>
     {
         private readonly string _value;
-        /// <summary> Maximum value. </summary>
-        private const string MaxValue = "max";
-        /// <summary> Minimum value. </summary>
-        private const string MinValue = "min";
         /// <summary> Average value. </summary>
-        private const string AvgValue = "avg";
+        private const string AverageValue = "Average";
         /// <summary> Summation. </summary>
-        private const string SumValue = "sum";
+        private const string SumValue = "Sum";
+        /// <summary> Count of occurrences. </summary>
+        private const string CountValue = "Count";
+        /// <summary> Minimum value. </summary>
+        private const string MinValue = "Min";
+        /// <summary> Maximum value. </summary>
+        private const string MaxValue = "Max";
 
         /// <summary> Initializes a new instance of <see cref="SliSamplingType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,17 +36,20 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
             _value = value;
         }
 
-        /// <summary> Maximum value. </summary>
-        public static SliSamplingType Max { get; } = new SliSamplingType(MaxValue);
+        /// <summary> Average value. </summary>
+        public static SliSamplingType Average { get; } = new SliSamplingType(AverageValue);
+
+        /// <summary> Summation. </summary>
+        public static SliSamplingType Sum { get; } = new SliSamplingType(SumValue);
+
+        /// <summary> Count of occurrences. </summary>
+        public static SliSamplingType Count { get; } = new SliSamplingType(CountValue);
 
         /// <summary> Minimum value. </summary>
         public static SliSamplingType Min { get; } = new SliSamplingType(MinValue);
 
-        /// <summary> Average value. </summary>
-        public static SliSamplingType Avg { get; } = new SliSamplingType(AvgValue);
-
-        /// <summary> Summation. </summary>
-        public static SliSamplingType Sum { get; } = new SliSamplingType(SumValue);
+        /// <summary> Maximum value. </summary>
+        public static SliSamplingType Max { get; } = new SliSamplingType(MaxValue);
 
         /// <summary> Determines if two <see cref="SliSamplingType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

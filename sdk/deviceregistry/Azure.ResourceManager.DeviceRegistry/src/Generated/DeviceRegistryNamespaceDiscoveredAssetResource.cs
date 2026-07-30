@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceDiscoveredAssetApiVersion);
             _namespaceDiscoveredAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _namespaceDiscoveredAssetsRestClient = new NamespaceDiscoveredAssets(_namespaceDiscoveredAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDiscoveredAssetApiVersion ?? "2026-03-01-preview");
+            _namespaceDiscoveredAssetsRestClient = new NamespaceDiscoveredAssets(_namespaceDiscoveredAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceDiscoveredAssetApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistryNamespaceDiscoveredAssetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource>(
-                    new DeviceRegistryNamespaceDiscoveredAssetOperationSource(Client),
+                    new DeviceRegistryNamespaceDiscoveredAssetResourceOperationSource(Client),
                     _namespaceDiscoveredAssetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistryNamespaceDiscoveredAssetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource>(
-                    new DeviceRegistryNamespaceDiscoveredAssetOperationSource(Client),
+                    new DeviceRegistryNamespaceDiscoveredAssetResourceOperationSource(Client),
                     _namespaceDiscoveredAssetsClientDiagnostics,
                     Pipeline,
                     message.Request,

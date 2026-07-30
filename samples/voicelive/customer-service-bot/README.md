@@ -116,9 +116,16 @@ Options:
   --model <model>                  VoiceLive model to use [default: gpt-4o]
   --voice <voice>                  Voice for the bot [default: en-US-JennyNeural]
   --instructions <instructions>    System instructions for the bot
-  --use-token-credential          Use Azure token credential instead of API key
+   --use-token-credential          Use `DefaultAzureCredential` (Azure Core via `Azure.Identity` namespace) instead of API key
   --verbose                        Enable verbose logging
+   --show-traces                    Print VoiceLive telemetry spans to console
   --help                           Show help message
+```
+
+You can also enable tracing with environment variable:
+
+```bash
+VOICELIVE_ENABLE_CONSOLE_TRACING=true
 ```
 
 ## Sample Data

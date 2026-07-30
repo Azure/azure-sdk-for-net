@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of SparkJobEntry. </summary>
     internal partial class UnknownSparkJobEntry : SparkJobEntry
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSparkJobEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSparkJobEntry(SparkJobEntryType sparkJobEntryType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sparkJobEntryType, serializedAdditionalRawData)
-        {
-            SparkJobEntryType = sparkJobEntryType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownSparkJobEntry"/> for deserialization. </summary>
-        internal UnknownSparkJobEntry()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSparkJobEntry(SparkJobEntryType sparkJobEntryType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(sparkJobEntryType != default ? sparkJobEntryType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

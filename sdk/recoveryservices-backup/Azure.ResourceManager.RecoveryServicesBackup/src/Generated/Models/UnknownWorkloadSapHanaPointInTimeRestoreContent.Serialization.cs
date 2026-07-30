@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadSapHanaPointInTimeRestoreContent IPersistableModel<WorkloadSapHanaPointInTimeRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownWorkloadSapHanaPointInTimeRestoreContent)PersistableModelCreateCore(data, options);
+        WorkloadSapHanaPointInTimeRestoreContent IPersistableModel<WorkloadSapHanaPointInTimeRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (WorkloadSapHanaPointInTimeRestoreContent)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkloadSapHanaPointInTimeRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadSapHanaPointInTimeRestoreContent IJsonModel<WorkloadSapHanaPointInTimeRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownWorkloadSapHanaPointInTimeRestoreContent)JsonModelCreateCore(ref reader, options);
+        WorkloadSapHanaPointInTimeRestoreContent IJsonModel<WorkloadSapHanaPointInTimeRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (WorkloadSapHanaPointInTimeRestoreContent)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

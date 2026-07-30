@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverPolicyResource.ResourceType, out string dnsResolverPolicyApiVersion);
             _dnsResolverPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolverPoliciesRestClient = new DnsResolverPolicies(_dnsResolverPoliciesClientDiagnostics, Pipeline, Endpoint, dnsResolverPolicyApiVersion ?? "2025-10-01-preview");
+            _dnsResolverPoliciesRestClient = new DnsResolverPolicies(_dnsResolverPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverPolicyApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, DnsResolverPolicyData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverPolicyResource> operation = new DnsResolverArmOperation<DnsResolverPolicyResource>(
-                    new DnsResolverPolicyOperationSource(Client),
+                    new DnsResolverPolicyResourceOperationSource(Client),
                     _dnsResolverPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, DnsResolverPolicyData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverPolicyResource> operation = new DnsResolverArmOperation<DnsResolverPolicyResource>(
-                    new DnsResolverPolicyOperationSource(Client),
+                    new DnsResolverPolicyResourceOperationSource(Client),
                     _dnsResolverPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

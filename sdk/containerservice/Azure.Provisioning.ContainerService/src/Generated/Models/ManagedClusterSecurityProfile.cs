@@ -126,6 +126,10 @@ namespace Azure.Provisioning.ContainerService
             _workloadIdentity = DefineModelProperty<ManagedClusterSecurityProfileWorkloadIdentity>(nameof(WorkloadIdentity), new string[] { "workloadIdentity" });
             _imageCleaner = DefineModelProperty<ManagedClusterSecurityProfileImageCleaner>(nameof(ImageCleaner), new string[] { "imageCleaner" });
             _customCATrustCertificates = DefineListProperty<BinaryData>(nameof(CustomCATrustCertificates), new string[] { "customCATrustCertificates" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

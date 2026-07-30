@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Fabric
         {
             TryGetApiVersion(FabricCapacityResource.ResourceType, out string fabricCapacityApiVersion);
             _fabricCapacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fabric", FabricCapacityResource.ResourceType.Namespace, Diagnostics);
-            _fabricCapacitiesRestClient = new FabricCapacities(_fabricCapacitiesClientDiagnostics, Pipeline, Endpoint, fabricCapacityApiVersion ?? "2025-01-15-preview");
+            _fabricCapacitiesRestClient = new FabricCapacities(_fabricCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fabricCapacityApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Fabric
                 HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
+                    new FabricCapacityResourceOperationSource(Client),
                     _fabricCapacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Fabric
                 HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
+                    new FabricCapacityResourceOperationSource(Client),
                     _fabricCapacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,

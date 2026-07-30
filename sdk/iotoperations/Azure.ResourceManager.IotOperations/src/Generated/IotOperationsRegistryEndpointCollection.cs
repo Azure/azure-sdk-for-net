@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(IotOperationsRegistryEndpointResource.ResourceType, out string iotOperationsRegistryEndpointApiVersion);
             _registryEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsRegistryEndpointResource.ResourceType.Namespace, Diagnostics);
-            _registryEndpointRestClient = new RegistryEndpoint(_registryEndpointClientDiagnostics, Pipeline, Endpoint, iotOperationsRegistryEndpointApiVersion ?? "2025-10-01");
+            _registryEndpointRestClient = new RegistryEndpoint(_registryEndpointClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsRegistryEndpointApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _registryEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, registryEndpointName, IotOperationsRegistryEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsRegistryEndpointResource> operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(
-                    new IotOperationsRegistryEndpointOperationSource(Client),
+                    new IotOperationsRegistryEndpointResourceOperationSource(Client),
                     _registryEndpointClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _registryEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, registryEndpointName, IotOperationsRegistryEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsRegistryEndpointResource> operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(
-                    new IotOperationsRegistryEndpointOperationSource(Client),
+                    new IotOperationsRegistryEndpointResourceOperationSource(Client),
                     _registryEndpointClientDiagnostics,
                     Pipeline,
                     message.Request,

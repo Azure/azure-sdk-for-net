@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            await subnet.DeleteAsync(WaitUntil.Completed);
+            await subnet.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Samples
                 AddressPrefix = "10.0.0.0/16",
                 ServiceGatewayId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/serviceGateways/SG1"),
             };
-            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 AddressPrefix = "10.0.0.0/16",
             };
-            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 AddressPrefix = "10.0.0.0/16",
             };
-            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network.Samples
 Service = "Microsoft.Storage",
 }},
             };
-            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -316,7 +316,7 @@ Service = "Microsoft.Storage",
 NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/subnet-test/providers/Microsoft.Network/publicIPAddresses/test-ip"),
 }},
             };
-            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -352,7 +352,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             {
                 AddressPrefix = "10.0.0.0/16",
             };
-            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -388,7 +388,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             {
                 ServiceName = "Microsoft.Sql/managedInstances",
             };
-            await subnet.PrepareNetworkPoliciesAsync(WaitUntil.Completed, content);
+            await subnet.PrepareNetworkPoliciesAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -419,7 +419,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             {
                 ServiceName = "Microsoft.Sql/managedInstances",
             };
-            await subnet.UnprepareNetworkPoliciesAsync(WaitUntil.Completed, content);
+            await subnet.UnprepareNetworkPoliciesAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

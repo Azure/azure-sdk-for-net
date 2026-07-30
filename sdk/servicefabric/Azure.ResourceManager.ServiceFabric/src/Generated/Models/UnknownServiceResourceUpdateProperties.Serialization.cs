@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceResourceUpdateProperties IPersistableModel<ServiceResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownServiceResourceUpdateProperties)PersistableModelCreateCore(data, options);
+        ServiceResourceUpdateProperties IPersistableModel<ServiceResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (ServiceResourceUpdateProperties)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServiceResourceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceResourceUpdateProperties IJsonModel<ServiceResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownServiceResourceUpdateProperties)JsonModelCreateCore(ref reader, options);
+        ServiceResourceUpdateProperties IJsonModel<ServiceResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (ServiceResourceUpdateProperties)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

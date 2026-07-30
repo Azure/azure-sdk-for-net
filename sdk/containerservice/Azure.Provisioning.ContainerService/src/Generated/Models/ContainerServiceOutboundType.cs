@@ -14,18 +14,18 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> The load balancer is used for egress through an AKS assigned public IP. This supports Kubernetes services of type 'loadBalancer'. For more information see [outbound type loadbalancer](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-loadbalancer). </summary>
         [DataMember(Name = "loadBalancer")]
-        LoadBalancer,
+        LoadBalancer = 0,
         /// <summary> Egress paths must be defined by the user. This is an advanced scenario and requires proper network configuration. For more information see [outbound type userDefinedRouting](https://docs.microsoft.com/azure/aks/egress-outboundtype#outbound-type-of-userdefinedrouting). </summary>
         [DataMember(Name = "userDefinedRouting")]
-        UserDefinedRouting,
+        UserDefinedRouting = 1,
         /// <summary> The AKS-managed NAT gateway is used for egress. </summary>
         [DataMember(Name = "managedNATGateway")]
-        ManagedNatGateway,
+        ManagedNatGateway = 2,
         /// <summary> The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration. </summary>
         [DataMember(Name = "userAssignedNATGateway")]
-        UserAssignedNatGateway,
+        UserAssignedNatGateway = 3,
         /// <summary> The AKS cluster is not set with any outbound-type. All AKS nodes follows Azure VM default outbound behavior. Please refer to https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/. </summary>
         [DataMember(Name = "none")]
-        None
+        None = 4
     }
 }

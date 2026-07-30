@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppConnectedEnvironmentDaprComponentApiVersion);
             _containerAppConnectedEnvironmentDaprComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppConnectedEnvironmentDaprComponentsRestClient = new ContainerAppConnectedEnvironmentDaprComponents(_containerAppConnectedEnvironmentDaprComponentsClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentDaprComponentApiVersion ?? "2025-10-02-preview");
+            _containerAppConnectedEnvironmentDaprComponentsRestClient = new ContainerAppConnectedEnvironmentDaprComponents(_containerAppConnectedEnvironmentDaprComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentDaprComponentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppConnectedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppDaprComponentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(
-                    new ContainerAppConnectedEnvironmentDaprComponentOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentDaprComponentResourceOperationSource(Client),
                     _containerAppConnectedEnvironmentDaprComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppConnectedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppDaprComponentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentDaprComponentResource>(
-                    new ContainerAppConnectedEnvironmentDaprComponentOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentDaprComponentResourceOperationSource(Client),
                     _containerAppConnectedEnvironmentDaprComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,

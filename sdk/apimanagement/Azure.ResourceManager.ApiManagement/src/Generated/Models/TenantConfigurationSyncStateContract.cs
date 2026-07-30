@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Result of Tenant Configuration Sync State. </summary>
     public partial class TenantConfigurationSyncStateContract : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContract"/>. </summary>
         public TenantConfigurationSyncStateContract()
@@ -53,67 +25,164 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContract"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="branch"> The name of Git branch. </param>
-        /// <param name="commitId"> The latest commit Id. </param>
-        /// <param name="isExported"> value indicating if last sync was save (true) or deploy (false) operation. </param>
-        /// <param name="isSynced"> value indicating if last synchronization was later than the configuration change. </param>
-        /// <param name="isGitEnabled"> value indicating whether Git configuration access is enabled. </param>
-        /// <param name="syncOn">
-        /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="configurationChangeOn">
-        /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties returned Tenant Configuration Sync State check. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TenantConfigurationSyncStateContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Branch = branch;
-            CommitId = commitId;
-            IsExported = isExported;
-            IsSynced = isSynced;
-            IsGitEnabled = isGitEnabled;
-            SyncOn = syncOn;
-            ConfigurationChangeOn = configurationChangeOn;
-            LastOperationId = lastOperationId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties returned Tenant Configuration Sync State check. </summary>
+        [WirePath("properties")]
+        internal TenantConfigurationSyncStateContractProperties Properties { get; set; }
 
         /// <summary> The name of Git branch. </summary>
         [WirePath("properties.branch")]
-        public string Branch { get; set; }
+        public string Branch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Branch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.Branch = value;
+            }
+        }
+
         /// <summary> The latest commit Id. </summary>
         [WirePath("properties.commitId")]
-        public string CommitId { get; set; }
+        public string CommitId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommitId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.CommitId = value;
+            }
+        }
+
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
         [WirePath("properties.isExport")]
-        public bool? IsExported { get; set; }
+        public bool? IsExported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsExported;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.IsExported = value;
+            }
+        }
+
         /// <summary> value indicating if last synchronization was later than the configuration change. </summary>
         [WirePath("properties.isSynced")]
-        public bool? IsSynced { get; set; }
+        public bool? IsSynced
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSynced;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.IsSynced = value;
+            }
+        }
+
         /// <summary> value indicating whether Git configuration access is enabled. </summary>
         [WirePath("properties.isGitEnabled")]
-        public bool? IsGitEnabled { get; set; }
-        /// <summary>
-        /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        public bool? IsGitEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsGitEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.IsGitEnabled = value;
+            }
+        }
+
+        /// <summary> The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.syncDate")]
-        public DateTimeOffset? SyncOn { get; set; }
-        /// <summary>
-        /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </summary>
+        public DateTimeOffset? SyncOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.SyncOn = value;
+            }
+        }
+
+        /// <summary> The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.configurationChangeDate")]
-        public DateTimeOffset? ConfigurationChangeOn { get; set; }
+        public DateTimeOffset? ConfigurationChangeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationChangeOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.ConfigurationChangeOn = value;
+            }
+        }
+
         /// <summary> Most recent tenant configuration operation identifier. </summary>
         [WirePath("properties.lastOperationId")]
-        public string LastOperationId { get; set; }
+        public string LastOperationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TenantConfigurationSyncStateContractProperties();
+                }
+                Properties.LastOperationId = value;
+            }
+        }
     }
 }

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.FrontDoor
                     yield break;
                 }
                 PreconfiguredEndpointList result = PreconfiguredEndpointList.FromResponse(response);
-                yield return Page<PreconfiguredEndpoint>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PreconfiguredEndpoint>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

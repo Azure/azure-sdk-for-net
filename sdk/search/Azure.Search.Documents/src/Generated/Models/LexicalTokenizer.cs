@@ -11,7 +11,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for tokenizers. </summary>
+    /// <summary>
+    /// Base type for tokenizers.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ClassicTokenizer"/>, <see cref="EdgeNGramTokenizer"/>, <see cref="KeywordTokenizer"/>, <see cref="MicrosoftLanguageTokenizer"/>, <see cref="MicrosoftLanguageStemmingTokenizer"/>, <see cref="NGramTokenizer"/>, <see cref="PathHierarchyTokenizer"/>, <see cref="PatternTokenizer"/>, <see cref="LuceneStandardTokenizer"/>, and <see cref="UaxUrlEmailTokenizer"/>.
+    /// </summary>
     public partial class LexicalTokenizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The response body for cluster insights. </summary>
+    [Experimental("AAIP001")]
     public partial class ProjectsInsight
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

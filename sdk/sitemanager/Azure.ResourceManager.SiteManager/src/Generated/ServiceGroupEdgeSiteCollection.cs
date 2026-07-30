@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             TryGetApiVersion(ServiceGroupEdgeSiteResource.ResourceType, out string serviceGroupEdgeSiteApiVersion);
             _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ServiceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
-            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, serviceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupEdgeSiteApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SiteManager
                 HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SiteManagerArmOperation<ServiceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ServiceGroupEdgeSiteResource>(
-                    new ServiceGroupEdgeSiteOperationSource(Client),
+                    new ServiceGroupEdgeSiteResourceOperationSource(Client),
                     _serviceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SiteManager
                 HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SiteManagerArmOperation<ServiceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ServiceGroupEdgeSiteResource>(
-                    new ServiceGroupEdgeSiteOperationSource(Client),
+                    new ServiceGroupEdgeSiteResourceOperationSource(Client),
                     _serviceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,

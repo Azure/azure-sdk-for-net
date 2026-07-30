@@ -25,7 +25,7 @@ public class BasicCommunicationTests
                 infra.Add(location);
 
                 CommunicationService comm =
-                    new(nameof(comm), "2023-03-31")
+                    new(nameof(comm), "2026-03-18")
                     {
                         Location = location,
                         DataLocation = "unitedstates"
@@ -45,7 +45,7 @@ public class BasicCommunicationTests
             """
             param location string = 'global'
 
-            resource comm 'Microsoft.Communication/communicationServices@2023-03-31' = {
+            resource comm 'Microsoft.Communication/communicationServices@2026-03-18' = {
               name: take('comm-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {

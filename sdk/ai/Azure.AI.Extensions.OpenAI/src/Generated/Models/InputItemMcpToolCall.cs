@@ -55,16 +55,16 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the tool call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The label of the MCP server running the tool. </summary>
-        public string ServerLabel { get; }
+        public string ServerLabel { get; set; }
 
         /// <summary> The name of the tool that was run. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> A JSON string of the arguments passed to the tool. </summary>
-        public string Arguments { get; }
+        public string Arguments { get; set; }
 
         /// <summary> Gets or sets the Output. </summary>
         public string Output { get; set; }

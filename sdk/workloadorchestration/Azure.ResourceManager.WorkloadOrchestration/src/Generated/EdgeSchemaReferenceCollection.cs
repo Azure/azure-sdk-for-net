@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSchemaReferenceResource.ResourceType, out string edgeSchemaReferenceApiVersion);
             _schemaReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaReferenceResource.ResourceType.Namespace, Diagnostics);
-            _schemaReferencesRestClient = new SchemaReferences(_schemaReferencesClientDiagnostics, Pipeline, Endpoint, edgeSchemaReferenceApiVersion ?? "2025-06-01");
+            _schemaReferencesRestClient = new SchemaReferences(_schemaReferencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaReferenceApiVersion ?? "2025-06-01");
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource>(
-                    new EdgeSchemaReferenceOperationSource(Client),
+                    new EdgeSchemaReferenceResourceOperationSource(Client),
                     _schemaReferencesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemaReferencesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), schemaReferenceName, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaReferenceResource>(
-                    new EdgeSchemaReferenceOperationSource(Client),
+                    new EdgeSchemaReferenceResourceOperationSource(Client),
                     _schemaReferencesClientDiagnostics,
                     Pipeline,
                     message.Request,

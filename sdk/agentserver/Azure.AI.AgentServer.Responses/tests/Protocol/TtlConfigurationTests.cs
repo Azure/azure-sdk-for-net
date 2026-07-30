@@ -42,23 +42,23 @@ public class TtlConfigurationTests : IDisposable
 
         // Create and complete a response with an event stream
         var response = new Models.ResponseObject("resp_default_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), IsolationContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
         var publisher = await provider.CreateEventPublisherAsync("resp_default_ttl");
         await publisher.OnNextAsync(ResponsesModelFactory.ResponseCreatedEvent(response));
         await publisher.OnCompletedAsync();
         response.Status = ResponseStatus.Completed;
-        await provider.UpdateResponseAsync(response, IsolationContext.Empty);
+        await provider.UpdateResponseAsync(response, PlatformContext.Empty);
 
         // Still retrievable before TTL
-        Assert.That(await provider.GetResponseAsync("resp_default_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_default_ttl", PlatformContext.Empty), Is.Not.Null);
 
         // Advance to 9 minutes — still available
         fakeTime.Advance(TimeSpan.FromMinutes(9));
-        Assert.That(await provider.GetResponseAsync("resp_default_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_default_ttl", PlatformContext.Empty), Is.Not.Null);
 
         // Advance past 10 minutes — response still available, event stream evicted
         fakeTime.Advance(TimeSpan.FromMinutes(2));
-        Assert.That(await provider.GetResponseAsync("resp_default_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_default_ttl", PlatformContext.Empty), Is.Not.Null);
 
         // Event stream evicted
         Assert.ThrowsAsync<BadRequestException>(async () =>
@@ -83,19 +83,19 @@ public class TtlConfigurationTests : IDisposable
 
         // Create and complete a response with event stream
         var response = new Models.ResponseObject("resp_1s_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), IsolationContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
         var publisher = await provider.CreateEventPublisherAsync("resp_1s_ttl");
         await publisher.OnNextAsync(ResponsesModelFactory.ResponseCreatedEvent(response));
         await publisher.OnCompletedAsync();
         response.Status = ResponseStatus.Completed;
-        await provider.UpdateResponseAsync(response, IsolationContext.Empty);
+        await provider.UpdateResponseAsync(response, PlatformContext.Empty);
 
         // Still retrievable immediately
-        Assert.That(await provider.GetResponseAsync("resp_1s_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_1s_ttl", PlatformContext.Empty), Is.Not.Null);
 
         // Advance past 1 second — event stream evicted, response retained
         fakeTime.Advance(TimeSpan.FromSeconds(2));
-        Assert.That(await provider.GetResponseAsync("resp_1s_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_1s_ttl", PlatformContext.Empty), Is.Not.Null);
 
         // Event stream evicted
         Assert.ThrowsAsync<BadRequestException>(async () =>
@@ -122,7 +122,7 @@ public class TtlConfigurationTests : IDisposable
 
         // Create response with event stream
         var response = new Models.ResponseObject("resp_split_ttl", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), IsolationContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
         var publisher = await provider.CreateEventPublisherAsync("resp_split_ttl");
 
         // Publish an event and complete
@@ -130,10 +130,10 @@ public class TtlConfigurationTests : IDisposable
         await publisher.OnNextAsync(evt);
         await publisher.OnCompletedAsync();
         response.Status = ResponseStatus.Completed;
-        await provider.UpdateResponseAsync(response, IsolationContext.Empty);
+        await provider.UpdateResponseAsync(response, PlatformContext.Empty);
 
         // Before any eviction: both response and event stream available
-        Assert.That(await provider.GetResponseAsync("resp_split_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_split_ttl", PlatformContext.Empty), Is.Not.Null);
         var events = new List<ResponseStreamEvent>();
         var tcs = new TaskCompletionSource();
         var observer = new CollectingObserver(events, tcs);
@@ -147,7 +147,7 @@ public class TtlConfigurationTests : IDisposable
         fakeTime.Advance(TimeSpan.FromMinutes(1).Add(TimeSpan.FromSeconds(1)));
 
         // Models.ResponseObject still retrievable (retained indefinitely)
-        Assert.That(await provider.GetResponseAsync("resp_split_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_split_ttl", PlatformContext.Empty), Is.Not.Null);
 
         // Event stream evicted — subscribing throws
         Assert.ThrowsAsync<BadRequestException>(async () =>
@@ -158,7 +158,7 @@ public class TtlConfigurationTests : IDisposable
 
         // Even after a very long time, response is still available
         fakeTime.Advance(TimeSpan.FromHours(24));
-        Assert.That(await provider.GetResponseAsync("resp_split_ttl", IsolationContext.Empty), Is.Not.Null);
+        Assert.That(await provider.GetResponseAsync("resp_split_ttl", PlatformContext.Empty), Is.Not.Null);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -299,14 +299,14 @@ public class TtlConfigurationTests : IDisposable
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cts = new();
         public ConcurrentBag<string> Calls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, IsolationContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("CreateResponseAsync");
             _responses[request.Response.Id] = request.Response;
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("GetResponseAsync");
             if (!_responses.TryGetValue(responseId, out var response))
@@ -316,14 +316,14 @@ public class TtlConfigurationTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, IsolationContext isolation, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("UpdateResponseAsync");
             _responses[response.Id] = response;
             return Task.CompletedTask;
         }
 
-        public override Task DeleteResponseAsync(string responseId, IsolationContext isolation, CancellationToken ct = default)
+        public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
         {
             Calls.Add("DeleteResponseAsync");
             if (!_responses.TryRemove(responseId, out _))
@@ -331,13 +331,13 @@ public class TtlConfigurationTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, IsolationContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
             => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
 
-        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
 
-        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, IsolationContext isolation, CancellationToken ct = default)
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<string>());
 
         // --- Adapter factories for DI registration ---

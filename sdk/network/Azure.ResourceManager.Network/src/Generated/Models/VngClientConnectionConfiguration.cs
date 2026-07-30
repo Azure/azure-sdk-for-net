@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,37 +19,55 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VngClientConnectionConfiguration"/>. </summary>
         public VngClientConnectionConfiguration()
         {
-            VirtualNetworkGatewayPolicyGroups = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VngClientConnectionConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
-        /// <param name="virtualNetworkGatewayPolicyGroups"> List of references to virtualNetworkGatewayPolicyGroups. </param>
-        /// <param name="provisioningState"> The provisioning state of the VngClientConnectionConfiguration resource. </param>
-        internal VngClientConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace vpnClientAddressPool, IList<WritableSubResource> virtualNetworkGatewayPolicyGroups, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the vpn client root certificate. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VngClientConnectionConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VngClientConnectionConfigurationProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            VpnClientAddressPool = vpnClientAddressPool;
-            VirtualNetworkGatewayPolicyGroups = virtualNetworkGatewayPolicyGroups;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the vpn client root certificate. </summary>
+        [WirePath("properties")]
+        internal VngClientConnectionConfigurationProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
         [WirePath("properties.vpnClientAddressPool")]
-        public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
-        /// <summary> List of references to virtualNetworkGatewayPolicyGroups. </summary>
-        [WirePath("properties.virtualNetworkGatewayPolicyGroups")]
-        public IList<WritableSubResource> VirtualNetworkGatewayPolicyGroups { get; }
+        public VirtualNetworkAddressSpace VpnClientAddressPool
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnClientAddressPool;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VngClientConnectionConfigurationProperties();
+                }
+                Properties.VpnClientAddressPool = value;
+            }
+        }
+
         /// <summary> The provisioning state of the VngClientConnectionConfiguration resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

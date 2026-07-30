@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class ApiManagementGroupTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ApiManagementGroupType value) => value switch
         {
             ApiManagementGroupType.Custom => "custom",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementGroupType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ApiManagementGroupType ToApiManagementGroupType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "custom")) return ApiManagementGroupType.Custom;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system")) return ApiManagementGroupType.System;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "external")) return ApiManagementGroupType.External;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "custom"))
+            {
+                return ApiManagementGroupType.Custom;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system"))
+            {
+                return ApiManagementGroupType.System;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "external"))
+            {
+                return ApiManagementGroupType.External;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementGroupType value.");
         }
     }

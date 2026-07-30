@@ -7,117 +7,72 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteProviderPort data model.
-    /// ExpressRouteProviderPort resource.
-    /// </summary>
+    /// <summary> ExpressRouteProviderPort resource. </summary>
     public partial class ExpressRouteProviderPortData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ExpressRouteProviderPortData(AzureLocation location) : base(location)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="portPairDescriptor"> The name of the port pair. </param>
-        /// <param name="primaryAzurePort"> The name of the primary port. </param>
-        /// <param name="secondaryAzurePort"> The name of the secondary port. </param>
-        /// <param name="peeringLocation"> The peering location of the port pair. </param>
-        /// <param name="overprovisionFactor"> Overprovisioning factor for the port pair. </param>
-        /// <param name="portBandwidthInMbps"> Bandwidth of the port in Mbps. </param>
-        /// <param name="usedBandwidthInMbps"> Used Bandwidth of the port in Mbps. </param>
-        /// <param name="remainingBandwidthInMbps"> Remaining Bandwidth of the port in Mbps. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteProviderPortData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string portPairDescriptor, string primaryAzurePort, string secondaryAzurePort, string peeringLocation, int? overprovisionFactor, int? portBandwidthInMbps, int? usedBandwidthInMbps, int? remainingBandwidthInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            ETag = etag;
-            PortPairDescriptor = portPairDescriptor;
-            PrimaryAzurePort = primaryAzurePort;
-            SecondaryAzurePort = secondaryAzurePort;
-            PeeringLocation = peeringLocation;
-            OverprovisionFactor = overprovisionFactor;
-            PortBandwidthInMbps = portBandwidthInMbps;
-            UsedBandwidthInMbps = usedBandwidthInMbps;
-            RemainingBandwidthInMbps = remainingBandwidthInMbps;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/> for deserialization. </summary>
         internal ExpressRouteProviderPortData()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
+        /// <param name="properties"> Properties of the express route Service Provider Port. </param>
+        /// <param name="name"> The name of the provider port. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteProviderPortData(ExpressRouteProviderPortProperties properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Properties of the express route Service Provider Port. </summary>
+        [WirePath("properties")]
+        internal ExpressRouteProviderPortProperties Properties { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The name of the port pair. </summary>
         [WirePath("properties.portPairDescriptor")]
-        public string PortPairDescriptor { get; }
+        public string PortPairDescriptor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PortPairDescriptor;
+            }
+        }
+
         /// <summary> The name of the primary port. </summary>
         [WirePath("properties.primaryAzurePort")]
-        public string PrimaryAzurePort { get; }
+        public string PrimaryAzurePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryAzurePort;
+            }
+        }
+
         /// <summary> The name of the secondary port. </summary>
         [WirePath("properties.secondaryAzurePort")]
-        public string SecondaryAzurePort { get; }
-        /// <summary> The peering location of the port pair. </summary>
-        [WirePath("properties.peeringLocation")]
-        public string PeeringLocation { get; set; }
-        /// <summary> Overprovisioning factor for the port pair. </summary>
-        [WirePath("properties.overprovisionFactor")]
-        public int? OverprovisionFactor { get; set; }
-        /// <summary> Bandwidth of the port in Mbps. </summary>
-        [WirePath("properties.portBandwidthInMbps")]
-        public int? PortBandwidthInMbps { get; set; }
-        /// <summary> Used Bandwidth of the port in Mbps. </summary>
-        [WirePath("properties.usedBandwidthInMbps")]
-        public int? UsedBandwidthInMbps { get; set; }
-        /// <summary> Remaining Bandwidth of the port in Mbps. </summary>
-        [WirePath("properties.remainingBandwidthInMbps")]
-        public int? RemainingBandwidthInMbps { get; set; }
+        public string SecondaryAzurePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryAzurePort;
+            }
+        }
     }
 }

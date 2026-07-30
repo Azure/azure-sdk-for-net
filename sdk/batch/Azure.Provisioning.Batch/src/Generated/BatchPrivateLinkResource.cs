@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Creates a new BatchPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BatchPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/privateLinkResources", resourceVersion ?? "2025-06-01")
+        internal BatchPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/privateLinkResources", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -67,18 +67,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal BatchPrivateLinkResourceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -92,18 +87,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
             {
                 Initialize();
                 return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
             }
         }
 
@@ -127,10 +117,6 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new BatchPrivateLinkResourceProperties();
-                }
                 return Properties.GroupId;
             }
         }
@@ -140,10 +126,6 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new BatchPrivateLinkResourceProperties();
-                }
                 return Properties.RequiredMembers;
             }
         }
@@ -153,10 +135,6 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new BatchPrivateLinkResourceProperties();
-                }
                 return Properties.RequiredZoneNames;
             }
         }
@@ -191,7 +169,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 101, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 101, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 
         /// <summary></summary>
         public static partial class ResourceVersions

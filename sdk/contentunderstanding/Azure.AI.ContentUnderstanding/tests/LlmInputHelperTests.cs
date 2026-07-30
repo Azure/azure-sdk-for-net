@@ -197,8 +197,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             string output = result.ToLlmInput();
 
             Assert.That(output, Does.Contain("pages: 1-2"));
-            Assert.That(output, Does.Contain("<!-- page 1 -->"));
-            Assert.That(output, Does.Contain("<!-- page 2 -->"));
+            Assert.That(output, Does.Contain("<!-- InputPageNumber: 1 -->"));
+            Assert.That(output, Does.Contain("<!-- InputPageNumber: 2 -->"));
             Assert.That(output, Does.Not.Contain("<!-- PageBreak -->"));
         }
 
@@ -226,9 +226,52 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Contain("<!-- page 1 -->"));
-            Assert.That(output, Does.Contain("<!-- page 2 -->"));
+            Assert.That(output, Does.Contain("<!-- InputPageNumber: 1 -->"));
+            Assert.That(output, Does.Contain("<!-- InputPageNumber: 2 -->"));
             Assert.That(output, Does.Not.Contain("<!-- PageBreak -->"));
+        }
+
+        [Test]
+        public void ToLlmInput_PageMarkersNotDuplicatedWhenServiceProvidesMarkers()
+        {
+            string markdown =
+                "<!-- InputPageNumber: 1 -->\n\nFirst page text.\n\n" +
+                "<!-- InputPageNumber: 2 -->\n\nSecond page text.";
+
+            var page1 = ContentUnderstandingModelFactory.DocumentPage(
+                pageNumber: 1,
+                spans: new[] { ContentUnderstandingModelFactory.ContentSpan(offset: 0, length: 47) });
+            var page2 = ContentUnderstandingModelFactory.DocumentPage(
+                pageNumber: 2,
+                spans: new[] { ContentUnderstandingModelFactory.ContentSpan(offset: 49, length: 48) });
+
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: markdown,
+                startPageNumber: 1,
+                endPageNumber: 2,
+                pages: new[] { page1, page2 });
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            // Existing markers must be preserved and not duplicated.
+            Assert.That(CountOccurrences(output, "<!-- InputPageNumber: 1 -->"), Is.EqualTo(1));
+            Assert.That(CountOccurrences(output, "<!-- InputPageNumber: 2 -->"), Is.EqualTo(1));
+        }
+
+        private static int CountOccurrences(string text, string value)
+        {
+            int count = 0;
+            int index = 0;
+            while ((index = text.IndexOf(value, index, StringComparison.Ordinal)) != -1)
+            {
+                count++;
+                index += value.Length;
+            }
+            return count;
         }
 
         // ---------------------------------------------------------------
@@ -653,6 +696,129 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.That(output, Does.Contain("code: hate"));
             Assert.That(output, Does.Not.Contain("Name: Test"));
             Assert.That(output, Does.Not.Contain("Some text"));
+        }
+
+        [Test]
+        public void ToLlmInput_LlmStatsWarning_IsFilteredFromRaiWarnings()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Some text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var warnings = new List<ResponseError>
+            {
+                new ResponseError("Telemetry", "LLMStats: completion calls: 2; embedding calls: 1"),
+                new ResponseError("ContentWarning", "Potentially sensitive content."),
+            };
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content },
+                warnings: warnings);
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("rai_warnings:"));
+            Assert.That(output, Does.Not.Contain("LLMStats:"));
+            Assert.That(output, Does.Contain("Potentially sensitive content."));
+        }
+
+        [Test]
+        public void ToLlmInput_LlmStatsWarningOnly_OmitsRaiWarningsBlock()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Some text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var warnings = new List<ResponseError>
+            {
+                new ResponseError("Telemetry", "LLMStats: completion latency: 7.71s"),
+            };
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content },
+                warnings: warnings);
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Not.Contain("rai_warnings:"));
+            Assert.That(output, Does.Not.Contain("LLMStats:"));
+        }
+
+        [Test]
+        public void ToLlmInput_LlmStatsFilterIsCaseSensitive()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Some text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var warnings = new List<ResponseError>
+            {
+                new ResponseError("ContentWarning", "llmstats: keep as a real warning"),
+            };
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content },
+                warnings: warnings);
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("rai_warnings:"));
+            Assert.That(output, Does.Contain("llmstats: keep as a real warning"));
+        }
+
+        [Test]
+        public void ToLlmInput_LlmStatsTextInMarkdownBody_IsPreserved()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "A log excerpt:\n- LLMStats: keep this body text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var warnings = new List<ResponseError>
+            {
+                new ResponseError("Telemetry", "LLMStats: remove this warning text"),
+            };
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content },
+                warnings: warnings);
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Not.Contain("rai_warnings:"));
+            Assert.That(output, Does.Contain("LLMStats: keep this body text"));
+            Assert.That(output, Does.Not.Contain("LLMStats: remove this warning text"));
+        }
+
+        [Test]
+        public void ToLlmInput_LlmStatsWarningWithLeadingWhitespace_IsFiltered()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Some text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var warnings = new List<ResponseError>
+            {
+                new ResponseError("Telemetry", "  LLMStats: completion calls: 2"),
+            };
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content },
+                warnings: warnings);
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Not.Contain("rai_warnings:"));
+            Assert.That(output, Does.Not.Contain("LLMStats:"));
         }
 
         // ---------------------------------------------------------------

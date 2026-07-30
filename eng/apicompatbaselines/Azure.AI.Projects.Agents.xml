@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>T:Azure.AI.Projects.Agents.HostedAgentDefinition:[T:System.Diagnostics.CodeAnalysis.ExperimentalAttribute]</Target>
+  </Suppression>
+</Suppressions>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             TryGetApiVersion(AppServiceDomainResource.ResourceType, out string appServiceDomainApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", AppServiceDomainResource.ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Endpoint, appServiceDomainApiVersion ?? "2024-11-01");
+            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceDomainApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 HttpMessage message = _domainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, AppServiceDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DomainRegistrationArmOperation<AppServiceDomainResource> operation = new DomainRegistrationArmOperation<AppServiceDomainResource>(
-                    new AppServiceDomainOperationSource(Client),
+                    new AppServiceDomainResourceOperationSource(Client),
                     _domainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 HttpMessage message = _domainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainName, AppServiceDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DomainRegistrationArmOperation<AppServiceDomainResource> operation = new DomainRegistrationArmOperation<AppServiceDomainResource>(
-                    new AppServiceDomainOperationSource(Client),
+                    new AppServiceDomainResourceOperationSource(Client),
                     _domainsClientDiagnostics,
                     Pipeline,
                     message.Request,

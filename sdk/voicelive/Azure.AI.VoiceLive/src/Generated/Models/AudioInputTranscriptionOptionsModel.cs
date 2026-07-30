@@ -17,6 +17,8 @@ namespace Azure.AI.VoiceLive
         private const string Whisper1Value = "whisper-1";
         private const string Gpt4oTranscribeValue = "gpt-4o-transcribe";
         private const string Gpt4oMiniTranscribeValue = "gpt-4o-mini-transcribe";
+        private const string Gpt4oTranscribeDiarizeValue = "gpt-4o-transcribe-diarize";
+        private const string MaiTranscribe1Value = "mai-transcribe-1";
         private const string AzureSpeechValue = "azure-speech";
 
         /// <summary> Initializes a new instance of <see cref="AudioInputTranscriptionOptionsModel"/>. </summary>
@@ -37,6 +39,12 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Gpt4oMiniTranscribe. </summary>
         public static AudioInputTranscriptionOptionsModel Gpt4oMiniTranscribe { get; } = new AudioInputTranscriptionOptionsModel(Gpt4oMiniTranscribeValue);
+
+        /// <summary> Gets the Gpt4oTranscribeDiarize. </summary>
+        public static AudioInputTranscriptionOptionsModel Gpt4oTranscribeDiarize { get; } = new AudioInputTranscriptionOptionsModel(Gpt4oTranscribeDiarizeValue);
+
+        /// <summary> Gets the MaiTranscribe1. </summary>
+        public static AudioInputTranscriptionOptionsModel MaiTranscribe1 { get; } = new AudioInputTranscriptionOptionsModel(MaiTranscribe1Value);
 
         /// <summary> Gets the AzureSpeech. </summary>
         public static AudioInputTranscriptionOptionsModel AzureSpeech { get; } = new AudioInputTranscriptionOptionsModel(AzureSpeechValue);

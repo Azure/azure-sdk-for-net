@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ServiceBus
                     yield break;
                 }
                 ArmDisasterRecoveryListResult result = ArmDisasterRecoveryListResult.FromResponse(response);
-                yield return Page<ServiceBusDisasterRecoveryData>.FromValues((IReadOnlyList<ServiceBusDisasterRecoveryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceBusDisasterRecoveryData>.FromValues((IReadOnlyList<ServiceBusDisasterRecoveryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

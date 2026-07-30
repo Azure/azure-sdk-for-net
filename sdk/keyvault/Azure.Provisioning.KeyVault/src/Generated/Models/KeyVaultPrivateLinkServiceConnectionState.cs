@@ -74,6 +74,10 @@ namespace Azure.Provisioning.KeyVault
             _status = DefineProperty<KeyVaultPrivateEndpointServiceConnectionStatus>(nameof(Status), new string[] { "status" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _actionsRequired = DefineProperty<KeyVaultActionsRequiredMessage>(nameof(ActionsRequired), new string[] { "actionsRequired" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultPrivateLinkServiceConnectionState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
