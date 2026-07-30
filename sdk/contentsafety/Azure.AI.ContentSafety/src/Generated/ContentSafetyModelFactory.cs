@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.ContentSafety
 {
@@ -166,6 +167,66 @@ namespace Azure.AI.ContentSafety
         public static DocumentInjectionAnalysisResult DocumentInjectionAnalysisResult(bool attackDetected = default)
         {
             return new DocumentInjectionAnalysisResult(attackDetected, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input describing the media to inspect using Content Provenance Detection. </summary>
+        /// <param name="content"> Source content to inspect. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectProvenanceOptions"/> instance for mocking. </returns>
+        public static DetectProvenanceOptions DetectProvenanceOptions(ProvenanceContent content = default)
+        {
+            return new DetectProvenanceOptions(content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Source content descriptor for a Content Provenance Detection operation. </summary>
+        /// <param name="uri"> Blob URI of the media to inspect. Media up to 100 MB is supported. Supported formats: image (JPEG, PNG, GIF, WebP), audio (MP3, WAV), and video (MP4). </param>
+        /// <returns> A new <see cref="ContentSafety.ProvenanceContent"/> instance for mocking. </returns>
+        public static ProvenanceContent ProvenanceContent(Uri uri = default)
+        {
+            return new ProvenanceContent(uri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result of a Content Provenance Detection operation. </summary>
+        /// <param name="outcome"> Top-level outcome of the Content Provenance Detection operation. </param>
+        /// <param name="results"> Detected provenance signals. Empty or omitted when `outcome` is `NoProvenanceDetected`. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectProvenanceResult"/> instance for mocking. </returns>
+        public static DetectProvenanceResult DetectProvenanceResult(DetectOutcome outcome = default, IEnumerable<DetectedProvenance> results = default)
+        {
+            results ??= new ChangeTrackingList<DetectedProvenance>();
+
+            return new DetectProvenanceResult(outcome, results.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Microsoft-issued provenance signal indicating the media was created or modified using AI. </summary>
+        /// <param name="type"> Detected provenance record type. </param>
+        /// <param name="provider"> Identifier of the Microsoft provider that generated the content. </param>
+        /// <param name="modelName"> Identifier of the generating AI model when available. </param>
+        /// <param name="timestamp"> Generation timestamp recorded in the provenance signal. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectedProvenance"/> instance for mocking. </returns>
+        public static DetectedProvenance DetectedProvenance(DetectedProvenanceType? @type = default, string provider = default, string modelName = default, DateTimeOffset? timestamp = default)
+        {
+            return new DetectedProvenance(@type, provider, modelName, timestamp, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status and result of an asynchronous Content Provenance Detection operation. </summary>
+        /// <param name="id"> The unique ID of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="error"> Error object that describes the error when status is "Failed". </param>
+        /// <param name="result"> The result of the operation. </param>
+        /// <param name="kind"> Kind of Content Provenance Detection operation. </param>
+        /// <param name="createdAt"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedAt"> Date and time (UTC) when the status was last updated. </param>
+        /// <returns> A new <see cref="ContentSafety.ProvenanceDetectOperation"/> instance for mocking. </returns>
+        public static ProvenanceDetectOperation ProvenanceDetectOperation(string id = default, OperationState status = default, ResponseError error = default, DetectProvenanceResult result = default, ProvenanceOperationKind kind = default, DateTimeOffset? createdAt = default, DateTimeOffset? lastUpdatedAt = default)
+        {
+            return new ProvenanceDetectOperation(
+                id,
+                status,
+                error,
+                result,
+                kind,
+                createdAt,
+                lastUpdatedAt,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The request to add blocklistItems to a text blocklist. </summary>

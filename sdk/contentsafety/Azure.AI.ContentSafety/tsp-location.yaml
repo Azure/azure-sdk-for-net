@@ -1,6 +1,6 @@
-commit: 882f28f86c2c48d530248a541c4e95ea2f727e9c
-additionalDirectories: []
-repo: Azure/azure-rest-api-specs
 directory: specification/cognitiveservices/ContentSafety
+commit: 829ccecea7e9c1609881104b9a8d0f8cb65ce644
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
 
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
