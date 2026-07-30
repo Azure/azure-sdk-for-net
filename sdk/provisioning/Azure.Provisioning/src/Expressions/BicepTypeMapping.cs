@@ -55,8 +55,6 @@ internal static class BicepTypeMapping
     /// <list type="bullet">
     /// <item><description><c>R</c>, <c>O</c>, <c>U</c>, and <c>D</c> for <see cref="DateTimeOffset"/> values.</description></item>
     /// <item><description><c>T</c>, <c>P</c>, <c>c</c>, <c>seconds</c>, <c>seconds-int64</c>, <c>seconds-float</c>, <c>seconds-double</c>, <c>milliseconds</c>, <c>milliseconds-int64</c>, <c>milliseconds-float</c>, and <c>milliseconds-double</c> for <see cref="TimeSpan"/> values.</description></item>
-    /// <item><description><c>base64</c> and <c>base64url</c> for byte values.</description></item>
-    /// <item><description><c>string</c> for string-encoded integer values.</description></item>
     /// </list>
     /// </param>
     /// <returns>The corresponding Bicep literal string.</returns>
@@ -75,7 +73,7 @@ internal static class BicepTypeMapping
             Uri u => u.AbsoluteUri,
             DateTimeOffset d => format is null ? d.ToString("o", CultureInfo.InvariantCulture) : ToString(d, format),
             TimeSpan t => format is null ? t.ToString() : ToString(t, format),
-            byte[] b => ToString(b, format ?? "base64"),
+            byte[] b => Convert.ToBase64String(b),
             Guid g => g.ToString(),
             IPAddress a => a.ToString(),
             ETag e => e.ToString(),
@@ -102,15 +100,15 @@ internal static class BicepTypeMapping
         value switch
         {
             bool b => BicepSyntax.Value(b),
-            int i => ToExpression(i, format),
-            long i => ToExpression(i, format),
+            int i => BicepSyntax.Value(i),
+            long i => BicepSyntax.Value(i),
             float f => BicepSyntax.Value(f),
             double d => BicepSyntax.Value(d),
             string s => BicepSyntax.Value(s),
             Uri u => BicepSyntax.Value(ToLiteralString(u, format)),
             DateTimeOffset d => ToExpression(d, format),
             TimeSpan t => ToExpression(t, format),
-            byte[] b => BicepSyntax.Value(ToLiteralString(b, format)),
+            byte[] b => BicepSyntax.Value(ToLiteralString(b, null)),
             Guid g => BicepSyntax.Value(ToLiteralString(g, format)),
             IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
             ETag e => BicepSyntax.Value(ToLiteralString(e, format)),
@@ -145,32 +143,9 @@ internal static class BicepTypeMapping
         _ => ThrowUnsupportedFormat(value, format)
     };
 
-    public static string ToString(byte[] value, string format) => format switch
-    {
-        "base64" => Convert.ToBase64String(value),
-        "base64url" => Convert.ToBase64String(value).TrimEnd('=').Replace('+', '-').Replace('/', '_'),
-        _ => ThrowUnsupportedFormat(value, format)
-    };
+    private static string ToString(int value, string? format) => value.ToString(CultureInfo.InvariantCulture);
 
-    private static string ToString(int value, string? format) =>
-        string.Equals(format, "string", StringComparison.Ordinal) ?
-            value.ToString(CultureInfo.InvariantCulture) :
-            format is null ? value.ToString() : ThrowUnsupportedFormat(value, format);
-
-    private static string ToString(long value, string? format) =>
-        string.Equals(format, "string", StringComparison.Ordinal) ?
-            value.ToString(CultureInfo.InvariantCulture) :
-            format is null ? value.ToString() : ThrowUnsupportedFormat(value, format);
-
-    private static BicepExpression ToExpression(int value, string? format) =>
-        string.Equals(format, "string", StringComparison.Ordinal) ?
-            BicepSyntax.Value(value.ToString(CultureInfo.InvariantCulture)) :
-            format is null ? BicepSyntax.Value(value) : BicepSyntax.Value(ThrowUnsupportedFormat(value, format));
-
-    private static BicepExpression ToExpression(long value, string? format) =>
-        string.Equals(format, "string", StringComparison.Ordinal) ?
-            BicepSyntax.Value(value.ToString(CultureInfo.InvariantCulture)) :
-            format is null ? BicepSyntax.Value(value) : BicepSyntax.Value(ThrowUnsupportedFormat(value, format));
+    private static string ToString(long value, string? format) => value.ToString(CultureInfo.InvariantCulture);
 
     private static BicepExpression ToExpression(DateTimeOffset value, string? format) =>
         format switch
