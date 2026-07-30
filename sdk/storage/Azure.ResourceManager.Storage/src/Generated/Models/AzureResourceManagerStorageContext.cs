@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -38,6 +37,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(BlobServiceItems))]
     [ModelReaderWriterBuildable(typeof(BlobServicePropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(BlobServiceResource))]
+    [ModelReaderWriterBuildable(typeof(BlobServiceStaticWebsite))]
     [ModelReaderWriterBuildable(typeof(BurstingConstants))]
     [ModelReaderWriterBuildable(typeof(ConnectorListResult))]
     [ModelReaderWriterBuildable(typeof(ContainerProperties))]
@@ -150,13 +150,11 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(QueueServiceData))]
     [ModelReaderWriterBuildable(typeof(QueueServicePropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(QueueServiceResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceSasContent))]
     [ModelReaderWriterBuildable(typeof(ServiceSharedKeyAccessProperties))]
     [ModelReaderWriterBuildable(typeof(SmbOAuthSettings))]
     [ModelReaderWriterBuildable(typeof(SmbSetting))]
-    [ModelReaderWriterBuildable(typeof(StaticWebsite))]
     [ModelReaderWriterBuildable(typeof(StorageAccountCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(StorageAccountData))]
     [ModelReaderWriterBuildable(typeof(StorageAccountEncryption))]

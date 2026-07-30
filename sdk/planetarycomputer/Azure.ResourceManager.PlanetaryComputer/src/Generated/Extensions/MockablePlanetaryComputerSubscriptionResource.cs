@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
 
         private ClientDiagnostics GeoCatalogsClientDiagnostics => _geoCatalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GeoCatalogs GeoCatalogsRestClient => _geoCatalogsRestClient ??= new GeoCatalogs(GeoCatalogsClientDiagnostics, Pipeline, Endpoint, "2026-04-15");
+        private GeoCatalogs GeoCatalogsRestClient => _geoCatalogsRestClient ??= new GeoCatalogs(GeoCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-15");
 
         /// <summary>
         /// List GeoCatalog resources by subscription ID

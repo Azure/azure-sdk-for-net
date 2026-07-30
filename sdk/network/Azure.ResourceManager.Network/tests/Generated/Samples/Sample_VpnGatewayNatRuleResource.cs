@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnGatewayNatRuleResource vpnGatewayNatRule = client.GetVpnGatewayNatRuleResource(vpnGatewayNatRuleResourceId);
 
             // invoke the operation
-            await vpnGatewayNatRule.DeleteAsync(WaitUntil.Completed);
+            await vpnGatewayNatRule.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -110,7 +110,7 @@ AddressSpace = "192.168.21.0/24",
 }},
                 IPConfigurationId = "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/cloudnet1-VNG/ipConfigurations/default",
             };
-            ArmOperation<VpnGatewayNatRuleResource> lro = await vpnGatewayNatRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VpnGatewayNatRuleResource> lro = await vpnGatewayNatRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayNatRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

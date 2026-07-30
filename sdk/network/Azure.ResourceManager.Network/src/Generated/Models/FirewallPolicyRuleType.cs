@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     internal readonly partial struct FirewallPolicyRuleType : IEquatable<FirewallPolicyRuleType>
     {
         private readonly string _value;
+        /// <summary> ApplicationRule. </summary>
+        private const string ApplicationRuleValue = "ApplicationRule";
+        /// <summary> NetworkRule. </summary>
+        private const string NetworkRuleValue = "NetworkRule";
+        /// <summary> NatRule. </summary>
+        private const string NatRuleValue = "NatRule";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApplicationRuleValue = "ApplicationRule";
-        private const string NetworkRuleValue = "NetworkRule";
-        private const string NatRuleValue = "NatRule";
+            _value = value;
+        }
 
         /// <summary> ApplicationRule. </summary>
         public static FirewallPolicyRuleType ApplicationRule { get; } = new FirewallPolicyRuleType(ApplicationRuleValue);
+
         /// <summary> NetworkRule. </summary>
         public static FirewallPolicyRuleType NetworkRule { get; } = new FirewallPolicyRuleType(NetworkRuleValue);
+
         /// <summary> NatRule. </summary>
         public static FirewallPolicyRuleType NatRule { get; } = new FirewallPolicyRuleType(NatRuleValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyRuleType left, FirewallPolicyRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyRuleType left, FirewallPolicyRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyRuleType(string value) => new FirewallPolicyRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyRuleType?(string value) => value == null ? null : new FirewallPolicyRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

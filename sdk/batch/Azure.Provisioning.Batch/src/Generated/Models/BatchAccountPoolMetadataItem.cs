@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountPoolMetadataItem that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

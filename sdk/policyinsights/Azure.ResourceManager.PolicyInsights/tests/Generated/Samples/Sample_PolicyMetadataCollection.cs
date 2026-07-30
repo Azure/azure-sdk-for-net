@@ -59,11 +59,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
 
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this PolicyMetadataResource
-            PolicyMetadataCollection collection = tenantResource.GetAllPolicyMetadata();
-
             // invoke the operation and iterate over the result
-            await foreach (SlimPolicyMetadata item in collection.GetAllAsync())
+            await foreach (SlimPolicyMetadata item in tenantResource.GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -85,11 +82,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
 
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            // get the collection of this PolicyMetadataResource
-            PolicyMetadataCollection collection = tenantResource.GetAllPolicyMetadata();
-
             // invoke the operation and iterate over the result
-            await foreach (SlimPolicyMetadata item in collection.GetAllAsync())
+            await foreach (SlimPolicyMetadata item in tenantResource.GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

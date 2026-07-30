@@ -219,18 +219,46 @@ namespace Azure.AI.Agents.Persistent
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Backward-compat stub — old name was AIAgentsPersistentClientBuilderExtensions. </summary>
+    /// <summary>
+    /// Backward-compat stub. Extension methods to add <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient"/>
+    /// to an <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient, TOptions}"/>. The original generated type
+    /// (<c>AIAgentsPersistentClientBuilderExtensions</c>) shipped in the GA 1.0.0 release; this stub preserves the public API.
+    /// </summary>
     public static partial class AIAgentsPersistentClientBuilderExtensions
     {
-        /// <summary> Registers a PersistentAgentsAdministrationClient. </summary>
+        /// <summary>
+        /// Registers a <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient"/>
+        /// with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient, TOptions}"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">The client factory builder type.</typeparam>
+        /// <param name="builder">The builder to register the client with.</param>
+        /// <param name="endpoint">The service endpoint.</param>
+        /// <returns>The <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient, TOptions}"/> for chaining.</returns>
+        /// <exception cref="System.ArgumentNullException"><paramref name="endpoint"/> is <see langword="null"/>.</exception>
         public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient, global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential
-            => AgentsPersistentClientBuilderExtensions.AddPersistentAgentsAdministrationClient(builder, endpoint);
+        {
+            if (endpoint == null)
+            {
+                throw new System.ArgumentNullException(nameof(endpoint));
+            }
 
-        /// <summary> Registers a PersistentAgentsAdministrationClient from configuration. </summary>
+            return builder.RegisterClientFactory<global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient, global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions>((options, credential) => new global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient(endpoint, credential, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient"/>
+        /// with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient, TOptions}"/> using configuration binding.
+        /// </summary>
+        /// <typeparam name="TBuilder">The client factory builder type.</typeparam>
+        /// <typeparam name="TConfiguration">The configuration source type.</typeparam>
+        /// <param name="builder">The builder to register the client with.</param>
+        /// <param name="configuration">The configuration to use for the client.</param>
+        /// <returns>The <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient, TOptions}"/> for chaining.</returns>
         [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static global::Azure.Core.Extensions.IAzureClientBuilder<global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient, global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : global::Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-            => AgentsPersistentClientBuilderExtensions.AddPersistentAgentsAdministrationClient(builder, configuration);
-#pragma warning restore IL2026, IL3050
+        {
+            return builder.RegisterClientFactory<global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient, global::Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions>(configuration);
+        }
     }
 }

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 DeploymentVersionListResult result = DeploymentVersionListResult.FromResponse(response);
-                yield return Page<CdnDeploymentVersionData>.FromValues((IReadOnlyList<CdnDeploymentVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnDeploymentVersionData>.FromValues((IReadOnlyList<CdnDeploymentVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

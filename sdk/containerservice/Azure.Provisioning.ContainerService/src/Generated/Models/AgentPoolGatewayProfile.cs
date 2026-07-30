@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _publicIPPrefixSize = DefineProperty<int>(nameof(PublicIPPrefixSize), new string[] { "publicIPPrefixSize" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolGatewayProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

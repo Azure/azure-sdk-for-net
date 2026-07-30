@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.KnowledgeBases
 
         private static ResponseClassifier PipelineMessageClassifier200206 => _pipelineMessageClassifier200206 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 206 });
 
-        internal HttpMessage CreateRetrieveRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateRetrieveRequest(RequestContent content, string querySourceAuthorization, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -35,6 +35,10 @@ namespace Azure.Search.Documents.KnowledgeBases
             if ("application/json;odata.metadata=minimal" != null)
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            if (querySourceAuthorization != null)
+            {
+                request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
             }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;

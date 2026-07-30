@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,84 +15,75 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class EventGridJsonInputSchemaMapping : EventGridInputSchemaMapping
     {
         /// <summary> Initializes a new instance of <see cref="EventGridJsonInputSchemaMapping"/>. </summary>
-        public EventGridJsonInputSchemaMapping()
+        public EventGridJsonInputSchemaMapping() : base(InputSchemaMappingType.Json)
         {
-            InputSchemaMappingType = InputSchemaMappingType.Json;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridJsonInputSchemaMapping"/>. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The mapping information for the Id property of the Event Grid Event. </param>
-        /// <param name="topic"> The mapping information for the Topic property of the Event Grid Event. </param>
-        /// <param name="eventTime"> The mapping information for the EventTime property of the Event Grid Event. </param>
-        /// <param name="eventType"> The mapping information for the EventType property of the Event Grid Event. </param>
-        /// <param name="subject"> The mapping information for the Subject property of the Event Grid Event. </param>
-        /// <param name="dataVersion"> The mapping information for the DataVersion property of the Event Grid Event. </param>
-        internal EventGridJsonInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> serializedAdditionalRawData, JsonField id, JsonField topic, JsonField eventTime, JsonFieldWithDefault eventType, JsonFieldWithDefault subject, JsonFieldWithDefault dataVersion) : base(inputSchemaMappingType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> JSON Properties of the input schema mapping. </param>
+        internal EventGridJsonInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> additionalBinaryDataProperties, JsonInputSchemaMappingProperties properties) : base(inputSchemaMappingType, additionalBinaryDataProperties)
         {
-            Id = id;
-            Topic = topic;
-            EventTime = eventTime;
-            EventType = eventType;
-            Subject = subject;
-            DataVersion = dataVersion;
-            InputSchemaMappingType = inputSchemaMappingType;
+            Properties = properties;
         }
 
-        /// <summary> The mapping information for the Id property of the Event Grid Event. </summary>
-        internal JsonField Id { get; set; }
-        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
-        [WirePath("properties.id.sourceField")]
-        public string IdSourceField
-        {
-            get => Id is null ? default : Id.SourceField;
-            set
-            {
-                if (Id is null)
-                    Id = new JsonField();
-                Id.SourceField = value;
-            }
-        }
-
-        /// <summary> The mapping information for the Topic property of the Event Grid Event. </summary>
-        internal JsonField Topic { get; set; }
-        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
-        [WirePath("properties.topic.sourceField")]
-        public string TopicSourceField
-        {
-            get => Topic is null ? default : Topic.SourceField;
-            set
-            {
-                if (Topic is null)
-                    Topic = new JsonField();
-                Topic.SourceField = value;
-            }
-        }
-
-        /// <summary> The mapping information for the EventTime property of the Event Grid Event. </summary>
-        internal JsonField EventTime { get; set; }
-        /// <summary> Name of a field in the input event schema that's to be used as the source of a mapping. </summary>
-        [WirePath("properties.eventTime.sourceField")]
-        public string EventTimeSourceField
-        {
-            get => EventTime is null ? default : EventTime.SourceField;
-            set
-            {
-                if (EventTime is null)
-                    EventTime = new JsonField();
-                EventTime.SourceField = value;
-            }
-        }
+        /// <summary> JSON Properties of the input schema mapping. </summary>
+        [WirePath("properties")]
+        internal JsonInputSchemaMappingProperties Properties { get; set; }
 
         /// <summary> The mapping information for the EventType property of the Event Grid Event. </summary>
         [WirePath("properties.eventType")]
-        public JsonFieldWithDefault EventType { get; set; }
+        public JsonFieldWithDefault EventType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JsonInputSchemaMappingProperties();
+                }
+                Properties.EventType = value;
+            }
+        }
+
         /// <summary> The mapping information for the Subject property of the Event Grid Event. </summary>
         [WirePath("properties.subject")]
-        public JsonFieldWithDefault Subject { get; set; }
+        public JsonFieldWithDefault Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JsonInputSchemaMappingProperties();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> The mapping information for the DataVersion property of the Event Grid Event. </summary>
         [WirePath("properties.dataVersion")]
-        public JsonFieldWithDefault DataVersion { get; set; }
+        public JsonFieldWithDefault DataVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JsonInputSchemaMappingProperties();
+                }
+                Properties.DataVersion = value;
+            }
+        }
     }
 }

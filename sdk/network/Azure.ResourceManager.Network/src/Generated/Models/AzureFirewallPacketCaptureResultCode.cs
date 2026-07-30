@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AzureFirewallPacketCaptureResultCode : IEquatable<AzureFirewallPacketCaptureResultCode>
     {
         private readonly string _value;
+        /// <summary> NotImplemented. </summary>
+        private const string NotImplementedValue = "NotImplemented";
+        /// <summary> AzureFirewallPacketCaptureStartSucceeded. </summary>
+        private const string AzureFirewallPacketCaptureStartSucceededValue = "AzureFirewallPacketCaptureStartSucceeded";
+        /// <summary> AzureFirewallPacketCaptureStartFailed. </summary>
+        private const string AzureFirewallPacketCaptureStartFailedValue = "AzureFirewallPacketCaptureStartFailed";
+        /// <summary> AzureFirewallPacketCaptureStartFailedToUpload. </summary>
+        private const string AzureFirewallPacketCaptureStartFailedToUploadValue = "AzureFirewallPacketCaptureStartFailedToUpload";
+        /// <summary> AzureFirewallPacketCaptureStartFailure. </summary>
+        private const string AzureFirewallPacketCaptureStartFailureValue = "AzureFirewallPacketCaptureStartFailure";
+        /// <summary> AzureFirewallPacketCaptureInProgress. </summary>
+        private const string AzureFirewallPacketCaptureInProgressValue = "AzureFirewallPacketCaptureInProgress";
+        /// <summary> AzureFirewallPacketCaptureNotInProgress. </summary>
+        private const string AzureFirewallPacketCaptureNotInProgressValue = "AzureFirewallPacketCaptureNotInProgress";
+        /// <summary> AzureFirewallPacketCaptureStopSucceeded. </summary>
+        private const string AzureFirewallPacketCaptureStopSucceededValue = "AzureFirewallPacketCaptureStopSucceeded";
+        /// <summary> AzureFirewallPacketCaptureFailed. </summary>
+        private const string AzureFirewallPacketCaptureFailedValue = "AzureFirewallPacketCaptureFailed";
+        /// <summary> AzureFirewallPacketCaptureCompleted. </summary>
+        private const string AzureFirewallPacketCaptureCompletedValue = "AzureFirewallPacketCaptureCompleted";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureResultCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFirewallPacketCaptureResultCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotImplementedValue = "NotImplemented";
-        private const string AzureFirewallPacketCaptureStartSucceededValue = "AzureFirewallPacketCaptureStartSucceeded";
-        private const string AzureFirewallPacketCaptureStartFailedValue = "AzureFirewallPacketCaptureStartFailed";
-        private const string AzureFirewallPacketCaptureStartFailedToUploadValue = "AzureFirewallPacketCaptureStartFailedToUpload";
-        private const string AzureFirewallPacketCaptureStartFailureValue = "AzureFirewallPacketCaptureStartFailure";
-        private const string AzureFirewallPacketCaptureInProgressValue = "AzureFirewallPacketCaptureInProgress";
-        private const string AzureFirewallPacketCaptureNotInProgressValue = "AzureFirewallPacketCaptureNotInProgress";
-        private const string AzureFirewallPacketCaptureStopSucceededValue = "AzureFirewallPacketCaptureStopSucceeded";
-        private const string AzureFirewallPacketCaptureFailedValue = "AzureFirewallPacketCaptureFailed";
-        private const string AzureFirewallPacketCaptureCompletedValue = "AzureFirewallPacketCaptureCompleted";
+            _value = value;
+        }
 
         /// <summary> NotImplemented. </summary>
         public static AzureFirewallPacketCaptureResultCode NotImplemented { get; } = new AzureFirewallPacketCaptureResultCode(NotImplementedValue);
+
         /// <summary> AzureFirewallPacketCaptureStartSucceeded. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartSucceeded { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureStartSucceededValue);
+
         /// <summary> AzureFirewallPacketCaptureStartFailed. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartFailed { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureStartFailedValue);
+
         /// <summary> AzureFirewallPacketCaptureStartFailedToUpload. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartFailedToUpload { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureStartFailedToUploadValue);
+
         /// <summary> AzureFirewallPacketCaptureStartFailure. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStartFailure { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureStartFailureValue);
+
         /// <summary> AzureFirewallPacketCaptureInProgress. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureInProgress { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureInProgressValue);
+
         /// <summary> AzureFirewallPacketCaptureNotInProgress. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureNotInProgress { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureNotInProgressValue);
+
         /// <summary> AzureFirewallPacketCaptureStopSucceeded. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureStopSucceeded { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureStopSucceededValue);
+
         /// <summary> AzureFirewallPacketCaptureFailed. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureFailed { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureFailedValue);
+
         /// <summary> AzureFirewallPacketCaptureCompleted. </summary>
         public static AzureFirewallPacketCaptureResultCode AzureFirewallPacketCaptureCompleted { get; } = new AzureFirewallPacketCaptureResultCode(AzureFirewallPacketCaptureCompletedValue);
+
         /// <summary> Determines if two <see cref="AzureFirewallPacketCaptureResultCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureFirewallPacketCaptureResultCode left, AzureFirewallPacketCaptureResultCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureFirewallPacketCaptureResultCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureFirewallPacketCaptureResultCode left, AzureFirewallPacketCaptureResultCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallPacketCaptureResultCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureResultCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureFirewallPacketCaptureResultCode(string value) => new AzureFirewallPacketCaptureResultCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureResultCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureFirewallPacketCaptureResultCode?(string value) => value == null ? null : new AzureFirewallPacketCaptureResultCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFirewallPacketCaptureResultCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureFirewallPacketCaptureResultCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

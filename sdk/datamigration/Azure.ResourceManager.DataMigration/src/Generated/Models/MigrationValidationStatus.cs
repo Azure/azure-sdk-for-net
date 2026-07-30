@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct MigrationValidationStatus : IEquatable<MigrationValidationStatus>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> Initialized. </summary>
+        private const string InitializedValue = "Initialized";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> CompletedWithIssues. </summary>
+        private const string CompletedWithIssuesValue = "CompletedWithIssues";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="MigrationValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationValidationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string NotStartedValue = "NotStarted";
-        private const string InitializedValue = "Initialized";
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
-        private const string CompletedWithIssuesValue = "CompletedWithIssues";
-        private const string StoppedValue = "Stopped";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static MigrationValidationStatus Default { get; } = new MigrationValidationStatus(DefaultValue);
+
         /// <summary> NotStarted. </summary>
         public static MigrationValidationStatus NotStarted { get; } = new MigrationValidationStatus(NotStartedValue);
+
         /// <summary> Initialized. </summary>
         public static MigrationValidationStatus Initialized { get; } = new MigrationValidationStatus(InitializedValue);
+
         /// <summary> InProgress. </summary>
         public static MigrationValidationStatus InProgress { get; } = new MigrationValidationStatus(InProgressValue);
+
         /// <summary> Completed. </summary>
         public static MigrationValidationStatus Completed { get; } = new MigrationValidationStatus(CompletedValue);
+
         /// <summary> CompletedWithIssues. </summary>
         public static MigrationValidationStatus CompletedWithIssues { get; } = new MigrationValidationStatus(CompletedWithIssuesValue);
+
         /// <summary> Stopped. </summary>
         public static MigrationValidationStatus Stopped { get; } = new MigrationValidationStatus(StoppedValue);
+
         /// <summary> Failed. </summary>
         public static MigrationValidationStatus Failed { get; } = new MigrationValidationStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="MigrationValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationValidationStatus left, MigrationValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationValidationStatus left, MigrationValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationValidationStatus(string value) => new MigrationValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationValidationStatus?(string value) => value == null ? null : new MigrationValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

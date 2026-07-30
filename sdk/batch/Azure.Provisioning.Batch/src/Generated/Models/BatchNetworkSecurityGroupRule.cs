@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Batch
             _access = DefineProperty<BatchNetworkSecurityGroupRuleAccess>(nameof(Access), new string[] { "access" }, isRequired: true);
             _sourceAddressPrefix = DefineProperty<string>(nameof(SourceAddressPrefix), new string[] { "sourceAddressPrefix" }, isRequired: true);
             _sourcePortRanges = DefineListProperty<string>(nameof(SourcePortRanges), new string[] { "sourcePortRanges" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchNetworkSecurityGroupRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

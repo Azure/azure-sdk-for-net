@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(ResourceType, out string communicationDomainResourceApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Endpoint, communicationDomainResourceApiVersion ?? "2026-03-18");
+            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, communicationDomainResourceApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 

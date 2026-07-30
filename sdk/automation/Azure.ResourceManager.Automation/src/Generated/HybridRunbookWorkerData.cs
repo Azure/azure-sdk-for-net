@@ -13,83 +13,128 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the HybridRunbookWorker data model.
-    /// Definition of hybrid runbook worker.
-    /// </summary>
+    /// <summary> Definition of hybrid runbook worker. </summary>
     public partial class HybridRunbookWorkerData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>
-        public HybridRunbookWorkerData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Gets or sets the hybrid worker group properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridRunbookWorkerProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="ip"> Gets or sets the assigned machine IP address. </param>
-        /// <param name="registeredOn"> Gets or sets the registration time of the worker machine. </param>
-        /// <param name="lastSeenOn"> Last Heartbeat from the Worker. </param>
-        /// <param name="vmResourceId"> Azure Resource Manager Id for a virtual machine. </param>
-        /// <param name="workerType"> Type of the HybridWorker. </param>
-        /// <param name="workerName"> Name of the HybridWorker. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridRunbookWorkerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ip, DateTimeOffset? registeredOn, DateTimeOffset? lastSeenOn, ResourceIdentifier vmResourceId, HybridWorkerType? workerType, string workerName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            IP = ip;
-            RegisteredOn = registeredOn;
-            LastSeenOn = lastSeenOn;
-            VmResourceId = vmResourceId;
-            WorkerType = workerType;
-            WorkerName = workerName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Gets or sets the hybrid worker group properties. </summary>
+        internal HybridRunbookWorkerProperties Properties { get; set; }
 
         /// <summary> Gets or sets the assigned machine IP address. </summary>
-        public string IP { get; set; }
+        public string IP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridRunbookWorkerProperties();
+                }
+                Properties.IP = value;
+            }
+        }
+
         /// <summary> Gets or sets the registration time of the worker machine. </summary>
-        public DateTimeOffset? RegisteredOn { get; set; }
+        public DateTimeOffset? RegisteredOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RegisteredOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridRunbookWorkerProperties();
+                }
+                Properties.RegisteredOn = value;
+            }
+        }
+
         /// <summary> Last Heartbeat from the Worker. </summary>
-        public DateTimeOffset? LastSeenOn { get; set; }
+        public DateTimeOffset? LastSeenOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastSeenOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridRunbookWorkerProperties();
+                }
+                Properties.LastSeenOn = value;
+            }
+        }
+
         /// <summary> Azure Resource Manager Id for a virtual machine. </summary>
-        public ResourceIdentifier VmResourceId { get; set; }
+        public ResourceIdentifier VmResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridRunbookWorkerProperties();
+                }
+                Properties.VmResourceId = value;
+            }
+        }
+
         /// <summary> Type of the HybridWorker. </summary>
-        public HybridWorkerType? WorkerType { get; set; }
+        public HybridWorkerType? WorkerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkerType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridRunbookWorkerProperties();
+                }
+                Properties.WorkerType = value;
+            }
+        }
+
         /// <summary> Name of the HybridWorker. </summary>
-        public string WorkerName { get; set; }
+        public string WorkerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkerName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HybridRunbookWorkerProperties();
+                }
+                Properties.WorkerName = value;
+            }
+        }
     }
 }

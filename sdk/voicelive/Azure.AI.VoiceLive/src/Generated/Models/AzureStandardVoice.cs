@@ -29,20 +29,50 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Voice name cannot be empty. </param>
         /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
-        /// <param name="customLexiconUrl"></param>
-        /// <param name="customTextNormalizationUrl"></param>
-        /// <param name="preferLocales"></param>
-        /// <param name="locale"></param>
-        /// <param name="style"></param>
-        /// <param name="pitch"></param>
-        /// <param name="rate"></param>
-        /// <param name="volume"></param>
-        internal AzureStandardVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, string customLexiconUrl, string customTextNormalizationUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
+        /// <param name="customLexiconUrl"> URL of a custom lexicon file for pronunciation customization. </param>
+        /// <param name="customTextNormalizationUri"> URL of a custom text normalization endpoint. </param>
+        /// <param name="preferLocales">
+        /// Preferred locales in BCP-47 format that change the accents of languages.
+        /// If not set, TTS uses the default accent for each language (e.g., American English for English,
+        /// Mexican Spanish for Spanish). Setting this to `["en-GB", "es-ES"]` changes the English accent
+        /// to British English and the Spanish accent to European Spanish, while TTS can still speak other
+        /// languages like French or Chinese with their default accents.
+        /// </param>
+        /// <param name="locale">
+        /// Enforced locale in BCP-47 format for TTS output. If set, TTS will always use the specified
+        /// locale to speak. For example, setting locale to `en-US` forces American English accent for all
+        /// text content, even if the text is in another language, and TTS will output silence for
+        /// unsupported languages (e.g., Chinese text with `en-US` locale). If not set, TTS automatically
+        /// detects the language from the text content.
+        /// </param>
+        /// <param name="style"> Speaking style for the voice (e.g., 'cheerful', 'sad'). </param>
+        /// <param name="pitch">
+        /// Pitch adjustment for the voice output. Follows the same rules as the `pitch` attribute of the
+        /// SSML `prosody` element (see
+        /// https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-voice#adjust-prosody).
+        /// Typical values: a named level (`x-low`, `low`, `medium`, `high`, `x-high`, `default`),
+        /// a relative change (e.g., `+10%`, `-5%`, `+50Hz`, `-2st`), or an absolute frequency (e.g., `200Hz`).
+        /// </param>
+        /// <param name="rate">
+        /// Speaking rate adjustment for the voice output. Follows the same rules as the `rate` attribute of
+        /// the SSML `prosody` element (see
+        /// https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-voice#adjust-prosody).
+        /// Typical values: a named level (`x-slow`, `slow`, `medium`, `fast`, `x-fast`, `default`),
+        /// a relative percentage (e.g., `+20%`, `-10%`), or a non-negative multiplier (e.g., `0.5`, `1.5`).
+        /// </param>
+        /// <param name="volume">
+        /// Volume adjustment for the voice output. Follows the same rules as the `volume` attribute of the
+        /// SSML `prosody` element (see
+        /// https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-voice#adjust-prosody).
+        /// Typical values: a named level (`silent`, `x-soft`, `soft`, `medium`, `loud`, `x-loud`, `default`),
+        /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
+        /// </param>
+        internal AzureStandardVoice(AzureVoiceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, string customLexiconUrl, Uri customTextNormalizationUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Temperature = temperature;
             CustomLexiconUrl = customLexiconUrl;
-            CustomTextNormalizationUrl = customTextNormalizationUrl;
+            CustomTextNormalizationUri = customTextNormalizationUri;
             PreferLocales = preferLocales;
             Locale = locale;
             Style = style;
@@ -57,28 +87,58 @@ namespace Azure.AI.VoiceLive
         /// <summary> Temperature must be between 0.0 and 1.0. </summary>
         public float? Temperature { get; set; }
 
-        /// <summary> Gets or sets the CustomLexiconUrl. </summary>
+        /// <summary> URL of a custom lexicon file for pronunciation customization. </summary>
         public string CustomLexiconUrl { get; set; }
 
-        /// <summary> Gets or sets the CustomTextNormalizationUrl. </summary>
-        public string CustomTextNormalizationUrl { get; set; }
+        /// <summary> URL of a custom text normalization endpoint. </summary>
+        public Uri CustomTextNormalizationUri { get; set; }
 
-        /// <summary> Gets the PreferLocales. </summary>
+        /// <summary>
+        /// Preferred locales in BCP-47 format that change the accents of languages.
+        /// If not set, TTS uses the default accent for each language (e.g., American English for English,
+        /// Mexican Spanish for Spanish). Setting this to `["en-GB", "es-ES"]` changes the English accent
+        /// to British English and the Spanish accent to European Spanish, while TTS can still speak other
+        /// languages like French or Chinese with their default accents.
+        /// </summary>
         public IList<string> PreferLocales { get; }
 
-        /// <summary> Gets or sets the Locale. </summary>
+        /// <summary>
+        /// Enforced locale in BCP-47 format for TTS output. If set, TTS will always use the specified
+        /// locale to speak. For example, setting locale to `en-US` forces American English accent for all
+        /// text content, even if the text is in another language, and TTS will output silence for
+        /// unsupported languages (e.g., Chinese text with `en-US` locale). If not set, TTS automatically
+        /// detects the language from the text content.
+        /// </summary>
         public string Locale { get; set; }
 
-        /// <summary> Gets or sets the Style. </summary>
+        /// <summary> Speaking style for the voice (e.g., 'cheerful', 'sad'). </summary>
         public string Style { get; set; }
 
-        /// <summary> Gets or sets the Pitch. </summary>
+        /// <summary>
+        /// Pitch adjustment for the voice output. Follows the same rules as the `pitch` attribute of the
+        /// SSML `prosody` element (see
+        /// https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-voice#adjust-prosody).
+        /// Typical values: a named level (`x-low`, `low`, `medium`, `high`, `x-high`, `default`),
+        /// a relative change (e.g., `+10%`, `-5%`, `+50Hz`, `-2st`), or an absolute frequency (e.g., `200Hz`).
+        /// </summary>
         public string Pitch { get; set; }
 
-        /// <summary> Gets or sets the Rate. </summary>
+        /// <summary>
+        /// Speaking rate adjustment for the voice output. Follows the same rules as the `rate` attribute of
+        /// the SSML `prosody` element (see
+        /// https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-voice#adjust-prosody).
+        /// Typical values: a named level (`x-slow`, `slow`, `medium`, `fast`, `x-fast`, `default`),
+        /// a relative percentage (e.g., `+20%`, `-10%`), or a non-negative multiplier (e.g., `0.5`, `1.5`).
+        /// </summary>
         public string Rate { get; set; }
 
-        /// <summary> Gets or sets the Volume. </summary>
+        /// <summary>
+        /// Volume adjustment for the voice output. Follows the same rules as the `volume` attribute of the
+        /// SSML `prosody` element (see
+        /// https://learn.microsoft.com/azure/ai-services/speech-service/speech-synthesis-markup-voice#adjust-prosody).
+        /// Typical values: a named level (`silent`, `x-soft`, `soft`, `medium`, `loud`, `x-loud`, `default`),
+        /// an absolute number from 0.0 to 100.0, or a relative change (e.g., `+10`, `-6dB`).
+        /// </summary>
         public string Volume { get; set; }
     }
 }

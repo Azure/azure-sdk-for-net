@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A pointer to an Azure Action Group. </summary>
     public partial class ActivityLogAlertActionGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ActivityLogAlertActionGroup"/>. </summary>
         /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
@@ -55,27 +27,29 @@ namespace Azure.ResourceManager.Monitor.Models
 
             ActionGroupId = actionGroupId;
             WebhookProperties = new ChangeTrackingDictionary<string, string>();
+            ActionProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityLogAlertActionGroup"/>. </summary>
         /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
         /// <param name="webhookProperties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityLogAlertActionGroup(ResourceIdentifier actionGroupId, IDictionary<string, string> webhookProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="actionProperties"> Predefined list of properties and configuration items for the action group. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ActivityLogAlertActionGroup(ResourceIdentifier actionGroupId, IDictionary<string, string> webhookProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionGroupId = actionGroupId;
             WebhookProperties = webhookProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertActionGroup"/> for deserialization. </summary>
-        internal ActivityLogAlertActionGroup()
-        {
+            ActionProperties = actionProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource ID of the Action Group. This cannot be null or empty. </summary>
         public ResourceIdentifier ActionGroupId { get; set; }
+
         /// <summary> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </summary>
         public IDictionary<string, string> WebhookProperties { get; }
+
+        /// <summary> Predefined list of properties and configuration items for the action group. </summary>
+        public IDictionary<string, string> ActionProperties { get; }
     }
 }

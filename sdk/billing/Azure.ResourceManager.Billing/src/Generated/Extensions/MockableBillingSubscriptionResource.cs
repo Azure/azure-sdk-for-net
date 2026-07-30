@@ -6,42 +6,79 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Billing;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableBillingSubscriptionResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableBillingSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableBillingSubscriptionResource for mocking. </summary>
         protected MockableBillingSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableBillingSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableBillingSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableBillingSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets an object representing a BillingPropertyResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
-        public virtual BillingPropertyResource GetBillingProperty()
-        {
-            return new BillingPropertyResource(Client, Id.AppendProviderResource("Microsoft.Billing", "billingProperty", "default"));
-        }
-
-        /// <summary> Gets an object representing a SubscriptionPolicyResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Lists the policies that are managed by the Billing Admin for the defined subscriptions. This is supported for Microsoft Online Services Program, Microsoft Customer Agreement and Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/policies/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionPolicies_GetBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <returns> Returns a <see cref="SubscriptionPolicyResource"/> object. </returns>
         public virtual SubscriptionPolicyResource GetSubscriptionPolicy()
         {
             return new SubscriptionPolicyResource(Client, Id.AppendProviderResource("Microsoft.Billing", "policies", "default"));
+        }
+
+        /// <summary>
+        /// Gets the billing properties for a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProperties_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPropertyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
+        public virtual BillingPropertyResource GetBillingProperty()
+        {
+            return new BillingPropertyResource(Client, Id.AppendProviderResource("Microsoft.Billing", "billingProperty", "default"));
         }
     }
 }

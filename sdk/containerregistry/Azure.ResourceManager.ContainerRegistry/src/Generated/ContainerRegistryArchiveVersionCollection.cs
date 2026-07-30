@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ContainerRegistryArchiveVersionResource.ResourceType, out string containerRegistryArchiveVersionApiVersion);
             _archiveVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryArchiveVersionResource.ResourceType.Namespace, Diagnostics);
-            _archiveVersionsRestClient = new ArchiveVersions(_archiveVersionsClientDiagnostics, Pipeline, Endpoint, containerRegistryArchiveVersionApiVersion ?? "2026-01-01-preview");
+            _archiveVersionsRestClient = new ArchiveVersions(_archiveVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryArchiveVersionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _archiveVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(
-                    new ContainerRegistryArchiveVersionOperationSource(Client),
+                    new ContainerRegistryArchiveVersionResourceOperationSource(Client),
                     _archiveVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _archiveVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, archiveVersionName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(
-                    new ContainerRegistryArchiveVersionOperationSource(Client),
+                    new ContainerRegistryArchiveVersionResourceOperationSource(Client),
                     _archiveVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

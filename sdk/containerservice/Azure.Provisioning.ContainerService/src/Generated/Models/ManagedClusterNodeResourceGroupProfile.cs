@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _restrictionLevel = DefineProperty<ManagedClusterNodeResourceGroupRestrictionLevel>(nameof(RestrictionLevel), new string[] { "restrictionLevel" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterNodeResourceGroupProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

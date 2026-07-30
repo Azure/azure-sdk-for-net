@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchApplicationPackageState
     {
         /// <summary> The application package has been created but has not yet been activated. </summary>
-        Pending,
+        Pending = 0,
         /// <summary> The application package is ready for use. </summary>
-        Active
+        Active = 1
     }
 }

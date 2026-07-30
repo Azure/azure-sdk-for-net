@@ -50,13 +50,13 @@ namespace Azure.Communication.JobRouter
                     yield break;
                 }
                 PagedClassificationPolicy result = (PagedClassificationPolicy)response;
+                nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureCommunicationJobRouterContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;

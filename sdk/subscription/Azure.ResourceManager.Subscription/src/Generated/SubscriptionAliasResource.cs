@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Subscription
         {
             TryGetApiVersion(ResourceType, out string subscriptionAliasApiVersion);
             _subscriptionAliasResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", ResourceType.Namespace, Diagnostics);
-            _subscriptionAliasResponsesRestClient = new SubscriptionAliasResponses(_subscriptionAliasResponsesClientDiagnostics, Pipeline, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
+            _subscriptionAliasResponsesRestClient = new SubscriptionAliasResponses(_subscriptionAliasResponsesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionAliasApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Subscription
                 HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
-                    new SubscriptionAliasOperationSource(Client),
+                    new SubscriptionAliasResourceOperationSource(Client),
                     _subscriptionAliasResponsesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Subscription
                 HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
-                    new SubscriptionAliasOperationSource(Client),
+                    new SubscriptionAliasResourceOperationSource(Client),
                     _subscriptionAliasResponsesClientDiagnostics,
                     Pipeline,
                     message.Request,

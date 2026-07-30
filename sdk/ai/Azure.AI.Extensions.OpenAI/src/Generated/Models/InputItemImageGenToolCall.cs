@@ -38,12 +38,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the image generation call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The status of the image generation call. </summary>
-        public InputItemImageGenToolCallStatus Status { get; }
+        public InputItemImageGenToolCallStatus Status { get; set; }
 
-        /// <summary> Gets the Result. </summary>
-        public string Result { get; }
+        /// <summary> Gets or sets the Result. </summary>
+        public string Result { get; set; }
     }
 }

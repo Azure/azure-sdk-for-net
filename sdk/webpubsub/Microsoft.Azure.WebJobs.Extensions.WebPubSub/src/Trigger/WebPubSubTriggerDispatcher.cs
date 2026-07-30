@@ -81,12 +81,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var request = JsonSerializer.Deserialize<MqttConnectEventRequestContent>(content);
+                                var request = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventRequest);
                                 eventRequest = new MqttConnectEventRequest(mqttContext, request.Claims, request.Query, request.ClientCertificates, request.Headers, request.Mqtt);
                             }
                             else
                             {
-                                var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
+                                var request = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.ConnectEventRequest);
                                 eventRequest = new ConnectEventRequest(context, request.Claims, request.Query, request.Subprotocols, request.ClientCertificates, request.Headers);
                             }
                             var connectEventRequest = (ConnectEventRequest)eventRequest;
@@ -101,12 +101,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestContent>(content);
+                                var requestBody = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.MqttDisconnectedEventRequest);
                                 eventRequest = new MqttDisconnectedEventRequest(mqttContext, requestBody.Reason, requestBody.Mqtt);
                             }
                             else
                             {
-                                var request = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
+                                var request = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.DisconnectedEventRequest);
                                 eventRequest = new DisconnectedEventRequest(context, request.Reason);
                             }
                             reason = ((DisconnectedEventRequest)eventRequest).Reason;

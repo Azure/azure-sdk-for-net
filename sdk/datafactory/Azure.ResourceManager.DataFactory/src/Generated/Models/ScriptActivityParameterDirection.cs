@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct ScriptActivityParameterDirection : IEquatable<ScriptActivityParameterDirection>
     {
         private readonly string _value;
+        /// <summary> Input. </summary>
+        private const string InputValue = "Input";
+        /// <summary> Output. </summary>
+        private const string OutputValue = "Output";
+        /// <summary> InputOutput. </summary>
+        private const string InputOutputValue = "InputOutput";
 
         /// <summary> Initializes a new instance of <see cref="ScriptActivityParameterDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScriptActivityParameterDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InputValue = "Input";
-        private const string OutputValue = "Output";
-        private const string InputOutputValue = "InputOutput";
+            _value = value;
+        }
 
         /// <summary> Input. </summary>
         public static ScriptActivityParameterDirection Input { get; } = new ScriptActivityParameterDirection(InputValue);
+
         /// <summary> Output. </summary>
         public static ScriptActivityParameterDirection Output { get; } = new ScriptActivityParameterDirection(OutputValue);
+
         /// <summary> InputOutput. </summary>
         public static ScriptActivityParameterDirection InputOutput { get; } = new ScriptActivityParameterDirection(InputOutputValue);
+
         /// <summary> Determines if two <see cref="ScriptActivityParameterDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScriptActivityParameterDirection left, ScriptActivityParameterDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScriptActivityParameterDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScriptActivityParameterDirection left, ScriptActivityParameterDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScriptActivityParameterDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScriptActivityParameterDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScriptActivityParameterDirection(string value) => new ScriptActivityParameterDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScriptActivityParameterDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScriptActivityParameterDirection?(string value) => value == null ? null : new ScriptActivityParameterDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScriptActivityParameterDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScriptActivityParameterDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

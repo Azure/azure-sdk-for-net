@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.Provisioning.SelfHelp.csproj" />
+  <Project Path="tests/Azure.Provisioning.SelfHelp.Tests.csproj" />
+</Solution>

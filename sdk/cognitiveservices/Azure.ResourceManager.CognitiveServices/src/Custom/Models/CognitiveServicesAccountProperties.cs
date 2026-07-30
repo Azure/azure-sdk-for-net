@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             get
             {
-                 throw new InvalidOperationException("Deprecated.  Use AIFoundryNetworkInjections array instead");
+                throw new InvalidOperationException("Deprecated.  Use AIFoundryNetworkInjections array instead");
             }
             set
             {

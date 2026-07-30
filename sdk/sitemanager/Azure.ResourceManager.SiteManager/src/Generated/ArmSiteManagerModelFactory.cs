@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SiteManager;
@@ -19,7 +17,6 @@ namespace Azure.ResourceManager.SiteManager.Models
     public static partial class ArmSiteManagerModelFactory
     {
 
-        /// <summary> Site as Extension Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,11 +30,10 @@ namespace Azure.ResourceManager.SiteManager.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Site properties. </summary>
         /// <param name="displayName"> displayName of Site resource. </param>
         /// <param name="description"> Description of Site resource. </param>
         /// <param name="siteAddress"> Physical address of the site. </param>
@@ -52,12 +48,37 @@ namespace Azure.ResourceManager.SiteManager.Models
                 displayName,
                 description,
                 siteAddress,
-                labels,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The updatable properties of the Site. </summary>
+        /// <param name="streetAddress1"> First line of the street address. </param>
+        /// <param name="streetAddress2"> Second line of the street address. </param>
+        /// <param name="city"> City of the address. </param>
+        /// <param name="stateOrProvince"> State or province of the address. </param>
+        /// <param name="country"> Country of the address. </param>
+        /// <param name="postalCode"> Postal or ZIP code of the address. </param>
+        /// <returns> A new <see cref="Models.EdgeSiteAddressProperties"/> instance for mocking. </returns>
+        public static EdgeSiteAddressProperties EdgeSiteAddressProperties(string streetAddress1 = default, string streetAddress2 = default, string city = default, string stateOrProvince = default, string country = default, string postalCode = default)
+        {
+            return new EdgeSiteAddressProperties(
+                streetAddress1,
+                streetAddress2,
+                city,
+                stateOrProvince,
+                country,
+                postalCode,
+                default);
+        }
+
+        /// <param name="properties"> The updatable properties of the Site. </param>
+        /// <returns> A new <see cref="Models.EdgeSitePatch"/> instance for mocking. </returns>
+        public static EdgeSitePatch EdgeSitePatch(EdgeSitePatchProperties properties = default)
+        {
+            return new EdgeSitePatch(properties, default);
+        }
+
         /// <param name="displayName"> displayName of Site resource. </param>
         /// <param name="description"> Description of Site resource. </param>
         /// <param name="siteAddress"> Physical address of the site. </param>
@@ -67,7 +88,7 @@ namespace Azure.ResourceManager.SiteManager.Models
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EdgeSitePatchProperties(displayName, description, siteAddress, labels, additionalBinaryDataProperties: null);
+            return new EdgeSitePatchProperties(displayName, description, siteAddress, labels ?? new ChangeTrackingDictionary<string, string>(), default);
         }
     }
 }

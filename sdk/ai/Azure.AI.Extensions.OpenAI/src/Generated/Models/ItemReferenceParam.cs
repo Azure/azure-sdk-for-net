@@ -30,6 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the item to reference. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
     }
 }

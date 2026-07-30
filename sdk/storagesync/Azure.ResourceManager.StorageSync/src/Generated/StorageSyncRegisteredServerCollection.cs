@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(StorageSyncRegisteredServerResource.ResourceType, out string storageSyncRegisteredServerApiVersion);
             _registeredServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncRegisteredServerResource.ResourceType.Namespace, Diagnostics);
-            _registeredServersRestClient = new RegisteredServers(_registeredServersClientDiagnostics, Pipeline, Endpoint, storageSyncRegisteredServerApiVersion ?? "2022-09-01");
+            _registeredServersRestClient = new RegisteredServers(_registeredServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncRegisteredServerApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _registeredServersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, StorageSyncRegisteredServerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncRegisteredServerResource> operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(
-                    new StorageSyncRegisteredServerOperationSource(Client),
+                    new StorageSyncRegisteredServerResourceOperationSource(Client),
                     _registeredServersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _registeredServersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, StorageSyncRegisteredServerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncRegisteredServerResource> operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(
-                    new StorageSyncRegisteredServerOperationSource(Client),
+                    new StorageSyncRegisteredServerResourceOperationSource(Client),
                     _registeredServersClientDiagnostics,
                     Pipeline,
                     message.Request,

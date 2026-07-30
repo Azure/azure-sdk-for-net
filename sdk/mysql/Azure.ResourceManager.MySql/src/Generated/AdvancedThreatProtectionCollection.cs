@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(AdvancedThreatProtectionResource.ResourceType, out string advancedThreatProtectionApiVersion);
             _advancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", AdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
-            _advancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettings(_advancedThreatProtectionSettingsClientDiagnostics, Pipeline, Endpoint, advancedThreatProtectionApiVersion ?? "2024-12-30");
+            _advancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettings(_advancedThreatProtectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
-                    new AdvancedThreatProtectionOperationSource(Client),
+                    new AdvancedThreatProtectionResourceOperationSource(Client),
                     _advancedThreatProtectionSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
-                    new AdvancedThreatProtectionOperationSource(Client),
+                    new AdvancedThreatProtectionResourceOperationSource(Client),
                     _advancedThreatProtectionSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

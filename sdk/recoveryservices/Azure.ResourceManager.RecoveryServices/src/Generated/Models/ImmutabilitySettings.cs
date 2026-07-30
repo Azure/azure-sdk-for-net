@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Immutability Settings of vault. </summary>
-    internal partial class ImmutabilitySettings
+    public partial class ImmutabilitySettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,27 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="ImmutabilitySettings"/>. </summary>
         /// <param name="state"></param>
+        /// <param name="configuration">
+        /// Immutability configuration of the vault — selects whether immutability is
+        /// inherited from the backup policy (AsPerPolicy) or fixed for a specific
+        /// duration (TimeBased).
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImmutabilitySettings(ImmutabilityState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImmutabilitySettings(ImmutabilityState? state, ImmutabilityConfiguration configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
+            Configuration = configuration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the State. </summary>
         public ImmutabilityState? State { get; set; }
+
+        /// <summary>
+        /// Immutability configuration of the vault — selects whether immutability is
+        /// inherited from the backup policy (AsPerPolicy) or fixed for a specific
+        /// duration (TimeBased).
+        /// </summary>
+        public ImmutabilityConfiguration Configuration { get; set; }
     }
 }

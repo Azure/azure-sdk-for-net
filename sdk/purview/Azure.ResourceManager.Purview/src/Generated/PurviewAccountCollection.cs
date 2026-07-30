@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(PurviewAccountResource.ResourceType, out string purviewAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewAccountApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Purview
                 HttpMessage message = _accountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, PurviewAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PurviewArmOperation<PurviewAccountResource> operation = new PurviewArmOperation<PurviewAccountResource>(
-                    new PurviewAccountOperationSource(Client),
+                    new PurviewAccountResourceOperationSource(Client),
                     _accountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Purview
                 HttpMessage message = _accountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, PurviewAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PurviewArmOperation<PurviewAccountResource> operation = new PurviewArmOperation<PurviewAccountResource>(
-                    new PurviewAccountOperationSource(Client),
+                    new PurviewAccountResourceOperationSource(Client),
                     _accountsClientDiagnostics,
                     Pipeline,
                     message.Request,

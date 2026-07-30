@@ -11,12 +11,12 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the FileService data model.
-    /// The properties of File services in storage account.
-    /// </summary>
     public partial class FileServiceData : ResourceData
     {
+        // this property was safe-flattened because FileServiceProtocolSettings previously only have one property
+        // after one of these api-versions, new properties were added to FileServiceProtocolSettings
+        // therefore this property is no longer flattened.
+        // this customization code added it back to keep back compat.
         /// <summary> Setting for SMB protocol. </summary>
         [WirePath("properties.protocolSettings.smb")]
         public SmbSetting ProtocolSmbSetting

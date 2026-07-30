@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(WorkloadNetworkPublicIPResource.ResourceType, out string workloadNetworkPublicIPApiVersion);
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkPublicIPResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkPublicIPApiVersion ?? "2025-09-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkPublicIPApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreatePublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, WorkloadNetworkPublicIPData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkPublicIPResource> operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(
-                    new WorkloadNetworkPublicIPOperationSource(Client),
+                    new WorkloadNetworkPublicIPResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreatePublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, publicIPId, WorkloadNetworkPublicIPData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkPublicIPResource> operation = new AvsArmOperation<WorkloadNetworkPublicIPResource>(
-                    new WorkloadNetworkPublicIPOperationSource(Client),
+                    new WorkloadNetworkPublicIPResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

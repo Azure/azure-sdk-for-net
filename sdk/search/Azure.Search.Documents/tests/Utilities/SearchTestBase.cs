@@ -10,7 +10,6 @@ using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -31,7 +30,7 @@ namespace Azure.Search.Documents.Tests
         /// The current API version under test. Change this single constant
         /// when a new version ships — all tests update automatically.
         /// </summary>
-        protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_04_01;
+        protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_05_01_Preview;
 
         /// <summary>
         /// Shared HTTP client instance with a longer timeout.  It's
@@ -70,6 +69,7 @@ namespace Azure.Search.Documents.Tests
             JsonPathSanitizers.Add("$..storageConnectionString");
             JsonPathSanitizers.Remove("$..token");
             SanitizedHeaders.Add("api-key");
+            SanitizedHeaders.Add("x-ms-query-source-authorization");
             CompareBodies = false;
         }
 

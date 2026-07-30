@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ResourceType, out string workloadImpactApiVersion);
             _workloadImpactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
-            _workloadImpactsRestClient = new WorkloadImpacts(_workloadImpactsClientDiagnostics, Pipeline, Endpoint, workloadImpactApiVersion ?? "2024-05-01-preview");
+            _workloadImpactsRestClient = new WorkloadImpacts(_workloadImpactsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadImpactApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
+                    new WorkloadImpactResourceOperationSource(Client),
                     _workloadImpactsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
+                    new WorkloadImpactResourceOperationSource(Client),
                     _workloadImpactsClientDiagnostics,
                     Pipeline,
                     message.Request,

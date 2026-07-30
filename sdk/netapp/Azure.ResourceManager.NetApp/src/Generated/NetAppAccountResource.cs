@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, netAppAccountApiVersion ?? "2026-01-15-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-05-01");
             _volumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Endpoint, netAppAccountApiVersion ?? "2026-01-15-preview");
+            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-05-01");
             _backupsUnderAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _backupsUnderAccountRestClient = new BackupsUnderAccount(_backupsUnderAccountClientDiagnostics, Pipeline, Endpoint, netAppAccountApiVersion ?? "2026-01-15-preview");
+            _backupsUnderAccountRestClient = new BackupsUnderAccount(_backupsUnderAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppAccountApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppAccountResource> operation = new NetAppArmOperation<NetAppAccountResource>(
-                    new NetAppAccountOperationSource(Client),
+                    new NetAppAccountResourceOperationSource(Client),
                     _accountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppAccountResource> operation = new NetAppArmOperation<NetAppAccountResource>(
-                    new NetAppAccountOperationSource(Client),
+                    new NetAppAccountResourceOperationSource(Client),
                     _accountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

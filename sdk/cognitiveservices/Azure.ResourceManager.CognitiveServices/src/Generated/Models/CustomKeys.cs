@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         [WirePath("keys")]
-        public IDictionary<string, string> Keys { get; }
+        public IDictionary<string, string> Keys { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

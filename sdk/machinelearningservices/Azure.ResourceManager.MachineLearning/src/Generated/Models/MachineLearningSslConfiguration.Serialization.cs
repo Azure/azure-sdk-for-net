@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSslConfiguration : IUtf8JsonSerializable, IJsonModel<MachineLearningSslConfiguration>
+    /// <summary> The ssl configuration for scoring. </summary>
+    public partial class MachineLearningSslConfiguration : IJsonModel<MachineLearningSslConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSslConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningSslConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningSslConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSslConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSslConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningSslConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningSslConfiguration IPersistableModel<MachineLearningSslConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningSslConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningSslConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningSslConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -42,66 +81,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Cert))
             {
-                if (Cert != null)
-                {
-                    writer.WritePropertyName("cert"u8);
-                    writer.WriteStringValue(Cert);
-                }
-                else
-                {
-                    writer.WriteNull("cert");
-                }
+                writer.WritePropertyName("cert"u8);
+                writer.WriteStringValue(Cert);
             }
             if (Optional.IsDefined(Key))
             {
-                if (Key != null)
-                {
-                    writer.WritePropertyName("key"u8);
-                    writer.WriteStringValue(Key);
-                }
-                else
-                {
-                    writer.WriteNull("key");
-                }
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(Key);
             }
             if (Optional.IsDefined(Cname))
             {
-                if (Cname != null)
-                {
-                    writer.WritePropertyName("cname"u8);
-                    writer.WriteStringValue(Cname);
-                }
-                else
-                {
-                    writer.WriteNull("cname");
-                }
+                writer.WritePropertyName("cname"u8);
+                writer.WriteStringValue(Cname);
             }
             if (Optional.IsDefined(LeafDomainLabel))
             {
-                if (LeafDomainLabel != null)
-                {
-                    writer.WritePropertyName("leafDomainLabel"u8);
-                    writer.WriteStringValue(LeafDomainLabel);
-                }
-                else
-                {
-                    writer.WriteNull("leafDomainLabel");
-                }
+                writer.WritePropertyName("leafDomainLabel"u8);
+                writer.WriteStringValue(LeafDomainLabel);
             }
             if (Optional.IsDefined(OverwriteExistingDomain))
             {
                 writer.WritePropertyName("overwriteExistingDomain"u8);
                 writer.WriteBooleanValue(OverwriteExistingDomain.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,22 +121,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningSslConfiguration IJsonModel<MachineLearningSslConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningSslConfiguration IJsonModel<MachineLearningSslConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningSslConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningSslConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningSslConfiguration(document.RootElement, options);
         }
 
-        internal static MachineLearningSslConfiguration DeserializeMachineLearningSslConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningSslConfiguration DeserializeMachineLearningSslConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,74 +152,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string cname = default;
             string leafDomainLabel = default;
             bool? overwriteExistingDomain = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new MachineLearningSslConfigStatus(property.Value.GetString());
+                    status = new MachineLearningSslConfigStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cert"u8))
+                if (prop.NameEquals("cert"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cert = null;
                         continue;
                     }
-                    cert = property.Value.GetString();
+                    cert = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"u8))
+                if (prop.NameEquals("key"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         key = null;
                         continue;
                     }
-                    key = property.Value.GetString();
+                    key = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cname"u8))
+                if (prop.NameEquals("cname"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         cname = null;
                         continue;
                     }
-                    cname = property.Value.GetString();
+                    cname = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("leafDomainLabel"u8))
+                if (prop.NameEquals("leafDomainLabel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         leafDomainLabel = null;
                         continue;
                     }
-                    leafDomainLabel = property.Value.GetString();
+                    leafDomainLabel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overwriteExistingDomain"u8))
+                if (prop.NameEquals("overwriteExistingDomain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overwriteExistingDomain = property.Value.GetBoolean();
+                    overwriteExistingDomain = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningSslConfiguration(
                 status,
                 cert,
@@ -211,178 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 cname,
                 leafDomainLabel,
                 overwriteExistingDomain,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    builder.AppendLine($"'{Status.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cert), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cert: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Cert))
-                {
-                    builder.Append("  cert: ");
-                    if (Cert.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Cert}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Cert}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  key: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Key))
-                {
-                    builder.Append("  key: ");
-                    if (Key.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Key}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Key}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cname), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cname: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Cname))
-                {
-                    builder.Append("  cname: ");
-                    if (Cname.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Cname}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Cname}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeafDomainLabel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  leafDomainLabel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LeafDomainLabel))
-                {
-                    builder.Append("  leafDomainLabel: ");
-                    if (LeafDomainLabel.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LeafDomainLabel}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LeafDomainLabel}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverwriteExistingDomain), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  overwriteExistingDomain: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OverwriteExistingDomain))
-                {
-                    builder.Append("  overwriteExistingDomain: ");
-                    var boolValue = OverwriteExistingDomain.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningSslConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningSslConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningSslConfiguration IPersistableModel<MachineLearningSslConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSslConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningSslConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningSslConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningSslConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

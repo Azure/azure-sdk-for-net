@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FailoverTestType : IEquatable<FailoverTestType>
     {
         private readonly string _value;
+        /// <summary> SingleSiteFailover. </summary>
+        private const string SingleSiteFailoverValue = "SingleSiteFailover";
+        /// <summary> MultiSiteFailover. </summary>
+        private const string MultiSiteFailoverValue = "MultiSiteFailover";
+        /// <summary> All. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="FailoverTestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FailoverTestType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleSiteFailoverValue = "SingleSiteFailover";
-        private const string MultiSiteFailoverValue = "MultiSiteFailover";
-        private const string AllValue = "All";
+            _value = value;
+        }
 
         /// <summary> SingleSiteFailover. </summary>
         public static FailoverTestType SingleSiteFailover { get; } = new FailoverTestType(SingleSiteFailoverValue);
+
         /// <summary> MultiSiteFailover. </summary>
         public static FailoverTestType MultiSiteFailover { get; } = new FailoverTestType(MultiSiteFailoverValue);
+
         /// <summary> All. </summary>
         public static FailoverTestType All { get; } = new FailoverTestType(AllValue);
+
         /// <summary> Determines if two <see cref="FailoverTestType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FailoverTestType left, FailoverTestType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FailoverTestType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FailoverTestType left, FailoverTestType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverTestType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FailoverTestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FailoverTestType(string value) => new FailoverTestType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FailoverTestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FailoverTestType?(string value) => value == null ? null : new FailoverTestType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailoverTestType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FailoverTestType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

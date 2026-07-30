@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Managed Network settings for a machine learning workspace. </summary>
     public partial class ManagedNetworkSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         public ManagedNetworkSettings()
@@ -52,39 +24,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
+        /// <param name="enableNetworkMonitor"> A flag to indicate if monitoring needs to be enabled for the managed network. </param>
         /// <param name="isolationMode"> Isolation mode for the managed network of a machine learning workspace. </param>
         /// <param name="networkId"></param>
-        /// <param name="outboundRules">
-        /// Dictionary of &lt;OutboundRule&gt;
-        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
-        /// </param>
+        /// <param name="outboundRules"> Dictionary of &lt;OutboundRule&gt;. </param>
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
+        /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
+        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedNetworkSettings(bool? enableNetworkMonitor, IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            EnableNetworkMonitor = enableNetworkMonitor;
             IsolationMode = isolationMode;
             NetworkId = networkId;
             OutboundRules = outboundRules;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            FirewallSku = firewallSku;
+            ManagedNetworkKind = managedNetworkKind;
+            FirewallPublicIpAddress = firewallPublicIpAddress;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> A flag to indicate if monitoring needs to be enabled for the managed network. </summary>
+        [WirePath("enableNetworkMonitor")]
+        public bool? EnableNetworkMonitor { get; set; }
 
         /// <summary> Isolation mode for the managed network of a machine learning workspace. </summary>
         [WirePath("isolationMode")]
         public IsolationMode? IsolationMode { get; set; }
-        /// <summary> Gets the network id. </summary>
+
+        /// <summary> Gets the NetworkId. </summary>
         [WirePath("networkId")]
         public string NetworkId { get; }
-        /// <summary>
-        /// Dictionary of &lt;OutboundRule&gt;
-        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
-        /// </summary>
+
+        /// <summary> Dictionary of &lt;OutboundRule&gt;. </summary>
         [WirePath("outboundRules")]
         public IDictionary<string, MachineLearningOutboundRule> OutboundRules { get; set; }
+
         /// <summary> Status of the Provisioning for the managed network of a machine learning workspace. </summary>
         [WirePath("status")]
         public ManagedNetworkProvisionStatus Status { get; set; }
+
+        /// <summary> Firewall Sku used for FQDN Rules. </summary>
+        [WirePath("firewallSku")]
+        public FirewallSku? FirewallSku { get; set; }
+
+        /// <summary> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </summary>
+        [WirePath("managedNetworkKind")]
+        public ManagedNetworkKind? ManagedNetworkKind { get; set; }
+
+        /// <summary> Public IP address assigned to the Azure Firewall. </summary>
+        [WirePath("firewallPublicIpAddress")]
+        public string FirewallPublicIpAddress { get; }
     }
 }

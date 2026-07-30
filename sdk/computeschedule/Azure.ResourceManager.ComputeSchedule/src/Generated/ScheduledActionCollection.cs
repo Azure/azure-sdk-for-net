@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             TryGetApiVersion(ScheduledActionResource.ResourceType, out string scheduledActionApiVersion);
             _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
-            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Endpoint, scheduledActionApiVersion ?? "2026-04-15-preview");
+            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 HttpMessage message = _scheduledActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, ScheduledActionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeScheduleArmOperation<ScheduledActionResource> operation = new ComputeScheduleArmOperation<ScheduledActionResource>(
-                    new ScheduledActionOperationSource(Client),
+                    new ScheduledActionResourceOperationSource(Client),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 HttpMessage message = _scheduledActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, ScheduledActionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeScheduleArmOperation<ScheduledActionResource> operation = new ComputeScheduleArmOperation<ScheduledActionResource>(
-                    new ScheduledActionOperationSource(Client),
+                    new ScheduledActionResourceOperationSource(Client),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
                     message.Request,

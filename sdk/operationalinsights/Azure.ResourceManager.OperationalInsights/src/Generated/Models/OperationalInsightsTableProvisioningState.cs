@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsTableProvisioningState : IEquatable<OperationalInsightsTableProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Table schema is still being built and updated, table is currently locked for any changes till the procedure is done. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Table schema is stable and without changes, table data is being updated. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Table state is stable and without changes, table is unlocked and open for new updates. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Table state is deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsTableProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UpdatingValue = "Updating";
-        private const string InProgressValue = "InProgress";
-        private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Table schema is still being built and updated, table is currently locked for any changes till the procedure is done. </summary>
         public static OperationalInsightsTableProvisioningState Updating { get; } = new OperationalInsightsTableProvisioningState(UpdatingValue);
+
         /// <summary> Table schema is stable and without changes, table data is being updated. </summary>
         public static OperationalInsightsTableProvisioningState InProgress { get; } = new OperationalInsightsTableProvisioningState(InProgressValue);
+
         /// <summary> Table state is stable and without changes, table is unlocked and open for new updates. </summary>
         public static OperationalInsightsTableProvisioningState Succeeded { get; } = new OperationalInsightsTableProvisioningState(SucceededValue);
+
         /// <summary> Table state is deleting. </summary>
         public static OperationalInsightsTableProvisioningState Deleting { get; } = new OperationalInsightsTableProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsTableProvisioningState left, OperationalInsightsTableProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsTableProvisioningState left, OperationalInsightsTableProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsTableProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTableProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsTableProvisioningState(string value) => new OperationalInsightsTableProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTableProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsTableProvisioningState?(string value) => value == null ? null : new OperationalInsightsTableProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsTableProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsTableProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

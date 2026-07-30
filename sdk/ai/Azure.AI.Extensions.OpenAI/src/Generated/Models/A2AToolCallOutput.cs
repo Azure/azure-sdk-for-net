@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
+    [Experimental("AAIP001")]
     public partial class A2AToolCallOutput : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="A2AToolCallOutput"/>. </summary>

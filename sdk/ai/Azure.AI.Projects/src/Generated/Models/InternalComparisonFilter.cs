@@ -48,10 +48,10 @@ namespace OpenAI
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
         /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
         /// </summary>
-        public FileSearchToolFiltersType Type { get; }
+        public FileSearchToolFiltersType Type { get; set; }
 
         /// <summary> The key to compare against the value. </summary>
-        public string Key { get; }
+        public string Key { get; set; }
 
         /// <summary>
         /// The value to compare against the attribute key; supports string, number, or boolean types.
@@ -98,6 +98,6 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Value { get; }
+        public BinaryData Value { get; set; }
     }
 }

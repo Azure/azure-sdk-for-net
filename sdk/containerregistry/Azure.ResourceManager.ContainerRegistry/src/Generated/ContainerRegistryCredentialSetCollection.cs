@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ContainerRegistryCredentialSetResource.ResourceType, out string containerRegistryCredentialSetApiVersion);
             _credentialSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryCredentialSetResource.ResourceType.Namespace, Diagnostics);
-            _credentialSetsRestClient = new CredentialSets(_credentialSetsClientDiagnostics, Pipeline, Endpoint, containerRegistryCredentialSetApiVersion ?? "2026-01-01-preview");
+            _credentialSetsRestClient = new CredentialSets(_credentialSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryCredentialSetApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _credentialSetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, ContainerRegistryCredentialSetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(
-                    new ContainerRegistryCredentialSetOperationSource(Client),
+                    new ContainerRegistryCredentialSetResourceOperationSource(Client),
                     _credentialSetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _credentialSetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, ContainerRegistryCredentialSetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(
-                    new ContainerRegistryCredentialSetOperationSource(Client),
+                    new ContainerRegistryCredentialSetResourceOperationSource(Client),
                     _credentialSetsClientDiagnostics,
                     Pipeline,
                     message.Request,

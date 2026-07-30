@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct EnrollmentDepartmentAdminViewCharge : IEquatable<EnrollmentDepartmentAdminViewCharge>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Allowed. </summary>
+        private const string AllowedValue = "Allowed";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> NotAllowed. </summary>
+        private const string NotAllowedValue = "NotAllowed";
 
         /// <summary> Initializes a new instance of <see cref="EnrollmentDepartmentAdminViewCharge"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnrollmentDepartmentAdminViewCharge(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string AllowedValue = "Allowed";
-        private const string DisabledValue = "Disabled";
-        private const string NotAllowedValue = "NotAllowed";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static EnrollmentDepartmentAdminViewCharge Other { get; } = new EnrollmentDepartmentAdminViewCharge(OtherValue);
+
         /// <summary> Allowed. </summary>
         public static EnrollmentDepartmentAdminViewCharge Allowed { get; } = new EnrollmentDepartmentAdminViewCharge(AllowedValue);
+
         /// <summary> Disabled. </summary>
         public static EnrollmentDepartmentAdminViewCharge Disabled { get; } = new EnrollmentDepartmentAdminViewCharge(DisabledValue);
+
         /// <summary> NotAllowed. </summary>
         public static EnrollmentDepartmentAdminViewCharge NotAllowed { get; } = new EnrollmentDepartmentAdminViewCharge(NotAllowedValue);
+
         /// <summary> Determines if two <see cref="EnrollmentDepartmentAdminViewCharge"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnrollmentDepartmentAdminViewCharge left, EnrollmentDepartmentAdminViewCharge right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnrollmentDepartmentAdminViewCharge"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnrollmentDepartmentAdminViewCharge left, EnrollmentDepartmentAdminViewCharge right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnrollmentDepartmentAdminViewCharge"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnrollmentDepartmentAdminViewCharge"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnrollmentDepartmentAdminViewCharge(string value) => new EnrollmentDepartmentAdminViewCharge(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnrollmentDepartmentAdminViewCharge"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnrollmentDepartmentAdminViewCharge?(string value) => value == null ? null : new EnrollmentDepartmentAdminViewCharge(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnrollmentDepartmentAdminViewCharge other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnrollmentDepartmentAdminViewCharge other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

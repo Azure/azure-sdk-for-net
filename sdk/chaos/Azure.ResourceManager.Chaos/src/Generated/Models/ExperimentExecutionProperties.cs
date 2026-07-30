@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The status of the execution. </param>
         /// <param name="startedOn"> String that represents the start date time. </param>
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionProperties(string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExperimentExecutionProperties(string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartedOn = startedOn;
             StoppedOn = stoppedOn;
+            ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> String that represents the stop date time. </summary>
         public DateTimeOffset? StoppedOn { get; }
+
+        /// <summary> Resource provisioning state. Not currently in use for executions. </summary>
+        public ChaosProvisioningState? ProvisioningState { get; }
     }
 }

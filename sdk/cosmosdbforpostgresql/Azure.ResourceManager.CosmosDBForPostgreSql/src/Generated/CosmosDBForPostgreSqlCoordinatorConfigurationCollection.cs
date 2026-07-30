@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(CosmosDBForPostgreSqlCoordinatorConfigurationResource.ResourceType, out string cosmosDBForPostgreSqlCoordinatorConfigurationApiVersion);
             _cosmosDBForPostgreSqlCoordinatorConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlCoordinatorConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _cosmosDBForPostgreSqlCoordinatorConfigurationsRestClient = new CosmosDBForPostgreSqlCoordinatorConfigurations(_cosmosDBForPostgreSqlCoordinatorConfigurationsClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlCoordinatorConfigurationApiVersion ?? "2023-03-02-preview");
+            _cosmosDBForPostgreSqlCoordinatorConfigurationsRestClient = new CosmosDBForPostgreSqlCoordinatorConfigurations(_cosmosDBForPostgreSqlCoordinatorConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlCoordinatorConfigurationApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _cosmosDBForPostgreSqlCoordinatorConfigurationsRestClient.CreateUpdateOnCoordinatorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource>(
-                    new CosmosDBForPostgreSqlCoordinatorConfigurationOperationSource(Client),
+                    new CosmosDBForPostgreSqlCoordinatorConfigurationResourceOperationSource(Client),
                     _cosmosDBForPostgreSqlCoordinatorConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _cosmosDBForPostgreSqlCoordinatorConfigurationsRestClient.CreateUpdateOnCoordinatorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlCoordinatorConfigurationResource>(
-                    new CosmosDBForPostgreSqlCoordinatorConfigurationOperationSource(Client),
+                    new CosmosDBForPostgreSqlCoordinatorConfigurationResourceOperationSource(Client),
                     _cosmosDBForPostgreSqlCoordinatorConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct StorageKeyType : IEquatable<StorageKeyType>
     {
         private readonly string _value;
+        /// <summary> SharedAccessKey. </summary>
+        private const string SharedAccessKeyValue = "SharedAccessKey";
+        /// <summary> StorageAccessKey. </summary>
+        private const string StorageAccessKeyValue = "StorageAccessKey";
+        /// <summary> ManagedIdentity. </summary>
+        private const string ManagedIdentityValue = "ManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="StorageKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageKeyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SharedAccessKeyValue = "SharedAccessKey";
-        private const string StorageAccessKeyValue = "StorageAccessKey";
-        private const string ManagedIdentityValue = "ManagedIdentity";
+            _value = value;
+        }
 
         /// <summary> SharedAccessKey. </summary>
         public static StorageKeyType SharedAccessKey { get; } = new StorageKeyType(SharedAccessKeyValue);
+
         /// <summary> StorageAccessKey. </summary>
         public static StorageKeyType StorageAccessKey { get; } = new StorageKeyType(StorageAccessKeyValue);
+
         /// <summary> ManagedIdentity. </summary>
         public static StorageKeyType ManagedIdentity { get; } = new StorageKeyType(ManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="StorageKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageKeyType left, StorageKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageKeyType left, StorageKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageKeyType(string value) => new StorageKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageKeyType?(string value) => value == null ? null : new StorageKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

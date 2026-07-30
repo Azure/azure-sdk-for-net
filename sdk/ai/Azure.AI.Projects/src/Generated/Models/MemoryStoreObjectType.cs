@@ -4,18 +4,20 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     public readonly partial struct MemoryStoreObjectType : IEquatable<MemoryStoreObjectType>
     {
         private readonly string _value;
         private const string MemoryStoreValue = "memory_store";
         private const string MemoryStoreDeletedValue = "memory_store.deleted";
         private const string MemoryStoreScopeDeletedValue = "memory_store.scope.deleted";
-        private const string MemoryDeletedValue = "memory.deleted";
+        private const string MemoryDeletedValue = "memory_store.item.deleted";
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreObjectType"/>. </summary>
         /// <param name="value"> The value. </param>

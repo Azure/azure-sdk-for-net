@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.Cdn.Models
     // marked as EditorBrowsable.Never.
     public partial class RequestHeaderMatchCondition
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, RequestHeaderOperator requestHeaderOperator) : this(requestHeaderOperator)
         {
             ConditionType = conditionType;
         }
 
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestHeaderMatchConditionType ConditionType
         {
