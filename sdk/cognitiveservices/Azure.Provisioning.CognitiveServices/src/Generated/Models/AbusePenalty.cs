@@ -59,7 +59,7 @@ namespace Azure.Provisioning.CognitiveServices
             base.DefineProvisionableProperties();
             _action = DefineProperty<AbusePenaltyAction>(nameof(Action), new string[] { "action" });
             _rateLimitPercentage = DefineProperty<float>(nameof(RateLimitPercentage), new string[] { "rateLimitPercentage" });
-            _expiration = DefineProperty<DateTimeOffset>(nameof(Expiration), new string[] { "expiration" });
+            _expiration = DefineProperty<DateTimeOffset>(nameof(Expiration), new string[] { "expiration" }, format: "O");
             DefineAdditionalProperties();
         }
 

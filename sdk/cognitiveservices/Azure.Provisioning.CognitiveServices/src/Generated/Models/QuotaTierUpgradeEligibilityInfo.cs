@@ -70,7 +70,7 @@ namespace Azure.Provisioning.CognitiveServices
             base.DefineProvisionableProperties();
             _nextTierName = DefineProperty<string>(nameof(NextTierName), new string[] { "nextTierName" });
             _upgradeAvailabilityStatus = DefineProperty<QuotaTierUpgradeAvailabilityStatus>(nameof(UpgradeAvailabilityStatus), new string[] { "upgradeAvailabilityStatus" });
-            _upgradeApplicableOn = DefineProperty<DateTimeOffset>(nameof(UpgradeApplicableOn), new string[] { "upgradeApplicableDate" });
+            _upgradeApplicableOn = DefineProperty<DateTimeOffset>(nameof(UpgradeApplicableOn), new string[] { "upgradeApplicableDate" }, format: "O");
             _upgradeUnavailabilityReason = DefineProperty<string>(nameof(UpgradeUnavailabilityReason), new string[] { "upgradeUnavailabilityReason" });
             DefineAdditionalProperties();
         }

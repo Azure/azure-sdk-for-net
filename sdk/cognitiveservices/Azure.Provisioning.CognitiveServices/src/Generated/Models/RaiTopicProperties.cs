@@ -158,8 +158,8 @@ namespace Azure.Provisioning.CognitiveServices
             _sampleBlobUri = DefineProperty<string>(nameof(SampleBlobUri), new string[] { "sampleBlobUrl" });
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" });
             _failedReason = DefineProperty<string>(nameof(FailedReason), new string[] { "failedReason" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" });
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedAt" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, format: "O");
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedAt" }, format: "O");
             DefineAdditionalProperties();
         }
 

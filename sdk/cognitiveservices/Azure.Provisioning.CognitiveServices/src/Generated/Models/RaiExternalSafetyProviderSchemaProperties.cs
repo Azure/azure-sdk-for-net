@@ -165,8 +165,8 @@ namespace Azure.Provisioning.CognitiveServices
             _secretName = DefineProperty<string>(nameof(SecretName), new string[] { "secretName" });
             _managedIdentity = DefineProperty<string>(nameof(ManagedIdentity), new string[] { "managedIdentity" });
             _keyVaultUri = DefineProperty<Uri>(nameof(KeyVaultUri), new string[] { "keyVaultUri" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedAt" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

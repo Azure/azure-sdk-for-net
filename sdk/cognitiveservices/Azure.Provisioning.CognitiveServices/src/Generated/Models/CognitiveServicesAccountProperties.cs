@@ -500,7 +500,7 @@ namespace Azure.Provisioning.CognitiveServices
             _amlWorkspace = DefineModelProperty<UserOwnedAmlWorkspace>(nameof(AmlWorkspace), new string[] { "amlWorkspace" });
             _publicNetworkAccess = DefineProperty<ServiceAccountPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _apiProperties = DefineModelProperty<ServiceAccountApiProperties>(nameof(ApiProperties), new string[] { "apiProperties" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "dateCreated" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "dateCreated" }, isOutput: true, format: "O");
             _callRateLimit = DefineModelProperty<ServiceAccountCallRateLimit>(nameof(CallRateLimit), new string[] { "callRateLimit" }, isOutput: true);
             _enableDynamicThrottling = DefineProperty<bool>(nameof(EnableDynamicThrottling), new string[] { "dynamicThrottlingEnabled" });
             _isStoredCompletionsDisabled = DefineProperty<bool>(nameof(IsStoredCompletionsDisabled), new string[] { "storedCompletionsDisabled" });
@@ -510,7 +510,7 @@ namespace Azure.Provisioning.CognitiveServices
             _disableLocalAuth = DefineProperty<bool>(nameof(DisableLocalAuth), new string[] { "disableLocalAuth" });
             _endpoints = DefineDictionaryProperty<string>(nameof(Endpoints), new string[] { "endpoints" }, isOutput: true);
             _restore = DefineProperty<bool>(nameof(Restore), new string[] { "restore" });
-            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionDate" }, isOutput: true);
+            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionDate" }, isOutput: true, format: "O");
             _scheduledPurgeDate = DefineProperty<string>(nameof(ScheduledPurgeDate), new string[] { "scheduledPurgeDate" }, isOutput: true);
             _locations = DefineModelProperty<CognitiveServicesMultiRegionSettings>(nameof(Locations), new string[] { "locations" });
             _commitmentPlanAssociations = DefineListProperty<CommitmentPlanAssociation>(nameof(CommitmentPlanAssociations), new string[] { "commitmentPlanAssociations" }, isOutput: true);

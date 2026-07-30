@@ -92,8 +92,8 @@ namespace Azure.Provisioning.CognitiveServices
             _tier = DefineProperty<string>(nameof(Tier), new string[] { "tier" });
             _count = DefineProperty<int>(nameof(Count), new string[] { "count" });
             _quota = DefineModelProperty<CommitmentQuota>(nameof(Quota), new string[] { "quota" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isOutput: true);
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, isOutput: true);
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isOutput: true, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

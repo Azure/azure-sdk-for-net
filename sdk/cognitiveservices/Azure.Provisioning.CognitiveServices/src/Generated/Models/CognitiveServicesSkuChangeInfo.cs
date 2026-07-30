@@ -59,7 +59,7 @@ namespace Azure.Provisioning.CognitiveServices
             base.DefineProvisionableProperties();
             _countOfDowngrades = DefineProperty<float>(nameof(CountOfDowngrades), new string[] { "countOfDowngrades" });
             _countOfUpgradesAfterDowngrades = DefineProperty<float>(nameof(CountOfUpgradesAfterDowngrades), new string[] { "countOfUpgradesAfterDowngrades" });
-            _lastChangedOn = DefineProperty<DateTimeOffset>(nameof(LastChangedOn), new string[] { "lastChangeDate" });
+            _lastChangedOn = DefineProperty<DateTimeOffset>(nameof(LastChangedOn), new string[] { "lastChangeDate" }, format: "O");
             DefineAdditionalProperties();
         }
 

@@ -75,7 +75,7 @@ namespace Azure.Provisioning.CognitiveServices
             base.DefineProvisionableProperties();
             _currentTierName = DefineProperty<string>(nameof(CurrentTierName), new string[] { "currentTierName" }, isOutput: true);
             _tierUpgradePolicy = DefineProperty<CognitiveServicesTierUpgradePolicy>(nameof(TierUpgradePolicy), new string[] { "tierUpgradePolicy" });
-            _assignmentOn = DefineProperty<DateTimeOffset>(nameof(AssignmentOn), new string[] { "assignmentDate" }, isOutput: true);
+            _assignmentOn = DefineProperty<DateTimeOffset>(nameof(AssignmentOn), new string[] { "assignmentDate" }, isOutput: true, format: "O");
             _tierUpgradeEligibilityInfo = DefineModelProperty<QuotaTierUpgradeEligibilityInfo>(nameof(TierUpgradeEligibilityInfo), new string[] { "tierUpgradeEligibilityInfo" }, isOutput: true);
             DefineAdditionalProperties();
         }
