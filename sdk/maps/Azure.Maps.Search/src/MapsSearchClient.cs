@@ -537,5 +537,3 @@ namespace Azure.Maps.Search
         }
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE
