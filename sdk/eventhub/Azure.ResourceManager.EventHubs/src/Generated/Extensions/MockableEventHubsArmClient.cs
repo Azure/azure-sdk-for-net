@@ -107,6 +107,24 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             return new EventHubsConsumerGroupResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="FabricShortcutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FabricShortcutResource"/> object. </returns>
+        public virtual FabricShortcutResource GetFabricShortcutResource(ResourceIdentifier id)
+        {
+            FabricShortcutResource.ValidateResourceId(id);
+            return new FabricShortcutResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="UpgradePreferencesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpgradePreferencesResource"/> object. </returns>
+        public virtual UpgradePreferencesResource GetUpgradePreferencesResource(ResourceIdentifier id)
+        {
+            UpgradePreferencesResource.ValidateResourceId(id);
+            return new UpgradePreferencesResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="EventHubsNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EventHubsNamespaceResource"/> object. </returns>

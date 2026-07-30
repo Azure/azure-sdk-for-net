@@ -106,6 +106,9 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupResource> GetEventHubsConsumerGroup(string consumerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupResource>> GetEventHubsConsumerGroupAsync(string consumerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsConsumerGroupCollection GetEventHubsConsumerGroups() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource> GetFabricShortcut(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource>> GetFabricShortcutAsync(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventHubs.FabricShortcutCollection GetFabricShortcuts() { throw null; }
         Azure.ResourceManager.EventHubs.EventHubData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.EventHubs.EventHubData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -238,6 +241,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>> GetConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetNamespaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetNamespacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventHubs.UpgradePreferencesResource GetUpgradePreferences() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties> PatchConfiguration(Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties clusterQuotaConfigurationProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>> PatchConfigurationAsync(Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties clusterQuotaConfigurationProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubsClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -428,6 +432,8 @@ namespace Azure.ResourceManager.EventHubs
         public static Azure.ResourceManager.EventHubs.EventHubsNetworkSecurityPerimeterConfigurationResource GetEventHubsNetworkSecurityPerimeterConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionResource GetEventHubsPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource GetEventHubsSchemaGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.EventHubs.FabricShortcutResource GetFabricShortcutResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.EventHubs.UpgradePreferencesResource GetUpgradePreferencesResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class EventHubsNamespaceAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.EventHubsNamespaceAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsNamespaceAuthorizationRuleResource>, System.Collections.IEnumerable
     {
@@ -782,6 +788,94 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class FabricShortcutCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.FabricShortcutResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.FabricShortcutResource>, System.Collections.IEnumerable
+    {
+        protected FabricShortcutCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.FabricShortcutResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string fabricShortcutName, Azure.ResourceManager.EventHubs.FabricShortcutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.FabricShortcutResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string fabricShortcutName, Azure.ResourceManager.EventHubs.FabricShortcutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource> Get(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.FabricShortcutResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.FabricShortcutResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource>> GetAsync(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.EventHubs.FabricShortcutResource> GetIfExists(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.EventHubs.FabricShortcutResource>> GetIfExistsAsync(string fabricShortcutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EventHubs.FabricShortcutResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.FabricShortcutResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.FabricShortcutResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.FabricShortcutResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FabricShortcutData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.FabricShortcutData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>
+    {
+        public FabricShortcutData() { }
+        public string Location { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.FabricShortcutData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.FabricShortcutData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FabricShortcutResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.FabricShortcutData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FabricShortcutResource() { }
+        public virtual Azure.ResourceManager.EventHubs.FabricShortcutData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource> Approve(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource>> ApproveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string eventHubName, string fabricShortcutName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource> Reject(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.FabricShortcutResource>> RejectAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventHubs.FabricShortcutData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.FabricShortcutData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.FabricShortcutData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.FabricShortcutResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.FabricShortcutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.FabricShortcutResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.FabricShortcutData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class UpgradePreferencesData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>
+    {
+        public UpgradePreferencesData() { }
+        public Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.UpgradePreferencesData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.UpgradePreferencesData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UpgradePreferencesResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected UpgradePreferencesResource() { }
+        public virtual Azure.ResourceManager.EventHubs.UpgradePreferencesData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.UpgradePreferencesResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.UpgradePreferencesData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.UpgradePreferencesResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.UpgradePreferencesData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.UpgradePreferencesResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.UpgradePreferencesResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.EventHubs.UpgradePreferencesData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.UpgradePreferencesData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.UpgradePreferencesData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.UpgradePreferencesResource> UpgradeNow(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.UpgradePreferencesResource>> UpgradeNowAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.EventHubs.Mocking
 {
@@ -801,6 +895,8 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         public virtual Azure.ResourceManager.EventHubs.EventHubsNetworkSecurityPerimeterConfigurationResource GetEventHubsNetworkSecurityPerimeterConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionResource GetEventHubsPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource GetEventHubsSchemaGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventHubs.FabricShortcutResource GetFabricShortcutResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.EventHubs.UpgradePreferencesResource GetUpgradePreferencesResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableEventHubsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -875,7 +971,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData EventHubsSchemaGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? updatedAtUtc = default(System.DateTimeOffset?), System.DateTimeOffset? createdAtUtc = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> groupProperties = null, Azure.ResourceManager.EventHubs.Models.EventHubsSchemaCompatibility? schemaCompatibility = default(Azure.ResourceManager.EventHubs.Models.EventHubsSchemaCompatibility?), Azure.ResourceManager.EventHubs.Models.EventHubsSchemaType? schemaType = default(Azure.ResourceManager.EventHubs.Models.EventHubsSchemaType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsSku EventHubsSku(Azure.ResourceManager.EventHubs.Models.EventHubsSkuName name = default(Azure.ResourceManager.EventHubs.Models.EventHubsSkuName), Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier? tier = default(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier?), int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy EventHubsThrottlingPolicy(string name = null, long rateLimitThreshold = (long)0, Azure.ResourceManager.EventHubs.Models.EventHubsMetricId metricId = default(Azure.ResourceManager.EventHubs.Models.EventHubsMetricId)) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.ExceptionWindow ExceptionWindow(System.DateTimeOffset date = default(System.DateTimeOffset), Azure.ResourceManager.EventHubs.Models.ExceptionWindowAction action = Azure.ResourceManager.EventHubs.Models.ExceptionWindowAction.Block, System.TimeSpan startTimeOfDay = default(System.TimeSpan), int durationMinutes = 0) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration FabricShortcutConfiguration(System.Guid tenantId = default(System.Guid), System.Guid workspaceId = default(System.Guid), System.Guid artifactId = default(System.Guid), string premiumCapacityId = null, Azure.Core.ResourceIdentifier logAnalyticsResourceId = null, string workspaceName = null, string artifactName = null) { throw null; }
+        public static Azure.ResourceManager.EventHubs.FabricShortcutData FabricShortcutData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties properties = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties FabricShortcutProperties(Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration configuration = null, Azure.ResourceManager.EventHubs.Models.FabricShortcutType? shortcutType = default(Azure.ResourceManager.EventHubs.Models.FabricShortcutType?), Azure.ResourceManager.EventHubs.Models.FabricShortcutStatus? shortcutStatus = default(Azure.ResourceManager.EventHubs.Models.FabricShortcutStatus?), string statusDescription = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.MaintenanceWindow MaintenanceWindow(Azure.ResourceManager.EventHubs.Models.UpgradePreferenceDayOfWeek dayOfWeek = Azure.ResourceManager.EventHubs.Models.UpgradePreferenceDayOfWeek.Sunday, System.TimeSpan startTimeOfDay = default(System.TimeSpan), int durationMinutes = 0) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.RetentionDescription RetentionDescription(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription? cleanupPolicy = default(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription?), long? retentionTimeInHours = default(long?), long? minCompactionLagTimeInMinutes = default(long?), int? tombstoneRetentionTimeInHours = default(int?)) { throw null; }
+        public static Azure.ResourceManager.EventHubs.UpgradePreferencesData UpgradePreferencesData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties UpgradePreferencesProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow> maintenanceWindows = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.Models.ExceptionWindow> exceptionWindows = null, Azure.ResourceManager.EventHubs.Models.UpgradeStatus upgradeStatus = null) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.UpgradeStatus UpgradeStatus(bool pendingUpgrade = false, bool inProgress = false, System.DateTimeOffset? completesOn = default(System.DateTimeOffset?)) { throw null; }
     }
     public partial class AvailableCluster : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>
     {
@@ -1872,6 +1976,94 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion left, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ExceptionWindow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.ExceptionWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ExceptionWindow>
+    {
+        public ExceptionWindow(System.DateTimeOffset date, Azure.ResourceManager.EventHubs.Models.ExceptionWindowAction action, System.TimeSpan startTimeOfDay, int durationMinutes) { }
+        public Azure.ResourceManager.EventHubs.Models.ExceptionWindowAction Action { get { throw null; } set { } }
+        public System.DateTimeOffset Date { get { throw null; } set { } }
+        public int DurationMinutes { get { throw null; } set { } }
+        public System.TimeSpan StartTimeOfDay { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.EventHubs.Models.ExceptionWindow JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EventHubs.Models.ExceptionWindow PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.Models.ExceptionWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.ExceptionWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.ExceptionWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.ExceptionWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ExceptionWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ExceptionWindow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ExceptionWindow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum ExceptionWindowAction
+    {
+        Block = 0,
+        Allow = 1,
+    }
+    public partial class FabricShortcutConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration>
+    {
+        public FabricShortcutConfiguration(System.Guid tenantId, System.Guid workspaceId, System.Guid artifactId) { }
+        public System.Guid ArtifactId { get { throw null; } set { } }
+        public string ArtifactName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogAnalyticsResourceId { get { throw null; } set { } }
+        public string PremiumCapacityId { get { throw null; } set { } }
+        public System.Guid TenantId { get { throw null; } set { } }
+        public System.Guid WorkspaceId { get { throw null; } set { } }
+        public string WorkspaceName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FabricShortcutProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties>
+    {
+        public FabricShortcutProperties(Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration configuration) { }
+        public Azure.ResourceManager.EventHubs.Models.FabricShortcutConfiguration Configuration { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset? ModifiedOn { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.FabricShortcutStatus? ShortcutStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.FabricShortcutType? ShortcutType { get { throw null; } set { } }
+        public string StatusDescription { get { throw null; } }
+        protected virtual Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.FabricShortcutProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum FabricShortcutStatus
+    {
+        Pending = 0,
+        Approved = 1,
+        Rejected = 2,
+    }
+    public enum FabricShortcutType
+    {
+        Entity = 0,
+        Network = 1,
+    }
+    public partial class MaintenanceWindow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow>
+    {
+        public MaintenanceWindow(Azure.ResourceManager.EventHubs.Models.UpgradePreferenceDayOfWeek dayOfWeek, System.TimeSpan startTimeOfDay, int durationMinutes) { }
+        public Azure.ResourceManager.EventHubs.Models.UpgradePreferenceDayOfWeek DayOfWeek { get { throw null; } set { } }
+        public int DurationMinutes { get { throw null; } set { } }
+        public System.TimeSpan StartTimeOfDay { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.EventHubs.Models.MaintenanceWindow JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EventHubs.Models.MaintenanceWindow PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.Models.MaintenanceWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.MaintenanceWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RetentionDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>
     {
         public RetentionDescription() { }
@@ -1888,5 +2080,47 @@ namespace Azure.ResourceManager.EventHubs.Models
         Azure.ResourceManager.EventHubs.Models.RetentionDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum UpgradePreferenceDayOfWeek
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+    }
+    public partial class UpgradePreferencesProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties>
+    {
+        public UpgradePreferencesProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.ExceptionWindow> ExceptionWindows { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.MaintenanceWindow> MaintenanceWindows { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.UpgradeStatus UpgradeStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradePreferencesProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UpgradeStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.UpgradeStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradeStatus>
+    {
+        internal UpgradeStatus() { }
+        public System.DateTimeOffset? CompletesOn { get { throw null; } }
+        public bool InProgress { get { throw null; } }
+        public bool PendingUpgrade { get { throw null; } }
+        protected virtual Azure.ResourceManager.EventHubs.Models.UpgradeStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EventHubs.Models.UpgradeStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EventHubs.Models.UpgradeStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.UpgradeStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.UpgradeStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.UpgradeStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradeStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradeStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.UpgradeStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
