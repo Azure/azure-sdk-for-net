@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Net.ServerSentEvents" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
