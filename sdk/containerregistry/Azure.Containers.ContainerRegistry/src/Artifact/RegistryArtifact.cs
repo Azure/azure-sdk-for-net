@@ -565,5 +565,3 @@ namespace Azure.Containers.ContainerRegistry
         #endregion
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE
