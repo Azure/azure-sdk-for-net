@@ -461,7 +461,7 @@ namespace Azure.Provisioning.Compute
             _hardwareProfile = DefineModelProperty<VirtualMachineScaleSetHardwareProfile>(nameof(HardwareProfile), new string[] { "hardwareProfile" });
             _serviceArtifactReference = DefineModelProperty<ServiceArtifactReference>(nameof(ServiceArtifactReference), new string[] { "serviceArtifactReference" });
             _securityPostureReference = DefineModelProperty<ComputeSecurityPostureReference>(nameof(SecurityPostureReference), new string[] { "securityPostureReference" });
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

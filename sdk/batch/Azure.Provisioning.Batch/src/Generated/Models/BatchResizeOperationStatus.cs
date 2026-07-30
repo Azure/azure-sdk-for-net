@@ -92,9 +92,9 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _targetDedicatedNodes = DefineProperty<int>(nameof(TargetDedicatedNodes), new string[] { "targetDedicatedNodes" });
             _targetLowPriorityNodes = DefineProperty<int>(nameof(TargetLowPriorityNodes), new string[] { "targetLowPriorityNodes" });
-            _resizeTimeout = DefineProperty<TimeSpan>(nameof(ResizeTimeout), new string[] { "resizeTimeout" });
+            _resizeTimeout = DefineProperty<TimeSpan>(nameof(ResizeTimeout), new string[] { "resizeTimeout" }, format: "P");
             _nodeDeallocationOption = DefineProperty<BatchNodeDeallocationOption>(nameof(NodeDeallocationOption), new string[] { "nodeDeallocationOption" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
             _errors = DefineListProperty<BatchResizeError>(nameof(Errors), new string[] { "errors" });
             DefineAdditionalProperties();
         }
