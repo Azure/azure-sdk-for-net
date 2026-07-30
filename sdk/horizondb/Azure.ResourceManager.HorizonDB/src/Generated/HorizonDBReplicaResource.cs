@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(ResourceType, out string horizonDBReplicaApiVersion);
             _horizonDBReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBReplicasRestClient = new HorizonDBReplicas(_horizonDBReplicasClientDiagnostics, Pipeline, Endpoint, horizonDBReplicaApiVersion ?? "2026-01-20-preview");
+            _horizonDBReplicasRestClient = new HorizonDBReplicas(_horizonDBReplicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBReplicaApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 

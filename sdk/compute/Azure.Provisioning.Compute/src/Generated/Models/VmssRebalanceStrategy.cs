@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Compute
     public enum VmssRebalanceStrategy
     {
         /// <summary> Recreate. </summary>
-        Recreate
+        Recreate = 0
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachineScaleSetLifecycleHookActionState
     {
         /// <summary> The lifecycle hook for the target resource is waiting for approval. </summary>
-        Waiting,
+        Waiting = 0,
         /// <summary> The lifecycle hook for the target resource is approved. </summary>
-        Approved,
+        Approved = 1,
         /// <summary> The lifecycle hook for the target resource is rejected. </summary>
-        Rejected
+        Rejected = 2
     }
 }

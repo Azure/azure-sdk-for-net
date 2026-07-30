@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> Choose Standard_ZRS storage if the region supports it, else choose Standard_LRS storage, unless overridden by specifying regional storageAccountType. If no storageAccountStrategy is specified, this is the default strategy (from API version 2025-03-03 onwards). </summary>
         [DataMember(Name = "PreferStandard_ZRS")]
-        PreferStandardZrs,
+        PreferStandardZrs = 0,
         /// <summary> Choose Standard_LRS storage unless overridden by specifying regional storageAccountType. </summary>
         [DataMember(Name = "DefaultStandard_LRS")]
-        DefaultStandardLrs
+        DefaultStandardLrs = 1
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum OperatingSystemType
     {
         /// <summary> Windows. </summary>
-        Windows,
+        Windows = 0,
         /// <summary> Linux. </summary>
-        Linux
+        Linux = 1
     }
 }

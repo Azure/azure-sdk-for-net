@@ -20,9 +20,17 @@ model ResourceProfileProperties {
   @visibility(Lifecycle.Read)
   latestRevision?: ResourceProfileRevision;
 
+  /** The previous revision resource returned with the profile. */
+  @visibility(Lifecycle.Read)
+  previousRevision?: ResourceProfileRevision;
+
   /** The specialized profile resource returned with the profile. */
   @visibility(Lifecycle.Read)
   specializedProfile?: SpecializedResourceProfile;
+
+  /** The discriminated profile resource returned with the profile, typed as the discriminator base. */
+  @visibility(Lifecycle.Read)
+  baseDiscriminatedProfile?: DiscriminatedResourceProfile;
 }
 
 /** A discriminated profile resource. */

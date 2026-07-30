@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum IPVersion
     {
         /// <summary> IPv4. </summary>
-        IPv4,
+        IPv4 = 0,
         /// <summary> IPv6. </summary>
-        IPv6
+        IPv6 = 1
     }
 }

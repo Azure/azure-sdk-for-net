@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ConfidentialVmVersion
     {
         /// <summary> V1 indicates the resource does not have an associated Virtual Machine Metadata. </summary>
-        V1,
+        V1 = 0,
         /// <summary> V2 indicates the resource has an associated Virtual Machine Metadata. </summary>
-        V2
+        V2 = 1
     }
 }

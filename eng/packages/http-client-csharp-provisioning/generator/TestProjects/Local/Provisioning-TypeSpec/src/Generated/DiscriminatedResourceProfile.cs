@@ -13,10 +13,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary>
-    /// A discriminated profile resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SpecializedResourceProfile"/>.
-    /// </summary>
+    /// <summary> A discriminated profile resource. </summary>
     public partial class DiscriminatedResourceProfile : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

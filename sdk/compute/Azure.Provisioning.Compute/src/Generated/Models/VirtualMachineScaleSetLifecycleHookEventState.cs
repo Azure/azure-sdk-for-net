@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachineScaleSetLifecycleHookEventState
     {
         /// <summary> The lifecycle hook event is active. E.g., waiting on a response from the customer. </summary>
-        Active,
+        Active = 0,
         /// <summary> The lifecycle hook event is completed. i.e., all the target resources in the event have moved to a terminal state. </summary>
-        Completed
+        Completed = 1
     }
 }

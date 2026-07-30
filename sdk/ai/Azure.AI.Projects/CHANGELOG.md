@@ -10,6 +10,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix the Foundry-Features header, resulting in 400 error during Agent optimization jobs submission.
 
 ### Other Changes
 

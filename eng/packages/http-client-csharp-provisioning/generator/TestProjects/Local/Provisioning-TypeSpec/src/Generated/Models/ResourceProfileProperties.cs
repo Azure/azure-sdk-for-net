@@ -13,7 +13,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public partial class ResourceProfileProperties : ProvisionableConstruct
     {
         private ResourceProfileRevision _latestRevision;
+        private ResourceProfileRevision _previousRevision;
         private SpecializedResourceProfile _specializedProfile;
+        private DiscriminatedResourceProfile _baseDiscriminatedProfile;
 
         /// <summary> Creates a new ResourceProfileProperties. </summary>
         public ResourceProfileProperties()
@@ -30,6 +32,16 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets the PreviousRevision. </summary>
+        public ResourceProfileRevision PreviousRevision
+        {
+            get
+            {
+                Initialize();
+                return _previousRevision;
+            }
+        }
+
         /// <summary> Gets the SpecializedProfile. </summary>
         public SpecializedResourceProfile SpecializedProfile
         {
@@ -40,12 +52,24 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets the BaseDiscriminatedProfile. </summary>
+        public DiscriminatedResourceProfile BaseDiscriminatedProfile
+        {
+            get
+            {
+                Initialize();
+                return _baseDiscriminatedProfile;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ResourceProfileProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _latestRevision = DefineModelProperty(nameof(LatestRevision), new string[] { "latestRevision" }, new ResourceProfileRevision("resourceProfileRevision"), isOutput: true);
-            _specializedProfile = DefineModelProperty(nameof(SpecializedProfile), new string[] { "specializedProfile" }, new SpecializedResourceProfile("specializedResourceProfile"), isOutput: true);
+            _latestRevision = DefineModelProperty(nameof(LatestRevision), new string[] { "latestRevision" }, new ResourceProfileRevision("latestRevision"), isOutput: true);
+            _previousRevision = DefineModelProperty(nameof(PreviousRevision), new string[] { "previousRevision" }, new ResourceProfileRevision("previousRevision"), isOutput: true);
+            _specializedProfile = DefineModelProperty(nameof(SpecializedProfile), new string[] { "specializedProfile" }, new SpecializedResourceProfile("specializedProfile"), isOutput: true);
+            _baseDiscriminatedProfile = DefineModelProperty(nameof(BaseDiscriminatedProfile), new string[] { "baseDiscriminatedProfile" }, new DiscriminatedResourceProfile("baseDiscriminatedProfile"), isOutput: true);
             DefineAdditionalProperties();
         }
 

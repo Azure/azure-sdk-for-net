@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum GallerySharingPermissionType
     {
         /// <summary> Private. </summary>
-        Private,
+        Private = 0,
         /// <summary> Groups. </summary>
-        Groups,
+        Groups = 1,
         /// <summary> Community. </summary>
-        Community
+        Community = 2
     }
 }

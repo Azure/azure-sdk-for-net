@@ -97,10 +97,15 @@ namespace Azure.Generator.Provisioning.Utilities
             };
             if (IsResourceType(propertyType))
             {
-                args.Add(New.Instance(propertyType, [Literal(propertyType.Name.ToVariableName())]));
+                // The identifier is derived from the property so that multiple properties of the same
+                // resource type on one construct do not share the same bicep identifier.
+                args.Add(New.Instance(propertyType, [Literal(propertyName.ToVariableName())]));
             }
             if (isOutput)
             {
+                // Output applies to this property occurrence, not recursively to the shared model/resource type.
+                // Setter availability is determined once per generated type from all of its usages. Deep per-usage
+                // read-only APIs would require separate input/output types or wrappers for both models and resources.
                 args.Add(new PositionalParameterReferenceExpression("isOutput", Literal(true)));
             }
             if (isRequired)

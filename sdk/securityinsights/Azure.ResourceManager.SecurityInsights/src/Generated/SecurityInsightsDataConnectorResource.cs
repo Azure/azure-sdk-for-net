@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsDataConnectorApiVersion);
             _dataConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _dataConnectorsRestClient = new DataConnectors(_dataConnectorsClientDiagnostics, Pipeline, Endpoint, securityInsightsDataConnectorApiVersion ?? "2025-07-01-preview");
+            _dataConnectorsRestClient = new DataConnectors(_dataConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsDataConnectorApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

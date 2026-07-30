@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary></summary>
+    /// <summary> Resource Identity Type. </summary>
     internal enum ResourceIdentityType
     {
         /// <summary> SystemAssigned. </summary>

@@ -13,9 +13,9 @@ namespace Azure.Provisioning.Compute
     public enum ComputeGalleryEndpointType
     {
         /// <summary> WireServer. </summary>
-        WireServer,
+        WireServer = 0,
         /// <summary> Imds. </summary>
         [DataMember(Name = "IMDS")]
-        Imds
+        Imds = 1
     }
 }

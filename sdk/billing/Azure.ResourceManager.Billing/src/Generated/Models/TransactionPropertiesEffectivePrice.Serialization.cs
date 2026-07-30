@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The price of the product after applying any discounts. </summary>
-    public partial class TransactionPropertiesEffectivePrice : BillingAmount, IJsonModel<TransactionPropertiesEffectivePrice>
+    internal partial class TransactionPropertiesEffectivePrice : BillingAmount, IJsonModel<TransactionPropertiesEffectivePrice>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

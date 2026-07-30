@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Compute
     public enum PatchOperationStatus
     {
         /// <summary> Unknown. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> InProgress. </summary>
-        InProgress,
+        InProgress = 1,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> CompletedWithWarnings. </summary>
-        CompletedWithWarnings
+        CompletedWithWarnings = 4
     }
 }

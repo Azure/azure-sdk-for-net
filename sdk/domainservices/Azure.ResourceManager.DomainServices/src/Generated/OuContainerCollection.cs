@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DomainServices
         {
             TryGetApiVersion(OuContainerResource.ResourceType, out string ouContainerApiVersion);
             _ouContainerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainServices", OuContainerResource.ResourceType.Namespace, Diagnostics);
-            _ouContainerRestClient = new OuContainer(_ouContainerClientDiagnostics, Pipeline, Endpoint, ouContainerApiVersion ?? "2025-10-01-preview");
+            _ouContainerRestClient = new OuContainer(_ouContainerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ouContainerApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

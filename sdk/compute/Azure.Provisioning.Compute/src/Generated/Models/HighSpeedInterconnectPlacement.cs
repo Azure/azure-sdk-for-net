@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum HighSpeedInterconnectPlacement
     {
         /// <summary> No high speed interconnect placement. </summary>
-        None,
+        None = 0,
         /// <summary> Trunk high speed interconnect placement. </summary>
-        Trunk
+        Trunk = 1
     }
 }

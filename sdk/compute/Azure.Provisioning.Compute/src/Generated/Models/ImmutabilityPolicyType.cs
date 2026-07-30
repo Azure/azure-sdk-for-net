@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ImmutabilityPolicyType
     {
         /// <summary> Privileged users can modify the snapshot's immutability policy, if it is unlocked type. </summary>
-        Unlocked,
+        Unlocked = 0,
         /// <summary> The snapshot immutability policy duration cannot be reduced but can be extended. The policy cannot be removed until the lock period expires. </summary>
-        Locked
+        Locked = 1
     }
 }

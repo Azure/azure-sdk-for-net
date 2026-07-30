@@ -14,12 +14,12 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> Standard HDD locally redundant storage. </summary>
         [DataMember(Name = "Standard_LRS")]
-        StandardLrs,
+        StandardLrs = 0,
         /// <summary> Premium SSD locally redundant storage. </summary>
         [DataMember(Name = "Premium_LRS")]
-        PremiumLrs,
+        PremiumLrs = 1,
         /// <summary> Standard zone redundant storage. </summary>
         [DataMember(Name = "Standard_ZRS")]
-        StandardZrs
+        StandardZrs = 2
     }
 }

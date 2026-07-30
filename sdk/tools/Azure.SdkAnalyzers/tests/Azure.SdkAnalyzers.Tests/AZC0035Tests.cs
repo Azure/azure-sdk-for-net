@@ -18,10 +18,12 @@ namespace Azure.SdkAnalyzers.Tests
         [TestCase("Task<Operation<TestModel>>")]
         [TestCase("Pageable<TestModel>")]
         [TestCase("AsyncPageable<TestModel>")]
+        [TestCase("System.ClientModel.AsyncStreamingClientResult<TestModel>")]
         public async Task AZC0035_ProducedWhenOutputModelMissingFromModelFactory(string returnType)
         {
             string code = $@"
 using Azure;
+using System.ClientModel;
 using System.Threading.Tasks;
 
 namespace Azure.Test
@@ -41,7 +43,15 @@ namespace Azure.Test
     }}
 }}";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            var analyzer = Verifier.CreateAnalyzer(code);
+            analyzer.TestState.Sources.Add(@"
+namespace System.ClientModel
+{
+    public sealed class AsyncStreamingClientResult<T>
+    {
+    }
+}");
+            await analyzer.RunAsync();
         }
 
         [Test]
@@ -82,6 +92,45 @@ namespace Azure.Test
         }
 
         public static TestModel2 TestModel2()
+        {
+            return null;
+        }
+    }
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
+        public async Task AZC0035_UnwrapsSseItemInsideAsyncStreamingClientResult()
+        {
+            const string code = @"
+namespace System.Net.ServerSentEvents
+{
+    public sealed class SseItem<T>
+    {
+    }
+}
+
+namespace System.ClientModel
+{
+    public sealed class AsyncStreamingClientResult<T>
+    {
+    }
+}
+
+namespace Azure.Test
+{
+    public class {|AZC0035:TestModel|}
+    {
+        private TestModel() { }
+        public string Name { get; }
+    }
+
+    public class TestClient
+    {
+        public System.ClientModel.AsyncStreamingClientResult<
+            System.Net.ServerSentEvents.SseItem<TestModel>> GetModels()
         {
             return null;
         }

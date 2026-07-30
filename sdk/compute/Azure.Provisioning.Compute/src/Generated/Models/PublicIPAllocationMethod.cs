@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum PublicIPAllocationMethod
     {
         /// <summary> Dynamic. </summary>
-        Dynamic,
+        Dynamic = 0,
         /// <summary> Static. </summary>
-        Static
+        Static = 1
     }
 }

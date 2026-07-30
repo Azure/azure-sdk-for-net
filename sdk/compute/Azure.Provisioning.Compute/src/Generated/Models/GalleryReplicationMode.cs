@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum GalleryReplicationMode
     {
         /// <summary> Full. </summary>
-        Full,
+        Full = 0,
         /// <summary> Shallow. </summary>
-        Shallow
+        Shallow = 1
     }
 }

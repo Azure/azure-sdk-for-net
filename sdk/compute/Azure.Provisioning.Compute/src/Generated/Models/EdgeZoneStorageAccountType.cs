@@ -14,15 +14,15 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> StandardLrs. </summary>
         [DataMember(Name = "Standard_LRS")]
-        StandardLrs,
+        StandardLrs = 0,
         /// <summary> StandardZrs. </summary>
         [DataMember(Name = "Standard_ZRS")]
-        StandardZrs,
+        StandardZrs = 1,
         /// <summary> StandardSsdLrs. </summary>
         [DataMember(Name = "StandardSSD_LRS")]
-        StandardSsdLrs,
+        StandardSsdLrs = 2,
         /// <summary> PremiumLrs. </summary>
         [DataMember(Name = "Premium_LRS")]
-        PremiumLrs
+        PremiumLrs = 3
     }
 }

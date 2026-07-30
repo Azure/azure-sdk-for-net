@@ -14,12 +14,12 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> EncryptedVmGuestStateOnlyWithPmk. </summary>
         [DataMember(Name = "EncryptedVMGuestStateOnlyWithPmk")]
-        EncryptedVmGuestStateOnlyWithPmk,
+        EncryptedVmGuestStateOnlyWithPmk = 0,
         /// <summary> EncryptedWithPmk. </summary>
-        EncryptedWithPmk,
+        EncryptedWithPmk = 1,
         /// <summary> EncryptedWithCmk. </summary>
-        EncryptedWithCmk,
+        EncryptedWithCmk = 2,
         /// <summary> NonPersistedTPM. </summary>
-        NonPersistedTPM
+        NonPersistedTPM = 3
     }
 }

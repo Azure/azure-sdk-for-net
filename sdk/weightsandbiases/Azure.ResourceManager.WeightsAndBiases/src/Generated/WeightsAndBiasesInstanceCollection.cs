@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         {
             TryGetApiVersion(WeightsAndBiasesInstanceResource.ResourceType, out string weightsAndBiasesInstanceApiVersion);
             _instancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", WeightsAndBiasesInstanceResource.ResourceType.Namespace, Diagnostics);
-            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Endpoint, weightsAndBiasesInstanceApiVersion ?? "2024-09-18");
+            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, weightsAndBiasesInstanceApiVersion ?? "2024-09-18");
             ValidateResourceId(id);
         }
 

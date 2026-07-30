@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesProjectScopedCapabilityHostResource.ResourceType, out string cognitiveServicesProjectScopedCapabilityHostApiVersion);
             _projectCapabilityHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesProjectScopedCapabilityHostResource.ResourceType.Namespace, Diagnostics);
-            _projectCapabilityHostsRestClient = new ProjectCapabilityHosts(_projectCapabilityHostsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectScopedCapabilityHostApiVersion ?? "2026-05-15-preview");
+            _projectCapabilityHostsRestClient = new ProjectCapabilityHosts(_projectCapabilityHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectScopedCapabilityHostApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

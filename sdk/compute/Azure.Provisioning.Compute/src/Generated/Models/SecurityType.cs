@@ -13,11 +13,11 @@ namespace Azure.Provisioning.Compute
     public enum SecurityType
     {
         /// <summary> Indicates a VM without UEFI features such as SecureBoot or vTPM; returned as the default value when securityType is not specified. </summary>
-        Standard,
+        Standard = 0,
         /// <summary> TrustedLaunch. </summary>
-        TrustedLaunch,
+        TrustedLaunch = 1,
         /// <summary> ConfidentialVm. </summary>
         [DataMember(Name = "ConfidentialVM")]
-        ConfidentialVm
+        ConfidentialVm = 2
     }
 }

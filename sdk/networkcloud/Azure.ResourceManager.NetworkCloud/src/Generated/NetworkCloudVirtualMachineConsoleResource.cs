@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudVirtualMachineConsoleApiVersion);
             _consolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _consolesRestClient = new Consoles(_consolesClientDiagnostics, Pipeline, Endpoint, networkCloudVirtualMachineConsoleApiVersion ?? "2026-05-01-preview");
+            _consolesRestClient = new Consoles(_consolesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudVirtualMachineConsoleApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
