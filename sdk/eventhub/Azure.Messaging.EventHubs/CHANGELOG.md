@@ -10,11 +10,15 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
+- Added a warning log, emitted when `PrefetchSizeInBytes` is configured and a receive operation completes with no events while the AMQP link has no credit available.  This condition indicates that the prefetch size limit may be constraining receive throughput.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 - Fixed a bug where `EventHubBufferedProducerClient` could get stuck during `FlushAsync` or `CloseAsync` until `MaximumWaitTime` elapsed.
+
+- Fixed the event id used when logging that a legacy checkpoint format was detected.  The event was previously written with an unregistered id and did not render for listeners.
 
 ### Other Changes
 
