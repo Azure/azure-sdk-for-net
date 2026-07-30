@@ -27,3 +27,5 @@ namespace Azure.Storage
         public TimeSpan AutoInterval { get; set; } = TimeSpan.FromMinutes(1);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

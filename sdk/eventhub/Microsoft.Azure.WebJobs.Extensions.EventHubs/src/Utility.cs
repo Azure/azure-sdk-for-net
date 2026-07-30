@@ -58,3 +58,5 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

@@ -465,5 +465,3 @@ namespace Azure.Communication.Identity
         }
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE

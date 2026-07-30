@@ -86,5 +86,3 @@ namespace Azure.ResourceManager.AppService.Models
         public string Password { get; set; }    // This is a settable property.
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE
