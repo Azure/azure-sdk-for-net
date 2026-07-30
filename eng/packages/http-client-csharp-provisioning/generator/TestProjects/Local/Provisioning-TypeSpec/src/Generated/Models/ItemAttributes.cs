@@ -55,7 +55,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "expires" });
+            _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "expires" }, format: "O");
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" }, isRequired: true);
             DefineAdditionalProperties();
         }

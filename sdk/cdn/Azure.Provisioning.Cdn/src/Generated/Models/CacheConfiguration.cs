@@ -108,7 +108,7 @@ namespace Azure.Provisioning.Cdn
             _queryParameters = DefineProperty<string>(nameof(QueryParameters), new string[] { "queryParameters" });
             _isCompressionEnabled = DefineProperty<RuleIsCompressionEnabled>(nameof(IsCompressionEnabled), new string[] { "isCompressionEnabled" });
             _cacheBehavior = DefineProperty<RuleCacheBehavior>(nameof(CacheBehavior), new string[] { "cacheBehavior" });
-            _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" });
+            _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" }, format: "P");
             DefineAdditionalProperties();
         }
 
