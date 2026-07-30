@@ -14,3 +14,5 @@ public partial class AuthorizationRoleDefinition
     private partial BicepValue<string> GetNameDefaultValue() =>
         BicepFunction.CreateGuid(BicepFunction.GetResourceGroup().Id, BicepIdentifier);
 }
+
+// Test comment for batching validation - DO NOT MERGE

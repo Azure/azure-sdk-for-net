@@ -52,5 +52,3 @@ namespace Azure.Storage.DataMovement.Blobs
         public PageBlobRequestConditions DestinationConditions { get; set; }
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE

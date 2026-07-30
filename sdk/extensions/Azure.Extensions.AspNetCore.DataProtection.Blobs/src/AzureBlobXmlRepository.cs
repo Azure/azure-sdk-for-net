@@ -242,3 +242,5 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
