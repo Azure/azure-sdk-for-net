@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("allowedSubjects"u8);
                 writer.WriteStartArray();
-                foreach (AllowedSubject item in AllowedSubjects)
+                foreach (ManagedClusterLoadBalancerAllowedSubject item in AllowedSubjects)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IdentityBindingManagedIdentityProfile managedIdentity = default;
             IdentityBindingOidcIssuerProfile oidcIssuer = default;
             ManagedClusterIdentityBindingProvisioningState? provisioningState = default;
-            IList<AllowedSubject> allowedSubjects = default;
+            IList<ManagedClusterLoadBalancerAllowedSubject> allowedSubjects = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<AllowedSubject> array = new List<AllowedSubject>();
+                    List<ManagedClusterLoadBalancerAllowedSubject> array = new List<ManagedClusterLoadBalancerAllowedSubject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AllowedSubject.DeserializeAllowedSubject(item, options));
+                        array.Add(ManagedClusterLoadBalancerAllowedSubject.DeserializeManagedClusterLoadBalancerAllowedSubject(item, options));
                     }
                     allowedSubjects = array;
                     continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuer, provisioningState, allowedSubjects ?? new ChangeTrackingList<AllowedSubject>(), additionalBinaryDataProperties);
+            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuer, provisioningState, allowedSubjects ?? new ChangeTrackingList<ManagedClusterLoadBalancerAllowedSubject>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             long? syslogPort = default;
             bool? isCustomMetricsDisabled = default;
             bool? isPrometheusMetricsScrapingDisabled = default;
-            ContainerNetworkLogs? containerNetworkLogs = default;
+            ManagedClusterContainerNetworkLogs? containerNetworkLogs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    containerNetworkLogs = new ContainerNetworkLogs(prop.Value.GetString());
+                    containerNetworkLogs = new ManagedClusterContainerNetworkLogs(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

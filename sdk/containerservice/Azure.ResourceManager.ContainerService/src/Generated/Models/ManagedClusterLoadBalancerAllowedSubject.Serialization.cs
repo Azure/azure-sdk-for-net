@@ -21,56 +21,56 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// AllowedSubject are AND'd; multiple AllowedSubjects on an
     /// IdentityBinding are OR'd.
     /// </summary>
-    public partial class AllowedSubject : IJsonModel<AllowedSubject>
+    public partial class ManagedClusterLoadBalancerAllowedSubject : IJsonModel<ManagedClusterLoadBalancerAllowedSubject>
     {
-        /// <summary> Initializes a new instance of <see cref="AllowedSubject"/> for deserialization. </summary>
-        internal AllowedSubject()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerAllowedSubject"/> for deserialization. </summary>
+        internal ManagedClusterLoadBalancerAllowedSubject()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AllowedSubject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterLoadBalancerAllowedSubject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancerAllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAllowedSubject(document.RootElement, options);
+                        return DeserializeManagedClusterLoadBalancerAllowedSubject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AllowedSubject)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerAllowedSubject)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancerAllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AllowedSubject)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerAllowedSubject)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AllowedSubject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterLoadBalancerAllowedSubject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AllowedSubject IPersistableModel<AllowedSubject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterLoadBalancerAllowedSubject IPersistableModel<ManagedClusterLoadBalancerAllowedSubject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AllowedSubject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterLoadBalancerAllowedSubject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AllowedSubject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterLoadBalancerAllowedSubject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancerAllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedSubject)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerAllowedSubject)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("namespaceSelector"u8);
             writer.WriteObjectValue(NamespaceSelector, options);
@@ -112,24 +112,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AllowedSubject IJsonModel<AllowedSubject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterLoadBalancerAllowedSubject IJsonModel<ManagedClusterLoadBalancerAllowedSubject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AllowedSubject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterLoadBalancerAllowedSubject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancerAllowedSubject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedSubject)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerAllowedSubject)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAllowedSubject(document.RootElement, options);
+            return DeserializeManagedClusterLoadBalancerAllowedSubject(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AllowedSubject DeserializeAllowedSubject(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterLoadBalancerAllowedSubject DeserializeManagedClusterLoadBalancerAllowedSubject(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllowedSubject(namespaceSelector, serviceAccountSelector, additionalBinaryDataProperties);
+            return new ManagedClusterLoadBalancerAllowedSubject(namespaceSelector, serviceAccountSelector, additionalBinaryDataProperties);
         }
     }
 }

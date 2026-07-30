@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The Managed GPU experience installs additional components, such as the Data Center GPU Manager (DCGM) metrics for monitoring, on top of the GPU driver for you. For more details of what is installed, check out aka.ms/aks/managed-gpu. </summary>
-    public readonly partial struct GpuManagementMode : IEquatable<GpuManagementMode>
+    public readonly partial struct AgentPoolGpuManagementMode : IEquatable<AgentPoolGpuManagementMode>
     {
         private readonly string _value;
         /// <summary> Managed GPU experience is disabled for NVIDIA GPUs. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Managed GPU experience is enabled for NVIDIA GPUs. </summary>
         private const string ManagedValue = "Managed";
 
-        /// <summary> Initializes a new instance of <see cref="GpuManagementMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolGpuManagementMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GpuManagementMode(string value)
+        public AgentPoolGpuManagementMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Managed GPU experience is disabled for NVIDIA GPUs. </summary>
-        public static GpuManagementMode Unmanaged { get; } = new GpuManagementMode(UnmanagedValue);
+        public static AgentPoolGpuManagementMode Unmanaged { get; } = new AgentPoolGpuManagementMode(UnmanagedValue);
 
         /// <summary> Managed GPU experience is enabled for NVIDIA GPUs. </summary>
-        public static GpuManagementMode Managed { get; } = new GpuManagementMode(ManagedValue);
+        public static AgentPoolGpuManagementMode Managed { get; } = new AgentPoolGpuManagementMode(ManagedValue);
 
-        /// <summary> Determines if two <see cref="GpuManagementMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolGpuManagementMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(GpuManagementMode left, GpuManagementMode right) => left.Equals(right);
+        public static bool operator ==(AgentPoolGpuManagementMode left, AgentPoolGpuManagementMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="GpuManagementMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AgentPoolGpuManagementMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(GpuManagementMode left, GpuManagementMode right) => !left.Equals(right);
+        public static bool operator !=(AgentPoolGpuManagementMode left, AgentPoolGpuManagementMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="GpuManagementMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolGpuManagementMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GpuManagementMode(string value) => new GpuManagementMode(value);
+        public static implicit operator AgentPoolGpuManagementMode(string value) => new AgentPoolGpuManagementMode(value);
 
-        /// <summary> Converts a string to a <see cref="GpuManagementMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentPoolGpuManagementMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GpuManagementMode?(string value) => value == null ? null : new GpuManagementMode(value);
+        public static implicit operator AgentPoolGpuManagementMode?(string value) => value == null ? null : new AgentPoolGpuManagementMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is GpuManagementMode other && Equals(other);
+        public override bool Equals(object obj) => obj is AgentPoolGpuManagementMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(GpuManagementMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentPoolGpuManagementMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
