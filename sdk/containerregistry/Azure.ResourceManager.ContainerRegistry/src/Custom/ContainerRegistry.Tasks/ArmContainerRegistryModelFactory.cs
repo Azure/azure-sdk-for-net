@@ -66,11 +66,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <returns> A new <see cref="ContainerRegistryRunData"/> instance for mocking. </returns>
-        // NOTE: The parameter names and order below intentionally match the shipped 1.4.0 signature exactly.
-        // This custom overload is the only mechanism available to preserve named-argument source
-        // compatibility for callers after the Task/Run/AgentPool types moved to the separate
-        // Azure.ResourceManager.ContainerRegistry.Tasks package; do not "clean up" the ordering to
-        // match the current model, and do not add [CodeGenSuppress] here (this method is not generated).
+        // Preserve the shipped 1.4.0 parameter names and order for named-argument source compatibility
+        // after the Task/Run/AgentPool types moved to Azure.ResourceManager.ContainerRegistry.Tasks.
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryRunData ContainerRegistryRunData(
@@ -269,11 +266,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <returns> A new <see cref="ContainerRegistryTaskStepProperties"/> instance for mocking. </returns>
-        // NOTE: The parameter names and order below intentionally match the shipped 1.4.0 signature exactly.
-        // This custom overload is the only mechanism available to preserve named-argument source
-        // compatibility for callers after the Task/Run/AgentPool types moved to the separate
-        // Azure.ResourceManager.ContainerRegistry.Tasks package; do not "clean up" the ordering to
-        // match the current model, and do not add [CodeGenSuppress] here (this method is not generated).
+        // Preserve the shipped 1.4.0 parameter names and order for named-argument source compatibility
+        // after the Task/Run/AgentPool types moved to Azure.ResourceManager.ContainerRegistry.Tasks.
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(
