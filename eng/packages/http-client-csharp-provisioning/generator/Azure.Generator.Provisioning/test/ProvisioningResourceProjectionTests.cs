@@ -515,6 +515,63 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void SingletonResourceWithGeneratedParentNameIsNotSettable()
+        {
+            var parentModel = CreateModel("Parent");
+            var nameProperty = CreateProperty("Name", isRequired: true);
+            var singletonModel = CreateModel("SingletonSetting", [nameProperty]);
+            var parentResource = CreateMetadata(
+                parentModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                "Microsoft.Test/parents",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"]);
+            var singletonResource = CreateMetadata(
+                singletonModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}/settings/default",
+                "Microsoft.Test/parents/settings",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                singletonResourceName: "default",
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, singletonModel]);
+            var providers = CreateAndRegisterResourceProviders(parentResource, singletonResource);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)providers[1]).GetProvisioningPropertyInfo(nameProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+            Assert.That(propertyInfo.DefaultValue, Is.EqualTo("default"));
+        }
+
+        [Test]
+        public void SingletonResourceWithoutGeneratedParentHasSettableName()
+        {
+            var nameProperty = CreateProperty("Name", isRequired: true);
+            var model = CreateModel("SingletonSetting", [nameProperty]);
+            var singletonResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}/settings/default",
+                "Microsoft.Test/parents/settings",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                singletonResourceName: "default",
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(singletonResource);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(nameProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.True);
+            Assert.That(propertyInfo.DefaultValue, Is.Null);
+        }
+
+        [Test]
         public void WritableResourcePropertiesRemainSettable()
         {
             var writableProperty = CreateProperty("WritableValue");

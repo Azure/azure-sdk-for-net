@@ -89,6 +89,12 @@ namespace Azure.Generator.Provisioning.Providers
                 ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)?.Type
                 : null;
 
+        private bool RequiresFullyQualifiedName
+            => _resourceProjection is { IsExtensionResource: false, ParentResourceId: { } parentId }
+                && !ProvisioningGenerator.Instance.InputLibrary.ResourceProjections.Any(
+                    resource => resource.ResourceIdPatterns.Any(
+                        pattern => pattern.SerializedPath == parentId.SerializedPath));
+
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
         {
@@ -502,10 +508,12 @@ namespace Azure.Generator.Provisioning.Providers
                 var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
-                // For singleton resources, the "name" property has one fixed default value and is not settable.
+                // Keep the singleton name fixed only when its immediate parent can be emitted.
+                // Otherwise callers must supply the missing parent name segments.
                 string? defaultValue = null;
                 if (isResourceName
-                    && _resourceProjection?.SingletonResourceName is string singletonResourceName)
+                    && _resourceProjection?.SingletonResourceName is string singletonResourceName
+                    && !RequiresFullyQualifiedName)
                 {
                     defaultValue = singletonResourceName;
                     isSettable = false;
