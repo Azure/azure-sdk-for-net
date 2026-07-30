@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
 
@@ -148,5 +149,185 @@ public class BicepValueTests
                   }
                 }
                 """);
+    }
+
+    [Test]
+    public async Task ValidateDateTimeListProperty()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new DateTimeCollectionResource("dateTimeCollection")
+                {
+                    Name = "date-time-collection",
+                    DateTimes =
+                    [
+                        new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero),
+                        new DateTimeOffset(2026, 7, 30, 10, 45, 0, TimeSpan.Zero)
+                    ]
+                };
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource dateTimeCollection 'Test.Provider/dateTimeCollections@2024-01-01' = {
+                  name: 'date-time-collection'
+                  properties: {
+                    dateTimes: [
+                      '2026-07-29T09:30:00.0000000+00:00'
+                      '2026-07-30T10:45:00.0000000+00:00'
+                    ]
+                  }
+                }
+                """);
+    }
+
+    [Test]
+    public async Task ValidateRfc7231DateTimeListProperty()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new DateTimeCollectionResource("dateTimeCollection")
+                {
+                    Name = "date-time-collection",
+                    Rfc7231DateTimes =
+                    [
+                        new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero)
+                    ]
+                };
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource dateTimeCollection 'Test.Provider/dateTimeCollections@2024-01-01' = {
+                  name: 'date-time-collection'
+                  properties: {
+                    rfc7231DateTimes: [
+                      'Wed, 29 Jul 2026 09:30:00 GMT'
+                    ]
+                  }
+                }
+                """);
+    }
+
+    [Test]
+    public async Task ValidateRfc7231DateTimeDictionaryProperty()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new DateTimeCollectionResource("dateTimeCollection")
+                {
+                    Name = "date-time-collection"
+                };
+                resource.Rfc7231DateTimeMap.Add("created", new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero));
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource dateTimeCollection 'Test.Provider/dateTimeCollections@2024-01-01' = {
+                  name: 'date-time-collection'
+                  properties: {
+                    rfc7231DateTimeMap: {
+                      created: 'Wed, 29 Jul 2026 09:30:00 GMT'
+                    }
+                  }
+                }
+                """);
+    }
+
+    [Test]
+    public async Task ValidateDurationListProperty()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new DateTimeCollectionResource("dateTimeCollection")
+                {
+                    Name = "date-time-collection",
+                    Durations =
+                    [
+                        new TimeSpan(1, 2, 3, 4)
+                    ]
+                };
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource dateTimeCollection 'Test.Provider/dateTimeCollections@2024-01-01' = {
+                  name: 'date-time-collection'
+                  properties: {
+                    durations: [
+                      'P1DT2H3M4S'
+                    ]
+                  }
+                }
+                """);
+    }
+
+    private class DateTimeCollectionResource : ProvisionableResource
+    {
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+        private BicepValue<string>? _name;
+
+        public BicepList<DateTimeOffset> DateTimes
+        {
+            get { Initialize(); return _dateTimes!; }
+            set { Initialize(); _dateTimes!.Assign(value); }
+        }
+        private BicepList<DateTimeOffset>? _dateTimes;
+
+        public BicepList<DateTimeOffset> Rfc7231DateTimes
+        {
+            get { Initialize(); return _rfc7231DateTimes!; }
+            set { Initialize(); _rfc7231DateTimes!.Assign(value); }
+        }
+        private BicepList<DateTimeOffset>? _rfc7231DateTimes;
+
+        public BicepDictionary<DateTimeOffset> Rfc7231DateTimeMap
+        {
+            get { Initialize(); return _rfc7231DateTimeMap!; }
+            set { Initialize(); _rfc7231DateTimeMap!.Assign(value); }
+        }
+        private BicepDictionary<DateTimeOffset>? _rfc7231DateTimeMap;
+
+        public BicepList<TimeSpan> Durations
+        {
+            get { Initialize(); return _durations!; }
+            set { Initialize(); _durations!.Assign(value); }
+        }
+        private BicepList<TimeSpan>? _durations;
+
+        public DateTimeCollectionResource(string bicepIdentifier)
+            : base(bicepIdentifier, "Test.Provider/dateTimeCollections", "2024-01-01")
+        {
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+            _dateTimes = DefineListProperty<DateTimeOffset>("DateTimes", ["properties", "dateTimes"]);
+            _rfc7231DateTimes = DefineListProperty<DateTimeOffset>("Rfc7231DateTimes", ["properties", "rfc7231DateTimes"], format: "R");
+            _rfc7231DateTimeMap = DefineDictionaryProperty<DateTimeOffset>("Rfc7231DateTimeMap", ["properties", "rfc7231DateTimeMap"], format: "R");
+            _durations = DefineListProperty<TimeSpan>("Durations", ["properties", "durations"], format: "P");
+        }
     }
 }

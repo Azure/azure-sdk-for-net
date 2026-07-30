@@ -313,12 +313,21 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         string[]? bicepPath,
         bool isOutput = false,
         bool isRequired = false)
+        => DefineListProperty<T>(propertyName, bicepPath, format: null, isOutput, isRequired);
+
+    protected BicepList<T> DefineListProperty<T>(
+        string propertyName,
+        string[]? bicepPath,
+        string? format,
+        bool isOutput = false,
+        bool isRequired = false)
     {
         BicepList<T> values =
             new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" list
             {
                 _isOutput = isOutput,
-                _isRequired = isRequired
+                _isRequired = isRequired,
+                Format = format
             };
         ProvisionableProperties[propertyName] = values;
         return values;
@@ -329,12 +338,21 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         string[]? bicepPath,
         bool isOutput = false,
         bool isRequired = false)
+        => DefineDictionaryProperty<T>(propertyName, bicepPath, format: null, isOutput, isRequired);
+
+    protected BicepDictionary<T> DefineDictionaryProperty<T>(
+        string propertyName,
+        string[]? bicepPath,
+        string? format,
+        bool isOutput = false,
+        bool isRequired = false)
     {
         BicepDictionary<T> values =
             new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" dictionary
             {
                 _isOutput = isOutput,
-                _isRequired = isRequired
+                _isRequired = isRequired,
+                Format = format
             };
         ProvisionableProperties[propertyName] = values;
         return values;

@@ -16,6 +16,8 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 internal static class BicepTypeMapping
 {
+    private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+
     /// <summary>
     /// Map standard Azure types into Bicep primitive type names like bool,
     /// int, string, object, or array.  More complex types are not supported.
@@ -31,6 +33,8 @@ internal static class BicepTypeMapping
         type == typeof(Uri) ? "string" :
         type == typeof(DateTimeOffset) ? "string" :
         type == typeof(TimeSpan) ? "string" :
+        type == typeof(byte[]) ? "string" :
+        type == typeof(BinaryData) ? "string" :
         type == typeof(Guid) ? "string" :
         type == typeof(IPAddress) ? "string" :
         type == typeof(ETag) ? "string" :
@@ -55,15 +59,16 @@ internal static class BicepTypeMapping
         value switch
         {
             bool b => b.ToString(),
-            int i => i.ToString(),
-            long i => i.ToString(),
-            float f => f.ToString(CultureInfo.InvariantCulture),
-            double d => d.ToString(CultureInfo.InvariantCulture),
+            int i => ToString(i, format),
+            long i => ToString(i, format),
+            float f => f.ToString(format ?? "G", CultureInfo.InvariantCulture),
+            double d => d.ToString(format ?? "G", CultureInfo.InvariantCulture),
             string s => s,
             Uri u => u.AbsoluteUri,
-            DateTimeOffset d => d.ToString("o"),
-            TimeSpan t when format == "P" => XmlConvert.ToString(t),
-            TimeSpan t => t.ToString(),
+            DateTimeOffset d => format is null ? d.ToString("o", CultureInfo.InvariantCulture) : ToString(d, format),
+            TimeSpan t => format is null ? t.ToString() : ToString(t, format),
+            byte[] b => ToString(b, format ?? "D"),
+            BinaryData b => ToString(b.ToArray(), format ?? "D"),
             Guid g => g.ToString(),
             IPAddress a => a.ToString(),
             ETag e => e.ToString(),
@@ -76,6 +81,45 @@ internal static class BicepTypeMapping
             ValueType ee => ee.ToString()!,
             _ => throw new InvalidOperationException($"Cannot convert {value} to a literal Bicep string.")
         };
+
+    public static string ToString(DateTimeOffset value, string format) => format switch
+    {
+        "D" => value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+        "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
+        "O" or "o" => value.ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture),
+        "R" => value.ToString("r", CultureInfo.InvariantCulture),
+        "T" => value.ToString("HH:mm:ss", CultureInfo.InvariantCulture),
+        _ => value.ToString(format, CultureInfo.InvariantCulture)
+    };
+
+    public static string ToString(TimeSpan value, string format) => format switch
+    {
+        "P" => XmlConvert.ToString(value),
+        "%s" => Convert.ToInt32(Math.Round(value.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
+        "%S" => Convert.ToInt64(Math.Round(value.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
+        "s\\.FFF" or "s\\.FFFFFF" => value.TotalSeconds.ToString(CultureInfo.InvariantCulture),
+        "%m" => Convert.ToInt32(Math.Round(value.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
+        "%M" => Convert.ToInt64(Math.Round(value.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
+        "m\\.FFF" or "m\\.FFFFFF" => value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
+        _ => value.ToString(format, CultureInfo.InvariantCulture)
+    };
+
+    public static string ToString(byte[] value, string format) => format switch
+    {
+        "D" => Convert.ToBase64String(value),
+        "U" => Convert.ToBase64String(value).TrimEnd('=').Replace('+', '-').Replace('/', '_'),
+        _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
+    };
+
+    private static string ToString(int value, string? format) =>
+        string.Equals(format, "S", StringComparison.Ordinal) ?
+            value.ToString(CultureInfo.InvariantCulture) :
+            value.ToString();
+
+    private static string ToString(long value, string? format) =>
+        string.Equals(format, "S", StringComparison.Ordinal) ?
+            value.ToString(CultureInfo.InvariantCulture) :
+            value.ToString();
 
     /// <summary>
     /// Get the value of an enum.  This is either the name of the enum value or
