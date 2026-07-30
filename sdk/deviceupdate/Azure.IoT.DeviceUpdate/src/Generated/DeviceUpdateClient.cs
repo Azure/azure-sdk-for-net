@@ -28,18 +28,18 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint. </param>
         /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
+        public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint?.Authority, instanceId, new DeviceUpdateClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint. </param>
         /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="options"> The options for configuring the client. </param>
         internal DeviceUpdateClient(HttpPipelinePolicy authenticationPolicy, string endpoint, string instanceId, DeviceUpdateClientOptions options)
@@ -70,14 +70,14 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpoint"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public DeviceUpdateClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, instanceId, options)
+        public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint?.Authority, instanceId, options)
         {
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient from a <see cref="DeviceUpdateClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DeviceUpdateClient. </param>
         [Experimental("SCME0002")]
-        public DeviceUpdateClient(DeviceUpdateClientSettings settings) : this(settings?.Endpoint, settings?.InstanceId, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        internal DeviceUpdateClient(DeviceUpdateClientSettings settings) : this(new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.InstanceId, settings?.Options)
         {
         }
 
@@ -132,7 +132,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation StartImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
@@ -159,7 +159,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> StartImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
@@ -625,9 +625,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? maxCount = default, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetOperationStatusesCollectionResult(this, filter, maxCount, context, "DeviceUpdateClient.GetOperationStatuses");
+            return new DeviceUpdateClientGetOperationStatusesCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
         }
 
         /// <summary>
@@ -652,9 +652,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? maxCount = default, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(this, filter, maxCount, context, "DeviceUpdateClient.GetOperationStatuses");
+            return new DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
         }
 
         /// <summary>

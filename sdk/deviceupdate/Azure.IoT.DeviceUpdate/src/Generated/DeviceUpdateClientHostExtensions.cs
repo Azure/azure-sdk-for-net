@@ -16,7 +16,7 @@ namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Extension methods to add <see cref="DeviceUpdateClient"/> to an <see cref="IHostApplicationBuilder"/>. </summary>
     [Experimental("SCME0002")]
-    public static partial class DeviceUpdateClientHostExtensions
+    internal static partial class DeviceUpdateClientHostExtensions
     {
         /// <summary> Adds a singleton <see cref="DeviceUpdateClient"/> to the <see cref="IHostApplicationBuilder"/>'s service collection. </summary>
         /// <param name="host"> The <see cref="IHostApplicationBuilder"/> to add to. </param>

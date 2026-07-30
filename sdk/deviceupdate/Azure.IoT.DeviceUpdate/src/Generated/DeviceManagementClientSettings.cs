@@ -13,7 +13,7 @@ namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Represents the settings used to configure a <see cref="DeviceManagementClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class DeviceManagementClientSettings : ClientSettings
+    internal partial class DeviceManagementClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public string Endpoint { get; set; }

@@ -54,7 +54,7 @@ namespace Azure.IoT.DeviceUpdate
     [ModelReaderWriterBuildable(typeof(UpdateList))]
     [ModelReaderWriterBuildable(typeof(UpdateOperation))]
     [ModelReaderWriterBuildable(typeof(UpdateOperationsList))]
-    public partial class AzureIoTDeviceUpdateContext : ModelReaderWriterContext
+    internal partial class AzureIoTDeviceUpdateContext : ModelReaderWriterContext
     {
     }
 }
