@@ -26,40 +26,40 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerRegistryAgentPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AgentPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource"/> object. </returns>
-        public virtual ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgentPoolResource"/> object. </returns>
+        public virtual AgentPoolResource GetAgentPoolResource(ResourceIdentifier id)
         {
-            ContainerRegistryAgentPoolResource.ValidateResourceId(id);
-            return new ContainerRegistryAgentPoolResource(Client, id);
+            AgentPoolResource.ValidateResourceId(id);
+            return new AgentPoolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerRegistryRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryRunResource"/> object. </returns>
-        public virtual ContainerRegistryRunResource GetContainerRegistryRunResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RunResource"/> object. </returns>
+        public virtual RunResource GetRunResource(ResourceIdentifier id)
         {
-            ContainerRegistryRunResource.ValidateResourceId(id);
-            return new ContainerRegistryRunResource(Client, id);
+            RunResource.ValidateResourceId(id);
+            return new RunResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerRegistryTaskRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TaskRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource"/> object. </returns>
-        public virtual ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TaskRunResource"/> object. </returns>
+        public virtual TaskRunResource GetTaskRunResource(ResourceIdentifier id)
         {
-            ContainerRegistryTaskRunResource.ValidateResourceId(id);
-            return new ContainerRegistryTaskRunResource(Client, id);
+            TaskRunResource.ValidateResourceId(id);
+            return new TaskRunResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerRegistryTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryTaskResource"/> object. </returns>
-        public virtual ContainerRegistryTaskResource GetContainerRegistryTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TaskResource"/> object. </returns>
+        public virtual TaskResource GetTaskResource(ResourceIdentifier id)
         {
-            ContainerRegistryTaskResource.ValidateResourceId(id);
-            return new ContainerRegistryTaskResource(Client, id);
+            TaskResource.ValidateResourceId(id);
+            return new TaskResource(Client, id);
         }
     }
 }

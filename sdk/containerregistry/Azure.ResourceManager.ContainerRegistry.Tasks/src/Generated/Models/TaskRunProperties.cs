@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="runResult"> The result of this task run. </param>
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskRunProperties(ContainerRegistryTaskProvisioningState? provisioningState, RunContent runRequest, ContainerRegistryRunData runResult, string forceUpdateTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskRunProperties(ContainerRegistryTaskProvisioningState? provisioningState, RunContent runRequest, RunData runResult, string forceUpdateTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             RunRequest = runRequest;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public RunContent RunRequest { get; set; }
 
         /// <summary> The result of this task run. </summary>
-        public ContainerRegistryRunData RunResult { get; }
+        public RunData RunResult { get; }
 
         /// <summary> How the run should be forced to rerun even if the run request configuration has not changed. </summary>
         public string ForceUpdateTag { get; set; }

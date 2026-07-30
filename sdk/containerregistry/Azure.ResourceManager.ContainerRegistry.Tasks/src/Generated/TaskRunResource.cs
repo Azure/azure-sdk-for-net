@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
-    /// A class representing a ContainerRegistryTaskRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerRegistryTaskRunResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerRegistryTaskRuns method.
+    /// A class representing a TaskRun along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TaskRunResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetTaskRuns method.
     /// </summary>
-    public partial class ContainerRegistryTaskRunResource : ArmResource
+    public partial class TaskRunResource : ArmResource
     {
         private readonly ClientDiagnostics _taskRunsClientDiagnostics;
         private readonly TaskRuns _taskRunsRestClient;
-        private readonly ContainerRegistryTaskRunData _data;
+        private readonly TaskRunData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/taskRuns";
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunResource for mocking. </summary>
-        protected ContainerRegistryTaskRunResource()
+        /// <summary> Initializes a new instance of TaskRunResource for mocking. </summary>
+        protected TaskRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerRegistryTaskRunResource(ArmClient client, ContainerRegistryTaskRunData data) : this(client, data.Id)
+        internal TaskRunResource(ArmClient client, TaskRunData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ContainerRegistryTaskRunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TaskRunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string containerRegistryTaskRunApiVersion);
+            TryGetApiVersion(ResourceType, out string taskRunApiVersion);
             _taskRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", ResourceType.Namespace, Diagnostics);
-            _taskRunsRestClient = new TaskRuns(_taskRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryTaskRunApiVersion ?? "2025-03-01-preview");
+            _taskRunsRestClient = new TaskRuns(_taskRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, taskRunApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ContainerRegistryTaskRunData Data
+        public virtual TaskRunData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerRegistryTaskRunResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TaskRunResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.Get");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerRegistryTaskRunData> response = Response.FromValue(ContainerRegistryTaskRunData.FromResponse(result), result);
+                Response<TaskRunData> response = Response.FromValue(TaskRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryTaskRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TaskRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerRegistryTaskRunResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TaskRunResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.Get");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerRegistryTaskRunData> response = Response.FromValue(ContainerRegistryTaskRunData.FromResponse(result), result);
+                Response<TaskRunData> response = Response.FromValue(TaskRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryTaskRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TaskRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="patch"> The parameters for updating a task run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerRegistryTaskRunResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryTaskRunPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TaskRunResource>> UpdateAsync(WaitUntil waitUntil, TaskRunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.Update");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.Update");
             scope.Start();
             try
             {
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryTaskRunPatch.ToRequestContent(patch), context);
+                HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TaskRunPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TasksArmOperation<ContainerRegistryTaskRunResource> operation = new TasksArmOperation<ContainerRegistryTaskRunResource>(
-                    new ContainerRegistryTaskRunResourceOperationSource(Client),
+                TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
+                    new TaskRunResourceOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="patch"> The parameters for updating a task run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ContainerRegistryTaskRunResource> Update(WaitUntil waitUntil, ContainerRegistryTaskRunPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TaskRunResource> Update(WaitUntil waitUntil, TaskRunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.Update");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.Update");
             scope.Start();
             try
             {
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryTaskRunPatch.ToRequestContent(patch), context);
+                HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TaskRunPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TasksArmOperation<ContainerRegistryTaskRunResource> operation = new TasksArmOperation<ContainerRegistryTaskRunResource>(
-                    new ContainerRegistryTaskRunResourceOperationSource(Client),
+                TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
+                    new TaskRunResourceOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.Delete");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.Delete");
             scope.Start();
             try
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.Delete");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.Delete");
             scope.Start();
             try
             {
@@ -426,14 +426,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerRegistryTaskRunResource>> GetDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TaskRunResource>> GetDetailsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.GetDetails");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.GetDetails");
             scope.Start();
             try
             {
@@ -443,12 +443,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateGetDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerRegistryTaskRunData> response = Response.FromValue(ContainerRegistryTaskRunData.FromResponse(result), result);
+                Response<TaskRunData> response = Response.FromValue(TaskRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryTaskRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TaskRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -474,14 +474,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerRegistryTaskRunResource"/>. </description>
+        /// <description> <see cref="TaskRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerRegistryTaskRunResource> GetDetails(CancellationToken cancellationToken = default)
+        public virtual Response<TaskRunResource> GetDetails(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("ContainerRegistryTaskRunResource.GetDetails");
+            using DiagnosticScope scope = _taskRunsClientDiagnostics.CreateScope("TaskRunResource.GetDetails");
             scope.Start();
             try
             {
@@ -491,12 +491,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateGetDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerRegistryTaskRunData> response = Response.FromValue(ContainerRegistryTaskRunData.FromResponse(result), result);
+                Response<TaskRunData> response = Response.FromValue(TaskRunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryTaskRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TaskRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

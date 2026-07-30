@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary></summary>
-    internal partial class ContainerRegistryTaskRunResourceOperationSource : IOperationSource<ContainerRegistryTaskRunResource>
+    internal partial class AgentPoolResourceOperationSource : IOperationSource<AgentPoolResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ContainerRegistryTaskRunResourceOperationSource(ArmClient client)
+        internal AgentPoolResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ContainerRegistryTaskRunResource IOperationSource<ContainerRegistryTaskRunResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AgentPoolResource IOperationSource<AgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ContainerRegistryTaskRunData data = ContainerRegistryTaskRunData.DeserializeContainerRegistryTaskRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ContainerRegistryTaskRunResource(_client, data);
+            AgentPoolData data = AgentPoolData.DeserializeAgentPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AgentPoolResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ContainerRegistryTaskRunResource> IOperationSource<ContainerRegistryTaskRunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AgentPoolResource> IOperationSource<AgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ContainerRegistryTaskRunData data = ContainerRegistryTaskRunData.DeserializeContainerRegistryTaskRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ContainerRegistryTaskRunResource(_client, data);
+            AgentPoolData data = AgentPoolData.DeserializeAgentPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AgentPoolResource(_client, data);
         }
     }
 }

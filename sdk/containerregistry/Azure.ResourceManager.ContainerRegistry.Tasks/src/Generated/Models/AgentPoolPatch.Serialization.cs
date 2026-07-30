@@ -15,61 +15,61 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The parameters for updating an agent pool. </summary>
-    public partial class ContainerRegistryAgentPoolPatch : IJsonModel<ContainerRegistryAgentPoolPatch>
+    public partial class AgentPoolPatch : IJsonModel<AgentPoolPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerRegistryAgentPoolPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentPoolPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerRegistryAgentPoolPatch(document.RootElement, options);
+                        return DeserializeAgentPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerRegistryAgentPoolPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentPoolPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryAgentPoolPatch IPersistableModel<ContainerRegistryAgentPoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentPoolPatch IPersistableModel<AgentPoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerRegistryAgentPoolPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentPoolPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="containerRegistryAgentPoolPatch"> The <see cref="ContainerRegistryAgentPoolPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ContainerRegistryAgentPoolPatch containerRegistryAgentPoolPatch)
+        /// <param name="agentPoolPatch"> The <see cref="AgentPoolPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AgentPoolPatch agentPoolPatch)
         {
-            if (containerRegistryAgentPoolPatch == null)
+            if (agentPoolPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(containerRegistryAgentPoolPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(agentPoolPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerRegistryAgentPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryAgentPoolPatch IJsonModel<ContainerRegistryAgentPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentPoolPatch IJsonModel<AgentPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerRegistryAgentPoolPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentPoolPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerRegistryAgentPoolPatch(document.RootElement, options);
+            return DeserializeAgentPoolPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerRegistryAgentPoolPatch DeserializeContainerRegistryAgentPoolPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentPoolPatch DeserializeAgentPoolPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryAgentPoolPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new AgentPoolPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

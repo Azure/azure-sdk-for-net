@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerRegistryRunResource"/> and their operations.
-    /// Each <see cref="ContainerRegistryRunResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ContainerRegistryRunCollection"/> instance call the GetContainerRegistryRuns method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="RunResource"/> and their operations.
+    /// Each <see cref="RunResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="RunCollection"/> instance call the GetRuns method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ContainerRegistryRunCollection : ArmCollection, IEnumerable<ContainerRegistryRunResource>, IAsyncEnumerable<ContainerRegistryRunResource>
+    public partial class RunCollection : ArmCollection, IEnumerable<RunResource>, IAsyncEnumerable<RunResource>
     {
         private readonly ClientDiagnostics _runsClientDiagnostics;
         private readonly Runs _runsRestClient;
         /// <summary> The registryName. </summary>
         private readonly string _registryName;
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunCollection for mocking. </summary>
-        protected ContainerRegistryRunCollection()
+        /// <summary> Initializes a new instance of RunCollection for mocking. </summary>
+        protected RunCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="registryName"> The registryName for the resource. </param>
-        internal ContainerRegistryRunCollection(ArmClient client, ResourceIdentifier id, string registryName) : base(client, id)
+        internal RunCollection(ArmClient client, ResourceIdentifier id, string registryName) : base(client, id)
         {
-            TryGetApiVersion(ContainerRegistryRunResource.ResourceType, out string containerRegistryRunApiVersion);
+            TryGetApiVersion(RunResource.ResourceType, out string runApiVersion);
             _registryName = registryName;
-            _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", ContainerRegistryRunResource.ResourceType.Namespace, Diagnostics);
-            _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryRunApiVersion ?? "2025-03-01-preview");
+            _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", RunResource.ResourceType.Namespace, Diagnostics);
+            _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, runApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ContainerRegistryRunResource>> GetAsync(string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RunResource>> GetAsync(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Get");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunCollection.Get");
             scope.Start();
             try
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, runId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
+                Response<RunData> response = Response.FromValue(RunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ContainerRegistryRunResource> Get(string runId, CancellationToken cancellationToken = default)
+        public virtual Response<RunResource> Get(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Get");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunCollection.Get");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, runId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
+                Response<RunData> response = Response.FromValue(RunData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerRegistryRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerRegistryRunResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RunResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RunResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryRunData, ContainerRegistryRunResource>(new RunsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RunData, RunResource>(new RunsGetAllAsyncCollectionResultOfT(
                 _runsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 filter,
                 top,
                 context,
-                "ContainerRegistryRunCollection.GetAll"), data => new ContainerRegistryRunResource(Client, data));
+                "RunCollection.GetAll"), data => new RunResource(Client, data));
         }
 
         /// <summary>
@@ -215,14 +215,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerRegistryRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerRegistryRunResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RunResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RunResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryRunData, ContainerRegistryRunResource>(new RunsGetAllCollectionResultOfT(
+            return new PageableWrapper<RunData, RunResource>(new RunsGetAllCollectionResultOfT(
                 _runsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 filter,
                 top,
                 context,
-                "ContainerRegistryRunCollection.GetAll"), data => new ContainerRegistryRunResource(Client, data));
+                "RunCollection.GetAll"), data => new RunResource(Client, data));
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Exists");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunCollection.Exists");
             scope.Start();
             try
             {
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, runId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ContainerRegistryRunData> response = default;
+                Response<RunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
+                        response = Response.FromValue(RunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ContainerRegistryRunData)null, result);
+                        response = Response.FromValue((RunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.Exists");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunCollection.Exists");
             scope.Start();
             try
             {
@@ -326,14 +326,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, runId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ContainerRegistryRunData> response = default;
+                Response<RunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
+                        response = Response.FromValue(RunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ContainerRegistryRunData)null, result);
+                        response = Response.FromValue((RunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -368,11 +368,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ContainerRegistryRunResource>> GetIfExistsAsync(string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RunResource>> GetIfExistsAsync(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.GetIfExists");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -383,23 +383,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, runId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ContainerRegistryRunData> response = default;
+                Response<RunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
+                        response = Response.FromValue(RunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ContainerRegistryRunData)null, result);
+                        response = Response.FromValue((RunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ContainerRegistryRunResource>(response.GetRawResponse());
+                    return new NoValueResponse<RunResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ContainerRegistryRunResource> GetIfExists(string runId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RunResource> GetIfExists(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.GetIfExists");
+            using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -444,23 +444,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _runsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, runId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ContainerRegistryRunData> response = default;
+                Response<RunData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
+                        response = Response.FromValue(RunData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ContainerRegistryRunData)null, result);
+                        response = Response.FromValue((RunData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ContainerRegistryRunResource>(response.GetRawResponse());
+                    return new NoValueResponse<RunResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             }
         }
 
-        IEnumerator<ContainerRegistryRunResource> IEnumerable<ContainerRegistryRunResource>.GetEnumerator()
+        IEnumerator<RunResource> IEnumerable<RunResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ContainerRegistryRunResource> IAsyncEnumerable<ContainerRegistryRunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RunResource> IAsyncEnumerable<RunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

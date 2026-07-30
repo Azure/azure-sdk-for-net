@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ContainerRegistryTaskRunData item in Value)
+                foreach (TaskRunData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            IList<ContainerRegistryTaskRunData> value = default;
+            IList<TaskRunData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<ContainerRegistryTaskRunData> array = new List<ContainerRegistryTaskRunData>();
+                    List<TaskRunData> array = new List<TaskRunData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskRunData.DeserializeContainerRegistryTaskRunData(item, options));
+                        array.Add(TaskRunData.DeserializeTaskRunData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TaskRunListResult(value ?? new ChangeTrackingList<ContainerRegistryTaskRunData>(), nextLink, additionalBinaryDataProperties);
+            return new TaskRunListResult(value ?? new ChangeTrackingList<TaskRunData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

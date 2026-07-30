@@ -15,61 +15,61 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The parameters for updating a task run. </summary>
-    public partial class ContainerRegistryTaskRunPatch : IJsonModel<ContainerRegistryTaskRunPatch>
+    public partial class TaskRunPatch : IJsonModel<TaskRunPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerRegistryTaskRunPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TaskRunPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerRegistryTaskRunPatch(document.RootElement, options);
+                        return DeserializeTaskRunPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaskRunPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaskRunPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerRegistryTaskRunPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TaskRunPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryTaskRunPatch IPersistableModel<ContainerRegistryTaskRunPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TaskRunPatch IPersistableModel<TaskRunPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerRegistryTaskRunPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TaskRunPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="containerRegistryTaskRunPatch"> The <see cref="ContainerRegistryTaskRunPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ContainerRegistryTaskRunPatch containerRegistryTaskRunPatch)
+        /// <param name="taskRunPatch"> The <see cref="TaskRunPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TaskRunPatch taskRunPatch)
         {
-            if (containerRegistryTaskRunPatch == null)
+            if (taskRunPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(containerRegistryTaskRunPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(taskRunPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerRegistryTaskRunPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TaskRunPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TaskRunPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Identity))
             {
@@ -135,24 +135,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryTaskRunPatch IJsonModel<ContainerRegistryTaskRunPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TaskRunPatch IJsonModel<TaskRunPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerRegistryTaskRunPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TaskRunPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TaskRunPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TaskRunPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerRegistryTaskRunPatch(document.RootElement, options);
+            return DeserializeTaskRunPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerRegistryTaskRunPatch DeserializeContainerRegistryTaskRunPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static TaskRunPatch DeserializeTaskRunPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryTaskRunPatch(identity, properties, location, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new TaskRunPatch(identity, properties, location, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

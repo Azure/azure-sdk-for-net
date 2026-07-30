@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary> Run resource properties. </summary>
-    public partial class ContainerRegistryRunData : ResourceData
+    public partial class RunData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunData"/>. </summary>
-        internal ContainerRegistryRunData()
+        /// <summary> Initializes a new instance of <see cref="RunData"/>. </summary>
+        internal RunData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of a run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -17,72 +17,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
-    /// <summary>
-    /// The task run that has the ARM resource and properties.
-    /// The task run will have the information of request and result of a run.
-    /// </summary>
-    public partial class ContainerRegistryTaskRunData : ResourceData, IJsonModel<ContainerRegistryTaskRunData>
+    /// <summary> Run resource properties. </summary>
+    public partial class RunData : ResourceData, IJsonModel<RunData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerRegistryTaskRunData(document.RootElement, options);
+                        return DeserializeRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerRegistryTaskRunData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RunData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryTaskRunData IPersistableModel<ContainerRegistryTaskRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerRegistryTaskRunData)PersistableModelCreateCore(data, options);
+        RunData IPersistableModel<RunData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RunData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerRegistryTaskRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="containerRegistryTaskRunData"> The <see cref="ContainerRegistryTaskRunData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ContainerRegistryTaskRunData containerRegistryTaskRunData)
-        {
-            if (containerRegistryTaskRunData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(containerRegistryTaskRunData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerRegistryTaskRunData"/> from. </param>
-        internal static ContainerRegistryTaskRunData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RunData"/> from. </param>
+        internal static RunData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeContainerRegistryTaskRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerRegistryTaskRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -93,26 +80,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,24 +110,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerRegistryTaskRunData IJsonModel<ContainerRegistryTaskRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerRegistryTaskRunData)JsonModelCreateCore(ref reader, options);
+        RunData IJsonModel<RunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RunData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskRunData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskRunData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerRegistryTaskRunData(document.RootElement, options);
+            return DeserializeRunData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerRegistryTaskRunData DeserializeContainerRegistryTaskRunData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RunData DeserializeRunData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,9 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            TaskRunProperties properties = default;
-            ContainerRegistryTaskIdentityProperties identity = default;
-            AzureLocation? location = default;
+            RunProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,25 +179,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                     {
                         continue;
                     }
-                    properties = TaskRunProperties.DeserializeTaskRunProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ContainerRegistryTaskIdentityProperties.DeserializeContainerRegistryTaskIdentityProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
+                    properties = RunProperties.DeserializeRunProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -230,14 +187,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryTaskRunData(
+            return new RunData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                identity,
-                location,
                 additionalBinaryDataProperties);
         }
     }

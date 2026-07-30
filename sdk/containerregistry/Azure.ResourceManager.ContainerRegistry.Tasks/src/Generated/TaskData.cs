@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
     /// The task that has the ARM resource and task properties.
     /// The task will have all information to schedule a run against it.
     /// </summary>
-    public partial class ContainerRegistryTaskData : TrackedResourceData
+    public partial class TaskData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public ContainerRegistryTaskData(AzureLocation location) : base(location)
+        public TaskData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="properties"> The properties of a task. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TaskProperties properties, ContainerRegistryTaskIdentityProperties identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal TaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TaskProperties properties, ContainerRegistryTaskIdentityProperties identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;

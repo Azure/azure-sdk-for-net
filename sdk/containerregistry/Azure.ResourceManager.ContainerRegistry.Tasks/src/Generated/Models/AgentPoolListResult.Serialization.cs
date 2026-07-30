@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ContainerRegistryAgentPoolData item in Value)
+                foreach (AgentPoolData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            IList<ContainerRegistryAgentPoolData> value = default;
+            IList<AgentPoolData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<ContainerRegistryAgentPoolData> array = new List<ContainerRegistryAgentPoolData>();
+                    List<AgentPoolData> array = new List<AgentPoolData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(item, options));
+                        array.Add(AgentPoolData.DeserializeAgentPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolListResult(value ?? new ChangeTrackingList<ContainerRegistryAgentPoolData>(), nextLink, additionalBinaryDataProperties);
+            return new AgentPoolListResult(value ?? new ChangeTrackingList<AgentPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
