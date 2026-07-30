@@ -98,3 +98,5 @@ namespace Azure.Storage.DataMovement
         protected internal override bool IsContainer => true;
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

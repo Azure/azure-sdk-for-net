@@ -69,5 +69,3 @@ namespace Azure.ResourceManager.ApiManagement
         }
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE

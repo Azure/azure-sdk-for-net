@@ -77,3 +77,5 @@ namespace Azure.Identity.Broker
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
