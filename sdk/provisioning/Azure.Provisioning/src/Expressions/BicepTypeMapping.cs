@@ -46,7 +46,7 @@ internal static class BicepTypeMapping
         null;
 
     /// <summary>
-    /// Convert a .NET object into a literal Bicep string.
+    /// Convert a .NET object into a string-valued Bicep literal payload.
     /// </summary>
     /// <param name="value">The .NET value.</param>
     /// <param name="format">
@@ -58,7 +58,7 @@ internal static class BicepTypeMapping
     /// <item><description><c>string</c> for string-encoded integer values.</description></item>
     /// </list>
     /// </param>
-    /// <returns>The corresponding Bicep literal string.</returns>
+    /// <returns>The corresponding string-valued Bicep literal payload.</returns>
     /// <exception cref="InvalidOperationException">
     /// Thrown when we cannot convert a value to a literal Bicep string.
     /// </exception>
@@ -66,14 +66,14 @@ internal static class BicepTypeMapping
         value switch
         {
             bool b => b.ToString(),
-            int i => ToString(i, format),
-            long i => ToString(i, format),
+            int i => FormatIntegerAsString(i, format),
+            long i => FormatIntegerAsString(i, format),
             float f => f.ToString(CultureInfo.InvariantCulture),
             double d => d.ToString(CultureInfo.InvariantCulture),
             string s => s,
             Uri u => u.AbsoluteUri,
-            DateTimeOffset d => format is null ? d.ToString("o", CultureInfo.InvariantCulture) : ToString(d, format),
-            TimeSpan t => format is null ? t.ToString() : ToString(t, format),
+            DateTimeOffset d => format is null ? d.ToString("o", CultureInfo.InvariantCulture) : FormatDateTimeOffsetAsString(d, format),
+            TimeSpan t => format is null ? t.ToString() : FormatDurationAsString(t, format),
             byte[] b => Convert.ToBase64String(b),
             Guid g => g.ToString(),
             IPAddress a => a.ToString(),
@@ -101,14 +101,14 @@ internal static class BicepTypeMapping
         value switch
         {
             bool b => BicepSyntax.Value(b),
-            int i => ToExpression(i, format),
-            long i => ToExpression(i, format),
+            int i => FormatIntegerAsExpression(i, format),
+            long i => FormatIntegerAsExpression(i, format),
             float f => BicepSyntax.Value(f),
             double d => BicepSyntax.Value(d),
             string s => BicepSyntax.Value(s),
             Uri u => BicepSyntax.Value(ToLiteralString(u, format)),
-            DateTimeOffset d => ToExpression(d, format),
-            TimeSpan t => ToExpression(t, format),
+            DateTimeOffset d => FormatDateTimeOffsetAsExpression(d, format),
+            TimeSpan t => FormatDurationAsExpression(t, format),
             byte[] b => BicepSyntax.Value(ToLiteralString(b, null)),
             Guid g => BicepSyntax.Value(ToLiteralString(g, format)),
             IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
@@ -121,7 +121,7 @@ internal static class BicepTypeMapping
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
 
-    public static string ToString(DateTimeOffset value, string format) => format switch
+    private static string FormatDateTimeOffsetAsString(DateTimeOffset value, string format) => format switch
     {
         "D" => value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
         "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
@@ -130,7 +130,7 @@ internal static class BicepTypeMapping
         _ => ThrowUnsupportedFormat(value, format)
     };
 
-    public static string ToString(TimeSpan value, string format) => format switch
+    private static string FormatDurationAsString(TimeSpan value, string format) => format switch
     {
         "T" => ToIsoTimeString(value),
         "P" => XmlConvert.ToString(value),
@@ -144,36 +144,36 @@ internal static class BicepTypeMapping
         _ => ThrowUnsupportedFormat(value, format)
     };
 
-    private static string ToString(int value, string? format) =>
+    private static string FormatIntegerAsString(int value, string? format) =>
         string.Equals(format, "string", StringComparison.Ordinal) ?
             value.ToString(CultureInfo.InvariantCulture) :
             format is null ? value.ToString(CultureInfo.InvariantCulture) : ThrowUnsupportedFormat(value, format);
 
-    private static string ToString(long value, string? format) =>
+    private static string FormatIntegerAsString(long value, string? format) =>
         string.Equals(format, "string", StringComparison.Ordinal) ?
             value.ToString(CultureInfo.InvariantCulture) :
             format is null ? value.ToString(CultureInfo.InvariantCulture) : ThrowUnsupportedFormat(value, format);
 
-    private static BicepExpression ToExpression(int value, string? format) =>
+    private static BicepExpression FormatIntegerAsExpression(int value, string? format) =>
         string.Equals(format, "string", StringComparison.Ordinal) ?
             BicepSyntax.Value(value.ToString(CultureInfo.InvariantCulture)) :
             format is null ? BicepSyntax.Value(value) : BicepSyntax.Value(ThrowUnsupportedFormat(value, format));
 
-    private static BicepExpression ToExpression(long value, string? format) =>
+    private static BicepExpression FormatIntegerAsExpression(long value, string? format) =>
         string.Equals(format, "string", StringComparison.Ordinal) ?
             BicepSyntax.Value(value.ToString(CultureInfo.InvariantCulture)) :
             format is null ? BicepSyntax.Value(value) : BicepSyntax.Value(ThrowUnsupportedFormat(value, format));
 
-    private static BicepExpression ToExpression(DateTimeOffset value, string? format) =>
+    private static BicepExpression FormatDateTimeOffsetAsExpression(DateTimeOffset value, string? format) =>
         format switch
         {
             null => BicepSyntax.Value(value.ToString("o", CultureInfo.InvariantCulture)),
             "U" => BicepSyntax.Value(value.ToUnixTimeSeconds()),
-            "D" or "O" or "R" => BicepSyntax.Value(ToString(value, format)),
+            "D" or "O" or "R" => BicepSyntax.Value(FormatDateTimeOffsetAsString(value, format)),
             _ => BicepSyntax.Value(ThrowUnsupportedFormat(value, format))
         };
 
-    private static BicepExpression ToExpression(TimeSpan value, string? format) =>
+    private static BicepExpression FormatDurationAsExpression(TimeSpan value, string? format) =>
         format switch
         {
             null => BicepSyntax.Value(value.ToString()),
@@ -183,7 +183,7 @@ internal static class BicepTypeMapping
             "milliseconds" => BicepSyntax.Value(Convert.ToInt32(Math.Round(value.TotalMilliseconds))),
             "milliseconds-int64" => BicepSyntax.Value(Convert.ToInt64(Math.Round(value.TotalMilliseconds))),
             "milliseconds-float" or "milliseconds-double" => BicepSyntax.Value(value.TotalMilliseconds),
-            "T" or "P" or "c" => BicepSyntax.Value(ToString(value, format)),
+            "T" or "P" or "c" => BicepSyntax.Value(FormatDurationAsString(value, format)),
             _ => BicepSyntax.Value(ThrowUnsupportedFormat(value, format))
         };
 
