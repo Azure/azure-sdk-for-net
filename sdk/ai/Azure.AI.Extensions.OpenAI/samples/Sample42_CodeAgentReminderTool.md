@@ -296,27 +296,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 }
 ```
 
-7. To get the response from a specific session, we need to set session ID in a header, which can be done through policy.
-
-```C# Snippet:Sample_SessionHeaderPolicy_CodeAgentReminderTool
-private class SessionHeaderPolicy(string agentSessionID) : PipelinePolicy
-{
-    private static readonly string _SESSION_HEADER = "x-agent-session-id";
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-8. Create a session and wait for it to arrive to active state.
+7. Create a session and wait for it to arrive to active state.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForSession_CodeAgentReminderTool_Sync
@@ -350,7 +330,7 @@ if (session.Status != AgentSessionStatus.Active)
 }
 ```
 
-9. Create the response client to communicate with an Agent and get the response and list the response items.
+8. Create the response client to communicate with an Agent and get the response and list the response items.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Sync
@@ -398,7 +378,7 @@ Console.WriteLine(response.GetOutputText());
 responseTime = response.CreatedAt;
 ```
 
-10. In this example the reminder tool will create a routine. Generally, it will be named as `reminder-mycodeagentremindertool-1784584974173`, however, the naming scheme may be changed. In this example, we will take a routine, which was created within one minute after the response.
+9. In this example the reminder tool will create a routine. Generally, it will be named as `reminder-mycodeagentremindertool-1784584974173`, however, the naming scheme may be changed. In this example, we will take a routine, which was created within one minute after the response.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetCreatedTrigger_CodeAgentReminderTool_Sync
@@ -452,7 +432,7 @@ if (created == null)
 Console.WriteLine($"The last created routine is {created.Name}, assuming it was created by ReminderPreviewToolboxTool.");
 ```
 
-11. Create the `CheckRunResult` method, handling routine run errors.
+10. Create the `CheckRunResult` method, handling routine run errors.
 
 ```C# Snippet:Sample_CheckRunResult_CodeAgentReminderTool
 protected static void CheckRunResult(RoutineRun completedRun, int minutesWait, bool runCreated)
@@ -479,7 +459,7 @@ protected static void CheckRunResult(RoutineRun completedRun, int minutesWait, b
 }
 ```
 
-12. Wait for the routine run to complete.
+11. Wait for the routine run to complete.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForRoutine_CodeAgentReminderTool_Sync
@@ -539,7 +519,7 @@ while (DateTime.UtcNow < deadline)
 CheckRunResult(completedRun, minutesWait, runWasTriggered);
 ```
 
-13. Output the routine run status.
+12. Output the routine run status.
 
 Synchronous sample:
 ```C# Snippet:Sample_OutputStatus_CodeAgentReminderTool_Sync
@@ -567,7 +547,7 @@ Console.WriteLine($"The run has completed with status {completedRun.Status}, res
 // Console.WriteLine($"Response: {result.GetOutputText()}");
 ```
 
-14. Delete toolbox and Agent we have created.
+13. Delete toolbox and Agent we have created.
 
 Synchronous sample:
 ```C# Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Sync

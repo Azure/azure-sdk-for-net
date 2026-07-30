@@ -206,27 +206,7 @@ ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClien
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-6. To get the response within a specific session, we need to provide `x-agent-session-id` header with the agent session ID. Define the policy to add the header.
-
-```C# Snippet:Sample_SessionHeaderPolicy_HostedAgentSessions
-private class SessionHeaderPolicy(string agentSessionID) : PipelinePolicy
-{
-    private static readonly string _SESSION_HEADER = "x-agent-session-id";
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-7. Create the session and response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method, we also set the `x-agent-session-id` using `SessionHeaderPolicy` defined above.
+6. Create the session and response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Sync
@@ -258,7 +238,7 @@ ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell 
 Console.WriteLine(response.GetOutputText());
 ```
 
-8. Disable Agent and try to create a new session; this operation should fail.
+7. Disable Agent and try to create a new session; this operation should fail.
 
 Synchronous sample:
 ```C# Snippet:Sample_DisableTheAgent_HostedAgentSessions_Sync
@@ -298,7 +278,7 @@ catch (ClientResultException ex)
 }
 ```
 
-9. Enable the Agent Again. Now we can create another session and use it to get the response.
+8. Enable the Agent Again. Now we can create another session and use it to get the response.
 
 Synchronous sample:
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessions_Sync
@@ -332,7 +312,7 @@ response = await responseClient.CreateResponseAsync("Hello, tell me another joke
 Console.WriteLine(response.GetOutputText());
 ```
 
-10. Delete the Agent we have created.
+9. Delete the Agent we have created.
 
 Synchronous sample:
 ```C# Snippet:DeleteHostedAgentSessions_HostedAgentSessions_Sync
