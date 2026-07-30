@@ -24,32 +24,32 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     }
     public partial class ContainerRegistryRun : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ContainerRegistryRun(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> CustomRegistries { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> FinishOn { get { throw null; } set { } }
+        internal ContainerRegistryRun() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> CustomRegistries { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> FinishOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchiveEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedOn { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsArchiveEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedOn { get { throw null; } }
         public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageDescriptor LogArtifact { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageDescriptor> OutputImages { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskProvisioningState> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageDescriptor> OutputImages { get { throw null; } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RunErrorMessage { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RunId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunType> RunType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SourceRegistryAuth { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunStatus> Status { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RunId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunType> RunType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SourceRegistryAuth { get { throw null; } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunStatus> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Task { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> UpdateTriggerToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Task { get { throw null; } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> UpdateTriggerToken { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRun FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -176,18 +176,18 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     public partial class ContainerRegistryTaskImageDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTaskImageDescriptor() { }
-        public Azure.Provisioning.BicepValue<string> Digest { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Registry { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Repository { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Digest { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Registry { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Repository { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerRegistryTaskImageUpdateTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTaskImageUpdateTrigger() { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageDescriptor> Images { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> OccurredOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageDescriptor> Images { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> OccurredOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ContainerRegistryTaskOS
@@ -329,13 +329,13 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     public partial class ContainerRegistryTaskSourceTriggerDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTaskSourceTriggerDescriptor() { }
-        public Azure.Provisioning.BicepValue<string> BranchName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CommitId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EventType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProviderType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PullRequestId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Uri> RepositoryUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> BranchName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CommitId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EventType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ProviderType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PullRequestId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> RepositoryUri { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ContainerRegistryTaskSourceTriggerEvent
@@ -361,8 +361,8 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     public partial class ContainerRegistryTaskTimerTriggerDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTaskTimerTriggerDescriptor() { }
-        public Azure.Provisioning.BicepValue<string> ScheduleOccurrence { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TimerTriggerName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ScheduleOccurrence { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TimerTriggerName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ContainerRegistryTaskTokenType

@@ -42,7 +42,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
         }
 
-        /// <summary> Gets or sets the RunId. </summary>
+        /// <summary> Gets the RunId. </summary>
         public BicepValue<string> RunId
         {
             get
@@ -50,14 +50,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _runId;
             }
-            set
-            {
-                Initialize();
-                _runId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<ContainerRegistryTaskRunStatus> Status
         {
             get
@@ -65,14 +60,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the LastUpdatedOn. </summary>
+        /// <summary> Gets the LastUpdatedOn. </summary>
         public BicepValue<DateTimeOffset> LastUpdatedOn
         {
             get
@@ -80,14 +70,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _lastUpdatedOn;
             }
-            set
-            {
-                Initialize();
-                _lastUpdatedOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RunType. </summary>
+        /// <summary> Gets the RunType. </summary>
         public BicepValue<ContainerRegistryTaskRunType> RunType
         {
             get
@@ -95,14 +80,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _runType;
             }
-            set
-            {
-                Initialize();
-                _runType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AgentPoolName. </summary>
+        /// <summary> Gets the AgentPoolName. </summary>
         public BicepValue<string> AgentPoolName
         {
             get
@@ -110,14 +90,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _agentPoolName;
             }
-            set
-            {
-                Initialize();
-                _agentPoolName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CreatedOn. </summary>
+        /// <summary> Gets the CreatedOn. </summary>
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -125,14 +100,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _createdOn;
             }
-            set
-            {
-                Initialize();
-                _createdOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
+        /// <summary> Gets the StartOn. </summary>
         public BicepValue<DateTimeOffset> StartOn
         {
             get
@@ -140,14 +110,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _startOn;
             }
-            set
-            {
-                Initialize();
-                _startOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the FinishOn. </summary>
+        /// <summary> Gets the FinishOn. </summary>
         public BicepValue<DateTimeOffset> FinishOn
         {
             get
@@ -155,14 +120,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _finishOn;
             }
-            set
-            {
-                Initialize();
-                _finishOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the OutputImages. </summary>
+        /// <summary> Gets the OutputImages. </summary>
         public BicepList<ContainerRegistryTaskImageDescriptor> OutputImages
         {
             get
@@ -170,14 +130,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _outputImages;
             }
-            set
-            {
-                Initialize();
-                _outputImages.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Task. </summary>
+        /// <summary> Gets the Task. </summary>
         public BicepValue<string> Task
         {
             get
@@ -185,14 +140,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _task;
             }
-            set
-            {
-                Initialize();
-                _task.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ImageUpdateTrigger. </summary>
+        /// <summary> Gets the ImageUpdateTrigger. </summary>
         public ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger
         {
             get
@@ -200,14 +150,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _imageUpdateTrigger;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _imageUpdateTrigger, value);
-            }
         }
 
-        /// <summary> Gets or sets the SourceTrigger. </summary>
+        /// <summary> Gets the SourceTrigger. </summary>
         public ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger
         {
             get
@@ -215,14 +160,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _sourceTrigger;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _sourceTrigger, value);
-            }
         }
 
-        /// <summary> Gets or sets the TimerTrigger. </summary>
+        /// <summary> Gets the TimerTrigger. </summary>
         public ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger
         {
             get
@@ -230,14 +170,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _timerTrigger;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _timerTrigger, value);
-            }
         }
 
-        /// <summary> Gets or sets the Platform. </summary>
+        /// <summary> Gets the Platform. </summary>
         public ContainerRegistryTaskPlatformProperties Platform
         {
             get
@@ -245,14 +180,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _platform;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _platform, value);
-            }
         }
 
-        /// <summary> Gets or sets the AgentConfiguration. </summary>
+        /// <summary> Gets the AgentConfiguration. </summary>
         internal AgentProperties AgentConfiguration
         {
             get
@@ -260,14 +190,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _agentConfiguration;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _agentConfiguration, value);
-            }
         }
 
-        /// <summary> Gets or sets the SourceRegistryAuth. </summary>
+        /// <summary> Gets the SourceRegistryAuth. </summary>
         public BicepValue<string> SourceRegistryAuth
         {
             get
@@ -275,25 +200,15 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _sourceRegistryAuth;
             }
-            set
-            {
-                Initialize();
-                _sourceRegistryAuth.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CustomRegistries. </summary>
+        /// <summary> Gets the CustomRegistries. </summary>
         public BicepList<string> CustomRegistries
         {
             get
             {
                 Initialize();
                 return _customRegistries;
-            }
-            set
-            {
-                Initialize();
-                _customRegistries.Assign(value);
             }
         }
 
@@ -307,18 +222,13 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Gets or sets the UpdateTriggerToken. </summary>
+        /// <summary> Gets the UpdateTriggerToken. </summary>
         public BicepValue<string> UpdateTriggerToken
         {
             get
             {
                 Initialize();
                 return _updateTriggerToken;
-            }
-            set
-            {
-                Initialize();
-                _updateTriggerToken.Assign(value);
             }
         }
 
@@ -332,7 +242,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Gets or sets the ProvisioningState. </summary>
+        /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get
@@ -340,25 +250,15 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _provisioningState;
             }
-            set
-            {
-                Initialize();
-                _provisioningState.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsArchiveEnabled. </summary>
+        /// <summary> Gets the IsArchiveEnabled. </summary>
         public BicepValue<bool> IsArchiveEnabled
         {
             get
             {
                 Initialize();
                 return _isArchiveEnabled;
-            }
-            set
-            {
-                Initialize();
-                _isArchiveEnabled.Assign(value);
             }
         }
 
@@ -367,15 +267,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             get
             {
-                return AgentConfiguration is null ? default : AgentConfiguration.Cpu;
-            }
-            set
-            {
-                if (AgentConfiguration is null)
-                {
-                    AgentConfiguration = new AgentProperties();
-                }
-                AgentConfiguration.Cpu = value;
+                return AgentConfiguration.Cpu;
             }
         }
 

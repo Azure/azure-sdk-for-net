@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<string> Id
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the OccurredOn. </summary>
+        /// <summary> Gets the OccurredOn. </summary>
         public BicepValue<DateTimeOffset> OccurredOn
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _occurredOn;
             }
-            set
-            {
-                Initialize();
-                _occurredOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Images. </summary>
+        /// <summary> Gets the Images. </summary>
         public BicepList<ContainerRegistryTaskImageDescriptor> Images
         {
             get
             {
                 Initialize();
                 return _images;
-            }
-            set
-            {
-                Initialize();
-                _images.Assign(value);
             }
         }
 

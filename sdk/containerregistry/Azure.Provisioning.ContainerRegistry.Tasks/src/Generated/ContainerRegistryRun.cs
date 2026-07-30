@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryRun. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerRegistryRun(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/runs", resourceVersion ?? "2025-03-01-preview")
+        internal ContainerRegistryRun(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/runs", resourceVersion ?? "2025-03-01-preview")
         {
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal RunProperties Properties
         {
             get
@@ -72,282 +72,149 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the RunId. </summary>
+        /// <summary> Gets the RunId. </summary>
         public BicepValue<string> RunId
         {
             get
             {
-                return Properties is null ? default : Properties.RunId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.RunId = value;
+                return Properties.RunId;
             }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<ContainerRegistryTaskRunStatus> Status
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.Status = value;
+                return Properties.Status;
             }
         }
 
-        /// <summary> Gets or sets the LastUpdatedOn. </summary>
+        /// <summary> Gets the LastUpdatedOn. </summary>
         public BicepValue<DateTimeOffset> LastUpdatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastUpdatedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.LastUpdatedOn = value;
+                return Properties.LastUpdatedOn;
             }
         }
 
-        /// <summary> Gets or sets the RunType. </summary>
+        /// <summary> Gets the RunType. </summary>
         public BicepValue<ContainerRegistryTaskRunType> RunType
         {
             get
             {
-                return Properties is null ? default : Properties.RunType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.RunType = value;
+                return Properties.RunType;
             }
         }
 
-        /// <summary> Gets or sets the AgentPoolName. </summary>
+        /// <summary> Gets the AgentPoolName. </summary>
         public BicepValue<string> AgentPoolName
         {
             get
             {
-                return Properties is null ? default : Properties.AgentPoolName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.AgentPoolName = value;
+                return Properties.AgentPoolName;
             }
         }
 
-        /// <summary> Gets or sets the CreatedOn. </summary>
+        /// <summary> Gets the CreatedOn. </summary>
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.CreatedOn = value;
+                return Properties.CreatedOn;
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
+        /// <summary> Gets the StartOn. </summary>
         public BicepValue<DateTimeOffset> StartOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.StartOn = value;
+                return Properties.StartOn;
             }
         }
 
-        /// <summary> Gets or sets the FinishOn. </summary>
+        /// <summary> Gets the FinishOn. </summary>
         public BicepValue<DateTimeOffset> FinishOn
         {
             get
             {
-                return Properties is null ? default : Properties.FinishOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.FinishOn = value;
+                return Properties.FinishOn;
             }
         }
 
-        /// <summary> Gets or sets the OutputImages. </summary>
+        /// <summary> Gets the OutputImages. </summary>
         public BicepList<ContainerRegistryTaskImageDescriptor> OutputImages
         {
             get
             {
-                return Properties is null ? default : Properties.OutputImages;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.OutputImages = value;
+                return Properties.OutputImages;
             }
         }
 
-        /// <summary> Gets or sets the Task. </summary>
+        /// <summary> Gets the Task. </summary>
         public BicepValue<string> Task
         {
             get
             {
-                return Properties is null ? default : Properties.Task;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.Task = value;
+                return Properties.Task;
             }
         }
 
-        /// <summary> Gets or sets the ImageUpdateTrigger. </summary>
+        /// <summary> Gets the ImageUpdateTrigger. </summary>
         public ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger
         {
             get
             {
-                return Properties is null ? default : Properties.ImageUpdateTrigger;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.ImageUpdateTrigger = value;
+                return Properties.ImageUpdateTrigger;
             }
         }
 
-        /// <summary> Gets or sets the SourceTrigger. </summary>
+        /// <summary> Gets the SourceTrigger. </summary>
         public ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger
         {
             get
             {
-                return Properties is null ? default : Properties.SourceTrigger;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.SourceTrigger = value;
+                return Properties.SourceTrigger;
             }
         }
 
-        /// <summary> Gets or sets the TimerTrigger. </summary>
+        /// <summary> Gets the TimerTrigger. </summary>
         public ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger
         {
             get
             {
-                return Properties is null ? default : Properties.TimerTrigger;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.TimerTrigger = value;
+                return Properties.TimerTrigger;
             }
         }
 
-        /// <summary> Gets or sets the Platform. </summary>
+        /// <summary> Gets the Platform. </summary>
         public ContainerRegistryTaskPlatformProperties Platform
         {
             get
             {
-                return Properties is null ? default : Properties.Platform;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.Platform = value;
+                return Properties.Platform;
             }
         }
 
-        /// <summary> Gets or sets the SourceRegistryAuth. </summary>
+        /// <summary> Gets the SourceRegistryAuth. </summary>
         public BicepValue<string> SourceRegistryAuth
         {
             get
             {
-                return Properties is null ? default : Properties.SourceRegistryAuth;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.SourceRegistryAuth = value;
+                return Properties.SourceRegistryAuth;
             }
         }
 
-        /// <summary> Gets or sets the CustomRegistries. </summary>
+        /// <summary> Gets the CustomRegistries. </summary>
         public BicepList<string> CustomRegistries
         {
             get
             {
-                return Properties is null ? default : Properties.CustomRegistries;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.CustomRegistries = value;
+                return Properties.CustomRegistries;
             }
         }
 
@@ -356,28 +223,16 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
                 return Properties.RunErrorMessage;
             }
         }
 
-        /// <summary> Gets or sets the UpdateTriggerToken. </summary>
+        /// <summary> Gets the UpdateTriggerToken. </summary>
         public BicepValue<string> UpdateTriggerToken
         {
             get
             {
-                return Properties is null ? default : Properties.UpdateTriggerToken;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.UpdateTriggerToken = value;
+                return Properties.UpdateTriggerToken;
             }
         }
 
@@ -386,41 +241,25 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties is null ? default : Properties.LogArtifact;
+                return Properties.LogArtifact;
             }
         }
 
-        /// <summary> Gets or sets the ProvisioningState. </summary>
+        /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.ProvisioningState = value;
+                return Properties.ProvisioningState;
             }
         }
 
-        /// <summary> Gets or sets the IsArchiveEnabled. </summary>
+        /// <summary> Gets the IsArchiveEnabled. </summary>
         public BicepValue<bool> IsArchiveEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsArchiveEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.IsArchiveEnabled = value;
+                return Properties.IsArchiveEnabled;
             }
         }
 
@@ -429,15 +268,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties is null ? default : Properties.AgentCpu;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RunProperties();
-                }
-                Properties.AgentCpu = value;
+                return Properties.AgentCpu;
             }
         }
 

@@ -27,7 +27,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<string> Id
         {
             get
@@ -35,14 +35,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EventType. </summary>
+        /// <summary> Gets the EventType. </summary>
         public BicepValue<string> EventType
         {
             get
@@ -50,14 +45,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _eventType;
             }
-            set
-            {
-                Initialize();
-                _eventType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CommitId. </summary>
+        /// <summary> Gets the CommitId. </summary>
         public BicepValue<string> CommitId
         {
             get
@@ -65,14 +55,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _commitId;
             }
-            set
-            {
-                Initialize();
-                _commitId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PullRequestId. </summary>
+        /// <summary> Gets the PullRequestId. </summary>
         public BicepValue<string> PullRequestId
         {
             get
@@ -80,14 +65,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _pullRequestId;
             }
-            set
-            {
-                Initialize();
-                _pullRequestId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RepositoryUri. </summary>
+        /// <summary> Gets the RepositoryUri. </summary>
         public BicepValue<Uri> RepositoryUri
         {
             get
@@ -95,14 +75,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _repositoryUri;
             }
-            set
-            {
-                Initialize();
-                _repositoryUri.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the BranchName. </summary>
+        /// <summary> Gets the BranchName. </summary>
         public BicepValue<string> BranchName
         {
             get
@@ -110,25 +85,15 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _branchName;
             }
-            set
-            {
-                Initialize();
-                _branchName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ProviderType. </summary>
+        /// <summary> Gets the ProviderType. </summary>
         public BicepValue<string> ProviderType
         {
             get
             {
                 Initialize();
                 return _providerType;
-            }
-            set
-            {
-                Initialize();
-                _providerType.Assign(value);
             }
         }
 

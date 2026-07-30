@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
         }
 
-        /// <summary> Gets or sets the Registry. </summary>
+        /// <summary> Gets the Registry. </summary>
         public BicepValue<string> Registry
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _registry;
             }
-            set
-            {
-                Initialize();
-                _registry.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Repository. </summary>
+        /// <summary> Gets the Repository. </summary>
         public BicepValue<string> Repository
         {
             get
@@ -46,14 +41,9 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _repository;
             }
-            set
-            {
-                Initialize();
-                _repository.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Tag. </summary>
+        /// <summary> Gets the Tag. </summary>
         public BicepValue<string> Tag
         {
             get
@@ -61,25 +51,15 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _tag;
             }
-            set
-            {
-                Initialize();
-                _tag.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Digest. </summary>
+        /// <summary> Gets the Digest. </summary>
         public BicepValue<string> Digest
         {
             get
             {
                 Initialize();
                 return _digest;
-            }
-            set
-            {
-                Initialize();
-                _digest.Assign(value);
             }
         }
 

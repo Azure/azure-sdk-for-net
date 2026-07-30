@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
         }
 
-        /// <summary> Gets or sets the TimerTriggerName. </summary>
+        /// <summary> Gets the TimerTriggerName. </summary>
         public BicepValue<string> TimerTriggerName
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
                 Initialize();
                 return _timerTriggerName;
             }
-            set
-            {
-                Initialize();
-                _timerTriggerName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ScheduleOccurrence. </summary>
+        /// <summary> Gets the ScheduleOccurrence. </summary>
         public BicepValue<string> ScheduleOccurrence
         {
             get
             {
                 Initialize();
                 return _scheduleOccurrence;
-            }
-            set
-            {
-                Initialize();
-                _scheduleOccurrence.Assign(value);
             }
         }
 

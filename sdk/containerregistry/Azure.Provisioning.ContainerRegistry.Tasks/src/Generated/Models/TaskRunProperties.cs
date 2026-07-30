@@ -79,7 +79,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ContainerRegistryTaskProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _runRequest = DefineModelProperty<RunContent>(nameof(RunRequest), new string[] { "runRequest" });
-            _runResult = DefineModelProperty(nameof(RunResult), new string[] { "runResult" }, new ContainerRegistryRun("containerRegistryRun"), isOutput: true);
+            _runResult = DefineModelProperty(nameof(RunResult), new string[] { "runResult" }, new ContainerRegistryRun("runResult"), isOutput: true);
             _forceUpdateTag = DefineProperty<string>(nameof(ForceUpdateTag), new string[] { "forceUpdateTag" });
             DefineAdditionalProperties();
         }
