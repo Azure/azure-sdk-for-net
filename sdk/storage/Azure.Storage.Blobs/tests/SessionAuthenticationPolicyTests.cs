@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,9 +23,9 @@ namespace Azure.Storage.Blobs.Tests
     {
         private readonly bool _async;
 
-        public SessionAuthenticationPolicyTests(bool @async)
+        public SessionAuthenticationPolicyTests(bool isAsync)
         {
-            _async = @async;
+            _async = isAsync;
         }
 
         #region Constants
@@ -131,30 +132,65 @@ namespace Azure.Storage.Blobs.Tests
             return response;
         }
 
-        private static BlobServiceClient CreateMockServiceClient(params MockResponse[] responses)
+        /// <summary>
+        /// A <see cref="TokenCredential"/> stub returning a fixed, non-expiring token.
+        /// The provider's <see cref="MockTransport"/> intercepts all traffic, so the
+        /// credential is never exercised against a real identity endpoint.
+        /// </summary>
+        private sealed class StaticTokenCredential : TokenCredential
         {
-            var transport = new MockTransport(responses);
-            var options = new BlobClientOptions();
-            options.Transport = transport;
+            private static readonly AccessToken s_token =
+                new AccessToken("fake-oauth-token", DateTimeOffset.MaxValue);
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => s_token;
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new ValueTask<AccessToken>(s_token);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="TokenCredentialSessionProvider"/> whose internal
+        /// session-minting client is backed by a <see cref="MockTransport"/>.
+        /// The returned transport observes only CreateSession traffic, so tests can
+        /// assert exactly how many sessions were minted.
+        /// </summary>
+        private static (TokenCredentialSessionProvider Provider, MockTransport CreateSessionTransport) CreateProvider(
+            params MockResponse[] createSessionResponses)
+        {
+            var transport = new MockTransport(createSessionResponses);
+            var options = new BlobClientOptions
+            {
+                Transport = transport,
+            };
             options.Retry.MaxRetries = 0;
 
-            return new BlobServiceClient(
+            var provider = new TokenCredentialSessionProvider(
                 ServiceUri,
-                new StorageSharedKeyCredential(AccountName, s_accountKey),
+                new StaticTokenCredential(),
                 options);
+
+            return (provider, transport);
         }
 
         private static SessionAuthenticationPolicy CreateSessionPolicy(
             Mock<HttpPipelinePolicy> mockBearer,
             SessionOptions sessionOptions,
             params MockResponse[] createSessionResponses)
-        {
-            var serviceClient = CreateMockServiceClient(createSessionResponses);
-            return new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: sessionOptions);
-        }
+            => CreateSessionPolicy(mockBearer, sessionOptions, CreateProvider(createSessionResponses).Provider);
+
+        /// <summary>
+        /// Builds a policy over an existing <see cref="SessionProvider"/>. Use when a
+        /// single provider must be shared across multiple policies (i.e. multiple clients).
+        /// </summary>
+        private static SessionAuthenticationPolicy CreateSessionPolicy(
+            Mock<HttpPipelinePolicy> mockBearer,
+            SessionOptions sessionOptions,
+            SessionProvider sessionProvider)
+            => new SessionAuthenticationPolicy(
+                mockBearer.Object,
+                sessionProvider,
+                sessionOptions);
 
         private async Task<(HttpMessage Message, MockTransport OuterTransport)> SendBlobGetAsync(
             SessionAuthenticationPolicy policy,
@@ -200,18 +236,18 @@ namespace Azure.Storage.Blobs.Tests
         public void Ctor_NullBearerPolicy_Throws()
         {
             Assert.Throws<ArgumentNullException>(() => new SessionAuthenticationPolicy(
-                bearerTokenPolicy: null,
-                blobServiceClientFactory: () => CreateMockServiceClient(),
+                fallbackAuthPolicy: null,
+                sessionProvider: CreateProvider().Provider,
                 sessionOptions: EnabledOptions));
         }
 
         [Test]
-        public void Ctor_NullFactory_Throws()
+        public void Ctor_NullSessionProvider_Throws()
         {
             var mockBearer = CreateMockBearerPolicy();
             Assert.Throws<ArgumentNullException>(() => new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: null,
+                fallbackAuthPolicy: mockBearer.Object,
+                sessionProvider: null,
                 sessionOptions: EnabledOptions));
         }
 
@@ -220,19 +256,20 @@ namespace Azure.Storage.Blobs.Tests
         {
             var mockBearer = CreateMockBearerPolicy();
             Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => CreateMockServiceClient(),
+                mockBearer.Object,
+                CreateProvider().Provider,
                 sessionOptions: null));
         }
 
         [Test]
-        public void Ctor_EnabledMode_MissingAccountName_Throws()
+        public void Ctor_EnabledMode_MissingAccountName_DoesNotThrow()
         {
             var mockBearer = CreateMockBearerPolicy();
-            Assert.Throws<ArgumentException>(() => new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => CreateMockServiceClient(),
-                sessionOptions: new SessionOptions
+            // AccountName is optional; it is derived from the request URL at signing time.
+            Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
+                mockBearer.Object,
+                CreateProvider().Provider,
+                new SessionOptions
                 {
                     SessionMode = SessionMode.Enabled,
                     AccountName = null
@@ -244,9 +281,9 @@ namespace Azure.Storage.Blobs.Tests
         {
             var mockBearer = CreateMockBearerPolicy();
             Assert.DoesNotThrow(() => new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => CreateMockServiceClient(),
-                sessionOptions: EnabledOptions));
+                mockBearer.Object,
+                CreateProvider().Provider,
+                EnabledOptions));
         }
 
         [Test]
@@ -394,13 +431,10 @@ namespace Azure.Storage.Blobs.Tests
         {
             var mockBearer = CreateMockBearerPolicy();
             // Only one CreateSession response — second call would throw if cache miss.
-            var serviceClient = CreateMockServiceClient(
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                EnabledOptions,
                 CreateSessionMockResponse(sessionToken: "shared-token"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
 
             var blob1Uri = new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}/blob1");
             var blob2Uri = new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}/blob2");
@@ -422,14 +456,11 @@ namespace Azure.Storage.Blobs.Tests
             var mockBearer = CreateMockBearerPolicy();
             // Only two CreateSession responses — a third CreateSession call would throw,
             // proving that the third blob request below hits an existing cache entry.
-            var serviceClient = CreateMockServiceClient(
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                EnabledOptions,
                 CreateSessionMockResponse(sessionToken: "token-containerA"),
                 CreateSessionMockResponse(sessionToken: "token-containerB"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
 
             var containerAUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerA/{BlobName}");
             var containerBUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerB/{BlobName}");
@@ -550,6 +581,55 @@ namespace Azure.Storage.Blobs.Tests
         }
         #endregion
 
+        #region Optional AccountName
+        [Test]
+        public async Task AccountNameOmitted_DerivedFromUrl_SignsSuccessfully()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            // AccountName is intentionally omitted; it must be parsed from the
+            // standard *.blob.core.windows.net request URL at signing time.
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                new SessionOptions { SessionMode = SessionMode.Enabled },
+                CreateSessionMockResponse());
+
+            var (message, outerTransport) = await SendBlobGetAsync(
+                policy,
+                BlobUri,
+                RequestMethod.Get,
+                CreateBlobGetResponse(200));
+
+            Assert.IsTrue(
+                outerTransport.Requests[0].Headers.TryGetValue("Authorization", out string authHeader));
+            Assert.IsTrue(authHeader.StartsWith($"Session {SessionToken}:"),
+                $"Expected session signing using the URL-derived account name, got: {authHeader}");
+            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
+        }
+
+        [Test]
+        public void AccountNameOmitted_CustomDomain_Throws()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            // A custom domain carries no parseable account name, so signing cannot
+            // proceed without an explicit SessionOptions.AccountName.
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                new SessionOptions { SessionMode = SessionMode.Enabled },
+                CreateSessionMockResponse());
+
+            var customDomainBlobUri = new Uri($"https://storage.mycustomdomain.com/{ContainerName}/{BlobName}");
+
+            Assert.That(
+                async () => await SendBlobGetAsync(
+                    policy,
+                    customDomainBlobUri,
+                    RequestMethod.Get,
+                    CreateBlobGetResponse(200)),
+                Throws.Exception,
+                "Signing must fail when the account name can be neither supplied nor derived.");
+        }
+        #endregion
+
         #region Session Acquisition Fallback
         [Test]
         public async Task SessionAcquireFails_500_FallsBackToBearer()
@@ -639,34 +719,20 @@ namespace Azure.Storage.Blobs.Tests
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
 
-        [Test]
-        public void SessionAcquireFails_OperationCanceled_Propagates()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-
-            // Factory throws OperationCanceledException (not RequestFailedException).
-            var cts = new CancellationTokenSource();
-            cts.Cancel();
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => throw new OperationCanceledException(cts.Token),
-                sessionOptions: EnabledOptions);
-
-            Assert.That(
-                async () => await SendBlobGetAsync(
-                    policy,
-                    BlobUri,
-                    RequestMethod.Get,
-                    CreateBlobGetResponse(200)),
-                Throws.InstanceOf<OperationCanceledException>());
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-        }
         #endregion
 
         #region Session Acquisition Cooldown
-        [Test]
-        public async Task SessionAcquireFails_500_CooldownPreventsRepeatAcquisition()
+        /// <summary>
+        /// Every fallback-eligible CreateSession failure caches a fallback-to-bearer
+        /// sentinel, so subsequent requests reuse it instead of re-attempting acquisition.
+        /// 5xx uses a 60s cooldown; 403 and 400/FeatureNotEnabled use a 24h cooldown.
+        /// All three must suppress re-acquisition within the test's time window.
+        /// </summary>
+        [TestCase(500, "InternalError")]
+        [TestCase(503, "ServerBusy")]
+        [TestCase(403, "Forbidden")]
+        [TestCase(400, "FeatureNotEnabled")]
+        public async Task SessionAcquireFails_CooldownPreventsRepeatAcquisition(int statusCode, string errorCode)
         {
             const int requestCount = 5;
             var mockBearer = CreateMockBearerPolicy();
@@ -674,18 +740,9 @@ namespace Azure.Storage.Blobs.Tests
             // Only one CreateSession response queued. If a second acquisition were
             // attempted within the cooldown window, the inner MockTransport would
             // throw, failing the test.
-            var innerTransport = new MockTransport(CreateSessionErrorResponse(500, "InternalError"));
-            var innerOptions = new BlobClientOptions { Transport = innerTransport };
-            innerOptions.Retry.MaxRetries = 0;
-            var serviceClient = new BlobServiceClient(
-                ServiceUri,
-                new StorageSharedKeyCredential(AccountName, s_accountKey),
-                innerOptions);
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            var (provider, createSessionTransport) = CreateProvider(
+                CreateSessionErrorResponse(statusCode, errorCode));
+            var policy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
 
             for (int i = 0; i < requestCount; i++)
             {
@@ -700,7 +757,7 @@ namespace Azure.Storage.Blobs.Tests
             VerifyBearerPolicyInvoked(mockBearer, Times.Exactly(requestCount));
             // Exactly one CreateSession attempt — the sentinel cached after the first
             // failure prevented re-acquisition for all subsequent requests.
-            Assert.AreEqual(1, innerTransport.Requests.Count,
+            Assert.AreEqual(1, createSessionTransport.Requests.Count,
                 "Cooldown should prevent re-acquisition; expected exactly one CreateSession call.");
         }
 
@@ -714,20 +771,10 @@ namespace Azure.Storage.Blobs.Tests
             //   2. containerB's first acquire succeeds with tokenB.
             // If containerA's cooldown weren't per-container, a re-acquire on A would
             // steal containerB's queued response and break this test.
-            var innerTransport = new MockTransport(
+            var (provider, createSessionTransport) = CreateProvider(
                 CreateSessionErrorResponse(500, "InternalError"),
                 CreateSessionMockResponse(sessionToken: "tokenB"));
-            var innerOptions = new BlobClientOptions { Transport = innerTransport };
-            innerOptions.Retry.MaxRetries = 0;
-            var serviceClient = new BlobServiceClient(
-                ServiceUri,
-                new StorageSharedKeyCredential(AccountName, s_accountKey),
-                innerOptions);
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            var policy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
 
             var containerAUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerA/{BlobName}");
             var containerBUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerB/{BlobName}");
@@ -760,7 +807,7 @@ namespace Azure.Storage.Blobs.Tests
             // the session path (not bearer).
             VerifyBearerPolicyInvoked(mockBearer, Times.Exactly(3));
             // Exactly two CreateSession attempts: one A (failed → cooldown), one B (succeeded → cached).
-            Assert.AreEqual(2, innerTransport.Requests.Count,
+            Assert.AreEqual(2, createSessionTransport.Requests.Count,
                 "Cooldown should be scoped per container; expected one CreateSession per container.");
         }
 
@@ -772,19 +819,9 @@ namespace Azure.Storage.Blobs.Tests
 
             // Only one CreateSession response queued. A second acquisition would
             // underrun the inner transport and throw, failing the test.
-            var innerTransport = new MockTransport(
+            var (provider, createSessionTransport) = CreateProvider(
                 CreateSessionErrorResponse(503, "ServerBusy"));
-            var innerOptions = new BlobClientOptions { Transport = innerTransport };
-            innerOptions.Retry.MaxRetries = 0;
-            var serviceClient = new BlobServiceClient(
-                ServiceUri,
-                new StorageSharedKeyCredential(AccountName, s_accountKey),
-                innerOptions);
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            var policy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
 
             var outerResponses = new ConcurrentQueue<MockResponse>();
             for (int i = 0; i < parallelism; i++)
@@ -818,19 +855,18 @@ namespace Azure.Storage.Blobs.Tests
             // Exactly one CreateSession attempt across all 50 concurrent callers — proves
             // both (a) the cache's TCS coalescing handled concurrent first-callers, and
             // (b) the cooldown prevented post-failure callers from re-attempting.
-            Assert.AreEqual(1, innerTransport.Requests.Count,
+            Assert.AreEqual(1, createSessionTransport.Requests.Count,
                 "Concurrent failed acquires should coalesce to a single CreateSession call.");
         }
 
         [Test]
-        public void SessionTokenInfo_FallbackSentinel_RefreshOnIsBeforeExpiry()
+        public void SessionTokenInfo_FallbackSentinel_RefreshOnEqualsExpiresOn()
         {
             TimeSpan cooldown = TimeSpan.FromMinutes(5);
-            TimeSpan refreshBuffer = TimeSpan.FromSeconds(30);
 
             DateTimeOffset before = DateTimeOffset.UtcNow;
-            SessionAuthenticationPolicy.SessionTokenInfo sentinel =
-                SessionAuthenticationPolicy.SessionTokenInfo.CreateFallbackToBearer(cooldown, refreshBuffer);
+            SessionProvider.SessionTokenInfo sentinel =
+                SessionProvider.SessionTokenInfo.CreateFallbackToBearer(cooldown);
             DateTimeOffset after = DateTimeOffset.UtcNow;
 
             Assert.IsTrue(sentinel.IsFallbackToBearer, "Sentinel must signal fallback to bearer.");
@@ -838,10 +874,10 @@ namespace Azure.Storage.Blobs.Tests
                 "ExpiresOn must be at least UtcNow + cooldown at construction time.");
             Assert.LessOrEqual(sentinel.ExpiresOn, after + cooldown,
                 "ExpiresOn must be at most UtcNow + cooldown at construction time.");
-            // Locks in the contract that a background refresh probes the service
-            // refreshBuffer before the cooldown expires.
-            Assert.AreEqual(sentinel.ExpiresOn - refreshBuffer, sentinel.RefreshOn,
-                "RefreshOn must precede ExpiresOn by exactly refreshBuffer to enable proactive recovery.");
+            // The sentinel must not refresh early: an earlier RefreshOn would shorten
+            // the intended cooldown window and cause premature re-acquisition.
+            Assert.AreEqual(sentinel.ExpiresOn, sentinel.RefreshOn,
+                "RefreshOn must equal ExpiresOn so the full cooldown is honored.");
         }
         #endregion
 
@@ -866,64 +902,13 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public async Task Response401_InvalidatesAndRetries()
-        {
-            string expiredToken = "expired-token";
-            string freshToken = "fresh-token";
-            var mockBearer = CreateMockBearerPolicy();
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(sessionToken: expiredToken),
-                CreateSessionMockResponse(sessionToken: freshToken));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
-
-            // Capture Authorization header values at send time to avoid shared-reference issue.
-            var capturedAuthHeaders = new System.Collections.Generic.List<string>();
-            var responseIndex = 0;
-            // Any 401 triggers one retry with a fresh session.
-            MockResponse[] outerResponses = new[]
-            {
-                CreateBlobGetResponse(401),
-                CreateBlobGetResponse(200)
-            };
-
-            var outerTransport = MockTransport.FromMessageCallback(msg =>
-            {
-                msg.Request.Headers.TryGetValue("Authorization", out string auth);
-                capturedAuthHeaders.Add(auth);
-                return outerResponses[responseIndex++];
-            });
-
-            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
-            var message = pipeline.CreateMessage();
-            message.Request.Method = RequestMethod.Get;
-            message.Request.Uri.Reset(BlobUri);
-
-            await SendAsync(pipeline, message);
-
-            Assert.AreEqual(2, capturedAuthHeaders.Count);
-            Assert.AreEqual(200, message.Response.Status);
-
-            Assert.IsTrue(capturedAuthHeaders[0].StartsWith($"Session {expiredToken}:"), $"First request expected {expiredToken}, got: {capturedAuthHeaders[0]}");
-            Assert.IsTrue(capturedAuthHeaders[1].StartsWith($"Session {freshToken}:"), $"Second request expected {freshToken}, got: {capturedAuthHeaders[1]}");
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-        }
-
-        [Test]
-        public async Task Response401_ReacquireFails_FallsBackToBearer()
+        public async Task Response401_InvalidatesCacheAndFallsBackToBearer()
         {
             var mockBearer = CreateMockBearerPolicy();
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(),
-                CreateSessionErrorResponse(500, "InternalError"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                EnabledOptions,
+                CreateSessionMockResponse());
 
             var (message, outerTransport) = await SendBlobGetAsync(
                 policy,
@@ -931,83 +916,57 @@ namespace Azure.Storage.Blobs.Tests
                 RequestMethod.Get,
                 CreateBlobGetResponse(401));
 
-            // Only 1 outer request
-            Assert.AreEqual(1, outerTransport.Requests.Count);
+            // The policy no longer retries with a fresh session: exactly one
+            // session-authenticated attempt is made.
+            Assert.AreEqual(1, outerTransport.Requests.Count,
+                "A 401 must not trigger a session retry; expected a single outer request.");
 
-            // Re-acquisition failed → fell back to bearer token.
+            // The request is instead re-issued through the bearer token policy.
             VerifyBearerPolicyInvoked(mockBearer, Times.Once());
         }
 
         [Test]
-        public void Response401_ReacquireFails_NonFallbackError_Propagates()
+        public async Task Response401_NextRequest_ReAcquiresFreshSession()
         {
+            const string staleToken = "stale-token";
+            const string freshToken = "fresh-token";
+
             var mockBearer = CreateMockBearerPolicy();
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(),
-                CreateSessionErrorResponse(404, "ContainerNotFound"));
+            var (provider, createSessionTransport) = CreateProvider(
+                CreateSessionMockResponse(sessionToken: staleToken),
+                CreateSessionMockResponse(sessionToken: freshToken));
+            var policy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
 
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
-
-            // 404 is not a fallback-eligible error
-            Assert.ThrowsAsync<RequestFailedException>(async () => await SendBlobGetAsync(
+            // First request signs with the stale token and gets a 401, which must
+            // invalidate the cached session.
+            var (_, transport1) = await SendBlobGetAsync(
                 policy,
                 BlobUri,
                 RequestMethod.Get,
-                CreateBlobGetResponse(401)));
+                CreateBlobGetResponse(401));
 
-            // Bearer was never invoked — the error propagated before reaching fallback.
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
+            Assert.IsTrue(transport1.Requests[0].Headers.TryGetValue("Authorization", out string auth1));
+            Assert.IsTrue(auth1.StartsWith($"Session {staleToken}:"),
+                $"First request expected {staleToken}, got: {auth1}");
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
+
+            // The next request must mint a brand new session, proving the 401
+            // cleared the cache rather than leaving the stale token in place.
+            var (_, transport2) = await SendBlobGetAsync(
+                policy,
+                BlobUri,
+                RequestMethod.Get,
+                CreateBlobGetResponse(200));
+
+            Assert.IsTrue(transport2.Requests[0].Headers.TryGetValue("Authorization", out string auth2));
+            Assert.IsTrue(auth2.StartsWith($"Session {freshToken}:"),
+                $"Second request expected {freshToken} after invalidation, got: {auth2}");
+            Assert.AreEqual(2, createSessionTransport.Requests.Count,
+                "Expected a second CreateSession call after the 401 invalidated the cache.");
         }
 
         [Test]
-        public async Task Response401_RetryAlso401_DoesNotLoopInfinitely()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(sessionToken: "token1"),
-                CreateSessionMockResponse(sessionToken: "token2"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
-
-            var capturedAuthHeaders = new System.Collections.Generic.List<string>();
-            var responseIndex = 0;
-            // Both the original and the retry return 401
-            MockResponse[] outerResponses = new[]
-            {
-                CreateBlobGetResponse(401),
-                CreateBlobGetResponse(401)
-            };
-
-            var outerTransport = MockTransport.FromMessageCallback(msg =>
-            {
-                msg.Request.Headers.TryGetValue("Authorization", out string auth);
-                capturedAuthHeaders.Add(auth);
-                return outerResponses[responseIndex++];
-            });
-
-            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
-            var message = pipeline.CreateMessage();
-            message.Request.Method = RequestMethod.Get;
-            message.Request.Uri.Reset(BlobUri);
-
-            await SendAsync(pipeline, message);
-
-            // Exactly 2 attempts: original + one retry. No infinite loop.
-            Assert.AreEqual(2, capturedAuthHeaders.Count);
-            // Final response is still 401 — not retried further.
-            Assert.AreEqual(401, message.Response.Status);
-            // Bearer was never invoked — second 401 doesn't trigger fallback.
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-        }
-
-        [Test]
-        public async Task Response503_SessionsUnavailable_FallsBackToBearer()
+        public async Task Response401_DisposesPriorContentStreamBeforeBearerFallback()
         {
             var mockBearer = CreateMockBearerPolicy();
             var policy = CreateSessionPolicy(
@@ -1015,56 +974,16 @@ namespace Azure.Storage.Blobs.Tests
                 EnabledOptions,
                 CreateSessionMockResponse());
 
-            var (message, _) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(503, errorCode: "SessionOperationsTemporarilyUnavailable"));
-
-            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
-        }
-
-        [Test]
-        public async Task Response503_DifferentErrorCode_NoFallback()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            var policy = CreateSessionPolicy(
-                mockBearer,
-                EnabledOptions,
-                CreateSessionMockResponse());
-
-            var (message, _) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(503, errorCode: "ServerBusy"));
-
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-            Assert.AreEqual(503, message.Response.Status);
-        }
-
-        [Test]
-        public async Task Response401_DisposesPriorContentStreamBeforeRetry()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(sessionToken: "token1"),
-                CreateSessionMockResponse(sessionToken: "token2"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
-
-            // Attach a tracking stream to the 401 response
-            // the policy disposes it before re-sending. Mirrors Azure.Core.RetryPolicy
-            // behavior of disposing message.Response.ContentStream between attempts to
-            // release the connection-pool lease.
+            // Attach a tracking stream to the 401 response so we can observe whether
+            // the policy disposes it before handing off to the bearer policy (which
+            // will overwrite message.Response when it re-sends). Mirrors
+            // Azure.Core.RetryPolicy behavior of disposing message.Response.ContentStream
+            // between attempts to release the connection-pool lease.
             var trackingStream = new DisposeTrackingStream(Encoding.UTF8.GetBytes("<Error/>"));
             var response401 = CreateBlobGetResponse(401);
             response401.ContentStream = trackingStream;
 
-            var outerTransport = new MockTransport(response401, CreateBlobGetResponse(200));
+            var outerTransport = new MockTransport(response401);
             var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
             var message = pipeline.CreateMessage();
             message.Request.Method = RequestMethod.Get;
@@ -1074,39 +993,7 @@ namespace Azure.Storage.Blobs.Tests
 
             Assert.IsTrue(
                 trackingStream.Disposed,
-                "The 401 response's ContentStream should be disposed before the retry to release the connection-pool lease.");
-            Assert.AreEqual(200, message.Response.Status);
-        }
-
-        [Test]
-        public async Task Response503_SessionsUnavailable_DisposesPriorContentStreamBeforeBearerFallback()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            var policy = CreateSessionPolicy(
-                mockBearer,
-                EnabledOptions,
-                CreateSessionMockResponse());
-
-            // Attach a tracking stream to the 503 response so we can observe whether
-            // the policy disposes it before handing off to the bearer policy (which
-            // will overwrite message.Response when it re-sends).
-            var trackingStream = new DisposeTrackingStream(Encoding.UTF8.GetBytes("<Error/>"));
-            var response503 = CreateBlobGetResponse(
-                503,
-                errorCode: "SessionOperationsTemporarilyUnavailable");
-            response503.ContentStream = trackingStream;
-
-            var outerTransport = new MockTransport(response503);
-            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
-            var message = pipeline.CreateMessage();
-            message.Request.Method = RequestMethod.Get;
-            message.Request.Uri.Reset(BlobUri);
-
-            await SendAsync(pipeline, message);
-
-            Assert.IsTrue(
-                trackingStream.Disposed,
-                "The 503 response's ContentStream should be disposed before bearer fallback to release the connection-pool lease.");
+                "The 401 response's ContentStream should be disposed before bearer fallback to release the connection-pool lease.");
             VerifyBearerPolicyInvoked(mockBearer, Times.Once());
         }
         #endregion
@@ -1119,16 +1006,12 @@ namespace Azure.Storage.Blobs.Tests
             // Three CreateSession responses:
             //   1. containerA initial session
             //   2. containerB initial session
-            //   3. containerA re-acquired session after 401 invalidation
-            var serviceClient = CreateMockServiceClient(
+            //   3. containerA re-acquired session on the request following the 401
+            var (provider, createSessionTransport) = CreateProvider(
                 CreateSessionMockResponse(sessionToken: "tokenA-original"),
                 CreateSessionMockResponse(sessionToken: "tokenB-original"),
                 CreateSessionMockResponse(sessionToken: "tokenA-refreshed"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            var policy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
 
             var containerAUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerA/{BlobName}");
             var containerBUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerB/{BlobName}");
@@ -1137,39 +1020,32 @@ namespace Azure.Storage.Blobs.Tests
             await SendBlobGetAsync(policy, containerAUri, RequestMethod.Get, CreateBlobGetResponse(200));
             await SendBlobGetAsync(policy, containerBUri, RequestMethod.Get, CreateBlobGetResponse(200));
 
-            // ContainerA gets a 401 → invalidates containerA's cache, re-acquires, retries.
-            var responseIndex = 0;
-            MockResponse[] outerResponses = new[] {
-                CreateBlobGetResponse(401),
-                CreateBlobGetResponse(200)
-            };
-            var capturedAuthHeaders = new System.Collections.Generic.List<string>();
-            var outerTransport = MockTransport.FromMessageCallback(msg =>
-            {
-                msg.Request.Headers.TryGetValue("Authorization", out string auth);
-                capturedAuthHeaders.Add(auth);
-                return outerResponses[responseIndex++];
-            });
+            // ContainerA gets a 401 -> invalidates only containerA's cache and falls back to bearer.
+            var (_, transportA401) = await SendBlobGetAsync(
+                policy, containerAUri, RequestMethod.Get, CreateBlobGetResponse(401));
 
-            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
-            var message = pipeline.CreateMessage();
-            message.Request.Method = RequestMethod.Get;
-            message.Request.Uri.Reset(containerAUri);
-            await SendAsync(pipeline, message);
+            Assert.AreEqual(1, transportA401.Requests.Count,
+                "A 401 must not trigger a session retry.");
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
 
-            // ContainerA should have re-acquired a fresh token.
-            Assert.AreEqual(2, capturedAuthHeaders.Count);
-            Assert.IsTrue(capturedAuthHeaders[0].StartsWith("Session tokenA-original:"),
-                $"First request expected tokenA-original, got: {capturedAuthHeaders[0]}");
-            Assert.IsTrue(capturedAuthHeaders[1].StartsWith("Session tokenA-refreshed:"),
-                $"Retry expected refreshed tokenA, got: {capturedAuthHeaders[1]}");
-
-            // ContainerB's cache should be unaffected — still uses original token.
+            // ContainerB's cache must be unaffected -- still uses its original token
+            // and must not have triggered a re-acquisition.
             var (_, transportB2) = await SendBlobGetAsync(
                 policy, containerBUri, RequestMethod.Get, CreateBlobGetResponse(200));
             Assert.IsTrue(transportB2.Requests[0].Headers.TryGetValue("Authorization", out string authB));
             Assert.IsTrue(authB.StartsWith("Session tokenB-original:"),
                 $"ContainerB cache should be intact, got: {authB}");
+            Assert.AreEqual(2, createSessionTransport.Requests.Count,
+                "ContainerB should still be served from cache; no third CreateSession yet.");
+
+            // ContainerA's next request re-acquires, proving its entry (and only its
+            // entry) was invalidated.
+            var (_, transportA2) = await SendBlobGetAsync(
+                policy, containerAUri, RequestMethod.Get, CreateBlobGetResponse(200));
+            Assert.IsTrue(transportA2.Requests[0].Headers.TryGetValue("Authorization", out string authA2));
+            Assert.IsTrue(authA2.StartsWith("Session tokenA-refreshed:"),
+                $"ContainerA should have re-acquired after the 401, got: {authA2}");
+            Assert.AreEqual(3, createSessionTransport.Requests.Count);
         }
 
         [Test]
@@ -1179,14 +1055,11 @@ namespace Azure.Storage.Blobs.Tests
             // Two CreateSession responses:
             //   1. containerA fails with 500
             //   2. containerB succeeds
-            var serviceClient = CreateMockServiceClient(
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                EnabledOptions,
                 CreateSessionErrorResponse(500, "InternalError"),
                 CreateSessionMockResponse(sessionToken: "tokenB"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
 
             var containerAUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerA/{BlobName}");
             var containerBUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerB/{BlobName}");
@@ -1207,38 +1080,6 @@ namespace Azure.Storage.Blobs.Tests
                 $"ContainerB should use session auth, got: {authB}");
         }
 
-        [Test]
-        public async Task MultiContainer_Response503_DoesNotAffectOtherContainers()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            // Two CreateSession responses — one per container, both succeed.
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(sessionToken: "tokenA"),
-                CreateSessionMockResponse(sessionToken: "tokenB"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
-
-            var containerAUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerA/{BlobName}");
-            var containerBUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerB/{BlobName}");
-
-            // ContainerA gets a 503 SessionsUnavailable → falls back to bearer.
-            var (_, _) = await SendBlobGetAsync(
-                policy,
-                containerAUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(503, errorCode: "SessionOperationsTemporarilyUnavailable"));
-            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
-
-            // ContainerB should still get a session token from its own cache.
-            var (_, transportB) = await SendBlobGetAsync(
-                policy, containerBUri, RequestMethod.Get, CreateBlobGetResponse(200));
-            Assert.IsTrue(transportB.Requests[0].Headers.TryGetValue("Authorization", out string authB));
-            Assert.IsTrue(authB.StartsWith("Session tokenB:"),
-                $"ContainerB should use session auth, got: {authB}");
-        }
         #endregion
 
         #region Cache Expiration
@@ -1248,18 +1089,15 @@ namespace Azure.Storage.Blobs.Tests
             var mockBearer = CreateMockBearerPolicy();
             // First session expires very quickly (already in the past by second request),
             // second session is long-lived.
-            var serviceClient = CreateMockServiceClient(
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                EnabledOptions,
                 CreateSessionMockResponse(
                     sessionToken: "short-lived-token",
                     expiration: DateTimeOffset.UtcNow.AddSeconds(1)),
                 CreateSessionMockResponse(
                     sessionToken: "renewed-token",
                     expiration: DateTimeOffset.UtcNow.AddMinutes(30)));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
 
             // First request succeeds with the short-lived token.
             var (message1, transport1) = await SendBlobGetAsync(
@@ -1297,7 +1135,9 @@ namespace Azure.Storage.Blobs.Tests
             //   1. containerA: short-lived session (expires in 1s)
             //   2. containerB: long-lived session
             //   3. containerA: re-acquired session after expiry
-            var serviceClient = CreateMockServiceClient(
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                EnabledOptions,
                 CreateSessionMockResponse(
                     sessionToken: "tokenA-short",
                     expiration: DateTimeOffset.UtcNow.AddSeconds(1)),
@@ -1307,11 +1147,6 @@ namespace Azure.Storage.Blobs.Tests
                 CreateSessionMockResponse(
                     sessionToken: "tokenA-renewed",
                     expiration: DateTimeOffset.UtcNow.AddMinutes(30)));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
 
             var containerAUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerA/{BlobName}");
             var containerBUri = new Uri($"https://{AccountName}.blob.core.windows.net/containerB/{BlobName}");
@@ -1359,13 +1194,10 @@ namespace Azure.Storage.Blobs.Tests
 
             // Only one CreateSession response queued. If a second acquisition were
             // attempted, the inner MockTransport would throw, failing the test.
-            var serviceClient = CreateMockServiceClient(
+            var policy = CreateSessionPolicy(
+                mockBearer,
+                EnabledOptions,
                 CreateSessionMockResponse(sessionToken: "shared-token"));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
 
             var outerResponses = new ConcurrentQueue<MockResponse>();
             for (int i = 0; i < parallelism; i++)
@@ -1423,12 +1255,7 @@ namespace Azure.Storage.Blobs.Tests
             {
                 sessionResponses[i] = CreateSessionMockResponse(sessionToken: $"token{i}");
             }
-            var serviceClient = CreateMockServiceClient(sessionResponses);
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            var policy = CreateSessionPolicy(mockBearer, EnabledOptions, sessionResponses);
 
             int totalRequests = numContainers * numCallsPerContainer;
             var outerResponses = new ConcurrentQueue<MockResponse>();
@@ -1497,170 +1324,363 @@ namespace Azure.Storage.Blobs.Tests
                 "Each container must have its own distinct token (per-container cache isolation).");
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
+        #endregion
+
+        #region Shared SessionProvider Across Clients
+        // A SessionProvider owns its own session-minting BlobServiceClient, built from
+        // the arguments given to *its* constructor. It is therefore independent of the
+        // lifetime and pipeline of any client that consumes it. These tests share a
+        // single provider across multiple policies (each policy standing in for an
+        // independently constructed client) and assert that the session cache is shared
+        // and survives, which is the scenario the provider abstraction exists to solve.
 
         [Test]
-        public async Task Concurrent_401_OnSameContainer_AllTasksRecover()
+        public async Task SharedProvider_AfterClientDropped_CacheSurvives()
         {
-            const int parallelism = 20;
             var mockBearer = CreateMockBearerPolicy();
 
-            // The policy invalidates the cache on every 401 and retries.
-            var sessionResponses = new MockResponse[parallelism + 1]; // +1 for the initial prime.
-            for (int i = 0; i < sessionResponses.Length; i++)
-            {
-                sessionResponses[i] = CreateSessionMockResponse(sessionToken: $"token{i}");
-            }
-            var serviceClient = CreateMockServiceClient(sessionResponses);
+            // Only one CreateSession response: the surviving client must reuse the
+            // cache warmed by the dropped one.
+            var (provider, createSessionTransport) = CreateProvider(
+                CreateSessionMockResponse(sessionToken: "persistent-token"));
 
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            // Warm the cache using a policy scoped to a helper method, then drop it.
+            // Azure SDK clients are not IDisposable, so "disposing" a client means
+            // releasing the last reference to it.
+            WeakReference weakRef = await WarmCacheWithTransientClientAsync(provider, mockBearer);
 
-            // Prime the cache so all `parallelism` tasks start with a known token.
-            await SendBlobGetAsync(policy, BlobUri, RequestMethod.Get, CreateBlobGetResponse(200));
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
 
-            // Per-message attempt tracking: each HttpMessage's first attempt returns 401,
-            // its retry returns 200.
-            var attemptByMessage = new ConcurrentDictionary<HttpMessage, int>();
-            var capturedAuthHeaders = new ConcurrentQueue<string>();
-            var outerTransport = MockTransport.FromMessageCallback(msg =>
-            {
-                msg.Request.Headers.TryGetValue("Authorization", out string auth);
-                capturedAuthHeaders.Enqueue(auth);
-                int attempt = attemptByMessage.AddOrUpdate(msg, 1, (_, v) => v + 1);
-                return CreateBlobGetResponse(attempt == 1 ? 401 : 200);
-            });
-            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+            // Collection is not what keeps the cache alive (the provider is
+            // independently rooted), so this is informational rather than load-bearing.
+            TestContext.WriteLine($"Transient client collected: {!weakRef.IsAlive}");
 
-            using var startGate = new ManualResetEventSlim(false);
-            var tasks = new Task[parallelism];
-            for (int i = 0; i < parallelism; i++)
-            {
-                tasks[i] = Task.Run(async () =>
-                {
-                    startGate.Wait();
-                    var message = pipeline.CreateMessage();
-                    message.Request.Method = RequestMethod.Get;
-                    message.Request.Uri.Reset(BlobUri);
-                    await SendAsync(pipeline, message);
-                    Assert.AreEqual(200, message.Response.Status);
-                });
-            }
-            startGate.Set();
-            await Task.WhenAll(tasks);
+            // A brand new client over the same provider must reuse the cached session.
+            var survivingPolicy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
+            var (_, transport) = await SendBlobGetAsync(
+                survivingPolicy,
+                BlobUri,
+                RequestMethod.Get,
+                CreateBlobGetResponse(200));
 
-            // Each task: 1 initial 401 attempt + 1 retry that succeeded = 2 outer requests.
-            Assert.AreEqual(parallelism * 2, capturedAuthHeaders.Count);
-            // Every header should be a Session header (no fallback to bearer).
-            foreach (string auth in capturedAuthHeaders)
-            {
-                Assert.IsNotNull(auth);
-                Assert.IsTrue(auth.StartsWith("Session token"),
-                    $"Expected a Session header, got: {auth}");
-            }
+            Assert.IsTrue(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth));
+            Assert.IsTrue(auth.StartsWith("Session persistent-token:"),
+                $"The surviving client should reuse the cached session, got: {auth}");
+            Assert.AreEqual(1, createSessionTransport.Requests.Count,
+                "The session cache must survive the disposal of the client that warmed it.");
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
 
-        [Test]
-        public async Task Concurrent_401_OnSameContainer_CoalescesIntoSingleReacquire()
+        /// <summary>
+        /// Warms <paramref name="provider"/>'s cache using a policy that goes out of
+        /// scope when this method returns, leaving only a <see cref="WeakReference"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private async Task<WeakReference> WarmCacheWithTransientClientAsync(
+            SessionProvider provider,
+            Mock<HttpPipelinePolicy> mockBearer)
         {
-            const int parallelism = 20;
-            var mockBearer = CreateMockBearerPolicy();
+            var transientPolicy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
 
-            // Exactly two CreateSession responses queued: one for the initial prime,
-            // one for the post-401 re-acquisition. If the policy's InvalidateIfCurrent
-            // coalescing fails (e.g. each of the N concurrent 401 handlers wipes the
-            // cache and triggers its own re-acquire), the inner MockTransport will
-            // run out of responses and throw, failing the test.
-            var serviceClient = CreateMockServiceClient(
+            var (_, transport) = await SendBlobGetAsync(
+                transientPolicy,
+                BlobUri,
+                RequestMethod.Get,
+                CreateBlobGetResponse(200));
+
+            Assert.IsTrue(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth));
+            Assert.IsTrue(auth.StartsWith("Session persistent-token:"),
+                $"The transient client should have warmed the cache, got: {auth}");
+
+            return new WeakReference(transientPolicy);
+        }
+
+        [Test]
+        public async Task SharedProvider_401OnOneClient_InvalidatesForAllClients()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            var (provider, createSessionTransport) = CreateProvider(
                 CreateSessionMockResponse(sessionToken: "token-original"),
                 CreateSessionMockResponse(sessionToken: "token-refreshed"));
 
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: EnabledOptions);
+            // Client A warms the cache.
+            var policyA = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
+            var (_, transportA1) = await SendBlobGetAsync(
+                policyA, BlobUri, RequestMethod.Get, CreateBlobGetResponse(200));
+            Assert.IsTrue(transportA1.Requests[0].Headers.TryGetValue("Authorization", out string authA1));
+            Assert.IsTrue(authA1.StartsWith("Session token-original:"));
 
-            // Prime the cache with token-original so all `parallelism` tasks start
-            // signing with the same (about-to-be-invalidated) token.
-            await SendBlobGetAsync(policy, BlobUri, RequestMethod.Get, CreateBlobGetResponse(200));
+            // Client A then receives a 401, invalidating the shared cache entry.
+            var (_, transportA2) = await SendBlobGetAsync(
+                policyA, BlobUri, RequestMethod.Get, CreateBlobGetResponse(401));
+            Assert.AreEqual(1, transportA2.Requests.Count, "A 401 must not trigger a session retry.");
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
 
-            var attemptByMessage = new ConcurrentDictionary<HttpMessage, int>();
-            var capturedAuthHeaders = new ConcurrentQueue<string>();
-            using var arrivalGate = new CountdownEvent(parallelism);
-            using var releaseGate = new ManualResetEventSlim(false);
-            var outerTransport = MockTransport.FromMessageCallback(msg =>
+            // Client B — a different client — must observe the invalidation and mint
+            // a fresh session rather than reusing the revoked token.
+            var policyB = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
+            var (_, transportB) = await SendBlobGetAsync(
+                policyB, BlobUri, RequestMethod.Get, CreateBlobGetResponse(200));
+
+            Assert.IsTrue(transportB.Requests[0].Headers.TryGetValue("Authorization", out string authB));
+            Assert.IsTrue(authB.StartsWith("Session token-refreshed:"),
+                $"Invalidation must be visible across clients sharing a provider, got: {authB}");
+            Assert.AreEqual(2, createSessionTransport.Requests.Count);
+        }
+
+        [Test]
+        public async Task SharedProvider_ConcurrentClients_AcquireSessionOnce()
+        {
+            const int policyCount = 5;
+            const int requestsPerPolicy = 10;
+            const int totalRequests = policyCount * requestsPerPolicy;
+
+            var mockBearer = CreateMockBearerPolicy();
+
+            // One queued CreateSession response across every concurrent caller on
+            // every policy: guards the ConcurrentDictionary + AutoRefreshingCache
+            // coalescing under the shared-provider topology.
+            var (provider, createSessionTransport) = CreateProvider(
+                CreateSessionMockResponse(sessionToken: "shared-token"));
+
+            var outerResponses = new ConcurrentQueue<MockResponse>();
+            for (int i = 0; i < totalRequests; i++)
             {
-                msg.Request.Headers.TryGetValue("Authorization", out string auth);
-                capturedAuthHeaders.Enqueue(auth);
-                int attempt = attemptByMessage.AddOrUpdate(msg, 1, (_, v) => v + 1);
-                if (attempt == 1)
-                {
-                    // First attempt: signal arrival, then wait for the test to
-                    // release all N 401s together.
-                    arrivalGate.Signal();
-                    releaseGate.Wait();
-                    return CreateBlobGetResponse(401);
-                }
-                // Retry: succeed immediately.
-                return CreateBlobGetResponse(200);
-            });
-            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+                outerResponses.Enqueue(CreateBlobGetResponse(200));
+            }
+            var capturedAuthHeaders = new ConcurrentQueue<string>();
+            var outerTransport = CreateConcurrentOuterTransport(outerResponses, capturedAuthHeaders);
+
+            // Each policy is an independently constructed client sharing one provider,
+            // and each gets its own pipeline over a common transport.
+            var pipelines = new HttpPipeline[policyCount];
+            for (int i = 0; i < policyCount; i++)
+            {
+                var policy = CreateSessionPolicy(mockBearer, EnabledOptions, provider);
+                pipelines[i] = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+            }
 
             using var startGate = new ManualResetEventSlim(false);
-            var tasks = new Task[parallelism];
-            for (int i = 0; i < parallelism; i++)
+            var tasks = new Task[totalRequests];
+            for (int i = 0; i < totalRequests; i++)
             {
+                HttpPipeline pipeline = pipelines[i % policyCount];
+                int blobIndex = i;
                 tasks[i] = Task.Run(async () =>
                 {
                     startGate.Wait();
+                    var blobUri = new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}/blob{blobIndex}");
                     var message = pipeline.CreateMessage();
                     message.Request.Method = RequestMethod.Get;
-                    message.Request.Uri.Reset(BlobUri);
+                    message.Request.Uri.Reset(blobUri);
                     await SendAsync(pipeline, message);
                     Assert.AreEqual(200, message.Response.Status);
                 });
             }
             startGate.Set();
-
-            // Wait for every first attempt to be parked at the transport, then
-            // release them all at once.
-            arrivalGate.Wait();
-            releaseGate.Set();
             await Task.WhenAll(tasks);
 
-            // Every task: 1 initial 401 + 1 retry = 2 outer requests.
-            Assert.AreEqual(parallelism * 2, capturedAuthHeaders.Count);
-
-            // Partition captured headers by token. The original-token requests are
-            // the initial 401 attempts; the refreshed-token requests are the retries.
-            // We expect exactly `parallelism` of each — i.e., one and only one
-            // re-acquisition serviced all N concurrent 401 retries.
-            int originalCount = 0;
-            int refreshedCount = 0;
+            Assert.AreEqual(1, createSessionTransport.Requests.Count,
+                "Concurrent clients sharing a provider should coalesce into one CreateSession.");
+            Assert.AreEqual(totalRequests, capturedAuthHeaders.Count);
             foreach (string auth in capturedAuthHeaders)
             {
                 Assert.IsNotNull(auth);
-                if (auth.StartsWith("Session token-original:"))
-                {
-                    originalCount++;
-                }
-                else if (auth.StartsWith("Session token-refreshed:"))
-                {
-                    refreshedCount++;
-                }
-                else
-                {
-                    Assert.Fail($"Unexpected Authorization header: {auth}");
-                }
+                Assert.IsTrue(auth.StartsWith("Session shared-token:"),
+                    $"Expected the single shared token, got: {auth}");
             }
-            Assert.AreEqual(parallelism, originalCount,
-                "Every task's first attempt should have signed with the original token.");
-            Assert.AreEqual(parallelism, refreshedCount,
-                "Every task's retry should have signed with the single refreshed token. " +
-                "Seeing a different count means the cache was re-acquired more than once.");
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
+        }
+        #endregion
+
+        #region SessionOptions.SessionProvider Wiring
+        private static MockResponse CreateBlobDownloadResponse()
+        {
+            var response = new MockResponse(200);
+            response.AddHeader("Content-Type", "application/octet-stream");
+            response.AddHeader("x-ms-blob-type", "BlockBlob");
+            response.SetContent("hello");
+            return response;
+        }
+
+        /// <summary>
+        /// Builds client options wired to <paramref name="provider"/> and to a
+        /// data-plane transport that serves a single blob download.
+        /// </summary>
+        private static (BlobClientOptions Options, MockTransport DataTransport) CreateWiredClientOptions(
+            SessionProvider provider)
+        {
+            var dataTransport = new MockTransport(CreateBlobDownloadResponse());
+            var options = new BlobClientOptions
+            {
+                Transport = dataTransport,
+                SessionOptions = new SessionOptions
+                {
+                    SessionMode = SessionMode.Enabled,
+                    AccountName = AccountName,
+                    SessionProvider = provider,
+                },
+            };
+            options.Retry.MaxRetries = 0;
+            return (options, dataTransport);
+        }
+
+        private async Task DownloadAsync(BlobClient client)
+        {
+            if (_async)
+            {
+                await client.DownloadStreamingAsync();
+            }
+            else
+            {
+                client.DownloadStreaming();
+            }
+        }
+
+        private static void AssertSignedWithSession(MockTransport dataTransport, string expectedToken)
+        {
+            Assert.Greater(dataTransport.Requests.Count, 0, "Expected a data-plane request.");
+            Assert.IsTrue(
+                dataTransport.Requests[0].Headers.TryGetValue("Authorization", out string auth),
+                "Data-plane request should carry an Authorization header.");
+            Assert.IsTrue(auth.StartsWith($"Session {expectedToken}:", StringComparison.Ordinal),
+                $"Expected session auth using the supplied provider's token, got: {auth}");
+        }
+
+        [Test]
+        public void Clone_PreservesSessionProvider()
+        {
+            var (provider, _) = CreateProvider();
+            var options = new SessionOptions
+            {
+                SessionMode = SessionMode.Enabled,
+                AccountName = AccountName,
+                SessionProvider = provider,
+            };
+
+            // The policy defensively clones SessionOptions; if Clone dropped the
+            // provider, every client would silently fall back to its own cache.
+            SessionOptions clone = options.Clone();
+
+            Assert.AreSame(provider, clone.SessionProvider,
+                "Clone must carry the customer-supplied provider through to the policy.");
+            Assert.AreEqual(SessionMode.Enabled, clone.SessionMode);
+            Assert.AreEqual(AccountName, clone.AccountName);
+        }
+
+        [Test]
+        public async Task BlobClient_UsesSuppliedSessionProvider()
+        {
+            var (provider, createSessionTransport) = CreateProvider(CreateSessionMockResponse());
+            var (options, dataTransport) = CreateWiredClientOptions(provider);
+
+            var client = new BlobClient(BlobUri, new StaticTokenCredential(), options);
+            await DownloadAsync(client);
+
+            Assert.AreEqual(1, createSessionTransport.Requests.Count,
+                "CreateSession should have been issued by the supplied provider's own transport.");
+            AssertSignedWithSession(dataTransport, SessionToken);
+        }
+
+        [Test]
+        public async Task BlobContainerClient_UsesSuppliedSessionProvider()
+        {
+            var (provider, createSessionTransport) = CreateProvider(CreateSessionMockResponse());
+            var (options, dataTransport) = CreateWiredClientOptions(provider);
+
+            var containerClient = new BlobContainerClient(ContainerUri, new StaticTokenCredential(), options);
+            BlobClient client = containerClient.GetBlobClient(BlobName);
+            await DownloadAsync(client);
+
+            Assert.AreEqual(1, createSessionTransport.Requests.Count);
+            AssertSignedWithSession(dataTransport, SessionToken);
+        }
+
+        [Test]
+        public async Task BlobServiceClient_UsesSuppliedSessionProvider()
+        {
+            var (provider, createSessionTransport) = CreateProvider(CreateSessionMockResponse());
+            var (options, dataTransport) = CreateWiredClientOptions(provider);
+
+            var serviceClient = new BlobServiceClient(ServiceUri, new StaticTokenCredential(), options);
+            BlobClient client = serviceClient
+                .GetBlobContainerClient(ContainerName)
+                .GetBlobClient(BlobName);
+            await DownloadAsync(client);
+
+            Assert.AreEqual(1, createSessionTransport.Requests.Count);
+            AssertSignedWithSession(dataTransport, SessionToken);
+        }
+
+        /// <summary>
+        /// The end-to-end expression of the scenario the provider abstraction exists
+        /// for: two clients constructed entirely independently, sharing one provider,
+        /// must mint only a single session for the same container.
+        /// </summary>
+        [Test]
+        public async Task SharedProvider_AcrossIndependentClients_AcquiresSessionOnce()
+        {
+            // A single queued CreateSession response: a second acquisition would
+            // underrun the provider transport and throw.
+            var (provider, createSessionTransport) = CreateProvider(CreateSessionMockResponse());
+
+            var (optionsA, dataTransportA) = CreateWiredClientOptions(provider);
+            var clientA = new BlobClient(BlobUri, new StaticTokenCredential(), optionsA);
+            await DownloadAsync(clientA);
+
+            // Client B is built from scratch — separate options, separate pipeline,
+            // separate transport — sharing only the provider.
+            var (optionsB, dataTransportB) = CreateWiredClientOptions(provider);
+            var clientB = new BlobClient(BlobUri, new StaticTokenCredential(), optionsB);
+            await DownloadAsync(clientB);
+
+            Assert.AreEqual(1, createSessionTransport.Requests.Count,
+                "Independent clients sharing a provider must reuse a single cached session.");
+            AssertSignedWithSession(dataTransportA, SessionToken);
+            AssertSignedWithSession(dataTransportB, SessionToken);
+        }
+
+        [Test]
+        public async Task NoSuppliedProvider_ClientsDoNotShareCache()
+        {
+            // Each client creates its own client-scoped provider, so each must mint
+            // its own session. Both clients point at their own CreateSession transport
+            // via their own options; a shared cache would leave one unused.
+            var transportA = new MockTransport(CreateSessionMockResponse(), CreateBlobDownloadResponse());
+            var optionsA = new BlobClientOptions
+            {
+                Transport = transportA,
+                SessionOptions = new SessionOptions
+                {
+                    SessionMode = SessionMode.Enabled,
+                    AccountName = AccountName,
+                },
+            };
+            optionsA.Retry.MaxRetries = 0;
+
+            var transportB = new MockTransport(CreateSessionMockResponse(), CreateBlobDownloadResponse());
+            var optionsB = new BlobClientOptions
+            {
+                Transport = transportB,
+                SessionOptions = new SessionOptions
+                {
+                    SessionMode = SessionMode.Enabled,
+                    AccountName = AccountName,
+                },
+            };
+            optionsB.Retry.MaxRetries = 0;
+
+            await DownloadAsync(new BlobClient(BlobUri, new StaticTokenCredential(), optionsA));
+            await DownloadAsync(new BlobClient(BlobUri, new StaticTokenCredential(), optionsB));
+
+            // Each transport saw both a CreateSession and a download, proving neither
+            // client benefited from the other's cache.
+            Assert.AreEqual(2, transportA.Requests.Count,
+                "Client A should have minted its own session when no provider was supplied.");
+            Assert.AreEqual(2, transportB.Requests.Count,
+                "Client B should have minted its own session when no provider was supplied.");
         }
         #endregion
 

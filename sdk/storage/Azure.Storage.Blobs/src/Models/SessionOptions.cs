@@ -17,9 +17,19 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// The Account name to use for signing the session key.
-        /// Must be set if <see cref="Models.SessionMode"/> is <see cref="SessionMode.Enabled"/>.
+        /// Optional. When not set, the account name is derived from the request URL at
+        /// signing time. Set this explicitly when the endpoint is a custom URL from which
+        /// the account name cannot be derived; otherwise there may be failures or implicit
+        /// fallback to bearer token authentication.
         /// </summary>
         public string AccountName { get; set; }
+
+        /// <summary>
+        /// An optional session provider that owns the session cache and mints sessions.
+        /// When set, the same provider (and its cache) can be shared across multiple
+        /// clients. When not set, the client creates a client-scoped provider internally.
+        /// </summary>
+        public SessionProvider SessionProvider { get; set; }
 
         /// <summary>
         /// Creates a shallow copy.
@@ -28,6 +38,7 @@ namespace Azure.Storage.Blobs.Models
         {
             SessionMode = this.SessionMode,
             AccountName = this.AccountName,
+            SessionProvider = this.SessionProvider,
         };
     }
 

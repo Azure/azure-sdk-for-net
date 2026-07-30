@@ -368,9 +368,11 @@ namespace Azure.Storage.Blobs
 
             string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();
 
+            SessionProvider sessionProvider = options?.SessionOptions?.SessionProvider
+                ?? new TokenCredentialSessionProvider(blobContainerUri, credential, options);
             _authenticationPolicy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: credential.AsPolicy(audienceScope, options),
-                blobServiceClientFactory: () => GetParentBlobServiceClientCore(),
+                fallbackAuthPolicy: credential.AsPolicy(audienceScope, options),
+                sessionProvider: sessionProvider,
                 sessionOptions: options?.SessionOptions);
             options ??= new BlobClientOptions();
 

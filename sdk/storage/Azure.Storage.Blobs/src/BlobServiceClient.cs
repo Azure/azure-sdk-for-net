@@ -363,9 +363,11 @@ namespace Azure.Storage.Blobs
 
             if (tokenCredential != null)
             {
+                SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
+                    ?? new TokenCredentialSessionProvider(serviceUri, tokenCredential, options);
                 authentication = new SessionAuthenticationPolicy(
-                    bearerTokenPolicy: authentication,
-                    blobServiceClientFactory: () => this,
+                    fallbackAuthPolicy: authentication,
+                    sessionProvider: sessionProvider,
                     sessionOptions: options.SessionOptions);
             }
 
@@ -570,13 +572,13 @@ namespace Azure.Storage.Blobs
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
-            HttpPipelinePolicy bearerTokenPolicy,
-            Func<BlobServiceClient> blobServiceClientFactory,
+            HttpPipelinePolicy fallbackAuthPolicy,
+            SessionProvider sessionProvider,
             SessionOptions sessionOptions)
         {
             return new SessionAuthenticationPolicy(
-                bearerTokenPolicy,
-                blobServiceClientFactory,
+                fallbackAuthPolicy,
+                sessionProvider,
                 sessionOptions);
         }
 

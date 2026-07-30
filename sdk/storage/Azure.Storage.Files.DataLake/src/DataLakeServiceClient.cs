@@ -400,11 +400,14 @@ namespace Azure.Storage.Files.DataLake
 
             HttpPipeline blobPipeline = dfsPipeline;
             HttpPipelinePolicy blobAuthentication = authentication;
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(options);
             if (tokenCredential != null)
             {
                 blobAuthentication = BlobServiceClientInternals.CreateSessionPolicy(
                     authentication,
-                    () => _blobServiceClient,
+                    _blobUri,
+                    tokenCredential,
+                    BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
                     options.SessionOptions);
                 blobPipeline = options.Build(blobAuthentication);
             }
@@ -414,7 +417,7 @@ namespace Azure.Storage.Files.DataLake
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey)
             {
@@ -442,10 +445,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 return BlobServiceClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                    {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
-                    },
+                    CreateBlobClientOptions(clientConfiguration.ClientOptions, clientConfiguration.ClientDiagnostics),
                     authentication,
                     clientConfiguration.BlobPipeline,
                     clientConfiguration.SharedKeyCredential,
@@ -453,14 +453,33 @@ namespace Azure.Storage.Files.DataLake
                     clientConfiguration.TokenCredential);
             }
 
+            /// <summary>
+            /// Translates <see cref="DataLakeClientOptions"/> into the equivalent
+            /// <see cref="BlobClientOptions"/> used by the inner blob clients (including the
+            /// session-minting client).
+            /// </summary>
+            public static BlobClientOptions CreateBlobClientOptions(
+                DataLakeClientOptions options,
+                ClientDiagnostics clientDiagnostics)
+            {
+                return new BlobClientOptions(options.Version.AsBlobsVersion())
+                {
+                    Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled }
+                };
+            }
+
             public static HttpPipelinePolicy CreateSessionPolicy(
-                HttpPipelinePolicy bearerTokenPolicy,
-                Func<BlobServiceClient> blobServiceClientFactory,
+                HttpPipelinePolicy fallbackAuthPolicy,
+                Uri blobServiceUri,
+                TokenCredential tokenCredential,
+                BlobClientOptions blobClientOptions,
                 Blobs.Models.SessionOptions sessionOptions)
             {
+                Blobs.Models.SessionProvider sessionProvider = sessionOptions?.SessionProvider
+                    ?? new Blobs.Models.TokenCredentialSessionProvider(blobServiceUri, tokenCredential, blobClientOptions);
                 return BlobServiceClient.CreateSessionAuthenticationPolicy(
-                    bearerTokenPolicy,
-                    blobServiceClientFactory,
+                    fallbackAuthPolicy,
+                    sessionProvider,
                     sessionOptions);
             }
         }

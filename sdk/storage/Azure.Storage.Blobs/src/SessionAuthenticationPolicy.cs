@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Globalization;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -24,54 +22,18 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal class SessionAuthenticationPolicy : HttpPipelinePolicy
     {
-        private readonly HttpPipelinePolicy _bearerTokenPolicy;
-        private readonly Func<BlobServiceClient> _blobServiceClientFactory;
+        private readonly HttpPipelinePolicy _fallbackAuthPolicy;
+        private readonly SessionProvider _sessionProvider;
         private readonly SessionOptions _sessionOptions;
 
-        /// <summary>
-        /// Per-container session cache. One entry is created per container on first
-        /// access when <see cref="SessionMode.Enabled"/>.
-        /// </summary>
-        private readonly ConcurrentDictionary<string, AutoRefreshingCache<SessionTokenInfo>> _sessionCaches
-            = new ConcurrentDictionary<string, AutoRefreshingCache<SessionTokenInfo>>(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// Buffer before <see cref="SessionTokenInfo.ExpiresOn"/> at which a proactive
-        /// background refresh is initiated.
-        /// </summary>
-        private static readonly TimeSpan SessionRefreshBuffer = TimeSpan.FromSeconds(30);
-
-        /// <summary>
-        /// Maximum time allowed for a background session refresh before falling back
-        /// to the current (still-valid) session token.
-        /// </summary>
-        private static readonly TimeSpan BackgroundAcquireTimeout = TimeSpan.FromSeconds(30);
-
-        /// <summary>
-        /// Cooldown applied to the fallback-to-bearer sentinel returned by
-        /// <see cref="AcquireSessionAsync"/> after a fallback-eligible CreateSession failure.
-        /// See <see cref="SessionTokenInfo.CreateFallbackToBearer"/>.
-        /// </summary>
-        private static readonly TimeSpan AcquireFailureCooldown = TimeSpan.FromMinutes(5);
-
-        private const string SessionsUnavailable = "SessionOperationsTemporarilyUnavailable";
-        private const string FeatureNotEnabled = "FeatureNotEnabled";
-
         public SessionAuthenticationPolicy(
-            HttpPipelinePolicy bearerTokenPolicy,
-            Func<BlobServiceClient> blobServiceClientFactory,
+            HttpPipelinePolicy fallbackAuthPolicy,
+            SessionProvider sessionProvider,
             SessionOptions sessionOptions)
         {
-            _bearerTokenPolicy = bearerTokenPolicy ?? throw Errors.ArgumentNull(nameof(bearerTokenPolicy));
-            _blobServiceClientFactory = blobServiceClientFactory ?? throw Errors.ArgumentNull(nameof(blobServiceClientFactory));
+            _fallbackAuthPolicy = fallbackAuthPolicy ?? throw Errors.ArgumentNull(nameof(fallbackAuthPolicy));
+            _sessionProvider = sessionProvider ?? throw Errors.ArgumentNull(nameof(sessionProvider));
             _sessionOptions = sessionOptions?.Clone() ?? new SessionOptions();
-
-            // AccountName is required whenever sessions are used (needed to sign requests).
-            if (_sessionOptions.SessionMode == SessionMode.Enabled
-                && string.IsNullOrEmpty(_sessionOptions.AccountName))
-            {
-                throw BlobErrors.AccountNameRequiredForEnabledMode(sessionOptions);
-            }
         }
 
         /// <inheritdoc />
@@ -85,91 +47,55 @@ namespace Azure.Storage.Blobs
         private async ValueTask ProcessInternal(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             // 1. Analyze the request to determine eligibility for session authentication.
-            AuthState state = AnalyzeRequest(message, out string containerName);
+            AuthState state = AnalyzeRequest(message);
 
-            SessionTokenInfo sentWith = default; // Tracks the token used in the most recent session request.
-
-            // 2. Attempt first request with session authentication (if eligible).
+            // 2. Attempt request with session authentication (if eligible).
+            SessionProvider.SessionTokenInfo sentWith = default;
             if (state == AuthState.UseSessionToken)
             {
-                (state, sentWith) = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
+                (state, sentWith) = await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
             }
 
-            // 3. Handle the first attempt's session response (may signal retry or fallback to bearer-token).
+            // 3. Handle the session response (may signal fallback to bearer-token).
             if (state == AuthState.SentWithSession)
             {
-                state = HandleFirstSessionResponse(message, containerName, sentWith);
+                state = HandleSessionResponse(message, sentWith);
             }
 
-            // 4. Retry exactly one time (if eligible). Intentionally do not handle response on the retry.
-            if (state == AuthState.UseSessionToken)
-            {
-                (state, sentWith) = await TryAcquireSignAndSendAsync(message, pipeline, async, containerName).ConfigureAwait(false);
-            }
-
-            // 5. Fallback to bearer-token (if eligible).
+            // 4. Fallback to bearer-token (if eligible).
             if (state == AuthState.UseBearerToken)
             {
                 if (async)
                 {
-                    await _bearerTokenPolicy.ProcessAsync(message, pipeline).ConfigureAwait(false);
+                    await _fallbackAuthPolicy.ProcessAsync(message, pipeline).ConfigureAwait(false);
                 }
                 else
                 {
-                    _bearerTokenPolicy.Process(message, pipeline);
+                    _fallbackAuthPolicy.Process(message, pipeline);
                 }
             }
         }
 
         /// <summary>
         /// Analyzes the request to determine whether a session token or bearer token should be used.
-        /// When <see cref="SessionMode.Enabled"/>, any container is eligible for session-token
-        /// authentication. When <see cref="SessionMode.Disabled"/>, all requests fall back to
-        /// bearer token.
+        /// When <see cref="SessionMode.Disabled"/>, all requests fall back to bearer token. Otherwise
+        /// eligibility is delegated to <see cref="SessionProvider.IsRequestEligible"/>.
         /// </summary>
         /// <returns>
         /// <see cref="AuthState.UseSessionToken"/> if the request is eligible for session-token
         /// authentication; <see cref="AuthState.UseBearerToken"/> otherwise.
         /// </returns>
-        private AuthState AnalyzeRequest(HttpMessage message, out string containerName)
+        private AuthState AnalyzeRequest(HttpMessage message)
         {
-            containerName = null;
-
             // Check if Sessions is disabled.
             if (_sessionOptions.SessionMode == SessionMode.Disabled)
             {
                 return AuthState.UseBearerToken;
             }
 
-            // Only GET blob requests are eligible for session tokens.
-            if (message.Request.Method != RequestMethod.Get)
-            {
-                return AuthState.UseBearerToken;
-            }
-
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(message.Request.Uri.ToUri());
-
-            // If Service-level request (no container in path).
-            if (string.IsNullOrEmpty(uriBuilder.BlobContainerName))
-            {
-                return AuthState.UseBearerToken;
-            }
-
-            // If Container-level request (no blob in path).
-            if (string.IsNullOrEmpty(uriBuilder.BlobName))
-            {
-                return AuthState.UseBearerToken;
-            }
-
-            // If request with a "comp" query parameter.
-            if (!string.IsNullOrEmpty(uriBuilder.Query)
-                && new UriQueryParamsCollection(uriBuilder.Query).ContainsKey(Constants.UriQueryParameters.Comp))
-            {
-                return AuthState.UseBearerToken;
-            }
-
-            containerName = uriBuilder.BlobContainerName;
-            return AuthState.UseSessionToken;
+            return _sessionProvider.IsRequestEligible(message)
+                ? AuthState.UseSessionToken
+                : AuthState.UseBearerToken;
         }
 
         /// <summary>
@@ -181,18 +107,15 @@ namespace Azure.Storage.Blobs
         /// <returns>
         /// A tuple containing the resulting <see cref="AuthState"/> and, when the
         /// state is <see cref="AuthState.SentWithSession"/>, the
-        /// <see cref="SessionTokenInfo"/> that was used to sign the request.
+        /// session token that was used to sign the request.
         /// The token is default when the state is <see cref="AuthState.UseBearerToken"/>.
         /// </returns>
-        private async ValueTask<(AuthState State, SessionTokenInfo SentWith)> TryAcquireSignAndSendAsync(
+        private async ValueTask<(AuthState State, SessionProvider.SessionTokenInfo SentWith)> TryAcquireSignAndSendAsync(
             HttpMessage message,
             ReadOnlyMemory<HttpPipelinePolicy> pipeline,
-            bool async,
-            string containerName)
+            bool async)
         {
-            AutoRefreshingCache<SessionTokenInfo> cache = GetOrCreateCache(containerName);
-
-            SessionTokenInfo sessionInfo = await cache.GetAsync(async, message.CancellationToken).ConfigureAwait(false);
+            SessionProvider.SessionTokenInfo sessionInfo = await _sessionProvider.GetSessionAsync(message, async).ConfigureAwait(false);
             if (sessionInfo.IsFallbackToBearer)
             {
                 return (AuthState.UseBearerToken, default);
@@ -214,14 +137,13 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Classifies the first session-authenticated response. Not invoked for the retry's response.
+        /// Classifies the session-authenticated response.
         /// </summary>
         /// <returns>
         /// <see cref="AuthState.SentWithSession"/> to return the response as-is;
-        /// <see cref="AuthState.UseBearerToken"/> to fall back to bearer auth;
-        /// <see cref="AuthState.UseSessionToken"/> to re-acquire a session and retry once.
+        /// <see cref="AuthState.UseBearerToken"/> to fall back to bearer auth.
         /// </returns>
-        private AuthState HandleFirstSessionResponse(HttpMessage message, string containerName, SessionTokenInfo sentWith)
+        private AuthState HandleSessionResponse(HttpMessage message, SessionProvider.SessionTokenInfo sentWith)
         {
             int statusCode = message.Response.Status;
 
@@ -232,80 +154,14 @@ namespace Azure.Storage.Blobs
                 message.Response.ContentStream?.Dispose();
 
                 // Only clear the cache if it still holds the token we just used.
-                GetOrCreateCache(containerName).InvalidateIfCurrent(sentWith);
+                // The next request will re-acquire a fresh session.
+                _sessionProvider.InvalidateSession(message, sentWith);
 
-                // Signal to retry with a new session token.
-                return AuthState.UseSessionToken;
-            }
-
-            // --- 503 SessionOperationsTemporarilyUnavailable ---
-            if (statusCode == (int)HttpStatusCode.ServiceUnavailable
-                && message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string errorCode)
-                && string.Equals(errorCode, SessionsUnavailable, StringComparison.OrdinalIgnoreCase))
-            {
-                // Dispose the content stream to free up a connection.
-                message.Response.ContentStream?.Dispose();
-
-                // Signal to fall back to bearer token.
+                // Signal to fall back to bearer token for this request.
                 return AuthState.UseBearerToken;
             }
 
             return AuthState.SentWithSession;
-        }
-
-        private static bool ShouldFallbackCreateSessionFailure(RequestFailedException ex) =>
-            ex.Status >= (int)HttpStatusCode.InternalServerError
-            || ex.Status == (int)HttpStatusCode.Forbidden
-            || (ex.Status == (int)HttpStatusCode.BadRequest
-                && string.Equals(ex.ErrorCode, FeatureNotEnabled, StringComparison.OrdinalIgnoreCase));
-
-        /// <summary>
-        /// Returns the per-container cache, creating it on first access. The acquire
-        /// delegate captures <paramref name="containerName"/> so each cache only
-        /// mints sessions for its own container.
-        /// </summary>
-        private AutoRefreshingCache<SessionTokenInfo> GetOrCreateCache(string containerName)
-        {
-            return _sessionCaches.GetOrAdd(
-                containerName,
-                name => new AutoRefreshingCache<SessionTokenInfo>(
-                    acquire: (async, ct) => AcquireSessionAsync(name, async, ct),
-                    backgroundAcquireTimeout: BackgroundAcquireTimeout));
-        }
-
-        /// <summary>
-        /// Acquire delegate called by <see cref="AutoRefreshingCache{TValue}"/> to create a
-        /// new session via the Container REST API. Fallback-eligible failures are converted
-        /// to a sentinel via <see cref="SessionTokenInfo.CreateFallbackToBearer"/>.
-        /// </summary>
-        private async ValueTask<SessionTokenInfo> AcquireSessionAsync(
-            string containerName, bool async, CancellationToken cancellationToken)
-        {
-            BlobContainerClient containerClient = _blobServiceClientFactory().GetBlobContainerClient(containerName);
-            CreateSessionConfiguration config = new CreateSessionConfiguration(AuthenticationType.Hmac);
-
-            Response<CreateSessionResponse> response;
-            try
-            {
-                response = async
-                    ? await containerClient.CreateSessionAsync(config: config, cancellationToken: cancellationToken).ConfigureAwait(false)
-                    : containerClient.CreateSession(config: config, cancellationToken: cancellationToken);
-            }
-            catch (RequestFailedException ex) when (ShouldFallbackCreateSessionFailure(ex))
-            {
-                return SessionTokenInfo.CreateFallbackToBearer(AcquireFailureCooldown, SessionRefreshBuffer);
-            }
-
-            CreateSessionResponse session = response.Value;
-            DateTimeOffset expiresOn = session.Expiration.Value;
-            DateTimeOffset refreshOn = expiresOn - SessionRefreshBuffer;
-
-            return new SessionTokenInfo(
-                sessionToken: session.Credentials.SessionToken,
-                sessionKey: session.Credentials.SessionKey,
-                expiresOn: expiresOn,
-                refreshOn: refreshOn,
-                isFallbackToBearer: false);
         }
 
         /// <summary>
@@ -313,9 +169,19 @@ namespace Azure.Storage.Blobs
         /// <see cref="StorageSharedKeyPipelinePolicy"/>, then sets the
         /// Authorization header with the Session scheme.
         /// </summary>
-        private void SignRequestAndSetAuthHeader(HttpMessage message, SessionTokenInfo sessionInfo)
+        private void SignRequestAndSetAuthHeader(HttpMessage message, SessionProvider.SessionTokenInfo sessionInfo)
         {
             string accountName = _sessionOptions.AccountName;
+            if (string.IsNullOrEmpty(accountName))
+            {
+                // Fall back to deriving the account name from the request URL.
+                accountName = new BlobUriBuilder(message.Request.Uri.ToUri()).AccountName;
+                if (string.IsNullOrEmpty(accountName))
+                {
+                    throw BlobErrors.AccountNameRequiredForSessionSigning();
+                }
+            }
+
             var credential = new StorageSharedKeyCredential(accountName, sessionInfo.SessionKey);
             var sharedKeyPolicy = new StorageSharedKeyPipelinePolicy(credential);
 
@@ -331,67 +197,6 @@ namespace Azure.Storage.Blobs
             message.Request.Headers.SetValue(
                 HttpHeader.Names.Authorization,
                 $"Session {sessionInfo.SessionToken}:{signature}");
-        }
-
-        /// <summary>
-        /// Cached session token information returned by the Create Session API, or a
-        /// fallback-to-bearer sentinel when <see cref="AcquireSessionAsync"/> encountered
-        /// an error classified by <see cref="ShouldFallbackCreateSessionFailure"/>.
-        /// </summary>
-        internal readonly struct SessionTokenInfo : IExpiringValue, IEquatable<SessionTokenInfo>
-        {
-            public string SessionToken { get; }
-            public string SessionKey { get; }
-            public DateTimeOffset ExpiresOn { get; }
-            public DateTimeOffset RefreshOn { get; }
-
-            /// <summary>
-            /// When true, this instance is a sentinel indicating that callers
-            /// should fall back to bearer authentication for the duration of the cached
-            /// entry. <see cref="SessionToken"/> and <see cref="SessionKey"/> are null
-            /// in this state and must not be used to sign requests.
-            /// </summary>
-            public bool IsFallbackToBearer { get; }
-
-            public SessionTokenInfo(
-                string sessionToken,
-                string sessionKey,
-                DateTimeOffset expiresOn,
-                DateTimeOffset refreshOn,
-                bool isFallbackToBearer)
-            {
-                SessionToken = sessionToken;
-                SessionKey = sessionKey;
-                ExpiresOn = expiresOn;
-                RefreshOn = refreshOn;
-                IsFallbackToBearer = isFallbackToBearer;
-            }
-
-            /// <summary>
-            /// Creates a sentinel value that signals callers to fall back to bearer
-            /// authentication. The sentinel is treated as a normal cached value by
-            /// <see cref="AutoRefreshingCache{TValue}"/> and expires after
-            /// <paramref name="cooldown"/>. <paramref name="refreshBuffer"/> before
-            /// expiry, exactly one caller triggers a background re-acquisition while
-            /// other callers continue to fall back to bearer with no added latency.
-            /// </summary>
-            public static SessionTokenInfo CreateFallbackToBearer(TimeSpan cooldown, TimeSpan refreshBuffer)
-            {
-                DateTimeOffset expiresOn = DateTimeOffset.UtcNow + cooldown;
-                DateTimeOffset refreshOn = expiresOn - refreshBuffer;
-                return new SessionTokenInfo(
-                    sessionToken: null,
-                    sessionKey: null,
-                    expiresOn: expiresOn,
-                    refreshOn: refreshOn,
-                    isFallbackToBearer: true);
-            }
-
-            public IExpiringValue WithRefreshOn(DateTimeOffset refreshOn) =>
-                new SessionTokenInfo(SessionToken, SessionKey, ExpiresOn, refreshOn, IsFallbackToBearer);
-
-            public bool Equals(SessionTokenInfo other) =>
-                string.Equals(SessionToken, other.SessionToken);
         }
 
         /// <summary>

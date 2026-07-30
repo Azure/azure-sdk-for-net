@@ -9763,6 +9763,301 @@ namespace Azure.Storage.Blobs.Test
                 "Container A and container B should have different session tokens");
         }
 
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task DownloadAsync_Sessions_WithoutAccountName()
+        {
+            // SessionOptions.AccountName is optional; when omitted the account will be
+            // derived from the client's URI.
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled,
+                // AccountName intentionally omitted
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(2)
+            {
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobs)
+            {
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+            }
+
+            // Act
+            countingPolicy.Start();
+            List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
+            foreach (BlockBlobClient blob in blobs)
+            {
+                responses.Add(await blob.DownloadAsync());
+            }
+
+            // Assert — verify data was downloaded correctly
+            foreach (Response<BlobDownloadInfo> response in responses)
+            {
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+
+            // Assert — sessions still negotiated and used without an explicit AccountName
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected one create session request for the container");
+            Assert.AreEqual(2, countingPolicy.GetSessionAuthCount, "Expected all download requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(2, sessionTokens.Count);
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "Both requests should share the same session token");
+        }
+
+        [RecordedTest]
+        public async Task DownloadAsync_Sessions_IncorrectAccountName()
+        {
+            // The account name is part of the canonicalized resource in the string-to-sign,
+            // so a misconfigured SessionOptions.AccountName produces a signature the service
+            // cannot reproduce.
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.Enabled,
+                // Deliberately not the account under test.
+                AccountName = "nottherightaccountname",
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            countingPolicy.Start();
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert — the download still succeeds, by way of the bearer fallback
+            Assert.AreEqual(data.Length, response.Value.ContentLength);
+            var actual = new MemoryStream();
+            await response.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+
+            // Assert — a session was minted and attempted, but the request was served by bearer
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "Expected one create session request for the container");
+            Assert.AreEqual(1, countingPolicy.GetSessionAuthCount,
+                "Expected the download to attempt Session authorization before falling back");
+            Assert.AreEqual(1, countingPolicy.BearerGetBlobCount,
+                "Expected the download to fall back to Bearer authorization after the session signature is rejected");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task DownloadAsync_Sessions_SharedSessionProvider()
+        {
+            // A customer-supplied SessionProvider is the only way two independently
+            // constructed clients can share a session cache.
+            var countingPolicy = new SessionAuthCountingPolicy(null);
+
+            // The provider owns its own pipeline for CreateSession traffic, so the
+            // counting policy has to be attached to the provider's options as well.
+            BlobClientOptions providerOptions = GetOptions();
+            providerOptions.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            SessionProvider sharedProvider = new TokenCredentialSessionProvider(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                TestEnvironment.Credential,
+                providerOptions);
+
+            BlobServiceClient setupServiceClient = GetServiceClient_OAuth();
+            await using DisposingContainer testA = await GetTestContainerAsync(service: setupServiceClient);
+            await using DisposingContainer testB = await GetTestContainerAsync(service: setupServiceClient);
+
+            // Arrange — 2 distinct blobs per container. For each, build an independent top-level client sharing the
+            // provider; without the shared provider each would manage its own session.
+            var data = GetRandomBuffer(Constants.KB);
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(4);
+            foreach (DisposingContainer test in new[] { testA, testB })
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    BlockBlobClient uploadClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await uploadClient.UploadAsync(stream);
+                    }
+
+                    BlobClientOptions options = GetOptions();
+                    options.SessionOptions = new SessionOptions()
+                    {
+                        SessionMode = SessionMode.Enabled,
+                        AccountName = Tenants.TestConfigOAuth.AccountName,
+                        SessionProvider = sharedProvider,
+                    };
+                    options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+                    blobs.Add(InstrumentClient(new BlockBlobClient(
+                        uploadClient.Uri,
+                        TestEnvironment.Credential,
+                        options)));
+                }
+            }
+
+            // Act
+            countingPolicy.Start();
+            List<Response<BlobDownloadInfo>> responses = new List<Response<BlobDownloadInfo>>();
+            foreach (BlockBlobClient blob in blobs)
+            {
+                responses.Add(await blob.DownloadAsync());
+            }
+
+            // Assert — verify data was downloaded correctly
+            foreach (Response<BlobDownloadInfo> response in responses)
+            {
+                Assert.AreEqual(data.Length, response.Value.ContentLength);
+                var actual = new MemoryStream();
+                await response.Value.Content.CopyToAsync(actual);
+                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+
+            // Assert — one CreateSession per container despite 4 independent clients
+            Assert.AreEqual(2, countingPolicy.CreateSessionCount,
+                "A shared provider should mint exactly one session per container, regardless of client count");
+            Assert.AreEqual(4, countingPolicy.GetSessionAuthCount,
+                "Expected all download requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
+                "Expected no GET blob requests to fall back to Bearer authorization");
+
+            // Assert — per-container token sharing across independent clients
+            // Ordering: [0]=A0, [1]=A1, [2]=B0, [3]=B1
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetBlobSessionTokens;
+            Assert.AreEqual(4, sessionTokens.Count);
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "Independent clients in container A should share the provider's cached session token");
+            Assert.AreEqual(sessionTokens[2], sessionTokens[3],
+                "Independent clients in container B should share the provider's cached session token");
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[2],
+                "Sessions must remain scoped per container even when the provider is shared");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task DownloadToAsync_Sessions_SharedSessionProvider()
+        {
+            // DownloadTo fans a single logical download out into many concurrent ranged
+            // GETs. Combined with a shared provider and a cold cache, this races several
+            // independent clients through session acquisition at once. Verify the provider
+            // collapses that race into exactly one CreateSession per container, while
+            // still keeping sessions scoped per container.
+            var countingPolicy = new SessionAuthCountingPolicy(null);
+
+            // The provider owns its own pipeline for CreateSession traffic, so the
+            // counting policy has to be attached to the provider's options as well.
+            BlobClientOptions providerOptions = GetOptions();
+            providerOptions.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            SessionProvider sharedProvider = new TokenCredentialSessionProvider(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                TestEnvironment.Credential,
+                providerOptions);
+
+            BlobServiceClient setupServiceClient = GetServiceClient_OAuth();
+            await using DisposingContainer testA = await GetTestContainerAsync(service: setupServiceClient);
+            await using DisposingContainer testB = await GetTestContainerAsync(service: setupServiceClient);
+
+            // Arrange — 2 distinct blobs per container, each large enough that the transfer
+            // options below force the download into multiple parallel range GETs. Distinct
+            // blobs prove the cached session is scoped to the container rather than to any
+            // single blob. Uploaded without the session pipeline, then paired with an
+            // independent top-level client sharing the provider.
+            var data = GetRandomBuffer(10 * Constants.KB);
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(4);
+            foreach (DisposingContainer test in new[] { testA, testB })
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    BlockBlobClient uploadClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await uploadClient.UploadAsync(stream);
+                    }
+
+                    BlobClientOptions options = GetOptions();
+                    options.SessionOptions = new SessionOptions()
+                    {
+                        SessionMode = SessionMode.Enabled,
+                        AccountName = Tenants.TestConfigOAuth.AccountName,
+                        SessionProvider = sharedProvider,
+                    };
+                    options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+                    blobs.Add(InstrumentClient(new BlockBlobClient(
+                        uploadClient.Uri,
+                        TestEnvironment.Credential,
+                        options)));
+                }
+            }
+
+            // Act — run every partitioned download concurrently against a cold cache.
+            countingPolicy.Start();
+            List<MemoryStream> resultStreams = new List<MemoryStream>(blobs.Count);
+            List<Task> downloads = new List<Task>(blobs.Count);
+            foreach (BlockBlobClient blob in blobs)
+            {
+                var resultStream = new MemoryStream();
+                resultStreams.Add(resultStream);
+                downloads.Add(blob.DownloadToAsync(
+                    resultStream,
+                    new BlobDownloadToOptions
+                    {
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            InitialTransferLength = Constants.KB,
+                            MaximumTransferLength = Constants.KB,
+                            MaximumConcurrency = 4
+                        }
+                    }));
+            }
+            await Task.WhenAll(downloads);
+
+            // Assert — verify data was downloaded correctly
+            foreach (MemoryStream resultStream in resultStreams)
+            {
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+                resultStream.Dispose();
+            }
+
+            // Assert — the concurrent cold-cache race collapses to one session per
+            // container, despite four independent clients and many parallel range GETs.
+            Assert.AreEqual(2, countingPolicy.CreateSessionCount,
+                "A shared provider should mint exactly one session per container, even when concurrent partitioned downloads race a cold cache");
+            Assert.IsTrue(countingPolicy.GetSessionAuthCount > blobs.Count,
+                "Expected each download to fan out into multiple range GET requests using Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
+                "Expected no GET blob requests to fall back to Bearer authorization");
+
+            // Assert — per-container token sharing. Completion order is nondeterministic
+            // under concurrency, so compare the distinct set rather than by index.
+            Assert.AreEqual(2, countingPolicy.GetBlobSessionTokens.Distinct().Count(),
+                "Expected exactly one distinct session token per container across all clients and partitions");
+        }
+
         /// <summary>
         /// Thread-safe pipeline policy that counts session-auth and CreateSession
         /// requests using <see cref="Interlocked"/>.  Used by session tests to

@@ -390,9 +390,11 @@ namespace Azure.Storage.Blobs.Specialized
             // Token-credential path
             if (tokenCredential != null)
             {
+                SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
+                    ?? new TokenCredentialSessionProvider(blobUri, tokenCredential, options);
                 authentication = new SessionAuthenticationPolicy(
-                    bearerTokenPolicy: authentication,
-                    blobServiceClientFactory: () => GetParentBlobContainerClientCore().GetParentBlobServiceClientCore(),
+                    fallbackAuthPolicy: authentication,
+                    sessionProvider: sessionProvider,
                     sessionOptions: options.SessionOptions);
             }
 

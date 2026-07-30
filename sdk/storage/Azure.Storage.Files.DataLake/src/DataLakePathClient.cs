@@ -580,11 +580,14 @@ namespace Azure.Storage.Files.DataLake
             HttpPipeline dfsPipeline = options.Build(authentication);
 
             HttpPipeline blobPipeline = dfsPipeline;
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(options);
             if (tokenCredential != null)
             {
                 HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
                     authentication,
-                    () => _blockBlobClient.GetParentBlobContainerClient().GetParentBlobServiceClient(),
+                    _blobUri,
+                    tokenCredential,
+                    DataLakeServiceClient.BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
                     options.SessionOptions);
                 blobPipeline = options.Build(blobAuthentication);
             }
@@ -594,7 +597,7 @@ namespace Azure.Storage.Files.DataLake
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey)
             {
