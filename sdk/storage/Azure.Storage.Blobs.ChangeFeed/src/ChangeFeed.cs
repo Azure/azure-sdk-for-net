@@ -203,3 +203,5 @@ namespace Azure.Storage.Blobs.ChangeFeed
              };
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
