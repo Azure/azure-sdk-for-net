@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Discovery.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ChatModelDeploymentData item in Value)
+            foreach (DiscoveryChatModelDeploymentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            IList<ChatModelDeploymentData> value = default;
+            IList<DiscoveryChatModelDeploymentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ChatModelDeploymentData> array = new List<ChatModelDeploymentData>();
+                    List<DiscoveryChatModelDeploymentData> array = new List<DiscoveryChatModelDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ChatModelDeploymentData.DeserializeChatModelDeploymentData(item, options));
+                        array.Add(DiscoveryChatModelDeploymentData.DeserializeDiscoveryChatModelDeploymentData(item, options));
                     }
                     value = array;
                     continue;

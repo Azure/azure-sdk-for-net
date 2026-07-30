@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Discovery.Models
             }
             DiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, UserAssignedIdentity> workloadIdentities = default;
-            CustomerManagedKeys? customerManagedKeys = default;
+            DiscoveryCustomerManagedKeys? customerManagedKeys = default;
             BookshelfKeyVaultProperties keyVaultProperties = default;
             ResourceIdentifier logAnalyticsClusterId = default;
             IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections = default;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    customerManagedKeys = new CustomerManagedKeys(prop.Value.GetString());
+                    customerManagedKeys = new DiscoveryCustomerManagedKeys(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyVaultProperties"u8))

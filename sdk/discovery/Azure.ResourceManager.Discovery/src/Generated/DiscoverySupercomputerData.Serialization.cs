@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Discovery
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            SupercomputerProperties properties = default;
+            DiscoverySupercomputerProperties properties = default;
             DiscoverySystemAssignedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         continue;
                     }
-                    properties = SupercomputerProperties.DeserializeSupercomputerProperties(prop.Value, options);
+                    properties = DiscoverySupercomputerProperties.DeserializeDiscoverySupercomputerProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

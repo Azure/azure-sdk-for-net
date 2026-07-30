@@ -100,62 +100,6 @@ namespace Azure.ResourceManager.Discovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ChatModelDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>, System.Collections.IEnumerable
-    {
-        protected ChatModelDeploymentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string chatModelDeploymentName, Azure.ResourceManager.Discovery.ChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string chatModelDeploymentName, Azure.ResourceManager.Discovery.ChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> Get(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> GetAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> GetIfExists(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> GetIfExistsAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ChatModelDeploymentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>
-    {
-        public ChatModelDeploymentData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.ChatModelDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.ChatModelDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ChatModelDeploymentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ChatModelDeploymentResource() { }
-        public virtual Azure.ResourceManager.Discovery.ChatModelDeploymentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string chatModelDeploymentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Discovery.ChatModelDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.ChatModelDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ChatModelDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class DiscoveryBookshelfCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>, System.Collections.IEnumerable
     {
         protected DiscoveryBookshelfCollection() { }
@@ -218,6 +162,62 @@ namespace Azure.ResourceManager.Discovery
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryBookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryBookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DiscoveryChatModelDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>, System.Collections.IEnumerable
+    {
+        protected DiscoveryChatModelDeploymentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string chatModelDeploymentName, Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string chatModelDeploymentName, Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> Get(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> GetAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> GetIfExists(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> GetIfExistsAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DiscoveryChatModelDeploymentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>
+    {
+        public DiscoveryChatModelDeploymentData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryChatModelDeploymentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DiscoveryChatModelDeploymentResource() { }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string chatModelDeploymentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class DiscoveryExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelf(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Discovery
         public static Azure.ResourceManager.Discovery.DiscoveryBookshelfCollection GetBookshelves(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelves(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelvesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Discovery.ChatModelDeploymentResource GetChatModelDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.DiscoveryBookshelfResource GetDiscoveryBookshelfResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource GetDiscoveryChatModelDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.DiscoveryNodePoolResource GetDiscoveryNodePoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.DiscoveryProjectResource GetDiscoveryProjectResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.DiscoveryStorageAssetResource GetDiscoveryStorageAssetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class DiscoveryNodePoolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryNodePoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryNodePoolData>
     {
         public DiscoveryNodePoolData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.NodePoolProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class DiscoveryProjectData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>
     {
         public DiscoveryProjectData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.ProjectProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class DiscoveryStorageAssetData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryStorageAssetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryStorageAssetData>
     {
         public DiscoveryStorageAssetData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.StorageAssetProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class DiscoveryStorageContainerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryStorageContainerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryStorageContainerData>
     {
         public DiscoveryStorageContainerData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.StorageContainerProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Discovery
     {
         public DiscoverySupercomputerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.SupercomputerProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class DiscoveryToolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryToolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>
     {
         public DiscoveryToolData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.ToolProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class DiscoveryWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>
     {
         public DiscoveryWorkspaceData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.WorkspaceProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -646,9 +646,9 @@ namespace Azure.ResourceManager.Discovery
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> GetChatModelDeployment(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> GetChatModelDeploymentAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.ChatModelDeploymentCollection GetChatModelDeployments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource> GetChatModelDeployment(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource>> GetChatModelDeploymentAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentCollection GetChatModelDeployments() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource> GetProject(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> GetProjectAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Discovery.DiscoveryProjectCollection GetProjects() { throw null; }
@@ -772,8 +772,8 @@ namespace Azure.ResourceManager.Discovery.Mocking
         protected MockableDiscoveryArmClient() { }
         public virtual Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource GetBookshelfPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.BookshelfPrivateLinkResource GetBookshelfPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.ChatModelDeploymentResource GetChatModelDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.DiscoveryBookshelfResource GetDiscoveryBookshelfResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentResource GetDiscoveryChatModelDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.DiscoveryNodePoolResource GetDiscoveryNodePoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.DiscoveryProjectResource GetDiscoveryProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.DiscoveryStorageAssetResource GetDiscoveryStorageAssetResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -827,36 +827,36 @@ namespace Azure.ResourceManager.Discovery.Models
         public static Azure.ResourceManager.Discovery.Models.BookshelfKeyVaultProperties BookshelfKeyVaultProperties(System.Uri keyVaultUri = null, string keyName = null, string keyVersion = null, string identityClientId = null) { throw null; }
         public static Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionData BookshelfPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceData BookshelfPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.BookshelfProperties BookshelfProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.BookshelfKeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess?), Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier searchSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null, System.Uri bookshelfUri = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.ChatModelDeploymentData ChatModelDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties ChatModelDeploymentProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string modelFormat = null, string modelName = null, string modelVersion = null, string skuName = null, int? capacity = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.BookshelfProperties BookshelfProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null, Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.BookshelfKeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess?), Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier searchSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null, System.Uri bookshelfUri = null) { throw null; }
         public static Azure.ResourceManager.Discovery.DiscoveryBookshelfData DiscoveryBookshelfData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.BookshelfProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryChatModelDeploymentData DiscoveryChatModelDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties DiscoveryChatModelDeploymentProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string modelFormat = null, string modelName = null, string modelVersion = null, string skuName = null, int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties DiscoveryKeyVaultProperties(System.Uri keyVaultUri = null, string keyName = null, string keyVersion = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference DiscoveryManagedIdentityReference(Azure.Core.ResourceIdentifier id = null, System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.Discovery.DiscoveryNodePoolData DiscoveryNodePoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.NodePoolProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource DiscoveryMoboBrokerResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryNodePoolData DiscoveryNodePoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties DiscoveryNodePoolProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize vmSize = default(Azure.ResourceManager.Discovery.Models.DiscoveryVmSize), int maxNodeCount = 0, int? minNodeCount = default(int?), Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? scaleSetPriority = default(Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority?), int? osDiskSizeGb = default(int?), int? imageCacheLowerThreshold = default(int?), int? imageCacheUpperThreshold = default(int?)) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection DiscoveryPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties DiscoveryPrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkResourceProperties DiscoveryPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState DiscoveryPrivateLinkServiceConnectionState(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointServiceConnectionStatus? status = default(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointServiceConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.DiscoveryProjectData DiscoveryProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ProjectProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.DiscoveryStorageAssetData DiscoveryStorageAssetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.StorageAssetProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.DiscoveryStorageContainerData DiscoveryStorageContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.StorageContainerProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryProjectData DiscoveryProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties DiscoveryProjectProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Uri foundryProjectEndpoint = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageContainerIds = null, string behaviorPreferences = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryStorageAssetData DiscoveryStorageAssetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties DiscoveryStorageAssetProperties(string description = null, Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string path = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryStorageContainerData DiscoveryStorageContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties DiscoveryStorageContainerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore storageStore = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore DiscoveryStorageStore(string kind = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.DiscoverySupercomputerData DiscoverySupercomputerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.SupercomputerProperties properties = null, Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoverySupercomputerData DiscoverySupercomputerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties properties = null, Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities DiscoverySupercomputerIdentities(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference clusterIdentity = null, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference kubeletIdentity = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties DiscoverySupercomputerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier managementSubnetId = null, Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? outboundType = default(Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType?), Azure.ResourceManager.Discovery.Models.DiscoverySystemSku? systemSku = default(Azure.ResourceManager.Discovery.Models.DiscoverySystemSku?), Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities identities = null, Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys?), Azure.Core.ResourceIdentifier diskEncryptionSetId = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity DiscoverySystemAssignedServiceIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType type = default(Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType)) { throw null; }
-        public static Azure.ResourceManager.Discovery.DiscoveryToolData DiscoveryToolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ToolProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.DiscoveryWorkspaceData DiscoveryWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.WorkspaceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.MoboBrokerResource MoboBrokerResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.NodePoolProperties NodePoolProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize vmSize = default(Azure.ResourceManager.Discovery.Models.DiscoveryVmSize), int maxNodeCount = 0, int? minNodeCount = default(int?), Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? scaleSetPriority = default(Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority?), int? osDiskSizeGb = default(int?), int? imageCacheLowerThreshold = default(int?), int? imageCacheUpperThreshold = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ProjectProperties ProjectProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Uri foundryProjectEndpoint = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageContainerIds = null, string behaviorPreferences = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.StorageAssetProperties StorageAssetProperties(string description = null, Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string path = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.StorageContainerProperties StorageContainerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore storageStore = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.SupercomputerIdentities SupercomputerIdentities(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference clusterIdentity = null, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference kubeletIdentity = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.SupercomputerProperties SupercomputerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier managementSubnetId = null, Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? outboundType = default(Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType?), Azure.ResourceManager.Discovery.Models.DiscoverySystemSku? systemSku = default(Azure.ResourceManager.Discovery.Models.DiscoverySystemSku?), Azure.ResourceManager.Discovery.Models.SupercomputerIdentities identities = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.Core.ResourceIdentifier diskEncryptionSetId = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ToolProperties ToolProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string version = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IDictionary<string, System.BinaryData> definitionContent = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryToolData DiscoveryToolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties DiscoveryToolProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string version = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IDictionary<string, System.BinaryData> definitionContent = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryWorkspaceData DiscoveryWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties DiscoveryWorkspaceProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> supercomputerIds = null, System.Uri workspaceApiUri = null, System.Uri workspaceUiUri = null, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference workspaceIdentity = null, Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess?), Azure.Core.ResourceIdentifier agentSubnetId = null, Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier workspaceSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
         public static Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionData WorkspacePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Discovery.WorkspacePrivateLinkResourceData WorkspacePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.WorkspaceProperties WorkspaceProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> supercomputerIds = null, System.Uri workspaceApiUri = null, System.Uri workspaceUiUri = null, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference workspaceIdentity = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess?), Azure.Core.ResourceIdentifier agentSubnetId = null, Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier workspaceSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
     }
     public partial class AzureNetAppFilesStore : Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>
     {
@@ -926,10 +926,10 @@ namespace Azure.ResourceManager.Discovery.Models
     {
         public BookshelfProperties() { }
         public System.Uri BookshelfUri { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? CustomerManagedKeys { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys? CustomerManagedKeys { get { throw null; } set { } }
         public Azure.ResourceManager.Discovery.Models.BookshelfKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsClusterId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public string ManagedResourceGroup { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointSubnetId { get { throw null; } set { } }
@@ -947,40 +947,40 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.BookshelfProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.BookshelfProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ChatModelDeploymentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties>
+    public partial class DiscoveryChatModelDeploymentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties>
     {
-        public ChatModelDeploymentProperties(string modelFormat, string modelName) { }
+        public DiscoveryChatModelDeploymentProperties(string modelFormat, string modelName) { }
         public int? Capacity { get { throw null; } set { } }
         public string ModelFormat { get { throw null; } set { } }
         public string ModelName { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public string SkuName { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryChatModelDeploymentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomerManagedKeys : System.IEquatable<Azure.ResourceManager.Discovery.Models.CustomerManagedKeys>
+    public readonly partial struct DiscoveryCustomerManagedKeys : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CustomerManagedKeys(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.CustomerManagedKeys Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.CustomerManagedKeys Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys other) { throw null; }
+        public DiscoveryCustomerManagedKeys(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys left, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.CustomerManagedKeys (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys left, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys left, Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys left, Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DiscoveryKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>
@@ -1015,6 +1015,20 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DiscoveryMoboBrokerResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource>
+    {
+        internal DiscoveryMoboBrokerResource() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiscoveryNetworkEgressType : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType>
     {
@@ -1031,6 +1045,28 @@ namespace Azure.ResourceManager.Discovery.Models
         public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType left, Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DiscoveryNodePoolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties>
+    {
+        public DiscoveryNodePoolProperties(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize vmSize, int maxNodeCount) { }
+        public int? ImageCacheLowerThreshold { get { throw null; } set { } }
+        public int? ImageCacheUpperThreshold { get { throw null; } set { } }
+        public int MaxNodeCount { get { throw null; } set { } }
+        public int? MinNodeCount { get { throw null; } set { } }
+        public int? OsDiskSizeGb { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? ScaleSetPriority { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryVmSize VmSize { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryNodePoolProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DiscoveryPrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection>
     {
@@ -1132,6 +1168,23 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DiscoveryProjectProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties>
+    {
+        public DiscoveryProjectProperties() { }
+        public string BehaviorPreferences { get { throw null; } set { } }
+        public System.Uri FoundryProjectEndpoint { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> StorageContainerIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryProjectProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiscoveryProvisioningState : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState>
     {
@@ -1188,6 +1241,37 @@ namespace Azure.ResourceManager.Discovery.Models
         public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority left, Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DiscoveryStorageAssetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties>
+    {
+        public DiscoveryStorageAssetProperties(string description) { }
+        public string Description { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageAssetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryStorageContainerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties>
+    {
+        public DiscoveryStorageContainerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore storageStore) { }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore StorageStore { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageContainerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class DiscoveryStorageStore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>
     {
         internal DiscoveryStorageStore() { }
@@ -1200,6 +1284,46 @@ namespace Azure.ResourceManager.Discovery.Models
         Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoverySupercomputerIdentities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities>
+    {
+        public DiscoverySupercomputerIdentities(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference clusterIdentity, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference kubeletIdentity) { }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference ClusterIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference KubeletIdentity { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> WorkloadIdentities { get { throw null; } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoverySupercomputerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties>
+    {
+        public DiscoverySupercomputerProperties(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities identities) { }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys? CustomerManagedKeys { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerIdentities Identities { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogAnalyticsClusterId { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public string ManagedResourceGroup { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagementSubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? OutboundType { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoverySystemSku? SystemSku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySupercomputerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DiscoverySystemAssignedServiceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>
     {
@@ -1252,6 +1376,23 @@ namespace Azure.ResourceManager.Discovery.Models
         public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoverySystemSku left, Azure.ResourceManager.Discovery.Models.DiscoverySystemSku right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DiscoveryToolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties>
+    {
+        public DiscoveryToolProperties(string version, System.Collections.Generic.IDictionary<string, System.BinaryData> definitionContent) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> DefinitionContent { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryToolProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiscoveryVmSize : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryVmSize>
     {
@@ -1281,19 +1422,33 @@ namespace Azure.ResourceManager.Discovery.Models
         public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryVmSize left, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MoboBrokerResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>
+    public partial class DiscoveryWorkspaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties>
     {
-        internal MoboBrokerResource() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        protected virtual Azure.ResourceManager.Discovery.Models.MoboBrokerResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public DiscoveryWorkspaceProperties(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference workspaceIdentity) { }
+        public Azure.Core.ResourceIdentifier AgentSubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryCustomerManagedKeys? CustomerManagedKeys { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogAnalyticsClusterId { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryMoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
+        public string ManagedResourceGroup { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointSubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SupercomputerIds { get { throw null; } }
+        public System.Uri WorkspaceApiUri { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference WorkspaceIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceSubnetId { get { throw null; } set { } }
+        public System.Uri WorkspaceUiUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.MoboBrokerResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.MoboBrokerResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.MoboBrokerResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryWorkspaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetAppMountProtocol : System.IEquatable<Azure.ResourceManager.Discovery.Models.NetAppMountProtocol>
@@ -1310,160 +1465,5 @@ namespace Azure.ResourceManager.Discovery.Models
         public static implicit operator Azure.ResourceManager.Discovery.Models.NetAppMountProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Discovery.Models.NetAppMountProtocol left, Azure.ResourceManager.Discovery.Models.NetAppMountProtocol right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class NodePoolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>
-    {
-        public NodePoolProperties(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize vmSize, int maxNodeCount) { }
-        public int? ImageCacheLowerThreshold { get { throw null; } set { } }
-        public int? ImageCacheUpperThreshold { get { throw null; } set { } }
-        public int MaxNodeCount { get { throw null; } set { } }
-        public int? MinNodeCount { get { throw null; } set { } }
-        public int? OsDiskSizeGb { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? ScaleSetPriority { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryVmSize VmSize { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Discovery.Models.NodePoolProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.NodePoolProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.NodePoolProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.NodePoolProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProjectProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>
-    {
-        public ProjectProperties() { }
-        public string BehaviorPreferences { get { throw null; } set { } }
-        public System.Uri FoundryProjectEndpoint { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> StorageContainerIds { get { throw null; } }
-        protected virtual Azure.ResourceManager.Discovery.Models.ProjectProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.ProjectProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.ProjectProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.ProjectProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class StorageAssetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>
-    {
-        public StorageAssetProperties(string description) { }
-        public string Description { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.Discovery.Models.StorageAssetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.StorageAssetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.StorageAssetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.StorageAssetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class StorageContainerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>
-    {
-        public StorageContainerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore storageStore) { }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore StorageStore { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Discovery.Models.StorageContainerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.StorageContainerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.StorageContainerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.StorageContainerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SupercomputerIdentities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>
-    {
-        public SupercomputerIdentities(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference clusterIdentity, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference kubeletIdentity) { }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference ClusterIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference KubeletIdentity { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> WorkloadIdentities { get { throw null; } }
-        protected virtual Azure.ResourceManager.Discovery.Models.SupercomputerIdentities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.SupercomputerIdentities PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.SupercomputerIdentities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.SupercomputerIdentities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SupercomputerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>
-    {
-        public SupercomputerProperties(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Discovery.Models.SupercomputerIdentities identities) { }
-        public Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? CustomerManagedKeys { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.SupercomputerIdentities Identities { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier LogAnalyticsClusterId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
-        public string ManagedResourceGroup { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ManagementSubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? OutboundType { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoverySystemSku? SystemSku { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Discovery.Models.SupercomputerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.SupercomputerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.SupercomputerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.SupercomputerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ToolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ToolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ToolProperties>
-    {
-        public ToolProperties(string version, System.Collections.Generic.IDictionary<string, System.BinaryData> definitionContent) { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> DefinitionContent { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
-        public string Version { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Discovery.Models.ToolProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.ToolProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.ToolProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ToolProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ToolProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.ToolProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ToolProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ToolProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ToolProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class WorkspaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>
-    {
-        public WorkspaceProperties(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference workspaceIdentity) { }
-        public Azure.Core.ResourceIdentifier AgentSubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? CustomerManagedKeys { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier LogAnalyticsClusterId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
-        public string ManagedResourceGroup { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointSubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SupercomputerIds { get { throw null; } }
-        public System.Uri WorkspaceApiUri { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference WorkspaceIdentity { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier WorkspaceSubnetId { get { throw null; } set { } }
-        public System.Uri WorkspaceUiUri { get { throw null; } }
-        protected virtual Azure.ResourceManager.Discovery.Models.WorkspaceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.WorkspaceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.WorkspaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.WorkspaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

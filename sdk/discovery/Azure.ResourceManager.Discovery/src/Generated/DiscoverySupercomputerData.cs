@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoverySupercomputerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SupercomputerProperties properties, DiscoverySystemAssignedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DiscoverySupercomputerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DiscoverySupercomputerProperties properties, DiscoverySystemAssignedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public SupercomputerProperties Properties { get; set; }
+        public DiscoverySupercomputerProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public DiscoverySystemAssignedServiceIdentity Identity { get; set; }

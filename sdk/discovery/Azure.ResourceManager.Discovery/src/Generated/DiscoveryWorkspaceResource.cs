@@ -745,10 +745,10 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary> Gets a collection of ChatModelDeployments in the <see cref="DiscoveryWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of ChatModelDeployments and their operations over a ChatModelDeploymentResource. </returns>
-        public virtual ChatModelDeploymentCollection GetChatModelDeployments()
+        /// <returns> An object representing collection of ChatModelDeployments and their operations over a DiscoveryChatModelDeploymentResource. </returns>
+        public virtual DiscoveryChatModelDeploymentCollection GetChatModelDeployments()
         {
-            return GetCachedClient(client => new ChatModelDeploymentCollection(client, Id));
+            return GetCachedClient(client => new DiscoveryChatModelDeploymentCollection(client, Id));
         }
 
         /// <summary> Get a ChatModelDeployment. </summary>
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="chatModelDeploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chatModelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ChatModelDeploymentResource>> GetChatModelDeploymentAsync(string chatModelDeploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryChatModelDeploymentResource>> GetChatModelDeploymentAsync(string chatModelDeploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatModelDeploymentName, nameof(chatModelDeploymentName));
 
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="chatModelDeploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="chatModelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ChatModelDeploymentResource> GetChatModelDeployment(string chatModelDeploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryChatModelDeploymentResource> GetChatModelDeployment(string chatModelDeploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(chatModelDeploymentName, nameof(chatModelDeploymentName));
 

@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Discovery
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            ProjectProperties properties = default;
+            DiscoveryProjectProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         continue;
                     }
-                    properties = ProjectProperties.DeserializeProjectProperties(prop.Value, options);
+                    properties = DiscoveryProjectProperties.DeserializeDiscoveryProjectProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Discovery.Mocking
             return new WorkspacePrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ChatModelDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryChatModelDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChatModelDeploymentResource"/> object. </returns>
-        public virtual ChatModelDeploymentResource GetChatModelDeploymentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryChatModelDeploymentResource"/> object. </returns>
+        public virtual DiscoveryChatModelDeploymentResource GetDiscoveryChatModelDeploymentResource(ResourceIdentifier id)
         {
-            ChatModelDeploymentResource.ValidateResourceId(id);
-            return new ChatModelDeploymentResource(Client, id);
+            DiscoveryChatModelDeploymentResource.ValidateResourceId(id);
+            return new DiscoveryChatModelDeploymentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WorkspacePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>

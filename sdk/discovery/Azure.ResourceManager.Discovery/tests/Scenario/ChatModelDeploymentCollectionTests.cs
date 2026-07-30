@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private ChatModelDeploymentCollection GetChatModelDeploymentCollection()
+        private DiscoveryChatModelDeploymentCollection GetChatModelDeploymentCollection()
             => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName)).GetChatModelDeployments();
 
-        private ChatModelDeploymentResource GetChatModelDeploymentReference()
-            => Client.GetChatModelDeploymentResource(ChatModelDeploymentResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName, ChatModelDeploymentName));
+        private DiscoveryChatModelDeploymentResource GetChatModelDeploymentReference()
+            => Client.GetDiscoveryChatModelDeploymentResource(DiscoveryChatModelDeploymentResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName, ChatModelDeploymentName));
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ArmOperation<ChatModelDeploymentResource> operation = await GetChatModelDeploymentCollection().CreateOrUpdateAsync(WaitUntil.Completed, ChatModelDeploymentName, new ChatModelDeploymentData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryChatModelDeploymentResource> operation = await GetChatModelDeploymentCollection().CreateOrUpdateAsync(WaitUntil.Completed, ChatModelDeploymentName, new DiscoveryChatModelDeploymentData(AzureLocation.UKSouth));
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(ChatModelDeploymentName));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<ChatModelDeploymentResource> response = await GetChatModelDeploymentCollection().GetAsync(ChatModelDeploymentName);
+            Response<DiscoveryChatModelDeploymentResource> response = await GetChatModelDeploymentCollection().GetAsync(ChatModelDeploymentName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(ChatModelDeploymentName));
         }
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListByWorkspace()
         {
-            List<ChatModelDeploymentResource> items = new List<ChatModelDeploymentResource>();
-            await foreach (ChatModelDeploymentResource item in GetChatModelDeploymentCollection().GetAllAsync())
+            List<DiscoveryChatModelDeploymentResource> items = new List<DiscoveryChatModelDeploymentResource>();
+            await foreach (DiscoveryChatModelDeploymentResource item in GetChatModelDeploymentCollection().GetAllAsync())
             {
                 items.Add(item);
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            ArmOperation<ChatModelDeploymentResource> operation = await GetChatModelDeploymentReference().UpdateAsync(WaitUntil.Completed, new ChatModelDeploymentData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryChatModelDeploymentResource> operation = await GetChatModelDeploymentReference().UpdateAsync(WaitUntil.Completed, new DiscoveryChatModelDeploymentData(AzureLocation.UKSouth));
 
             Assert.That(operation.Value.Data.Name, Is.EqualTo(ChatModelDeploymentName));
         }

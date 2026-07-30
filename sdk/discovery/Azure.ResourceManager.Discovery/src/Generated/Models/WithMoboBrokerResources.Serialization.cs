@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                foreach (MoboBrokerResource item in MoboBrokerResources)
+                foreach (DiscoveryMoboBrokerResource item in MoboBrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            IReadOnlyList<MoboBrokerResource> moboBrokerResources = default;
+            IReadOnlyList<DiscoveryMoboBrokerResource> moboBrokerResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    List<MoboBrokerResource> array = new List<MoboBrokerResource>();
+                    List<DiscoveryMoboBrokerResource> array = new List<DiscoveryMoboBrokerResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MoboBrokerResource.DeserializeMoboBrokerResource(item, options));
+                        array.Add(DiscoveryMoboBrokerResource.DeserializeDiscoveryMoboBrokerResource(item, options));
                     }
                     moboBrokerResources = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WithMoboBrokerResources(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>(), additionalBinaryDataProperties);
+            return new WithMoboBrokerResources(moboBrokerResources ?? new ChangeTrackingList<DiscoveryMoboBrokerResource>(), additionalBinaryDataProperties);
         }
     }
 }

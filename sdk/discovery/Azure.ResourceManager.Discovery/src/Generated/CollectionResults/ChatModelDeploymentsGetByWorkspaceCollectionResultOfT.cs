@@ -14,7 +14,7 @@ using Azure.ResourceManager.Discovery.Models;
 
 namespace Azure.ResourceManager.Discovery
 {
-    internal partial class ChatModelDeploymentsGetByWorkspaceCollectionResultOfT : Pageable<ChatModelDeploymentData>
+    internal partial class ChatModelDeploymentsGetByWorkspaceCollectionResultOfT : Pageable<DiscoveryChatModelDeploymentData>
     {
         private readonly ChatModelDeployments _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ChatModelDeploymentsGetByWorkspaceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ChatModelDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DiscoveryChatModelDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Discovery
                 }
                 ChatModelDeploymentListResult result = ChatModelDeploymentListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ChatModelDeploymentData>.FromValues((IReadOnlyList<ChatModelDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DiscoveryChatModelDeploymentData>.FromValues((IReadOnlyList<DiscoveryChatModelDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

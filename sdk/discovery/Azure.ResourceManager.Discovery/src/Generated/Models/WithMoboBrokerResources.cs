@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <summary> Initializes a new instance of <see cref="WithMoboBrokerResources"/>. </summary>
         internal WithMoboBrokerResources()
         {
-            MoboBrokerResources = new ChangeTrackingList<MoboBrokerResource>();
+            MoboBrokerResources = new ChangeTrackingList<DiscoveryMoboBrokerResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WithMoboBrokerResources"/>. </summary>
         /// <param name="moboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WithMoboBrokerResources(IReadOnlyList<MoboBrokerResource> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WithMoboBrokerResources(IReadOnlyList<DiscoveryMoboBrokerResource> moboBrokerResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MoboBrokerResources = moboBrokerResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerResource> MoboBrokerResources { get; } = new ChangeTrackingList<MoboBrokerResource>();
+        public IReadOnlyList<DiscoveryMoboBrokerResource> MoboBrokerResources { get; } = new ChangeTrackingList<DiscoveryMoboBrokerResource>();
     }
 }

@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            // MoboBrokerResource is a generated model (Azure.ResourceManager.Discovery.Models),
+            // DiscoveryMoboBrokerResource is a generated model (Azure.ResourceManager.Discovery.Models),
             // not an ARM resource, but its name ends with the "Resource" suffix.
-            ExceptionList = new string[] { "MoboBrokerResource" };
+            ExceptionList = new string[] { "DiscoveryMoboBrokerResource" };
         }
     }
 }

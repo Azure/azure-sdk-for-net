@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="managedOnBehalfOfConfiguration"> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </param>
         /// <param name="bookshelfUri"> The bookshelf data plane API URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BookshelfProperties(DiscoveryProvisioningState? provisioningState, IDictionary<string, UserAssignedIdentity> workloadIdentities, CustomerManagedKeys? customerManagedKeys, BookshelfKeyVaultProperties keyVaultProperties, ResourceIdentifier logAnalyticsClusterId, IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections, DiscoveryPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier privateEndpointSubnetId, ResourceIdentifier searchSubnetId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, Uri bookshelfUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BookshelfProperties(DiscoveryProvisioningState? provisioningState, IDictionary<string, UserAssignedIdentity> workloadIdentities, DiscoveryCustomerManagedKeys? customerManagedKeys, BookshelfKeyVaultProperties keyVaultProperties, ResourceIdentifier logAnalyticsClusterId, IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections, DiscoveryPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier privateEndpointSubnetId, ResourceIdentifier searchSubnetId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, Uri bookshelfUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             WorkloadIdentities = workloadIdentities;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public IDictionary<string, UserAssignedIdentity> WorkloadIdentities { get; }
 
         /// <summary> Whether or not to use a customer managed key when encrypting data at rest. </summary>
-        public CustomerManagedKeys? CustomerManagedKeys { get; set; }
+        public DiscoveryCustomerManagedKeys? CustomerManagedKeys { get; set; }
 
         /// <summary> The key to use for encrypting data at rest when customer managed keys are enabled. Required if Customer Managed Keys is enabled. </summary>
         public BookshelfKeyVaultProperties KeyVaultProperties { get; set; }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public Uri BookshelfUri { get; }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<DiscoveryMoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {
