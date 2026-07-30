@@ -62,8 +62,8 @@ namespace Azure.Provisioning.EventHubs
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true, format: "O");
             _userMetadata = DefineProperty<string>(nameof(UserMetadata), new string[] { "userMetadata" });
             DefineAdditionalProperties();
         }

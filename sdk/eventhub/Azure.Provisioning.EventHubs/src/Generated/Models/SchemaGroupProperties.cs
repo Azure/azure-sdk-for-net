@@ -106,8 +106,8 @@ namespace Azure.Provisioning.EventHubs
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _updatedAtUtc = DefineProperty<DateTimeOffset>(nameof(UpdatedAtUtc), new string[] { "updatedAtUtc" }, isOutput: true);
-            _createdAtUtc = DefineProperty<DateTimeOffset>(nameof(CreatedAtUtc), new string[] { "createdAtUtc" }, isOutput: true);
+            _updatedAtUtc = DefineProperty<DateTimeOffset>(nameof(UpdatedAtUtc), new string[] { "updatedAtUtc" }, isOutput: true, format: "O");
+            _createdAtUtc = DefineProperty<DateTimeOffset>(nameof(CreatedAtUtc), new string[] { "createdAtUtc" }, isOutput: true, format: "O");
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _groupProperties = DefineDictionaryProperty<string>(nameof(GroupProperties), new string[] { "groupProperties" });
             _schemaCompatibility = DefineProperty<EventHubsSchemaCompatibility>(nameof(SchemaCompatibility), new string[] { "schemaCompatibility" });

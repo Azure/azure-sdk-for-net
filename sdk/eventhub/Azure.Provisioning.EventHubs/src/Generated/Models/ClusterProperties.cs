@@ -144,9 +144,9 @@ namespace Azure.Provisioning.EventHubs
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<EventHubsClusterProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true);
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true, format: "O");
             _metricId = DefineProperty<string>(nameof(MetricId), new string[] { "metricId" }, isOutput: true);
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" }, isOutput: true);
             _supportsScaling = DefineProperty<bool>(nameof(SupportsScaling), new string[] { "supportsScaling" });

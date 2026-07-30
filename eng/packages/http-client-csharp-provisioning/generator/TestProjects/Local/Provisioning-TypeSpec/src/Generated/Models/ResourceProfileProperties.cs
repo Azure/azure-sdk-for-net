@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private ResourceProfileRevision _latestRevision;
         private ResourceProfileRevision _previousRevision;
         private SpecializedResourceProfile _specializedProfile;
+        private DiscriminatedResourceProfile _baseDiscriminatedProfile;
 
         /// <summary> Creates a new ResourceProfileProperties. </summary>
         public ResourceProfileProperties()
@@ -51,6 +52,16 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets the BaseDiscriminatedProfile. </summary>
+        public DiscriminatedResourceProfile BaseDiscriminatedProfile
+        {
+            get
+            {
+                Initialize();
+                return _baseDiscriminatedProfile;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ResourceProfileProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -58,6 +69,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _latestRevision = DefineModelProperty(nameof(LatestRevision), new string[] { "latestRevision" }, new ResourceProfileRevision("latestRevision"), isOutput: true);
             _previousRevision = DefineModelProperty(nameof(PreviousRevision), new string[] { "previousRevision" }, new ResourceProfileRevision("previousRevision"), isOutput: true);
             _specializedProfile = DefineModelProperty(nameof(SpecializedProfile), new string[] { "specializedProfile" }, new SpecializedResourceProfile("specializedProfile"), isOutput: true);
+            _baseDiscriminatedProfile = DefineModelProperty(nameof(BaseDiscriminatedProfile), new string[] { "baseDiscriminatedProfile" }, new DiscriminatedResourceProfile("baseDiscriminatedProfile"), isOutput: true);
             DefineAdditionalProperties();
         }
 

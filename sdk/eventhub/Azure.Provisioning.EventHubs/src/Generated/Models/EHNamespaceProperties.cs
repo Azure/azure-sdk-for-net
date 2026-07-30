@@ -318,8 +318,8 @@ namespace Azure.Provisioning.EventHubs
             _minimumTlsVersion = DefineProperty<EventHubsTlsVersion>(nameof(MinimumTlsVersion), new string[] { "minimumTlsVersion" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true, format: "O");
             _serviceBusEndpoint = DefineProperty<string>(nameof(ServiceBusEndpoint), new string[] { "serviceBusEndpoint" }, isOutput: true);
             _clusterArmId = DefineProperty<ResourceIdentifier>(nameof(ClusterArmId), new string[] { "clusterArmId" });
             _metricId = DefineProperty<string>(nameof(MetricId), new string[] { "metricId" }, isOutput: true);

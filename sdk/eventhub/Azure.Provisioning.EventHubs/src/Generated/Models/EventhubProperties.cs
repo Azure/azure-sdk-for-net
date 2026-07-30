@@ -198,8 +198,8 @@ namespace Azure.Provisioning.EventHubs
         {
             base.DefineProvisionableProperties();
             _partitionIds = DefineListProperty<string>(nameof(PartitionIds), new string[] { "partitionIds" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true);
-            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdAt" }, isOutput: true, format: "O");
+            _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedAt" }, isOutput: true, format: "O");
             _messageRetentionInDays = DefineProperty<long>(nameof(MessageRetentionInDays), new string[] { "messageRetentionInDays" });
             _partitionCount = DefineProperty<long>(nameof(PartitionCount), new string[] { "partitionCount" });
             _status = DefineProperty<EventHubEntityStatus>(nameof(Status), new string[] { "status" });
