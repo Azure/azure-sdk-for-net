@@ -13,9 +13,11 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources.Mocking
+namespace Azure.ResourceManager.Resources.Deployments.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableResourcesTenantResource : ArmResource

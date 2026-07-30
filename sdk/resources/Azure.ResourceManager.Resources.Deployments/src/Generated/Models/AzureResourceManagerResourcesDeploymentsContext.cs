@@ -9,8 +9,9 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(WhatIfOperationProperties))]
     [ModelReaderWriterBuildable(typeof(WhatIfOperationResult))]
     [ModelReaderWriterBuildable(typeof(WhatIfPropertyChange))]
-    public partial class AzureResourceManagerResourcesContext : ModelReaderWriterContext
+    public partial class AzureResourceManagerResourcesDeploymentsContext : ModelReaderWriterContext
     {
     }
 }

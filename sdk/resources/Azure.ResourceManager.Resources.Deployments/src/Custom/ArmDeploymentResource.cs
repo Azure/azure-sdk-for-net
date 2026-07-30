@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     public partial class ArmDeploymentResource : ArmResource
     {
