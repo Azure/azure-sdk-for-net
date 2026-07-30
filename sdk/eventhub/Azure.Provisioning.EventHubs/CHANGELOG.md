@@ -1,14 +1,16 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-07-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for Event Hubs network security perimeter configuration resources.
+- Added support for disaster recovery authorization rule resources.
+- Added support for the `2026-01-01` API version.
 
 ### Other Changes
+
+- Migrated the library to the TypeSpec provisioning emitter.
 
 ## 1.1.0 (2025-06-16)
 
