@@ -39,10 +39,11 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="algorithm">The algorithm identifier for the Algorithm Key Pair (AKP) key. See <see cref="AkpAlgorithm"/> for possible values.</param>
         /// <param name="hardwareProtected">True to create a hardware-protected key in a hardware security module (HSM). The default is false to create a software key.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null, or <paramref name="algorithm"/> is not set.</exception>
         public CreateAkpKeyOptions(string name, AkpAlgorithm algorithm, bool hardwareProtected = false)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(algorithm.ToString(), nameof(algorithm));
 
             Name = name;
             Algorithm = algorithm;

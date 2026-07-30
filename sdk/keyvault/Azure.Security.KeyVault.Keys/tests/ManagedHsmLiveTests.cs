@@ -87,6 +87,26 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_05_01_Preview)]
+        [Ignore("AKP requires an INT Managed HSM; skipping until AKP GA.")]
+        public async Task CreateAkpKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateAkpKeyOptions options = new CreateAkpKeyOptions(keyName, AkpAlgorithm.MLDsa65, hardwareProtected: true);
+            KeyVaultKey akpKey = await Client.CreateAkpKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(akpKey, keyReturned);
+
+            Assert.AreEqual(KeyType.AkpHsm, keyReturned.KeyType);
+            Assert.AreEqual(AkpAlgorithm.MLDsa65, keyReturned.Key.Algorithm);
+            Assert.IsNotNull(keyReturned.Key.Pub);
+        }
+
+        [RecordedTest]
         [TestCase(16)]
         [TestCase(32)]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
