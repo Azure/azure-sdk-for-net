@@ -30,9 +30,9 @@ public class Sample_CodeAgent : SamplesBase
         {
             Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
             CodeConfiguration = new(
-                runtime: "python_3_14",
-                entryPoint: ["python", "main.py"],
-                dependencyResolution: CodeDependencyResolution.RemoteBuild
+                runtime: "dotnet_10",
+                entryPoint: ["dotnet", "EchoAgent.dll"],
+                dependencyResolution: CodeDependencyResolution.Bundled
             ),
         };
         AgentVersionFromCodeMetadata metadata = new(agentDefinition);

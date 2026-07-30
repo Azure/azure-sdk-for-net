@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
 
@@ -40,7 +39,6 @@ namespace Azure.ResourceManager.Sphere
     [ModelReaderWriterBuildable(typeof(ProductUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceContent))]
     [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceResponse))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SignedCapabilityImageResponse))]
     [ModelReaderWriterBuildable(typeof(SphereCatalogData))]
     [ModelReaderWriterBuildable(typeof(SphereCatalogPatch))]

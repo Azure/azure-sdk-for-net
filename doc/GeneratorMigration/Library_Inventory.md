@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-07-27 07:49:31 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-07-28 01:06:41 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 434
-- Management Plane (MPG): 253
+- Total libraries: 433
+- Management Plane (MPG): 252
   - Autorest/Swagger: 46
-  - New Emitter (TypeSpec): 207
+  - New Emitter (TypeSpec): 206
   - Old TypeSpec: 0
 - Data Plane (DPG): 130
   - Autorest/Swagger: 33
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 33
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 207 / 207 (100%)
+**Migration Status**: 206 / 206 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -342,7 +342,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | support | Azure.ResourceManager.Support | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
-| virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
 | webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | websites | Azure.ResourceManager.AppService | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
