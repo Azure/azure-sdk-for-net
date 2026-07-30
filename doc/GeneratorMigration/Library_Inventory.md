@@ -122,7 +122,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 33
 | maps | Azure.Maps.Search |
 | maps | Azure.Maps.TimeZones |
 | maps | Azure.Maps.Weather |
-| personalizer | Azure.AI.Personalizer |
 | purview | Azure.Analytics.Purview.Sharing |
 | purview | Azure.Analytics.Purview.Workflows |
 | synapse | Azure.Analytics.Synapse.Artifacts |
