@@ -41,6 +41,7 @@
     </ItemGroup>
     <PropertyGroup>
       <_ApiCompatChangelogPath>$(PackageRootDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
+      <_ApiCompatChangelogPath Condition="!$(MSBuildProjectDirectory.EndsWith('\src')) and !$(MSBuildProjectDirectory.EndsWith('/src'))">$(MSBuildProjectDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
     </PropertyGroup>
     <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and !Exists('$(_ApiCompatChangelogPath)')"
            Text="ApiCompat validation cannot determine release history for $(MSBuildProjectName): CHANGELOG.md was not found at $(_ApiCompatChangelogPath)." />
@@ -94,7 +95,6 @@
 
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
-    <PackageRootDirectory Condition="!Exists('$(PackageRootDirectory)/CHANGELOG.md') and Exists('$(MSBuildProjectDirectory)/CHANGELOG.md')">$(MSBuildProjectDirectory)</PackageRootDirectory>
 
     <!--
         For API compat checks, libraries that don't release often are likely to not have newer targets,
