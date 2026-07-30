@@ -164,6 +164,7 @@ namespace Azure.AI.Projects
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual Azure.AI.Projects.ProjectSchedules Schedules { get { throw null; } }
         public virtual Azure.AI.Projects.AIProjectTelemetry Telemetry { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual Azure.AI.Projects.Memory.AIProjectMemoryStores GetAIProjectMemoryStoresClient() { throw null; }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
@@ -503,10 +504,8 @@ namespace Azure.AI.Projects
     {
         protected AIProjectModels() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.CreateAsyncResponse> CreateModelVersionRequest(string name, string version, Azure.AI.Projects.ModelVersion modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateModelVersionRequest(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.CreateAsyncResponse>> CreateModelVersionRequestAsync(string name, string version, Azure.AI.Projects.ModelVersion modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateModelVersionRequestAsync(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteModelVersion(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
@@ -514,33 +513,23 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteModelVersionAsync(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteModelVersionAsync(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetLatestModelVersions(System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.ModelVersion> GetLatestModelVersions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetLatestModelVersionsAsync(System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.ModelVersion> GetLatestModelVersionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential> GetModelCredentials(string name, string version, Azure.AI.Projects.ModelCredentialRequest credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetModelCredentials(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential>> GetModelCredentialsAsync(string name, string version, Azure.AI.Projects.ModelCredentialRequest credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetModelCredentialsAsync(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult GetModelVersion(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ModelVersion> GetModelVersion(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetModelVersionAsync(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.ModelVersion>> GetModelVersionAsync(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetModelVersions(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.ModelVersion> GetModelVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetModelVersionsAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.ModelVersion> GetModelVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ModelPendingUploadResult> StartModelPendingUpload(string name, string version, Azure.AI.Projects.ModelPendingUploadContent pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult StartModelPendingUpload(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.ModelPendingUploadResult>> StartModelPendingUploadAsync(string name, string version, Azure.AI.Projects.ModelPendingUploadContent pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StartModelPendingUploadAsync(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ModelVersion> UpdateModelVersion(string name, string version, Azure.AI.Projects.UpdateModelVersionOptions updateOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -874,6 +863,8 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.SimpleQnADataGenerationJobOptions SimpleQnADataGenerationJobOptions(int maxSamples = 0, float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.SimpleQnAFineTuningQuestionType> questionTypes = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.TargetConfig TargetConfig(string type = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Projects.TaskGenerationDataGenerationJobOptions TaskGenerationDataGenerationJobOptions(int maxSamples = 0, float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Evaluation.TaxonomyCategory TaxonomyCategory(string id = null, string name = null, string description = null, Azure.AI.Projects.Evaluation.RiskCategory riskCategory = default(Azure.AI.Projects.Evaluation.RiskCategory), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.TaxonomySubCategory> subCategories = null, System.Collections.Generic.IDictionary<string, string> properties = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -1824,10 +1815,8 @@ namespace Azure.AI.Projects
     {
         protected ProjectSchedules() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsSchedule> CreateOrUpdate(string id, Azure.AI.Projects.Evaluation.ProjectsSchedule resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateOrUpdate(string id, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsSchedule>> CreateOrUpdateAsync(string id, Azure.AI.Projects.Evaluation.ProjectsSchedule resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateOrUpdateAsync(string id, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
@@ -1835,27 +1824,19 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsSchedule> Get(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.ProjectsSchedule> GetAll(Azure.AI.Projects.Evaluation.ScheduleTaskType? type = default(Azure.AI.Projects.Evaluation.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetAll(string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.ProjectsSchedule> GetAllAsync(Azure.AI.Projects.Evaluation.ScheduleTaskType? type = default(Azure.AI.Projects.Evaluation.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsSchedule>> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetRun(string scheduleId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ScheduleRun> GetRun(string scheduleId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetRunAsync(string scheduleId, string runId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ScheduleRun>> GetRunAsync(string scheduleId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.ScheduleRun> GetRuns(string id, Azure.AI.Projects.Evaluation.ScheduleTaskType? type = default(Azure.AI.Projects.Evaluation.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetRuns(string id, string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.ScheduleRun> GetRunsAsync(string id, Azure.AI.Projects.Evaluation.ScheduleTaskType? type = default(Azure.AI.Projects.Evaluation.ScheduleTaskType?), bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetRunsAsync(string id, string type, bool? enabled, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
@@ -2287,6 +2268,20 @@ namespace Azure.AI.Projects
         public static implicit operator Azure.AI.Projects.SimpleQnAFineTuningQuestionType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.SimpleQnAFineTuningQuestionType left, Azure.AI.Projects.SimpleQnAFineTuningQuestionType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class TaskGenerationDataGenerationJobOptions : Azure.AI.Projects.DataGenerationJobOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TaskGenerationDataGenerationJobOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TaskGenerationDataGenerationJobOptions>
+    {
+        public TaskGenerationDataGenerationJobOptions(int maxSamples) { }
+        protected override Azure.AI.Projects.DataGenerationJobOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.DataGenerationJobOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.TaskGenerationDataGenerationJobOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TaskGenerationDataGenerationJobOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TaskGenerationDataGenerationJobOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.TaskGenerationDataGenerationJobOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TaskGenerationDataGenerationJobOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TaskGenerationDataGenerationJobOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TaskGenerationDataGenerationJobOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class TimerRoutineTrigger : Azure.AI.Projects.RoutineTrigger, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TimerRoutineTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TimerRoutineTrigger>
@@ -3018,16 +3013,12 @@ namespace Azure.AI.Projects.Evaluation
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.EvaluationTaxonomy> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetAll(string inputName, string inputType, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.EvaluationTaxonomy> GetAll(string inputName = null, string inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string inputName, string inputType, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.EvaluationTaxonomy> GetAllAsync(string inputName = null, string inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.EvaluationTaxonomy>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Update(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
@@ -3598,10 +3589,8 @@ namespace Azure.AI.Projects.Evaluation
     {
         protected ProjectEvaluators() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> CreateVersion(string name, Azure.AI.Projects.Evaluation.EvaluatorVersion evaluatorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateVersion(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.EvaluatorVersion>> CreateVersionAsync(string name, Azure.AI.Projects.Evaluation.EvaluatorVersion evaluatorVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateVersionAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteVersion(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
@@ -3610,22 +3599,16 @@ namespace Azure.AI.Projects.Evaluation
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteVersionAsync(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential> GetCredential(string name, string version, Azure.AI.Projects.Evaluation.EvaluationCredentialContent credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DatasetCredential>> GetCredentialAsync(string name, string version, Azure.AI.Projects.Evaluation.EvaluationCredentialContent credentialRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetLatestVersions(Azure.AI.Projects.Evaluation.ListVersionsRequestType? type = default(Azure.AI.Projects.Evaluation.ListVersionsRequestType?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetLatestVersions(string type, int? limit, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetLatestVersionsAsync(Azure.AI.Projects.Evaluation.ListVersionsRequestType? type = default(Azure.AI.Projects.Evaluation.ListVersionsRequestType?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetLatestVersionsAsync(string type, int? limit, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult GetVersion(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetVersion(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetVersionAsync(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.EvaluatorVersion>> GetVersionAsync(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetVersions(string name, Azure.AI.Projects.Evaluation.ListVersionsRequestType? type = default(Azure.AI.Projects.Evaluation.ListVersionsRequestType?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetVersions(string name, string type, int? limit, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.EvaluatorVersion> GetVersionsAsync(string name, Azure.AI.Projects.Evaluation.ListVersionsRequestType? type = default(Azure.AI.Projects.Evaluation.ListVersionsRequestType?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetVersionsAsync(string name, string type, int? limit, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.PendingUploadResult> StartPendingUpload(string name, string version, Azure.AI.Projects.PendingUploadConfiguration pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3642,22 +3625,16 @@ namespace Azure.AI.Projects.Evaluation
     {
         protected ProjectInsights() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsInsight> Generate(Azure.AI.Projects.Evaluation.ProjectsInsight insight, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Generate(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsInsight>> GenerateAsync(Azure.AI.Projects.Evaluation.ProjectsInsight insight, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GenerateAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsInsight> Get(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string id, string foundryFeatures, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.ProjectsInsight> GetAll(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.Evaluation.InsightType? type = default(Azure.AI.Projects.Evaluation.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetAll(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.ProjectsInsight> GetAllAsync(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.Evaluation.InsightType? type = default(Azure.AI.Projects.Evaluation.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.ProjectsInsight>> GetAsync(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, string foundryFeatures, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
@@ -3808,24 +3785,18 @@ namespace Azure.AI.Projects.Evaluation
         protected RedTeams() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.RedTeam> Create(Azure.AI.Projects.Evaluation.RedTeam redTeam, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.RedTeam> Create(Azure.AI.Projects.Evaluation.RedTeam redTeam, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Create(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.RedTeam>> CreateAsync(Azure.AI.Projects.Evaluation.RedTeam redTeam, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.RedTeam>> CreateAsync(Azure.AI.Projects.Evaluation.RedTeam redTeam, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.RedTeam> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.CollectionResult GetAll(System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation.RedTeam> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation.RedTeam> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation.RedTeam>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -4005,43 +3976,31 @@ namespace Azure.AI.Projects.Memory
         protected AIProjectMemoryStores() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult CreateMemory(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryItem> CreateMemory(string name, string scope, string content, Azure.AI.Projects.Memory.MemoryItemKind kind, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateMemoryAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryItem>> CreateMemoryAsync(string name, string scope, string content, Azure.AI.Projects.Memory.MemoryItemKind kind, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateMemoryStore(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryStore> CreateMemoryStore(string name, Azure.AI.Projects.Memory.MemoryStoreDefinition definition, string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateMemoryStoreAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryStore>> CreateMemoryStoreAsync(string name, Azure.AI.Projects.Memory.MemoryStoreDefinition definition, string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteMemory(string name, string memoryId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryDeletionResult> DeleteMemory(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteMemoryAsync(string name, string memoryId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryDeletionResult>> DeleteMemoryAsync(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteMemoryStore(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.DeleteMemoryStoreResponse> DeleteMemoryStore(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteMemoryStoreAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.DeleteMemoryStoreResponse>> DeleteMemoryStoreAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteScope(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryStoreDeleteScopeResponse> DeleteScope(string name, string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteScopeAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryStoreDeleteScopeResponse>> DeleteScopeAsync(string name, string scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Memory.MemoryItem> GetMemories(string name, string scope, Azure.AI.Projects.Memory.MemoryItemKind? kind = default(Azure.AI.Projects.Memory.MemoryItemKind?), int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.Primitives.AsyncCollectionResult GetMemoriesAsync(string name, System.ClientModel.BinaryContent content, string kind = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Memory.MemoryItem> GetMemoriesAsync(string name, string scope, Azure.AI.Projects.Memory.MemoryItemKind? kind = default(Azure.AI.Projects.Memory.MemoryItemKind?), int? limit = default(int?), Azure.AI.Projects.Memory.MemoryStoreListOrder? order = default(Azure.AI.Projects.Memory.MemoryStoreListOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetMemory(string name, string memoryId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryItem> GetMemory(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetMemoryAsync(string name, string memoryId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryItem>> GetMemoryAsync(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult GetMemoryStore(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryStore> GetMemoryStore(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4062,10 +4021,8 @@ namespace Azure.AI.Projects.Memory
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryUpdateResult>> UpdateMemoriesAsync(string memoryStoreName, Azure.AI.Projects.Memory.MemoryUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateMemoriesAsync(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult UpdateMemory(string name, string memoryId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryItem> UpdateMemory(string name, string memoryId, string content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateMemoryAsync(string name, string memoryId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryItem>> UpdateMemoryAsync(string name, string memoryId, string content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult UpdateMemoryStore(string name, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryStore> UpdateMemoryStore(string name, string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

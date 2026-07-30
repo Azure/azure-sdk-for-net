@@ -12,10 +12,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.CostManagement
 {
-    /// <summary>
-    /// Setting definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TagInheritanceSetting"/>.
-    /// </summary>
+    /// <summary> Setting definition. </summary>
     public partial class CostManagementSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

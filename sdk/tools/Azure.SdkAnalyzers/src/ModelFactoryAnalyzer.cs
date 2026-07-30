@@ -18,6 +18,7 @@ namespace Azure.SdkAnalyzers
 
         private const string AzureNamespace = "Azure";
         private const string SystemClientModelNamespace = "System.ClientModel";
+        private const string SystemNetServerSentEventsNamespace = "System.Net.ServerSentEvents";
         private const string SystemNamespace = "System";
         private const string PageableTypeName = "Pageable";
         private const string AsyncPageableTypeName = "AsyncPageable";
@@ -28,6 +29,8 @@ namespace Azure.SdkAnalyzers
         private const string ClientResultTypeName = "ClientResult";
         private const string CollectionResultTypeName = "CollectionResult";
         private const string AsyncCollectionResultTypeName = "AsyncCollectionResult";
+        private const string AsyncStreamingClientResultTypeName = "AsyncStreamingClientResult";
+        private const string SseItemTypeName = "SseItem";
         private const string PageableOperationTypeName = "PageableOperation";
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(
@@ -152,7 +155,8 @@ namespace Azure.SdkAnalyzers
                 namedType.Name == TaskTypeName)
             {
                 unwrappedType = namedType.TypeArguments.FirstOrDefault();
-                if (unwrappedType == null) return null;
+                if (unwrappedType == null)
+                    return null;
             }
 
             ITypeSymbol modelType = null;
@@ -166,12 +170,23 @@ namespace Azure.SdkAnalyzers
                 IsOrImplements(unwrappedType, AsyncPageableTypeName, AzureNamespace) ||
                 IsOrImplements(unwrappedType, CollectionResultTypeName, SystemClientModelNamespace) ||
                 IsOrImplements(unwrappedType, AsyncCollectionResultTypeName, SystemClientModelNamespace) ||
+                IsOrImplements(unwrappedType, AsyncStreamingClientResultTypeName, SystemClientModelNamespace) ||
                 IsOrImplements(unwrappedType, PageableOperationTypeName, AzureNamespace))
             {
                 if (unwrappedType is INamedTypeSymbol genericType && genericType.IsGenericType)
                 {
                     modelType = genericType.TypeArguments.FirstOrDefault();
                 }
+            }
+
+            if (modelType is INamedTypeSymbol envelopeType &&
+                envelopeType.IsGenericType &&
+                IsOrImplements(
+                    envelopeType,
+                    SseItemTypeName,
+                    SystemNetServerSentEventsNamespace))
+            {
+                modelType = envelopeType.TypeArguments.FirstOrDefault();
             }
 
             // Only return user-defined types, not built-in types
