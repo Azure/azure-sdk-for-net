@@ -283,6 +283,7 @@ namespace Azure.Test { public class TestClient { } }
         {
             private readonly HashSet<string> _markedPaths;
 
+            // Simulate the project property and AdditionalFile metadata emitted by MSBuild.
             public TestOptionsProvider(string projectName, HashSet<string> markedPaths)
             {
                 _markedPaths = markedPaths;
