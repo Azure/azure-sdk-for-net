@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Whether the version is preview or stable. </summary>
-    public readonly partial struct ContainerServiceGuardrailsSupport : IEquatable<ContainerServiceGuardrailsSupport>
+    public readonly partial struct GuardrailsSupport : IEquatable<GuardrailsSupport>
     {
         private readonly string _value;
         /// <summary> The version is preview. It is not recommended to use preview versions on critical production clusters. The preview version may not support all use-cases. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The version is stable and can be used on critical production clusters. </summary>
         private const string StableValue = "Stable";
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsSupport"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuardrailsSupport"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerServiceGuardrailsSupport(string value)
+        public GuardrailsSupport(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The version is preview. It is not recommended to use preview versions on critical production clusters. The preview version may not support all use-cases. </summary>
-        public static ContainerServiceGuardrailsSupport Preview { get; } = new ContainerServiceGuardrailsSupport(PreviewValue);
+        public static GuardrailsSupport Preview { get; } = new GuardrailsSupport(PreviewValue);
 
         /// <summary> The version is stable and can be used on critical production clusters. </summary>
-        public static ContainerServiceGuardrailsSupport Stable { get; } = new ContainerServiceGuardrailsSupport(StableValue);
+        public static GuardrailsSupport Stable { get; } = new GuardrailsSupport(StableValue);
 
-        /// <summary> Determines if two <see cref="ContainerServiceGuardrailsSupport"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="GuardrailsSupport"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ContainerServiceGuardrailsSupport left, ContainerServiceGuardrailsSupport right) => left.Equals(right);
+        public static bool operator ==(GuardrailsSupport left, GuardrailsSupport right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ContainerServiceGuardrailsSupport"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="GuardrailsSupport"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ContainerServiceGuardrailsSupport left, ContainerServiceGuardrailsSupport right) => !left.Equals(right);
+        public static bool operator !=(GuardrailsSupport left, GuardrailsSupport right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ContainerServiceGuardrailsSupport"/>. </summary>
+        /// <summary> Converts a string to a <see cref="GuardrailsSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceGuardrailsSupport(string value) => new ContainerServiceGuardrailsSupport(value);
+        public static implicit operator GuardrailsSupport(string value) => new GuardrailsSupport(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerServiceGuardrailsSupport"/>. </summary>
+        /// <summary> Converts a string to a <see cref="GuardrailsSupport"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceGuardrailsSupport?(string value) => value == null ? null : new ContainerServiceGuardrailsSupport(value);
+        public static implicit operator GuardrailsSupport?(string value) => value == null ? null : new GuardrailsSupport(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContainerServiceGuardrailsSupport other && Equals(other);
+        public override bool Equals(object obj) => obj is GuardrailsSupport other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ContainerServiceGuardrailsSupport other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(GuardrailsSupport other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

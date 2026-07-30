@@ -2809,11 +2809,11 @@ namespace Azure.ResourceManager.ContainerService
             return GetManagedClusterMeshMemberships().Get(meshMembershipName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AlertConfigurations in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>
-        /// <returns> An object representing collection of AlertConfigurations and their operations over a AlertConfigurationResource. </returns>
-        public virtual AlertConfigurationCollection GetAlertConfigurations()
+        /// <summary> Gets a collection of ContainerServiceAlertConfigurations in the <see cref="ContainerServiceManagedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerServiceAlertConfigurations and their operations over a ContainerServiceAlertConfigurationResource. </returns>
+        public virtual ContainerServiceAlertConfigurationCollection GetContainerServiceAlertConfigurations()
         {
-            return GetCachedClient(client => new AlertConfigurationCollection(client, Id));
+            return GetCachedClient(client => new ContainerServiceAlertConfigurationCollection(client, Id));
         }
 
         /// <summary> Gets the specified alert configuration of a managed cluster. </summary>
@@ -2822,11 +2822,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AlertConfigurationResource>> GetAlertConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceAlertConfigurationResource>> GetContainerServiceAlertConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            return await GetAlertConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerServiceAlertConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified alert configuration of a managed cluster. </summary>
@@ -2835,11 +2835,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AlertConfigurationResource> GetAlertConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceAlertConfigurationResource> GetContainerServiceAlertConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            return GetAlertConfigurations().Get(configurationName, cancellationToken);
+            return GetContainerServiceAlertConfigurations().Get(configurationName, cancellationToken);
         }
 
         /// <summary>

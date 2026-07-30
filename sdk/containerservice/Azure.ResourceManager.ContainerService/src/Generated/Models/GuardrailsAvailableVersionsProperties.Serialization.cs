@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isDefaultVersion = default;
-            ContainerServiceGuardrailsSupport? support = default;
+            GuardrailsSupport? support = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    support = new ContainerServiceGuardrailsSupport(prop.Value.GetString());
+                    support = new GuardrailsSupport(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

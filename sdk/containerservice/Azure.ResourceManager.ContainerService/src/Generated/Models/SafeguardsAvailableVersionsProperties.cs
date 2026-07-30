@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isDefaultVersion"> Whether this is the default version. </param>
         /// <param name="support"> Whether the version is preview or stable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SafeguardsAvailableVersionsProperties(bool? isDefaultVersion, ContainerServiceSafeguardsSupport? support, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SafeguardsAvailableVersionsProperties(bool? isDefaultVersion, SafeguardsSupport? support, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDefaultVersion = isDefaultVersion;
             Support = support;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether the version is preview or stable. </summary>
         [WirePath("support")]
-        public ContainerServiceSafeguardsSupport? Support { get; }
+        public SafeguardsSupport? Support { get; }
     }
 }

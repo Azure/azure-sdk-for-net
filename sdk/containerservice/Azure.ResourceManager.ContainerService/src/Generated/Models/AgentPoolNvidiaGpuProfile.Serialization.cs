@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            AgentPoolGpuManagementMode? managementMode = default;
-            AgentPoolMultiInstanceGpuStrategy? migStrategy = default;
+            GpuManagementMode? managementMode = default;
+            MultiInstanceGpuStrategy? migStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    managementMode = new AgentPoolGpuManagementMode(prop.Value.GetString());
+                    managementMode = new GpuManagementMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("migStrategy"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    migStrategy = new AgentPoolMultiInstanceGpuStrategy(prop.Value.GetString());
+                    migStrategy = new MultiInstanceGpuStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

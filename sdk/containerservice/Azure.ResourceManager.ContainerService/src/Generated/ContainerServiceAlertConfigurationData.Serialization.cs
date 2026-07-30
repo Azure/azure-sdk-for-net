@@ -21,68 +21,68 @@ namespace Azure.ResourceManager.ContainerService
     /// Alert configuration for a managed cluster. Allows configuring AKS-managed alerts
     /// that notify users of important cluster events and conditions.
     /// </summary>
-    public partial class AlertConfigurationData : ResourceData, IJsonModel<AlertConfigurationData>
+    public partial class ContainerServiceAlertConfigurationData : ResourceData, IJsonModel<ContainerServiceAlertConfigurationData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceAlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlertConfigurationData(document.RootElement, options);
+                        return DeserializeContainerServiceAlertConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertConfigurationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceAlertConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceAlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AlertConfigurationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceAlertConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AlertConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceAlertConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertConfigurationData IPersistableModel<AlertConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AlertConfigurationData)PersistableModelCreateCore(data, options);
+        ContainerServiceAlertConfigurationData IPersistableModel<ContainerServiceAlertConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceAlertConfigurationData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AlertConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceAlertConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="alertConfigurationData"> The <see cref="AlertConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AlertConfigurationData alertConfigurationData)
+        /// <param name="containerServiceAlertConfigurationData"> The <see cref="ContainerServiceAlertConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ContainerServiceAlertConfigurationData containerServiceAlertConfigurationData)
         {
-            if (alertConfigurationData == null)
+            if (containerServiceAlertConfigurationData == null)
             {
                 return null;
             }
-            return RequestContent.Create(alertConfigurationData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(containerServiceAlertConfigurationData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AlertConfigurationData"/> from. </param>
-        internal static AlertConfigurationData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceAlertConfigurationData"/> from. </param>
+        internal static ContainerServiceAlertConfigurationData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAlertConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeContainerServiceAlertConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AlertConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceAlertConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceAlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertConfigurationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceAlertConfigurationData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertConfigurationData IJsonModel<AlertConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AlertConfigurationData)JsonModelCreateCore(ref reader, options);
+        ContainerServiceAlertConfigurationData IJsonModel<ContainerServiceAlertConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerServiceAlertConfigurationData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceAlertConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertConfigurationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceAlertConfigurationData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlertConfigurationData(document.RootElement, options);
+            return DeserializeContainerServiceAlertConfigurationData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AlertConfigurationData DeserializeAlertConfigurationData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceAlertConfigurationData DeserializeContainerServiceAlertConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertConfigurationData(
+            return new ContainerServiceAlertConfigurationData(
                 id,
                 name,
                 resourceType,

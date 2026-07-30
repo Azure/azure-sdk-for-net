@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT : AsyncPageable<AlertConfigurationData>
+    internal partial class AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT : AsyncPageable<ContainerServiceAlertConfigurationData>
     {
         private readonly AlertConfigurations _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AlertConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ContainerServiceAlertConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 AlertConfigurationListResult result = AlertConfigurationListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<AlertConfigurationData>.FromValues((IReadOnlyList<AlertConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerServiceAlertConfigurationData>.FromValues((IReadOnlyList<ContainerServiceAlertConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

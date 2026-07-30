@@ -399,21 +399,21 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerServiceAlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetAlertConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceAlertConfigurationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AlertConfigurationResource"/> object. </returns>
-        public static AlertConfigurationResource GetAlertConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceAlertConfigurationResource"/> object. </returns>
+        public static ContainerServiceAlertConfigurationResource GetContainerServiceAlertConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceArmClient(client).GetAlertConfigurationResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceAlertConfigurationResource(id);
         }
 
         /// <summary>

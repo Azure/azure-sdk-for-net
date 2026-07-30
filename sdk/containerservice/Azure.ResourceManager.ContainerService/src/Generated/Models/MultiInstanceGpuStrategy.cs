@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Sets the MIG (Multi-Instance GPU) strategy that will be used for managed MIG support. For more information about the different strategies, visit aka.ms/aks/managed-gpu. When not specified, the default is None. </summary>
-    public readonly partial struct AgentPoolMultiInstanceGpuStrategy : IEquatable<AgentPoolMultiInstanceGpuStrategy>
+    public readonly partial struct MultiInstanceGpuStrategy : IEquatable<MultiInstanceGpuStrategy>
     {
         private readonly string _value;
         /// <summary> Don't set a MIG strategy. If you previously had one set, this will override it and set remove the set MIG strategy. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Set the MIG strategy for managed MIG as mixed. </summary>
         private const string MixedValue = "Mixed";
 
-        /// <summary> Initializes a new instance of <see cref="AgentPoolMultiInstanceGpuStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiInstanceGpuStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AgentPoolMultiInstanceGpuStrategy(string value)
+        public MultiInstanceGpuStrategy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Don't set a MIG strategy. If you previously had one set, this will override it and set remove the set MIG strategy. </summary>
-        public static AgentPoolMultiInstanceGpuStrategy None { get; } = new AgentPoolMultiInstanceGpuStrategy(NoneValue);
+        public static MultiInstanceGpuStrategy None { get; } = new MultiInstanceGpuStrategy(NoneValue);
 
         /// <summary> Set the MIG strategy for managed MIG as single. </summary>
-        public static AgentPoolMultiInstanceGpuStrategy Single { get; } = new AgentPoolMultiInstanceGpuStrategy(SingleValue);
+        public static MultiInstanceGpuStrategy Single { get; } = new MultiInstanceGpuStrategy(SingleValue);
 
         /// <summary> Set the MIG strategy for managed MIG as mixed. </summary>
-        public static AgentPoolMultiInstanceGpuStrategy Mixed { get; } = new AgentPoolMultiInstanceGpuStrategy(MixedValue);
+        public static MultiInstanceGpuStrategy Mixed { get; } = new MultiInstanceGpuStrategy(MixedValue);
 
-        /// <summary> Determines if two <see cref="AgentPoolMultiInstanceGpuStrategy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MultiInstanceGpuStrategy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AgentPoolMultiInstanceGpuStrategy left, AgentPoolMultiInstanceGpuStrategy right) => left.Equals(right);
+        public static bool operator ==(MultiInstanceGpuStrategy left, MultiInstanceGpuStrategy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AgentPoolMultiInstanceGpuStrategy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MultiInstanceGpuStrategy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AgentPoolMultiInstanceGpuStrategy left, AgentPoolMultiInstanceGpuStrategy right) => !left.Equals(right);
+        public static bool operator !=(MultiInstanceGpuStrategy left, MultiInstanceGpuStrategy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AgentPoolMultiInstanceGpuStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MultiInstanceGpuStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolMultiInstanceGpuStrategy(string value) => new AgentPoolMultiInstanceGpuStrategy(value);
+        public static implicit operator MultiInstanceGpuStrategy(string value) => new MultiInstanceGpuStrategy(value);
 
-        /// <summary> Converts a string to a <see cref="AgentPoolMultiInstanceGpuStrategy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MultiInstanceGpuStrategy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AgentPoolMultiInstanceGpuStrategy?(string value) => value == null ? null : new AgentPoolMultiInstanceGpuStrategy(value);
+        public static implicit operator MultiInstanceGpuStrategy?(string value) => value == null ? null : new MultiInstanceGpuStrategy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AgentPoolMultiInstanceGpuStrategy other && Equals(other);
+        public override bool Equals(object obj) => obj is MultiInstanceGpuStrategy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AgentPoolMultiInstanceGpuStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MultiInstanceGpuStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

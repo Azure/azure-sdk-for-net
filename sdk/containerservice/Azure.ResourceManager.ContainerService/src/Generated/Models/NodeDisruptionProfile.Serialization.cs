@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ContainerServiceNodeDisruptionPolicy? nodeDisruptionPolicy = default;
+            NodeDisruptionPolicy? nodeDisruptionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    nodeDisruptionPolicy = new ContainerServiceNodeDisruptionPolicy(prop.Value.GetString());
+                    nodeDisruptionPolicy = new NodeDisruptionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AlertConfigurationData item in Value)
+            foreach (ContainerServiceAlertConfigurationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            IList<AlertConfigurationData> value = default;
+            IList<ContainerServiceAlertConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AlertConfigurationData> array = new List<AlertConfigurationData>();
+                    List<ContainerServiceAlertConfigurationData> array = new List<ContainerServiceAlertConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertConfigurationData.DeserializeAlertConfigurationData(item, options));
+                        array.Add(ContainerServiceAlertConfigurationData.DeserializeContainerServiceAlertConfigurationData(item, options));
                     }
                     value = array;
                     continue;

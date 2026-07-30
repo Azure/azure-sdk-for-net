@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AlertConfigurationResource"/> and their operations.
-    /// Each <see cref="AlertConfigurationResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource"/>.
-    /// To get a <see cref="AlertConfigurationCollection"/> instance call the GetAlertConfigurations method from an instance of <see cref="ContainerServiceManagedClusterResource"/>.
+    /// A class representing a collection of <see cref="ContainerServiceAlertConfigurationResource"/> and their operations.
+    /// Each <see cref="ContainerServiceAlertConfigurationResource"/> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource"/>.
+    /// To get a <see cref="ContainerServiceAlertConfigurationCollection"/> instance call the GetContainerServiceAlertConfigurations method from an instance of <see cref="ContainerServiceManagedClusterResource"/>.
     /// </summary>
-    public partial class AlertConfigurationCollection : ArmCollection, IEnumerable<AlertConfigurationResource>, IAsyncEnumerable<AlertConfigurationResource>
+    public partial class ContainerServiceAlertConfigurationCollection : ArmCollection, IEnumerable<ContainerServiceAlertConfigurationResource>, IAsyncEnumerable<ContainerServiceAlertConfigurationResource>
     {
         private readonly ClientDiagnostics _alertConfigurationsClientDiagnostics;
         private readonly AlertConfigurations _alertConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of AlertConfigurationCollection for mocking. </summary>
-        protected AlertConfigurationCollection()
+        /// <summary> Initializes a new instance of ContainerServiceAlertConfigurationCollection for mocking. </summary>
+        protected ContainerServiceAlertConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerServiceAlertConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AlertConfigurationResource.ResourceType, out string alertConfigurationApiVersion);
-            _alertConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", AlertConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, alertConfigurationApiVersion ?? "2026-05-02-preview");
+            TryGetApiVersion(ContainerServiceAlertConfigurationResource.ResourceType, out string containerServiceAlertConfigurationApiVersion);
+            _alertConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceAlertConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceAlertConfigurationApiVersion ?? "2026-05-02-preview");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AlertConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, AlertConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerServiceAlertConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, ContainerServiceAlertConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, AlertConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, ContainerServiceAlertConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceArmOperation<AlertConfigurationResource> operation = new ContainerServiceArmOperation<AlertConfigurationResource>(
-                    new AlertConfigurationResourceOperationSource(Client),
+                ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource> operation = new ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource>(
+                    new ContainerServiceAlertConfigurationResourceOperationSource(Client),
                     _alertConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AlertConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, AlertConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerServiceAlertConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, ContainerServiceAlertConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, AlertConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, ContainerServiceAlertConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceArmOperation<AlertConfigurationResource> operation = new ContainerServiceArmOperation<AlertConfigurationResource>(
-                    new AlertConfigurationResourceOperationSource(Client),
+                ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource> operation = new ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource>(
+                    new ContainerServiceAlertConfigurationResourceOperationSource(Client),
                     _alertConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AlertConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceAlertConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Get");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertConfigurationData> response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                Response<ContainerServiceAlertConfigurationData> response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AlertConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceAlertConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Get");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertConfigurationData> response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                Response<ContainerServiceAlertConfigurationData> response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceAlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceAlertConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AlertConfigurationData, AlertConfigurationResource>(new AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceAlertConfigurationData, ContainerServiceAlertConfigurationResource>(new AlertConfigurationsGetByManagedClusterAsyncCollectionResultOfT(
                 _alertConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AlertConfigurationCollection.GetAll"), data => new AlertConfigurationResource(Client, data));
+                "ContainerServiceAlertConfigurationCollection.GetAll"), data => new ContainerServiceAlertConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertConfigurationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceAlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceAlertConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AlertConfigurationData, AlertConfigurationResource>(new AlertConfigurationsGetByManagedClusterCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceAlertConfigurationData, ContainerServiceAlertConfigurationResource>(new AlertConfigurationsGetByManagedClusterCollectionResultOfT(
                 _alertConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AlertConfigurationCollection.GetAll"), data => new AlertConfigurationResource(Client, data));
+                "ContainerServiceAlertConfigurationCollection.GetAll"), data => new ContainerServiceAlertConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Exists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<ContainerServiceAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((ContainerServiceAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Exists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<ContainerServiceAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((ContainerServiceAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AlertConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ContainerServiceAlertConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +486,23 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<ContainerServiceAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((ContainerServiceAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AlertConfigurationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerServiceAlertConfigurationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AlertConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ContainerServiceAlertConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +547,23 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<ContainerServiceAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((ContainerServiceAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AlertConfigurationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerServiceAlertConfigurationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        IEnumerator<AlertConfigurationResource> IEnumerable<AlertConfigurationResource>.GetEnumerator()
+        IEnumerator<ContainerServiceAlertConfigurationResource> IEnumerable<ContainerServiceAlertConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AlertConfigurationResource> IAsyncEnumerable<AlertConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ContainerServiceAlertConfigurationResource> IAsyncEnumerable<ContainerServiceAlertConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

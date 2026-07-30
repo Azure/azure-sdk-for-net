@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a AlertConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AlertConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetAlertConfigurations method.
+    /// A class representing a ContainerServiceAlertConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceAlertConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetContainerServiceAlertConfigurations method.
     /// </summary>
-    public partial class AlertConfigurationResource : ArmResource
+    public partial class ContainerServiceAlertConfigurationResource : ArmResource
     {
         private readonly ClientDiagnostics _alertConfigurationsClientDiagnostics;
         private readonly AlertConfigurations _alertConfigurationsRestClient;
-        private readonly AlertConfigurationData _data;
+        private readonly ContainerServiceAlertConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/alertConfigurations";
 
-        /// <summary> Initializes a new instance of AlertConfigurationResource for mocking. </summary>
-        protected AlertConfigurationResource()
+        /// <summary> Initializes a new instance of ContainerServiceAlertConfigurationResource for mocking. </summary>
+        protected ContainerServiceAlertConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AlertConfigurationResource(ArmClient client, AlertConfigurationData data) : this(client, data.Id)
+        internal ContainerServiceAlertConfigurationResource(ArmClient client, ContainerServiceAlertConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerServiceAlertConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string alertConfigurationApiVersion);
+            TryGetApiVersion(ResourceType, out string containerServiceAlertConfigurationApiVersion);
             _alertConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, alertConfigurationApiVersion ?? "2026-05-02-preview");
+            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceAlertConfigurationApiVersion ?? "2026-05-02-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AlertConfigurationData Data
+        public virtual ContainerServiceAlertConfigurationData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertConfigurationResource"/>. </description>
+        /// <description> <see cref="ContainerServiceAlertConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceAlertConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationResource.Get");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertConfigurationData> response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                Response<ContainerServiceAlertConfigurationData> response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertConfigurationResource"/>. </description>
+        /// <description> <see cref="ContainerServiceAlertConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertConfigurationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceAlertConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationResource.Get");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertConfigurationData> response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                Response<ContainerServiceAlertConfigurationData> response = Response.FromValue(ContainerServiceAlertConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertConfigurationResource"/>. </description>
+        /// <description> <see cref="ContainerServiceAlertConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationResource.Delete");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertConfigurationResource"/>. </description>
+        /// <description> <see cref="ContainerServiceAlertConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationResource.Delete");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationResource.Delete");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Update a AlertConfiguration.
+        /// Update a ContainerServiceAlertConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertConfigurationResource"/>. </description>
+        /// <description> <see cref="ContainerServiceAlertConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The alert configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AlertConfigurationResource>> UpdateAsync(WaitUntil waitUntil, AlertConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerServiceAlertConfigurationResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceAlertConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationResource.Update");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AlertConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceAlertConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceArmOperation<AlertConfigurationResource> operation = new ContainerServiceArmOperation<AlertConfigurationResource>(
-                    new AlertConfigurationResourceOperationSource(Client),
+                ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource> operation = new ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource>(
+                    new ContainerServiceAlertConfigurationResourceOperationSource(Client),
                     _alertConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Update a AlertConfiguration.
+        /// Update a ContainerServiceAlertConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertConfigurationResource"/>. </description>
+        /// <description> <see cref="ContainerServiceAlertConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> The alert configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AlertConfigurationResource> Update(WaitUntil waitUntil, AlertConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerServiceAlertConfigurationResource> Update(WaitUntil waitUntil, ContainerServiceAlertConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationResource.Update");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("ContainerServiceAlertConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AlertConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _alertConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceAlertConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceArmOperation<AlertConfigurationResource> operation = new ContainerServiceArmOperation<AlertConfigurationResource>(
-                    new AlertConfigurationResourceOperationSource(Client),
+                ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource> operation = new ContainerServiceArmOperation<ContainerServiceAlertConfigurationResource>(
+                    new ContainerServiceAlertConfigurationResourceOperationSource(Client),
                     _alertConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
