@@ -157,6 +157,35 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(firstIdentifier, Is.Not.EqualTo(secondIdentifier));
         }
 
+        [Test]
+        public void BuildDefinePropertyArgsOmitsFormatsForCollectionTypes()
+        {
+            // TODO: Remove this workaround after collection element formats are supported.
+            // https://github.com/Azure/azure-sdk-for-net/issues/61525
+            var listArgs = BicepTypeHelpers.BuildDefinePropertyArgs(
+                new CSharpType(typeof(BicepList<>), typeof(string)),
+                "Values",
+                ["values"],
+                isOutput: false,
+                isRequired: false,
+                format: "R");
+            var dictionaryArgs = BicepTypeHelpers.BuildDefinePropertyArgs(
+                new CSharpType(typeof(BicepDictionary<>), typeof(string)),
+                "ValuesByName",
+                ["valuesByName"],
+                isOutput: false,
+                isRequired: false,
+                format: "P");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(listArgs, Has.Length.EqualTo(2));
+                Assert.That(dictionaryArgs, Has.Length.EqualTo(2));
+                Assert.That(listArgs.Select(arg => arg.ToDisplayString()), Has.None.Contain("format"));
+                Assert.That(dictionaryArgs.Select(arg => arg.ToDisplayString()), Has.None.Contain("format"));
+            });
+        }
+
         private static InputModelType CreateRegularModel(string name = "TestModel")
             => new(
                 name,
