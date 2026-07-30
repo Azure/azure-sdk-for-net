@@ -36,5 +36,3 @@ namespace Azure.Messaging.WebPubSub.Clients
         }
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE
