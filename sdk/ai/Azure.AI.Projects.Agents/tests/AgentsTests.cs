@@ -370,7 +370,7 @@ public class AgentsTests : AgentsTestBase
         if (agentVersion.Definition is DeclarativeAgentDefinition declarativeDefinition)
         {
             Assert.That(declarativeDefinition.Tools, Has.Count.EqualTo(1));
-            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(((ResponseTool)ProjectsAgentTool.AsProjectTool(toolBox.Tools[0])).GetType()));
+            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo((toolBox.Tools[0]).GetType()));
         }
         else
         {
