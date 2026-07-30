@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="repositoryRef"> The source reference for the OCIRepository object. </param>
         /// <param name="layerSelector"> The layer to be pulled from the OCI artifact. </param>
         /// <param name="verify"> Verification of the authenticity of an OCI Artifact. </param>
-        /// <param name="insecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
+        /// <param name="isInsecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
         /// <param name="useWorkloadIdentity"> Specifies whether to use Workload Identity to authenticate with the OCI repository. </param>
         /// <param name="serviceAccountName"> The service account name to authenticate with the OCI repository. </param>
         /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OciRepository(Uri uri, long? timeoutInSeconds, long? syncIntervalInSeconds, OciRepositoryRef repositoryRef, LayerSelector layerSelector, Verify verify, bool? insecure, bool? useWorkloadIdentity, string serviceAccountName, TlsConfig tlsConfig, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OciRepository(Uri uri, long? timeoutInSeconds, long? syncIntervalInSeconds, OciRepositoryRef repositoryRef, LayerSelector layerSelector, OciRepositoryVerify verify, bool? isInsecure, bool? useWorkloadIdentity, string serviceAccountName, TlsConfig tlsConfig, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             TimeoutInSeconds = timeoutInSeconds;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             RepositoryRef = repositoryRef;
             LayerSelector = layerSelector;
             Verify = verify;
-            Insecure = insecure;
+            IsInsecure = isInsecure;
             UseWorkloadIdentity = useWorkloadIdentity;
             ServiceAccountName = serviceAccountName;
             TlsConfig = tlsConfig;
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public LayerSelector LayerSelector { get; set; }
 
         /// <summary> Verification of the authenticity of an OCI Artifact. </summary>
-        public Verify Verify { get; set; }
+        public OciRepositoryVerify Verify { get; set; }
 
         /// <summary> Specify whether to allow connecting to a non-TLS HTTP container registry. </summary>
-        public bool? Insecure { get; set; }
+        public bool? IsInsecure { get; set; }
 
         /// <summary> Specifies whether to use Workload Identity to authenticate with the OCI repository. </summary>
         public bool? UseWorkloadIdentity { get; set; }

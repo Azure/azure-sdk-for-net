@@ -14,51 +14,51 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> Parameters to authenticate using Service Principal. </summary>
-    public partial class ServicePrincipalPatch : IJsonModel<ServicePrincipalPatch>
+    public partial class FluxServicePrincipal : IJsonModel<FluxServicePrincipal>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServicePrincipalPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FluxServicePrincipal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeServicePrincipalPatch(document.RootElement, options);
+                        return DeserializeFluxServicePrincipal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxServicePrincipal)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationFluxConfigurationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxServicePrincipal)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServicePrincipalPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FluxServicePrincipal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServicePrincipalPatch IPersistableModel<ServicePrincipalPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FluxServicePrincipal IPersistableModel<FluxServicePrincipal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServicePrincipalPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FluxServicePrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ServicePrincipalPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FluxServicePrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipalPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxServicePrincipal)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ClientId))
             {
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServicePrincipalPatch IJsonModel<ServicePrincipalPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FluxServicePrincipal IJsonModel<FluxServicePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServicePrincipalPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FluxServicePrincipal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FluxServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipalPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxServicePrincipal)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServicePrincipalPatch(document.RootElement, options);
+            return DeserializeFluxServicePrincipal(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServicePrincipalPatch DeserializeServicePrincipalPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static FluxServicePrincipal DeserializeFluxServicePrincipal(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,6 +187,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (prop.NameEquals("clientCertificate"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        clientCertificate = null;
+                        continue;
+                    }
                     clientCertificate = prop.Value.GetString();
                     continue;
                 }
@@ -214,7 +219,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServicePrincipalPatch(
+            return new FluxServicePrincipal(
                 clientId,
                 tenantId,
                 clientSecret,

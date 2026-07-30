@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> Parameters to authenticate using Service Principal. </summary>
-    public partial class ServicePrincipal
+    public partial class FluxServicePrincipalPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServicePrincipal"/>. </summary>
-        public ServicePrincipal()
+        /// <summary> Initializes a new instance of <see cref="FluxServicePrincipalPatch"/>. </summary>
+        public FluxServicePrincipalPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServicePrincipal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluxServicePrincipalPatch"/>. </summary>
         /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
         /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
         /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
         /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServicePrincipal(string clientId, string tenantId, string clientSecret, string clientCertificate, string clientCertificatePassword, bool? isClientCertificateSendChain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxServicePrincipalPatch(string clientId, string tenantId, string clientSecret, string clientCertificate, string clientCertificatePassword, bool? isClientCertificateSendChain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;
             TenantId = tenantId;

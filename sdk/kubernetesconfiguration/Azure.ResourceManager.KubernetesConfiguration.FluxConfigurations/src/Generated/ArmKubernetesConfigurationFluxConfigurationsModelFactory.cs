@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="managedIdentityClientId"> The client Id for authenticating a Managed Identity. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <returns> A new <see cref="Models.AzureBlob"/> instance for mocking. </returns>
-        public static AzureBlob AzureBlob(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, ServicePrincipal servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
+        public static AzureBlob AzureBlob(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxServicePrincipal servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
         {
             return new AzureBlob(
                 uri,
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
         /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
         /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
-        /// <returns> A new <see cref="Models.ServicePrincipal"/> instance for mocking. </returns>
-        public static ServicePrincipal ServicePrincipal(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
+        /// <returns> A new <see cref="Models.FluxServicePrincipal"/> instance for mocking. </returns>
+        public static FluxServicePrincipal FluxServicePrincipal(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
         {
-            return new ServicePrincipal(
+            return new FluxServicePrincipal(
                 clientId,
                 tenantId,
                 clientSecret,
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="repositoryRef"> The source reference for the OCIRepository object. </param>
         /// <param name="layerSelector"> The layer to be pulled from the OCI artifact. </param>
         /// <param name="verify"> Verification of the authenticity of an OCI Artifact. </param>
-        /// <param name="insecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
+        /// <param name="isInsecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
         /// <param name="useWorkloadIdentity"> Specifies whether to use Workload Identity to authenticate with the OCI repository. </param>
         /// <param name="serviceAccountName"> The service account name to authenticate with the OCI repository. </param>
         /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <returns> A new <see cref="Models.OciRepository"/> instance for mocking. </returns>
-        public static OciRepository OciRepository(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRef repositoryRef = default, LayerSelector layerSelector = default, Verify verify = default, bool? insecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, TlsConfig tlsConfig = default, string localAuthRef = default)
+        public static OciRepository OciRepository(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRef repositoryRef = default, LayerSelector layerSelector = default, OciRepositoryVerify verify = default, bool? isInsecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, TlsConfig tlsConfig = default, string localAuthRef = default)
         {
             return new OciRepository(
                 uri,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 repositoryRef,
                 layerSelector,
                 verify,
-                insecure,
+                isInsecure,
                 useWorkloadIdentity,
                 serviceAccountName,
                 tlsConfig,
@@ -223,13 +223,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provider"> Verification provider name. </param>
         /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
         /// <param name="matchOidcIdentity"> Array defining the criteria for matching the identity while verifying an OCI artifact. </param>
-        /// <returns> A new <see cref="Models.Verify"/> instance for mocking. </returns>
-        public static Verify Verify(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentity> matchOidcIdentity = default)
+        /// <returns> A new <see cref="Models.OciRepositoryVerify"/> instance for mocking. </returns>
+        public static OciRepositoryVerify OciRepositoryVerify(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentity> matchOidcIdentity = default)
         {
             verificationConfig ??= new ChangeTrackingDictionary<string, string>();
             matchOidcIdentity ??= new ChangeTrackingList<MatchOidcIdentity>();
 
-            return new Verify(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentity>()).ToList(), default);
+            return new OciRepositoryVerify(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentity>()).ToList(), default);
         }
 
         /// <param name="issuer"> The regex pattern to match against to verify the OIDC issuer. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="managedIdentityClientId"> The client Id for authenticating a Managed Identity. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <returns> A new <see cref="Models.AzureBlobPatch"/> instance for mocking. </returns>
-        public static AzureBlobPatch AzureBlobPatch(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, ServicePrincipalPatch servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
+        public static AzureBlobPatch AzureBlobPatch(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxServicePrincipalPatch servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
         {
             return new AzureBlobPatch(
                 uri,
@@ -463,10 +463,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
         /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
         /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
-        /// <returns> A new <see cref="Models.ServicePrincipalPatch"/> instance for mocking. </returns>
-        public static ServicePrincipalPatch ServicePrincipalPatch(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
+        /// <returns> A new <see cref="Models.FluxServicePrincipalPatch"/> instance for mocking. </returns>
+        public static FluxServicePrincipalPatch FluxServicePrincipalPatch(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
         {
-            return new ServicePrincipalPatch(
+            return new FluxServicePrincipalPatch(
                 clientId,
                 tenantId,
                 clientSecret,
@@ -482,13 +482,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="repositoryRef"> The source reference for the OCIRepository object. </param>
         /// <param name="layerSelector"> The layer to be pulled from the OCI artifact. </param>
         /// <param name="verify"> Verification of the authenticity of an OCI Artifact. </param>
-        /// <param name="insecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
+        /// <param name="isInsecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
         /// <param name="useWorkloadIdentity"> Specifies whether to use Workload Identity to authenticate with the OCI repository. </param>
         /// <param name="serviceAccountName"> The service account name to authenticate with the OCI repository. </param>
         /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <returns> A new <see cref="Models.OciRepositoryPatch"/> instance for mocking. </returns>
-        public static OciRepositoryPatch OciRepositoryPatch(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRefPatch repositoryRef = default, LayerSelectorPatch layerSelector = default, VerifyPatch verify = default, bool? insecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, TlsConfigPatch tlsConfig = default, string localAuthRef = default)
+        public static OciRepositoryPatch OciRepositoryPatch(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRefPatch repositoryRef = default, LayerSelectorPatch layerSelector = default, OciRepositoryVerifyPatch verify = default, bool? isInsecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, TlsConfigPatch tlsConfig = default, string localAuthRef = default)
         {
             return new OciRepositoryPatch(
                 uri,
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 repositoryRef,
                 layerSelector,
                 verify,
-                insecure,
+                isInsecure,
                 useWorkloadIdentity,
                 serviceAccountName,
                 tlsConfig,
@@ -525,13 +525,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provider"> Verification provider name. </param>
         /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
         /// <param name="matchOidcIdentity"> Array defining the criteria for matching the OIDC identity while verifying an OCI artifact. </param>
-        /// <returns> A new <see cref="Models.VerifyPatch"/> instance for mocking. </returns>
-        public static VerifyPatch VerifyPatch(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentityPatch> matchOidcIdentity = default)
+        /// <returns> A new <see cref="Models.OciRepositoryVerifyPatch"/> instance for mocking. </returns>
+        public static OciRepositoryVerifyPatch OciRepositoryVerifyPatch(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentityPatch> matchOidcIdentity = default)
         {
             verificationConfig ??= new ChangeTrackingDictionary<string, string>();
             matchOidcIdentity ??= new ChangeTrackingList<MatchOidcIdentityPatch>();
 
-            return new VerifyPatch(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentityPatch>()).ToList(), default);
+            return new OciRepositoryVerifyPatch(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentityPatch>()).ToList(), default);
         }
 
         /// <param name="issuer"> The regex pattern to match against to verify the OIDC issuer. </param>

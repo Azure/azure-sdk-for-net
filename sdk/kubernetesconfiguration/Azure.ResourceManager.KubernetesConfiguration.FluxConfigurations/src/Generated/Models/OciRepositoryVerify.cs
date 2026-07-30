@@ -12,24 +12,24 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> Parameters to verify the authenticity of an OCI Artifact. </summary>
-    public partial class Verify
+    public partial class OciRepositoryVerify
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Verify"/>. </summary>
-        public Verify()
+        /// <summary> Initializes a new instance of <see cref="OciRepositoryVerify"/>. </summary>
+        public OciRepositoryVerify()
         {
             VerificationConfig = new ChangeTrackingDictionary<string, string>();
             MatchOidcIdentity = new ChangeTrackingList<MatchOidcIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Verify"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciRepositoryVerify"/>. </summary>
         /// <param name="provider"> Verification provider name. </param>
         /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
         /// <param name="matchOidcIdentity"> Array defining the criteria for matching the identity while verifying an OCI artifact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Verify(string provider, IDictionary<string, string> verificationConfig, IList<MatchOidcIdentity> matchOidcIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OciRepositoryVerify(string provider, IDictionary<string, string> verificationConfig, IList<MatchOidcIdentity> matchOidcIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             VerificationConfig = verificationConfig;

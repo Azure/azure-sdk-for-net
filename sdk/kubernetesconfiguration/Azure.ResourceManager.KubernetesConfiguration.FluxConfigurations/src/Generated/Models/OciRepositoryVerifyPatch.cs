@@ -12,24 +12,24 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> Parameters to verify the authenticity of an OCI Artifact. </summary>
-    public partial class VerifyPatch
+    public partial class OciRepositoryVerifyPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VerifyPatch"/>. </summary>
-        public VerifyPatch()
+        /// <summary> Initializes a new instance of <see cref="OciRepositoryVerifyPatch"/>. </summary>
+        public OciRepositoryVerifyPatch()
         {
             VerificationConfig = new ChangeTrackingDictionary<string, string>();
             MatchOidcIdentity = new ChangeTrackingList<MatchOidcIdentityPatch>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VerifyPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciRepositoryVerifyPatch"/>. </summary>
         /// <param name="provider"> Verification provider name. </param>
         /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
         /// <param name="matchOidcIdentity"> Array defining the criteria for matching the OIDC identity while verifying an OCI artifact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VerifyPatch(string provider, IDictionary<string, string> verificationConfig, IList<MatchOidcIdentityPatch> matchOidcIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OciRepositoryVerifyPatch(string provider, IDictionary<string, string> verificationConfig, IList<MatchOidcIdentityPatch> matchOidcIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             VerificationConfig = verificationConfig;

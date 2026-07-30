@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             string containerName = default;
             long? timeoutInSeconds = default;
             long? syncIntervalInSeconds = default;
-            ServicePrincipal servicePrincipal = default;
+            FluxServicePrincipal servicePrincipal = default;
             string accountKey = default;
             string sasToken = default;
             ManagedIdentityDefinition managedIdentity = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    servicePrincipal = ServicePrincipal.DeserializeServicePrincipal(prop.Value, options);
+                    servicePrincipal = FluxServicePrincipal.DeserializeFluxServicePrincipal(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("accountKey"u8))

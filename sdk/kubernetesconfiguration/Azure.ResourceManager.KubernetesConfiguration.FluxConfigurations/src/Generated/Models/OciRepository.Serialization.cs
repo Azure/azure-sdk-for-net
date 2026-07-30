@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("verify"u8);
                 writer.WriteObjectValue(Verify, options);
             }
-            if (Optional.IsDefined(Insecure))
+            if (Optional.IsDefined(IsInsecure))
             {
                 writer.WritePropertyName("insecure"u8);
-                writer.WriteBooleanValue(Insecure.Value);
+                writer.WriteBooleanValue(IsInsecure.Value);
             }
             if (Optional.IsDefined(UseWorkloadIdentity))
             {
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             long? syncIntervalInSeconds = default;
             OciRepositoryRef repositoryRef = default;
             LayerSelector layerSelector = default;
-            Verify verify = default;
-            bool? insecure = default;
+            OciRepositoryVerify verify = default;
+            bool? isInsecure = default;
             bool? useWorkloadIdentity = default;
             string serviceAccountName = default;
             TlsConfig tlsConfig = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    verify = Verify.DeserializeVerify(prop.Value, options);
+                    verify = OciRepositoryVerify.DeserializeOciRepositoryVerify(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("insecure"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    insecure = prop.Value.GetBoolean();
+                    isInsecure = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("useWorkloadIdentity"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 repositoryRef,
                 layerSelector,
                 verify,
-                insecure,
+                isInsecure,
                 useWorkloadIdentity,
                 serviceAccountName,
                 tlsConfig,

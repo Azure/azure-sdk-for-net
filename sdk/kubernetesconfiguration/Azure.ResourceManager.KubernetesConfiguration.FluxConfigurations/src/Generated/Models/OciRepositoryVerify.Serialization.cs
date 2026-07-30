@@ -14,51 +14,51 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> Parameters to verify the authenticity of an OCI Artifact. </summary>
-    public partial class Verify : IJsonModel<Verify>
+    public partial class OciRepositoryVerify : IJsonModel<OciRepositoryVerify>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Verify PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OciRepositoryVerify PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Verify>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OciRepositoryVerify>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVerify(document.RootElement, options);
+                        return DeserializeOciRepositoryVerify(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Verify)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OciRepositoryVerify)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Verify>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OciRepositoryVerify>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationFluxConfigurationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Verify)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OciRepositoryVerify)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Verify>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OciRepositoryVerify>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Verify IPersistableModel<Verify>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OciRepositoryVerify IPersistableModel<OciRepositoryVerify>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Verify>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OciRepositoryVerify>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Verify>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OciRepositoryVerify>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Verify>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OciRepositoryVerify>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Verify)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OciRepositoryVerify)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Provider))
             {
@@ -124,24 +124,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Verify IJsonModel<Verify>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OciRepositoryVerify IJsonModel<OciRepositoryVerify>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Verify JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OciRepositoryVerify JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Verify>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OciRepositoryVerify>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Verify)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OciRepositoryVerify)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVerify(document.RootElement, options);
+            return DeserializeOciRepositoryVerify(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Verify DeserializeVerify(JsonElement element, ModelReaderWriterOptions options)
+        internal static OciRepositoryVerify DeserializeOciRepositoryVerify(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Verify(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentity>(), additionalBinaryDataProperties);
+            return new OciRepositoryVerify(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentity>(), additionalBinaryDataProperties);
         }
     }
 }

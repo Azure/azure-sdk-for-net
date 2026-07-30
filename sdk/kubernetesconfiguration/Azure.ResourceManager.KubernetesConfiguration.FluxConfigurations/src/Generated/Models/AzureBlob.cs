@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="managedIdentity"> Parameters to authenticate using a Managed Identity. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlob(string uri, string containerName, long? timeoutInSeconds, long? syncIntervalInSeconds, ServicePrincipal servicePrincipal, string accountKey, string sasToken, ManagedIdentityDefinition managedIdentity, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlob(string uri, string containerName, long? timeoutInSeconds, long? syncIntervalInSeconds, FluxServicePrincipal servicePrincipal, string accountKey, string sasToken, ManagedIdentityDefinition managedIdentity, string localAuthRef, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             ContainerName = containerName;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public long? SyncIntervalInSeconds { get; set; }
 
         /// <summary> Parameters to authenticate using Service Principal. </summary>
-        public ServicePrincipal ServicePrincipal { get; set; }
+        public FluxServicePrincipal ServicePrincipal { get; set; }
 
         /// <summary> The account key (shared key) to access the storage account. </summary>
         public string AccountKey { get; set; }
