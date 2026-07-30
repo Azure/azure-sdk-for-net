@@ -109,7 +109,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             base.DefineProvisionableProperties();
             DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "AzureWorkloadContainer");
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" });
-            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" });
+            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, format: "O");
             _extendedInfo = DefineModelProperty<WorkloadContainerExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });
             _workloadType = DefineProperty<BackupWorkloadType>(nameof(WorkloadType), new string[] { "workloadType" });
             _operationType = DefineProperty<WorkloadOperationType>(nameof(OperationType), new string[] { "operationType" });

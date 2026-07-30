@@ -214,7 +214,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _healthDetails = DefineListProperty<IaasVmHealthDetails>(nameof(HealthDetails), new string[] { "healthDetails" });
             _kpisHealths = DefineDictionaryProperty<KpiResourceHealthDetails>(nameof(KpisHealths), new string[] { "kpisHealths" });
             _lastBackupStatus = DefineProperty<string>(nameof(LastBackupStatus), new string[] { "lastBackupStatus" });
-            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" }, isOutput: true);
+            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" }, isOutput: true, format: "O");
             _protectedItemDataId = DefineProperty<string>(nameof(ProtectedItemDataId), new string[] { "protectedItemDataId" }, isOutput: true);
             _extendedInfo = DefineModelProperty<IaasVmProtectedItemExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });
             _extendedProperties = DefineModelProperty<IaasVmBackupExtendedProperties>(nameof(ExtendedProperties), new string[] { "extendedProperties" });

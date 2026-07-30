@@ -139,7 +139,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             _computerName = DefineProperty<string>(nameof(ComputerName), new string[] { "computerName" });
             _lastBackupStatus = DefineProperty<string>(nameof(LastBackupStatus), new string[] { "lastBackupStatus" });
-            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" });
+            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" }, format: "O");
             _protectionState = DefineProperty<string>(nameof(ProtectionState), new string[] { "protectionState" });
             _deferredDeleteSyncTimeInUTC = DefineProperty<long>(nameof(DeferredDeleteSyncTimeInUTC), new string[] { "deferredDeleteSyncTimeInUTC" });
             _extendedInfo = DefineModelProperty<MabFileFolderProtectedItemExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });

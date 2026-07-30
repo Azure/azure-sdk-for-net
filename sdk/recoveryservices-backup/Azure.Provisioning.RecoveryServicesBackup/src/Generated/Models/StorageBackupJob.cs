@@ -101,7 +101,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AzureStorageJob");
-            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" });
+            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _errorDetails = DefineListProperty<StorageErrorInfo>(nameof(ErrorDetails), new string[] { "errorDetails" });
             _storageAccountName = DefineProperty<string>(nameof(StorageAccountName), new string[] { "storageAccountName" });

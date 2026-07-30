@@ -57,7 +57,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryTime" });
+            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryTime" }, format: "O");
             _ruleName = DefineProperty<string>(nameof(RuleName), new string[] { "ruleName" });
             _isSoftDeleted = DefineProperty<bool>(nameof(IsSoftDeleted), new string[] { "isSoftDeleted" });
             DefineAdditionalProperties();

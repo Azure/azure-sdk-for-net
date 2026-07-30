@@ -77,7 +77,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "VaultJob");
-            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" });
+            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _errorDetails = DefineListProperty<VaultBackupJobErrorInfo>(nameof(ErrorDetails), new string[] { "errorDetails" });
             _extendedInfo = DefineModelProperty<VaultJobExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });

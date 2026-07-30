@@ -73,7 +73,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             _interval = DefineProperty<int>(nameof(Interval), new string[] { "interval" });
-            _scheduleWindowStartOn = DefineProperty<DateTimeOffset>(nameof(ScheduleWindowStartOn), new string[] { "scheduleWindowStartTime" });
+            _scheduleWindowStartOn = DefineProperty<DateTimeOffset>(nameof(ScheduleWindowStartOn), new string[] { "scheduleWindowStartTime" }, format: "O");
             _scheduleWindowDuration = DefineProperty<int>(nameof(ScheduleWindowDuration), new string[] { "scheduleWindowDuration" });
             DefineAdditionalProperties();
         }

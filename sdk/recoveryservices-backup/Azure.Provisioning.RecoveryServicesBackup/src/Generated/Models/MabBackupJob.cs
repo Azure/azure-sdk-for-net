@@ -101,7 +101,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "MabJob");
-            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" });
+            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _mabServerName = DefineProperty<string>(nameof(MabServerName), new string[] { "mabServerName" });
             _mabServerType = DefineProperty<MabServerType>(nameof(MabServerType), new string[] { "mabServerType" });

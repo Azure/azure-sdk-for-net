@@ -80,7 +80,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             base.DefineProvisionableProperties();
             DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AzureWorkloadJob");
             _workloadType = DefineProperty<string>(nameof(WorkloadType), new string[] { "workloadType" });
-            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" });
+            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _errorDetails = DefineListProperty<WorkloadErrorInfo>(nameof(ErrorDetails), new string[] { "errorDetails" });
             _extendedInfo = DefineModelProperty<WorkloadBackupJobExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });

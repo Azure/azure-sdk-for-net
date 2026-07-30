@@ -140,7 +140,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _protectionStatus = DefineProperty<string>(nameof(ProtectionStatus), new string[] { "protectionStatus" });
             _protectionState = DefineProperty<BackupProtectionState>(nameof(ProtectionState), new string[] { "protectionState" });
             _lastBackupStatus = DefineProperty<string>(nameof(LastBackupStatus), new string[] { "lastBackupStatus" });
-            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" });
+            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" }, format: "O");
             _kpisHealths = DefineDictionaryProperty<KpiResourceHealthDetails>(nameof(KpisHealths), new string[] { "kpisHealths" });
             _extendedInfo = DefineModelProperty<FileshareProtectedItemExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });
             DefineAdditionalProperties();

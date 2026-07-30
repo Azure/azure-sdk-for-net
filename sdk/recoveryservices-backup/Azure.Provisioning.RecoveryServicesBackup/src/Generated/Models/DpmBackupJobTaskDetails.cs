@@ -80,9 +80,9 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             _taskId = DefineProperty<string>(nameof(TaskId), new string[] { "taskId" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" });
-            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, format: "O");
+            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" });
             DefineAdditionalProperties();
         }

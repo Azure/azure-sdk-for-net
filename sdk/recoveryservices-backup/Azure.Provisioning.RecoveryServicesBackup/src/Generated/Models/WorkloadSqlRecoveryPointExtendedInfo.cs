@@ -46,7 +46,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _dataDirectoryInfoCapturedOn = DefineProperty<DateTimeOffset>(nameof(DataDirectoryInfoCapturedOn), new string[] { "dataDirectoryTimeInUTC" });
+            _dataDirectoryInfoCapturedOn = DefineProperty<DateTimeOffset>(nameof(DataDirectoryInfoCapturedOn), new string[] { "dataDirectoryTimeInUTC" }, format: "O");
             _dataDirectoryPaths = DefineListProperty<SqlDataDirectory>(nameof(DataDirectoryPaths), new string[] { "dataDirectoryPaths" });
             DefineAdditionalProperties();
         }

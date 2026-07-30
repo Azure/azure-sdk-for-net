@@ -82,7 +82,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "AzureWorkloadRecoveryPoint");
-            _recoveryPointCreatedOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointCreatedOn), new string[] { "recoveryPointTimeInUTC" });
+            _recoveryPointCreatedOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointCreatedOn), new string[] { "recoveryPointTimeInUTC" }, format: "O");
             _restorePointType = DefineProperty<RestorePointType>(nameof(RestorePointType), new string[] { "type" });
             _recoveryPointTierDetails = DefineListProperty<RecoveryPointTierInformationV2>(nameof(RecoveryPointTierDetails), new string[] { "recoveryPointTierDetails" });
             _recoveryPointMoveReadinessInfo = DefineDictionaryProperty<RecoveryPointMoveReadinessInfo>(nameof(RecoveryPointMoveReadinessInfo), new string[] { "recoveryPointMoveReadinessInfo" });

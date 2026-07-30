@@ -46,8 +46,8 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

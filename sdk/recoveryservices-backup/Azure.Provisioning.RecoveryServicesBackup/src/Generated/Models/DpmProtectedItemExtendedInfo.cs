@@ -252,11 +252,11 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _isProtected = DefineProperty<bool>(nameof(IsProtected), new string[] { "protected" });
             _isPresentOnCloud = DefineProperty<bool>(nameof(IsPresentOnCloud), new string[] { "isPresentOnCloud" });
             _lastBackupStatus = DefineProperty<string>(nameof(LastBackupStatus), new string[] { "lastBackupStatus" });
-            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" });
-            _oldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOn), new string[] { "oldestRecoveryPoint" });
+            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" }, format: "O");
+            _oldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOn), new string[] { "oldestRecoveryPoint" }, format: "O");
             _recoveryPointCount = DefineProperty<int>(nameof(RecoveryPointCount), new string[] { "recoveryPointCount" });
-            _onPremiseOldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OnPremiseOldestRecoverOn), new string[] { "onPremiseOldestRecoveryPoint" });
-            _onPremiseLatestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OnPremiseLatestRecoverOn), new string[] { "onPremiseLatestRecoveryPoint" });
+            _onPremiseOldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OnPremiseOldestRecoverOn), new string[] { "onPremiseOldestRecoveryPoint" }, format: "O");
+            _onPremiseLatestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OnPremiseLatestRecoverOn), new string[] { "onPremiseLatestRecoveryPoint" }, format: "O");
             _onPremiseRecoveryPointCount = DefineProperty<int>(nameof(OnPremiseRecoveryPointCount), new string[] { "onPremiseRecoveryPointCount" });
             _isCollocated = DefineProperty<bool>(nameof(IsCollocated), new string[] { "isCollocated" });
             _protectionGroupName = DefineProperty<string>(nameof(ProtectionGroupName), new string[] { "protectionGroupName" });

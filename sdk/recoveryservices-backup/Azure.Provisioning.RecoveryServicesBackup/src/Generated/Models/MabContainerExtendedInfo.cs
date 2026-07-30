@@ -104,7 +104,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" });
+            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" }, format: "O");
             _backupItemType = DefineProperty<BackupItemType>(nameof(BackupItemType), new string[] { "backupItemType" });
             _backupItems = DefineListProperty<string>(nameof(BackupItems), new string[] { "backupItems" });
             _policyName = DefineProperty<string>(nameof(PolicyName), new string[] { "policyName" });

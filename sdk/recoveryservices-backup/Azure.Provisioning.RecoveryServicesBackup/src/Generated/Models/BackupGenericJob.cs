@@ -108,8 +108,8 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _backupManagementType = DefineProperty<BackupManagementType>(nameof(BackupManagementType), new string[] { "backupManagementType" });
             _operation = DefineProperty<string>(nameof(Operation), new string[] { "operation" });
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, format: "O");
             _activityId = DefineProperty<string>(nameof(ActivityId), new string[] { "activityId" });
             DefineAdditionalProperties();
         }

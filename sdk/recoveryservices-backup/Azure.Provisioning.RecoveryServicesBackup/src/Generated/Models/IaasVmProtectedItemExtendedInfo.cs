@@ -120,10 +120,10 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _oldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOn), new string[] { "oldestRecoveryPoint" });
-            _oldestRecoverOnInVault = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOnInVault), new string[] { "oldestRecoveryPointInVault" });
-            _oldestRecoverOnInArchive = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOnInArchive), new string[] { "oldestRecoveryPointInArchive" });
-            _newestRecoverOnInArchive = DefineProperty<DateTimeOffset>(nameof(NewestRecoverOnInArchive), new string[] { "newestRecoveryPointInArchive" });
+            _oldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOn), new string[] { "oldestRecoveryPoint" }, format: "O");
+            _oldestRecoverOnInVault = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOnInVault), new string[] { "oldestRecoveryPointInVault" }, format: "O");
+            _oldestRecoverOnInArchive = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOnInArchive), new string[] { "oldestRecoveryPointInArchive" }, format: "O");
+            _newestRecoverOnInArchive = DefineProperty<DateTimeOffset>(nameof(NewestRecoverOnInArchive), new string[] { "newestRecoveryPointInArchive" }, format: "O");
             _recoveryPointCount = DefineProperty<int>(nameof(RecoveryPointCount), new string[] { "recoveryPointCount" });
             _isPolicyInconsistent = DefineProperty<bool>(nameof(IsPolicyInconsistent), new string[] { "policyInconsistent" });
             DefineAdditionalProperties();

@@ -248,7 +248,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _protectionStatus = DefineProperty<string>(nameof(ProtectionStatus), new string[] { "protectionStatus" }, isOutput: true);
             _protectionState = DefineProperty<BackupProtectionState>(nameof(ProtectionState), new string[] { "protectionState" });
             _lastBackupStatus = DefineProperty<LastBackupStatus>(nameof(LastBackupStatus), new string[] { "lastBackupStatus" });
-            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" });
+            _lastBackupOn = DefineProperty<DateTimeOffset>(nameof(LastBackupOn), new string[] { "lastBackupTime" }, format: "O");
             _lastBackupErrorDetail = DefineModelProperty<BackupErrorDetail>(nameof(LastBackupErrorDetail), new string[] { "lastBackupErrorDetail" });
             _protectedItemDataSourceId = DefineProperty<string>(nameof(ProtectedItemDataSourceId), new string[] { "protectedItemDataSourceId" });
             _protectedItemHealthStatus = DefineProperty<VmWorkloadProtectedItemHealthStatus>(nameof(ProtectedItemHealthStatus), new string[] { "protectedItemHealthStatus" });

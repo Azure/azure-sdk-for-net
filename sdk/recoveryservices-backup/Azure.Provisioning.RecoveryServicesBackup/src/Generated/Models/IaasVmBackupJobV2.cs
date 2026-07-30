@@ -92,7 +92,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AzureIaaSVMJobV2");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _containerName = DefineProperty<string>(nameof(ContainerName), new string[] { "containerName" });
-            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" });
+            _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _errorDetails = DefineListProperty<IaasVmErrorInfo>(nameof(ErrorDetails), new string[] { "errorDetails" });
             _virtualMachineVersion = DefineProperty<string>(nameof(VirtualMachineVersion), new string[] { "virtualMachineVersion" });
             _extendedInfo = DefineModelProperty<IaasVmBackupJobExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });

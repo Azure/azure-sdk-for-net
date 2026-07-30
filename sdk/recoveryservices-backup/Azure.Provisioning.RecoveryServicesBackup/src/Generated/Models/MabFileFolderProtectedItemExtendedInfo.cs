@@ -72,8 +72,8 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" });
-            _oldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOn), new string[] { "oldestRecoveryPoint" });
+            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" }, format: "O");
+            _oldestRecoverOn = DefineProperty<DateTimeOffset>(nameof(OldestRecoverOn), new string[] { "oldestRecoveryPoint" }, format: "O");
             _recoveryPointCount = DefineProperty<int>(nameof(RecoveryPointCount), new string[] { "recoveryPointCount" });
             DefineAdditionalProperties();
         }

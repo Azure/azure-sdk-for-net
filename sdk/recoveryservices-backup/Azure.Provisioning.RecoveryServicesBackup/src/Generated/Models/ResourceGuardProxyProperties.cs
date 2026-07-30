@@ -91,7 +91,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             base.DefineProvisionableProperties();
             _resourceGuardResourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceGuardResourceId), new string[] { "resourceGuardResourceId" }, isRequired: true);
             _resourceGuardOperationDetails = DefineListProperty<ResourceGuardOperationDetail>(nameof(ResourceGuardOperationDetails), new string[] { "resourceGuardOperationDetails" });
-            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" });
+            _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, format: "O");
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             DefineAdditionalProperties();
         }

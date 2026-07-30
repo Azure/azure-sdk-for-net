@@ -91,7 +91,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             base.DefineProvisionableProperties();
             DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "AzureFileShareRecoveryPoint");
             _recoveryPointType = DefineProperty<string>(nameof(RecoveryPointType), new string[] { "recoveryPointType" });
-            _recoveryPointOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointOn), new string[] { "recoveryPointTime" });
+            _recoveryPointOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointOn), new string[] { "recoveryPointTime" }, format: "O");
             _fileShareSnapshotUri = DefineProperty<Uri>(nameof(FileShareSnapshotUri), new string[] { "fileShareSnapshotUri" });
             _recoveryPointSizeInGB = DefineProperty<int>(nameof(RecoveryPointSizeInGB), new string[] { "recoveryPointSizeInGB" });
             _recoveryPointProperties = DefineModelProperty<RecoveryPointProperties>(nameof(RecoveryPointProperties), new string[] { "recoveryPointProperties" });

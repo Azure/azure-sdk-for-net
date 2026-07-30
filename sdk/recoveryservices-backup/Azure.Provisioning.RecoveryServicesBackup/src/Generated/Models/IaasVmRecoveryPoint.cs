@@ -235,7 +235,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             base.DefineProvisionableProperties();
             DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "IaasVMRecoveryPoint");
             _recoveryPointType = DefineProperty<string>(nameof(RecoveryPointType), new string[] { "recoveryPointType" });
-            _recoveryPointOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointOn), new string[] { "recoveryPointTime" });
+            _recoveryPointOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointOn), new string[] { "recoveryPointTime" }, format: "O");
             _recoveryPointAdditionalInfo = DefineProperty<string>(nameof(RecoveryPointAdditionalInfo), new string[] { "recoveryPointAdditionalInfo" });
             _sourceVmStorageType = DefineProperty<string>(nameof(SourceVmStorageType), new string[] { "sourceVMStorageType" });
             _isSourceVmEncrypted = DefineProperty<bool>(nameof(IsSourceVmEncrypted), new string[] { "isSourceVMEncrypted" });

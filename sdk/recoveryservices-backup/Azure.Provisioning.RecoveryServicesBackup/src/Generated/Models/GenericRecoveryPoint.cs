@@ -81,7 +81,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "GenericRecoveryPoint");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             _recoveryPointType = DefineProperty<string>(nameof(RecoveryPointType), new string[] { "recoveryPointType" });
-            _recoveryPointOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointOn), new string[] { "recoveryPointTime" });
+            _recoveryPointOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointOn), new string[] { "recoveryPointTime" }, format: "O");
             _recoveryPointAdditionalInfo = DefineProperty<string>(nameof(RecoveryPointAdditionalInfo), new string[] { "recoveryPointAdditionalInfo" });
             _recoveryPointProperties = DefineModelProperty<RecoveryPointProperties>(nameof(RecoveryPointProperties), new string[] { "recoveryPointProperties" });
             DefineAdditionalProperties();

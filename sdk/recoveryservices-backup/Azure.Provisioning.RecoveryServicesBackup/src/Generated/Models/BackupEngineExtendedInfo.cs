@@ -118,7 +118,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _diskCount = DefineProperty<int>(nameof(DiskCount), new string[] { "diskCount" });
             _usedDiskSpace = DefineProperty<double>(nameof(UsedDiskSpace), new string[] { "usedDiskSpace" });
             _availableDiskSpace = DefineProperty<double>(nameof(AvailableDiskSpace), new string[] { "availableDiskSpace" });
-            _refreshedOn = DefineProperty<DateTimeOffset>(nameof(RefreshedOn), new string[] { "refreshedAt" });
+            _refreshedOn = DefineProperty<DateTimeOffset>(nameof(RefreshedOn), new string[] { "refreshedAt" }, format: "O");
             _azureProtectedInstances = DefineProperty<int>(nameof(AzureProtectedInstances), new string[] { "azureProtectedInstances" });
             DefineAdditionalProperties();
         }

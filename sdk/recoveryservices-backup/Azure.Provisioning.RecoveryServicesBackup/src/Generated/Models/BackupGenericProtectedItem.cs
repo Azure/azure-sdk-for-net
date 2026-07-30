@@ -306,10 +306,10 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _containerName = DefineProperty<string>(nameof(ContainerName), new string[] { "containerName" });
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" });
             _policyId = DefineProperty<ResourceIdentifier>(nameof(PolicyId), new string[] { "policyId" });
-            _lastRecoverOn = DefineProperty<DateTimeOffset>(nameof(LastRecoverOn), new string[] { "lastRecoveryPoint" });
+            _lastRecoverOn = DefineProperty<DateTimeOffset>(nameof(LastRecoverOn), new string[] { "lastRecoveryPoint" }, format: "O");
             _backupSetName = DefineProperty<string>(nameof(BackupSetName), new string[] { "backupSetName" });
             _createMode = DefineProperty<BackupCreateMode>(nameof(CreateMode), new string[] { "createMode" });
-            _deferredDeletedOn = DefineProperty<DateTimeOffset>(nameof(DeferredDeletedOn), new string[] { "deferredDeleteTimeInUTC" });
+            _deferredDeletedOn = DefineProperty<DateTimeOffset>(nameof(DeferredDeletedOn), new string[] { "deferredDeleteTimeInUTC" }, format: "O");
             _isScheduledForDeferredDelete = DefineProperty<bool>(nameof(IsScheduledForDeferredDelete), new string[] { "isScheduledForDeferredDelete" });
             _deferredDeleteTimeRemaining = DefineProperty<string>(nameof(DeferredDeleteTimeRemaining), new string[] { "deferredDeleteTimeRemaining" });
             _isDeferredDeleteScheduleUpcoming = DefineProperty<bool>(nameof(IsDeferredDeleteScheduleUpcoming), new string[] { "isDeferredDeleteScheduleUpcoming" });

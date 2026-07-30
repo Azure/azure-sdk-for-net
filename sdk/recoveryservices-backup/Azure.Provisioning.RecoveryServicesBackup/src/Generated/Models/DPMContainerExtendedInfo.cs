@@ -40,7 +40,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" });
+            _lastRefreshedOn = DefineProperty<DateTimeOffset>(nameof(LastRefreshedOn), new string[] { "lastRefreshedAt" }, format: "O");
             DefineAdditionalProperties();
         }
 
