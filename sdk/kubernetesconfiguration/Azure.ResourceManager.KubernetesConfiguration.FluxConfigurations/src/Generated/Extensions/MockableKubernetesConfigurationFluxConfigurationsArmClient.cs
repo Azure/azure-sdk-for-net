@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
@@ -33,6 +37,42 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Mocki
         {
             FluxConfigurationResource.ValidateResourceId(id);
             return new FluxConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="FluxConfigurationCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="FluxConfigurationResource"/> objects. </returns>
+        public virtual FluxConfigurationCollection GetFluxConfigurations(ResourceIdentifier scope)
+        {
+            return new FluxConfigurationCollection(Client, scope);
+        }
+
+        /// <summary> Gets details of the Flux Configuration. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FluxConfigurationResource> GetFluxConfiguration(ResourceIdentifier scope, string fluxConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
+
+            return GetFluxConfigurations(scope).Get(fluxConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets details of the Flux Configuration. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FluxConfigurationResource>> GetFluxConfigurationAsync(ResourceIdentifier scope, string fluxConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
+
+            return await GetFluxConfigurations(scope).GetAsync(fluxConfigurationName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

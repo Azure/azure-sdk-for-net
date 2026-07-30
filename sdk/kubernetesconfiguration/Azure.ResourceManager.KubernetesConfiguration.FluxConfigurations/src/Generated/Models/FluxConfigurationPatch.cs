@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     Properties = new FluxConfigurationPatchProperties();
                 }
-                Properties.SourceKind = value.Value;
+                Properties.SourceKind = value;
             }
         }
 
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     Properties = new FluxConfigurationPatchProperties();
                 }
-                Properties.IsSuspended = value.Value;
+                Properties.IsSuspended = value;
             }
         }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-        public GitRepositoryPatchDefinition GitRepository
+        public GitRepositoryPatch GitRepository
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-        public BucketPatchDefinition Bucket
+        public BucketPatch Bucket
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
-        public AzureBlobPatchDefinition AzureBlob
+        public AzureBlobPatch AzureBlob
         {
             get
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the OCIRepository source kind type. </summary>
-        public OciRepositoryPatchDefinition OciRepository
+        public OciRepositoryPatch OciRepository
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationPatchDefinition> Kustomizations
+        public IDictionary<string, KustomizationPatch> Kustomizations
         {
             get
             {

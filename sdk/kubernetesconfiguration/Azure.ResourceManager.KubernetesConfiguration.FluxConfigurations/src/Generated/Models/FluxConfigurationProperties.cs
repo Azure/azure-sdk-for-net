@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationProperties"/>. </summary>
         public FluxConfigurationProperties()
         {
-            Kustomizations = new ChangeTrackingDictionary<string, KustomizationDefinition>();
+            Kustomizations = new ChangeTrackingDictionary<string, Kustomization>();
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
-            Statuses = new ChangeTrackingList<ObjectStatusDefinition>();
+            Statuses = new ChangeTrackingList<ObjectStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationProperties"/>. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
         /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FluxConfigurationProperties(FluxConfigurationScopeType? scope, string @namespace, FluxConfigurationSourceKindType? sourceKind, bool? isSuspended, GitRepositoryDefinition gitRepository, BucketDefinition bucket, AzureBlobDefinition azureBlob, OciRepositoryDefinition ociRepository, IDictionary<string, KustomizationDefinition> kustomizations, IDictionary<string, string> configurationProtectedSettings, IReadOnlyList<ObjectStatusDefinition> statuses, string repositoryPublicKey, string sourceSyncedCommitId, DateTimeOffset? sourceUpdatedOn, DateTimeOffset? statusUpdatedOn, bool? isWaitForReconciliation, string reconciliationWaitDuration, FluxComplianceState? complianceState, FluxConfigurationProvisioningState? provisioningState, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxConfigurationProperties(FluxConfigurationScopeType? scope, string @namespace, FluxConfigurationSourceKindType? sourceKind, bool? isSuspended, GitRepository gitRepository, Bucket bucket, AzureBlob azureBlob, OciRepository ociRepository, IDictionary<string, Kustomization> kustomizations, IDictionary<string, string> configurationProtectedSettings, IReadOnlyList<ObjectStatus> statuses, string repositoryPublicKey, string sourceSyncedCommitId, DateTimeOffset? sourceUpdatedOn, DateTimeOffset? statusUpdatedOn, bool? isWaitForReconciliation, string reconciliationWaitDuration, FluxComplianceState? complianceState, FluxConfigurationProvisioningState? provisioningState, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Namespace = @namespace;
@@ -85,25 +85,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public bool? IsSuspended { get; set; }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-        public GitRepositoryDefinition GitRepository { get; set; }
+        public GitRepository GitRepository { get; set; }
 
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-        public BucketDefinition Bucket { get; set; }
+        public Bucket Bucket { get; set; }
 
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
-        public AzureBlobDefinition AzureBlob { get; set; }
+        public AzureBlob AzureBlob { get; set; }
 
         /// <summary> Parameters to reconcile to the OCIRepository source kind type. </summary>
-        public OciRepositoryDefinition OciRepository { get; set; }
+        public OciRepository OciRepository { get; set; }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationDefinition> Kustomizations { get; } = new ChangeTrackingDictionary<string, KustomizationDefinition>();
+        public IDictionary<string, Kustomization> Kustomizations { get; } = new ChangeTrackingDictionary<string, Kustomization>();
 
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
         public IDictionary<string, string> ConfigurationProtectedSettings { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </summary>
-        public IReadOnlyList<ObjectStatusDefinition> Statuses { get; } = new ChangeTrackingList<ObjectStatusDefinition>();
+        public IReadOnlyList<ObjectStatus> Statuses { get; } = new ChangeTrackingList<ObjectStatus>();
 
         /// <summary> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </summary>
         public string RepositoryPublicKey { get; }

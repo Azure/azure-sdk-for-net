@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Mocking;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
 {
@@ -23,12 +22,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         private static MockableKubernetesConfigurationFluxConfigurationsArmClient GetMockableKubernetesConfigurationFluxConfigurationsArmClient(ArmClient client)
         {
             return client.GetCachedClient(client0 => new MockableKubernetesConfigurationFluxConfigurationsArmClient(client0, ResourceIdentifier.Root));
-        }
-
-        /// <param name="resourceGroupResource"></param>
-        private static MockableKubernetesConfigurationFluxConfigurationsResourceGroupResource GetMockableKubernetesConfigurationFluxConfigurationsResourceGroupResource(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient(client => new MockableKubernetesConfigurationFluxConfigurationsResourceGroupResource(client, resourceGroupResource.Id));
         }
 
         /// <summary>
@@ -50,67 +43,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary>
-        /// Gets a collection of FluxConfigurations in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of <see cref="FluxConfigurationCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationFluxConfigurationsResourceGroupResource.GetFluxConfigurations(string, string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationFluxConfigurationsArmClient.GetFluxConfigurations(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of FluxConfigurations and their operations over a FluxConfigurationResource. </returns>
-        public static FluxConfigurationCollection GetFluxConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="FluxConfigurationResource"/> objects. </returns>
+        public static FluxConfigurationCollection GetFluxConfigurations(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableKubernetesConfigurationFluxConfigurationsResourceGroupResource(resourceGroupResource).GetFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationFluxConfigurationsArmClient(client).GetFluxConfigurations(scope);
         }
 
         /// <summary>
         /// Gets details of the Flux Configuration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationFluxConfigurationsResourceGroupResource.GetFluxConfigurationAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationFluxConfigurationsArmClient.GetFluxConfiguration(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FluxConfigurationResource>> GetFluxConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
+        public static Response<FluxConfigurationResource> GetFluxConfiguration(this ArmClient client, ResourceIdentifier scope, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableKubernetesConfigurationFluxConfigurationsResourceGroupResource(resourceGroupResource).GetFluxConfigurationAsync(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken).ConfigureAwait(false);
+            return GetMockableKubernetesConfigurationFluxConfigurationsArmClient(client).GetFluxConfiguration(scope, fluxConfigurationName, cancellationToken);
         }
 
         /// <summary>
         /// Gets details of the Flux Configuration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationFluxConfigurationsResourceGroupResource.GetFluxConfiguration(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKubernetesConfigurationFluxConfigurationsArmClient.GetFluxConfigurationAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FluxConfigurationResource> GetFluxConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<FluxConfigurationResource>> GetFluxConfigurationAsync(this ArmClient client, ResourceIdentifier scope, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableKubernetesConfigurationFluxConfigurationsResourceGroupResource(resourceGroupResource).GetFluxConfiguration(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken);
+            return await GetMockableKubernetesConfigurationFluxConfigurationsArmClient(client).GetFluxConfigurationAsync(scope, fluxConfigurationName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

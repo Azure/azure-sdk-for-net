@@ -8,32 +8,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
 {
     /// <summary>
     /// A class representing a collection of <see cref="FluxConfigurationResource"/> and their operations.
-    /// Each <see cref="FluxConfigurationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="FluxConfigurationCollection"/> instance call the GetFluxConfigurations method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="FluxConfigurationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="FluxConfigurationCollection"/> instance call the GetFluxConfigurations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class FluxConfigurationCollection : ArmCollection, IEnumerable<FluxConfigurationResource>, IAsyncEnumerable<FluxConfigurationResource>
     {
         private readonly ClientDiagnostics _fluxConfigurationInterfaceClientDiagnostics;
         private readonly FluxConfigurationInterface _fluxConfigurationInterfaceRestClient;
-        /// <summary> The clusterRp. </summary>
-        private readonly string _clusterRp;
-        /// <summary> The clusterResourceName. </summary>
-        private readonly string _clusterResourceName;
-        /// <summary> The clusterName. </summary>
-        private readonly string _clusterName;
 
         /// <summary> Initializes a new instance of FluxConfigurationCollection for mocking. </summary>
         protected FluxConfigurationCollection()
@@ -43,28 +35,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="clusterRp"> The clusterRp for the resource. </param>
-        /// <param name="clusterResourceName"> The clusterResourceName for the resource. </param>
-        /// <param name="clusterName"> The clusterName for the resource. </param>
-        internal FluxConfigurationCollection(ArmClient client, ResourceIdentifier id, string clusterRp, string clusterResourceName, string clusterName) : base(client, id)
+        internal FluxConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(FluxConfigurationResource.ResourceType, out string fluxConfigurationApiVersion);
-            _clusterRp = clusterRp;
-            _clusterResourceName = clusterResourceName;
-            _clusterName = clusterName;
             _fluxConfigurationInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations", FluxConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _fluxConfigurationInterfaceRestClient = new FluxConfigurationInterface(_fluxConfigurationInterfaceClientDiagnostics, Pipeline, Endpoint, fluxConfigurationApiVersion ?? "2025-04-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
-            }
+            _fluxConfigurationInterfaceRestClient = new FluxConfigurationInterface(_fluxConfigurationInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fluxConfigurationApiVersion ?? "2025-04-01");
         }
 
         /// <summary>
@@ -103,10 +78,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FluxConfigurationsArmOperation<FluxConfigurationResource> operation = new FluxConfigurationsArmOperation<FluxConfigurationResource>(
-                    new FluxConfigurationOperationSource(Client),
+                    new FluxConfigurationResourceOperationSource(Client),
                     _fluxConfigurationInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -161,10 +136,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FluxConfigurationsArmOperation<FluxConfigurationResource> operation = new FluxConfigurationsArmOperation<FluxConfigurationResource>(
-                    new FluxConfigurationOperationSource(Client),
+                    new FluxConfigurationResourceOperationSource(Client),
                     _fluxConfigurationInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -216,7 +191,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FluxConfigurationData> response = Response.FromValue(FluxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,7 +240,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FluxConfigurationData> response = Response.FromValue(FluxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -310,10 +285,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 _fluxConfigurationInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _clusterRp,
-                _clusterResourceName,
-                _clusterName,
-                context), data => new FluxConfigurationResource(Client, data));
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
+                context,
+                "FluxConfigurationCollection.GetAll"), data => new FluxConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -345,10 +321,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 _fluxConfigurationInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
-                _clusterRp,
-                _clusterResourceName,
-                _clusterName,
-                context), data => new FluxConfigurationResource(Client, data));
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
+                context,
+                "FluxConfigurationCollection.GetAll"), data => new FluxConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -384,7 +361,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;
@@ -441,7 +418,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;
@@ -498,7 +475,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;
@@ -559,7 +536,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, context);
+                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;

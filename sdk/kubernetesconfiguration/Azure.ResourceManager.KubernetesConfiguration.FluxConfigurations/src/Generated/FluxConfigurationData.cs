@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties to create a Flux Configuration resource. </param>
-        internal FluxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FluxConfigurationProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FluxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FluxConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties to create a Flux Configuration resource. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     Properties = new FluxConfigurationProperties();
                 }
-                Properties.Scope = value.Value;
+                Properties.Scope = value;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     Properties = new FluxConfigurationProperties();
                 }
-                Properties.SourceKind = value.Value;
+                Properties.SourceKind = value;
             }
         }
 
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     Properties = new FluxConfigurationProperties();
                 }
-                Properties.IsSuspended = value.Value;
+                Properties.IsSuspended = value;
             }
         }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-        public GitRepositoryDefinition GitRepository
+        public GitRepository GitRepository
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-        public BucketDefinition Bucket
+        public Bucket Bucket
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
-        public AzureBlobDefinition AzureBlob
+        public AzureBlob AzureBlob
         {
             get
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Parameters to reconcile to the OCIRepository source kind type. </summary>
-        public OciRepositoryDefinition OciRepository
+        public OciRepository OciRepository
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationDefinition> Kustomizations
+        public IDictionary<string, Kustomization> Kustomizations
         {
             get
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </summary>
-        public IReadOnlyList<ObjectStatusDefinition> Statuses
+        public IReadOnlyList<ObjectStatus> Statuses
         {
             get
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     Properties = new FluxConfigurationProperties();
                 }
-                Properties.IsWaitForReconciliation = value.Value;
+                Properties.IsWaitForReconciliation = value;
             }
         }
 

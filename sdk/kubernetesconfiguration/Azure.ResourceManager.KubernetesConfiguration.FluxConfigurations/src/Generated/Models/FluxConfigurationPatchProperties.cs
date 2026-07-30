@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationPatchProperties"/>. </summary>
         public FluxConfigurationPatchProperties()
         {
-            Kustomizations = new ChangeTrackingDictionary<string, KustomizationPatchDefinition>();
+            Kustomizations = new ChangeTrackingDictionary<string, KustomizationPatch>();
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
         /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FluxConfigurationPatchProperties(FluxConfigurationSourceKindType? sourceKind, bool? isSuspended, GitRepositoryPatchDefinition gitRepository, BucketPatchDefinition bucket, AzureBlobPatchDefinition azureBlob, OciRepositoryPatchDefinition ociRepository, IDictionary<string, KustomizationPatchDefinition> kustomizations, IDictionary<string, string> configurationProtectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxConfigurationPatchProperties(FluxConfigurationSourceKindType? sourceKind, bool? isSuspended, GitRepositoryPatch gitRepository, BucketPatch bucket, AzureBlobPatch azureBlob, OciRepositoryPatch ociRepository, IDictionary<string, KustomizationPatch> kustomizations, IDictionary<string, string> configurationProtectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceKind = sourceKind;
             IsSuspended = isSuspended;
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public bool? IsSuspended { get; set; }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-        public GitRepositoryPatchDefinition GitRepository { get; set; }
+        public GitRepositoryPatch GitRepository { get; set; }
 
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-        public BucketPatchDefinition Bucket { get; set; }
+        public BucketPatch Bucket { get; set; }
 
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
-        public AzureBlobPatchDefinition AzureBlob { get; set; }
+        public AzureBlobPatch AzureBlob { get; set; }
 
         /// <summary> Parameters to reconcile to the OCIRepository source kind type. </summary>
-        public OciRepositoryPatchDefinition OciRepository { get; set; }
+        public OciRepositoryPatch OciRepository { get; set; }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationPatchDefinition> Kustomizations { get; } = new ChangeTrackingDictionary<string, KustomizationPatchDefinition>();
+        public IDictionary<string, KustomizationPatch> Kustomizations { get; } = new ChangeTrackingDictionary<string, KustomizationPatch>();
 
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
         public IDictionary<string, string> ConfigurationProtectedSettings { get; } = new ChangeTrackingDictionary<string, string>();

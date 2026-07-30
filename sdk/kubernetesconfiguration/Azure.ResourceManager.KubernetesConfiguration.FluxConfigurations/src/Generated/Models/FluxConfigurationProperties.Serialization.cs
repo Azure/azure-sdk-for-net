@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
-                foreach (ObjectStatusDefinition item in Statuses)
+                foreach (ObjectStatus item in Statuses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             string @namespace = default;
             FluxConfigurationSourceKindType? sourceKind = default;
             bool? isSuspended = default;
-            GitRepositoryDefinition gitRepository = default;
-            BucketDefinition bucket = default;
-            AzureBlobDefinition azureBlob = default;
-            OciRepositoryDefinition ociRepository = default;
-            IDictionary<string, KustomizationDefinition> kustomizations = default;
+            GitRepository gitRepository = default;
+            Bucket bucket = default;
+            AzureBlob azureBlob = default;
+            OciRepository ociRepository = default;
+            IDictionary<string, Kustomization> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
-            IReadOnlyList<ObjectStatusDefinition> statuses = default;
+            IReadOnlyList<ObjectStatus> statuses = default;
             string repositoryPublicKey = default;
             string sourceSyncedCommitId = default;
             DateTimeOffset? sourceUpdatedOn = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    gitRepository = GitRepositoryDefinition.DeserializeGitRepositoryDefinition(prop.Value, options);
+                    gitRepository = GitRepository.DeserializeGitRepository(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bucket"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    bucket = BucketDefinition.DeserializeBucketDefinition(prop.Value, options);
+                    bucket = Bucket.DeserializeBucket(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureBlob"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    azureBlob = AzureBlobDefinition.DeserializeAzureBlobDefinition(prop.Value, options);
+                    azureBlob = AzureBlob.DeserializeAzureBlob(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ociRepository"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    ociRepository = OciRepositoryDefinition.DeserializeOciRepositoryDefinition(prop.Value, options);
+                    ociRepository = OciRepository.DeserializeOciRepository(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kustomizations"u8))
@@ -335,10 +335,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    Dictionary<string, KustomizationDefinition> dictionary = new Dictionary<string, KustomizationDefinition>();
+                    Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, KustomizationDefinition.DeserializeKustomizationDefinition(prop0.Value, options));
+                        dictionary.Add(prop0.Name, Kustomization.DeserializeKustomization(prop0.Value, options));
                     }
                     kustomizations = dictionary;
                     continue;
@@ -370,10 +370,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    List<ObjectStatusDefinition> array = new List<ObjectStatusDefinition>();
+                    List<ObjectStatus> array = new List<ObjectStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObjectStatusDefinition.DeserializeObjectStatusDefinition(item, options));
+                        array.Add(ObjectStatus.DeserializeObjectStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationDefinition>(),
+                kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                statuses ?? new ChangeTrackingList<ObjectStatusDefinition>(),
+                statuses ?? new ChangeTrackingList<ObjectStatus>(),
                 repositoryPublicKey,
                 sourceSyncedCommitId,
                 sourceUpdatedOn,

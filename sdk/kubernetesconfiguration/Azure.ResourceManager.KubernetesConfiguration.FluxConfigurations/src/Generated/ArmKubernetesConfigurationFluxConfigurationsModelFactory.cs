@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 using Azure.ResourceManager.Models;
@@ -43,14 +42,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
         /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
         /// <returns> A new <see cref="FluxConfigurations.FluxConfigurationData"/> instance for mocking. </returns>
-        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, GitRepositoryDefinition gitRepository = default, BucketDefinition bucket = default, AzureBlobDefinition azureBlob = default, OciRepositoryDefinition ociRepository = default, IDictionary<string, KustomizationDefinition> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<ObjectStatusDefinition> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
+        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, GitRepository gitRepository = default, Bucket bucket = default, AzureBlob azureBlob = default, OciRepository ociRepository = default, IDictionary<string, Kustomization> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<ObjectStatus> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
         {
             return new FluxConfigurationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 scope is null && @namespace is null && sourceKind is null && isSuspended is null && gitRepository is null && bucket is null && azureBlob is null && ociRepository is null && kustomizations is null && configurationProtectedSettings is null && statuses is null && repositoryPublicKey is null && sourceSyncedCommitId is null && sourceUpdatedOn is null && statusUpdatedOn is null && isWaitForReconciliation is null && reconciliationWaitDuration is null && complianceState is null && provisioningState is null && errorMessage is null ? default : new FluxConfigurationProperties(
                     scope,
                     @namespace,
@@ -60,9 +58,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     bucket,
                     azureBlob,
                     ociRepository,
-                    kustomizations,
-                    configurationProtectedSettings,
-                    (statuses ?? new ChangeTrackingList<ObjectStatusDefinition>()).ToList(),
+                    kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
+                    configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                    (statuses ?? new ChangeTrackingList<ObjectStatus>()).ToList(),
                     repositoryPublicKey,
                     sourceSyncedCommitId,
                     sourceUpdatedOn,
@@ -72,10 +70,185 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     complianceState,
                     provisioningState,
                     errorMessage,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> The Kustomization defining how to reconcile the artifact pulled by the source type on the cluster. </summary>
+        /// <param name="uri"> The URL to sync for the flux configuration git repository. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster git repository source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster git repository source with the remote. </param>
+        /// <param name="repositoryRef"> The source reference for the GitRepository object. </param>
+        /// <param name="sshKnownHosts"> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </param>
+        /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
+        /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <param name="provider"> Name of the provider used for authentication. </param>
+        /// <returns> A new <see cref="Models.GitRepository"/> instance for mocking. </returns>
+        public static GitRepository GitRepository(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, RepositoryRef repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
+        {
+            return new GitRepository(
+                uri,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                sshKnownHosts,
+                httpsUser,
+                httpsCACert,
+                localAuthRef,
+                provider,
+                default);
+        }
+
+        /// <param name="branch"> The git repository branch name to checkout. </param>
+        /// <param name="tag"> The git repository tag name to checkout. This takes precedence over branch. </param>
+        /// <param name="semver"> The semver range used to match against git repository tags. This takes precedence over tag. </param>
+        /// <param name="commit"> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </param>
+        /// <returns> A new <see cref="Models.RepositoryRef"/> instance for mocking. </returns>
+        public static RepositoryRef RepositoryRef(string branch = default, string tag = default, string semver = default, string commit = default)
+        {
+            return new RepositoryRef(branch, tag, semver, commit, default);
+        }
+
+        /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
+        /// <param name="bucketName"> The bucket name to sync from the url endpoint for the flux configuration. </param>
+        /// <param name="isInsecure"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster bucket source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster bucket source with the remote. </param>
+        /// <param name="accessKey"> Plaintext access key used to securely access the S3 bucket. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <returns> A new <see cref="Models.Bucket"/> instance for mocking. </returns>
+        public static Bucket Bucket(string uri = default, string bucketName = default, bool? isInsecure = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, string accessKey = default, string localAuthRef = default)
+        {
+            return new Bucket(
+                uri,
+                bucketName,
+                isInsecure,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                accessKey,
+                localAuthRef,
+                default);
+        }
+
+        /// <param name="uri"> The URL to sync for the flux configuration Azure Blob storage account. </param>
+        /// <param name="containerName"> The Azure Blob container name to sync from the url endpoint for the flux configuration. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster Azure Blob source with the remote. </param>
+        /// <param name="servicePrincipal"> Parameters to authenticate using Service Principal. </param>
+        /// <param name="accountKey"> The account key (shared key) to access the storage account. </param>
+        /// <param name="sasToken"> The Shared Access token to access the storage container. </param>
+        /// <param name="managedIdentityClientId"> The client Id for authenticating a Managed Identity. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <returns> A new <see cref="Models.AzureBlob"/> instance for mocking. </returns>
+        public static AzureBlob AzureBlob(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, ServicePrincipal servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
+        {
+            return new AzureBlob(
+                uri,
+                containerName,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                servicePrincipal,
+                accountKey,
+                sasToken,
+                managedIdentityClientId is null ? default : new ManagedIdentityDefinition(managedIdentityClientId, default),
+                localAuthRef,
+                default);
+        }
+
+        /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
+        /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
+        /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
+        /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
+        /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
+        /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
+        /// <returns> A new <see cref="Models.ServicePrincipal"/> instance for mocking. </returns>
+        public static ServicePrincipal ServicePrincipal(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
+        {
+            return new ServicePrincipal(
+                clientId,
+                tenantId,
+                clientSecret,
+                clientCertificate,
+                clientCertificatePassword,
+                isClientCertificateSendChain,
+                default);
+        }
+
+        /// <param name="uri"> The URL to sync for the flux configuration OCI repository. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster OCI repository source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster OCI repository source with the remote. </param>
+        /// <param name="repositoryRef"> The source reference for the OCIRepository object. </param>
+        /// <param name="layerSelector"> The layer to be pulled from the OCI artifact. </param>
+        /// <param name="verify"> Verification of the authenticity of an OCI Artifact. </param>
+        /// <param name="insecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
+        /// <param name="useWorkloadIdentity"> Specifies whether to use Workload Identity to authenticate with the OCI repository. </param>
+        /// <param name="serviceAccountName"> The service account name to authenticate with the OCI repository. </param>
+        /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <returns> A new <see cref="Models.OciRepository"/> instance for mocking. </returns>
+        public static OciRepository OciRepository(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRef repositoryRef = default, LayerSelector layerSelector = default, Verify verify = default, bool? insecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, TlsConfig tlsConfig = default, string localAuthRef = default)
+        {
+            return new OciRepository(
+                uri,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                layerSelector,
+                verify,
+                insecure,
+                useWorkloadIdentity,
+                serviceAccountName,
+                tlsConfig,
+                localAuthRef,
+                default);
+        }
+
+        /// <param name="tag"> The OCI repository image tag name to pull. This defaults to 'latest'. </param>
+        /// <param name="semver"> The semver range used to match against OCI repository tags. This takes precedence over tag. </param>
+        /// <param name="digest"> The image digest to pull from OCI repository, the value should be in the format ‘sha256:’. This takes precedence over semver. </param>
+        /// <returns> A new <see cref="Models.OciRepositoryRef"/> instance for mocking. </returns>
+        public static OciRepositoryRef OciRepositoryRef(string tag = default, string semver = default, string digest = default)
+        {
+            return new OciRepositoryRef(tag, semver, digest, default);
+        }
+
+        /// <param name="mediaType"> The first layer matching the specified media type will be used. </param>
+        /// <param name="operation"> The operation to be performed on the selected layer. The default value is 'extract', but it can be set to 'copy'. </param>
+        /// <returns> A new <see cref="Models.LayerSelector"/> instance for mocking. </returns>
+        public static LayerSelector LayerSelector(string mediaType = default, FluxConfigurationOperationType? operation = default)
+        {
+            return new LayerSelector(mediaType, operation, default);
+        }
+
+        /// <param name="provider"> Verification provider name. </param>
+        /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
+        /// <param name="matchOidcIdentity"> Array defining the criteria for matching the identity while verifying an OCI artifact. </param>
+        /// <returns> A new <see cref="Models.Verify"/> instance for mocking. </returns>
+        public static Verify Verify(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentity> matchOidcIdentity = default)
+        {
+            verificationConfig ??= new ChangeTrackingDictionary<string, string>();
+            matchOidcIdentity ??= new ChangeTrackingList<MatchOidcIdentity>();
+
+            return new Verify(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentity>()).ToList(), default);
+        }
+
+        /// <param name="issuer"> The regex pattern to match against to verify the OIDC issuer. </param>
+        /// <param name="subject"> The regex pattern to match against to verify the identity subject. </param>
+        /// <returns> A new <see cref="Models.MatchOidcIdentity"/> instance for mocking. </returns>
+        public static MatchOidcIdentity MatchOidcIdentity(string issuer = default, string subject = default)
+        {
+            return new MatchOidcIdentity(issuer, subject, default);
+        }
+
+        /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a client with the OCI repository. </param>
+        /// <param name="privateKey"> Base64-encoded private key used to authenticate a client with the OCI repository. </param>
+        /// <param name="caCertificate"> Base64-encoded CA certificate used to verify the server. </param>
+        /// <returns> A new <see cref="Models.TlsConfig"/> instance for mocking. </returns>
+        public static TlsConfig TlsConfig(string clientCertificate = default, string privateKey = default, string caCertificate = default)
+        {
+            return new TlsConfig(clientCertificate, privateKey, caCertificate, default);
+        }
+
         /// <param name="name"> Name of the Kustomization, matching the key in the Kustomizations object map. </param>
         /// <param name="path"> The path in the source reference to reconcile on the cluster. </param>
         /// <param name="dependsOn"> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </param>
@@ -86,15 +259,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="isForce"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
         /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
-        /// <returns> A new <see cref="Models.KustomizationDefinition"/> instance for mocking. </returns>
-        public static KustomizationDefinition KustomizationDefinition(string name = default, string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, PostBuildDefinition postBuild = default)
+        /// <returns> A new <see cref="Models.Kustomization"/> instance for mocking. </returns>
+        public static Kustomization Kustomization(string name = default, string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, PostBuild postBuild = default)
         {
             dependsOn ??= new ChangeTrackingList<string>();
 
-            return new KustomizationDefinition(
+            return new Kustomization(
                 name,
                 path,
-                dependsOn.ToList(),
+                (dependsOn ?? new ChangeTrackingList<string>()).ToList(),
                 timeoutInSeconds,
                 syncIntervalInSeconds,
                 retryIntervalInSeconds,
@@ -102,22 +275,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 isForce,
                 isWait,
                 postBuild,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The postBuild definitions defining variable substitutions for this Kustomization after kustomize build. </summary>
         /// <param name="substitute"> Key/value pairs holding the variables to be substituted in this Kustomization. </param>
         /// <param name="substituteFrom"> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </param>
-        /// <returns> A new <see cref="Models.PostBuildDefinition"/> instance for mocking. </returns>
-        public static PostBuildDefinition PostBuildDefinition(IDictionary<string, string> substitute = default, IEnumerable<SubstituteFromDefinition> substituteFrom = default)
+        /// <returns> A new <see cref="Models.PostBuild"/> instance for mocking. </returns>
+        public static PostBuild PostBuild(IDictionary<string, string> substitute = default, IEnumerable<SubstituteFrom> substituteFrom = default)
         {
             substitute ??= new ChangeTrackingDictionary<string, string>();
-            substituteFrom ??= new ChangeTrackingList<SubstituteFromDefinition>();
+            substituteFrom ??= new ChangeTrackingList<SubstituteFrom>();
 
-            return new PostBuildDefinition(substitute, substituteFrom.ToList(), additionalBinaryDataProperties: null);
+            return new PostBuild(substitute ?? new ChangeTrackingDictionary<string, string>(), (substituteFrom ?? new ChangeTrackingList<SubstituteFrom>()).ToList(), default);
         }
 
-        /// <summary> Statuses of objects deployed by the user-specified kustomizations from the git repository. </summary>
+        /// <param name="kind"> Define whether it is ConfigMap or Secret that holds the variables to be used in substitution. </param>
+        /// <param name="name"> Name of the ConfigMap/Secret that holds the variables to be used in substitution. </param>
+        /// <param name="isOptional"> Set to True to proceed without ConfigMap/Secret, if it is not present. </param>
+        /// <returns> A new <see cref="Models.SubstituteFrom"/> instance for mocking. </returns>
+        public static SubstituteFrom SubstituteFrom(string kind = default, string name = default, bool? isOptional = default)
+        {
+            return new SubstituteFrom(kind, name, isOptional, default);
+        }
+
         /// <param name="name"> Name of the applied object. </param>
         /// <param name="namespace"> Namespace of the applied object. </param>
         /// <param name="kind"> Kind of the applied object. </param>
@@ -125,65 +305,297 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="appliedBy"> Object reference to the Kustomization that applied this object. </param>
         /// <param name="statusConditions"> List of Kubernetes object status conditions present on the cluster. </param>
         /// <param name="helmReleaseProperties"> Additional properties that are provided from objects of the HelmRelease kind. </param>
-        /// <returns> A new <see cref="Models.ObjectStatusDefinition"/> instance for mocking. </returns>
-        public static ObjectStatusDefinition ObjectStatusDefinition(string name = default, string @namespace = default, string kind = default, FluxComplianceState? complianceState = default, ObjectReferenceDefinition appliedBy = default, IEnumerable<ObjectStatusConditionDefinition> statusConditions = default, HelmReleasePropertiesDefinition helmReleaseProperties = default)
+        /// <returns> A new <see cref="Models.ObjectStatus"/> instance for mocking. </returns>
+        public static ObjectStatus ObjectStatus(string name = default, string @namespace = default, string kind = default, FluxComplianceState? complianceState = default, ObjectReference appliedBy = default, IEnumerable<ObjectStatusCondition> statusConditions = default, HelmReleaseProperties helmReleaseProperties = default)
         {
-            statusConditions ??= new ChangeTrackingList<ObjectStatusConditionDefinition>();
+            statusConditions ??= new ChangeTrackingList<ObjectStatusCondition>();
 
-            return new ObjectStatusDefinition(
+            return new ObjectStatus(
                 name,
                 @namespace,
                 kind,
                 complianceState,
                 appliedBy,
-                statusConditions.ToList(),
+                (statusConditions ?? new ChangeTrackingList<ObjectStatusCondition>()).ToList(),
                 helmReleaseProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Object reference to a Kubernetes object on a cluster. </summary>
         /// <param name="name"> Name of the object. </param>
         /// <param name="namespace"> Namespace of the object. </param>
-        /// <returns> A new <see cref="Models.ObjectReferenceDefinition"/> instance for mocking. </returns>
-        public static ObjectReferenceDefinition ObjectReferenceDefinition(string name = default, string @namespace = default)
+        /// <returns> A new <see cref="Models.ObjectReference"/> instance for mocking. </returns>
+        public static ObjectReference ObjectReference(string name = default, string @namespace = default)
         {
-            return new ObjectReferenceDefinition(name, @namespace, additionalBinaryDataProperties: null);
+            return new ObjectReference(name, @namespace, default);
         }
 
-        /// <summary> Status condition of Kubernetes object. </summary>
         /// <param name="lastTransitionOn"> Last time this status condition has changed. </param>
         /// <param name="message"> A more verbose description of the object status condition. </param>
         /// <param name="reason"> Reason for the specified status condition type status. </param>
         /// <param name="status"> Status of the Kubernetes object condition type. </param>
         /// <param name="type"> Object status condition type for this object. </param>
-        /// <returns> A new <see cref="Models.ObjectStatusConditionDefinition"/> instance for mocking. </returns>
-        public static ObjectStatusConditionDefinition ObjectStatusConditionDefinition(DateTimeOffset? lastTransitionOn = default, string message = default, string reason = default, string status = default, string @type = default)
+        /// <returns> A new <see cref="Models.ObjectStatusCondition"/> instance for mocking. </returns>
+        public static ObjectStatusCondition ObjectStatusCondition(DateTimeOffset? lastTransitionOn = default, string message = default, string reason = default, string status = default, string @type = default)
         {
-            return new ObjectStatusConditionDefinition(
+            return new ObjectStatusCondition(
                 lastTransitionOn,
                 message,
                 reason,
                 status,
                 @type,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Properties for HelmRelease objects. </summary>
         /// <param name="lastRevisionApplied"> The revision number of the last released object change. </param>
         /// <param name="helmChartRef"> The reference to the HelmChart object used as the source to this HelmRelease. </param>
         /// <param name="failureCount"> Total number of times that the HelmRelease failed to install or upgrade. </param>
         /// <param name="installFailureCount"> Number of times that the HelmRelease failed to install. </param>
         /// <param name="upgradeFailureCount"> Number of times that the HelmRelease failed to upgrade. </param>
-        /// <returns> A new <see cref="Models.HelmReleasePropertiesDefinition"/> instance for mocking. </returns>
-        public static HelmReleasePropertiesDefinition HelmReleasePropertiesDefinition(long? lastRevisionApplied = default, ObjectReferenceDefinition helmChartRef = default, long? failureCount = default, long? installFailureCount = default, long? upgradeFailureCount = default)
+        /// <returns> A new <see cref="Models.HelmReleaseProperties"/> instance for mocking. </returns>
+        public static HelmReleaseProperties HelmReleaseProperties(long? lastRevisionApplied = default, ObjectReference helmChartRef = default, long? failureCount = default, long? installFailureCount = default, long? upgradeFailureCount = default)
         {
-            return new HelmReleasePropertiesDefinition(
+            return new HelmReleaseProperties(
                 lastRevisionApplied,
                 helmChartRef,
                 failureCount,
                 installFailureCount,
                 upgradeFailureCount,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="sourceKind"> Source Kind to pull the configuration data from. </param>
+        /// <param name="isSuspended"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
+        /// <param name="gitRepository"> Parameters to reconcile to the GitRepository source kind type. </param>
+        /// <param name="bucket"> Parameters to reconcile to the Bucket source kind type. </param>
+        /// <param name="azureBlob"> Parameters to reconcile to the AzureBlob source kind type. </param>
+        /// <param name="ociRepository"> Parameters to reconcile to the OCIRepository source kind type. </param>
+        /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
+        /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
+        /// <returns> A new <see cref="Models.FluxConfigurationPatch"/> instance for mocking. </returns>
+        public static FluxConfigurationPatch FluxConfigurationPatch(FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, GitRepositoryPatch gitRepository = default, BucketPatch bucket = default, AzureBlobPatch azureBlob = default, OciRepositoryPatch ociRepository = default, IDictionary<string, KustomizationPatch> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default)
+        {
+            return new FluxConfigurationPatch(sourceKind is null && isSuspended is null && gitRepository is null && bucket is null && azureBlob is null && ociRepository is null && kustomizations is null && configurationProtectedSettings is null ? default : new FluxConfigurationPatchProperties(
+                sourceKind,
+                isSuspended,
+                gitRepository,
+                bucket,
+                azureBlob,
+                ociRepository,
+                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationPatch>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                default), default);
+        }
+
+        /// <param name="uri"> The URL to sync for the flux configuration git repository. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster git repository source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster git repository source with the remote. </param>
+        /// <param name="repositoryRef"> The source reference for the GitRepository object. </param>
+        /// <param name="sshKnownHosts"> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </param>
+        /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
+        /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <param name="provider"> Name of the provider used for authentication. </param>
+        /// <returns> A new <see cref="Models.GitRepositoryPatch"/> instance for mocking. </returns>
+        public static GitRepositoryPatch GitRepositoryPatch(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, RepositoryRef repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
+        {
+            return new GitRepositoryPatch(
+                uri,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                sshKnownHosts,
+                httpsUser,
+                httpsCACert,
+                localAuthRef,
+                provider,
+                default);
+        }
+
+        /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
+        /// <param name="bucketName"> The bucket name to sync from the url endpoint for the flux configuration. </param>
+        /// <param name="isInsecure"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster bucket source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster bucket source with the remote. </param>
+        /// <param name="accessKey"> Plaintext access key used to securely access the S3 bucket. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <returns> A new <see cref="Models.BucketPatch"/> instance for mocking. </returns>
+        public static BucketPatch BucketPatch(string uri = default, string bucketName = default, bool? isInsecure = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, string accessKey = default, string localAuthRef = default)
+        {
+            return new BucketPatch(
+                uri,
+                bucketName,
+                isInsecure,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                accessKey,
+                localAuthRef,
+                default);
+        }
+
+        /// <param name="uri"> The URL to sync for the flux configuration Azure Blob storage account. </param>
+        /// <param name="containerName"> The Azure Blob container name to sync from the url endpoint for the flux configuration. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster Azure Blob source with the remote. </param>
+        /// <param name="servicePrincipal"> Parameters to authenticate using Service Principal. </param>
+        /// <param name="accountKey"> The account key (shared key) to access the storage account. </param>
+        /// <param name="sasToken"> The Shared Access token to access the storage container. </param>
+        /// <param name="managedIdentityClientId"> The client Id for authenticating a Managed Identity. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <returns> A new <see cref="Models.AzureBlobPatch"/> instance for mocking. </returns>
+        public static AzureBlobPatch AzureBlobPatch(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, ServicePrincipalPatch servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
+        {
+            return new AzureBlobPatch(
+                uri,
+                containerName,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                servicePrincipal,
+                accountKey,
+                sasToken,
+                managedIdentityClientId is null ? default : new ManagedIdentityPatchDefinition(managedIdentityClientId, default),
+                localAuthRef,
+                default);
+        }
+
+        /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
+        /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
+        /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
+        /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
+        /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
+        /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
+        /// <returns> A new <see cref="Models.ServicePrincipalPatch"/> instance for mocking. </returns>
+        public static ServicePrincipalPatch ServicePrincipalPatch(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
+        {
+            return new ServicePrincipalPatch(
+                clientId,
+                tenantId,
+                clientSecret,
+                clientCertificate,
+                clientCertificatePassword,
+                isClientCertificateSendChain,
+                default);
+        }
+
+        /// <param name="uri"> The URL to sync for the flux configuration OCI repository. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster OCI repository source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster OCI repository source with the remote. </param>
+        /// <param name="repositoryRef"> The source reference for the OCIRepository object. </param>
+        /// <param name="layerSelector"> The layer to be pulled from the OCI artifact. </param>
+        /// <param name="verify"> Verification of the authenticity of an OCI Artifact. </param>
+        /// <param name="insecure"> Specify whether to allow connecting to a non-TLS HTTP container registry. </param>
+        /// <param name="useWorkloadIdentity"> Specifies whether to use Workload Identity to authenticate with the OCI repository. </param>
+        /// <param name="serviceAccountName"> The service account name to authenticate with the OCI repository. </param>
+        /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        /// <returns> A new <see cref="Models.OciRepositoryPatch"/> instance for mocking. </returns>
+        public static OciRepositoryPatch OciRepositoryPatch(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRefPatch repositoryRef = default, LayerSelectorPatch layerSelector = default, VerifyPatch verify = default, bool? insecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, TlsConfigPatch tlsConfig = default, string localAuthRef = default)
+        {
+            return new OciRepositoryPatch(
+                uri,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                repositoryRef,
+                layerSelector,
+                verify,
+                insecure,
+                useWorkloadIdentity,
+                serviceAccountName,
+                tlsConfig,
+                localAuthRef,
+                default);
+        }
+
+        /// <param name="tag"> The OCI repository image tag name to pull. This defaults to 'latest'. </param>
+        /// <param name="semver"> The semver range used to match against OCI repository tags. This takes precedence over tag. </param>
+        /// <param name="digest"> The image digest to pull from OCI repository, the value should be in the format ‘sha256:’. This takes precedence over semver. </param>
+        /// <returns> A new <see cref="Models.OciRepositoryRefPatch"/> instance for mocking. </returns>
+        public static OciRepositoryRefPatch OciRepositoryRefPatch(string tag = default, string semver = default, string digest = default)
+        {
+            return new OciRepositoryRefPatch(tag, semver, digest, default);
+        }
+
+        /// <param name="mediaType"> The first layer matching the specified media type will be used. </param>
+        /// <param name="operation"> The operation to be performed on the selected layer. The default value is 'extract', but it can be set to 'copy'. </param>
+        /// <returns> A new <see cref="Models.LayerSelectorPatch"/> instance for mocking. </returns>
+        public static LayerSelectorPatch LayerSelectorPatch(string mediaType = default, FluxConfigurationOperationType? operation = default)
+        {
+            return new LayerSelectorPatch(mediaType, operation, default);
+        }
+
+        /// <param name="provider"> Verification provider name. </param>
+        /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
+        /// <param name="matchOidcIdentity"> Array defining the criteria for matching the OIDC identity while verifying an OCI artifact. </param>
+        /// <returns> A new <see cref="Models.VerifyPatch"/> instance for mocking. </returns>
+        public static VerifyPatch VerifyPatch(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentityPatch> matchOidcIdentity = default)
+        {
+            verificationConfig ??= new ChangeTrackingDictionary<string, string>();
+            matchOidcIdentity ??= new ChangeTrackingList<MatchOidcIdentityPatch>();
+
+            return new VerifyPatch(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentityPatch>()).ToList(), default);
+        }
+
+        /// <param name="issuer"> The regex pattern to match against to verify the OIDC issuer. </param>
+        /// <param name="subject"> The regex pattern to match against to verify the identity subject. </param>
+        /// <returns> A new <see cref="Models.MatchOidcIdentityPatch"/> instance for mocking. </returns>
+        public static MatchOidcIdentityPatch MatchOidcIdentityPatch(string issuer = default, string subject = default)
+        {
+            return new MatchOidcIdentityPatch(issuer, subject, default);
+        }
+
+        /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a client with the OCI repository. </param>
+        /// <param name="privateKey"> Base64-encoded private key used to authenticate a client with the OCI repository. </param>
+        /// <param name="caCertificate"> Base64-encoded CA certificate used to verify the server. </param>
+        /// <returns> A new <see cref="Models.TlsConfigPatch"/> instance for mocking. </returns>
+        public static TlsConfigPatch TlsConfigPatch(string clientCertificate = default, string privateKey = default, string caCertificate = default)
+        {
+            return new TlsConfigPatch(clientCertificate, privateKey, caCertificate, default);
+        }
+
+        /// <param name="path"> The path in the source reference to reconcile on the cluster. </param>
+        /// <param name="dependsOn"> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the Kustomization on the cluster. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster. </param>
+        /// <param name="retryIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </param>
+        /// <param name="isPrune"> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </param>
+        /// <param name="isForce"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
+        /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
+        /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
+        /// <returns> A new <see cref="Models.KustomizationPatch"/> instance for mocking. </returns>
+        public static KustomizationPatch KustomizationPatch(string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, PostBuildPatch postBuild = default)
+        {
+            dependsOn ??= new ChangeTrackingList<string>();
+
+            return new KustomizationPatch(
+                path,
+                (dependsOn ?? new ChangeTrackingList<string>()).ToList(),
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                retryIntervalInSeconds,
+                isPrune,
+                isForce,
+                isWait,
+                postBuild,
+                default);
+        }
+
+        /// <param name="substitute"> Key/value pairs holding the variables to be substituted in this Kustomization. </param>
+        /// <param name="substituteFrom"> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </param>
+        /// <returns> A new <see cref="Models.PostBuildPatch"/> instance for mocking. </returns>
+        public static PostBuildPatch PostBuildPatch(IDictionary<string, string> substitute = default, IEnumerable<SubstituteFromPatch> substituteFrom = default)
+        {
+            substitute ??= new ChangeTrackingDictionary<string, string>();
+            substituteFrom ??= new ChangeTrackingList<SubstituteFromPatch>();
+
+            return new PostBuildPatch(substitute ?? new ChangeTrackingDictionary<string, string>(), (substituteFrom ?? new ChangeTrackingList<SubstituteFromPatch>()).ToList(), default);
+        }
+
+        /// <param name="kind"> Define whether it is ConfigMap or Secret that holds the variables to be used in substitution. </param>
+        /// <param name="name"> Name of the ConfigMap/Secret that holds the variables to be used in substitution. </param>
+        /// <param name="isOptional"> Set to True to proceed without ConfigMap/Secret, if it is not present. </param>
+        /// <returns> A new <see cref="Models.SubstituteFromPatch"/> instance for mocking. </returns>
+        public static SubstituteFromPatch SubstituteFromPatch(string kind = default, string name = default, bool? isOptional = default)
+        {
+            return new SubstituteFromPatch(kind, name, isOptional, default);
         }
     }
 }
