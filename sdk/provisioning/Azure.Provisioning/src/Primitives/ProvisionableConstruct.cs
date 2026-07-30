@@ -312,8 +312,15 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,
-        bool isRequired = false,
-        string? format = null)
+        bool isRequired = false)
+        => DefineListProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
+
+    protected BicepList<T> DefineListProperty<T>(
+        string propertyName,
+        string[]? bicepPath,
+        bool isOutput,
+        bool isRequired,
+        string? format)
     {
         BicepList<T> values =
             new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" list
@@ -330,8 +337,15 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         string propertyName,
         string[]? bicepPath,
         bool isOutput = false,
-        bool isRequired = false,
-        string? format = null)
+        bool isRequired = false)
+        => DefineDictionaryProperty<T>(propertyName, bicepPath, isOutput, isRequired, format: null);
+
+    protected BicepDictionary<T> DefineDictionaryProperty<T>(
+        string propertyName,
+        string[]? bicepPath,
+        bool isOutput,
+        bool isRequired,
+        string? format)
     {
         BicepDictionary<T> values =
             new(new BicepValueReference(this, propertyName, bicepPath), values: null) // we call this ctor to initialize an "uninitialized" dictionary
