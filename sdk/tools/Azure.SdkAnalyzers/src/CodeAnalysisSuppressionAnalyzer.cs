@@ -58,14 +58,10 @@ namespace Azure.SdkAnalyzers
         private static void AnalyzeAttribute(SyntaxNodeAnalysisContext context)
         {
             var attribute = (AttributeSyntax)context.Node;
-            SymbolInfo symbolInfo = context.SemanticModel.GetSymbolInfo(attribute, context.CancellationToken);
-            IMethodSymbol constructor = symbolInfo.Symbol as IMethodSymbol;
-            if (constructor == null && !symbolInfo.CandidateSymbols.IsDefaultOrEmpty)
-            {
-                constructor = symbolInfo.CandidateSymbols[0] as IMethodSymbol;
-            }
-
-            if (constructor == null || !s_suppressionAttributeNames.Contains(constructor.ContainingType.ToDisplayString()))
+            IMethodSymbol constructor =
+                context.SemanticModel.GetSymbolInfo(attribute, context.CancellationToken).Symbol as IMethodSymbol;
+            if (constructor == null ||
+                !s_suppressionAttributeNames.Contains(constructor.ContainingType.ToDisplayString()))
             {
                 return;
             }
@@ -76,7 +72,8 @@ namespace Azure.SdkAnalyzers
                 return;
             }
 
-            Optional<object> constant = context.SemanticModel.GetConstantValue(checkIdArgument.Expression, context.CancellationToken);
+            Optional<object> constant =
+                context.SemanticModel.GetConstantValue(checkIdArgument.Expression, context.CancellationToken);
             if (!constant.HasValue || !(constant.Value is string checkId))
             {
                 return;
@@ -96,25 +93,18 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
-            int positionalIndex = 0;
-            foreach (AttributeArgumentSyntax argument in attribute.ArgumentList.Arguments)
+            for (int i = 0; i < attribute.ArgumentList.Arguments.Count; i++)
             {
+                AttributeArgumentSyntax argument = attribute.ArgumentList.Arguments[i];
                 if (argument.NameEquals != null)
                 {
                     continue;
                 }
 
-                string parameterName;
-                if (argument.NameColon != null)
+                string parameterName = argument.NameColon?.Name.Identifier.ValueText;
+                if (parameterName == null && i < constructor.Parameters.Length)
                 {
-                    parameterName = argument.NameColon.Name.Identifier.ValueText;
-                }
-                else
-                {
-                    parameterName = positionalIndex < constructor.Parameters.Length
-                        ? constructor.Parameters[positionalIndex].Name
-                        : null;
-                    positionalIndex++;
+                    parameterName = constructor.Parameters[i].Name;
                 }
 
                 if (string.Equals(parameterName, "checkId", StringComparison.Ordinal))

@@ -114,6 +114,7 @@ namespace Azure.Test
 
         [TestCase("checkId: {|AZC0041:\"AZC0015\"|}, category: \"Usage\"")]
         [TestCase("\"Usage\", checkId: {|AZC0041:\"AZC0015\"|}")]
+        [TestCase("category: \"Usage\", {|AZC0041:\"AZC0015\"|}")]
         public async Task ReportsNamedCheckIdSuppressionAttribute(string arguments)
         {
             string code = $@"
