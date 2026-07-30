@@ -113,6 +113,7 @@ namespace Azure.Provisioning.ServiceBus
         public Azure.Provisioning.BicepValue<string> ContentType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CorrelationId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MessageId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ReplyTo { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ReplyToSessionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> RequiresPreprocessing { get { throw null; } set { } }

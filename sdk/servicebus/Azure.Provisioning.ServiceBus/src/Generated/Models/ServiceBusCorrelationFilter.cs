@@ -13,6 +13,7 @@ namespace Azure.Provisioning.ServiceBus
     /// <summary> Represents the correlation filter expression. </summary>
     public partial class ServiceBusCorrelationFilter : ProvisionableConstruct
     {
+        private BicepDictionary<string> _properties;
         private BicepValue<string> _correlationId;
         private BicepValue<string> _messageId;
         private BicepValue<string> _sendTo;
@@ -26,6 +27,21 @@ namespace Azure.Provisioning.ServiceBus
         /// <summary> Creates a new ServiceBusCorrelationFilter. </summary>
         public ServiceBusCorrelationFilter()
         {
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        public BicepDictionary<string> Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                _properties.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the CorrelationId. </summary>
@@ -167,6 +183,7 @@ namespace Azure.Provisioning.ServiceBus
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
             _correlationId = DefineProperty<string>(nameof(CorrelationId), new string[] { "correlationId" });
             _messageId = DefineProperty<string>(nameof(MessageId), new string[] { "messageId" });
             _sendTo = DefineProperty<string>(nameof(SendTo), new string[] { "to" });
