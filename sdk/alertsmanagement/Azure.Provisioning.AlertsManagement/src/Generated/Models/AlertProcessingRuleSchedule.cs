@@ -88,8 +88,8 @@ namespace Azure.Provisioning.AlertsManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _effectiveFrom = DefineProperty<DateTimeOffset>(nameof(EffectiveFrom), new string[] { "effectiveFrom" });
-            _effectiveUntil = DefineProperty<DateTimeOffset>(nameof(EffectiveUntil), new string[] { "effectiveUntil" });
+            _effectiveFrom = DefineProperty<DateTimeOffset>(nameof(EffectiveFrom), new string[] { "effectiveFrom" }, format: "O");
+            _effectiveUntil = DefineProperty<DateTimeOffset>(nameof(EffectiveUntil), new string[] { "effectiveUntil" }, format: "O");
             _timeZone = DefineProperty<string>(nameof(TimeZone), new string[] { "timeZone" });
             _recurrences = DefineListProperty<AlertProcessingRuleRecurrence>(nameof(Recurrences), new string[] { "recurrences" });
             DefineAdditionalProperties();

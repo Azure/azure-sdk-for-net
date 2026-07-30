@@ -59,8 +59,8 @@ namespace Azure.Provisioning.AlertsManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<TimeSpan>(nameof(StartOn), new string[] { "startTime" });
-            _endOn = DefineProperty<TimeSpan>(nameof(EndOn), new string[] { "endTime" });
+            _startOn = DefineProperty<TimeSpan>(nameof(StartOn), new string[] { "startTime" }, format: "T");
+            _endOn = DefineProperty<TimeSpan>(nameof(EndOn), new string[] { "endTime" }, format: "T");
             DefineAdditionalProperties();
         }
 
