@@ -216,10 +216,13 @@ while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentS
     Thread.Sleep(500);
     session1 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
 }
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectCreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+    SessionId = session1.AgentSessionId
+};
+ResponseResult response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -231,10 +234,13 @@ while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentS
     await Task.Delay(500);
     session1 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
 }
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectCreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+    SessionId = session1.AgentSessionId
+};
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -289,10 +295,12 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
     Thread.Sleep(500);
     session2 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 }
-oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-response = responseClient.CreateResponse("Hello, tell me another joke.");
+responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+    SessionId = session2.AgentSessionId
+};
+response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -305,10 +313,12 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
     await Task.Delay(500);
     session2 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 }
-oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-response = await responseClient.CreateResponseAsync("Hello, tell me another joke.");
+responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+    SessionId = session2.AgentSessionId
+};
+response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 

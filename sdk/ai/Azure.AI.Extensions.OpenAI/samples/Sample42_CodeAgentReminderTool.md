@@ -2,167 +2,67 @@
 
 ## Hosted Code Agent Deployment prerequisites
 
-`Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
-1. Create a folder, containing agent code and dependencies. In our example, it should be located in the `Assets/AgentsCodeToolbox` folder next to the sample itself (this folder is not provided).
-2. Create the file `main.py` containing the logic for hosted Agent.
+`Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object; however, the hosted object represents the running container, which exposes the OpenAI-compatible API.
+1. Create a folder containing agent code and dependencies. In our example, it should be located in the `Assets/AgentsCodeReminder` folder next to the sample itself (this folder is not provided).
+2. Create a project and add dependencies.
 
-```python
-import asyncio
-import os
-from collections.abc import AsyncGenerator
-
-import httpx
-from agent_framework import Agent, AgentSession, MCPStreamableHTTPTool
-from agent_framework.foundry import FoundryChatClient
-from agent_framework_foundry_hosting import ResponsesHostServer
-from azure.ai.agentserver.invocations import InvocationAgentServerHost
-from azure.ai.agentserver.core import get_request_context
-from azure.identity import DefaultAzureCredential
-from starlette.requests import Request
-from starlette.responses import JSONResponse, Response, StreamingResponse
-
-DEFAULT_TOOLBOX_SCOPE = "https://ai.azure.com/.default"
-
-SYSTEM_PROMPT = """You are a helpful assistant that can schedule reminders.
-
-When a user asks to set, create, schedule, or remind them about something after
-some number of minutes, call the `schedule_reminder` tool with the best integer
-`minutes` value you can extract from the request.
-
-After the tool call succeeds, briefly confirm that the reminder was scheduled
-and include the created reminder name if the tool returned one.
-
-Do not pretend a reminder was created if the tool call failed.
-Keep your answers brief.
-"""
-
-# Read in the environment variables
-TOOLBOX_NAME = os.environ["TOOLBOX_NAME"]
-FOUNDRY_PROJECT_ENDPOINT = os.environ["FOUNDRY_PROJECT_ENDPOINT"]
-FOUNDRY_MODEL_NAME = os.environ["FOUNDRY_MODEL_NAME"]
-AGENT_NAME = os.environ["AGENT_NAME"]
-####
-
-
-class _ToolboxAuth(httpx.Auth):
-    def __init__(self, credential: DefaultAzureCredential, scope: str, agent_name: str) -> None:
-        self._credential = credential
-        self._scope = scope
-        self._agent_name = agent_name
-
-    def auth_flow(self, request: httpx.Request):
-        token = self._credential.get_token(self._scope).token
-        request.headers["Authorization"] = f"Bearer {token}"
-        for key, value in get_request_context().platform_headers().items():
-            request.headers[key] = value
-        if self._agent_name:
-            request.headers["x-aml-agent-name"] = self._agent_name
-        yield request
-
-
-class ReminderFoundryToolbox(MCPStreamableHTTPTool):
-    def __init__(
-        self,
-        credential: DefaultAzureCredential,
-        *,
-        timeout: float = 120.0,
-    ) -> None:
-        endpoint = f"{FOUNDRY_PROJECT_ENDPOINT.rstrip('/')}/toolboxes/{TOOLBOX_NAME}/mcp?api-version=v1"
-        http_client = httpx.AsyncClient(
-            auth=_ToolboxAuth(credential, DEFAULT_TOOLBOX_SCOPE, AGENT_NAME),
-            headers={
-                "x-aml-agent-name": AGENT_NAME,
-                "Foundry-Features": "Toolboxes=V1Preview"
-                },
-            timeout=timeout,
-        )
-        super().__init__(
-            name=TOOLBOX_NAME,
-            url=endpoint,
-            http_client=http_client,
-            load_prompts=False,
-            load_tools=True,
-        )
-
-    async def close(self) -> None:
-        try:
-            await super().close()
-        finally:
-            client = self._httpx_client
-            if client is not None:
-                self._httpx_client = None
-                await client.aclose()
-
-
-class MultiProtocolHost(ResponsesHostServer, InvocationAgentServerHost):
-    def __init__(self, agent: Agent, **kwargs) -> None:
-        super().__init__(agent, **kwargs)
-        self._invocation_sessions: dict[str, AgentSession] = {}
-        self.invoke_handler(self._handle_invoke)
-
-    async def _handle_invoke(self, request: Request) -> Response:
-        data = await request.json()
-        session_id: str = request.state.session_id
-        stream = data.get("stream", False)
-        user_message = data.get("message") or data.get("input")
-        if user_message is None:
-            error = "Missing 'message' in request"
-            if stream:
-                return StreamingResponse(content=error, status_code=400)
-            return Response(content=error, status_code=400)
-
-        await self._ensure_agent_ready()
-        session = self._invocation_sessions.setdefault(
-            session_id,
-            AgentSession(session_id=session_id),
-        )
-
-        if stream:
-
-            async def stream_response() -> AsyncGenerator[str]:
-                async for update in self._agent.run(user_message, session=session, stream=True):
-                    if update.text:
-                        yield update.text
-
-            return StreamingResponse(
-                stream_response(),
-                media_type="text/event-stream",
-                headers={"Cache-Control": "no-cache", "Connection": "keep-alive"},
-            )
-
-        response = await self._agent.run([user_message], session=session, stream=False)
-        return JSONResponse({"response": response.text, "session_id": session_id})
-
-
-async def main() -> None:
-    credential = DefaultAzureCredential()
-    toolbox = ReminderFoundryToolbox(credential)
-    client = FoundryChatClient(
-        project_endpoint=FOUNDRY_PROJECT_ENDPOINT,
-        model=FOUNDRY_MODEL_NAME,
-        credential=credential,
-    )
-    agent = Agent(
-        client=client,
-        instructions=SYSTEM_PROMPT,
-        tools=toolbox,
-        default_options={"store": False},
-    )
-    server = MultiProtocolHost(agent)
-    await server.run_async()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+```bash
+dotnet new console --name ToolboxAgent --output ToolboxAgent
+dotnet add package Azure.AI.Projects --prerelease
+dotnet add package Microsoft.Agents.AI.Foundry --prerelease
+dotnet add package Microsoft.Agents.AI.Foundry.Hosting --prerelease
 ```
 
-3. Create the `requirements.txt` in `Assets` folder with the next contents.
+2. Populate the code in Program.cs
 
+```C#
+using Azure.AI.Projects;
+using Azure.Identity;
+using Microsoft.Agents.AI;
+using Microsoft.Agents.AI.Foundry.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.AI;
+
+// Read in the environment variables
+string TOOLBOX_NAME = System.Environment.GetEnvironmentVariable(nameof(TOOLBOX_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(TOOLBOX_NAME)}");
+string FOUNDRY_PROJECT_ENDPOINT = System.Environment.GetEnvironmentVariable(nameof(FOUNDRY_PROJECT_ENDPOINT)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(FOUNDRY_PROJECT_ENDPOINT)}");
+string FOUNDRY_MODEL_NAME = System.Environment.GetEnvironmentVariable(nameof(FOUNDRY_MODEL_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(FOUNDRY_MODEL_NAME)}");
+string AGENT_NAME = System.Environment.GetEnvironmentVariable(nameof(AGENT_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(AGENT_NAME)}");
+//
+
+DefaultAzureCredential credential = new();
+AIAgent agent = new AIProjectClient(endpoint: new(FOUNDRY_PROJECT_ENDPOINT), credential)
+    .AsAIAgent(new ChatClientAgentOptions()
+    {
+        ChatOptions = new ChatOptions()
+        {
+            ModelId = FOUNDRY_MODEL_NAME,
+            Instructions = "You are a helpful assistant that can schedule reminders. " +
+                           "When a user asks to set, create, schedule, or remind them about something after " +
+                           "some number of minutes, call the `schedule_reminder` tool with the best integer " +
+                           "`minutes` value you can extract from the request. After the tool call succeeds, " +
+                           "briefly confirm that the reminder was scheduled and include the created reminder name if the tool returned one." +
+                           "Do not pretend a reminder was created if the tool call failed. Keep your answers brief.",
+        },
+        Name = AGENT_NAME,
+        Description = "Agent with the Toolbox.",
+    });
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Services.AddFoundryResponses(agent);
+builder.Services.AddFoundryToolboxes(credential, TOOLBOX_NAME);
+var app = builder.Build();
+app.MapFoundryResponses();
+app.Run();
 ```
-agent-framework-foundry
-agent-framework-foundry-hosting>=1.0.0a260630
-azure-identity>=1.25.0
+
+3. Compile the application.
+
+```bash
+dotnet publish
 ```
+
+This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
+4. Copy the contents of `publish` folder to `Assets/AgentsCodeReminder`.
 
 
 ## Run the sample.
@@ -177,6 +77,7 @@ AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentT
 ```
 
 2. For brevity we will create the method, returning the `AgentVersionFromCodeMetadata` object. It contains all environment variables needed to access toolbox from the Hosted Agent.
+**Note:** In this example we are uploading the project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCodeReminder` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 ```C# Snippet:Sample_CodeAgentReminderToolMetadata_CodeAgentReminderTool
 private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAgentName, string toolboxName, string foundryProjectEndpoint, string modelDeploymentName)
@@ -188,15 +89,16 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAg
     {
         Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0") },
         CodeConfiguration = new(
-            runtime: "python_3_14",
-            entryPoint: ["python", "main.py"],
-            dependencyResolution: CodeDependencyResolution.RemoteBuild
+            runtime: "dotnet_10",
+            entryPoint: ["dotnet", "ToolboxAgent.dll"],
+            dependencyResolution: CodeDependencyResolution.Bundled
         ),
         EnvironmentVariables = {
             { "AGENT_NAME", middlewareAgentName},
             { "TOOLBOX_NAME", toolboxName},
             { "FOUNDRY_PROJECT_ENDPOINT", foundryProjectEndpoint},
             { "FOUNDRY_MODEL_NAME", modelDeploymentName },
+            { "ASPNETCORE_URLS", "http://+:8088"},
         }
     };
     AgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -244,7 +146,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeAgentReminderTool_Sync
 ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
     agentName: "myCodeAgentReminderTool",
-    filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
+    filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
     metadata: GetAgentMetadata(
         middlewareAgentName: "codeAgentMiddleware1",
         toolboxName: toolBox.Name,
@@ -252,13 +154,15 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
         modelDeploymentName: modelDeploymentName
     )
 );
+Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeAgentReminderTool_Async
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
     agentName: "myCodeAgentReminderTool",
-    filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
+    filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
     metadata: GetAgentMetadata(
         middlewareAgentName: "codeAgentMiddleware1",
         toolboxName: toolBox.Name,
@@ -266,6 +170,8 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
         modelDeploymentName: modelDeploymentName
     )
 );
+Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
 ```
 
 6. Wait for the Agent to reach the active state; throw error if the deployment fails.
@@ -335,10 +241,17 @@ if (session.Status != AgentSessionStatus.Active)
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Sync
 Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = responseClient.CreateResponse(prompt);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectCreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
+    SessionId = session.AgentSessionId,
+};
+ResponseResult response = responseClient.CreateResponse(responseOptions);
+if (response.Error != null)
+{
+    throw new InvalidOperationException($"Unable to get the response from an Agent. Error Code: {response.Error.Code}; {response.Error.Message}");
+}
 Console.WriteLine("Response items:");
 foreach (ResponseItem item in response.OutputItems)
 {
@@ -358,10 +271,17 @@ responseTime = response.CreatedAt;
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
 Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = await responseClient.CreateResponseAsync(prompt);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectCreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
+    SessionId = session.AgentSessionId,
+};
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
+if (response.Error != null)
+{
+    throw new InvalidOperationException($"Unable to get the response from an Agent. Error Code: {response.Error.Code}; {response.Error.Message}");
+}
 Console.WriteLine("Response items:");
 foreach (ResponseItem item in response.OutputItems)
 {

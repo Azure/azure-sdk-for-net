@@ -18,7 +18,6 @@ using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Memory;
 using Azure.AI.Projects.Tests.Utils;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Containers;

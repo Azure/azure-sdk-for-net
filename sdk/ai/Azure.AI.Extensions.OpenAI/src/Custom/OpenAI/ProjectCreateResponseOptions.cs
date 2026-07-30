@@ -4,7 +4,7 @@
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
-# pragma warning disable SCME0001
+#pragma warning disable SCME0001
 
 /// <summary>
 /// The project extension for OpenAI CreateResponseOptions.
