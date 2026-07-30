@@ -237,16 +237,15 @@ namespace Azure.Generator.Management.Utilities
         {
             var immediateParentPropertyName = GetPropertyName(immediateParentProperty);
 
-            if (innerProperty.Type.Equals(typeof(bool)) || innerProperty.Type.Equals(typeof(bool?)))
-            {
-                return innerProperty.Name.Equals("Enabled", StringComparison.Ordinal) ? $"{immediateParentPropertyName}{innerProperty.Name}" : innerProperty.Name;
-            }
-
             if (innerProperty.Name.Equals("Id", StringComparison.Ordinal))
                 return $"{immediateParentPropertyName}{innerProperty.Name}";
 
             if (immediateParentPropertyName.EndsWith(innerProperty.Name, StringComparison.Ordinal))
                 return immediateParentPropertyName;
+
+            var nameWords = innerProperty.Name.SplitByCamelCase().ToArray();
+            if (nameWords.Length > 1 && nameWords[0].Equals("Is", StringComparison.Ordinal))
+                return $"Is{immediateParentPropertyName}{string.Join("", nameWords.Skip(1))}";
 
             var parentWords = immediateParentPropertyName.SplitByCamelCase();
             bool suffixStripped = false;
@@ -262,7 +261,6 @@ namespace Azure.Generator.Management.Utilities
 
             var parentWordArray = parentWords.ToArray();
             var parentWordsHash = new HashSet<string>(parentWordArray);
-            var nameWords = innerProperty.Name.SplitByCamelCase().ToArray();
             var lastWord = string.Empty;
             for (int i = 0; i < nameWords.Length; i++)
             {

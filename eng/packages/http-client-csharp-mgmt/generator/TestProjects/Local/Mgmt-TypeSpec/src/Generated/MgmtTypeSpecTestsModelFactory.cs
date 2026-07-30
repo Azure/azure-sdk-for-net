@@ -156,10 +156,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                boolValue is null && nestedPropertyProperties is null && flattenedProperty is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
+                nestedPropertyProperties is null && flattenedProperty is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
                     default,
                     default,
-                    boolValue,
+                    default,
                     default,
                     default,
                     default,
