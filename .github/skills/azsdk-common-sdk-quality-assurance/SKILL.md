@@ -8,7 +8,7 @@ description: 'Ensure to generate a high quality SDKs from TypeSpec. WHEN: "assur
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
-# Assurance SDK Quality
+# SDK Quality Assurance
 
 ## MCP Tools
 
