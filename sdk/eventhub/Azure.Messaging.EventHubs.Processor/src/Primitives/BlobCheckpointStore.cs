@@ -147,3 +147,5 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                    CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, startingPosition, cancellationToken);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
