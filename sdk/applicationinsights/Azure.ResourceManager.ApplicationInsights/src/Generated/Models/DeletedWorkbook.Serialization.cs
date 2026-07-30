@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.Models;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> A workbook definition. </summary>
-    public partial class DeletedWorkbook : DeletedWorkbookResource, IJsonModel<DeletedWorkbook>
+    public partial class DeletedWorkbook : DeletedWorkbookData, IJsonModel<DeletedWorkbook>
     {
         /// <summary> Initializes a new instance of <see cref="DeletedWorkbook"/> for deserialization. </summary>
         internal DeletedWorkbook()
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             WorkbookSharedTypeKind? kind = default;
-            string eTag = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DeletedWorkbookProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -196,7 +197,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

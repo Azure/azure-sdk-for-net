@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>> GetComponentCurrentBillingFeatureAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities> GetComponentFeatureCapability(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>> GetComponentFeatureCapabilityAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> GetComponentLinkedStorageAccounts(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> GetComponentLinkedStorageAccountsAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> GetComponentLinkedStorageAccounts(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> GetComponentLinkedStorageAccountsAsync(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus> GetComponentQuotaStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>> GetComponentQuotaStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration> GetDefaultWorkItemConfiguration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.ApplicationInsights
     public partial class ComponentLinkedStorageAccountsCollection : Azure.ResourceManager.ArmCollection
     {
         protected ComponentLinkedStorageAccountsCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> Get(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> GetAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> GetIfExists(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> GetIfExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> Get(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> GetAsync(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> GetIfExists(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource>> GetIfExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ComponentLinkedStorageAccountsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsData>
     {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         protected ComponentLinkedStorageAccountsResource() { }
         public virtual Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType storageType) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -919,6 +919,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApplicationInsightsLinkedStorageType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApplicationInsightsLinkedStorageType(string value) { throw null; }
+        public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType ServiceProfiler { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType left, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType left, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsLinkedStorageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationInsightsPublicNetworkAccessType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsPublicNetworkAccessType>
     {
         private readonly object _dummy;
@@ -1008,8 +1024,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeFilters ComponentPurgeFilters(string column = null, string @operator = null, System.BinaryData value = null, string key = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResult ComponentPurgeResult(string operationId = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResult ComponentPurgeStatusResult(Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState status = default(Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeState)) { throw null; }
-        public static Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook DeletedWorkbook(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind?), string eTag = null, string displayName = null, string serializedData = null, string version = null, System.DateTimeOffset? timeModified = default(System.DateTimeOffset?), string category = null, System.Collections.Generic.IEnumerable<string> tagsPropertiesTags = null, string userId = null, string sourceId = null, string storageUri = null, string description = null, string revision = null) { throw null; }
-        public static Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource DeletedWorkbookResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind?), string eTag = null) { throw null; }
+        public static Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook DeletedWorkbook(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind?), Azure.ETag? eTag = default(Azure.ETag?), string displayName = null, string serializedData = null, string version = null, System.DateTimeOffset? timeModified = default(System.DateTimeOffset?), string category = null, System.Collections.Generic.IEnumerable<string> tagsPropertiesTags = null, string userId = null, string sourceId = null, string storageUri = null, string description = null, string revision = null) { throw null; }
+        public static Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData DeletedWorkbookData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResult LiveTokenResult(string liveToken = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceReference PrivateLinkScopedResourceReference(Azure.Core.ResourceIdentifier resourceId = null, string scopeId = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.WebTestComponentTag WebTestComponentTag(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
@@ -1205,7 +1221,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.ComponentRequestSource left, Azure.ResourceManager.ApplicationInsights.Models.ComponentRequestSource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeletedWorkbook : Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook>
+    public partial class DeletedWorkbook : Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook>
     {
         internal DeletedWorkbook() { }
         public string Category { get { throw null; } }
@@ -1229,20 +1245,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbook>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeletedWorkbookResource : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource>
+    public partial class DeletedWorkbookData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData>
     {
-        internal DeletedWorkbookResource() { }
-        public string ETag { get { throw null; } }
+        internal DeletedWorkbookData() { }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind? Kind { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.DeletedWorkbookData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FavoriteSourceType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType>
@@ -1295,22 +1311,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.StorageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageType(string value) { throw null; }
-        public static Azure.ResourceManager.ApplicationInsights.Models.StorageType ServiceProfiler { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApplicationInsights.Models.StorageType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApplicationInsights.Models.StorageType left, Azure.ResourceManager.ApplicationInsights.Models.StorageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.StorageType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.StorageType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.StorageType left, Azure.ResourceManager.ApplicationInsights.Models.StorageType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class WebTestComponentTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestComponentTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestComponentTag>
     {

@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="description"> The description of the workbook. </param>
         /// <param name="revision"> The unique revision id for this workbook definition. </param>
         /// <returns> A new <see cref="Models.DeletedWorkbook"/> instance for mocking. </returns>
-        public static DeletedWorkbook DeletedWorkbook(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkbookSharedTypeKind? kind = default, string eTag = default, string displayName = default, string serializedData = default, string version = default, DateTimeOffset? timeModified = default, string category = default, IEnumerable<string> tagsPropertiesTags = default, string userId = default, string sourceId = default, string storageUri = default, string description = default, string revision = default)
+        public static DeletedWorkbook DeletedWorkbook(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkbookSharedTypeKind? kind = default, ETag? eTag = default, string displayName = default, string serializedData = default, string version = default, DateTimeOffset? timeModified = default, string category = default, IEnumerable<string> tagsPropertiesTags = default, string userId = default, string sourceId = default, string storageUri = default, string description = default, string revision = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -848,12 +848,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="eTag"> Resource etag. </param>
-        /// <returns> A new <see cref="Models.DeletedWorkbookResource"/> instance for mocking. </returns>
-        public static DeletedWorkbookResource DeletedWorkbookResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkbookSharedTypeKind? kind = default, string eTag = default)
+        /// <returns> A new <see cref="Models.DeletedWorkbookData"/> instance for mocking. </returns>
+        public static DeletedWorkbookData DeletedWorkbookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkbookSharedTypeKind? kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeletedWorkbookResource(
+            return new DeletedWorkbookData(
                 id,
                 name,
                 resourceType,

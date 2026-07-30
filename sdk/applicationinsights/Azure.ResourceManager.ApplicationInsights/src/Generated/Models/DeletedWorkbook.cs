@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> A workbook definition. </summary>
-    public partial class DeletedWorkbook : DeletedWorkbookResource
+    public partial class DeletedWorkbook : DeletedWorkbookData
     {
         /// <summary> Initializes a new instance of <see cref="DeletedWorkbook"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="eTag"> Resource etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Metadata describing a workbook for an Azure resource. </param>
-        internal DeletedWorkbook(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkbookSharedTypeKind? kind, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeletedWorkbookProperties properties) : base(id, name, resourceType, systemData, tags, location, kind, eTag, additionalBinaryDataProperties)
+        internal DeletedWorkbook(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkbookSharedTypeKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeletedWorkbookProperties properties) : base(id, name, resourceType, systemData, tags, location, kind, eTag, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

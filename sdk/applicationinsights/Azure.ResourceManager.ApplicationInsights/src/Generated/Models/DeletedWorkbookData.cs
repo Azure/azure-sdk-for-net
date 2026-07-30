@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.Models;
@@ -14,18 +15,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An azure resource object. </summary>
-    public partial class DeletedWorkbookResource : TrackedResourceData
+    public partial class DeletedWorkbookData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeletedWorkbookResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedWorkbookData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal DeletedWorkbookResource(AzureLocation location) : base(location)
+        internal DeletedWorkbookData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedWorkbookResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedWorkbookData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedWorkbookResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkbookSharedTypeKind? kind, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DeletedWorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkbookSharedTypeKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ETag = eTag;
@@ -48,6 +49,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Resource etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
     }
 }

@@ -4614,7 +4614,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ComponentLinkedStorageAccountsResource>> GetComponentLinkedStorageAccountsAsync(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentLinkedStorageAccountsResource>> GetComponentLinkedStorageAccountsAsync(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             return await GetAllComponentLinkedStorageAccounts().GetAsync(storageType, cancellationToken).ConfigureAwait(false);
         }
@@ -4623,7 +4623,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ComponentLinkedStorageAccountsResource> GetComponentLinkedStorageAccounts(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentLinkedStorageAccountsResource> GetComponentLinkedStorageAccounts(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             return GetAllComponentLinkedStorageAccounts().Get(storageType, cancellationToken);
         }

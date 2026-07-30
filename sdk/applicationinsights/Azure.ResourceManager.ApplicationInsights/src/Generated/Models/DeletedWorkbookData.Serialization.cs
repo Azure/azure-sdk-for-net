@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.Models;
@@ -17,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An azure resource object. </summary>
-    public partial class DeletedWorkbookResource : TrackedResourceData, IJsonModel<DeletedWorkbookResource>
+    public partial class DeletedWorkbookData : TrackedResourceData, IJsonModel<DeletedWorkbookData>
     {
-        /// <summary> Initializes a new instance of <see cref="DeletedWorkbookResource"/> for deserialization. </summary>
-        internal DeletedWorkbookResource()
+        /// <summary> Initializes a new instance of <see cref="DeletedWorkbookData"/> for deserialization. </summary>
+        internal DeletedWorkbookData()
         {
         }
 
@@ -28,45 +29,45 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeletedWorkbookResource(document.RootElement, options);
+                        return DeserializeDeletedWorkbookData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedWorkbookResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedWorkbookData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedWorkbookResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedWorkbookData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeletedWorkbookResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeletedWorkbookData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedWorkbookResource IPersistableModel<DeletedWorkbookResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeletedWorkbookResource)PersistableModelCreateCore(data, options);
+        DeletedWorkbookData IPersistableModel<DeletedWorkbookData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeletedWorkbookData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeletedWorkbookResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeletedWorkbookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeletedWorkbookResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeletedWorkbookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +78,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedWorkbookResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedWorkbookData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Kind))
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -112,24 +113,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedWorkbookResource IJsonModel<DeletedWorkbookResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeletedWorkbookResource)JsonModelCreateCore(ref reader, options);
+        DeletedWorkbookData IJsonModel<DeletedWorkbookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeletedWorkbookData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeletedWorkbookData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedWorkbookResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedWorkbookData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeletedWorkbookResource(document.RootElement, options);
+            return DeserializeDeletedWorkbookData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeletedWorkbookResource DeserializeDeletedWorkbookResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeletedWorkbookData DeserializeDeletedWorkbookData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             WorkbookSharedTypeKind? kind = default;
-            string eTag = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +216,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedWorkbookResource(
+            return new DeletedWorkbookData(
                 id,
                 name,
                 resourceType,

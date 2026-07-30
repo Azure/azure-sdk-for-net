@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="data"> Properties that need to be specified to update linked storage accounts for an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ComponentLinkedStorageAccountsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, StorageType storageType, ComponentLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ComponentLinkedStorageAccountsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApplicationInsightsLinkedStorageType storageType, ComponentLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="data"> Properties that need to be specified to update linked storage accounts for an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ComponentLinkedStorageAccountsResource> CreateOrUpdate(WaitUntil waitUntil, StorageType storageType, ComponentLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ComponentLinkedStorageAccountsResource> CreateOrUpdate(WaitUntil waitUntil, ApplicationInsightsLinkedStorageType storageType, ComponentLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComponentLinkedStorageAccountsResource>> GetAsync(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentLinkedStorageAccountsResource>> GetAsync(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _componentLinkedStorageAccountsClientDiagnostics.CreateScope("ComponentLinkedStorageAccountsCollection.Get");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComponentLinkedStorageAccountsResource> Get(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentLinkedStorageAccountsResource> Get(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _componentLinkedStorageAccountsClientDiagnostics.CreateScope("ComponentLinkedStorageAccountsCollection.Get");
             scope.Start();
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _componentLinkedStorageAccountsClientDiagnostics.CreateScope("ComponentLinkedStorageAccountsCollection.Exists");
             scope.Start();
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _componentLinkedStorageAccountsClientDiagnostics.CreateScope("ComponentLinkedStorageAccountsCollection.Exists");
             scope.Start();
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<ComponentLinkedStorageAccountsResource>> GetIfExistsAsync(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ComponentLinkedStorageAccountsResource>> GetIfExistsAsync(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _componentLinkedStorageAccountsClientDiagnostics.CreateScope("ComponentLinkedStorageAccountsCollection.GetIfExists");
             scope.Start();
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<ComponentLinkedStorageAccountsResource> GetIfExists(StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ComponentLinkedStorageAccountsResource> GetIfExists(ApplicationInsightsLinkedStorageType storageType, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _componentLinkedStorageAccountsClientDiagnostics.CreateScope("ComponentLinkedStorageAccountsCollection.GetIfExists");
             scope.Start();
