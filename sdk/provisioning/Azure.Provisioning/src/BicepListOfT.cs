@@ -136,8 +136,8 @@ public class BicepList<T> :
             {
                 _kind = BicepValueKind.Literal;
             }
-            _values[index].Format = Format;
             _values[index].Assign(value);
+            SetSelfForItem(_values[index], index);
         }
     }
 
@@ -170,7 +170,6 @@ public class BicepList<T> :
         }
         var insertedItem = new BicepValue<T>((BicepValueReference?)null);
         _values.Insert(index, insertedItem);
-        insertedItem.Format = Format;
         insertedItem.Assign(item);
         // update the _self for the inserted item and all items after it
         for (int i = index; i < _values.Count; i++)
@@ -190,7 +189,6 @@ public class BicepList<T> :
             _kind = BicepValueKind.Literal;
         }
         var addedItem = new BicepValue<T>((BicepValueReference?)null);
-        addedItem.Format = Format;
         addedItem.Assign(item);
         _values.Add(addedItem);
         // update the _self pointing the new item
@@ -280,10 +278,6 @@ public class BicepList<T> :
 
     private protected override BicepExpression CompileLiteralValue()
     {
-        for (int i = 0; i < _values.Count; i++)
-        {
-            SetSelfForItem(_values[i], i);
-        }
         return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
     }
 }

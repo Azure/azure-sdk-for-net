@@ -139,8 +139,8 @@ public class BicepDictionary<T> :
             }
             if (_values.TryGetValue(key, out var result))
             {
-                result.Format = Format;
                 result.Assign(value);
+                SetSelfForItem(result, key);
             }
             else
             {
@@ -161,7 +161,6 @@ public class BicepDictionary<T> :
         }
         var addedItem = new BicepValue<T>((BicepValueReference?)null);
         _values.Add(key, addedItem);
-        addedItem.Format = Format;
         addedItem.Assign(value);
         // update the _self pointing the new item
         SetSelfForItem(addedItem, key);
@@ -253,7 +252,6 @@ public class BicepDictionary<T> :
         Dictionary<string, BicepExpression> compiledValues = [];
         foreach (var kv in _values)
         {
-            SetSelfForItem(kv.Value, kv.Key);
             compiledValues[kv.Key] = kv.Value.Compile();
         }
         return BicepSyntax.Object(compiledValues);
