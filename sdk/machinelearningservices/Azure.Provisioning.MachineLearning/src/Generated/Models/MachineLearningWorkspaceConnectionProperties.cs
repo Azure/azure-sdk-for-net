@@ -213,7 +213,7 @@ namespace Azure.Provisioning.MachineLearning
             _category = DefineProperty<MachineLearningConnectionCategory>(nameof(Category), new string[] { "category" });
             _createdByWorkspaceArmId = DefineProperty<ResourceIdentifier>(nameof(CreatedByWorkspaceArmId), new string[] { "createdByWorkspaceArmId" }, isOutput: true);
             _error = DefineProperty<string>(nameof(Error), new string[] { "error" });
-            _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" });
+            _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" }, format: "O");
             _group = DefineProperty<WorkspaceConnectionGroup>(nameof(Group), new string[] { "group" }, isOutput: true);
             _isSharedToAll = DefineProperty<bool>(nameof(IsSharedToAll), new string[] { "isSharedToAll" });
             _metadata = DefineDictionaryProperty<string>(nameof(Metadata), new string[] { "metadata" });
