@@ -12,16 +12,16 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary>
     /// The request parameters for scheduling a run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DockerBuildContent"/>, <see cref="FileTaskRunContent"/>, <see cref="TaskRunContent"/>, and <see cref="EncodedTaskRunContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/>, <see cref="ContainerRegistryTaskRunContent"/>, and <see cref="ContainerRegistryEncodedTaskRunContent"/>.
     /// </summary>
-    public partial class RunContent : ProvisionableConstruct
+    public partial class ContainerRegistryRunContent : ProvisionableConstruct
     {
         private BicepValue<bool> _isArchiveEnabled;
         private BicepValue<string> _agentPoolName;
         private BicepValue<string> _logTemplate;
 
-        /// <summary> Creates a new RunContent. </summary>
-        public RunContent()
+        /// <summary> Creates a new ContainerRegistryRunContent. </summary>
+        public ContainerRegistryRunContent()
         {
         }
 
@@ -70,7 +70,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for RunContent. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryRunContent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for RunContent that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryRunContent that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

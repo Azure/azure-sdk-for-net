@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         private AgentProperties _agentConfiguration;
         private BicepValue<string> _agentPoolName;
         private BicepValue<int> _timeoutInSeconds;
-        private TaskStepProperties _step;
+        private ContainerRegistryTaskStepProperties _step;
         private ContainerRegistryTaskTriggerProperties _trigger;
         private ContainerRegistryTaskCredentials _credentials;
         private BicepValue<string> _logTemplate;
@@ -128,7 +128,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Step. </summary>
-        public TaskStepProperties Step
+        public ContainerRegistryTaskStepProperties Step
         {
             get
             {
@@ -230,7 +230,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             _agentConfiguration = DefineModelProperty<AgentProperties>(nameof(AgentConfiguration), new string[] { "agentConfiguration" });
             _agentPoolName = DefineProperty<string>(nameof(AgentPoolName), new string[] { "agentPoolName" });
             _timeoutInSeconds = DefineProperty<int>(nameof(TimeoutInSeconds), new string[] { "timeout" });
-            _step = DefineModelProperty<TaskStepProperties>(nameof(Step), new string[] { "step" });
+            _step = DefineModelProperty<ContainerRegistryTaskStepProperties>(nameof(Step), new string[] { "step" });
             _trigger = DefineModelProperty<ContainerRegistryTaskTriggerProperties>(nameof(Trigger), new string[] { "trigger" });
             _credentials = DefineModelProperty<ContainerRegistryTaskCredentials>(nameof(Credentials), new string[] { "credentials" });
             _logTemplate = DefineProperty<string>(nameof(LogTemplate), new string[] { "logTemplate" });

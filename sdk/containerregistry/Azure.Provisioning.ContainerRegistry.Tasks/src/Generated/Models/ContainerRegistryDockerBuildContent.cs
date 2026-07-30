@@ -9,65 +9,113 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
-    /// <summary> The parameters for a quick task run request. </summary>
-    public partial class EncodedTaskRunContent : RunContent
+    /// <summary> The parameters for a docker quick build. </summary>
+    public partial class ContainerRegistryDockerBuildContent : ContainerRegistryRunContent
     {
-        private BicepValue<string> _encodedTaskContent;
-        private BicepValue<string> _encodedValuesContent;
-        private BicepList<ContainerRegistryTaskSetValue> _values;
+        private BicepList<string> _imageNames;
+        private BicepValue<bool> _isPushEnabled;
+        private BicepValue<bool> _isCacheDisabled;
+        private BicepValue<string> _dockerFilePath;
+        private BicepValue<string> _target;
+        private BicepList<ContainerRegistryTaskArgument> _arguments;
         private BicepValue<int> _timeoutInSeconds;
         private ContainerRegistryTaskPlatformProperties _platform;
         private AgentProperties _agentConfiguration;
         private BicepValue<string> _sourceLocation;
         private ContainerRegistryTaskCredentials _credentials;
 
-        /// <summary> Creates a new EncodedTaskRunContent. </summary>
-        public EncodedTaskRunContent()
+        /// <summary> Creates a new ContainerRegistryDockerBuildContent. </summary>
+        public ContainerRegistryDockerBuildContent()
         {
         }
 
-        /// <summary> Gets or sets the EncodedTaskContent. </summary>
-        public BicepValue<string> EncodedTaskContent
+        /// <summary> Gets or sets the ImageNames. </summary>
+        public BicepList<string> ImageNames
         {
             get
             {
                 Initialize();
-                return _encodedTaskContent;
+                return _imageNames;
             }
             set
             {
                 Initialize();
-                _encodedTaskContent.Assign(value);
+                _imageNames.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the EncodedValuesContent. </summary>
-        public BicepValue<string> EncodedValuesContent
+        /// <summary> Gets or sets the IsPushEnabled. </summary>
+        public BicepValue<bool> IsPushEnabled
         {
             get
             {
                 Initialize();
-                return _encodedValuesContent;
+                return _isPushEnabled;
             }
             set
             {
                 Initialize();
-                _encodedValuesContent.Assign(value);
+                _isPushEnabled.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the Values. </summary>
-        public BicepList<ContainerRegistryTaskSetValue> Values
+        /// <summary> Gets or sets the IsCacheDisabled. </summary>
+        public BicepValue<bool> IsCacheDisabled
         {
             get
             {
                 Initialize();
-                return _values;
+                return _isCacheDisabled;
             }
             set
             {
                 Initialize();
-                _values.Assign(value);
+                _isCacheDisabled.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the DockerFilePath. </summary>
+        public BicepValue<string> DockerFilePath
+        {
+            get
+            {
+                Initialize();
+                return _dockerFilePath;
+            }
+            set
+            {
+                Initialize();
+                _dockerFilePath.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Target. </summary>
+        public BicepValue<string> Target
+        {
+            get
+            {
+                Initialize();
+                return _target;
+            }
+            set
+            {
+                Initialize();
+                _target.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Arguments. </summary>
+        public BicepList<ContainerRegistryTaskArgument> Arguments
+        {
+            get
+            {
+                Initialize();
+                return _arguments;
+            }
+            set
+            {
+                Initialize();
+                _arguments.Assign(value);
             }
         }
 
@@ -163,14 +211,17 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for EncodedTaskRunContent. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryDockerBuildContent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "EncodedTaskRunRequest");
-            _encodedTaskContent = DefineProperty<string>(nameof(EncodedTaskContent), new string[] { "encodedTaskContent" }, isRequired: true);
-            _encodedValuesContent = DefineProperty<string>(nameof(EncodedValuesContent), new string[] { "encodedValuesContent" });
-            _values = DefineListProperty<ContainerRegistryTaskSetValue>(nameof(Values), new string[] { "values" });
+            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "DockerBuildRequest");
+            _imageNames = DefineListProperty<string>(nameof(ImageNames), new string[] { "imageNames" });
+            _isPushEnabled = DefineProperty<bool>(nameof(IsPushEnabled), new string[] { "isPushEnabled" });
+            _isCacheDisabled = DefineProperty<bool>(nameof(IsCacheDisabled), new string[] { "noCache" });
+            _dockerFilePath = DefineProperty<string>(nameof(DockerFilePath), new string[] { "dockerFilePath" }, isRequired: true);
+            _target = DefineProperty<string>(nameof(Target), new string[] { "target" });
+            _arguments = DefineListProperty<ContainerRegistryTaskArgument>(nameof(Arguments), new string[] { "arguments" });
             _timeoutInSeconds = DefineProperty<int>(nameof(TimeoutInSeconds), new string[] { "timeout" });
             _platform = DefineModelProperty<ContainerRegistryTaskPlatformProperties>(nameof(Platform), new string[] { "platform" }, isRequired: true);
             _agentConfiguration = DefineModelProperty<AgentProperties>(nameof(AgentConfiguration), new string[] { "agentConfiguration" });
@@ -179,7 +230,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for EncodedTaskRunContent that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryDockerBuildContent that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

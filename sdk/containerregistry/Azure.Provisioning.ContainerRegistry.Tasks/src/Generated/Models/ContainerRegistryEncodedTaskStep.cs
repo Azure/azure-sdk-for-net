@@ -10,14 +10,14 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a encoded task step. </summary>
-    public partial class EncodedTaskStep : TaskStepProperties
+    public partial class ContainerRegistryEncodedTaskStep : ContainerRegistryTaskStepProperties
     {
         private BicepValue<string> _encodedTaskContent;
         private BicepValue<string> _encodedValuesContent;
         private BicepList<ContainerRegistryTaskSetValue> _values;
 
-        /// <summary> Creates a new EncodedTaskStep. </summary>
-        public EncodedTaskStep()
+        /// <summary> Creates a new ContainerRegistryEncodedTaskStep. </summary>
+        public ContainerRegistryEncodedTaskStep()
         {
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for EncodedTaskStep. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryEncodedTaskStep. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for EncodedTaskStep that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryEncodedTaskStep that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -10,14 +10,14 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a task step. </summary>
-    public partial class FileTaskStep : TaskStepProperties
+    public partial class ContainerRegistryFileTaskStep : ContainerRegistryTaskStepProperties
     {
         private BicepValue<string> _taskFilePath;
         private BicepValue<string> _valuesFilePath;
         private BicepList<ContainerRegistryTaskSetValue> _values;
 
-        /// <summary> Creates a new FileTaskStep. </summary>
-        public FileTaskStep()
+        /// <summary> Creates a new ContainerRegistryFileTaskStep. </summary>
+        public ContainerRegistryFileTaskStep()
         {
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for FileTaskStep. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryFileTaskStep. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -77,7 +77,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for FileTaskStep that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryFileTaskStep that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

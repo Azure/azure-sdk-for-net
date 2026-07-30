@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The request parameters for a scheduling run against a task file. </summary>
-    public partial class FileTaskRunContent : RunContent
+    public partial class ContainerRegistryFileTaskRunContent : ContainerRegistryRunContent
     {
         private BicepValue<string> _taskFilePath;
         private BicepValue<string> _valuesFilePath;
@@ -21,8 +21,8 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         private BicepValue<string> _sourceLocation;
         private ContainerRegistryTaskCredentials _credentials;
 
-        /// <summary> Creates a new FileTaskRunContent. </summary>
-        public FileTaskRunContent()
+        /// <summary> Creates a new ContainerRegistryFileTaskRunContent. </summary>
+        public ContainerRegistryFileTaskRunContent()
         {
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for FileTaskRunContent. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryFileTaskRunContent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for FileTaskRunContent that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryFileTaskRunContent that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -10,13 +10,13 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The parameters for a task run request. </summary>
-    public partial class TaskRunContent : RunContent
+    public partial class ContainerRegistryTaskRunContent : ContainerRegistryRunContent
     {
         private BicepValue<string> _taskId;
         private ContainerRegistryTaskOverrideStepProperties _overrideTaskStepProperties;
 
-        /// <summary> Creates a new TaskRunContent. </summary>
-        public TaskRunContent()
+        /// <summary> Creates a new ContainerRegistryTaskRunContent. </summary>
+        public ContainerRegistryTaskRunContent()
         {
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for TaskRunContent. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryTaskRunContent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for TaskRunContent that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryTaskRunContent that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

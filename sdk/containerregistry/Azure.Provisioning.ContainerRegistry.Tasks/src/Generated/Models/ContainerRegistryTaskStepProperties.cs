@@ -12,16 +12,16 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary>
     /// Base properties for any task step.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DockerBuildStep"/>, <see cref="FileTaskStep"/>, and <see cref="EncodedTaskStep"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryFileTaskStep"/>, and <see cref="ContainerRegistryEncodedTaskStep"/>.
     /// </summary>
-    public partial class TaskStepProperties : ProvisionableConstruct
+    public partial class ContainerRegistryTaskStepProperties : ProvisionableConstruct
     {
         private BicepList<ContainerRegistryTaskBaseImageDependency> _baseImageDependencies;
         private BicepValue<string> _contextPath;
         private BicepValue<string> _contextAccessToken;
 
-        /// <summary> Creates a new TaskStepProperties. </summary>
-        public TaskStepProperties()
+        /// <summary> Creates a new ContainerRegistryTaskStepProperties. </summary>
+        public ContainerRegistryTaskStepProperties()
         {
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for TaskStepProperties. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryTaskStepProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -75,7 +75,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for TaskStepProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryTaskStepProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

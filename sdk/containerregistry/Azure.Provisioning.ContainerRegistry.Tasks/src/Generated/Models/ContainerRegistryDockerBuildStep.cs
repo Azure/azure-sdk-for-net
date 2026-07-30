@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The Docker build step. </summary>
-    public partial class DockerBuildStep : TaskStepProperties
+    public partial class ContainerRegistryDockerBuildStep : ContainerRegistryTaskStepProperties
     {
         private BicepList<string> _imageNames;
         private BicepValue<bool> _isPushEnabled;
@@ -19,8 +19,8 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         private BicepValue<string> _target;
         private BicepList<ContainerRegistryTaskArgument> _arguments;
 
-        /// <summary> Creates a new DockerBuildStep. </summary>
-        public DockerBuildStep()
+        /// <summary> Creates a new ContainerRegistryDockerBuildStep. </summary>
+        public ContainerRegistryDockerBuildStep()
         {
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Define all the provisionable properties for DockerBuildStep. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryDockerBuildStep. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -128,7 +128,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for DockerBuildStep that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryDockerBuildStep that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

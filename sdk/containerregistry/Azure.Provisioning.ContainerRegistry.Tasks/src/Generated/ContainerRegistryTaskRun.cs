@@ -128,7 +128,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the RunRequest. </summary>
-        public RunContent RunRequest
+        public ContainerRegistryRunContent RunRequest
         {
             get
             {

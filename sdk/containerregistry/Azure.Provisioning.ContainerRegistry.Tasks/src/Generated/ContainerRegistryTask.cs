@@ -226,7 +226,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Step. </summary>
-        public TaskStepProperties Step
+        public ContainerRegistryTaskStepProperties Step
         {
             get
             {

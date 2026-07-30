@@ -21,6 +21,75 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             public static readonly string V2025_03_01_PREVIEW;
         }
     }
+    public partial class ContainerRegistryDockerBuildContent : Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRunContent
+    {
+        public ContainerRegistryDockerBuildContent() { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskArgument> Arguments { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DockerFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> ImageNames { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsCacheDisabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsPushEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerRegistryDockerBuildStep : Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskStepProperties
+    {
+        public ContainerRegistryDockerBuildStep() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskArgument> Arguments { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DockerFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> ImageNames { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsCacheDisabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsPushEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerRegistryEncodedTaskRunContent : Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRunContent
+    {
+        public ContainerRegistryEncodedTaskRunContent() { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EncodedTaskContent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EncodedValuesContent { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerRegistryEncodedTaskStep : Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskStepProperties
+    {
+        public ContainerRegistryEncodedTaskStep() { }
+        public Azure.Provisioning.BicepValue<string> EncodedTaskContent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EncodedValuesContent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerRegistryFileTaskRunContent : Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRunContent
+    {
+        public ContainerRegistryFileTaskRunContent() { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TaskFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValuesFilePath { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ContainerRegistryFileTaskStep : Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskStepProperties
+    {
+        public ContainerRegistryFileTaskStep() { }
+        public Azure.Provisioning.BicepValue<string> TaskFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValuesFilePath { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ContainerRegistryRun : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal ContainerRegistryRun() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -56,6 +125,14 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             public static readonly string V2025_03_01_PREVIEW;
         }
     }
+    public partial class ContainerRegistryRunContent : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryRunContent() { }
+        public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsArchiveEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> LogTemplate { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ContainerRegistryTask : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryTask(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -72,7 +149,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskStatus> Status { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.TaskStepProperties Step { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskStepProperties Step { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
@@ -237,7 +314,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.RunContent RunRequest { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRunContent RunRequest { get { throw null; } set { } }
         public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRun RunResult { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -247,6 +324,13 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         {
             public static readonly string V2025_03_01_PREVIEW;
         }
+    }
+    public partial class ContainerRegistryTaskRunContent : Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRunContent
+    {
+        public ContainerRegistryTaskRunContent() { }
+        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskOverrideStepProperties OverrideTaskStepProperties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TaskId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum ContainerRegistryTaskRunStatus
     {
@@ -346,6 +430,14 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         Disabled = 0,
         Enabled = 1,
     }
+    public partial class ContainerRegistryTaskStepProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryTaskStepProperties() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskBaseImageDependency> BaseImageDependencies { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ContextAccessToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ContextPath { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ContainerRegistryTaskTimerTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTaskTimerTrigger() { }
@@ -399,97 +491,5 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         V7 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="v8")]
         V8 = 2,
-    }
-    public partial class DockerBuildContent : Azure.Provisioning.ContainerRegistry.Tasks.RunContent
-    {
-        public DockerBuildContent() { }
-        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskArgument> Arguments { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DockerFilePath { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> ImageNames { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsCacheDisabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsPushEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class DockerBuildStep : Azure.Provisioning.ContainerRegistry.Tasks.TaskStepProperties
-    {
-        public DockerBuildStep() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskArgument> Arguments { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DockerFilePath { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> ImageNames { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsCacheDisabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsPushEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class EncodedTaskRunContent : Azure.Provisioning.ContainerRegistry.Tasks.RunContent
-    {
-        public EncodedTaskRunContent() { }
-        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EncodedTaskContent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EncodedValuesContent { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class EncodedTaskStep : Azure.Provisioning.ContainerRegistry.Tasks.TaskStepProperties
-    {
-        public EncodedTaskStep() { }
-        public Azure.Provisioning.BicepValue<string> EncodedTaskContent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EncodedValuesContent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class FileTaskRunContent : Azure.Provisioning.ContainerRegistry.Tasks.RunContent
-    {
-        public FileTaskRunContent() { }
-        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TaskFilePath { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValuesFilePath { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class FileTaskStep : Azure.Provisioning.ContainerRegistry.Tasks.TaskStepProperties
-    {
-        public FileTaskStep() { }
-        public Azure.Provisioning.BicepValue<string> TaskFilePath { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue> Values { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValuesFilePath { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class RunContent : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public RunContent() { }
-        public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsArchiveEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LogTemplate { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class TaskRunContent : Azure.Provisioning.ContainerRegistry.Tasks.RunContent
-    {
-        public TaskRunContent() { }
-        public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskOverrideStepProperties OverrideTaskStepProperties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TaskId { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class TaskStepProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public TaskStepProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskBaseImageDependency> BaseImageDependencies { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ContextAccessToken { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ContextPath { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
 }

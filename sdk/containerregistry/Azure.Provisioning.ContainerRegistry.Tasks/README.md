@@ -47,7 +47,7 @@ ContainerRegistryTask task =
         {
             OS = ContainerRegistryTaskOS.Linux,
         },
-        Step = new DockerBuildStep
+        Step = new ContainerRegistryDockerBuildStep
         {
             ContextPath = "https://github.com/Azure-Samples/acr-tasks.git",
             DockerFilePath = "Dockerfile",
