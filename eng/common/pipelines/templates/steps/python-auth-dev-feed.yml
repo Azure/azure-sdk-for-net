@@ -3,6 +3,7 @@ parameters:
   EnableTwineAuth: true
   EnablePipAuth: true
   EnableUvAuth: true
+  DisableAdditionalIndexes: false
 
 steps:
   - pwsh: |
@@ -29,6 +30,13 @@ steps:
       inputs:
         artifactFeeds: $(DevFeedName)
         onlyAddExtraIndex: false
+
+  - ${{ if eq(parameters.DisableAdditionalIndexes, true) }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=PIP_EXTRA_INDEX_URL]"
+        Write-Host "##vso[task.setvariable variable=UV_INDEX]"
+        Write-Host "##vso[task.setvariable variable=UV_EXTRA_INDEX_URL]"
+      displayName: 'Disable Additional Package Indexes'
 
   - ${{ if eq(parameters.EnableUvAuth, true) }}:
     - pwsh: |
