@@ -52,7 +52,7 @@ If any SDK breaking changes are mitigated through TypeSpec customization, return
 ## Examples
 
 - "Detect and mitigate SDK breaking changes for the service"
-- "assurance the SDK quality for the service project"
+- "Assure SDK quality for the service project"
 
 ## Troubleshooting
 
