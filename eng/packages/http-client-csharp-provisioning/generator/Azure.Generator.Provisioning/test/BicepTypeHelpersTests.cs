@@ -160,6 +160,8 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void BuildDefinePropertyArgsOmitsFormatsForCollectionTypes()
         {
+            // TODO: Remove this workaround after collection element formats are supported.
+            // https://github.com/Azure/azure-sdk-for-net/issues/61525
             var listArgs = BicepTypeHelpers.BuildDefinePropertyArgs(
                 new CSharpType(typeof(BicepList<>), typeof(string)),
                 "Values",
