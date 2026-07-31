@@ -1,6 +1,6 @@
 # Microsoft Azure Discovery management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This library provides management (control-plane) operations for Microsoft Discovery, an enterprise platform for accelerating scientific research and discovery. Use it to provision and manage `Microsoft.Discovery` resources — including workspaces, projects, supercomputers, tools, and bookshelves — along with their identity, networking, and storage configuration.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
