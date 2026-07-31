@@ -1,15 +1,14 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0 (2026-07-31)
 
 ### Features Added
 
 - Added `StatusReason` property to `HybridComputeMachineData` (via `MachineProperties`) and the new `MachineStatusReason` enum, indicating the reason for the machine's status.
 - Added `GatewayBypass` property to `ArcGatewayData` and `ArcGatewayPatch` for configuring domain bypass on the Arc gateway.
 
-### Bugs Fixed
-
 ### Other Changes
+
 - Migrated SDK code generation from AutoRest to TypeSpec.
 
 ## 1.1.0-beta.2 (2026-04-27)
