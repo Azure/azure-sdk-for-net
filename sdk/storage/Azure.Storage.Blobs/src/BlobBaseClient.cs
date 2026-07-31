@@ -386,6 +386,18 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Argument.AssertNotNull(blobUri, nameof(blobUri));
             options ??= new BlobClientOptions();
+
+            // Token-credential path
+            if (tokenCredential != null)
+            {
+                SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
+                    ?? new TokenCredentialSessionProvider(blobUri, tokenCredential, options);
+                authentication = new SessionAuthenticationPolicy(
+                    fallbackAuthPolicy: authentication,
+                    sessionProvider: sessionProvider,
+                    sessionOptions: options.SessionOptions);
+            }
+
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))
             {

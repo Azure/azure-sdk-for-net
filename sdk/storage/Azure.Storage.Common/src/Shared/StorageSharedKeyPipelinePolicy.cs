@@ -64,7 +64,7 @@ namespace Azure.Storage
         }
 
         // If you change this method, make sure live tests are passing before merging PR.
-        private string BuildStringToSign(HttpMessage message)
+        internal string BuildStringToSign(HttpMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
 

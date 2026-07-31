@@ -54,6 +54,7 @@ namespace Azure.Storage.Blobs
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Request100ContinueOptions Request100ContinueOptions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionOptions SessionOptions { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public bool TrimBlobNameSlashes { get { throw null; } set { } }
         public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
@@ -183,6 +184,7 @@ namespace Azure.Storage.Blobs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.BlobContainerClient>> CreateBlobContainerAsync(string blobContainerName, Azure.Storage.Blobs.Models.PublicAccessType publicAccessType = Azure.Storage.Blobs.Models.PublicAccessType.None, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected static Azure.Storage.Blobs.BlobServiceClient CreateClient(System.Uri serviceUri, Azure.Storage.Blobs.BlobClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy authentication, Azure.Core.Pipeline.HttpPipeline pipeline) { throw null; }
         protected static Azure.Storage.Blobs.BlobServiceClient CreateClient(System.Uri serviceUri, Azure.Storage.Blobs.BlobClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy authentication, Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Storage.StorageSharedKeyCredential sharedKeyCredential, Azure.AzureSasCredential sasCredential, Azure.Core.TokenCredential tokenCredential) { throw null; }
+        protected static Azure.Core.Pipeline.HttpPipelinePolicy CreateSessionAuthenticationPolicy(Azure.Core.Pipeline.HttpPipelinePolicy fallbackAuthPolicy, Azure.Storage.Blobs.Models.SessionProvider sessionProvider, Azure.Storage.Blobs.Models.SessionOptions sessionOptions) { throw null; }
         public virtual Azure.Response DeleteBlobContainer(string blobContainerName, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBlobContainerAsync(string blobContainerName, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Blobs.Models.TaggedBlobItem> FindBlobsByTags(string tagFilterSqlExpression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1506,6 +1508,22 @@ namespace Azure.Storage.Blobs.Models
         Update = 1,
         Increment = 2,
     }
+    public enum SessionMode
+    {
+        Disabled = 0,
+        Enabled = 1,
+    }
+    public partial class SessionOptions
+    {
+        public SessionOptions() { }
+        public string AccountName { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionMode SessionMode { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionProvider SessionProvider { get { throw null; } set { } }
+    }
+    public abstract partial class SessionProvider
+    {
+        internal SessionProvider() { }
+    }
     public enum SkuName
     {
         StandardLrs = 0,
@@ -1534,6 +1552,10 @@ namespace Azure.Storage.Blobs.Models
         public string BlobContainerName { get { throw null; } }
         public string BlobName { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class TokenCredentialSessionProvider : Azure.Storage.Blobs.Models.SessionProvider
+    {
+        public TokenCredentialSessionProvider(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
     }
     public partial class UserDelegationKey
     {
