@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.ManagedApplications
     [ModelReaderWriterBuildable(typeof(ApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationResource))]
     [ModelReaderWriterBuildable(typeof(GenericResourceInfo))]
-    [ModelReaderWriterBuildable(typeof(Models.Identity))]
     [ModelReaderWriterBuildable(typeof(JitApprover))]
     [ModelReaderWriterBuildable(typeof(JitAuthorizationPolicies))]
     [ModelReaderWriterBuildable(typeof(JitRequestDefinitionData))]
@@ -58,12 +57,13 @@ namespace Azure.ResourceManager.ManagedApplications
     [ModelReaderWriterBuildable(typeof(ManagedApplicationsSku))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityToken))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityTokenResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegistryPackage))]
     [ModelReaderWriterBuildable(typeof(RegistryPackageLinks))]
     [ModelReaderWriterBuildable(typeof(RegistryPackagePlan))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateAccessContent))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedResourceIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerManagedApplicationsContext : ModelReaderWriterContext
     {
     }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationData(ApplicationProperties properties, ManagedApplicationsPlan plan, string kind, Models.Identity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationData(ApplicationProperties properties, ManagedApplicationsPlan plan, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Plan = plan;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedApplications
         public string Kind { get; set; }
 
         /// <summary> The identity of the resource. </summary>
-        public Models.Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The managed resource group Id. </summary>
         public string ManagedResourceGroupId

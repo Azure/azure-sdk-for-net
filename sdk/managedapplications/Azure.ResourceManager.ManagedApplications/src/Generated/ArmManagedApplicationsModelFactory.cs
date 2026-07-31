@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="ManagedApplications.ApplicationData"/> instance for mocking. </returns>
-        public static ApplicationData ApplicationData(string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlan plan = default, string kind = default, Identity identity = default)
+        public static ApplicationData ApplicationData(string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlan plan = default, string kind = default, ManagedServiceIdentity identity = default)
         {
             return new ApplicationData(applicationDefinitionId is null && billingDetailsResourceUsageId is null ? default : new ApplicationProperties(
                 default,
@@ -172,26 +172,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default);
         }
 
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <param name="type"> The identity type. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.Identity"/> instance for mocking. </returns>
-        public static Identity Identity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedResourceIdentity> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedResourceIdentity>();
-
-            return new Identity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedResourceIdentity>(), default);
-        }
-
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="tenantId"> The tenant id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedResourceIdentity"/> instance for mocking. </returns>
-        public static UserAssignedResourceIdentity UserAssignedResourceIdentity(string principalId = default, string tenantId = default)
-        {
-            return new UserAssignedResourceIdentity(principalId, tenantId, default);
-        }
-
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -284,7 +264,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Models.ApplicationPatch"/> instance for mocking. </returns>
-        public static ApplicationPatch ApplicationPatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlanPatch plan = default, string kind = default, Identity identity = default)
+        public static ApplicationPatch ApplicationPatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlanPatch plan = default, string kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

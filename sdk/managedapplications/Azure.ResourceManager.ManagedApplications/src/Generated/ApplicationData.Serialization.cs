@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ManagedApplications
             ApplicationProperties properties = default;
             ManagedApplicationsPlan plan = default;
             string kind = default;
-            Models.Identity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     {
                         continue;
                     }
-                    identity = Models.Identity.DeserializeIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerManagedApplicationsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
