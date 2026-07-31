@@ -115,5 +115,3 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE

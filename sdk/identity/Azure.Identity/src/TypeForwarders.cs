@@ -60,5 +60,3 @@ using Azure.Identity;
 [assembly: TypeForwardedTo(typeof(VisualStudioCredentialOptions))]
 [assembly: TypeForwardedTo(typeof(WorkloadIdentityCredential))]
 [assembly: TypeForwardedTo(typeof(WorkloadIdentityCredentialOptions))]
-
-// Test comment for batching validation - DO NOT MERGE

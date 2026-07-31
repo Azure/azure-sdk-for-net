@@ -65,5 +65,3 @@ namespace Azure.ResourceManager.Synapse
             Update(WaitUntil.Started, patch, cancellationToken).WaitForCompletion(cancellationToken);
     }
 }
-
-// Test comment for batching validation - DO NOT MERGE
