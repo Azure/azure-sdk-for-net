@@ -12,6 +12,8 @@ namespace Azure.IoT.DeviceUpdate
         public DeviceManagementClient(Azure.IoT.DeviceUpdate.DeviceManagementClientSettings settings) { }
         public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
+        public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
+        public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdateDeployment(string groupId, string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateDeploymentAsync(string groupId, string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -113,6 +115,8 @@ namespace Azure.IoT.DeviceUpdate
         public DeviceUpdateClient(Azure.IoT.DeviceUpdate.DeviceUpdateClientSettings settings) { }
         public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
+        public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
+        public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation DeleteUpdate(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteUpdateAsync(Azure.WaitUntil waitUntil, string provider, string name, string version, Azure.RequestContext context = null) { throw null; }
