@@ -12,17 +12,17 @@ using Azure.ResourceManager.ManagedApplications;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Plan for the managed application. </summary>
-    public partial class RegistryPackagePlan
+    public partial class ManagedApplicationsRegistryPackagePlan
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RegistryPackagePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsRegistryPackagePlan"/>. </summary>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="offer"> The offer Id. </param>
         /// <param name="plan"> The plan Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="offer"/> or <paramref name="plan"/> is null. </exception>
-        public RegistryPackagePlan(string publisher, string offer, string plan)
+        public ManagedApplicationsRegistryPackagePlan(string publisher, string offer, string plan)
         {
             Argument.AssertNotNull(publisher, nameof(publisher));
             Argument.AssertNotNull(offer, nameof(offer));
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             Plan = plan;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegistryPackagePlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsRegistryPackagePlan"/>. </summary>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="offer"> The offer Id. </param>
         /// <param name="plan"> The plan Id. </param>
         /// <param name="version"> The plan's version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPackagePlan(string publisher, string offer, string plan, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedApplicationsRegistryPackagePlan(string publisher, string offer, string plan, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
             Offer = offer;

@@ -232,8 +232,8 @@ namespace Azure.ResourceManager.ManagedApplications
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedApplications.JitRequestDefinitionResource>> GetJitRequestDefinitionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string jitRequestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.JitRequestDefinitionResource GetJitRequestDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.JitRequestDefinitionCollection GetJitRequestDefinitions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage> PortalRegistryPackage(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan registryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>> PortalRegistryPackageAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan registryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage> PortalRegistryPackage(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>> PortalRegistryPackageAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedApplications.ApplicationResource> UpdateById(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string applicationId, Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedApplications.ApplicationResource>> UpdateByIdAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, string applicationId, Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -282,8 +282,8 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteByIdAsync(Azure.WaitUntil waitUntil, string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedApplications.ApplicationResource> GetById(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedApplications.ApplicationResource>> GetByIdAsync(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage> PortalRegistryPackage(Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan registryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>> PortalRegistryPackageAsync(Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan registryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage> PortalRegistryPackage(Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>> PortalRegistryPackageAsync(Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedApplications.ApplicationResource> UpdateById(Azure.WaitUntil waitUntil, string applicationId, Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedApplications.ApplicationResource>> UpdateByIdAsync(Azure.WaitUntil waitUntil, string applicationId, Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -614,12 +614,12 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsListTokenRequestContent ManagedApplicationsListTokenRequestContent(string authorizationAudience = null, System.Collections.Generic.IEnumerable<string> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlan ManagedApplicationsPlan(string name = null, string publisher = null, string product = null, string promotionCode = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch ManagedApplicationsPlanPatch(string name = null, string publisher = null, string product = null, string promotionCode = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage ManagedApplicationsRegistryPackage(string publisher = null, string offer = null, string plan = null, string version = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks packageLinks = null) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks ManagedApplicationsRegistryPackageLinks(string createUiDefinitionLink = null, string deploymentTemplateLink = null) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan ManagedApplicationsRegistryPackagePlan(string publisher = null, string offer = null, string plan = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku ManagedApplicationsSku(string name = null, string tier = null, string size = null, string family = null, string model = null, int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityToken ManagedIdentityToken(string accessToken = null, string expiresIn = null, string expiresOn = null, string notBefore = null, string authorizationAudience = null, string resourceId = null, string tokenType = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityTokenResult ManagedIdentityTokenResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityToken> value = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackage RegistryPackage(string publisher = null, string offer = null, string plan = null, string version = null, Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks packageLinks = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks RegistryPackageLinks(string createUiDefinitionLink = null, string deploymentTemplateLink = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan RegistryPackagePlan(string publisher = null, string offer = null, string plan = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent UpdateAccessContent(string approver = null, Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata metadata = null, Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus status = default(Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus), Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus subStatus = default(Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -933,6 +933,56 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ManagedApplicationsRegistryPackage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>
+    {
+        internal ManagedApplicationsRegistryPackage() { }
+        public string Offer { get { throw null; } }
+        public Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks PackageLinks { get { throw null; } }
+        public string Plan { get { throw null; } }
+        public string Publisher { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedApplicationsRegistryPackageLinks : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks>
+    {
+        internal ManagedApplicationsRegistryPackageLinks() { }
+        public string CreateUiDefinitionLink { get { throw null; } }
+        public string DeploymentTemplateLink { get { throw null; } }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackageLinks>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedApplicationsRegistryPackagePlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan>
+    {
+        public ManagedApplicationsRegistryPackagePlan(string publisher, string offer, string plan) { }
+        public string Offer { get { throw null; } }
+        public string Plan { get { throw null; } }
+        public string Publisher { get { throw null; } }
+        public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsRegistryPackagePlan>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ManagedApplicationsSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku>
     {
         public ManagedApplicationsSku(string name) { }
@@ -1009,56 +1059,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static implicit operator Azure.ResourceManager.ManagedApplications.Models.ProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.ProvisioningState left, Azure.ResourceManager.ManagedApplications.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RegistryPackage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>
-    {
-        internal RegistryPackage() { }
-        public string Offer { get { throw null; } }
-        public Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks PackageLinks { get { throw null; } }
-        public string Plan { get { throw null; } }
-        public string Publisher { get { throw null; } }
-        public string Version { get { throw null; } }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.RegistryPackage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.RegistryPackage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManagedApplications.Models.RegistryPackage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedApplications.Models.RegistryPackage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RegistryPackageLinks : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks>
-    {
-        internal RegistryPackageLinks() { }
-        public string CreateUiDefinitionLink { get { throw null; } }
-        public string DeploymentTemplateLink { get { throw null; } }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RegistryPackagePlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>
-    {
-        public RegistryPackagePlan(string publisher, string offer, string plan) { }
-        public string Offer { get { throw null; } }
-        public string Plan { get { throw null; } }
-        public string Publisher { get { throw null; } }
-        public string Version { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UpdateAccessContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent>
     {

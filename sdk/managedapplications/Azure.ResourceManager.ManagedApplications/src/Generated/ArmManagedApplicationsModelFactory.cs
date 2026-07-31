@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="offer"> The offer Id. </param>
         /// <param name="plan"> The plan Id. </param>
         /// <param name="version"> The plan's version. </param>
-        /// <returns> A new <see cref="Models.RegistryPackagePlan"/> instance for mocking. </returns>
-        public static RegistryPackagePlan RegistryPackagePlan(string publisher = default, string offer = default, string plan = default, string version = default)
+        /// <returns> A new <see cref="Models.ManagedApplicationsRegistryPackagePlan"/> instance for mocking. </returns>
+        public static ManagedApplicationsRegistryPackagePlan ManagedApplicationsRegistryPackagePlan(string publisher = default, string offer = default, string plan = default, string version = default)
         {
-            return new RegistryPackagePlan(publisher, offer, plan, version, default);
+            return new ManagedApplicationsRegistryPackagePlan(publisher, offer, plan, version, default);
         }
 
         /// <param name="publisher"> The publisher. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="plan"> The plan Id. </param>
         /// <param name="version"> The version of the plan. </param>
         /// <param name="packageLinks"> The registry package links. </param>
-        /// <returns> A new <see cref="Models.RegistryPackage"/> instance for mocking. </returns>
-        public static RegistryPackage RegistryPackage(string publisher = default, string offer = default, string plan = default, string version = default, RegistryPackageLinks packageLinks = default)
+        /// <returns> A new <see cref="Models.ManagedApplicationsRegistryPackage"/> instance for mocking. </returns>
+        public static ManagedApplicationsRegistryPackage ManagedApplicationsRegistryPackage(string publisher = default, string offer = default, string plan = default, string version = default, ManagedApplicationsRegistryPackageLinks packageLinks = default)
         {
-            return new RegistryPackage(
+            return new ManagedApplicationsRegistryPackage(
                 publisher,
                 offer,
                 plan,
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <param name="createUiDefinitionLink"> The create ui definition link. </param>
         /// <param name="deploymentTemplateLink"> The deployment template link. </param>
-        /// <returns> A new <see cref="Models.RegistryPackageLinks"/> instance for mocking. </returns>
-        public static RegistryPackageLinks RegistryPackageLinks(string createUiDefinitionLink = default, string deploymentTemplateLink = default)
+        /// <returns> A new <see cref="Models.ManagedApplicationsRegistryPackageLinks"/> instance for mocking. </returns>
+        public static ManagedApplicationsRegistryPackageLinks ManagedApplicationsRegistryPackageLinks(string createUiDefinitionLink = default, string deploymentTemplateLink = default)
         {
-            return new RegistryPackageLinks(createUiDefinitionLink, deploymentTemplateLink, default);
+            return new ManagedApplicationsRegistryPackageLinks(createUiDefinitionLink, deploymentTemplateLink, default);
         }
 
         /// <param name="managedResourceGroupId"> The managed resource group Id. </param>

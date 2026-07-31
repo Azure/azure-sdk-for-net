@@ -14,51 +14,51 @@ using Azure.ResourceManager.ManagedApplications;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Resource information. </summary>
-    public partial class RegistryPackageLinks : IJsonModel<RegistryPackageLinks>
+    public partial class ManagedApplicationsRegistryPackageLinks : IJsonModel<ManagedApplicationsRegistryPackageLinks>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegistryPackageLinks PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedApplicationsRegistryPackageLinks PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRegistryPackageLinks(document.RootElement, options);
+                        return DeserializeManagedApplicationsRegistryPackageLinks(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistryPackageLinks)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackageLinks)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedApplicationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RegistryPackageLinks)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackageLinks)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegistryPackageLinks>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedApplicationsRegistryPackageLinks>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegistryPackageLinks IPersistableModel<RegistryPackageLinks>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedApplicationsRegistryPackageLinks IPersistableModel<ManagedApplicationsRegistryPackageLinks>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegistryPackageLinks>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedApplicationsRegistryPackageLinks>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RegistryPackageLinks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedApplicationsRegistryPackageLinks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryPackageLinks)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackageLinks)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(CreateUiDefinitionLink))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegistryPackageLinks IJsonModel<RegistryPackageLinks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedApplicationsRegistryPackageLinks IJsonModel<ManagedApplicationsRegistryPackageLinks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegistryPackageLinks JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedApplicationsRegistryPackageLinks JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackageLinks>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryPackageLinks)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackageLinks)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRegistryPackageLinks(document.RootElement, options);
+            return DeserializeManagedApplicationsRegistryPackageLinks(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegistryPackageLinks DeserializeRegistryPackageLinks(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedApplicationsRegistryPackageLinks DeserializeManagedApplicationsRegistryPackageLinks(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegistryPackageLinks(createUiDefinitionLink, deploymentTemplateLink, additionalBinaryDataProperties);
+            return new ManagedApplicationsRegistryPackageLinks(createUiDefinitionLink, deploymentTemplateLink, additionalBinaryDataProperties);
         }
     }
 }

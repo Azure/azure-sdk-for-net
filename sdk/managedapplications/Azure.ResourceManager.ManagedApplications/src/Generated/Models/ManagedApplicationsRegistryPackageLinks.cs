@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Resource information. </summary>
-    public partial class RegistryPackageLinks
+    public partial class ManagedApplicationsRegistryPackageLinks
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RegistryPackageLinks"/>. </summary>
-        internal RegistryPackageLinks()
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsRegistryPackageLinks"/>. </summary>
+        internal ManagedApplicationsRegistryPackageLinks()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegistryPackageLinks"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsRegistryPackageLinks"/>. </summary>
         /// <param name="createUiDefinitionLink"> The create ui definition link. </param>
         /// <param name="deploymentTemplateLink"> The deployment template link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPackageLinks(string createUiDefinitionLink, string deploymentTemplateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedApplicationsRegistryPackageLinks(string createUiDefinitionLink, string deploymentTemplateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateUiDefinitionLink = createUiDefinitionLink;
             DeploymentTemplateLink = deploymentTemplateLink;

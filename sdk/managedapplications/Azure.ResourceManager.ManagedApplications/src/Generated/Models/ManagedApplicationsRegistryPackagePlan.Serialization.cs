@@ -15,66 +15,66 @@ using Azure.ResourceManager.ManagedApplications;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Plan for the managed application. </summary>
-    public partial class RegistryPackagePlan : IJsonModel<RegistryPackagePlan>
+    public partial class ManagedApplicationsRegistryPackagePlan : IJsonModel<ManagedApplicationsRegistryPackagePlan>
     {
-        /// <summary> Initializes a new instance of <see cref="RegistryPackagePlan"/> for deserialization. </summary>
-        internal RegistryPackagePlan()
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsRegistryPackagePlan"/> for deserialization. </summary>
+        internal ManagedApplicationsRegistryPackagePlan()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegistryPackagePlan PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedApplicationsRegistryPackagePlan PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRegistryPackagePlan(document.RootElement, options);
+                        return DeserializeManagedApplicationsRegistryPackagePlan(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistryPackagePlan)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackagePlan)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedApplicationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RegistryPackagePlan)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackagePlan)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegistryPackagePlan>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedApplicationsRegistryPackagePlan>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegistryPackagePlan IPersistableModel<RegistryPackagePlan>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedApplicationsRegistryPackagePlan IPersistableModel<ManagedApplicationsRegistryPackagePlan>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegistryPackagePlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedApplicationsRegistryPackagePlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="registryPackagePlan"> The <see cref="RegistryPackagePlan"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RegistryPackagePlan registryPackagePlan)
+        /// <param name="managedApplicationsRegistryPackagePlan"> The <see cref="ManagedApplicationsRegistryPackagePlan"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan)
         {
-            if (registryPackagePlan == null)
+            if (managedApplicationsRegistryPackagePlan == null)
             {
                 return null;
             }
-            return RequestContent.Create(registryPackagePlan, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(managedApplicationsRegistryPackagePlan, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RegistryPackagePlan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedApplicationsRegistryPackagePlan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryPackagePlan)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackagePlan)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("publisher"u8);
             writer.WriteStringValue(Publisher);
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegistryPackagePlan IJsonModel<RegistryPackagePlan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedApplicationsRegistryPackagePlan IJsonModel<ManagedApplicationsRegistryPackagePlan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegistryPackagePlan JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedApplicationsRegistryPackagePlan JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationsRegistryPackagePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryPackagePlan)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedApplicationsRegistryPackagePlan)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRegistryPackagePlan(document.RootElement, options);
+            return DeserializeManagedApplicationsRegistryPackagePlan(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegistryPackagePlan DeserializeRegistryPackagePlan(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedApplicationsRegistryPackagePlan DeserializeManagedApplicationsRegistryPackagePlan(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegistryPackagePlan(publisher, offer, plan, version, additionalBinaryDataProperties);
+            return new ManagedApplicationsRegistryPackagePlan(publisher, offer, plan, version, additionalBinaryDataProperties);
         }
     }
 }

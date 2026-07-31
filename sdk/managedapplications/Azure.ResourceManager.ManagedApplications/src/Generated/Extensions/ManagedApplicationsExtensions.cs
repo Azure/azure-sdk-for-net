@@ -406,36 +406,36 @@ namespace Azure.ResourceManager.ManagedApplications
         /// Generates the registry package links for Managed Applications and Solution Templates.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.PortalRegistryPackageAsync(RegistryPackagePlan, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.PortalRegistryPackageAsync(ManagedApplicationsRegistryPackagePlan, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="registryPackagePlan"> The request body. </param>
+        /// <param name="managedApplicationsRegistryPackagePlan"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<RegistryPackage>> PortalRegistryPackageAsync(this TenantResource tenantResource, RegistryPackagePlan registryPackagePlan, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedApplicationsRegistryPackage>> PortalRegistryPackageAsync(this TenantResource tenantResource, ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableManagedApplicationsTenantResource(tenantResource).PortalRegistryPackageAsync(registryPackagePlan, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedApplicationsTenantResource(tenantResource).PortalRegistryPackageAsync(managedApplicationsRegistryPackagePlan, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Generates the registry package links for Managed Applications and Solution Templates.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.PortalRegistryPackage(RegistryPackagePlan, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.PortalRegistryPackage(ManagedApplicationsRegistryPackagePlan, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="registryPackagePlan"> The request body. </param>
+        /// <param name="managedApplicationsRegistryPackagePlan"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<RegistryPackage> PortalRegistryPackage(this TenantResource tenantResource, RegistryPackagePlan registryPackagePlan, CancellationToken cancellationToken = default)
+        public static Response<ManagedApplicationsRegistryPackage> PortalRegistryPackage(this TenantResource tenantResource, ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableManagedApplicationsTenantResource(tenantResource).PortalRegistryPackage(registryPackagePlan, cancellationToken);
+            return GetMockableManagedApplicationsTenantResource(tenantResource).PortalRegistryPackage(managedApplicationsRegistryPackagePlan, cancellationToken);
         }
 
         /// <summary>

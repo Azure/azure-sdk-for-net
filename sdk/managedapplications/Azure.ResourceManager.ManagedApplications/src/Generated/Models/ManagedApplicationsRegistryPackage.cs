@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Information about an application definition request. </summary>
-    public partial class RegistryPackage
+    public partial class ManagedApplicationsRegistryPackage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RegistryPackage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsRegistryPackage"/>. </summary>
         /// <param name="publisher"> The publisher. </param>
         /// <param name="offer"> The offer Id. </param>
         /// <param name="plan"> The plan Id. </param>
         /// <param name="version"> The version of the plan. </param>
         /// <param name="packageLinks"> The registry package links. </param>
-        internal RegistryPackage(string publisher, string offer, string plan, string version, RegistryPackageLinks packageLinks)
+        internal ManagedApplicationsRegistryPackage(string publisher, string offer, string plan, string version, ManagedApplicationsRegistryPackageLinks packageLinks)
         {
             Publisher = publisher;
             Offer = offer;
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             PackageLinks = packageLinks;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegistryPackage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsRegistryPackage"/>. </summary>
         /// <param name="publisher"> The publisher. </param>
         /// <param name="offer"> The offer Id. </param>
         /// <param name="plan"> The plan Id. </param>
         /// <param name="version"> The version of the plan. </param>
         /// <param name="packageLinks"> The registry package links. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPackage(string publisher, string offer, string plan, string version, RegistryPackageLinks packageLinks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedApplicationsRegistryPackage(string publisher, string offer, string plan, string version, ManagedApplicationsRegistryPackageLinks packageLinks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Publisher = publisher;
             Offer = offer;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public string Version { get; }
 
         /// <summary> The registry package links. </summary>
-        public RegistryPackageLinks PackageLinks { get; }
+        public ManagedApplicationsRegistryPackageLinks PackageLinks { get; }
     }
 }

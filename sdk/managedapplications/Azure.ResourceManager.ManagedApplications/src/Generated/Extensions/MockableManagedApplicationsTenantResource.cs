@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="registryPackagePlan"> The request body. </param>
+        /// <param name="managedApplicationsRegistryPackagePlan"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryPackagePlan"/> is null. </exception>
-        public virtual async Task<Response<RegistryPackage>> PortalRegistryPackageAsync(RegistryPackagePlan registryPackagePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedApplicationsRegistryPackagePlan"/> is null. </exception>
+        public virtual async Task<Response<ManagedApplicationsRegistryPackage>> PortalRegistryPackageAsync(ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(registryPackagePlan, nameof(registryPackagePlan));
+            Argument.AssertNotNull(managedApplicationsRegistryPackagePlan, nameof(managedApplicationsRegistryPackagePlan));
 
             using DiagnosticScope scope = SolutionsClientClientDiagnostics.CreateScope("MockableManagedApplicationsTenantResource.PortalRegistryPackage");
             scope.Start();
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(RegistryPackagePlan.ToRequestContent(registryPackagePlan), context);
+                HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(ManagedApplicationsRegistryPackagePlan.ToRequestContent(managedApplicationsRegistryPackagePlan), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RegistryPackage> response = Response.FromValue(RegistryPackage.FromResponse(result), result);
+                Response<ManagedApplicationsRegistryPackage> response = Response.FromValue(ManagedApplicationsRegistryPackage.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="registryPackagePlan"> The request body. </param>
+        /// <param name="managedApplicationsRegistryPackagePlan"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryPackagePlan"/> is null. </exception>
-        public virtual Response<RegistryPackage> PortalRegistryPackage(RegistryPackagePlan registryPackagePlan, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="managedApplicationsRegistryPackagePlan"/> is null. </exception>
+        public virtual Response<ManagedApplicationsRegistryPackage> PortalRegistryPackage(ManagedApplicationsRegistryPackagePlan managedApplicationsRegistryPackagePlan, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(registryPackagePlan, nameof(registryPackagePlan));
+            Argument.AssertNotNull(managedApplicationsRegistryPackagePlan, nameof(managedApplicationsRegistryPackagePlan));
 
             using DiagnosticScope scope = SolutionsClientClientDiagnostics.CreateScope("MockableManagedApplicationsTenantResource.PortalRegistryPackage");
             scope.Start();
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(RegistryPackagePlan.ToRequestContent(registryPackagePlan), context);
+                HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(ManagedApplicationsRegistryPackagePlan.ToRequestContent(managedApplicationsRegistryPackagePlan), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RegistryPackage> response = Response.FromValue(RegistryPackage.FromResponse(result), result);
+                Response<ManagedApplicationsRegistryPackage> response = Response.FromValue(ManagedApplicationsRegistryPackage.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
