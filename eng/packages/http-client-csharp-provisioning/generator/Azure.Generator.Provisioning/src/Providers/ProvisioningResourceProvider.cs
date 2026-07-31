@@ -108,7 +108,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
-        public ProvisioningResourceProvider(ProvisioningResourceProjection projection, bool isSettableResource)
+        public ProvisioningResourceProvider(ProvisioningResourceProjection projection)
             : base(projection.ResourceModel)
         {
             _inputModel = projection.ResourceModel;
@@ -116,10 +116,11 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
-            _isSettableResource = isSettableResource;
+            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace Azure.Generator.Provisioning.Providers
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
         public override void Reset()
@@ -581,7 +583,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(field.Type, provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue, provProp.Format),
                         typeArgs,
                         false)
                 ).Terminate());
@@ -689,16 +691,7 @@ namespace Azure.Generator.Provisioning.Providers
             int minLength = constraints.MinLength ?? 1;
             int maxLength = constraints.MaxLength ?? 24;
 
-            // Parse valid characters from pattern, or use conservative default
-            var validCharacters = constraints.Pattern != null
-                ? constraints.Pattern.ParsePatternToResourceNameCharacters()
-                : ResourceNameCharacters.LowercaseLetters;
-
-            // If parsing produced no characters, fall back to conservative default
-            if (validCharacters == (ResourceNameCharacters)0)
-            {
-                validCharacters = ResourceNameCharacters.LowercaseLetters;
-            }
+            var validCharacters = constraints.ToResourceNameCharacters();
 
             // Build the flags expression by OR-ing the individual flag values
             ValueExpression flagsExpression = BuildResourceNameCharactersExpression(validCharacters);
@@ -963,6 +956,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 _parent = parent;
                 _apiVersions = apiVersions;
+                ProvisioningGenerator.Instance.AddTypeToKeep(this, isRoot: false);
             }
 
             protected override string BuildName() => "ResourceVersions";

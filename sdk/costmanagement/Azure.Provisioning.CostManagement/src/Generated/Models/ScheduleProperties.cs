@@ -141,8 +141,8 @@ namespace Azure.Provisioning.CostManagement
             _daysOfWeek = DefineListProperty<ScheduledActionDaysOfWeek>(nameof(DaysOfWeek), new string[] { "daysOfWeek" });
             _weeksOfMonth = DefineListProperty<ScheduledActionWeeksOfMonth>(nameof(WeeksOfMonth), new string[] { "weeksOfMonth" });
             _dayOfMonth = DefineProperty<int>(nameof(DayOfMonth), new string[] { "dayOfMonth" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true);
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, isRequired: true);
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, isRequired: true, format: "O");
             DefineAdditionalProperties();
         }
 

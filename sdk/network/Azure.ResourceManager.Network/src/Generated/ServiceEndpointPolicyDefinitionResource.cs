@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string serviceEndpointPolicyDefinitionApiVersion);
             _serviceEndpointPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _serviceEndpointPolicyDefinitionsRestClient = new ServiceEndpointPolicyDefinitions(_serviceEndpointPolicyDefinitionsClientDiagnostics, Pipeline, Endpoint, serviceEndpointPolicyDefinitionApiVersion ?? "2025-07-01");
+            _serviceEndpointPolicyDefinitionsRestClient = new ServiceEndpointPolicyDefinitions(_serviceEndpointPolicyDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEndpointPolicyDefinitionApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -234,7 +234,7 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"></param>
+        /// <param name="content"> The content multipart request content. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
@@ -257,7 +257,7 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"></param>
+        /// <param name="content"> The content multipart request content. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]

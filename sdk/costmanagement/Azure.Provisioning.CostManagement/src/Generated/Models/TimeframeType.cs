@@ -11,18 +11,18 @@ namespace Azure.Provisioning.CostManagement
     public enum TimeframeType
     {
         /// <summary> MonthToDate. </summary>
-        MonthToDate,
+        MonthToDate = 0,
         /// <summary> BillingMonthToDate. </summary>
-        BillingMonthToDate,
+        BillingMonthToDate = 1,
         /// <summary> TheLastMonth. </summary>
-        TheLastMonth,
+        TheLastMonth = 2,
         /// <summary> TheLastBillingMonth. </summary>
-        TheLastBillingMonth,
+        TheLastBillingMonth = 3,
         /// <summary> WeekToDate. </summary>
-        WeekToDate,
+        WeekToDate = 4,
         /// <summary> Custom. </summary>
-        Custom,
+        Custom = 5,
         /// <summary> TheCurrentMonth. </summary>
-        TheCurrentMonth
+        TheCurrentMonth = 6
     }
 }

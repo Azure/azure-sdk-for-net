@@ -11,12 +11,12 @@ namespace Azure.Provisioning.TrafficManager
     public enum AllowedEndpointRecordType
     {
         /// <summary> DomainName. </summary>
-        DomainName,
+        DomainName = 0,
         /// <summary> IPv4Address. </summary>
-        IPv4Address,
+        IPv4Address = 1,
         /// <summary> IPv6Address. </summary>
-        IPv6Address,
+        IPv6Address = 2,
         /// <summary> Any. </summary>
-        Any
+        Any = 3
     }
 }

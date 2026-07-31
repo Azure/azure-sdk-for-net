@@ -11,22 +11,22 @@ namespace Azure.Provisioning.Communication
     public enum DomainProvisioningState
     {
         /// <summary> Unknown. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 1,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Canceled. </summary>
-        Canceled,
+        Canceled = 3,
         /// <summary> Running. </summary>
-        Running,
+        Running = 4,
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 5,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 6,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 7,
         /// <summary> Moving. </summary>
-        Moving
+        Moving = 8
     }
 }

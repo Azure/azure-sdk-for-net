@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub
         {
             TryGetApiVersion(IotHubPrivateEndpointConnectionResource.ResourceType, out string iotHubPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, iotHubPrivateEndpointConnectionApiVersion ?? "2026-03-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotHubPrivateEndpointConnectionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

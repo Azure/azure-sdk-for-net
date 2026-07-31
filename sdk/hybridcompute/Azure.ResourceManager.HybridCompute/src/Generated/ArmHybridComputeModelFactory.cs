@@ -819,27 +819,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
-        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
-        /// <param name="esuKeys"> The list of ESU keys. </param>
-        /// <param name="serverType"> The type of the Esu servers. </param>
-        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
-        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        /// <param name="assignedLicense"> The resource id of the license. </param>
-        /// <returns> A new <see cref="Models.LicenseProfileArmEsuProperties"/> instance for mocking. </returns>
-        public static LicenseProfileArmEsuProperties LicenseProfileArmEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, string assignedLicense = default)
-        {
-            esuKeys ??= new ChangeTrackingList<EsuKey>();
-
-            return new LicenseProfileArmEsuProperties(
-                assignedLicenseImmutableId,
-                (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
-                default,
-                serverType,
-                esuEligibility,
-                esuKeyState,
-                assignedLicense);
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
         /// <param name="assignedLicense"> The resource id of the license. </param>

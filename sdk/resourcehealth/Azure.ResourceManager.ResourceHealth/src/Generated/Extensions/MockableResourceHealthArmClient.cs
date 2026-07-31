@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics ChildAvailabilityStatusesClientDiagnostics => _childAvailabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ChildAvailabilityStatuses ChildAvailabilityStatusesRestClient => _childAvailabilityStatusesRestClient ??= new ChildAvailabilityStatuses(ChildAvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ChildAvailabilityStatuses ChildAvailabilityStatusesRestClient => _childAvailabilityStatusesRestClient ??= new ChildAvailabilityStatuses(ChildAvailabilityStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         private ClientDiagnostics ChildResourcesClientDiagnostics => _childResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ChildResources ChildResourcesRestClient => _childResourcesRestClient ??= new ChildResources(ChildResourcesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ChildResources ChildResourcesRestClient => _childResourcesRestClient ??= new ChildResources(ChildResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
 
         /// <summary> Gets an object representing a <see cref="TenantResourceHealthEventImpactedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

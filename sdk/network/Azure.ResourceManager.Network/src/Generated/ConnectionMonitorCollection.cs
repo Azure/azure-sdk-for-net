@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ConnectionMonitorResource.ResourceType, out string connectionMonitorApiVersion);
             _connectionMonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ConnectionMonitorResource.ResourceType.Namespace, Diagnostics);
-            _connectionMonitorsRestClient = new ConnectionMonitors(_connectionMonitorsClientDiagnostics, Pipeline, Endpoint, connectionMonitorApiVersion ?? "2025-07-01");
+            _connectionMonitorsRestClient = new ConnectionMonitors(_connectionMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectionMonitorApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

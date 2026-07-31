@@ -182,7 +182,7 @@ namespace Azure.Provisioning.Communication
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 253, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
         /// <summary></summary>
         public static partial class ResourceVersions

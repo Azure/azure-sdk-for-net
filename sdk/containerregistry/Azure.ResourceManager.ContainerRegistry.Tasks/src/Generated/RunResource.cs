@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             TryGetApiVersion(ResourceType, out string runApiVersion);
             _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", ResourceType.Namespace, Diagnostics);
-            _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Endpoint, runApiVersion ?? "2025-03-01-preview");
+            _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, runApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

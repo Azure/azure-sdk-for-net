@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string storageAccountLocalUserApiVersion);
             _localUsersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _localUsersRestClient = new LocalUsers(_localUsersClientDiagnostics, Pipeline, Endpoint, storageAccountLocalUserApiVersion ?? "2025-08-01");
+            _localUsersRestClient = new LocalUsers(_localUsersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountLocalUserApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

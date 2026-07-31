@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             TryGetApiVersion(PlanetaryComputerGeoCatalogResource.ResourceType, out string planetaryComputerGeoCatalogApiVersion);
             _geoCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", PlanetaryComputerGeoCatalogResource.ResourceType.Namespace, Diagnostics);
-            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2026-04-15");
+            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2026-04-15");
             ValidateResourceId(id);
         }
 

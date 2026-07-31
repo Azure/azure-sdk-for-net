@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(EncryptionScopeResource.ResourceType, out string encryptionScopeApiVersion);
             _encryptionScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", EncryptionScopeResource.ResourceType.Namespace, Diagnostics);
-            _encryptionScopesRestClient = new EncryptionScopes(_encryptionScopesClientDiagnostics, Pipeline, Endpoint, encryptionScopeApiVersion ?? "2025-08-01");
+            _encryptionScopesRestClient = new EncryptionScopes(_encryptionScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, encryptionScopeApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> List of desired volumes on this disk. </summary>
         [WirePath("volumes")]
-        public IList<DiskVolumeConfiguration> Volumes { get; }
+        public IList<DiskVolumeConfiguration> Volumes { get; } = new ChangeTrackingList<DiskVolumeConfiguration>();
     }
 }

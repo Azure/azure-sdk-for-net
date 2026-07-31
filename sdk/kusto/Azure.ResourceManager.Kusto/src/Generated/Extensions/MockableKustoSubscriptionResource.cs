@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Kusto.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-14");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-14");
 
         private ClientDiagnostics OperationsResultsClientDiagnostics => _operationsResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationsResults OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResults(OperationsResultsClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
+        private OperationsResults OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResults(OperationsResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-14");
 
         private ClientDiagnostics OperationsResultsLocationClientDiagnostics => _operationsResultsLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationsResultsLocation OperationsResultsLocationRestClient => _operationsResultsLocationRestClient ??= new OperationsResultsLocation(OperationsResultsLocationClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
+        private OperationsResultsLocation OperationsResultsLocationRestClient => _operationsResultsLocationRestClient ??= new OperationsResultsLocation(OperationsResultsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-14");
 
         /// <summary>
         /// Lists all Kusto clusters within a subscription.

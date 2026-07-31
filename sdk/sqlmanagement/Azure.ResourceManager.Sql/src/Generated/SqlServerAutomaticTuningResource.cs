@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerAutomaticTuningApiVersion);
             _serverAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _serverAutomaticTuningRestClient = new ServerAutomaticTuning(_serverAutomaticTuningClientDiagnostics, Pipeline, Endpoint, sqlServerAutomaticTuningApiVersion ?? "2025-02-01-preview");
+            _serverAutomaticTuningRestClient = new ServerAutomaticTuning(_serverAutomaticTuningClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerAutomaticTuningApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRReplicaResource.ResourceType, out string signalRReplicaApiVersion);
             _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRReplicaResource.ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, signalRReplicaApiVersion ?? "2025-01-01-preview");
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRReplicaApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 

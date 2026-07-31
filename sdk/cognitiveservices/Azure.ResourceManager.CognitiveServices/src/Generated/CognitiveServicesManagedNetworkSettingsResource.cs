@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesManagedNetworkSettingsApiVersion);
             _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsPropertiesBasicResourcesRestClient = new ManagedNetworkSettingsPropertiesBasicResources(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, Endpoint, cognitiveServicesManagedNetworkSettingsApiVersion ?? "2026-05-15-preview");
+            _managedNetworkSettingsPropertiesBasicResourcesRestClient = new ManagedNetworkSettingsPropertiesBasicResources(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesManagedNetworkSettingsApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Relay.Mocking
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2024-01-01");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-01-01");
 
         /// <summary>
         /// Lists all the available namespaces within the subscription regardless of the resourceGroups.

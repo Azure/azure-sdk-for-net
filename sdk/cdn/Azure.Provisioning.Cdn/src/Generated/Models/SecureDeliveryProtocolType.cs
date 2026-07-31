@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum SecureDeliveryProtocolType
     {
         /// <summary> ServerNameIndication. </summary>
-        ServerNameIndication,
+        ServerNameIndication = 0,
         /// <summary> IPBased. </summary>
-        IPBased
+        IPBased = 1
     }
 }

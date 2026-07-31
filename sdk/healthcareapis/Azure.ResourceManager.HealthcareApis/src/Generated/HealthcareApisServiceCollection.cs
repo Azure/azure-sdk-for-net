@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(HealthcareApisServiceResource.ResourceType, out string healthcareApisServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, healthcareApisServiceApiVersion ?? "2025-04-01-preview");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisServiceApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 

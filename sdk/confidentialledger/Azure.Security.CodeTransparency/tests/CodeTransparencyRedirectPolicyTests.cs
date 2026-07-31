@@ -90,7 +90,63 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public async Task DoesNotFollowNonRedirectStatusCodes([Values(200, 201, 400, 404, 500, 301, 302, 303)] int statusCode)
+        public async Task Follows303RedirectWithinDomainAsGetWithoutBody()
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(303).AddHeader("Location", "https://myledger.confidential-ledger.azure.com/entries/123"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/entries"));
+                message.Request.Content = RequestContent.Create(new byte[] { 1, 2, 3 });
+                message.Request.Headers.SetValue("Content-Type", "application/cose");
+            }, new CodeTransparencyRedirectPolicy(s_endpoint));
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual("https://myledger.confidential-ledger.azure.com/entries/123", mockTransport.Requests[1].Uri.ToString());
+            // A 303 See Other must be followed with GET and without the original body.
+            Assert.AreEqual(RequestMethod.Get, mockTransport.Requests[1].Method);
+            Assert.IsNull(mockTransport.Requests[1].Content);
+        }
+
+        [Test]
+        public async Task Follows303RedirectToTrustedSubdomain()
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(303).AddHeader("Location", "https://primary-node.myledger.confidential-ledger.azure.com/entries/123"),
+                new MockResponse(200));
+
+            var response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/entries"));
+            }, new CodeTransparencyRedirectPolicy(s_endpoint));
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+            Assert.AreEqual(RequestMethod.Get, mockTransport.Requests[1].Method);
+        }
+
+        [Test]
+        public void RefusesToFollow303RedirectToUntrustedDomain()
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(303).AddHeader("Location", "https://other.host/entries/123"),
+                new MockResponse(200));
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await SendRequestAsync(mockTransport, message =>
+                {
+                    message.Request.Method = RequestMethod.Post;
+                    message.Request.Uri.Reset(new Uri("https://myledger.confidential-ledger.azure.com/entries"));
+                }, new CodeTransparencyRedirectPolicy(s_endpoint)));
+        }
+
+        [Test]
+        public async Task DoesNotFollowNonRedirectStatusCodes([Values(200, 201, 400, 404, 500, 301, 302)] int statusCode)
         {
             var mockTransport = new MockTransport(
                 new MockResponse(statusCode).AddHeader("Location", "https://other.host/"),

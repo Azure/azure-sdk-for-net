@@ -51,9 +51,9 @@ on:
   roles: [admin, maintainer, write]
   bots: ["azure-sdk", "azure-sdk-automation[bot]"]
 
-# Master kill-switch (fail-safe) + PR-eligibility gate. The workflow stays dormant unless
-# the repo Actions variable SDK_BUILD_REPAIR_ENABLED is exactly 'true'. In addition, on the
-# automatic (pull_request) path the PR must be a genuine release-planner Auto SDK PR:
+# Master kill-switch (fail-safe) + eligibility gate. The workflow stays dormant unless
+# the repo Actions variable SDK_BUILD_REPAIR_ENABLED is exactly 'true'. In addition, on
+# the automatic (pull_request) path the PR must be a genuine release-planner Auto SDK PR:
 # same-repo (no forks), opened by the `azure-sdk` or `azure-sdk-automation[bot]` release bot,
 # targeting `main`, on an
 # `sdkauto/` branch. This gates *which PRs are eligible* (not just *who* can trigger), so a
@@ -79,6 +79,12 @@ permissions:
   pull-requests: read
   copilot-requests: write
 
+# Authenticate the nested Copilot SDK used by azsdk with the workflow's Copilot CLI
+# and built-in token.
+env:
+  AZSDK_COPILOT_CLI_PATH: /usr/local/bin/copilot
+  AZSDK_COPILOT_GITHUB_TOKEN: ${{ github.token }}
+
 network:
   allowed:
     - defaults
@@ -97,9 +103,11 @@ steps:
   - name: Install azsdk CLI
     shell: pwsh
     run: |
-      $dir = Join-Path $env:RUNNER_TEMP 'azsdk-cli'
+      # gh-aw exposes tool-cache bin directories inside the agent sandbox.
+      $dir = Join-Path $env:RUNNER_TOOL_CACHE 'azsdk/latest/x64/bin'
       ./eng/common/mcp/azure-sdk-mcp.ps1 -InstallDirectory $dir
       Add-Content -Path $env:GITHUB_PATH -Value $dir
+      & (Join-Path $dir 'azsdk') --version
 
 tools:
   github:

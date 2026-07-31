@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CostManagement
     public enum CostManagementAlertOperator
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> EqualTo. </summary>
-        EqualTo,
+        EqualTo = 1,
         /// <summary> GreaterThan. </summary>
-        GreaterThan,
+        GreaterThan = 2,
         /// <summary> GreaterThanOrEqualTo. </summary>
-        GreaterThanOrEqualTo,
+        GreaterThanOrEqualTo = 3,
         /// <summary> LessThan. </summary>
-        LessThan,
+        LessThan = 4,
         /// <summary> LessThanOrEqualTo. </summary>
-        LessThanOrEqualTo
+        LessThanOrEqualTo = 5
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoClusterResource.ResourceType, out string kustoClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
