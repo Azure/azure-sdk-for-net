@@ -37,6 +37,7 @@ namespace Azure.SdkAnalyzers
             "AZC0035",
             "CS0618",
             "AAIP001",
+            "AAIP002",
             "OPENAI001",
             "OPENAICUA001"
         };

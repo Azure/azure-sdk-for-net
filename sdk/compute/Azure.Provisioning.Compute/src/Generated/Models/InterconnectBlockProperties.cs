@@ -127,10 +127,10 @@ namespace Azure.Provisioning.Compute
             _virtualMachinesAssociated = DefineListProperty<ComputeSubResourceData>(nameof(VirtualMachinesAssociated), new string[] { "virtualMachinesAssociated" }, isOutput: true);
             _interconnectGroup = DefineModelProperty<ComputeApiEntityReference>(nameof(InterconnectGroup), new string[] { "interconnectGroup" }, isRequired: true);
             _interconnectBlockId = DefineProperty<string>(nameof(InterconnectBlockId), new string[] { "interconnectBlockId" }, isOutput: true);
-            _provisioningOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningOn), new string[] { "provisioningTime" }, isOutput: true);
+            _provisioningOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningOn), new string[] { "provisioningTime" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _instanceView = DefineModelProperty<InterconnectBlockInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

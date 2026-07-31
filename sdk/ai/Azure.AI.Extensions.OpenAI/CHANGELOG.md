@@ -3,12 +3,13 @@
 ## 3.0.0-beta.1 (Unreleased)
 
 ### Features Added
-
 - Added distributed tracing support.
+- Added new object `ProjectCreateResponseOptions` with the `SessionId` property to allow getting response in specific session.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Removed session ID header from samples as it does not affects the session being used.
 
 ### Other Changes
 
