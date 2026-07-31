@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
-        /// <returns> A new <see cref="Models.GenericResource"/> instance for mocking. </returns>
-        public static GenericResource GenericResource(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default)
+        /// <returns> A new <see cref="Models.GenericResourceInfo"/> instance for mocking. </returns>
+        public static GenericResourceInfo GenericResourceInfo(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new GenericResource(
+            return new GenericResourceInfo(
                 id,
                 name,
                 @type,
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default)
+        /// <returns> A new <see cref="Models.ManagedApplicationResourceInfo"/> instance for mocking. </returns>
+        public static ManagedApplicationResourceInfo ManagedApplicationResourceInfo(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new Resource(
+            return new ManagedApplicationResourceInfo(
                 id,
                 name,
                 @type,

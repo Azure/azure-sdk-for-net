@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Information about managed application. </summary>
-    public partial class ApplicationPatch : GenericResource
+    public partial class ApplicationPatch : GenericResourceInfo
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationPatch"/>. </summary>
         public ApplicationPatch()

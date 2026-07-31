@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Resource information. </summary>
-    public partial class GenericResource : Resource
+    public partial class GenericResourceInfo : ManagedApplicationResourceInfo
     {
-        /// <summary> Initializes a new instance of <see cref="GenericResource"/>. </summary>
-        public GenericResource()
+        /// <summary> Initializes a new instance of <see cref="GenericResourceInfo"/>. </summary>
+        public GenericResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenericResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericResourceInfo"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
-        internal GenericResource(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties)
+        internal GenericResourceInfo(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties)
         {
             ManagedBy = managedBy;
             Sku = sku;

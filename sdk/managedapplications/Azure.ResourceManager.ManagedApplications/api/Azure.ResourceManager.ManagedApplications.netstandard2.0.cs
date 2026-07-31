@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationPatch : Azure.ResourceManager.ManagedApplications.Models.GenericResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch>
+    public partial class ApplicationPatch : Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch>
     {
         public ApplicationPatch() { }
         public string ApplicationDefinitionId { get { throw null; } set { } }
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public string PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls SupportUrls { get { throw null; } }
         public Azure.ResourceManager.ManagedApplications.Models.ApplicationClientDetails UpdatedBy { get { throw null; } }
-        protected override Azure.ResourceManager.ManagedApplications.Models.Resource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ManagedApplications.Models.Resource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls ApplicationPackageSupportUrls(string publicAzure = null, string governmentCloud = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch ApplicationPatch(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku sku = null, string managedResourceGroupId = null, string applicationDefinitionId = null, System.BinaryData parameters = null, System.BinaryData outputs = null, Azure.ResourceManager.ManagedApplications.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedApplications.Models.ProvisioningState?), Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy jitAccessPolicy = null, string publisherTenantId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationAuthorization> authorizations = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode? managementMode = default(Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode?), Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageContact customerSupport = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls supportUrls = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationArtifact> artifacts = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationClientDetails createdBy = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationClientDetails updatedBy = null, string billingDetailsResourceUsageId = null, Azure.ResourceManager.ManagedApplications.Models.PlanPatchable plan = null, string kind = null, Azure.ResourceManager.ManagedApplications.Models.Identity identity = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPolicy ApplicationPolicy(string name = null, string policyDefinitionId = null, string parameters = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.GenericResource GenericResource(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku sku = null) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo GenericResourceInfo(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku sku = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.Identity Identity(string principalId = null, string tenantId = null, Azure.ResourceManager.ManagedApplications.Models.ResourceIdentityType? type = default(Azure.ResourceManager.ManagedApplications.Models.ResourceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ManagedApplications.Models.UserAssignedResourceIdentity> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.JitApprover JitApprover(string id = null, Azure.ResourceManager.ManagedApplications.Models.JitApproverType? type = default(Azure.ResourceManager.ManagedApplications.Models.JitApproverType?), string displayName = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.JitAuthorizationPolicies JitAuthorizationPolicies(string principalId = null, string roleDefinitionId = null) { throw null; }
@@ -611,6 +611,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static Azure.ResourceManager.ManagedApplications.Models.JitRequestDefinitionPatch JitRequestDefinitionPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata JitRequestMetadata(string originRequestId = null, string requestorId = null, string tenantDisplayName = null, string subjectDisplayName = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.JitSchedulingPolicy JitSchedulingPolicy(Azure.ResourceManager.ManagedApplications.Models.JitSchedulingType type = default(Azure.ResourceManager.ManagedApplications.Models.JitSchedulingType), System.TimeSpan duration = default(System.TimeSpan), System.DateTimeOffset startOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo ManagedApplicationResourceInfo(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsListTokenRequestContent ManagedApplicationsListTokenRequestContent(string authorizationAudience = null, System.Collections.Generic.IEnumerable<string> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlan ManagedApplicationsPlan(string name = null, string publisher = null, string product = null, string promotionCode = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku ManagedApplicationsSku(string name = null, string tier = null, string size = null, string family = null, string model = null, int? capacity = default(int?)) { throw null; }
@@ -620,7 +621,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackage RegistryPackage(string publisher = null, string offer = null, string plan = null, string version = null, Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks packageLinks = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks RegistryPackageLinks(string createUiDefinitionLink = null, string deploymentTemplateLink = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan RegistryPackagePlan(string publisher = null, string offer = null, string plan = null, string version = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.Resource Resource(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent UpdateAccessContent(string approver = null, Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata metadata = null, Azure.ResourceManager.ManagedApplications.Models.Status status = default(Azure.ResourceManager.ManagedApplications.Models.Status), Azure.ResourceManager.ManagedApplications.Models.Substatus subStatus = default(Azure.ResourceManager.ManagedApplications.Models.Substatus)) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.UserAssignedResourceIdentity UserAssignedResourceIdentity(string principalId = null, string tenantId = null) { throw null; }
     }
@@ -642,20 +642,20 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.DeploymentMode left, Azure.ResourceManager.ManagedApplications.Models.DeploymentMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GenericResource : Azure.ResourceManager.ManagedApplications.Models.Resource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.GenericResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResource>
+    public partial class GenericResourceInfo : Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo>
     {
-        public GenericResource() { }
+        public GenericResourceInfo() { }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku Sku { get { throw null; } set { } }
-        protected override Azure.ResourceManager.ManagedApplications.Models.Resource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ManagedApplications.Models.Resource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManagedApplications.Models.GenericResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.GenericResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.GenericResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedApplications.Models.GenericResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class Identity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.Identity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.Identity>
     {
@@ -843,6 +843,25 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.JitSchedulingType left, Azure.ResourceManager.ManagedApplications.Models.JitSchedulingType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ManagedApplicationResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo>
+    {
+        public ManagedApplicationResourceInfo() { }
+        public string Id { get { throw null; } }
+        public string Location { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ManagedApplicationsListTokenRequestContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsListTokenRequestContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsListTokenRequestContent>
     {
         public ManagedApplicationsListTokenRequestContent() { }
@@ -1020,25 +1039,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Resource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.Resource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.Resource>
-    {
-        public Resource() { }
-        public string Id { get { throw null; } }
-        public string Location { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.Resource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.Resource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManagedApplications.Models.Resource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.Resource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.Resource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedApplications.Models.Resource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.Resource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.Resource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ResourceIdentityType
     {

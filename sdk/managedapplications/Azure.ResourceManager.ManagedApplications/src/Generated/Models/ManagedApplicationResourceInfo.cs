@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Resource information. </summary>
-    public partial class Resource
+    public partial class ManagedApplicationResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _name;
 
-        /// <summary> Initializes a new instance of <see cref="Resource"/>. </summary>
-        public Resource()
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationResourceInfo"/>. </summary>
+        public ManagedApplicationResourceInfo()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationResourceInfo"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Resource(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedApplicationResourceInfo(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
