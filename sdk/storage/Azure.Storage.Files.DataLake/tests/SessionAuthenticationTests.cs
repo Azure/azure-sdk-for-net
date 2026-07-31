@@ -283,6 +283,68 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(0, countingPolicy.BearerGetCount, "Expected no Bearer GET requests for a PUT operation");
         }
 
+        /// <summary>
+        /// <see cref="SessionOptions.AccountName"/> is optional; when omitted it is
+        /// derived from the request URL at signing time.
+        /// </summary>
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task FileClient_Read_EnabledSession_WithoutAccountName()
+        {
+            // Arrange — 2 files in the same file system, so the second read exercises the
+            // session cached by the first.
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+            var data = GetRandomBuffer(Size);
+            List<DataLakeFileClient> files = new List<DataLakeFileClient>(2);
+            for (int i = 0; i < 2; i++)
+            {
+                DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+                await file.CreateAsync();
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.AppendAsync(stream, 0);
+                    await file.FlushAsync(data.Length);
+                }
+                files.Add(file);
+            }
+
+            var countingPolicy = new SessionAuthCountingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions
+            {
+                SessionMode = SessionMode.Enabled,
+                // AccountName intentionally omitted
+                SessionProvider = GetCountingSessionProvider(files[0].Uri, countingPolicy),
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+
+            List<DataLakeFileClient> oauthFileClients = new List<DataLakeFileClient>(2);
+            foreach (DataLakeFileClient file in files)
+            {
+                oauthFileClients.Add(InstrumentClient(
+                    new DataLakeFileClient(
+                        file.Uri,
+                        TestEnvironment.Credential,
+                        options)));
+            }
+
+            // Act
+            countingPolicy.Start();
+            foreach (DataLakeFileClient oauthFileClient in oauthFileClients)
+            {
+                Response<FileDownloadInfo> response = await oauthFileClient.ReadAsync();
+
+                // Assert
+                Assert.IsNotNull(response.Value.Content);
+                await DrainAsync(response.Value.Content, data.Length);
+            }
+
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected one create session request for the file system");
+            Assert.AreEqual(2, countingPolicy.GetSessionAuthCount,
+                "Both reads should have been signed using the URL-derived account name.");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount, "Expected no GET requests to fall back to Bearer authorization");
+        }
+
         [RecordedTest]
         public async Task FileClient_Read_IncorrectAccountName()
         {
@@ -633,17 +695,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         /// <summary>
-        /// <see cref="SessionOptions.AccountName"/> is optional; when omitted it is
-        /// derived from the request URL at signing time.
+        /// ReadTo fans a single logical read out into multiple ranged GETs. Combined with a
+        /// shared provider and a cold cache, concurrent reads from independently constructed
+        /// clients race session acquisition at once; the provider must collapse that race
+        /// into a single session for the file system.
         /// </summary>
         [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
-        public async Task FileClient_Read_EnabledSession_WithoutAccountName()
+        public async Task FileClient_SharedSessionProvider_ConcurrentReadTo_CreatesSessionOnce()
         {
-            // Arrange — 2 files in the same file system, so the second read exercises the
-            // session cached by the first.
+            // Arrange — 2 distinct files in the same file system, each large enough that the
+            // transfer options below force the read into multiple ranged GETs.
             await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
-            var data = GetRandomBuffer(Size);
+            var data = GetRandomBuffer(10 * Constants.KB);
             List<DataLakeFileClient> files = new List<DataLakeFileClient>(2);
             for (int i = 0; i < 2; i++)
             {
@@ -657,15 +721,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                 files.Add(file);
             }
 
+            // CreateSession traffic flows through the provider's own pipeline, not the
+            // DataLake client's, so the counting policy must be attached to both.
             var countingPolicy = new SessionAuthCountingPolicy();
-            DataLakeClientOptions options = GetOptions();
-            options.SessionOptions = new SessionOptions
-            {
-                SessionMode = SessionMode.Enabled,
-                // AccountName intentionally omitted
-                SessionProvider = GetCountingSessionProvider(files[0].Uri, countingPolicy),
-            };
-            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+
+            Blobs.BlobClientOptions providerOptions = GetBlobOptionsForProvider(countingPolicy);
+            var sessionProvider = new Blobs.Models.TokenCredentialSessionProvider(
+                GetBlobServiceUri(files[0].Uri),
+                TestEnvironment.Credential,
+                providerOptions);
 
             List<DataLakeFileClient> oauthFileClients = new List<DataLakeFileClient>(2);
             foreach (DataLakeFileClient file in files)
@@ -674,24 +738,45 @@ namespace Azure.Storage.Files.DataLake.Tests
                     new DataLakeFileClient(
                         file.Uri,
                         TestEnvironment.Credential,
-                        options)));
+                        GetSessionOptions(countingPolicy, sessionProvider))));
             }
 
-            // Act
+            // Act — run both partitioned reads concurrently against a cold cache.
             countingPolicy.Start();
+            List<MemoryStream> destinations = new List<MemoryStream>(oauthFileClients.Count);
+            List<Task> reads = new List<Task>(oauthFileClients.Count);
             foreach (DataLakeFileClient oauthFileClient in oauthFileClients)
             {
-                Response<FileDownloadInfo> response = await oauthFileClient.ReadAsync();
+                var destination = new MemoryStream();
+                destinations.Add(destination);
+                reads.Add(oauthFileClient.ReadToAsync(
+                    destination,
+                    new DataLakeFileReadToOptions
+                    {
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            InitialTransferSize = Constants.KB,
+                            MaximumTransferSize = Constants.KB,
+                            MaximumConcurrency = 4
+                        }
+                    }));
+            }
+            await Task.WhenAll(reads);
 
-                // Assert
-                Assert.IsNotNull(response.Value.Content);
-                await DrainAsync(response.Value.Content, data.Length);
+            // Assert — verify data was read correctly
+            foreach (MemoryStream destination in destinations)
+            {
+                Assert.AreEqual(data.Length, destination.Length);
+                destination.Dispose();
             }
 
-            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected one create session request for the file system");
-            Assert.AreEqual(2, countingPolicy.GetSessionAuthCount,
-                "Both reads should have been signed using the URL-derived account name.");
-            Assert.AreEqual(0, countingPolicy.BearerGetCount, "Expected no GET requests to fall back to Bearer authorization");
+            // Assert — the concurrent cold-cache race collapses to a single session
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "Clients sharing a SessionProvider should mint one session, even when concurrent partitioned reads race a cold cache.");
+            Assert.Greater(countingPolicy.GetSessionAuthCount, oauthFileClients.Count,
+                "Expected each read to fan out into multiple ranged GETs using Session authorization.");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount,
+                "Expected no GET requests to fall back to Bearer authorization");
         }
 
         #endregion

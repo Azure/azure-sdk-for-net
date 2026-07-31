@@ -1328,11 +1328,11 @@ namespace Azure.Storage.Blobs.Tests
 
         #region Shared SessionProvider Across Clients
         // A SessionProvider owns its own session-minting BlobServiceClient, built from
-        // the arguments given to *its* constructor. It is therefore independent of the
+        // the arguments given to its constructor. It is therefore independent of the
         // lifetime and pipeline of any client that consumes it. These tests share a
         // single provider across multiple policies (each policy standing in for an
         // independently constructed client) and assert that the session cache is shared
-        // and survives, which is the scenario the provider abstraction exists to solve.
+        // and survives.
 
         [Test]
         public async Task SharedProvider_AfterClientDropped_CacheSurvives()

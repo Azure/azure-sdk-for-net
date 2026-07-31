@@ -9982,8 +9982,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange — 2 distinct blobs per container, each large enough that the transfer
             // options below force the download into multiple parallel range GETs. Distinct
             // blobs prove the cached session is scoped to the container rather than to any
-            // single blob. Uploaded without the session pipeline, then paired with an
-            // independent top-level client sharing the provider.
+            // single blob.
             var data = GetRandomBuffer(10 * Constants.KB);
             List<BlockBlobClient> blobs = new List<BlockBlobClient>(4);
             foreach (DisposingContainer test in new[] { testA, testB })
