@@ -1,16 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2026-07-31)
 
 ### Features Added
 
 - The `ExecuteStartContent`, `ExecuteDeallocateContent`, `ExecuteHibernateContent`, and `ExecuteDeleteContent` models now expose a settable `Resources` property and a constructor overload that accepts only `executionParameters`, in addition to the existing `(executionParameters, resources)` constructor.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2026-07-07)
 
