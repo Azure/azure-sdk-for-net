@@ -7,10 +7,6 @@
 - Regenerated the client library from the TypeSpec specification for the Device Update for IoT Hub `2026-06-01` GA API version.
 - Added support for TLS-secured update payload downloads.
 
-### Breaking Changes
-
-- Renamed the `top` parameter to `maxCount` on the synchronous and asynchronous `GetOperationStatuses` methods. This affects callers that use named arguments; positional calls are unchanged.
-
 ## 1.0.0 (2022-09-09)
 
 ### Features Added
