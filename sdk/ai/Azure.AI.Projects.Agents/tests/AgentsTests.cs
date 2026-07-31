@@ -1107,9 +1107,8 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersionDraft.Version.StartsWith("draft"), Is.True);
         Assert.That(agentVersionDraft.Definition, Is.InstanceOf<DeclarativeAgentDefinition>());
         Assert.That(((DeclarativeAgentDefinition)agentVersionDraft.Definition).Instructions, Is.EqualTo("You are a prompt agent which gives wrong answers with 0.1 probability."));
-        // Blocked by work ADO item 5447664
-        //ProjectsAgentRecord record = await agentsClient.GetAgentAsync(AGENT_NAME);
-        //Assert.That(record.GetLatestVersion().Version, Is.EqualTo(newAgentVersion.Version));
+        ProjectsAgentRecord record = await agentsClient.GetAgentAsync(AGENT_NAME);
+        Assert.That(record.GetLatestVersion().Version, Is.EqualTo(newAgentVersion.Version));
         HashSet<string> versions = [.. await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).Select(x => x.Version).ToListAsync()];
         Assert.That(versions, Does.Contain(newAgentVersion.Version));
         Assert.That(versions, Does.Not.Contain(agentVersionDraft.Version));

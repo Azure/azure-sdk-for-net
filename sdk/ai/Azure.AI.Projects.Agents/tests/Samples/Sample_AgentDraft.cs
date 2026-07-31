@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -10,6 +9,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
+#pragma warning disable AAIP001
 
 public class Sample_AgentDraft : SamplesBase
 {
