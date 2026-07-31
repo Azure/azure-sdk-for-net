@@ -55,3 +55,5 @@ namespace Microsoft.Extensions.Azure
             builder.RegisterClientFactory<EventGridPublisherClient, EventGridPublisherClientOptions>(configuration);
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

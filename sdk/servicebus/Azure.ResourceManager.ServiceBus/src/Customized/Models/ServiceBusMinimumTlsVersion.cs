@@ -19,3 +19,5 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusMinimumTlsVersion Tls1_3 { get; } = Tls13;
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
