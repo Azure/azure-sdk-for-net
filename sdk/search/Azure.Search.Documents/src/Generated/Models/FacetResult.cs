@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 
@@ -15,13 +14,13 @@ namespace Azure.Search.Documents.Models
     public partial class FacetResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         public FacetResult()
         {
             Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
@@ -33,7 +32,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
         /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
         /// <param name="additionalProperties"></param>
-        internal FacetResult(long? count, double? avg, double? min, double? max, double? sum, long? cardinality, IReadOnlyDictionary<string, IList<FacetResult>> facets, IDictionary<string, BinaryData> additionalProperties)
+        internal FacetResult(long? count, double? avg, double? min, double? max, double? sum, long? cardinality, IReadOnlyDictionary<string, IList<FacetResult>> facets, IDictionary<string, object> additionalProperties)
         {
             Count = count;
             Avg = avg;

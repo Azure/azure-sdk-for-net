@@ -1976,6 +1976,27 @@ namespace Azure.AI.Projects.Agents
             return ProjectsAgentRecord(id: id, name: name, state: default);
         }
 
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="versions"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal static ProjectsAgentRecord ProjectsAgentRecord(string id, string name, AgentObjectVersions versions)
+        {
+            return new ProjectsAgentRecord(
+                "agent",
+                id,
+                name,
+                default,
+                default,
+                versions,
+                default,
+                default,
+                default,
+                default,
+                default,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ProjectsAgentVersion. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
