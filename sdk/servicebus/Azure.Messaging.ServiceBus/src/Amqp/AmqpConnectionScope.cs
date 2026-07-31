@@ -706,7 +706,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         // Non-exclusive locking: a single composite filter carries the session id and (for takeover)
                         // the lock token. Presence of this filter implies non-exclusive mode. The plain session
-                        // filter is omitted so services that predate this feature simply ignore the unknown filter.
+                        // filter is omitted. A service that predates this change does not silently ignore the unknown
+                        // filter - it rejects the attach with an "invalid filter type" error - so this path depends on
+                        // the service-side change being deployed in the target region.
                         filters.Add(
                             AmqpClientConstants.NonExclusiveSessionFilterName,
                             new AmqpNonExclusiveSessionFilterCodec { SessionId = sessionId, LockToken = sessionLockToken });

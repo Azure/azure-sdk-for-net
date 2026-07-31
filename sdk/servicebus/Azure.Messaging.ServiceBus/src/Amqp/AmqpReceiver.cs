@@ -290,10 +290,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             SessionId = nonExclusiveFilter.SessionId;
                         }
 
-                        // Fail loudly if non-exclusive mode was requested but the service did not honor it (for
-                        // example, an older gateway that ignores the filter and grants an exclusive lock with no
-                        // token echoed back). The service-side change is required to be globally available before
-                        // this feature is released, so this should never occur.
+                        // Fail loudly if non-exclusive mode was requested but the service honored the attach without
+                        // echoing a lock token back. The service-side change is required to be globally available
+                        // before this feature is released, so this should never occur. A service that predates the
+                        // change rejects the attach outright with an "invalid filter type" error, so that case
+                        // surfaces from the attach above rather than reaching this guard.
                         if (SessionLockToken == null)
                         {
                             link.Session.SafeClose();
