@@ -2,10 +2,6 @@
 
 ## 1.0.0-beta.12 (2026-07-31)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed asynchronous registration and receipt retrieval against a still-pending transaction. When a
@@ -18,8 +14,6 @@
   `302` as retriable, and the client's default retry settings were raised (more, exponentially
   backed-off retries starting at 200 ms) so the pipeline polls until the committed receipt (`200`).
   All retry and delay values remain overridable through `CodeTransparencyClientOptions.Retry`.
-
-### Other Changes
 
 ## 1.0.0-beta.11 (2026-07-15)
 
