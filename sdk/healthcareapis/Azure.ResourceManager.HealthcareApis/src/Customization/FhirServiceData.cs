@@ -17,4 +17,3 @@ namespace Azure.ResourceManager.HealthcareApis
         public IList<FhirServiceAccessPolicyEntry> AccessPolicies { get; }
     }
 }
-// Test comment for batching validation - DO NOT MERGE
