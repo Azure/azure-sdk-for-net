@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
@@ -359,7 +358,6 @@ namespace Azure.ResourceManager.AppContainers
     [ModelReaderWriterBuildable(typeof(ReplicaCollection))]
     [ModelReaderWriterBuildable(typeof(ReplicaExecutionStatus))]
     [ModelReaderWriterBuildable(typeof(ReplicaProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RevisionCollection))]
     [ModelReaderWriterBuildable(typeof(RevisionProperties))]
     [ModelReaderWriterBuildable(typeof(Runtime))]

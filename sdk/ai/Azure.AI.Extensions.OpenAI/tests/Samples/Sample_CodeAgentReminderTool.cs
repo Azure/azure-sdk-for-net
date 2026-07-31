@@ -79,15 +79,16 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         {
             Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0") },
             CodeConfiguration = new(
-                runtime: "python_3_14",
-                entryPoint: ["python", "main.py"],
-                dependencyResolution: CodeDependencyResolution.RemoteBuild
+                runtime: "dotnet_10",
+                entryPoint: ["dotnet", "ToolboxAgent.dll"],
+                dependencyResolution: CodeDependencyResolution.Bundled
             ),
             EnvironmentVariables = {
                 { "AGENT_NAME", middlewareAgentName},
                 { "TOOLBOX_NAME", toolboxName},
                 { "FOUNDRY_PROJECT_ENDPOINT", foundryProjectEndpoint},
                 { "FOUNDRY_MODEL_NAME", modelDeploymentName },
+                { "ASPNETCORE_URLS", "http://+:8088"},
             }
         };
         AgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -123,7 +124,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_CodeAgentReminderTool_Async
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgentReminderTool",
-            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
+            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
             metadata: GetAgentMetadata(
                 middlewareAgentName: "codeAgentMiddleware1",
                 toolboxName: toolBox.Name,
@@ -131,6 +132,8 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
                 modelDeploymentName: modelDeploymentName
             )
         );
+        Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+        Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
         #endregion
         #region Snippet:Sample_WaitForDeployment_CodeAgentReminderTool_Async
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
@@ -163,6 +166,10 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
         ResponseResult response = await responseClient.CreateResponseAsync(prompt);
+        if (response.Error != null)
+        {
+            throw new InvalidOperationException($"Unable to get the response from an Agent. Error Code: {response.Error.Code}; {response.Error.Message}");
+        }
         Console.WriteLine("Response items:");
         foreach (ResponseItem item in response.OutputItems)
         {
@@ -271,7 +278,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_CodeAgentReminderTool_Sync
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
             agentName: "myCodeAgentReminderTool",
-            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
+            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeReminder"])),
             metadata: GetAgentMetadata(
                 middlewareAgentName: "codeAgentMiddleware1",
                 toolboxName: toolBox.Name,
@@ -279,6 +286,8 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
                 modelDeploymentName: modelDeploymentName
             )
         );
+        Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+        Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
         #endregion
         #region Snippet:Sample_WaitForDeployment_CodeAgentReminderTool_Sync
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
