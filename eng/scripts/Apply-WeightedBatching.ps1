@@ -46,6 +46,9 @@ param (
 Set-StrictMode -Version 4
 
 if ($IndirectTarget -le 0) { $IndirectTarget = $Target }
+if ($Target -le 0) { throw "Target must be greater than zero." }
+if ($IndirectTarget -le 0) { throw "IndirectTarget must be greater than zero." }
+if ($DefaultWeight -le 0) { throw "DefaultWeight must be greater than zero." }
 
 # Load weights
 $weights = @{}
@@ -84,6 +87,7 @@ if ($packages.Count -eq 0) {
 # Separate direct and indirect packages
 $directPackages = @($packages | Where-Object { $_.Json.IncludedForValidation -eq $false })
 $indirectPackages = @($packages | Where-Object { $_.Json.IncludedForValidation -eq $true })
+$expectedPackageNames = @($packages | ForEach-Object { $_.Json.ArtifactName } | Sort-Object)
 
 $totalPkgs = $directPackages.Count + $indirectPackages.Count
 $matchedWeights = @($packages | Where-Object { $weights.ContainsKey($_.Json.ArtifactName) }).Count
@@ -106,12 +110,19 @@ function Apply-LPTBatching {
   # Build weighted items
   $items = @(foreach ($pkg in $Packages) {
     $name = $pkg.Json.ArtifactName
-    $weight = if ($Weights.ContainsKey($name)) { [int]$Weights[$name] } else { $DefaultWeight }
+    $weight = if ($Weights.ContainsKey($name)) {
+      [math]::Max([int]$Weights[$name], $DefaultWeight)
+    }
+    else {
+      $DefaultWeight
+    }
     [PSCustomObject]@{ Package = $pkg; Weight = $weight; Name = $name }
   })
 
-  # Sort by weight descending (LPT: largest first)
-  $items = @($items | Sort-Object Weight -Descending)
+  # Sort by weight descending (LPT: largest first), then by name for deterministic ties.
+  $items = @($items | Sort-Object `
+    @{ Expression = "Weight"; Descending = $true }, `
+    @{ Expression = "Name"; Descending = $false })
 
   # Calculate number of buckets
   [int]$totalWeight = 0
@@ -127,6 +138,7 @@ function Apply-LPTBatching {
   $buckets = @()
   for ($b = 0; $b -lt $numBuckets; $b++) {
     $buckets += [PSCustomObject]@{
+      Index       = $b
       Items       = [System.Collections.ArrayList]::new()
       TotalWeight = [int]0
     }
@@ -134,7 +146,9 @@ function Apply-LPTBatching {
 
   # Greedy LPT: assign each item to the lightest bucket
   foreach ($item in $items) {
-    $lightest = $buckets | Sort-Object TotalWeight | Select-Object -First 1
+    $lightest = $buckets |
+      Sort-Object TotalWeight, Index |
+      Select-Object -First 1
     [void]$lightest.Items.Add($item)
     $lightest.TotalWeight += $item.Weight
   }
@@ -185,5 +199,26 @@ if ($indirectPackages.Count -gt 0) {
 }
 
 # Verify
-$remaining = @(Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse).Count
+$remainingFiles = @(Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Recurse)
+$remaining = $remainingFiles.Count
+$actualPackageNames = @(
+  $remainingFiles |
+    ForEach-Object { (Get-Content $_.FullName | ConvertFrom-Json).ArtifactName -split "," } |
+    Sort-Object
+)
+
+$missingPackages = @($expectedPackageNames | Where-Object { $_ -notin $actualPackageNames })
+$duplicatePackages = @(
+  $actualPackageNames |
+    Group-Object |
+    Where-Object { $_.Count -ne 1 } |
+    ForEach-Object { $_.Name }
+)
+
+if ($actualPackageNames.Count -ne $expectedPackageNames.Count -or
+    $missingPackages.Count -gt 0 -or
+    $duplicatePackages.Count -gt 0) {
+  throw "Weighted batching verification failed. Missing: [$($missingPackages -join ', ')]. Duplicated: [$($duplicatePackages -join ', ')]."
+}
+
 Write-Host "Weighted batching complete. $remaining consolidated PackageInfo files remain."

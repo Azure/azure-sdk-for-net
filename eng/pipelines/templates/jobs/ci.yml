@@ -219,7 +219,12 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 10
+          # Runtime weighting first creates small balanced buckets. Linux and Windows
+          # combine three buckets while slower macOS keeps one bucket per job.
+          PRJobBatchSize: 1
+          PRJobBatchSizeOverrides:
+            Linux: 3
+            Windows: 3
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
@@ -229,6 +234,7 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
+                EnableTestRuntimeWeighting: true
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
