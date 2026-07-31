@@ -15,11 +15,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="ToolProjectConnection"/>. </summary>
         /// <param name="projectConnectionId"> A project connection in a ToolProjectConnectionList attached to this tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public ToolProjectConnection(string projectConnectionId)
+        internal ToolProjectConnection(string projectConnectionId)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
-
             ProjectConnectionId = projectConnectionId;
         }
 
@@ -33,6 +30,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> A project connection in a ToolProjectConnectionList attached to this tool. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
     }
 }

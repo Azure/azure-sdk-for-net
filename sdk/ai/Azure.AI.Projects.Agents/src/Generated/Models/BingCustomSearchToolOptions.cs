@@ -21,11 +21,8 @@ namespace Azure.AI.Projects.Agents
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations)
+        internal BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
-
             SearchConfigurations = searchConfigurations.ToList();
         }
 

@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolOptions"/>. </summary>
-        public FabricDataAgentToolOptions()
+        internal FabricDataAgentToolOptions()
         {
             ProjectConnections = new ChangeTrackingList<ToolProjectConnection>();
         }

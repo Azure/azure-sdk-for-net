@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolOptions"/>. </summary>
-        public MemorySearchToolOptions()
+        internal MemorySearchToolOptions()
         {
         }
 
@@ -30,6 +30,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Maximum number of memory items to return. </summary>
-        public int? MaxMemories { get; set; }
+        public int? MaxMemories { get; }
     }
 }

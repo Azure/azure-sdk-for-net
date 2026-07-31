@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -52,10 +51,10 @@ namespace Azure.AI.Projects.Agents
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="OpenAI.InternalComparisonFilter"/>. </description>
+        /// <description> <see cref="object"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="OpenAI.InternalCompoundFilter"/>. </description>
+        /// <description> <see cref="object"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

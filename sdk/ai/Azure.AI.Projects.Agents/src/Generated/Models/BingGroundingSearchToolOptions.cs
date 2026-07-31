@@ -19,11 +19,8 @@ namespace Azure.AI.Projects.Agents
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public BingGroundingSearchToolOptions(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations)
+        internal BingGroundingSearchToolOptions(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
-
             SearchConfigurations = searchConfigurations.ToList();
         }
 
