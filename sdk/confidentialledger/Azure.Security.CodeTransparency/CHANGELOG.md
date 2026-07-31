@@ -8,14 +8,16 @@
 
 ### Bugs Fixed
 
-- Fixed asynchronous registration (`CreateEntry`/`CreateEntryAsync` without `waitForCommit`) so it
-  polls `GET /entries/{entryId}` through the SCRAPI v09 `302 Found` "still pending" response instead
-  of throwing `RequestFailedException`. The `302` is now handled as a bounded, backing-off poll that
-  honors `Retry-After`, and its `Location` is validated against the endpoint trust boundary so entry
-  polling can never be redirected to an untrusted host. `GetEntry`/`GetEntryAsync` likewise
-  transparently poll the transient `302` returned when reading a just-committed entry before it has
-  been indexed. `waitForCommit=true` (synchronous `201` + receipt), the legacy `202` +
-  `GET /operations/{id}` fallback, and the `303`/`307`/`308` redirect behavior are unchanged.
+- Fixed asynchronous registration and receipt retrieval against a still-pending transaction. When a
+  write is routed to a backup node the service replies with a redirect whose `Location` (for example
+  `/entries/{entryId}`) omits the `api-version`. `CodeTransparencyRedirectPolicy` now carries the
+  originating request's `api-version` onto followed `303`/`307`/`308` redirect targets, so the
+  subsequent read stays on the versioned API instead of falling back to the service's unversioned
+  (legacy) behavior. On the versioned API a read of a not-yet-committed entry is answered with a
+  `302 Found` whose `Location` points back at the same entry URL; the followed read now treats that
+  `302` as retriable, and the client's default retry settings were raised (more, exponentially
+  backed-off retries starting at 200 ms) so the pipeline polls until the committed receipt (`200`).
+  All retry and delay values remain overridable through `CodeTransparencyClientOptions.Retry`.
 
 ### Other Changes
 
