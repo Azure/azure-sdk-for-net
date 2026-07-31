@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public PostBuild()
         {
             Substitute = new ChangeTrackingDictionary<string, string>();
-            SubstituteFrom = new ChangeTrackingList<SubstituteFrom>();
+            SubstituteFrom = new ChangeTrackingList<Substitution>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostBuild"/>. </summary>
         /// <param name="substitute"> Key/value pairs holding the variables to be substituted in this Kustomization. </param>
         /// <param name="substituteFrom"> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostBuild(IDictionary<string, string> substitute, IList<SubstituteFrom> substituteFrom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostBuild(IDictionary<string, string> substitute, IList<Substitution> substituteFrom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Substitute = substitute;
             SubstituteFrom = substituteFrom;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public IDictionary<string, string> Substitute { get; set; }
 
         /// <summary> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </summary>
-        public IList<SubstituteFrom> SubstituteFrom { get; }
+        public IList<Substitution> SubstituteFrom { get; }
     }
 }

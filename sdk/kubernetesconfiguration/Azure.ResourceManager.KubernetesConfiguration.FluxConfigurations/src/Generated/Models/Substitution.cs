@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </summary>
-    public partial class SubstituteFromPatch
+    public partial class Substitution
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubstituteFromPatch"/>. </summary>
-        public SubstituteFromPatch()
+        /// <summary> Initializes a new instance of <see cref="Substitution"/>. </summary>
+        public Substitution()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubstituteFromPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Substitution"/>. </summary>
         /// <param name="kind"> Define whether it is ConfigMap or Secret that holds the variables to be used in substitution. </param>
         /// <param name="name"> Name of the ConfigMap/Secret that holds the variables to be used in substitution. </param>
         /// <param name="isOptional"> Set to True to proceed without ConfigMap/Secret, if it is not present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubstituteFromPatch(string kind, string name, bool? isOptional, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Substitution(string kind, string name, bool? isOptional, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Name = name;

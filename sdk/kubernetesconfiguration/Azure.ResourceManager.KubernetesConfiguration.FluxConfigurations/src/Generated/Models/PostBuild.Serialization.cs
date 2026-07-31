@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 writer.WritePropertyName("substituteFrom"u8);
                 writer.WriteStartArray();
-                foreach (SubstituteFrom item in SubstituteFrom)
+                foreach (Substitution item in SubstituteFrom)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 return null;
             }
             IDictionary<string, string> substitute = default;
-            IList<SubstituteFrom> substituteFrom = default;
+            IList<Substitution> substituteFrom = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    List<SubstituteFrom> array = new List<SubstituteFrom>();
+                    List<Substitution> array = new List<Substitution>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SubstituteFrom.DeserializeSubstituteFrom(item, options));
+                        array.Add(Substitution.DeserializeSubstitution(item, options));
                     }
                     substituteFrom = array;
                     continue;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostBuild(substitute ?? new ChangeTrackingDictionary<string, string>(), substituteFrom ?? new ChangeTrackingList<SubstituteFrom>(), additionalBinaryDataProperties);
+            return new PostBuild(substitute ?? new ChangeTrackingDictionary<string, string>(), substituteFrom ?? new ChangeTrackingList<Substitution>(), additionalBinaryDataProperties);
         }
     }
 }

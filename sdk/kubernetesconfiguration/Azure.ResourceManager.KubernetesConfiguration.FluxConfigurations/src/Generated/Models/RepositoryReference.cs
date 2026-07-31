@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> The source reference for the GitRepository object. </summary>
-    public partial class RepositoryRef
+    public partial class RepositoryReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RepositoryRef"/>. </summary>
-        public RepositoryRef()
+        /// <summary> Initializes a new instance of <see cref="RepositoryReference"/>. </summary>
+        public RepositoryReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RepositoryRef"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepositoryReference"/>. </summary>
         /// <param name="branch"> The git repository branch name to checkout. </param>
         /// <param name="tag"> The git repository tag name to checkout. This takes precedence over branch. </param>
         /// <param name="semver"> The semver range used to match against git repository tags. This takes precedence over tag. </param>
         /// <param name="commit"> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RepositoryRef(string branch, string tag, string semver, string commit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RepositoryReference(string branch, string tag, string semver, string commit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Branch = branch;
             Tag = tag;

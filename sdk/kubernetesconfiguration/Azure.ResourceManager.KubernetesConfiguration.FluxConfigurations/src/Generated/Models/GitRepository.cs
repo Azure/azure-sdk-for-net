@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="provider"> Name of the provider used for authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitRepository(string uri, long? timeoutInSeconds, long? syncIntervalInSeconds, RepositoryRef repositoryRef, string sshKnownHosts, string httpsUser, string httpsCACert, string localAuthRef, FluxConfigurationProviderType? provider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitRepository(string uri, long? timeoutInSeconds, long? syncIntervalInSeconds, RepositoryReference repositoryRef, string sshKnownHosts, string httpsUser, string httpsCACert, string localAuthRef, FluxConfigurationProviderType? provider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             TimeoutInSeconds = timeoutInSeconds;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public long? SyncIntervalInSeconds { get; set; }
 
         /// <summary> The source reference for the GitRepository object. </summary>
-        public RepositoryRef RepositoryRef { get; set; }
+        public RepositoryReference RepositoryRef { get; set; }
 
         /// <summary> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </summary>
         public string SshKnownHosts { get; set; }

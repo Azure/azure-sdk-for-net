@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             string uri = default;
             long? timeoutInSeconds = default;
             long? syncIntervalInSeconds = default;
-            RepositoryRef repositoryRef = default;
+            RepositoryReference repositoryRef = default;
             string sshKnownHosts = default;
             string httpsUser = default;
             string httpsCACert = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    repositoryRef = RepositoryRef.DeserializeRepositoryRef(prop.Value, options);
+                    repositoryRef = RepositoryReference.DeserializeRepositoryReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sshKnownHosts"u8))

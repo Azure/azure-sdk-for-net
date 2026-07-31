@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="provider"> Name of the provider used for authentication. </param>
         /// <returns> A new <see cref="Models.GitRepository"/> instance for mocking. </returns>
-        public static GitRepository GitRepository(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, RepositoryRef repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
+        public static GitRepository GitRepository(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, RepositoryReference repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
         {
             return new GitRepository(
                 uri,
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="tag"> The git repository tag name to checkout. This takes precedence over branch. </param>
         /// <param name="semver"> The semver range used to match against git repository tags. This takes precedence over tag. </param>
         /// <param name="commit"> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </param>
-        /// <returns> A new <see cref="Models.RepositoryRef"/> instance for mocking. </returns>
-        public static RepositoryRef RepositoryRef(string branch = default, string tag = default, string semver = default, string commit = default)
+        /// <returns> A new <see cref="Models.RepositoryReference"/> instance for mocking. </returns>
+        public static RepositoryReference RepositoryReference(string branch = default, string tag = default, string semver = default, string commit = default)
         {
-            return new RepositoryRef(branch, tag, semver, commit, default);
+            return new RepositoryReference(branch, tag, semver, commit, default);
         }
 
         /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
@@ -281,21 +281,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="substitute"> Key/value pairs holding the variables to be substituted in this Kustomization. </param>
         /// <param name="substituteFrom"> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </param>
         /// <returns> A new <see cref="Models.PostBuild"/> instance for mocking. </returns>
-        public static PostBuild PostBuild(IDictionary<string, string> substitute = default, IEnumerable<SubstituteFrom> substituteFrom = default)
+        public static PostBuild PostBuild(IDictionary<string, string> substitute = default, IEnumerable<Substitution> substituteFrom = default)
         {
             substitute ??= new ChangeTrackingDictionary<string, string>();
-            substituteFrom ??= new ChangeTrackingList<SubstituteFrom>();
+            substituteFrom ??= new ChangeTrackingList<Substitution>();
 
-            return new PostBuild(substitute ?? new ChangeTrackingDictionary<string, string>(), (substituteFrom ?? new ChangeTrackingList<SubstituteFrom>()).ToList(), default);
+            return new PostBuild(substitute ?? new ChangeTrackingDictionary<string, string>(), (substituteFrom ?? new ChangeTrackingList<Substitution>()).ToList(), default);
         }
 
         /// <param name="kind"> Define whether it is ConfigMap or Secret that holds the variables to be used in substitution. </param>
         /// <param name="name"> Name of the ConfigMap/Secret that holds the variables to be used in substitution. </param>
         /// <param name="isOptional"> Set to True to proceed without ConfigMap/Secret, if it is not present. </param>
-        /// <returns> A new <see cref="Models.SubstituteFrom"/> instance for mocking. </returns>
-        public static SubstituteFrom SubstituteFrom(string kind = default, string name = default, bool? isOptional = default)
+        /// <returns> A new <see cref="Models.Substitution"/> instance for mocking. </returns>
+        public static Substitution Substitution(string kind = default, string name = default, bool? isOptional = default)
         {
-            return new SubstituteFrom(kind, name, isOptional, default);
+            return new Substitution(kind, name, isOptional, default);
         }
 
         /// <param name="name"> Name of the applied object. </param>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="provider"> Name of the provider used for authentication. </param>
         /// <returns> A new <see cref="Models.GitRepositoryPatch"/> instance for mocking. </returns>
-        public static GitRepositoryPatch GitRepositoryPatch(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, RepositoryRef repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
+        public static GitRepositoryPatch GitRepositoryPatch(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, RepositoryReference repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
         {
             return new GitRepositoryPatch(
                 uri,
@@ -581,21 +581,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="substitute"> Key/value pairs holding the variables to be substituted in this Kustomization. </param>
         /// <param name="substituteFrom"> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </param>
         /// <returns> A new <see cref="Models.PostBuildPatch"/> instance for mocking. </returns>
-        public static PostBuildPatch PostBuildPatch(IDictionary<string, string> substitute = default, IEnumerable<SubstituteFromPatch> substituteFrom = default)
+        public static PostBuildPatch PostBuildPatch(IDictionary<string, string> substitute = default, IEnumerable<SubstitutionPatch> substituteFrom = default)
         {
             substitute ??= new ChangeTrackingDictionary<string, string>();
-            substituteFrom ??= new ChangeTrackingList<SubstituteFromPatch>();
+            substituteFrom ??= new ChangeTrackingList<SubstitutionPatch>();
 
-            return new PostBuildPatch(substitute ?? new ChangeTrackingDictionary<string, string>(), (substituteFrom ?? new ChangeTrackingList<SubstituteFromPatch>()).ToList(), default);
+            return new PostBuildPatch(substitute ?? new ChangeTrackingDictionary<string, string>(), (substituteFrom ?? new ChangeTrackingList<SubstitutionPatch>()).ToList(), default);
         }
 
         /// <param name="kind"> Define whether it is ConfigMap or Secret that holds the variables to be used in substitution. </param>
         /// <param name="name"> Name of the ConfigMap/Secret that holds the variables to be used in substitution. </param>
         /// <param name="isOptional"> Set to True to proceed without ConfigMap/Secret, if it is not present. </param>
-        /// <returns> A new <see cref="Models.SubstituteFromPatch"/> instance for mocking. </returns>
-        public static SubstituteFromPatch SubstituteFromPatch(string kind = default, string name = default, bool? isOptional = default)
+        /// <returns> A new <see cref="Models.SubstitutionPatch"/> instance for mocking. </returns>
+        public static SubstitutionPatch SubstitutionPatch(string kind = default, string name = default, bool? isOptional = default)
         {
-            return new SubstituteFromPatch(kind, name, isOptional, default);
+            return new SubstitutionPatch(kind, name, isOptional, default);
         }
     }
 }

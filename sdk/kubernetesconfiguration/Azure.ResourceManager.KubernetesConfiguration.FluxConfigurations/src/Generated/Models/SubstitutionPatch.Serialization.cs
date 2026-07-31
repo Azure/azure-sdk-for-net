@@ -13,52 +13,52 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
-    /// <summary> The source reference for the GitRepository object. </summary>
-    public partial class RepositoryRef : IJsonModel<RepositoryRef>
+    /// <summary> Array of ConfigMaps/Secrets from which the variables are substituted for this Kustomization. </summary>
+    public partial class SubstitutionPatch : IJsonModel<SubstitutionPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RepositoryRef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SubstitutionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubstitutionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRepositoryRef(document.RootElement, options);
+                        return DeserializeSubstitutionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RepositoryRef)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubstitutionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubstitutionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationFluxConfigurationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RepositoryRef)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubstitutionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RepositoryRef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SubstitutionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RepositoryRef IPersistableModel<RepositoryRef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SubstitutionPatch IPersistableModel<SubstitutionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RepositoryRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SubstitutionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RepositoryRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SubstitutionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,30 +69,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubstitutionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RepositoryRef)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SubstitutionPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Branch))
+            if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("branch"u8);
-                writer.WriteStringValue(Branch);
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Tag))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("tag"u8);
-                writer.WriteStringValue(Tag);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Semver))
+            if (Optional.IsDefined(IsOptional))
             {
-                writer.WritePropertyName("semver"u8);
-                writer.WriteStringValue(Semver);
-            }
-            if (Optional.IsDefined(Commit))
-            {
-                writer.WritePropertyName("commit"u8);
-                writer.WriteStringValue(Commit);
+                writer.WritePropertyName("optional"u8);
+                writer.WriteBooleanValue(IsOptional.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,74 +108,52 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RepositoryRef IJsonModel<RepositoryRef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SubstitutionPatch IJsonModel<SubstitutionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RepositoryRef JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SubstitutionPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubstitutionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RepositoryRef)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SubstitutionPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRepositoryRef(document.RootElement, options);
+            return DeserializeSubstitutionPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RepositoryRef DeserializeRepositoryRef(JsonElement element, ModelReaderWriterOptions options)
+        internal static SubstitutionPatch DeserializeSubstitutionPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string branch = default;
-            string tag = default;
-            string semver = default;
-            string commit = default;
+            string kind = default;
+            string name = default;
+            bool? isOptional = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("branch"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        branch = null;
-                        continue;
-                    }
-                    branch = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tag"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        tag = null;
-                        continue;
-                    }
-                    tag = prop.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("semver"u8))
+                if (prop.NameEquals("optional"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        semver = null;
                         continue;
                     }
-                    semver = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("commit"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        commit = null;
-                        continue;
-                    }
-                    commit = prop.Value.GetString();
+                    isOptional = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +161,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RepositoryRef(branch, tag, semver, commit, additionalBinaryDataProperties);
+            return new SubstitutionPatch(kind, name, isOptional, additionalBinaryDataProperties);
         }
     }
 }
