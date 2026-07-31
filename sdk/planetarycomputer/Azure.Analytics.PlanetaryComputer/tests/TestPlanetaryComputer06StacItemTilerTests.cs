@@ -176,10 +176,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<StacItemBounds> response = await dataClient.GetItemBoundsAsync(
-                collectionId: collectionId,
-                itemId: itemId
-            );
+            var boundsOptions = new GetItemTilesetsOptions(collectionId, itemId);
+            Response<StacItemBounds> response = await dataClient.GetItemBoundsAsync(boundsOptions);
 
             // Assert
             ValidateResponse(response, "GetBounds");
@@ -271,11 +269,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetItemInfoGeoJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            var infoOptions = new GetItemInfoOptions(collectionId, itemId) { Assets = { "image" } };
+            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetItemInfoGeoJsonAsync(infoOptions);
 
             // Assert
             ValidateResponse(response, "GetInfoGeoJson");
@@ -304,11 +299,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<TilerStacItemStatistics> response = await dataClient.GetItemStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            var statsOptions = new GetItemStatisticsOptions(collectionId, itemId) { Assets = { "image" } };
+            Response<TilerStacItemStatistics> response = await dataClient.GetItemStatisticsAsync(statsOptions);
 
             // Assert
             ValidateResponse(response, "GetStatistics");
@@ -386,11 +378,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<AssetStatisticsResult> response = await dataClient.GetItemAssetStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            var assetStatsOptions = new GetItemAssetStatisticsOptions(collectionId, itemId) { Assets = { "image" } };
+            Response<AssetStatisticsResult> response = await dataClient.GetItemAssetStatisticsAsync(assetStatsOptions);
 
             // Assert
             ValidateResponse(response, "GetAssetStatistics");
@@ -624,17 +613,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Geometry defined for statistics");
 
             // Act
-            Response response = await dataClient.GetItemFeatureStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                content: feature,
-                assets: new[] { "image" }
-            );
+            var featureStatsOptions = new GetItemFeatureStatisticsOptions(collectionId, itemId, feature) { Assets = { "image" } };
+            Response<StacItemStatisticsGeoJson> response = await dataClient.GetItemFeatureStatisticsAsync(featureStatsOptions);
 
             // Assert
-            ValidateResponse(response, "GetGeoJsonStatistics");
+            ValidateResponse(response.GetRawResponse(), "GetGeoJsonStatistics");
 
-            StacItemStatisticsGeoJson data = ModelReaderWriter.Read<StacItemStatisticsGeoJson>(response.Content);
+            StacItemStatisticsGeoJson data = response.Value;
             Assert.That(data, Is.Not.Null, "Response data should not be null");
 
             TestContext.WriteLine("GeoJSON statistics retrieved successfully");
@@ -771,13 +756,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - point: longitude={longitude}, latitude={latitude}");
 
             // Act
-            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                longitude: longitude,
-                latitude: latitude,
-                assets: new[] { "image" }
-            );
+            var pointOptions = new GetItemPointOptions(collectionId, itemId, longitude, latitude) { Assets = { "image" } };
+            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(pointOptions);
 
             // Assert
             ValidateResponse(response, "GetPoint");
@@ -854,17 +834,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<TileJsonMetadata> response = await dataClient.GetItemTileJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: "png",
-                tileScale: 1,
-                minZoom: 7,
-                maxZoom: 14,
-                assets: new[] { "image" },
-                assetBandIndices: new[] { "image|1,2,3" }
-            );
+            var tileJsonOptions = new GetItemTileJsonOptions(collectionId, itemId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                TileFormat = "png",
+                TileScale = 1,
+                MinZoom = 7,
+                MaxZoom = 14,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            };
+            Response<TileJsonMetadata> response = await dataClient.GetItemTileJsonAsync(tileJsonOptions);
 
             // Assert
             ValidateResponse(response, "GetTileJson");

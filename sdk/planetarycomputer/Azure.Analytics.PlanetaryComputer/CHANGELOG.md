@@ -12,14 +12,7 @@
 - Full async/await support throughout the SDK.
 - Support for .NET 8.0, .NET 10.0, and .NET Standard 2.0.
 - Added `PlanetaryComputerProClientSettings` to support creating a `PlanetaryComputerProClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-
-### Breaking Changes from Preview
-
-- Method renames to align with GA API specification: All data client methods prefixed with `GetItem*` (e.g., `GetItemBoundsAsync`, `GetItemPreviewAsync`, `GetItemStatisticsAsync`).
-- Search operations renamed: `GetMosaics*` → `GetSearch*` methods.
-- Parameter type change: `assetBandIndices` changed from `string` to `string[]` in rendering operations.
-- Removed static image rendering APIs (`CreateStaticImageAsync`, `GetStaticImageAsync`).
-- Collection creation/replacement pattern: Split `CreateOrReplaceCollectionAsync` into separate `CreateCollectionAsync` (with LRO support) and `ReplaceCollectionAsync` methods.
+- Data client methods with many parameters use options bag pattern for improved usability (e.g., `GetItemPointAsync(GetItemPointOptions)`).
 
 ### Removed Features
 

@@ -144,10 +144,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get bounding box for an item
-            Response<StacItemBounds> response = await dataClient.GetItemBoundsAsync(
-                collectionId: collectionId,
-                itemId: itemId
-            );
+            var boundsOptions = new GetItemTilesetsOptions(collectionId, itemId);
+            Response<StacItemBounds> response = await dataClient.GetItemBoundsAsync(boundsOptions);
 
             StacItemBounds boundsResult = response.Value;
             var bounds = boundsResult.Bounds;
@@ -219,11 +217,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get item metadata as GeoJSON
-            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetItemInfoGeoJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            var infoOptions = new GetItemInfoOptions(collectionId, itemId) { Assets = { "image" } };
+            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetItemInfoGeoJsonAsync(infoOptions);
 
             TilerInfoGeoJsonFeature info = response.Value;
             Console.WriteLine("Item info retrieved successfully");
@@ -253,11 +248,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get statistics for an item's assets
-            Response<TilerStacItemStatistics> response = await dataClient.GetItemStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            var statsOptions = new GetItemStatisticsOptions(collectionId, itemId) { Assets = { "image" } };
+            Response<TilerStacItemStatistics> response = await dataClient.GetItemStatisticsAsync(statsOptions);
 
             TilerStacItemStatistics statistics = response.Value;
             Console.WriteLine("Statistics retrieved successfully");
@@ -287,11 +279,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get detailed statistics for each asset
-            Response<AssetStatisticsResult> response = await dataClient.GetItemAssetStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                assets: new[] { "image" }
-            );
+            var assetStatsOptions = new GetItemAssetStatisticsOptions(collectionId, itemId) { Assets = { "image" } };
+            Response<AssetStatisticsResult> response = await dataClient.GetItemAssetStatisticsAsync(assetStatsOptions);
 
             IReadOnlyDictionary<string, BinaryData> assetStatistics = response.Value.AdditionalProperties;
             Console.WriteLine($"Statistics for {assetStatistics.Count} assets");
@@ -485,14 +474,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             feature.Properties.Add("description", BinaryData.FromString("\"Statistics area\""));
 
             // Get statistics for the area
-            Response response = await dataClient.GetItemFeatureStatisticsAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                content: feature,
-                assets: new[] { "image" }
-            );
+            var featureStatsOptions = new GetItemFeatureStatisticsOptions(collectionId, itemId, feature) { Assets = { "image" } };
+            Response<StacItemStatisticsGeoJson> response = await dataClient.GetItemFeatureStatisticsAsync(featureStatsOptions);
 
-            StacItemStatisticsGeoJson statistics = ModelReaderWriter.Read<StacItemStatisticsGeoJson>(response.Content);
+            StacItemStatisticsGeoJson statistics = response.Value;
             Console.WriteLine("Statistics for area retrieved successfully");
             #endregion
         }
@@ -602,13 +587,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get data at a specific point
-            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                longitude: -84.3860f,
-                latitude: 33.6760f,
-                assets: new[] { "image" }
-            );
+            var pointOptions = new GetItemPointOptions(collectionId, itemId, -84.3860f, 33.6760f) { Assets = { "image" } };
+            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(pointOptions);
 
             TilerCoreModelsResponsesPoint pointData = response.Value;
             Console.WriteLine("Point data retrieved successfully");
@@ -638,17 +618,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
             // Get TileJSON metadata
-            Response<TileJsonMetadata> response = await dataClient.GetItemTileJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: "png",
-                tileScale: 1,
-                minZoom: 7,
-                maxZoom: 14,
-                assets: new[] { "image" },
-                assetBandIndices: new[] { "image|1,2,3" }
-            );
+            var tileJsonOptions = new GetItemTileJsonOptions(collectionId, itemId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                TileFormat = "png",
+                TileScale = 1,
+                MinZoom = 7,
+                MaxZoom = 14,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            };
+            Response<TileJsonMetadata> response = await dataClient.GetItemTileJsonAsync(tileJsonOptions);
 
             TileJsonMetadata tileJson = response.Value;
             Console.WriteLine($"TileJSON version: {tileJson.TileJson}");
@@ -727,10 +707,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Console.WriteLine($"Step 1: Found {assetsResponse.Value.Count} assets");
 
             // Step 2: Get item bounds
-            Response<StacItemBounds> boundsResponse = await dataClient.GetItemBoundsAsync(
-                collectionId: collectionId,
-                itemId: itemId
-            );
+            var boundsOptions2 = new GetItemTilesetsOptions(collectionId, itemId);
+            Response<StacItemBounds> boundsResponse = await dataClient.GetItemBoundsAsync(boundsOptions2);
             var bounds = boundsResponse.Value.Bounds;
             Console.WriteLine($"Step 2: Bounds: [{bounds[0]}, {bounds[1]}, {bounds[2]}, {bounds[3]}]");
 
@@ -747,17 +725,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Console.WriteLine($"Step 3: Preview image: {previewResponse.Content.ToArray().Length} bytes");
 
             // Step 4: Get TileJSON for mapping applications
-            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetItemTileJsonAsync(
-                collectionId: collectionId,
-                itemId: itemId,
-                tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: "png",
-                tileScale: 1,
-                minZoom: 7,
-                maxZoom: 14,
-                assets: new[] { "image" },
-                assetBandIndices: new[] { "image|1,2,3" }
-            );
+            var tileJsonOptions4 = new GetItemTileJsonOptions(collectionId, itemId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                TileFormat = "png",
+                TileScale = 1,
+                MinZoom = 7,
+                MaxZoom = 14,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            };
+            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetItemTileJsonAsync(tileJsonOptions4);
             Console.WriteLine($"Step 4: TileJSON URL pattern: {tileJsonResponse.Value.Tiles[0]}");
 
             // Step 5: Get a specific tile

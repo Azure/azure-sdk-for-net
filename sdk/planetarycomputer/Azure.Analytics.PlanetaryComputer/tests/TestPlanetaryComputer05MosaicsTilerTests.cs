@@ -182,16 +182,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile JSON metadata
-            Response<TileJsonMetadata> response = await dataClient.GetSearchTileJsonAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                assets: new[] { "image" },
-                assetBandIndices: new[] { "image|1,2,3" },
-                tileScale: 1,
-                minZoom: 9,
-                tileFormat: "png",
-                collectionId: collectionId
-            );
+            var tileJsonOptions = new GetSearchTileJsonOptions(searchId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" },
+                TileScale = 1,
+                MinZoom = 9,
+                TileFormat = "png",
+                CollectionId = collectionId
+            };
+            Response<TileJsonMetadata> response = await dataClient.GetSearchTileJsonAsync(tileJsonOptions);
 
             // Assert
             ValidateResponse(response, "GetMosaicsTileJson");

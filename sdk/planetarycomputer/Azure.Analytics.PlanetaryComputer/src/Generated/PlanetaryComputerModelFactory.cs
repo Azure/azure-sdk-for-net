@@ -1294,6 +1294,43 @@ namespace Azure.Analytics.PlanetaryComputer
             return new TilerMosaicSearchRegistrationResult(searchId, links.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for item tileset list and bounds operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemTilesetsOptions"/> instance for mocking. </returns>
+        public static GetItemTilesetsOptions GetItemTilesetsOptions(string collectionId = default, string itemId = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetItemTilesetsOptions(
+                collectionId,
+                itemId,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Response containing a list of available tilesets. </summary>
         /// <param name="tilesets"> Array of available tilesets. </param>
         /// <returns> A new <see cref="PlanetaryComputer.TileSetList"/> instance for mocking. </returns>
@@ -1348,6 +1385,45 @@ namespace Azure.Analytics.PlanetaryComputer
             upperRight ??= new ChangeTrackingList<double>();
 
             return new TileSetBoundingBox(lowerLeft.ToList(), upperRight.ToList(), crs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for item tileset metadata operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemTilesetMetadataOptions"/> instance for mocking. </returns>
+        public static GetItemTilesetMetadataOptions GetItemTilesetMetadataOptions(string collectionId = default, string itemId = default, string tileMatrixSetId = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetItemTilesetMetadataOptions(
+                collectionId,
+                itemId,
+                tileMatrixSetId,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Detailed metadata about a specific tileset, including tile matrix set limits. </summary>
@@ -1413,6 +1489,46 @@ namespace Azure.Analytics.PlanetaryComputer
             bounds ??= new ChangeTrackingList<float>();
 
             return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for item info operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemInfoOptions"/> instance for mocking. </returns>
+        public static GetItemInfoOptions GetItemInfoOptions(string collectionId = default, string itemId = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assets = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            assets ??= new ChangeTrackingList<string>();
+
+            return new GetItemInfoOptions(
+                collectionId,
+                itemId,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                assets.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Return dataset's basic info. </summary>
@@ -1497,6 +1613,95 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for item per-asset statistics operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
+        /// <param name="categorical"> Return statistics for categorical dataset. </param>
+        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
+        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
+        /// <param name="histogramBins">
+        /// Defines the number of equal-width bins in the given range (10, by default).
+        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
+        /// increasing array of bin edges, including the rightmost edge, allowing for
+        /// non-uniform bin widths.
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="histogramRange">
+        /// Comma `,` delimited range of the bins.
+        /// The lower and upper range of the bins. If not provided, range is simply
+        /// (a.min(), a.max()).
+        /// Values outside the range are ignored. The first element of the range must be
+        /// less than or equal to the second.
+        /// range affects the automatic bin computation as well.
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="assetExpression"> Per asset band expression. </param>
+        /// <param name="height"> Force output image height. </param>
+        /// <param name="width"> Force output image width. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemAssetStatisticsOptions"/> instance for mocking. </returns>
+        public static GetItemAssetStatisticsOptions GetItemAssetStatisticsOptions(string collectionId = default, string itemId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, IEnumerable<string> assetBandIndices = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assetExpression = default, int? height = default, int? width = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            categoriesPixels ??= new ChangeTrackingList<int>();
+            percentiles ??= new ChangeTrackingList<int>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            assetExpression ??= new ChangeTrackingList<string>();
+
+            return new GetItemAssetStatisticsOptions(
+                collectionId,
+                itemId,
+                bidx.ToList(),
+                assets.ToList(),
+                assetBandIndices.ToList(),
+                noData,
+                unscale,
+                reproject,
+                resampling,
+                maxSize,
+                categorical,
+                categoriesPixels.ToList(),
+                percentiles.ToList(),
+                histogramBins,
+                histogramRange,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                assetExpression.ToList(),
+                height,
+                width,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Return dataset's statistics. </summary>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="PlanetaryComputer.AssetStatisticsResult"/> instance for mocking. </returns>
@@ -1555,6 +1760,100 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for item merged statistics operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
+        /// <param name="categorical"> Return statistics for categorical dataset. </param>
+        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
+        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
+        /// <param name="histogramBins">
+        /// Defines the number of equal-width bins in the given range (10, by default).
+        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
+        /// increasing array of bin edges, including the rightmost edge, allowing for
+        /// non-uniform bin widths.
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="histogramRange">
+        /// Comma `,` delimited range of the bins.
+        /// The lower and upper range of the bins. If not provided, range is simply
+        /// (a.min(), a.max()).
+        /// Values outside the range are ignored. The first element of the range must be
+        /// less than or equal to the second.
+        /// range affects the automatic bin computation as well.
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
+        /// <param name="height"> Force output image height. </param>
+        /// <param name="width"> Force output image width. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemStatisticsOptions"/> instance for mocking. </returns>
+        public static GetItemStatisticsOptions GetItemStatisticsOptions(string collectionId = default, string itemId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            categoriesPixels ??= new ChangeTrackingList<int>();
+            percentiles ??= new ChangeTrackingList<int>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetItemStatisticsOptions(
+                collectionId,
+                itemId,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                resampling,
+                maxSize,
+                categorical,
+                categoriesPixels.ToList(),
+                percentiles.ToList(),
+                histogramBins,
+                histogramRange,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                algorithm,
+                algorithmParams,
+                height,
+                width,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Return dataset's statistics. </summary>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="PlanetaryComputer.TilerStacItemStatistics"/> instance for mocking. </returns>
@@ -1563,6 +1862,106 @@ namespace Azure.Analytics.PlanetaryComputer
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new TilerStacItemStatistics(additionalProperties);
+        }
+
+        /// <summary> Options for item GeoJSON feature statistics operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="body"> Request GeoJson body. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
+        /// <param name="categorical"> Return statistics for categorical dataset. </param>
+        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
+        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
+        /// <param name="histogramBins">
+        /// Defines the number of equal-width bins in the given range (10, by default).
+        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
+        /// increasing array of bin edges, including the rightmost edge, allowing for
+        /// non-uniform bin widths.
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="histogramRange">
+        /// Comma `,` delimited range of the bins.
+        /// The lower and upper range of the bins. If not provided, range is simply
+        /// (a.min(), a.max()).
+        /// Values outside the range are ignored. The first element of the range must be
+        /// less than or equal to the second.
+        /// range affects the automatic bin computation as well.
+        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
+        /// </param>
+        /// <param name="destinationCrs"> Output Coordinate Reference System. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
+        /// <param name="height"> Force output image height. </param>
+        /// <param name="width"> Force output image width. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemFeatureStatisticsOptions"/> instance for mocking. </returns>
+        public static GetItemFeatureStatisticsOptions GetItemFeatureStatisticsOptions(string collectionId = default, string itemId = default, GeoJsonFeature body = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string destinationCrs = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            categoriesPixels ??= new ChangeTrackingList<int>();
+            percentiles ??= new ChangeTrackingList<int>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetItemFeatureStatisticsOptions(
+                collectionId,
+                itemId,
+                body,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                coordinateReferenceSystem,
+                resampling,
+                maxSize,
+                categorical,
+                categoriesPixels.ToList(),
+                percentiles.ToList(),
+                histogramBins,
+                histogramRange,
+                destinationCrs,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                algorithm,
+                algorithmParams,
+                height,
+                width,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
@@ -1585,6 +1984,97 @@ namespace Azure.Analytics.PlanetaryComputer
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new StacItemStatisticsGeoJsonProperties(statistics, additionalProperties);
+        }
+
+        /// <summary> Options for item TileJSON metadata operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
+        /// <param name="tileFormat"> The format of the output tile image. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemTileJsonOptions"/> instance for mocking. </returns>
+        public static GetItemTileJsonOptions GetItemTileJsonOptions(string collectionId = default, string itemId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetItemTileJsonOptions(
+                collectionId,
+                itemId,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                algorithm,
+                algorithmParams,
+                tileMatrixSetId,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                padding,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1634,6 +2124,161 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for item TileJSON metadata operations with TileMatrixSetId as path. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> The format of the output tile image. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemTileJsonByTmsOptions"/> instance for mocking. </returns>
+        public static GetItemTileJsonByTmsOptions GetItemTileJsonByTmsOptions(string collectionId = default, string itemId = default, string tileMatrixSetId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetItemTileJsonByTmsOptions(
+                collectionId,
+                itemId,
+                tileMatrixSetId,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                resampling,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                padding,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for item point query operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="itemId"> STAC Item Identifier. </param>
+        /// <param name="longitude"> Longitude. </param>
+        /// <param name="latitude"> Latitude. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetItemPointOptions"/> instance for mocking. </returns>
+        public static GetItemPointOptions GetItemPointOptions(string collectionId = default, string itemId = default, float longitude = default, float latitude = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetItemPointOptions(
+                collectionId,
+                itemId,
+                longitude,
+                latitude,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                coordinateReferenceSystem,
+                resampling,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Response model for point query operations providing values at a specific location. </summary>
         /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
         /// <param name="values"> Array of pixel values at the queried point for each band. </param>
@@ -1646,6 +2291,322 @@ namespace Azure.Analytics.PlanetaryComputer
             bandNames ??= new ChangeTrackingList<string>();
 
             return new TilerCoreModelsResponsesPoint(coordinates.ToList(), values.ToList(), bandNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for collection tileset list operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="ids"> Array of Item ids. </param>
+        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
+        /// <param name="query"> JSON query expression for filtering items. </param>
+        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetCollectionTilesetsOptions"/> instance for mocking. </returns>
+        public static GetCollectionTilesetsOptions GetCollectionTilesetsOptions(string collectionId = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetCollectionTilesetsOptions(
+                collectionId,
+                ids,
+                bbox,
+                query,
+                sortBy,
+                datetime,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for collection tileset metadata operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="ids"> Array of Item ids. </param>
+        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
+        /// <param name="query"> JSON query expression for filtering items. </param>
+        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetCollectionTilesetMetadataOptions"/> instance for mocking. </returns>
+        public static GetCollectionTilesetMetadataOptions GetCollectionTilesetMetadataOptions(string collectionId = default, string tileMatrixSetId = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetCollectionTilesetMetadataOptions(
+                collectionId,
+                tileMatrixSetId,
+                ids,
+                bbox,
+                query,
+                sortBy,
+                datetime,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for collection-level TileJSON metadata operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True).
+        /// </param>
+        /// <param name="ids"> Array of Item ids. </param>
+        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
+        /// <param name="query"> JSON query expression for filtering items. </param>
+        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
+        /// <param name="tileFormat"> The format of the output tile image. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetCollectionTileJsonOptions"/> instance for mocking. </returns>
+        public static GetCollectionTileJsonOptions GetCollectionTileJsonOptions(string collectionId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetCollectionTileJsonOptions(
+                collectionId,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                ids,
+                bbox,
+                query,
+                sortBy,
+                datetime,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                sel.ToList(),
+                selMethod,
+                algorithm,
+                algorithmParams,
+                tileMatrixSetId,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                collection,
+                resampling,
+                pixelSelection,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                padding,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for collection-level TileJSON with TileMatrixSetId as path. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True).
+        /// </param>
+        /// <param name="ids"> Array of Item ids. </param>
+        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
+        /// <param name="query"> JSON query expression for filtering items. </param>
+        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> The format of the output tile image. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetCollectionTileJsonByTmsOptions"/> instance for mocking. </returns>
+        public static GetCollectionTileJsonByTmsOptions GetCollectionTileJsonByTmsOptions(string collectionId = default, string tileMatrixSetId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetCollectionTileJsonByTmsOptions(
+                collectionId,
+                tileMatrixSetId,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                ids,
+                bbox,
+                query,
+                sortBy,
+                datetime,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                sel.ToList(),
+                selMethod,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                collection,
+                resampling,
+                pixelSelection,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                padding,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents GeoJSON with feature with an asset property. </summary>
@@ -1700,6 +2661,89 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Options for collection-level point query operations. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="longitude"> Longitude. </param>
+        /// <param name="latitude"> Latitude. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True).
+        /// </param>
+        /// <param name="ids"> Array of Item ids. </param>
+        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
+        /// <param name="query"> JSON query expression for filtering items. </param>
+        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetCollectionPointOptions"/> instance for mocking. </returns>
+        public static GetCollectionPointOptions GetCollectionPointOptions(string collectionId = default, float longitude = default, float latitude = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+
+            return new GetCollectionPointOptions(
+                collectionId,
+                longitude,
+                latitude,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                ids,
+                bbox,
+                query,
+                sortBy,
+                datetime,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                sel.ToList(),
+                selMethod,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                coordinateReferenceSystem,
+                resampling,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Asset information for the specified point. </summary>
         /// <param name="id"> STAC item ID. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
@@ -1712,6 +2756,361 @@ namespace Azure.Analytics.PlanetaryComputer
             assets ??= new ChangeTrackingDictionary<string, StacAsset>();
 
             return new StacItemPointAsset(id, boundingBox.ToList(), assets, collectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for search tileset list operations. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetSearchTilesetsOptions"/> instance for mocking. </returns>
+        public static GetSearchTilesetsOptions GetSearchTilesetsOptions(string searchId = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetSearchTilesetsOptions(
+                searchId,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for search tileset metadata operations. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetSearchTilesetMetadataOptions"/> instance for mocking. </returns>
+        public static GetSearchTilesetMetadataOptions GetSearchTilesetMetadataOptions(string searchId = default, string tileMatrixSetId = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+
+            return new GetSearchTilesetMetadataOptions(
+                searchId,
+                tileMatrixSetId,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for search-based TileJSON with TileMatrixSetId as path. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True).
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="tileFormat"> The format of the output tile image. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colorMapName"> Colormap name. </param>
+        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetSearchTileJsonByTmsOptions"/> instance for mocking. </returns>
+        public static GetSearchTileJsonByTmsOptions GetSearchTileJsonByTmsOptions(string searchId = default, string tileMatrixSetId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetSearchTileJsonByTmsOptions(
+                searchId,
+                tileMatrixSetId,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                algorithm,
+                algorithmParams,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                buffer,
+                colorFormula,
+                collection,
+                resampling,
+                pixelSelection,
+                rescale.ToList(),
+                colorMapName,
+                colorMap,
+                returnMask,
+                padding,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for search-based TileJSON metadata operations. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True).
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
+        /// <param name="tileFormat"> The format of the output tile image. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. </param>
+        /// <param name="minZoom"> Overwrite default minzoom. </param>
+        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
+        /// <param name="padding"> Padding to apply to each tile edge. </param>
+        /// <param name="buffer"> Buffer on each side of the given tile. </param>
+        /// <param name="colorFormula"> rio-color formula. </param>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="algorithm"> Terrain algorithm name. </param>
+        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
+        /// <param name="rescale"> Rescale ranges. </param>
+        /// <param name="colormapName"> Colormap name. </param>
+        /// <param name="colormap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetSearchTileJsonOptions"/> instance for mocking. </returns>
+        public static GetSearchTileJsonOptions GetSearchTileJsonOptions(string searchId = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, int? padding = default, float? buffer = default, string colorFormula = default, string collectionId = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default)
+        {
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            rescale ??= new ChangeTrackingList<string>();
+
+            return new GetSearchTileJsonOptions(
+                searchId,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                tileMatrixSetId,
+                tileFormat,
+                tileScale,
+                minZoom,
+                maxZoom,
+                padding,
+                buffer,
+                colorFormula,
+                collectionId,
+                resampling,
+                pixelSelection,
+                algorithm,
+                algorithmParams,
+                rescale.ToList(),
+                colormapName,
+                colormap,
+                returnMask,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for search-based point query operations. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="longitude"> Longitude. </param>
+        /// <param name="latitude"> Latitude. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
+        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
+        /// <param name="skipCovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True).
+        /// </param>
+        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
+        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
+        /// <param name="crs"> Coordinate Reference System. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
+        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="bidx"> Dataset band indexes. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="noData"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GetSearchPointOptions"/> instance for mocking. </returns>
+        public static GetSearchPointOptions GetSearchPointOptions(string searchId = default, float longitude = default, float latitude = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default)
+        {
+            subdatasetBands ??= new ChangeTrackingList<int>();
+            sel ??= new ChangeTrackingList<string>();
+            bidx ??= new ChangeTrackingList<int>();
+            assets ??= new ChangeTrackingList<string>();
+            assetBandIndices ??= new ChangeTrackingList<string>();
+
+            return new GetSearchPointOptions(
+                searchId,
+                longitude,
+                latitude,
+                scanLimit,
+                itemsLimit,
+                timeLimit,
+                exitWhenFull,
+                skipCovered,
+                subdatasetName,
+                subdatasetBands.ToList(),
+                crs,
+                datetime,
+                sel.ToList(),
+                selMethod,
+                bidx.ToList(),
+                assets.ToList(),
+                expression,
+                assetBandIndices.ToList(),
+                assetAsBand,
+                noData,
+                unscale,
+                reproject,
+                coordinateReferenceSystem,
+                resampling,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> UnsignedLink. </summary>

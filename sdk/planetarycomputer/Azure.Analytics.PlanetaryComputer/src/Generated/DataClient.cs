@@ -682,19 +682,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTilesets(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetTilesets(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetTilesetsRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -732,19 +727,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTilesetsAsync(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetTilesetsAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetTilesetsRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -756,66 +746,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return a list of available tilesets for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileSetList> GetTilesets(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetList> GetTilesets(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetTilesets(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetTilesets(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileSetList)result, result);
         }
 
         /// <summary> Return a list of available tilesets for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileSetList>> GetTilesetsAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetList>> GetTilesetsAsync(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetTilesetsAsync(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetTilesetsAsync(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSetList)result, result);
         }
 
@@ -847,20 +799,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTilesetMetadata(string collectionId, string itemId, string tileMatrixSetId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetTilesetMetadata(string collectionId, string itemId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetTilesetMetadataRequest(collectionId, itemId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -899,20 +845,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTilesetMetadataAsync(string collectionId, string itemId, string tileMatrixSetId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetTilesetMetadataAsync(string collectionId, string itemId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetTilesetMetadataRequest(collectionId, itemId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -924,70 +864,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return metadata for a specific tileset of a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileSetMetadata> GetTilesetMetadata(string collectionId, string itemId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetMetadata> GetTilesetMetadata(GetItemTilesetMetadataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetTilesetMetadata(collectionId, itemId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetTilesetMetadata(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileSetMetadata)result, result);
         }
 
         /// <summary> Return metadata for a specific tileset of a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileSetMetadata>> GetTilesetMetadataAsync(string collectionId, string itemId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetMetadata>> GetTilesetMetadataAsync(GetItemTilesetMetadataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetTilesetMetadataAsync(collectionId, itemId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetTilesetMetadataAsync(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSetMetadata)result, result);
         }
 
@@ -2898,19 +2796,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemBounds(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetItemBounds(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBounds");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemBoundsRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -2948,19 +2841,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemBoundsAsync(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetItemBoundsAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBounds");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemBoundsRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -2972,66 +2860,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return the bounds for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item bounds query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemBounds> GetItemBounds(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemBounds> GetItemBounds(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemBounds(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetItemBounds(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemBounds)result, result);
         }
 
         /// <summary> Return the bounds for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item bounds query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemBounds>> GetItemBoundsAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemBounds>> GetItemBoundsAsync(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemBoundsAsync(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemBoundsAsync(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemBounds)result, result);
         }
 
@@ -3063,19 +2913,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemInfo(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assets, RequestContext context)
+        internal virtual Response GetItemInfo(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<string> assets = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfo");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemInfoRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, assets, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -3114,19 +2959,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemInfoAsync(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assets, RequestContext context)
+        internal virtual async Task<Response> GetItemInfoAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<string> assets = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfo");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemInfoRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, assets, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -3138,68 +2978,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return dataset's basic info for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="assets"> Asset's names. </param>
+        /// <param name="options"> The options for the item info query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerInfoMapResult> GetItemInfo(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerInfoMapResult> GetItemInfo(GetItemInfoOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemInfo(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), assets, cancellationToken.ToRequestContext());
+            Response result = GetItemInfo(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, cancellationToken.ToRequestContext());
             return Response.FromValue((TilerInfoMapResult)result, result);
         }
 
         /// <summary> Return dataset's basic info for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="assets"> Asset's names. </param>
+        /// <param name="options"> The options for the item info query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerInfoMapResult>> GetItemInfoAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerInfoMapResult>> GetItemInfoAsync(GetItemInfoOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemInfoAsync(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemInfoAsync(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerInfoMapResult)result, result);
         }
 
@@ -3231,19 +3031,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemInfoGeoJson(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assets, RequestContext context)
+        internal virtual Response GetItemInfoGeoJson(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<string> assets = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfoGeoJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemInfoGeoJsonRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, assets, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -3282,19 +3077,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemInfoGeoJsonAsync(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assets, RequestContext context)
+        internal virtual async Task<Response> GetItemInfoGeoJsonAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<string> assets = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfoGeoJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemInfoGeoJsonRequest(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, assets, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -3306,68 +3096,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return info as GeoJSON for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="assets"> Asset's names. </param>
+        /// <param name="options"> The options for the item info GeoJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerInfoGeoJsonFeature> GetItemInfoGeoJson(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerInfoGeoJsonFeature> GetItemInfoGeoJson(GetItemInfoOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemInfoGeoJson(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), assets, cancellationToken.ToRequestContext());
+            Response result = GetItemInfoGeoJson(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, cancellationToken.ToRequestContext());
             return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
         }
 
         /// <summary> Return info as GeoJSON for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="assets"> Asset's names. </param>
+        /// <param name="options"> The options for the item info GeoJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerInfoGeoJsonFeature>> GetItemInfoGeoJsonAsync(string collectionId, string itemId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerInfoGeoJsonFeature>> GetItemInfoGeoJsonAsync(GetItemInfoOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemInfoGeoJsonAsync(collectionId, itemId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemInfoGeoJsonAsync(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
         }
 
@@ -3616,19 +3366,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Force output image height. </param>
         /// <param name="width"> Force output image width. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemAssetStatistics(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, IEnumerable<string> assetBandIndices, string noData, bool? unscale, string reproject, string resampling, int? maxSize, bool? categorical, IEnumerable<int> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assetExpression, int? height, int? width, RequestContext context)
+        internal virtual Response GetItemAssetStatistics(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, IEnumerable<string> assetBandIndices = default, string noData = default, bool? unscale = default, string reproject = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<string> assetExpression = default, int? height = default, int? width = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemAssetStatisticsRequest(collectionId, itemId, bidx, assets, assetBandIndices, noData, unscale, reproject, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, assetExpression, height, width, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -3696,19 +3441,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Force output image height. </param>
         /// <param name="width"> Force output image width. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, IEnumerable<string> assetBandIndices, string noData, bool? unscale, string reproject, string resampling, int? maxSize, bool? categorical, IEnumerable<int> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assetExpression, int? height, int? width, RequestContext context)
+        internal virtual async Task<Response> GetItemAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, IEnumerable<string> assetBandIndices = default, string noData = default, bool? unscale = default, string reproject = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<string> assetExpression = default, int? height = default, int? width = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemAssetStatisticsRequest(collectionId, itemId, bidx, assets, assetBandIndices, noData, unscale, reproject, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, assetExpression, height, width, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -3720,126 +3460,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Per asset statistics for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="assetExpression"> Per asset band expression. </param>
-        /// <param name="height"> Force output image height. </param>
-        /// <param name="width"> Force output image width. </param>
+        /// <param name="options"> The options for the item asset statistics query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetStatisticsResult> GetItemAssetStatistics(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, IEnumerable<string> assetBandIndices = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assetExpression = default, int? height = default, int? width = default, CancellationToken cancellationToken = default)
+        public virtual Response<AssetStatisticsResult> GetItemAssetStatistics(GetItemAssetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemAssetStatistics(collectionId, itemId, bidx, assets, assetBandIndices, noData, unscale, reproject?.ToString(), resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), assetExpression, height, width, cancellationToken.ToRequestContext());
+            Response result = GetItemAssetStatistics(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.AssetBandIndices, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.AssetExpression, options.Height, options.Width, cancellationToken.ToRequestContext());
             return Response.FromValue((AssetStatisticsResult)result, result);
         }
 
         /// <summary> Per asset statistics for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="assetExpression"> Per asset band expression. </param>
-        /// <param name="height"> Force output image height. </param>
-        /// <param name="width"> Force output image width. </param>
+        /// <param name="options"> The options for the item asset statistics query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetStatisticsResult>> GetItemAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, IEnumerable<string> assetBandIndices = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<string> assetExpression = default, int? height = default, int? width = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssetStatisticsResult>> GetItemAssetStatisticsAsync(GetItemAssetStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemAssetStatisticsAsync(collectionId, itemId, bidx, assets, assetBandIndices, noData, unscale, reproject?.ToString(), resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), assetExpression, height, width, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemAssetStatisticsAsync(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.AssetBandIndices, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.AssetExpression, options.Height, options.Width, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AssetStatisticsResult)result, result);
         }
 
@@ -3903,19 +3545,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Force output image height. </param>
         /// <param name="width"> Force output image width. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemStatistics(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string resampling, int? maxSize, bool? categorical, IEnumerable<int> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? height, int? width, RequestContext context)
+        internal virtual Response GetItemStatistics(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemStatisticsRequest(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, algorithm, algorithmParams, height, width, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -3986,19 +3623,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Force output image height. </param>
         /// <param name="width"> Force output image width. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemStatisticsAsync(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string resampling, int? maxSize, bool? categorical, IEnumerable<int> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? height, int? width, RequestContext context)
+        internal virtual async Task<Response> GetItemStatisticsAsync(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemStatisticsRequest(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, algorithm, algorithmParams, height, width, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -4010,132 +3642,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Merged assets statistics for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Algorithm name. </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="height"> Force output image height. </param>
-        /// <param name="width"> Force output image width. </param>
+        /// <param name="options"> The options for the item statistics query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerStacItemStatistics> GetItemStatistics(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerStacItemStatistics> GetItemStatistics(GetItemStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemStatistics(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), algorithm, algorithmParams, height, width, cancellationToken.ToRequestContext());
+            Response result = GetItemStatistics(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, cancellationToken.ToRequestContext());
             return Response.FromValue((TilerStacItemStatistics)result, result);
         }
 
         /// <summary> Merged assets statistics for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Algorithm name. </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="height"> Force output image height. </param>
-        /// <param name="width"> Force output image width. </param>
+        /// <param name="options"> The options for the item statistics query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerStacItemStatistics>> GetItemStatisticsAsync(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerStacItemStatistics>> GetItemStatisticsAsync(GetItemStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemStatisticsAsync(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), algorithm, algorithmParams, height, width, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemStatisticsAsync(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerStacItemStatistics)result, result);
         }
 
@@ -4202,20 +3730,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Force output image height. </param>
         /// <param name="width"> Force output image width. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemFeatureStatistics(string collectionId, string itemId, RequestContent content, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string destinationCrs = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, RequestContext context = null)
+        internal virtual Response GetItemFeatureStatistics(string collectionId, string itemId, RequestContent content, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string destinationCrs = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemFeatureStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateGetItemFeatureStatisticsRequest(collectionId, itemId, content, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, destinationCrs, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, algorithm, algorithmParams, height, width, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -4289,20 +3811,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="height"> Force output image height. </param>
         /// <param name="width"> Force output image width. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemFeatureStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string destinationCrs = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, RequestContext context = null)
+        internal virtual async Task<Response> GetItemFeatureStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string destinationCrs = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemFeatureStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateGetItemFeatureStatisticsRequest(collectionId, itemId, content, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, destinationCrs, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, algorithm, algorithmParams, height, width, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -4314,140 +3830,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get statistics from a GeoJSON feature for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="destinationCrs"> Output Coordinate Reference System. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Algorithm name. </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="height"> Force output image height. </param>
-        /// <param name="width"> Force output image width. </param>
+        /// <param name="options"> The options for the item feature statistics query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemStatisticsGeoJson> GetItemFeatureStatistics(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string destinationCrs = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, CancellationToken cancellationToken = default)
+        public virtual Response<StacItemStatisticsGeoJson> GetItemFeatureStatistics(GetItemFeatureStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemFeatureStatistics(collectionId, itemId, body, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, destinationCrs, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), algorithm, algorithmParams, height, width, cancellationToken.ToRequestContext());
+            Response result = GetItemFeatureStatistics(options.CollectionId, options.ItemId, options.Body, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemStatisticsGeoJson)result, result);
         }
 
         /// <summary> Get statistics from a GeoJSON feature for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="destinationCrs"> Output Coordinate Reference System. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Algorithm name. </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="height"> Force output image height. </param>
-        /// <param name="width"> Force output image width. </param>
+        /// <param name="options"> The options for the item feature statistics query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetItemFeatureStatisticsAsync(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<int> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, string destinationCrs = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string algorithm = default, string algorithmParams = default, int? height = default, int? width = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetItemFeatureStatisticsAsync(GetItemFeatureStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemFeatureStatisticsAsync(collectionId, itemId, body, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, destinationCrs, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), algorithm, algorithmParams, height, width, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemFeatureStatisticsAsync(options.CollectionId, options.ItemId, options.Body, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemStatisticsGeoJson)result, result);
         }
 
@@ -4511,19 +3915,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemTileJson(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetItemTileJson(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string algorithm = default, string algorithmParams = default, string tileMatrixSetId = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemTileJsonRequest(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, algorithm, algorithmParams, tileMatrixSetId, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -4594,19 +3993,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemTileJsonAsync(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetItemTileJsonAsync(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string algorithm = default, string algorithmParams = default, string tileMatrixSetId = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemTileJsonRequest(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, algorithm, algorithmParams, tileMatrixSetId, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -4618,132 +4012,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return TileJSON document for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad')
-        /// </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item TileJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetItemTileJson(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetItemTileJson(GetItemTileJsonOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemTileJson(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetItemTileJson(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return TileJSON document for a STAC item. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad')
-        /// </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item TileJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetItemTileJsonAsync(string collectionId, string itemId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetItemTileJsonAsync(GetItemTileJsonOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemTileJsonAsync(collectionId, itemId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemTileJsonAsync(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -4804,20 +4094,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemTileJsonByTms(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetItemTileJsonByTms(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJsonByTms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetItemTileJsonByTmsRequest(collectionId, itemId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -4885,20 +4169,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemTileJsonByTmsAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetItemTileJsonByTmsAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string resampling = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJsonByTms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetItemTileJsonByTmsRequest(collectionId, itemId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -4910,128 +4188,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return TileJSON document for a STAC item with TileMatrixSetId as path. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item TileJSON by TMS query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetItemTileJsonByTms(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetItemTileJsonByTms(GetItemTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemTileJsonByTms(collectionId, itemId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetItemTileJsonByTms(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return TileJSON document for a STAC item with TileMatrixSetId as path. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the item TileJSON by TMS query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetItemTileJsonByTmsAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetItemTileJsonByTmsAsync(GetItemTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemTileJsonByTmsAsync(collectionId, itemId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemTileJsonByTmsAsync(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -5390,19 +4568,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal virtual Response GetItemPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string coordinateReferenceSystem = default, string resampling = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemPointRequest(collectionId, itemId, longitude, latitude, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, coordinateReferenceSystem, resampling, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -5452,19 +4625,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal virtual async Task<Response> GetItemPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string coordinateReferenceSystem = default, string resampling = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
                 using HttpMessage message = CreateGetItemPointRequest(collectionId, itemId, longitude, latitude, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, coordinateReferenceSystem, resampling, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -5476,90 +4644,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get point value for a STAC item dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="options"> The options for the item point query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerCoreModelsResponsesPoint> GetItemPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerCoreModelsResponsesPoint> GetItemPoint(GetItemPointOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetItemPoint(collectionId, itemId, longitude, latitude, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetItemPoint(options.CollectionId, options.ItemId, options.Longitude, options.Latitude, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 
         /// <summary> Get point value for a STAC item dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="options"> The options for the item point query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetItemPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetItemPointAsync(GetItemPointOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetItemPointAsync(collectionId, itemId, longitude, latitude, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemPointAsync(options.CollectionId, options.ItemId, options.Longitude, options.Latitude, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 
@@ -6187,18 +5293,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetCollectionTilesets(string collectionId, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetCollectionTilesets(string collectionId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
                 using HttpMessage message = CreateGetCollectionTilesetsRequest(collectionId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -6239,18 +5341,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCollectionTilesetsAsync(string collectionId, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetCollectionTilesetsAsync(string collectionId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
                 using HttpMessage message = CreateGetCollectionTilesetsRequest(collectionId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -6262,70 +5360,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return a list of available tilesets for a STAC collection. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the collection tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileSetList> GetCollectionTilesets(string collectionId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetList> GetCollectionTilesets(GetCollectionTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetCollectionTilesets(collectionId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetCollectionTilesets(options.CollectionId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileSetList)result, result);
         }
 
         /// <summary> Return a list of available tilesets for a STAC collection. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the collection tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileSetList>> GetCollectionTilesetsAsync(string collectionId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetList>> GetCollectionTilesetsAsync(GetCollectionTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetCollectionTilesetsAsync(collectionId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetCollectionTilesetsAsync(options.CollectionId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSetList)result, result);
         }
 
@@ -6360,19 +5416,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetCollectionTilesetMetadata(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetCollectionTilesetMetadata(string collectionId, string tileMatrixSetId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetCollectionTilesetMetadataRequest(collectionId, tileMatrixSetId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -6414,19 +5465,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCollectionTilesetMetadataAsync(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetCollectionTilesetMetadataAsync(string collectionId, string tileMatrixSetId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetCollectionTilesetMetadataRequest(collectionId, tileMatrixSetId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -6438,74 +5484,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return metadata for a specific tileset of a STAC collection. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the collection tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileSetMetadata> GetCollectionTilesetMetadata(string collectionId, string tileMatrixSetId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetMetadata> GetCollectionTilesetMetadata(GetCollectionTilesetMetadataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetCollectionTilesetMetadata(collectionId, tileMatrixSetId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetCollectionTilesetMetadata(options.CollectionId, options.TileMatrixSetId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileSetMetadata)result, result);
         }
 
         /// <summary> Return metadata for a specific tileset of a STAC collection. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the collection tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileSetMetadata>> GetCollectionTilesetMetadataAsync(string collectionId, string tileMatrixSetId, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetMetadata>> GetCollectionTilesetMetadataAsync(GetCollectionTilesetMetadataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetCollectionTilesetMetadataAsync(collectionId, tileMatrixSetId, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetCollectionTilesetMetadataAsync(options.CollectionId, options.TileMatrixSetId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSetMetadata)result, result);
         }
 
@@ -8206,18 +7206,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetCollectionTileJson(string collectionId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal virtual Response GetCollectionTileJson(string collectionId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, string tileMatrixSetId = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
                 using HttpMessage message = CreateGetCollectionTileJsonRequest(collectionId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, algorithm, algorithmParams, tileMatrixSetId, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, padding, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -8301,18 +7297,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCollectionTileJsonAsync(string collectionId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal virtual async Task<Response> GetCollectionTileJsonAsync(string collectionId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, string tileMatrixSetId = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
                 using HttpMessage message = CreateGetCollectionTileJsonRequest(collectionId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, algorithm, algorithmParams, tileMatrixSetId, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, padding, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -8324,156 +7316,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return TileJSON document for a STAC collection. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad')
-        /// </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="options"> The options for the collection TileJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetCollectionTileJson(string collectionId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetCollectionTileJson(GetCollectionTileJsonOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetCollectionTileJson(collectionId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, cancellationToken.ToRequestContext());
+            Response result = GetCollectionTileJson(options.CollectionId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return TileJSON document for a STAC collection. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad')
-        /// </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="options"> The options for the collection TileJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetCollectionTileJsonAsync(string collectionId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetCollectionTileJsonAsync(GetCollectionTileJsonOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetCollectionTileJsonAsync(collectionId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetCollectionTileJsonAsync(options.CollectionId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -8547,19 +7411,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetCollectionTileJsonByTms(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal virtual Response GetCollectionTileJsonByTms(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJsonByTms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetCollectionTileJsonByTmsRequest(collectionId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, padding, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -8640,19 +7499,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCollectionTileJsonByTmsAsync(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal virtual async Task<Response> GetCollectionTileJsonByTmsAsync(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJsonByTms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetCollectionTileJsonByTmsRequest(collectionId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, padding, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -8664,152 +7518,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return TileJSON document for a STAC collection with TileMatrixSetId as path. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="options"> The options for the collection TileJSON by TMS query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetCollectionTileJsonByTms(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetCollectionTileJsonByTms(GetCollectionTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetCollectionTileJsonByTms(collectionId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, cancellationToken.ToRequestContext());
+            Response result = GetCollectionTileJsonByTms(options.CollectionId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return TileJSON document for a STAC collection with TileMatrixSetId as path. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="options"> The options for the collection TileJSON by TMS query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetCollectionTileJsonByTmsAsync(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetCollectionTileJsonByTmsAsync(GetCollectionTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetCollectionTileJsonByTmsAsync(collectionId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetCollectionTileJsonByTmsAsync(options.CollectionId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -10901,18 +9631,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetCollectionPoint(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal virtual Response GetCollectionPoint(string collectionId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
                 using HttpMessage message = CreateGetCollectionPointRequest(collectionId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, coordinateReferenceSystem, resampling, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -10973,18 +9699,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetCollectionPointAsync(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal virtual async Task<Response> GetCollectionPointAsync(string collectionId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
                 using HttpMessage message = CreateGetCollectionPointRequest(collectionId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, coordinateReferenceSystem, resampling, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -10996,110 +9718,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get Point value for a collection dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="options"> The options for the collection point query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerCoreModelsResponsesPoint> GetCollectionPoint(string collectionId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerCoreModelsResponsesPoint> GetCollectionPoint(GetCollectionPointOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetCollectionPoint(collectionId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetCollectionPoint(options.CollectionId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 
         /// <summary> Get Point value for a collection dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="ids"> Array of Item ids. </param>
-        /// <param name="bbox"> Bounding box (west, south, east, north). </param>
-        /// <param name="query"> JSON query expression for filtering items. </param>
-        /// <param name="sortBy"> Sorting expression (e.g. +/-property). </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="options"> The options for the collection point query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetCollectionPointAsync(string collectionId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string ids = default, string bbox = default, string query = default, string sortBy = default, string datetime = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetCollectionPointAsync(GetCollectionPointOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetCollectionPointAsync(collectionId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, ids, bbox, query, sortBy, datetime, subdatasetName, subdatasetBands, crs, sel, selMethod?.ToString(), bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetCollectionPointAsync(options.CollectionId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 
@@ -11359,18 +9999,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSearchTilesets(string searchId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetSearchTilesets(string searchId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
                 using HttpMessage message = CreateGetSearchTilesetsRequest(searchId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -11407,18 +10043,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSearchTilesetsAsync(string searchId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetSearchTilesetsAsync(string searchId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
                 using HttpMessage message = CreateGetSearchTilesetsRequest(searchId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -11430,62 +10062,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return a list of available tilesets for a mosaic search. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the search tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileSetList> GetSearchTilesets(string searchId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetList> GetSearchTilesets(GetSearchTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetSearchTilesets(searchId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetSearchTilesets(options.SearchId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileSetList)result, result);
         }
 
         /// <summary> Return a list of available tilesets for a mosaic search. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the search tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileSetList>> GetSearchTilesetsAsync(string searchId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetList>> GetSearchTilesetsAsync(GetSearchTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetSearchTilesetsAsync(searchId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSearchTilesetsAsync(options.SearchId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSetList)result, result);
         }
 
@@ -11516,19 +10114,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSearchTilesetMetadata(string searchId, string tileMatrixSetId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual Response GetSearchTilesetMetadata(string searchId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetSearchTilesetMetadataRequest(searchId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -11566,19 +10159,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
         /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSearchTilesetMetadataAsync(string searchId, string tileMatrixSetId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal virtual async Task<Response> GetSearchTilesetMetadataAsync(string searchId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetSearchTilesetMetadataRequest(searchId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -11590,66 +10178,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return metadata for a specific tileset of a mosaic search. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the search tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileSetMetadata> GetSearchTilesetMetadata(string searchId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetMetadata> GetSearchTilesetMetadata(GetSearchTilesetMetadataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetSearchTilesetMetadata(searchId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetSearchTilesetMetadata(options.SearchId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TileSetMetadata)result, result);
         }
 
         /// <summary> Return metadata for a specific tileset of a mosaic search. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
+        /// <param name="options"> The options for the search tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileSetMetadata>> GetSearchTilesetMetadataAsync(string searchId, string tileMatrixSetId, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetMetadata>> GetSearchTilesetMetadataAsync(GetSearchTilesetMetadataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetSearchTilesetMetadataAsync(searchId, tileMatrixSetId, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSearchTilesetMetadataAsync(options.SearchId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSetMetadata)result, result);
         }
 
@@ -12757,19 +11307,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSearchTileJsonByTms(string searchId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal virtual Response GetSearchTileJsonByTms(string searchId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, string tileFormat = default, int? tileScale = default, float? buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJsonByTms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetSearchTileJsonByTmsRequest(searchId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, padding, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -12846,19 +11391,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSearchTileJsonByTmsAsync(string searchId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal virtual async Task<Response> GetSearchTileJsonByTmsAsync(string searchId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, string tileFormat = default, int? tileScale = default, float? buffer = default, string colorFormula = default, string collection = default, string resampling = default, string pixelSelection = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJsonByTms");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
                 using HttpMessage message = CreateGetSearchTileJsonByTmsRequest(searchId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, padding, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -12870,144 +11410,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return TileJSON document for a search with TileMatrixSetId as path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="options"> The options for the search TileJSON by TMS query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetSearchTileJsonByTms(string searchId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetSearchTileJsonByTms(GetSearchTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetSearchTileJsonByTms(searchId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, cancellationToken.ToRequestContext());
+            Response result = GetSearchTileJsonByTms(options.SearchId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.MinZoom, options.MaxZoom, options.TileFormat?.ToString(), options.TileScale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return TileJSON document for a search with TileMatrixSetId as path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
+        /// <param name="options"> The options for the search TileJSON by TMS query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetSearchTileJsonByTmsAsync(string searchId, string tileMatrixSetId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, float? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, int? padding = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetSearchTileJsonByTmsAsync(GetSearchTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetSearchTileJsonByTmsAsync(searchId, tileMatrixSetId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, padding, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSearchTileJsonByTmsAsync(options.SearchId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.MinZoom, options.MaxZoom, options.TileFormat?.ToString(), options.TileScale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -14429,18 +12853,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSearchTileJson(string searchId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, int? padding, float? buffer, string colorFormula, string collectionId, string resampling, string pixelSelection, string algorithm, string algorithmParams, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        internal virtual Response GetSearchTileJson(string searchId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string tileMatrixSetId = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, int? padding = default, float? buffer = default, string colorFormula = default, string collectionId = default, string resampling = default, string pixelSelection = default, string algorithm = default, string algorithmParams = default, IEnumerable<string> rescale = default, string colormapName = default, string colormap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
                 using HttpMessage message = CreateGetSearchTileJsonRequest(searchId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, tileMatrixSetId, tileFormat, tileScale, minZoom, maxZoom, padding, buffer, colorFormula, collectionId, resampling, pixelSelection, algorithm, algorithmParams, rescale, colormapName, colormap, returnMask, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -14517,18 +12937,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSearchTileJsonAsync(string searchId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, int? padding, float? buffer, string colorFormula, string collectionId, string resampling, string pixelSelection, string algorithm, string algorithmParams, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        internal virtual async Task<Response> GetSearchTileJsonAsync(string searchId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, string tileMatrixSetId = default, string tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, int? padding = default, float? buffer = default, string colorFormula = default, string collectionId = default, string resampling = default, string pixelSelection = default, string algorithm = default, string algorithmParams = default, IEnumerable<string> rescale = default, string colormapName = default, string colormap = default, bool? returnMask = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJson");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
                 using HttpMessage message = CreateGetSearchTileJsonRequest(searchId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, tileMatrixSetId, tileFormat, tileScale, minZoom, maxZoom, padding, buffer, colorFormula, collectionId, resampling, pixelSelection, algorithm, algorithmParams, rescale, colormapName, colormap, returnMask, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -14540,142 +12956,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Return TileJSON document for a search. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. </param>
-        /// <param name="colormap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the search TileJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetSearchTileJson(string searchId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, int? padding = default, float? buffer = default, string colorFormula = default, string collectionId = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileJsonMetadata> GetSearchTileJson(GetSearchTileJsonOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetSearchTileJson(searchId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minZoom, maxZoom, padding, buffer, colorFormula, collectionId, resampling?.ToString(), pixelSelection?.ToString(), algorithm?.ToString(), algorithmParams, rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.ToRequestContext());
+            Response result = GetSearchTileJson(options.SearchId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Padding, options.Buffer, options.ColorFormula, options.CollectionId, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Rescale, options.ColormapName?.ToString(), options.Colormap, options.ReturnMask, cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
         /// <summary> Return TileJSON document for a search. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="padding"> Padding to apply to each tile edge. Helps reduce resampling artefacts along edges. Defaults to `0`. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. </param>
-        /// <param name="colormap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the search TileJSON query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetSearchTileJsonAsync(string searchId, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, TileMatrixSetId? tileMatrixSetId = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, int? padding = default, float? buffer = default, string colorFormula = default, string collectionId = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileJsonMetadata>> GetSearchTileJsonAsync(GetSearchTileJsonOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetSearchTileJsonAsync(searchId, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minZoom, maxZoom, padding, buffer, colorFormula, collectionId, resampling?.ToString(), pixelSelection?.ToString(), algorithm?.ToString(), algorithmParams, rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSearchTileJsonAsync(options.SearchId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Padding, options.Buffer, options.ColorFormula, options.CollectionId, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Rescale, options.ColormapName?.ToString(), options.Colormap, options.ReturnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -15757,18 +14059,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSearchPoint(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal virtual Response GetSearchPoint(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
                 using HttpMessage message = CreateGetSearchPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, coordinateReferenceSystem, resampling, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -15825,18 +14123,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
         /// <param name="resampling"> Resampling method. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSearchPointAsync(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal virtual async Task<Response> GetSearchPointAsync(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, string selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, string reproject = default, string coordinateReferenceSystem = default, string resampling = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchPoint");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
                 using HttpMessage message = CreateGetSearchPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod, bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject, coordinateReferenceSystem, resampling, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -15848,102 +14142,28 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get Point value for a search dataset. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="options"> The options for the search point query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerCoreModelsResponsesPoint> GetSearchPoint(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual Response<TilerCoreModelsResponsesPoint> GetSearchPoint(GetSearchPointOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetSearchPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext());
+            Response result = GetSearchPoint(options.SearchId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 
         /// <summary> Get Point value for a search dataset. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True).
-        /// </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="crs"> Coordinate Reference System. </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        /// Examples:
-        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="sel"> Xarray Indexing using dimension names `{dimension}={value}`. </param>
-        /// <param name="selMethod"> Xarray indexing method to use for inexact matches. </param>
-        /// <param name="bidx"> Dataset band indexes. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="reproject"> WarpKernel resampling algorithm (only used when doing re-projection). Defaults to `nearest`. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="options"> The options for the search point query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetSearchPointAsync(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string subdatasetName = default, IEnumerable<int> subdatasetBands = default, string crs = default, string datetime = default, IEnumerable<string> sel = default, SelMethod? selMethod = default, IEnumerable<int> bidx = default, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBandIndices = default, bool? assetAsBand = default, string noData = default, bool? unscale = default, WarpKernelResampling? reproject = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetSearchPointAsync(GetSearchPointOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetSearchPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, subdatasetName, subdatasetBands, crs, datetime, sel, selMethod?.ToString(), bidx, assets, expression, assetBandIndices, assetAsBand, noData, unscale, reproject?.ToString(), coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSearchPointAsync(options.SearchId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 

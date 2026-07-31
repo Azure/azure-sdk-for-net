@@ -128,16 +128,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get TileJSON metadata for the mosaic
-            Response<TileJsonMetadata> response = await dataClient.GetSearchTileJsonAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                assets: new[] { "image" },
-                assetBandIndices: new[] { "image|1,2,3" },
-                tileScale: 1,
-                minZoom: 9,
-                tileFormat: "png",
-                collectionId: collectionId
-            );
+            var tileJsonOptions = new GetSearchTileJsonOptions(searchId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" },
+                TileScale = 1,
+                MinZoom = 9,
+                TileFormat = "png",
+                CollectionId = collectionId
+            };
+            Response<TileJsonMetadata> response = await dataClient.GetSearchTileJsonAsync(tileJsonOptions);
 
             TileJsonMetadata tileJson = response.Value;
             Console.WriteLine($"TileJSON version: {tileJson.TileJson}");
@@ -370,16 +371,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Console.WriteLine($"Step 1: Registered search ID: {searchId}");
 
             // Step 2: Get TileJSON metadata
-            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetSearchTileJsonAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                assets: new[] { "image" },
-                assetBandIndices: new[] { "image|1,2,3" },
-                tileScale: 1,
-                minZoom: 9,
-                tileFormat: "png",
-                collectionId: collectionId
-            );
+            var tileJsonOptions2 = new GetSearchTileJsonOptions(searchId)
+            {
+                TileMatrixSetId = "WebMercatorQuad",
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" },
+                TileScale = 1,
+                MinZoom = 9,
+                TileFormat = "png",
+                CollectionId = collectionId
+            };
+            Response<TileJsonMetadata> tileJsonResponse = await dataClient.GetSearchTileJsonAsync(tileJsonOptions2);
 
             Console.WriteLine($"Step 2: TileJSON URL pattern: {tileJsonResponse.Value.Tiles[0]}");
 

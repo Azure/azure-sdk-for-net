@@ -69,44 +69,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionPoint for collection: {collectionId}");
             TestContext.WriteLine($"Coordinates: ({longitude}, {latitude})");
 
-            // Act - use protocol method to avoid deserialization bug in generated TilerCoreModelsResponsesPoint model
+            // Act - use options bag pattern
             // assets or expression is required for point queries
-            Response response = await dataClient.GetCollectionPointAsync(
-                collectionId: collectionId,
-                longitude: longitude,
-                latitude: latitude,
-                scanLimit: null,
-                itemsLimit: null,
-                timeLimit: null,
-                exitWhenFull: null,
-                skipCovered: null,
-                ids: null,
-                bbox: null,
-                query: null,
-                sortBy: null,
-                datetime: null,
-                subdatasetName: null,
-                subdatasetBands: null,
-                crs: null,
-                sel: null,
-                selMethod: null,
-                bidx: null,
-                assets: new[] { "image" },
-                expression: null,
-                assetBandIndices: null,
-                assetAsBand: null,
-                noData: null,
-                unscale: null,
-                reproject: null,
-                coordinateReferenceSystem: null,
-                resampling: null,
-                context: new RequestContext()
-            );
+            var pointOptions = new GetCollectionPointOptions(collectionId, longitude, latitude) { Assets = { "image" } };
+            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetCollectionPointAsync(pointOptions);
 
             // Assert
-            ValidateResponse(response, "GetCollectionPoint");
-            Assert.That(response.Content, Is.Not.Null, "Response content should not be null");
-            Assert.That(response.Content.ToString().Length, Is.GreaterThan(0), "Response should have content");
+            ValidateResponse(response.GetRawResponse(), "GetCollectionPoint");
+            Assert.That(response.Value, Is.Not.Null, "Response value should not be null");
 
             TestContext.WriteLine("GetCollectionPoint succeeded");
         }
@@ -206,11 +176,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionTileJson for collection: {collectionId}");
 
             // Act
-            Response<TileJsonMetadata> response = await dataClient.GetCollectionTileJsonAsync(
-                collectionId: collectionId,
-                assets: new[] { "image" },
-                assetBandIndices: new[] { "image|1,2,3" }
-            );
+            var tileJsonOptions = new GetCollectionTileJsonOptions(collectionId)
+            {
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            };
+            Response<TileJsonMetadata> response = await dataClient.GetCollectionTileJsonAsync(tileJsonOptions);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollectionTileJson");
@@ -397,9 +368,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionTilesets for collection: {collectionId}");
 
             // Act
-            Response<TileSetList> response = await dataClient.GetCollectionTilesetsAsync(
-                collectionId: collectionId
-            );
+            var tilesetsOptions = new GetCollectionTilesetsOptions(collectionId);
+            Response<TileSetList> response = await dataClient.GetCollectionTilesetsAsync(tilesetsOptions);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollectionTilesets");
@@ -456,10 +426,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionTilesetMetadata for collection: {collectionId}");
 
             // Act
-            Response<TileSetMetadata> response = await dataClient.GetCollectionTilesetMetadataAsync(
-                collectionId: collectionId,
-                tileMatrixSetId: "WebMercatorQuad"
-            );
+            var metadataOptions = new GetCollectionTilesetMetadataOptions(collectionId, "WebMercatorQuad");
+            Response<TileSetMetadata> response = await dataClient.GetCollectionTilesetMetadataAsync(metadataOptions);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollectionTilesetMetadata");

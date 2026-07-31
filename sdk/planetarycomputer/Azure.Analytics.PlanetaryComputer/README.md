@@ -320,14 +320,12 @@ DataClient dataClient = client.GetDataClient();
 string collectionId = "naip";
 string itemId = "ga_m_3308421_se_16_060_20211114";
 
-// Get point values at specific coordinates
-Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(
-    collectionId: collectionId,
-    itemId: itemId,
-    longitude: -84.41f,
-    latitude: 33.65f,
-    assets: new[] { "image" }
-);
+// Get point values at specific coordinates using options bag
+var options = new GetItemPointOptions(collectionId, itemId, longitude: -84.41f, latitude: 33.65f)
+{
+    Assets = { "image" }
+};
+Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(options);
 
 TilerCoreModelsResponsesPoint pointData = response.Value;
 Console.WriteLine($"Coordinates: {pointData.Coordinates}");
