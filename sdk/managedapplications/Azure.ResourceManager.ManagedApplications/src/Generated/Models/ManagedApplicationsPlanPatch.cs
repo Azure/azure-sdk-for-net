@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> Plan for the managed application. </summary>
-    public partial class PlanPatchable
+    public partial class ManagedApplicationsPlanPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PlanPatchable"/>. </summary>
-        public PlanPatchable()
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsPlanPatch"/>. </summary>
+        public ManagedApplicationsPlanPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlanPatchable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationsPlanPatch"/>. </summary>
         /// <param name="name"> The plan name. </param>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="product"> The product code. </param>
         /// <param name="promotionCode"> The promotion code. </param>
         /// <param name="version"> The plan's version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlanPatchable(string name, string publisher, string product, string promotionCode, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedApplicationsPlanPatch(string name, string publisher, string product, string promotionCode, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Publisher = publisher;

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="status"> The JIT status. </param>
         /// <param name="subStatus"> The JIT status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
-        public UpdateAccessContent(JitRequestMetadata metadata, Status status, Substatus subStatus)
+        public UpdateAccessContent(JitRequestMetadata metadata, JitRequestStatus status, JitRequestSubstatus subStatus)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="status"> The JIT status. </param>
         /// <param name="subStatus"> The JIT status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateAccessContent(string approver, JitRequestMetadata metadata, Status status, Substatus subStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateAccessContent(string approver, JitRequestMetadata metadata, JitRequestStatus status, JitRequestSubstatus subStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Approver = approver;
             Metadata = metadata;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public JitRequestMetadata Metadata { get; set; }
 
         /// <summary> The JIT status. </summary>
-        public Status Status { get; set; }
+        public JitRequestStatus Status { get; set; }
 
         /// <summary> The JIT status. </summary>
-        public Substatus SubStatus { get; set; }
+        public JitRequestSubstatus SubStatus { get; set; }
     }
 }

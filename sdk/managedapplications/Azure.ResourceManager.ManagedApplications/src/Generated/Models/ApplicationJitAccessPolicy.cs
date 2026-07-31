@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationJitAccessPolicy"/>. </summary>
-        /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
-        public ApplicationJitAccessPolicy(bool jitAccessEnabled)
+        /// <param name="isJitAccessEnabled"> Whether the JIT access is enabled. </param>
+        public ApplicationJitAccessPolicy(bool isJitAccessEnabled)
         {
-            JitAccessEnabled = jitAccessEnabled;
+            IsJitAccessEnabled = isJitAccessEnabled;
             JitApprovers = new ChangeTrackingList<JitApprover>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationJitAccessPolicy"/>. </summary>
-        /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
+        /// <param name="isJitAccessEnabled"> Whether the JIT access is enabled. </param>
         /// <param name="jitApprovalMode"> JIT approval mode. </param>
         /// <param name="jitApprovers"> The JIT approvers. </param>
         /// <param name="maximumJitAccessDuration"> The maximum duration JIT access is granted. This is an ISO8601 time period value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationJitAccessPolicy(bool jitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApprover> jitApprovers, string maximumJitAccessDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationJitAccessPolicy(bool isJitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApprover> jitApprovers, TimeSpan? maximumJitAccessDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            JitAccessEnabled = jitAccessEnabled;
+            IsJitAccessEnabled = isJitAccessEnabled;
             JitApprovalMode = jitApprovalMode;
             JitApprovers = jitApprovers;
             MaximumJitAccessDuration = maximumJitAccessDuration;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         }
 
         /// <summary> Whether the JIT access is enabled. </summary>
-        public bool JitAccessEnabled { get; set; }
+        public bool IsJitAccessEnabled { get; set; }
 
         /// <summary> JIT approval mode. </summary>
         public JitApprovalMode? JitApprovalMode { get; set; }
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public IList<JitApprover> JitApprovers { get; }
 
         /// <summary> The maximum duration JIT access is granted. This is an ISO8601 time period value. </summary>
-        public string MaximumJitAccessDuration { get; set; }
+        public TimeSpan? MaximumJitAccessDuration { get; set; }
     }
 }

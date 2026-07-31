@@ -12,7 +12,7 @@ using Azure.ResourceManager.ManagedApplications;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> The JIT status. </summary>
-    public readonly partial struct Status : IEquatable<Status>
+    public readonly partial struct JitRequestStatus : IEquatable<JitRequestStatus>
     {
         private readonly string _value;
         /// <summary> NotSpecified. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <summary> Remove. </summary>
         private const string RemoveValue = "Remove";
 
-        /// <summary> Initializes a new instance of <see cref="Status"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Status(string value)
+        public JitRequestStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         }
 
         /// <summary> NotSpecified. </summary>
-        public static Status NotSpecified { get; } = new Status(NotSpecifiedValue);
+        public static JitRequestStatus NotSpecified { get; } = new JitRequestStatus(NotSpecifiedValue);
 
         /// <summary> Elevate. </summary>
-        public static Status Elevate { get; } = new Status(ElevateValue);
+        public static JitRequestStatus Elevate { get; } = new JitRequestStatus(ElevateValue);
 
         /// <summary> Remove. </summary>
-        public static Status Remove { get; } = new Status(RemoveValue);
+        public static JitRequestStatus Remove { get; } = new JitRequestStatus(RemoveValue);
 
-        /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="JitRequestStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Status left, Status right) => left.Equals(right);
+        public static bool operator ==(JitRequestStatus left, JitRequestStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="JitRequestStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Status left, Status right) => !left.Equals(right);
+        public static bool operator !=(JitRequestStatus left, JitRequestStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="JitRequestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Status(string value) => new Status(value);
+        public static implicit operator JitRequestStatus(string value) => new JitRequestStatus(value);
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="JitRequestStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Status?(string value) => value == null ? null : new Status(value);
+        public static implicit operator JitRequestStatus?(string value) => value == null ? null : new JitRequestStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Status other && Equals(other);
+        public override bool Equals(object obj) => obj is JitRequestStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Status other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(JitRequestStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

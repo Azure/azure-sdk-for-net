@@ -427,11 +427,11 @@ namespace Azure.ResourceManager.ManagedApplications.Models
     }
     public partial class ApplicationJitAccessPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy>
     {
-        public ApplicationJitAccessPolicy(bool jitAccessEnabled) { }
-        public bool JitAccessEnabled { get { throw null; } set { } }
+        public ApplicationJitAccessPolicy(bool isJitAccessEnabled) { }
+        public bool IsJitAccessEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedApplications.Models.JitApprovalMode? JitApprovalMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedApplications.Models.JitApprover> JitApprovers { get { throw null; } }
-        public string MaximumJitAccessDuration { get { throw null; } set { } }
+        public System.TimeSpan? MaximumJitAccessDuration { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode? ManagementMode { get { throw null; } }
         public System.BinaryData Outputs { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } set { } }
-        public Azure.ResourceManager.ManagedApplications.Models.PlanPatchable Plan { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch Plan { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedApplications.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls SupportUrls { get { throw null; } }
@@ -595,12 +595,12 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationDefinitionArtifact ApplicationDefinitionArtifact(Azure.ResourceManager.ManagedApplications.Models.ApplicationDefinitionArtifactName name = default(Azure.ResourceManager.ManagedApplications.Models.ApplicationDefinitionArtifactName), string uri = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationArtifactType type = Azure.ResourceManager.ManagedApplications.Models.ApplicationArtifactType.NotSpecified) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.ApplicationDefinitionData ApplicationDefinitionData(Azure.ResourceManager.ManagedApplications.Models.ApplicationLockLevel lockLevel = default(Azure.ResourceManager.ManagedApplications.Models.ApplicationLockLevel), string displayName = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationAuthorization> authorizations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationDefinitionArtifact> artifacts = null, string description = null, string packageFileUri = null, string storageAccountId = null, System.BinaryData mainTemplate = null, System.BinaryData createUiDefinition = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageLockingPolicy lockingPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationPolicy> policies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationNotificationEndpoint> notificationEndpoints = null, Azure.ResourceManager.ManagedApplications.Models.DeploymentMode? deploymentMode = default(Azure.ResourceManager.ManagedApplications.Models.DeploymentMode?), Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode? managementMode = default(Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode?)) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationDefinitionPatch ApplicationDefinitionPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy ApplicationJitAccessPolicy(bool jitAccessEnabled = false, Azure.ResourceManager.ManagedApplications.Models.JitApprovalMode? jitApprovalMode = default(Azure.ResourceManager.ManagedApplications.Models.JitApprovalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.JitApprover> jitApprovers = null, string maximumJitAccessDuration = null) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy ApplicationJitAccessPolicy(bool isJitAccessEnabled = false, Azure.ResourceManager.ManagedApplications.Models.JitApprovalMode? jitApprovalMode = default(Azure.ResourceManager.ManagedApplications.Models.JitApprovalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.JitApprover> jitApprovers = null, System.TimeSpan? maximumJitAccessDuration = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationNotificationEndpoint ApplicationNotificationEndpoint(string uri = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageContact ApplicationPackageContact(string contactName = null, string email = null, string phone = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageLockingPolicy ApplicationPackageLockingPolicy(System.Collections.Generic.IEnumerable<string> allowedActions = null, System.Collections.Generic.IEnumerable<string> allowedDataActions = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls ApplicationPackageSupportUrls(string publicAzure = null, string governmentCloud = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch ApplicationPatch(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku sku = null, string managedResourceGroupId = null, string applicationDefinitionId = null, System.BinaryData parameters = null, System.BinaryData outputs = null, Azure.ResourceManager.ManagedApplications.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedApplications.Models.ProvisioningState?), Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy jitAccessPolicy = null, string publisherTenantId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationAuthorization> authorizations = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode? managementMode = default(Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode?), Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageContact customerSupport = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls supportUrls = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationArtifact> artifacts = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationClientDetails createdBy = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationClientDetails updatedBy = null, string billingDetailsResourceUsageId = null, Azure.ResourceManager.ManagedApplications.Models.PlanPatchable plan = null, string kind = null, Azure.ResourceManager.ManagedApplications.Models.Identity identity = null) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPatch ApplicationPatch(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku sku = null, string managedResourceGroupId = null, string applicationDefinitionId = null, System.BinaryData parameters = null, System.BinaryData outputs = null, Azure.ResourceManager.ManagedApplications.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedApplications.Models.ProvisioningState?), Azure.ResourceManager.ManagedApplications.Models.ApplicationJitAccessPolicy jitAccessPolicy = null, string publisherTenantId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationAuthorization> authorizations = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode? managementMode = default(Azure.ResourceManager.ManagedApplications.Models.ApplicationManagementMode?), Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageContact customerSupport = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationPackageSupportUrls supportUrls = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ApplicationArtifact> artifacts = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationClientDetails createdBy = null, Azure.ResourceManager.ManagedApplications.Models.ApplicationClientDetails updatedBy = null, string billingDetailsResourceUsageId = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch plan = null, string kind = null, Azure.ResourceManager.ManagedApplications.Models.Identity identity = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ApplicationPolicy ApplicationPolicy(string name = null, string policyDefinitionId = null, string parameters = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.GenericResourceInfo GenericResourceInfo(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku sku = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.Identity Identity(string principalId = null, string tenantId = null, Azure.ResourceManager.ManagedApplications.Models.ResourceIdentityType? type = default(Azure.ResourceManager.ManagedApplications.Models.ResourceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ManagedApplications.Models.UserAssignedResourceIdentity> userAssignedIdentities = null) { throw null; }
@@ -614,14 +614,14 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationResourceInfo ManagedApplicationResourceInfo(string id = null, string name = null, string type = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsListTokenRequestContent ManagedApplicationsListTokenRequestContent(string authorizationAudience = null, System.Collections.Generic.IEnumerable<string> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlan ManagedApplicationsPlan(string name = null, string publisher = null, string product = null, string promotionCode = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch ManagedApplicationsPlanPatch(string name = null, string publisher = null, string product = null, string promotionCode = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku ManagedApplicationsSku(string name = null, string tier = null, string size = null, string family = null, string model = null, int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityToken ManagedIdentityToken(string accessToken = null, string expiresIn = null, string expiresOn = null, string notBefore = null, string authorizationAudience = null, string resourceId = null, string tokenType = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityTokenResult ManagedIdentityTokenResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityToken> value = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.PlanPatchable PlanPatchable(string name = null, string publisher = null, string product = null, string promotionCode = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackage RegistryPackage(string publisher = null, string offer = null, string plan = null, string version = null, Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks packageLinks = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackageLinks RegistryPackageLinks(string createUiDefinitionLink = null, string deploymentTemplateLink = null) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.RegistryPackagePlan RegistryPackagePlan(string publisher = null, string offer = null, string plan = null, string version = null) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent UpdateAccessContent(string approver = null, Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata metadata = null, Azure.ResourceManager.ManagedApplications.Models.Status status = default(Azure.ResourceManager.ManagedApplications.Models.Status), Azure.ResourceManager.ManagedApplications.Models.Substatus subStatus = default(Azure.ResourceManager.ManagedApplications.Models.Substatus)) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent UpdateAccessContent(string approver = null, Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata metadata = null, Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus status = default(Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus), Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus subStatus = default(Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus)) { throw null; }
         public static Azure.ResourceManager.ManagedApplications.Models.UserAssignedResourceIdentity UserAssignedResourceIdentity(string principalId = null, string tenantId = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -809,6 +809,45 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.JitRequestState left, Azure.ResourceManager.ManagedApplications.Models.JitRequestState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct JitRequestStatus : System.IEquatable<Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public JitRequestStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus Elevate { get { throw null; } }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus Remove { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus left, Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus left, Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct JitRequestSubstatus : System.IEquatable<Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public JitRequestSubstatus(string value) { throw null; }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus Denied { get { throw null; } }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus Expired { get { throw null; } }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus Timeout { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus left, Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus left, Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class JitSchedulingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.JitSchedulingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.JitSchedulingPolicy>
     {
         public JitSchedulingPolicy(Azure.ResourceManager.ManagedApplications.Models.JitSchedulingType type, System.TimeSpan duration, System.DateTimeOffset startOn) { }
@@ -895,6 +934,24 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlan>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlan>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ManagedApplicationsPlanPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>
+    {
+        public ManagedApplicationsPlanPatch() { }
+        public string Name { get { throw null; } set { } }
+        public string Product { get { throw null; } set { } }
+        public string PromotionCode { get { throw null; } set { } }
+        public string Publisher { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsPlanPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ManagedApplicationsSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedApplicationsSku>
     {
         public ManagedApplicationsSku(string name) { }
@@ -947,24 +1004,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityTokenResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityTokenResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityTokenResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.ManagedIdentityTokenResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PlanPatchable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.PlanPatchable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.PlanPatchable>
-    {
-        public PlanPatchable() { }
-        public string Name { get { throw null; } set { } }
-        public string Product { get { throw null; } set { } }
-        public string PromotionCode { get { throw null; } set { } }
-        public string Publisher { get { throw null; } set { } }
-        public string Version { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.PlanPatchable JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ManagedApplications.Models.PlanPatchable PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ManagedApplications.Models.PlanPatchable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.PlanPatchable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.PlanPatchable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ManagedApplications.Models.PlanPatchable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.PlanPatchable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.PlanPatchable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.PlanPatchable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ManagedApplications.Models.ProvisioningState>
@@ -1047,52 +1086,13 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         SystemAssignedUserAssigned = 2,
         None = 3,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.ManagedApplications.Models.Status>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.Status Elevate { get { throw null; } }
-        public static Azure.ResourceManager.ManagedApplications.Models.Status NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.ManagedApplications.Models.Status Remove { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ManagedApplications.Models.Status other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ManagedApplications.Models.Status left, Azure.ResourceManager.ManagedApplications.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.Status (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.Status? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.Status left, Azure.ResourceManager.ManagedApplications.Models.Status right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Substatus : System.IEquatable<Azure.ResourceManager.ManagedApplications.Models.Substatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Substatus(string value) { throw null; }
-        public static Azure.ResourceManager.ManagedApplications.Models.Substatus Approved { get { throw null; } }
-        public static Azure.ResourceManager.ManagedApplications.Models.Substatus Denied { get { throw null; } }
-        public static Azure.ResourceManager.ManagedApplications.Models.Substatus Expired { get { throw null; } }
-        public static Azure.ResourceManager.ManagedApplications.Models.Substatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.ManagedApplications.Models.Substatus NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.ManagedApplications.Models.Substatus Timeout { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ManagedApplications.Models.Substatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ManagedApplications.Models.Substatus left, Azure.ResourceManager.ManagedApplications.Models.Substatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.Substatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ManagedApplications.Models.Substatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ManagedApplications.Models.Substatus left, Azure.ResourceManager.ManagedApplications.Models.Substatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class UpdateAccessContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent>
     {
-        public UpdateAccessContent(Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata metadata, Azure.ResourceManager.ManagedApplications.Models.Status status, Azure.ResourceManager.ManagedApplications.Models.Substatus subStatus) { }
+        public UpdateAccessContent(Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata metadata, Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus status, Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus subStatus) { }
         public string Approver { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedApplications.Models.JitRequestMetadata Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.ManagedApplications.Models.Status Status { get { throw null; } set { } }
-        public Azure.ResourceManager.ManagedApplications.Models.Substatus SubStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedApplications.Models.JitRequestStatus Status { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedApplications.Models.JitRequestSubstatus SubStatus { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ManagedApplications.Models.UpdateAccessContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

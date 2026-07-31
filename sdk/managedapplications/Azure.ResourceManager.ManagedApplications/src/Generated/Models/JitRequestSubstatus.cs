@@ -12,7 +12,7 @@ using Azure.ResourceManager.ManagedApplications;
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
     /// <summary> The sub status. </summary>
-    public readonly partial struct Substatus : IEquatable<Substatus>
+    public readonly partial struct JitRequestSubstatus : IEquatable<JitRequestSubstatus>
     {
         private readonly string _value;
         /// <summary> NotSpecified. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <summary> Timeout. </summary>
         private const string TimeoutValue = "Timeout";
 
-        /// <summary> Initializes a new instance of <see cref="Substatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestSubstatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Substatus(string value)
+        public JitRequestSubstatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         }
 
         /// <summary> NotSpecified. </summary>
-        public static Substatus NotSpecified { get; } = new Substatus(NotSpecifiedValue);
+        public static JitRequestSubstatus NotSpecified { get; } = new JitRequestSubstatus(NotSpecifiedValue);
 
         /// <summary> Approved. </summary>
-        public static Substatus Approved { get; } = new Substatus(ApprovedValue);
+        public static JitRequestSubstatus Approved { get; } = new JitRequestSubstatus(ApprovedValue);
 
         /// <summary> Denied. </summary>
-        public static Substatus Denied { get; } = new Substatus(DeniedValue);
+        public static JitRequestSubstatus Denied { get; } = new JitRequestSubstatus(DeniedValue);
 
         /// <summary> Failed. </summary>
-        public static Substatus Failed { get; } = new Substatus(FailedValue);
+        public static JitRequestSubstatus Failed { get; } = new JitRequestSubstatus(FailedValue);
 
         /// <summary> Expired. </summary>
-        public static Substatus Expired { get; } = new Substatus(ExpiredValue);
+        public static JitRequestSubstatus Expired { get; } = new JitRequestSubstatus(ExpiredValue);
 
         /// <summary> Timeout. </summary>
-        public static Substatus Timeout { get; } = new Substatus(TimeoutValue);
+        public static JitRequestSubstatus Timeout { get; } = new JitRequestSubstatus(TimeoutValue);
 
-        /// <summary> Determines if two <see cref="Substatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="JitRequestSubstatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Substatus left, Substatus right) => left.Equals(right);
+        public static bool operator ==(JitRequestSubstatus left, JitRequestSubstatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Substatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="JitRequestSubstatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Substatus left, Substatus right) => !left.Equals(right);
+        public static bool operator !=(JitRequestSubstatus left, JitRequestSubstatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Substatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="JitRequestSubstatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Substatus(string value) => new Substatus(value);
+        public static implicit operator JitRequestSubstatus(string value) => new JitRequestSubstatus(value);
 
-        /// <summary> Converts a string to a <see cref="Substatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="JitRequestSubstatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Substatus?(string value) => value == null ? null : new Substatus(value);
+        public static implicit operator JitRequestSubstatus?(string value) => value == null ? null : new JitRequestSubstatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Substatus other && Equals(other);
+        public override bool Equals(object obj) => obj is JitRequestSubstatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Substatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(JitRequestSubstatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

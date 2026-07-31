@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default), plan, kind, identity, default);
         }
 
-        /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
+        /// <param name="isJitAccessEnabled"> Whether the JIT access is enabled. </param>
         /// <param name="jitApprovalMode"> JIT approval mode. </param>
         /// <param name="jitApprovers"> The JIT approvers. </param>
         /// <param name="maximumJitAccessDuration"> The maximum duration JIT access is granted. This is an ISO8601 time period value. </param>
         /// <returns> A new <see cref="Models.ApplicationJitAccessPolicy"/> instance for mocking. </returns>
-        public static ApplicationJitAccessPolicy ApplicationJitAccessPolicy(bool jitAccessEnabled = default, JitApprovalMode? jitApprovalMode = default, IEnumerable<JitApprover> jitApprovers = default, string maximumJitAccessDuration = default)
+        public static ApplicationJitAccessPolicy ApplicationJitAccessPolicy(bool isJitAccessEnabled = default, JitApprovalMode? jitApprovalMode = default, IEnumerable<JitApprover> jitApprovers = default, TimeSpan? maximumJitAccessDuration = default)
         {
             jitApprovers ??= new ChangeTrackingList<JitApprover>();
 
-            return new ApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, (jitApprovers ?? new ChangeTrackingList<JitApprover>()).ToList(), maximumJitAccessDuration, default);
+            return new ApplicationJitAccessPolicy(isJitAccessEnabled, jitApprovalMode, (jitApprovers ?? new ChangeTrackingList<JitApprover>()).ToList(), maximumJitAccessDuration, default);
         }
 
         /// <param name="id"> The approver service principal Id. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Models.ApplicationPatch"/> instance for mocking. </returns>
-        public static ApplicationPatch ApplicationPatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, PlanPatchable plan = default, string kind = default, Identity identity = default)
+        public static ApplicationPatch ApplicationPatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlanPatch plan = default, string kind = default, Identity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -325,10 +325,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="product"> The product code. </param>
         /// <param name="promotionCode"> The promotion code. </param>
         /// <param name="version"> The plan's version. </param>
-        /// <returns> A new <see cref="Models.PlanPatchable"/> instance for mocking. </returns>
-        public static PlanPatchable PlanPatchable(string name = default, string publisher = default, string product = default, string promotionCode = default, string version = default)
+        /// <returns> A new <see cref="Models.ManagedApplicationsPlanPatch"/> instance for mocking. </returns>
+        public static ManagedApplicationsPlanPatch ManagedApplicationsPlanPatch(string name = default, string publisher = default, string product = default, string promotionCode = default, string version = default)
         {
-            return new PlanPatchable(
+            return new ManagedApplicationsPlanPatch(
                 name,
                 publisher,
                 product,
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="status"> The JIT status. </param>
         /// <param name="subStatus"> The JIT status. </param>
         /// <returns> A new <see cref="Models.UpdateAccessContent"/> instance for mocking. </returns>
-        public static UpdateAccessContent UpdateAccessContent(string approver = default, JitRequestMetadata metadata = default, Status status = default, Substatus subStatus = default)
+        public static UpdateAccessContent UpdateAccessContent(string approver = default, JitRequestMetadata metadata = default, JitRequestStatus status = default, JitRequestSubstatus subStatus = default)
         {
             return new UpdateAccessContent(approver, metadata, status, subStatus, default);
         }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="plan"> The plan information. </param>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        internal ApplicationPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku, ApplicationProperties properties, PlanPatchable plan, string kind, Identity identity) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties, managedBy, sku)
+        internal ApplicationPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku, ApplicationProperties properties, ManagedApplicationsPlanPatch plan, string kind, Identity identity) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties, managedBy, sku)
         {
             Properties = properties;
             Plan = plan;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         internal ApplicationProperties Properties { get; set; }
 
         /// <summary> The plan information. </summary>
-        public PlanPatchable Plan { get; set; }
+        public ManagedApplicationsPlanPatch Plan { get; set; }
 
         /// <summary> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </summary>
         public string Kind { get; set; }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 throw new FormatException($"The model {nameof(ApplicationJitAccessPolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("jitAccessEnabled"u8);
-            writer.WriteBooleanValue(JitAccessEnabled);
+            writer.WriteBooleanValue(IsJitAccessEnabled);
             if (Optional.IsDefined(JitApprovalMode))
             {
                 writer.WritePropertyName("jitApprovalMode"u8);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             if (Optional.IsDefined(MaximumJitAccessDuration))
             {
                 writer.WritePropertyName("maximumJitAccessDuration"u8);
-                writer.WriteStringValue(MaximumJitAccessDuration);
+                writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 return null;
             }
-            bool jitAccessEnabled = default;
+            bool isJitAccessEnabled = default;
             JitApprovalMode? jitApprovalMode = default;
             IList<JitApprover> jitApprovers = default;
-            string maximumJitAccessDuration = default;
+            TimeSpan? maximumJitAccessDuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jitAccessEnabled"u8))
                 {
-                    jitAccessEnabled = prop.Value.GetBoolean();
+                    isJitAccessEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("jitApprovalMode"u8))
@@ -180,7 +180,11 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (prop.NameEquals("maximumJitAccessDuration"u8))
                 {
-                    maximumJitAccessDuration = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maximumJitAccessDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +192,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, jitApprovers ?? new ChangeTrackingList<JitApprover>(), maximumJitAccessDuration, additionalBinaryDataProperties);
+            return new ApplicationJitAccessPolicy(isJitAccessEnabled, jitApprovalMode, jitApprovers ?? new ChangeTrackingList<JitApprover>(), maximumJitAccessDuration, additionalBinaryDataProperties);
         }
     }
 }

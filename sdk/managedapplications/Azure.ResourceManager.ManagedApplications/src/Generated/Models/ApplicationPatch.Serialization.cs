@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             string managedBy = default;
             ManagedApplicationsSku sku = default;
             ApplicationProperties properties = default;
-            PlanPatchable plan = default;
+            ManagedApplicationsPlanPatch plan = default;
             string kind = default;
             Identity identity = default;
             foreach (var prop in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     {
                         continue;
                     }
-                    plan = PlanPatchable.DeserializePlanPatchable(prop.Value, options);
+                    plan = ManagedApplicationsPlanPatch.DeserializeManagedApplicationsPlanPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             }
             string approver = default;
             JitRequestMetadata metadata = default;
-            Status status = default;
-            Substatus subStatus = default;
+            JitRequestStatus status = default;
+            JitRequestSubstatus subStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (prop.NameEquals("Status"u8))
                 {
-                    status = new Status(prop.Value.GetString());
+                    status = new JitRequestStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("SubStatus"u8))
                 {
-                    subStatus = new Substatus(prop.Value.GetString());
+                    subStatus = new JitRequestSubstatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
