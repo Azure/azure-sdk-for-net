@@ -12,6 +12,9 @@ public class BasicLiveAttestationTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
 {
     [Test]
+    [Description(
+        "Azure Quickstart Template: https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.attestation/attestation-provider-create/main.bicep; " +
+        "Microsoft Learn quickstart: https://learn.microsoft.com/azure/attestation/quickstart-template")]
     [LiveOnly]
     public async Task CreateAttestationProvider()
     {

@@ -31,6 +31,9 @@ public class BasicAttestationTests
     }
 
     [Test]
+    [Description(
+      "Azure Quickstart Template: https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.attestation/attestation-provider-create/main.bicep; " +
+      "Microsoft Learn quickstart: https://learn.microsoft.com/azure/attestation/quickstart-template")]
     public async Task CreateAttestationProvider()
     {
         await using Trycep test = CreateAttestationProviderTest();
