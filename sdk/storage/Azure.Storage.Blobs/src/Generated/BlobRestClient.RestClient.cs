@@ -240,6 +240,43 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
+        internal HttpMessage CreateSetImmutabilityPolicyRequest(DateTimeOffset immutabilityPolicyExpiry, int? timeout, RequestConditions requestConditions, string immutabilityPolicyMode, string snapshot, string versionId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendQuery("comp", "immutabilityPolicies", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
+            }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            if (_version != null)
+            {
+                request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestConditions != null)
+            {
+                request.Headers.Add(requestConditions, "R");
+            }
+            request.Headers.SetValue("x-ms-immutability-policy-until-date", TypeFormatters.ConvertToString(immutabilityPolicyExpiry, SerializationFormat.DateTime_RFC7231));
+            if (immutabilityPolicyMode != null)
+            {
+                request.Headers.SetValue("x-ms-immutability-policy-mode", immutabilityPolicyMode);
+            }
+            return message;
+        }
+
         internal HttpMessage CreateDeleteImmutabilityPolicyRequest(int? timeout, string snapshot, string versionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
