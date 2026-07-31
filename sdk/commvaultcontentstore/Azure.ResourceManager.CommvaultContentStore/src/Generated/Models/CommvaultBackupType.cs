@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The type of backup. </summary>
-    public readonly partial struct BackupType : IEquatable<BackupType>
+    public readonly partial struct CommvaultBackupType : IEquatable<CommvaultBackupType>
     {
         private readonly string _value;
         /// <summary> Incremental backup. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Both incremental and full backups. </summary>
         private const string BothValue = "BOTH";
 
-        /// <summary> Initializes a new instance of <see cref="BackupType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultBackupType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupType(string value)
+        public CommvaultBackupType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Incremental backup. </summary>
-        public static BackupType Incremental { get; } = new BackupType(IncrementalValue);
+        public static CommvaultBackupType Incremental { get; } = new CommvaultBackupType(IncrementalValue);
 
         /// <summary> Full backup. </summary>
-        public static BackupType Full { get; } = new BackupType(FullValue);
+        public static CommvaultBackupType Full { get; } = new CommvaultBackupType(FullValue);
 
         /// <summary> Both incremental and full backups. </summary>
-        public static BackupType Both { get; } = new BackupType(BothValue);
+        public static CommvaultBackupType Both { get; } = new CommvaultBackupType(BothValue);
 
-        /// <summary> Determines if two <see cref="BackupType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultBackupType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(BackupType left, BackupType right) => left.Equals(right);
+        public static bool operator ==(CommvaultBackupType left, CommvaultBackupType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BackupType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultBackupType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(BackupType left, BackupType right) => !left.Equals(right);
+        public static bool operator !=(CommvaultBackupType left, CommvaultBackupType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BackupType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultBackupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupType(string value) => new BackupType(value);
+        public static implicit operator CommvaultBackupType(string value) => new CommvaultBackupType(value);
 
-        /// <summary> Converts a string to a <see cref="BackupType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultBackupType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BackupType?(string value) => value == null ? null : new BackupType(value);
+        public static implicit operator CommvaultBackupType?(string value) => value == null ? null : new CommvaultBackupType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BackupType other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultBackupType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(BackupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultBackupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

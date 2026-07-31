@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Initializes a new instance of <see cref="Schedule"/>. </summary>
         /// <param name="backupType"> Type of Backup. </param>
-        public Schedule(BackupType backupType)
+        public Schedule(CommvaultBackupType backupType)
         {
             BackupType = backupType;
             WeeklyDays = new ChangeTrackingList<WeeklyDays>();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="time"> Time of Retention. </param>
         /// <param name="timeZone"> Time Zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Schedule(BackupType backupType, Frequency? frequency, int? runsEvery, WeekOfMonth? weekOfMonth, CommvaultDayOfWeek? dayOfWeek, MonthOfYear? monthOfYear, int? dayOfMonth, IList<WeeklyDays> weeklyDays, string time, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Schedule(CommvaultBackupType backupType, Frequency? frequency, int? runsEvery, WeekOfMonth? weekOfMonth, CommvaultDayOfWeek? dayOfWeek, MonthOfYear? monthOfYear, int? dayOfMonth, IList<WeeklyDays> weeklyDays, string time, string timeZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupType = backupType;
             Frequency = frequency;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Type of Backup. </summary>
-        public BackupType BackupType { get; set; }
+        public CommvaultBackupType BackupType { get; set; }
 
         /// <summary> Frequency of Retention. </summary>
         public Frequency? Frequency { get; set; }

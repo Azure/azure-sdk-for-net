@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="time"> Time of Retention. </param>
         /// <param name="timeZone"> Time Zone. </param>
         /// <returns> A new <see cref="Models.Schedule"/> instance for mocking. </returns>
-        public static Schedule Schedule(BackupType backupType = default, Frequency? frequency = default, int? runsEvery = default, WeekOfMonth? weekOfMonth = default, CommvaultDayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<WeeklyDays> weeklyDays = default, string time = default, string timeZone = default)
+        public static Schedule Schedule(CommvaultBackupType backupType = default, Frequency? frequency = default, int? runsEvery = default, WeekOfMonth? weekOfMonth = default, CommvaultDayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<WeeklyDays> weeklyDays = default, string time = default, string timeZone = default)
         {
             weeklyDays ??= new ChangeTrackingList<WeeklyDays>();
 

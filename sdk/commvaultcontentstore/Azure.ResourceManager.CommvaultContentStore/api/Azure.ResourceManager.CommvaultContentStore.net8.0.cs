@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties RoleMappingProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.RoleAssignment> roles = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.Rule Rule(Azure.ResourceManager.CommvaultContentStore.Models.RuleProperty property = default(Azure.ResourceManager.CommvaultContentStore.Models.RuleProperty), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator @operator = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator), string value = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData SaaSResourceDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string saaSResourceId = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.Schedule Schedule(Azure.ResourceManager.CommvaultContentStore.Models.BackupType backupType = default(Azure.ResourceManager.CommvaultContentStore.Models.BackupType), Azure.ResourceManager.CommvaultContentStore.Models.Frequency? frequency = default(Azure.ResourceManager.CommvaultContentStore.Models.Frequency?), int? runsEvery = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth? weekOfMonth = default(Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek? dayOfWeek = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek?), Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear? monthOfYear = default(Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear?), int? dayOfMonth = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays> weeklyDays = null, string time = null, string timeZone = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.Schedule Schedule(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType backupType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType), Azure.ResourceManager.CommvaultContentStore.Models.Frequency? frequency = default(Azure.ResourceManager.CommvaultContentStore.Models.Frequency?), int? runsEvery = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth? weekOfMonth = default(Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek? dayOfWeek = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek?), Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear? monthOfYear = default(Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear?), int? dayOfMonth = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays> weeklyDays = null, string time = null, string timeZone = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent StopBackupProtectionGroupContent(string reason = null, string comment = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.StorageData StorageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CommvaultContentStore.Models.StorageProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.StoragePlan StoragePlan(string name = null, string storagePoolId = null, string copyName = null, int? copyPrecedence = default(int?), int? retentionPeriod = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.RetentionTime? retentionTime = default(Azure.ResourceManager.CommvaultContentStore.Models.RetentionTime?), Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType? backupRuleType = default(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime> extendedRetention = null) { throw null; }
@@ -523,24 +523,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType left, Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BackupType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.BackupType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BackupType(string value) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupType Both { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupType Full { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupType Incremental { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.BackupType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.BackupType left, Azure.ResourceManager.CommvaultContentStore.Models.BackupType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.BackupType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.BackupType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.BackupType left, Azure.ResourceManager.CommvaultContentStore.Models.BackupType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CloudAccountPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatch>
     {
         public CloudAccountPatch() { }
@@ -590,6 +572,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommvaultBackupType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommvaultBackupType(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType Both { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType Full { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType Incremental { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommvaultDayOfWeek : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek>
@@ -1172,8 +1172,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     }
     public partial class Schedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.Schedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.Schedule>
     {
-        public Schedule(Azure.ResourceManager.CommvaultContentStore.Models.BackupType backupType) { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.BackupType BackupType { get { throw null; } set { } }
+        public Schedule(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType backupType) { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType BackupType { get { throw null; } set { } }
         public int? DayOfMonth { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek? DayOfWeek { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.Frequency? Frequency { get { throw null; } set { } }
