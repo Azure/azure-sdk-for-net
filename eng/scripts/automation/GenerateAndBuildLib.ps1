@@ -919,6 +919,50 @@ function New-MgmtPackageScaffolding()
     Write-Host "Management SDK scaffolding complete for $packageName"
 }
 
+function Get-SDKSolutionBuildPath()
+{
+    param(
+        [string]$projectFolder,
+        [string]$sdkRootPath,
+        [string]$serviceType
+    )
+
+    if ($serviceType -eq "resource-manager") {
+        $packageName = Split-Path $projectFolder -Leaf
+        $solutions = @(Get-ChildItem -Path $projectFolder -Filter "*.sln*" -File |
+            Where-Object { $_.Extension -in ".sln", ".slnx" } |
+            Sort-Object Name)
+        $solution = $solutions |
+            Where-Object { $_.BaseName -eq $packageName } |
+            Select-Object -First 1
+        if (!$solution) {
+            $solution = $solutions | Select-Object -First 1
+        }
+        if (!$solution) {
+            throw "Management SDK solution not found in $projectFolder."
+        }
+        return $solution.FullName
+    }
+
+    return Join-Path $sdkRootPath 'eng' 'service.proj'
+}
+
+function Get-SDKPackageResult()
+{
+    param(
+        [bool]$isGenerateSuccess,
+        [bool]$hasValidationWarning
+    )
+
+    if (!$isGenerateSuccess) {
+        return "failed"
+    }
+    if ($hasValidationWarning) {
+        return "warning"
+    }
+    return "succeeded"
+}
+
 function GeneratePackage()
 {
     param(
@@ -942,8 +986,8 @@ function GeneratePackage()
     $hasBreakingChange = $false
     $breakingChangeItems = @()
     $content = ""
-    $result = "succeeded"
     $isGenerateSuccess = $true
+    $hasValidationWarning = $false
     $version = ""
 
     # Generate Code
@@ -958,7 +1002,6 @@ function GeneratePackage()
         }
         if ( !$?) {
             Write-Host "[ERROR] Failed to generate sdk for package:$packageName. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            $result = "failed"
             $isGenerateSuccess = $false
         }
     }
@@ -984,25 +1027,25 @@ function GeneratePackage()
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
             Write-Host "[WARNING] Failed to build the sdk project: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            $result = "warning"
+            $hasValidationWarning = $true
         } else {
-            # The management package source project was built above. Data-plane packages
-            # additionally use service.proj to validate the wider service project set.
-            if ($serviceType -ne "resource-manager") {
-                Write-Host "Start to build sdk solution: $projectFolder"
-                $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
-                dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
-                if ( !$? ) {
-                    Write-Host "[WARNING] Failed to build sdk solution: $packageName. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                    $result = "warning"
-                }
+            Write-Host "Start to build sdk solution: $projectFolder"
+            $solutionBuildPath = Get-SDKSolutionBuildPath -projectFolder $projectFolder -sdkRootPath $sdkRootPath -serviceType $serviceType
+            if ($serviceType -eq "resource-manager") {
+                dotnet build $solutionBuildPath /p:RunApiCompat=$false
+            } else {
+                dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $solutionBuildPath
+            }
+            if ( !$? ) {
+                Write-Host "[WARNING] Failed to build sdk solution: $packageName. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $hasValidationWarning = $true
             }
             # pack
             Write-Host "Start to pack sdk"
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
                 Write-Host "[WARNING] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "warning"
+                $hasValidationWarning = $true
             } else {
                 # artifacts
                 Push-Location $sdkRootPath
@@ -1043,7 +1086,7 @@ function GeneratePackage()
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
                 Write-Host "[WARNING] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                $result = "warning"
+                $hasValidationWarning = $true
             }
             # breaking change validation
             Write-Host "Start to validate breaking change. srcPath:$srcPath"
@@ -1085,6 +1128,8 @@ function GeneratePackage()
     if ( $serviceType -eq "resource-manager" ) {
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
+
+    $result = Get-SDKPackageResult -isGenerateSuccess $isGenerateSuccess -hasValidationWarning $hasValidationWarning
 
     $packageDetails = @{
         version=$version;
