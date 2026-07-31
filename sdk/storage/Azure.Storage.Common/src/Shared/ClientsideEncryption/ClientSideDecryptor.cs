@@ -8,18 +8,26 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
-using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography.Models;
 using static Azure.Storage.Cryptography.Models.ClientSideEncryptionVersionExtensions;
 
 namespace Azure.Storage.Cryptography
 {
+    /// <summary>
+    /// Decryptor for a single storage resource being downloaded. Security protections exist for
+    /// multi-part downloads within that single resource, but prevent this decryptor from being
+    /// used for multiple different resource downloads.
+    /// </summary>
     internal class ClientSideDecryptor
     {
         /// <summary>
-        /// A cache for encryption key if high level API spans across multiple service calls.
+        /// A cache for the content encryption key if high level API spans across multiple service calls
+        /// (e.g. partitioned download).
+        /// This cache implements protections against a downgrade attack during a multi-part download.
+        /// Those protections only work for the single resource being downloaded. Cache cannot be reused
+        /// across multiple different resources.
         /// </summary>
-        private static readonly AsyncLocal<ContentEncryptionKeyCache> s_contentEncryptionKeyCache = new();
+        private readonly AsyncLocal<ContentEncryptionKeyCache> s_contentEncryptionKeyCache = new();
 
         /// <summary>
         /// Clients that can upload data have a key encryption key stored on them. Checking if
@@ -37,6 +45,9 @@ namespace Azure.Storage.Cryptography
         {
             _potentialCachedIKeyEncryptionKey = options.KeyEncryptionKey;
             _keyResolver = options.KeyResolver;
+            // We don't care about CSE version here.
+            // The download version is whatever the metadata says it is.
+            // We verify the metadata elsewhere.
         }
 
         /// <summary>
@@ -373,9 +384,19 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            if (s_contentEncryptionKeyCache.Value?.Key.HasValue ?? false)
+            ContentEncryptionKeyCache cekCache = s_contentEncryptionKeyCache.Value;
+            if (cekCache != null)
             {
-                return s_contentEncryptionKeyCache.Value.Key.Value;
+                if (cekCache.TryGetKey(encryptionData, out Memory<byte> cek))
+                {
+                    return cek;
+                }
+                else
+                {
+                    /* The encryption data did not match the encryption data the CEK was originally
+                     * wrapped inside of. This is a downgrade attack. Fail the entire download.*/
+                    throw new CryptographicException("Mismatched encryption data.");
+                }
             }
 
             IKeyEncryptionKey key = default;
@@ -447,14 +468,57 @@ namespace Azure.Storage.Cryptography
             return unwrappedKey;
         }
 
-        internal static void BeginContentEncryptionKeyCaching(ContentEncryptionKeyCache cache = default)
-        {
-            s_contentEncryptionKeyCache.Value = cache ?? new ContentEncryptionKeyCache();
-        }
-
+        /// <summary>
+        /// A cache for a content encryption key (CEK), to avoid multiple key envelope unwraps over
+        /// a multipart download, as unwraps may be costly or otherwise rate limited.
+        /// This cache tracks the key encryption key (KEK) ID which unwrapped as well as the
+        /// client-side encryption version being used for this particular storage resource. If the
+        /// encryption metadata from a particular downloar partition does not match, the key will
+        /// not be returned.
+        /// </summary>
         internal class ContentEncryptionKeyCache
         {
-            public Memory<byte>? Key { get; set; }
+            private Memory<byte> _key;
+            private string _kekId;
+            private ClientSideEncryptionVersionInternal _cseVersion;
+
+            public ContentEncryptionKeyCache(Memory<byte> key, string kekId, ClientSideEncryptionVersionInternal cseVersion)
+            {
+                _key = key;
+                _kekId = kekId;
+                _cseVersion = cseVersion;
+            }
+
+            /// <summary>
+            /// Returns the encapsulated key only if the encryption metadata matches what is cached
+            /// alongside the key.
+            /// </summary>
+            /// <param name="match">Encrytpion data to match against.</param>
+            /// <param name="key">Key output.</param>
+            /// <returns>
+            /// True if the match is valid and a key has been returned in the out parameter.
+            /// Otherwise, false.
+            /// </returns>
+            public bool TryGetKey(EncryptionData match, out Memory<byte> key)
+            {
+                if (Matches(match))
+                {
+                    key = _key;
+                    return true;
+                }
+                key = Memory<byte>.Empty;
+                return false;
+            }
+
+            public bool Matches(EncryptionData encryptionData)
+            {
+                if (encryptionData == null)
+                {
+                    return false;
+                }
+                return encryptionData.EncryptionAgent.EncryptionVersion == _cseVersion &&
+                    encryptionData.WrappedContentKey.KeyId == _kekId;
+            }
         }
     }
 }
