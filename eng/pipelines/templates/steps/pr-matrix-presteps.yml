@@ -15,12 +15,33 @@ parameters:
   - name: LocTarget
     type: number
     default: 474000
+  - name: LocBaseCost
+    type: number
+    default: 0
   - name: PublishArtifact
     type: boolean
     default: true
+  - name: EnableTestWeighting
+    type: boolean
+    default: false
+  - name: TestPackagesPerJob
+    type: number
+    default: 10
+  - name: DefaultMatrixConfigs
+    type: object
+    default: []
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+  # When ForceDirect is set, every indirect package discovered below is deleted before matrix
+  # generation, and downstream jobs filter the published artifact down to the batch's
+  # ProjectNames. Computing the cross-package dependency graph (a full-repo MSBuild
+  # restore+evaluation, ~3.5 min) is therefore pure waste for these passes, so turn it off.
+  - ${{ if eq(parameters.ForceDirect, true) }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION;]true"
+      displayName: Skip dependent package calculation (direct packages only)
 
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
@@ -85,6 +106,30 @@ steps:
         eng/scripts/Apply-WeightedBatching.ps1 `
           -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -WeightsFile "$(Build.ArtifactStagingDirectory)/loc-weights.json" `
-          -Target ${{ parameters.LocTarget }}
-      displayName: Apply LOC-weighted batching (target ${{ parameters.LocTarget }})
+          -Target ${{ parameters.LocTarget }} `
+          -BaseCost ${{ parameters.LocBaseCost }}
+      displayName: Apply LOC-weighted batching (target ${{ parameters.LocTarget }}, base cost ${{ parameters.LocBaseCost }})
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
+
+  - ${{ if eq(parameters.EnableTestWeighting, true) }}:
+    - pwsh: |
+        '${{ convertToJson(parameters.DefaultMatrixConfigs) }}' `
+          | Set-Content "$(Build.ArtifactStagingDirectory)/default-test-matrix-configs.json"
+      displayName: Save default test matrix configs
+
+    - pwsh: |
+        eng/scripts/Get-PackageTestWeights.ps1 `
+          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -RepoRoot "$(Build.SourcesDirectory)" `
+          -OutputFile "$(Build.ArtifactStagingDirectory)/test-weights.json"
+      displayName: Estimate package test cost
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
+
+    - pwsh: |
+        eng/scripts/Apply-WeightedBatching.ps1 `
+          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -WeightsFile "$(Build.ArtifactStagingDirectory)/test-weights.json" `
+          -PackagesPerBatch ${{ parameters.TestPackagesPerJob }} `
+          -DefaultMatrixConfigsFile "$(Build.ArtifactStagingDirectory)/default-test-matrix-configs.json"
+      displayName: Apply test-weighted batching (${{ parameters.TestPackagesPerJob }} packages/job)
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))

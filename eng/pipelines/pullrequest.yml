@@ -41,3 +41,12 @@ extends:
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
+      # TEMP (draft only): these shared-infrastructure changes otherwise select Azure.Core
+      # and nearly every dependent package, exceeding the dynamic YAML size limit. Remove
+      # this block before marking the Test CI prototype ready for review.
+      - eng/scripts/Get-PackageTestWeights.ps1
+      - eng/scripts/Apply-WeightedBatching.ps1
+      - eng/scripts/tests/TestCiWeighting.Tests.ps1
+      - eng/pipelines/templates/jobs/ci.yml
+      - eng/pipelines/templates/stages/archetype-sdk-client.yml
+      - eng/pipelines/templates/steps/pr-matrix-presteps.yml

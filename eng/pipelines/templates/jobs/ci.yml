@@ -79,10 +79,11 @@ jobs:
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableLocWeighting: true
-              LocTarget: 1200000
+              LocTarget: 1300000
+              LocBaseCost: 5000
               PublishArtifact: true
 
-    # Analyze matrix - smaller LOC batches (300k) for more parallelism so analyze wall-clock matches build.
+    # Analyze matrix - smaller LOC batches for more parallelism so analyze wall-clock matches build.
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_analyze_matrix
@@ -116,7 +117,12 @@ jobs:
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableLocWeighting: true
-              LocTarget: 300000
+              # Analyze cost per package is fixed-cost heavy (per-package codegen, snippet and
+              # API-export cycles), so it carries a larger base cost than Build. Target raised
+              # from 300k to keep the job count neutral now that each package also carries a
+              # 15k base cost, so this rebalances batches without adding jobs.
+              LocTarget: 400000
+              LocBaseCost: 15000
               PublishArtifact: true
 
   - ${{ else }}:
@@ -219,7 +225,9 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 10
+          # PackageInfo files are pre-batched by estimated test cost while preserving
+          # the existing ten-packages-per-job bucket count.
+          PRJobBatchSize: 1
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
@@ -229,6 +237,9 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
+                EnableTestWeighting: true
+                TestPackagesPerJob: 10
+                DefaultMatrixConfigs: ${{ parameters.MatrixConfigs }}
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
