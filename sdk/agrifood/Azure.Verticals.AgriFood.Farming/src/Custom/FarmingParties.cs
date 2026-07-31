@@ -11,3 +11,4 @@ namespace Azure.Verticals.AgriFood.Farming
     {
     }
 }
+// Test comment for batching validation - DO NOT MERGE
