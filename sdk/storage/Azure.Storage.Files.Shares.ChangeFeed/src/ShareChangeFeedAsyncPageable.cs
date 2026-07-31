@@ -17,6 +17,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
         private readonly ShareChangeFeedResetPolicy _policy;
+        private readonly bool _isBatched;
 
         internal ShareChangeFeedAsyncPageable(
             ShareChangeFeedClient client,
@@ -25,7 +26,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedResetPolicy policy = ShareChangeFeedResetPolicy.ContinueOnReset,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
-            string continuation = default)
+            string continuation = default,
+            bool isBatched = false)
         {
             _client = client;
             _maxTransferSize = maxTransferSize;
@@ -34,6 +36,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _startTime = startTime;
             _endTime = endTime;
             _continuation = continuation;
+            _isBatched = isBatched;
         }
 
         public override async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
@@ -54,6 +57,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ChangeFeedCursor innerCursor = null;
             Guid? lastSeenResetId = null;
             long? lastSeenResetFileTime = null;
+
+            // Range bounds and batched intent default to the values captured at construction.
+            // On resume they are recovered from the token so a batched query keeps its range
+            // (and its policy default) instead of degrading to unbounded streaming behavior.
+            DateTimeOffset? rangeStart = _startTime;
+            DateTimeOffset? rangeEnd = _endTime;
+            bool isBatched = _isBatched;
+            ShareChangeFeedResetPolicy effectivePolicy = _policy;
+
             if (_continuation != null)
             {
                 outerCursor = ShareChangeFeedCursorSerializer.Deserialize(_continuation);
@@ -61,6 +73,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 innerCursor = outerCursor.InnerCursor;
                 lastSeenResetId = outerCursor.LastSeenResetId;
                 lastSeenResetFileTime = outerCursor.LastSeenResetFileTime;
+                rangeStart = outerCursor.RangeStart;
+                rangeEnd = outerCursor.RangeEnd;
+                isBatched = outerCursor.IsBatched;
+
+                // Resume via the single GetChangesAsync(continuationToken) overload cannot know
+                // statically whether the original query was batched, so resolve the effective
+                // policy from the intent persisted on the token.
+                effectivePolicy = _client.ResolveEffectivePolicy(isBatched);
             }
 
             // Read the reset pointer once at the start of enumeration. Detection is decided
@@ -83,8 +103,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     pointer.LatestResetId,
                     lastSeenResetFileTime,
                     lastSeenResetId,
-                    rangeStart: _startTime,
-                    rangeEnd: _endTime);
+                    rangeStart: rangeStart,
+                    rangeEnd: rangeEnd);
 
                 if (shouldSurface)
                 {
@@ -97,7 +117,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
                     resetToEmit = ResetMarkerReader.BuildResetEvent(pointer, perEvent);
 
-                    if (_policy == ShareChangeFeedResetPolicy.ThrowOnReset)
+                    if (effectivePolicy == ShareChangeFeedResetPolicy.ThrowOnReset)
                     {
                         throw new ShareChangeFeedResetException(resetToEmit);
                     }
@@ -161,7 +181,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     containerClient,
                     typedInner,
                     nextId,
-                    nextFileTime);
+                    nextFileTime,
+                    rangeStart,
+                    rangeEnd,
+                    isBatched);
 
                 yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(events, outerToken);
             }
@@ -173,7 +196,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     containerClient,
                     innerCursor: null,
                     pointer.LatestResetId,
-                    pointer.LatestResetFileTime);
+                    pointer.LatestResetFileTime,
+                    rangeStart,
+                    rangeEnd,
+                    isBatched);
                 yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(tail, outerToken);
             }
         }
@@ -186,7 +212,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             BlobContainerClient containerClient,
             ChangeFeedCursor innerCursor,
             Guid? lastSeenResetId,
-            long? lastSeenResetFileTime)
+            long? lastSeenResetFileTime,
+            DateTimeOffset? rangeStart,
+            DateTimeOffset? rangeEnd,
+            bool isBatched)
         {
             if (innerCursor == null && !lastSeenResetId.HasValue && !lastSeenResetFileTime.HasValue)
             {
@@ -197,7 +226,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 urlHost: containerClient.Uri.Host,
                 innerCursor: innerCursor,
                 lastSeenResetId: lastSeenResetId,
-                lastSeenResetFileTime: lastSeenResetFileTime);
+                lastSeenResetFileTime: lastSeenResetFileTime,
+                rangeStart: rangeStart,
+                rangeEnd: rangeEnd,
+                isBatched: isBatched);
 
             return ShareChangeFeedCursorSerializer.Serialize(outer);
         }

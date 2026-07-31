@@ -265,7 +265,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 _includeNonFinalizedEvents,
                 ResolveEffectivePolicy(isBatched: true),
                 startTime: start,
-                endTime: end);
+                endTime: end,
+                isBatched: true);
         }
 
         /// <summary>
@@ -296,7 +297,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 _includeNonFinalizedEvents,
                 ResolveEffectivePolicy(isBatched: true),
                 startTime: start,
-                endTime: end);
+                endTime: end,
+                isBatched: true);
         }
 
         private static void ThrowIfStartAfterEnd(DateTimeOffset? start, DateTimeOffset? end)

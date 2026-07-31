@@ -62,6 +62,31 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public long? LastSeenResetFileTime { get; set; }
 
         /// <summary>
+        /// Lower bound of the original query's time range, or <c>null</c> when the query was
+        /// unbounded (streaming). Persisted so a resumed batched <c>GetChanges(start, end)</c>
+        /// reconstructs its range and does not degrade to unbounded reset detection. Absent on
+        /// tokens issued before this field was added, in which case it deserializes to <c>null</c>.
+        /// </summary>
+        public DateTimeOffset? RangeStart { get; set; }
+
+        /// <summary>
+        /// Upper bound of the original query's time range, or <c>null</c> when the query was
+        /// unbounded (streaming). Persisted so a resumed batched <c>GetChanges(start, end)</c>
+        /// does not read events past the requested end. Absent on tokens issued before this
+        /// field was added, in which case it deserializes to <c>null</c>.
+        /// </summary>
+        public DateTimeOffset? RangeEnd { get; set; }
+
+        /// <summary>
+        /// <c>true</c> when the token was issued by a batched (time-range) query, <c>false</c>
+        /// for a streaming query. Persisted so resume via <c>GetChanges(continuationToken)</c>
+        /// reuses the original API's smart policy default instead of always resolving as
+        /// streaming. Absent on tokens issued before this field was added, in which case it
+        /// deserializes to <c>false</c>.
+        /// </summary>
+        public bool IsBatched { get; set; }
+
+        /// <summary>
         /// Parameterless constructor for <c>JsonSerializer</c>.
         /// </summary>
         public ShareChangeFeedCursor() { }
@@ -74,13 +99,19 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string urlHost,
             ChangeFeedCursor innerCursor,
             Guid? lastSeenResetId,
-            long? lastSeenResetFileTime)
+            long? lastSeenResetFileTime,
+            DateTimeOffset? rangeStart = null,
+            DateTimeOffset? rangeEnd = null,
+            bool isBatched = false)
         {
             CursorVersion = 1;
             UrlHost = urlHost;
             InnerCursor = innerCursor;
             LastSeenResetId = lastSeenResetId;
             LastSeenResetFileTime = lastSeenResetFileTime;
+            RangeStart = rangeStart;
+            RangeEnd = rangeEnd;
+            IsBatched = isBatched;
         }
     }
 }

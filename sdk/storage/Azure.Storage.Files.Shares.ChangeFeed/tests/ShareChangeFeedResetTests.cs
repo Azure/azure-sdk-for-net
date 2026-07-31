@@ -250,6 +250,50 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
+        public void ShareChangeFeedCursor_SerializeThenDeserialize_PreservesRangeAndBatchedIntent()
+        {
+            ChangeFeedCursor inner = new ChangeFeedCursor(
+                urlHost: ChangeFeedContainerUri.Host,
+                endDateTime: new DateTimeOffset(2025, 11, 20, 0, 0, 0, TimeSpan.Zero),
+                currentSegmentCursor: new SegmentCursor("idx/segments/2025/11/19/1500/meta.json", null, null));
+
+            DateTimeOffset rangeStart = new DateTimeOffset(2025, 11, 19, 13, 0, 0, TimeSpan.Zero);
+            DateTimeOffset rangeEnd = new DateTimeOffset(2025, 11, 19, 15, 0, 0, TimeSpan.Zero);
+
+            ShareChangeFeedCursor original = new ShareChangeFeedCursor(
+                urlHost: ChangeFeedContainerUri.Host,
+                innerCursor: inner,
+                lastSeenResetId: ResetIdFixture,
+                lastSeenResetFileTime: ResetFileTimeFixture,
+                rangeStart: rangeStart,
+                rangeEnd: rangeEnd,
+                isBatched: true);
+
+            string serialized = ShareChangeFeedCursorSerializer.Serialize(original);
+            ShareChangeFeedCursor round = ShareChangeFeedCursorSerializer.Deserialize(serialized);
+
+            Assert.AreEqual(rangeStart, round.RangeStart);
+            Assert.AreEqual(rangeEnd, round.RangeEnd);
+            Assert.IsTrue(round.IsBatched);
+        }
+
+        [Test]
+        public void ShareChangeFeedCursor_Deserialize_OlderTokenWithoutRangeFields_DefaultsToNullAndFalse()
+        {
+            // A token produced before RangeStart/RangeEnd/IsBatched were added must still
+            // deserialize: the new fields simply default to null/false.
+            string legacyToken =
+                @"{""CursorVersion"":1,""UrlHost"":""" + ChangeFeedContainerUri.Host + @""",""InnerCursor"":{""UrlHost"":""" +
+                ChangeFeedContainerUri.Host + @""",""EndTime"":null,""CurrentSegmentCursor"":null},""LastSeenResetId"":null,""LastSeenResetFileTime"":null}";
+
+            ShareChangeFeedCursor round = ShareChangeFeedCursorSerializer.Deserialize(legacyToken);
+
+            Assert.IsNull(round.RangeStart);
+            Assert.IsNull(round.RangeEnd);
+            Assert.IsFalse(round.IsBatched);
+        }
+
+        [Test]
         public void ShareChangeFeedCursor_Deserialize_NullOrGarbage_Throws()
         {
             Assert.Throws<ArgumentNullException>(() => ShareChangeFeedCursorSerializer.Deserialize(null));
@@ -369,6 +413,24 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual(ShareChangeFeedResetPolicy.ThrowOnReset, client.ResolveEffectivePolicy(isBatched: true));
         }
 
+        [Test]
+        public void ResolveEffectivePolicy_BatchedResume_PreservesThrowDefault()
+        {
+            // A batched query resumed via GetChanges(continuationToken) must reuse the batched
+            // default (ThrowOnReset) rather than flipping to the streaming default. The pageable
+            // resolves the effective policy from the token's persisted IsBatched intent, so this
+            // asserts the resolution the resume path relies on.
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                new Uri("https://account.file.core.windows.net"),
+                "myshare");
+
+            // Batched intent recovered from the token -> ThrowOnReset (unchanged from the
+            // original GetChanges(start, end) default).
+            Assert.AreEqual(ShareChangeFeedResetPolicy.ThrowOnReset, client.ResolveEffectivePolicy(isBatched: true));
+            // Streaming intent recovered from the token -> ContinueOnReset.
+            Assert.AreEqual(ShareChangeFeedResetPolicy.ContinueOnReset, client.ResolveEffectivePolicy(isBatched: false));
+        }
+
         #endregion ResolveEffectivePolicy
 
         #region ResetDetector surface/dedup
@@ -478,6 +540,30 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 lastSeenResetId: Guid.NewGuid(),
                 rangeStart: null,
                 rangeEnd: null);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void ShouldSurface_BatchedResume_RecoveredRange_SuppressesStalePreWindowReset()
+        {
+            // Repro from PR review: latest reset sits at Jun30 23:00Z, caller runs
+            // GetChanges(Jul1 00:00Z, Jul1 01:00Z). Page 1 (bounded) correctly filters the reset
+            // by range. On resume the range MUST be recovered from the token so detection still
+            // gates on the lower bound instead of degrading to unbounded (which would surface the
+            // stale pre-window reset).
+            DateTimeOffset start = new DateTimeOffset(2025, 7, 1, 0, 0, 0, TimeSpan.Zero);
+            DateTimeOffset end = new DateTimeOffset(2025, 7, 1, 1, 0, 0, TimeSpan.Zero);
+            DateTimeOffset resetTime = new DateTimeOffset(2025, 6, 30, 23, 0, 0, TimeSpan.Zero);
+
+            bool result = ResetDetector.ShouldSurface(
+                resetTime,
+                resetFileTime: ResetFileTimeFixture,
+                resetId: ResetIdFixture,
+                lastSeenResetFileTime: null,
+                lastSeenResetId: null,
+                rangeStart: start,
+                rangeEnd: end);
 
             Assert.IsFalse(result);
         }
