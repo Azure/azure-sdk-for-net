@@ -41,9 +41,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
             if (string.IsNullOrEmpty(connectionString))
-                throw new ArgumentNullException(nameof(connectionString));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(connectionString));
             if (string.IsNullOrEmpty(shareName))
-                throw new ArgumentNullException(nameof(shareName));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
@@ -63,9 +63,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
             if (fileServiceUri == null)
-                throw new ArgumentNullException(nameof(fileServiceUri));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(fileServiceUri));
             if (string.IsNullOrEmpty(shareName))
-                throw new ArgumentNullException(nameof(shareName));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
 
@@ -87,9 +87,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
             if (fileServiceUri == null)
-                throw new ArgumentNullException(nameof(fileServiceUri));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(fileServiceUri));
             if (string.IsNullOrEmpty(shareName))
-                throw new ArgumentNullException(nameof(shareName));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
 
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
@@ -111,9 +111,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedClientOptions changeFeedOptions = default)
         {
             if (fileServiceUri == null)
-                throw new ArgumentNullException(nameof(fileServiceUri));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(fileServiceUri));
             if (string.IsNullOrEmpty(shareName))
-                throw new ArgumentNullException(nameof(shareName));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(shareName));
 
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
@@ -225,9 +225,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         {
             if (start.HasValue && end.HasValue && start.Value > end.Value)
             {
-                throw new ArgumentException(
-                    $"{nameof(start)} ({start.Value:O}) must be earlier than or equal to {nameof(end)} ({end.Value:O}).",
-                    nameof(start));
+                throw ChangeFeedErrors.StartAfterEnd(start.Value, end.Value, nameof(start));
             }
         }
 
@@ -291,15 +289,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         {
             if (continuationToken != null && _includeNonFinalizedEvents)
             {
-                throw new ArgumentException(
-                    "Resuming from a continuation token is not supported when " +
-                    nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents) +
-                    " is enabled on " + nameof(ShareChangeFeedClientOptions) + ". " +
-                    "Non-finalized reads do not produce continuation tokens because segments past " +
-                    "the finalized watermark may change between calls. Disable " +
-                    nameof(ShareChangeFeedClientOptions.IncludeNonFinalizedEvents) +
-                    " to resume from a saved position.",
-                    nameof(continuationToken));
+                throw ShareChangeFeedErrors.ContinuationNotSupportedWithNonFinalized(nameof(continuationToken));
             }
         }
         #endregion GetChanges

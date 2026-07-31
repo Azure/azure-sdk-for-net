@@ -108,7 +108,15 @@ namespace Azure.Storage.ChangeFeed.Common
             // Resume path: deserialize the cursor and extract the start/end times from it.
             if (continuation != null)
             {
-                cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
+                try
+                {
+                    cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
+                }
+                catch (JsonException e)
+                {
+                    throw ChangeFeedErrors.MalformedContinuationToken(nameof(continuation), e);
+                }
+
                 ValidateCursor(_containerClient, cursor);
                 startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
                 endTime = cursor.EndTime;
@@ -139,7 +147,7 @@ namespace Azure.Storage.ChangeFeed.Common
             if (cursor == null)
                 throw new ArgumentNullException(nameof(cursor));
 
-            ValidateCursor(_containerClient, cursor);
+            ValidateCursor(_containerClient, cursor, nameof(cursor));
             DateTimeOffset? startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
             DateTimeOffset? endTime = cursor.EndTime;
 
@@ -173,7 +181,7 @@ namespace Azure.Storage.ChangeFeed.Common
                 changeFeedContainerExists = _containerClient.Exists(cancellationToken: cancellationToken);
 
             if (!changeFeedContainerExists)
-                throw new ArgumentException("Change Feed hasn't been enabled on this account, or is currently being enabled.");
+                throw ChangeFeedErrors.ChangeFeedNotEnabled();
 
             DateTimeOffset? lastConsumableNullable = await GetLastConsumableInternal(
                 _containerClient,
@@ -255,13 +263,14 @@ namespace Azure.Storage.ChangeFeed.Common
         /// </summary>
         private static void ValidateCursor(
             BlobContainerClient containerClient,
-            ChangeFeedCursor cursor)
+            ChangeFeedCursor cursor,
+            string paramName = "continuation")
         {
             if (!string.Equals(containerClient.Uri.Host, cursor.UrlHost, StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("Cursor URL Host does not match container URL host.");
+                throw ChangeFeedErrors.CursorHostMismatch(paramName);
 
             if (cursor.CursorVersion != 1)
-                throw new ArgumentException("Unsupported cursor version.");
+                throw ChangeFeedErrors.UnsupportedCursorVersion(paramName);
         }
 
         /// <summary>
