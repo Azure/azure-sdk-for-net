@@ -994,6 +994,11 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ProjectCreateResponseOptions : OpenAI.Responses.CreateResponseOptions
+    {
+        public ProjectCreateResponseOptions() { }
+        public string SessionId { get { throw null; } set { } }
+    }
     public partial class ProjectFilesClient : OpenAI.Files.OpenAIFileClient
     {
         protected ProjectFilesClient() { }
