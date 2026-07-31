@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using OpenAI.Responses;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI;
 #pragma warning disable SCME0001
@@ -9,6 +10,7 @@ namespace Azure.AI.Extensions.OpenAI;
 /// <summary>
 /// The project extension for OpenAI CreateResponseOptions.
 /// </summary>
+[Experimental("AAIP002")]
 public partial class ProjectCreateResponseOptions : CreateResponseOptions
 {
     /// <summary>

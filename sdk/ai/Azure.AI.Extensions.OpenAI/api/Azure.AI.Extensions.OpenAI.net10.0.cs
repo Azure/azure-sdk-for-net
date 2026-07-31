@@ -1211,6 +1211,7 @@ namespace Azure.AI.Extensions.OpenAI
         [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource>> UpdateProjectConversationAsync(string conversationId, OpenAI.Conversations.ConversationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
     public partial class ProjectCreateResponseOptions : OpenAI.Responses.CreateResponseOptions
     {
         public ProjectCreateResponseOptions() { }
