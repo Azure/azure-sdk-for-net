@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated the library to TypeSpec-based code generation.
+
 ## 1.1.0 (2026-04-16)
 
 ### Features Added

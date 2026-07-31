@@ -1,0 +1,4 @@
+directory: specification/network/resource-manager/Microsoft.Network/Network
+commit: 1f2a62567c8b53b2bb0735dfa5ef9bbe3526abc1
+repo: ArcturusZhang/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
