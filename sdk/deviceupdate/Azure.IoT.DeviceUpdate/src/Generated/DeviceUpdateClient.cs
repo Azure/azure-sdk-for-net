@@ -617,7 +617,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Optional to filter operations by status property. Only one specific filter is
         /// supported: "status eq 'NotStarted' or status eq 'Running'"
         /// </param>
-        /// <param name="maxCount">
+        /// <param name="top">
         /// Specifies a non-negative integer n that limits the number of items returned
         /// from a collection. The service returns the number of available items up to but
         /// not greater than the specified value n.
@@ -625,9 +625,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? maxCount = default, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetOperationStatusesCollectionResult(this, filter, maxCount, context, "DeviceUpdateClient.GetOperationStatuses");
+            return new DeviceUpdateClientGetOperationStatusesCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
         }
 
         /// <summary>
@@ -644,7 +644,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Optional to filter operations by status property. Only one specific filter is
         /// supported: "status eq 'NotStarted' or status eq 'Running'"
         /// </param>
-        /// <param name="maxCount">
+        /// <param name="top">
         /// Specifies a non-negative integer n that limits the number of items returned
         /// from a collection. The service returns the number of available items up to but
         /// not greater than the specified value n.
@@ -652,9 +652,9 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? maxCount = default, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = default, int? top = default, RequestContext context = null)
         {
-            return new DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(this, filter, maxCount, context, "DeviceUpdateClient.GetOperationStatuses");
+            return new DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(this, filter, top, context, "DeviceUpdateClient.GetOperationStatuses");
         }
 
         /// <summary>

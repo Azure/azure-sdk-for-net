@@ -360,7 +360,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -375,9 +375,9 @@ namespace Azure.IoT.DeviceUpdate
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -387,7 +387,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateNextGetOperationStatusesRequest(Uri nextPage, string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateNextGetOperationStatusesRequest(Uri nextPage, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -19,7 +19,7 @@ namespace Azure.IoT.DeviceUpdate
     {
         private readonly DeviceUpdateClient _client;
         private readonly string _filter;
-        private readonly int? _maxCount;
+        private readonly int? _top;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -29,18 +29,18 @@ namespace Azure.IoT.DeviceUpdate
         /// Optional to filter operations by status property. Only one specific filter is
         /// supported: "status eq 'NotStarted' or status eq 'Running'"
         /// </param>
-        /// <param name="maxCount">
+        /// <param name="top">
         /// Specifies a non-negative integer n that limits the number of items returned
         /// from a collection. The service returns the number of available items up to but
         /// not greater than the specified value n.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(DeviceUpdateClient client, string filter, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceUpdateClientGetOperationStatusesAsyncCollectionResult(DeviceUpdateClient client, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
-            _maxCount = maxCount;
+            _top = top;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -79,7 +79,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetOperationStatusesRequest(nextLink, _filter, _maxCount, _context) : _client.CreateGetOperationStatusesRequest(_filter, _maxCount, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetOperationStatusesRequest(nextLink, _filter, _top, _context) : _client.CreateGetOperationStatusesRequest(_filter, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
