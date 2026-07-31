@@ -236,6 +236,7 @@ dotnet publish
 
 This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
 4. Copy the contents of `publish` folder to `Assets/AgentsCode`.
+**Note:** In this example we are uploading the project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCode` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 Prepare the metadata for Agent:
 
