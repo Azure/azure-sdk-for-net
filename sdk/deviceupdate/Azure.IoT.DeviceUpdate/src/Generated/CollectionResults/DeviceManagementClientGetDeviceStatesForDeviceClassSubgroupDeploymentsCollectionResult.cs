@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    internal partial class DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentCollectionResult : Pageable<BinaryData>
+    internal partial class DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult : Pageable<BinaryData>
     {
         private readonly DeviceManagementClient _client;
         private readonly string _groupId;
@@ -24,7 +24,7 @@ namespace Azure.IoT.DeviceUpdate
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeviceManagementClient client used to send requests. </param>
         /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
@@ -35,7 +35,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentCollectionResult(DeviceManagementClient client, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult(DeviceManagementClient client, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _groupId = groupId;
@@ -46,10 +46,10 @@ namespace Azure.IoT.DeviceUpdate
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of DeviceManagementClientGetDeviceStatesForDeviceClassSubgroupDeploymentsCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -80,7 +80,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeviceStatesForDeviceClassSubgroupDeploymentRequest(nextLink, _groupId, _deviceClassId, _deploymentId, _filter, _context) : _client.CreateGetDeviceStatesForDeviceClassSubgroupDeploymentRequest(_groupId, _deviceClassId, _deploymentId, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(nextLink, _groupId, _deviceClassId, _deploymentId, _filter, _context) : _client.CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(_groupId, _deviceClassId, _deploymentId, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
