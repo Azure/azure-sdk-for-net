@@ -1909,6 +1909,10 @@ public class AgentsTests : AgentsTestBase
         return !fileData.IsEmpty;
     }
 
+    // The recorded test sessions capture this YAML with CRLF line endings. Raw string literals preserve the
+    // exact line endings present in the source file (normalized to LF by .gitattributes for *.cs files), so
+    // without this explicit normalization, playback would fail to match the recorded request body depending
+    // on how the repository was checked out.
     private static readonly string s_HelloWorkflowYaml = """
         kind: workflow
         trigger:
@@ -1920,7 +1924,7 @@ public class AgentsTests : AgentsTestBase
               activity: hello world
             - kind: EndConversation
               id: end_conversation
-        """;
+        """.ReplaceLineEndings("\r\n");
 
     private static async Task DeleteMemoryStoreMayBe(AIProjectClient projectClient, string name)
     {
