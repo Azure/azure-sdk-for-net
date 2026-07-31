@@ -106,7 +106,7 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     }
 
     /// <inheritdoc/>
-    public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
         TaskCompletionSource<object?> constructionCompletion;
         lock (_sync)

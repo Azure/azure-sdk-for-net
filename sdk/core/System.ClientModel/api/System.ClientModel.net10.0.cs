@@ -28,7 +28,7 @@ namespace System.ClientModel
         public string ReasonPhrase { get { throw null; } }
         public int Status { get { throw null; } }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
-        public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<T> System.Collections.Generic.IAsyncEnumerable<T>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class AuthenticationTokenProvider
     {
