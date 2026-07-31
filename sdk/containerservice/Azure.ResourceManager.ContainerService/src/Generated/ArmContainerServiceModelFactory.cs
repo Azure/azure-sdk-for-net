@@ -3178,7 +3178,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ContainerService.ContainerServiceAlertConfigurationData"/> instance for mocking. </returns>
-        public static ContainerServiceAlertConfigurationData ContainerServiceAlertConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertConfigurationProperties properties = default)
+        public static ContainerServiceAlertConfigurationData ContainerServiceAlertConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceAlertConfigurationProperties properties = default)
         {
             return new ContainerServiceAlertConfigurationData(
                 id,
@@ -3193,10 +3193,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="notificationActionGroupId"> The resource ID of the Azure Monitor action group to send notifications to. </param>
         /// <param name="provisioningState"> The current provisioning state of the alert configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationActionGroupId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.AlertConfigurationProperties"/> instance for mocking. </returns>
-        public static AlertConfigurationProperties AlertConfigurationProperties(AlertConfigurationMode mode = default, ResourceIdentifier notificationActionGroupId = default, AlertConfigurationProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.ContainerServiceAlertConfigurationProperties"/> instance for mocking. </returns>
+        public static ContainerServiceAlertConfigurationProperties ContainerServiceAlertConfigurationProperties(ContainerServiceAlertConfigurationMode mode = default, ResourceIdentifier notificationActionGroupId = default, ContainerServiceAlertConfigurationProvisioningState? provisioningState = default)
         {
-            return new AlertConfigurationProperties(mode, notificationActionGroupId is null ? default : new AlertNotification(notificationActionGroupId, default), provisioningState, default);
+            return new ContainerServiceAlertConfigurationProperties(mode, notificationActionGroupId is null ? default : new AlertNotification(notificationActionGroupId, default), provisioningState, default);
         }
 
         /// <param name="cpuManagerPolicy"> The CPU Manager policy to use. The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </param>

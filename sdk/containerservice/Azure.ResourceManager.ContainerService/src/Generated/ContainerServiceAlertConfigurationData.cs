@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceAlertConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ContainerServiceAlertConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServiceAlertConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public AlertConfigurationProperties Properties { get; set; }
+        public ContainerServiceAlertConfigurationProperties Properties { get; set; }
     }
 }

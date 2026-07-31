@@ -13,16 +13,16 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Properties of the alert configuration. </summary>
-    public partial class AlertConfigurationProperties
+    public partial class ContainerServiceAlertConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertConfigurationProperties"/>. </summary>
         /// <param name="mode"> The mode of the alert configuration. Specifies how AKS manages the alerts. </param>
         /// <param name="notificationActionGroupId"> The resource ID of the Azure Monitor action group to send notifications to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationActionGroupId"/> is null. </exception>
-        public AlertConfigurationProperties(AlertConfigurationMode mode, ResourceIdentifier notificationActionGroupId)
+        public ContainerServiceAlertConfigurationProperties(ContainerServiceAlertConfigurationMode mode, ResourceIdentifier notificationActionGroupId)
         {
             Argument.AssertNotNull(notificationActionGroupId, nameof(notificationActionGroupId));
 
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             Notification = new AlertNotification(notificationActionGroupId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertConfigurationProperties"/>. </summary>
         /// <param name="mode"> The mode of the alert configuration. Specifies how AKS manages the alerts. </param>
         /// <param name="notification"> Notification settings for the alert configuration. </param>
         /// <param name="provisioningState"> The current provisioning state of the alert configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertConfigurationProperties(AlertConfigurationMode mode, AlertNotification notification, AlertConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceAlertConfigurationProperties(ContainerServiceAlertConfigurationMode mode, AlertNotification notification, ContainerServiceAlertConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             Notification = notification;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The mode of the alert configuration. Specifies how AKS manages the alerts. </summary>
         [WirePath("mode")]
-        public AlertConfigurationMode Mode { get; set; }
+        public ContainerServiceAlertConfigurationMode Mode { get; set; }
 
         /// <summary> Notification settings for the alert configuration. </summary>
         [WirePath("notification")]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The current provisioning state of the alert configuration. </summary>
         [WirePath("provisioningState")]
-        public AlertConfigurationProvisioningState? ProvisioningState { get; }
+        public ContainerServiceAlertConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource ID of the Azure Monitor action group to send notifications to. </summary>
         [WirePath("notification.actionGroupId")]

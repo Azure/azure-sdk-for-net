@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerService
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            AlertConfigurationProperties properties = default;
+            ContainerServiceAlertConfigurationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         continue;
                     }
-                    properties = AlertConfigurationProperties.DeserializeAlertConfigurationProperties(prop.Value, options);
+                    properties = ContainerServiceAlertConfigurationProperties.DeserializeContainerServiceAlertConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
