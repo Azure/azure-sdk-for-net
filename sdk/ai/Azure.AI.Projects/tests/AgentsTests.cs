@@ -1914,7 +1914,7 @@ public class AgentsTests : AgentsTestBase
               activity: hello world
             - kind: EndConversation
               id: end_conversation
-        """.ReplaceLineEndings("\r\n");
+        """.ReplaceLineEndings("\n");
 
     private static async Task DeleteMemoryStoreMayBe(AIProjectClient projectClient, string name)
     {
