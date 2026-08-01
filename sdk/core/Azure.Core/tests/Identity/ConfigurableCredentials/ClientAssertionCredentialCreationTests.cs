@@ -5,10 +5,9 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ClientAssertion
 {
     /// <summary>
@@ -240,6 +239,8 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ClientAssertion
                 Assert.IsNotNull(cred);
                 Assert.AreEqual("test-tenant", cred.TenantId);
                 Assert.AreEqual("test-client", cred.ClientId);
+                Assert.IsNotNull(cred.PopClient);
+                Assert.AreNotSame(cred.Client, cred.PopClient);
             }
         }
 

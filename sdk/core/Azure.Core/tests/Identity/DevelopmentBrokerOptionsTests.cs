@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity.Broker
 {
     public class DevelopmentBrokerOptionsTests

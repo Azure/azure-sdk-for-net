@@ -416,6 +416,7 @@ the `Credential` section as well.
     "ManagedIdentityIdKind": "ClientId",
     "ManagedIdentityId": "00000000-0000-0000-0000-000000000000",
     "AzureCloud": "public",
+    "DisableMtlsProofOfPossession": false,
     "DisableInstanceDiscovery": false,
     "TokenCachePersistenceOptions": {
       "Name": "my-app-cache",
@@ -426,6 +427,7 @@ the `Credential` section as well.
 ```
 
 `ManagedIdentityIdKind` can be `ClientId`, `ResourceId`, or `ObjectId`. `AzureCloud` can be `public`, `usgov`, or `china`.
+Set `DisableMtlsProofOfPossession` to `true` to force bearer authentication for both token exchanges in the managed identity federated identity flow. The default is `false`.
 
 **VisualStudioCodeCredential:**
 ```json

@@ -9,10 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 {
     public class ConfigurableCredentialTests : ClientTestBase
@@ -299,6 +298,38 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             Assert.AreEqual(2, sources.Length, "Expected exactly two credentials in the chain");
             Assert.IsInstanceOf<VisualStudioCredential>(sources[0]);
             Assert.IsInstanceOf<AzureCliCredential>(sources[1]);
+        }
+
+        [Test]
+        public void Constructor_WithChainedFederatedIdentitySource_CreatesPopCredential()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                    ["Credential:Sources:0:TenantId"] = "test-tenant",
+                    ["Credential:Sources:0:ClientId"] = "test-client",
+                    ["Credential:Sources:0:ManagedIdentityIdKind"] = "ClientId",
+                    ["Credential:Sources:0:ManagedIdentityId"] = "test-mi-client-id",
+                    ["Credential:Sources:0:AzureCloud"] = "public",
+                    ["Credential:Sources:0:DisableMtlsProofOfPossession"] = "true",
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(1, sources.Length);
+            var assertionCredential = sources[0] as ClientAssertionCredential;
+            Assert.IsNotNull(assertionCredential);
+            Assert.IsNotNull(assertionCredential.PopClient);
+            Assert.AreNotSame(assertionCredential.Client, assertionCredential.PopClient);
         }
 
         [Test]

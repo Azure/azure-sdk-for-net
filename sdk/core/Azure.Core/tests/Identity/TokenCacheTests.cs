@@ -7,12 +7,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Moq;
 using NUnit.Framework;
-
-using Azure.Identity;
 using TokenCache = Azure.Identity.TokenCache;
 namespace Azure.Core.Tests.Identity
 {

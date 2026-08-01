@@ -7,12 +7,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 {
     /// <summary>

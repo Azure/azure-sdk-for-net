@@ -54,7 +54,7 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<TClient, TOptions> WithCredential<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder, Func<IServiceProvider, TokenCredential> credentialFactory) where TOptions : class
         {
             var impl = builder.ToBuilder();
-            impl.ServiceCollection.AddSingleton<IConfigureOptions<AzureClientCredentialOptions<TClient>>>(new ConfigureClientCredentials<TClient,TOptions>(impl.Registration, credentialFactory));
+            impl.ServiceCollection.AddSingleton<IConfigureOptions<AzureClientCredentialOptions<TClient>>>(new ConfigureClientCredentials<TClient, TOptions>(impl.Registration, credentialFactory));
             return builder;
         }
 
@@ -97,7 +97,7 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<TClient, TOptions> ConfigureOptions<TClient, TOptions>(this IAzureClientBuilder<TClient, TOptions> builder, Action<TOptions, IServiceProvider> configureOptions) where TOptions : class
         {
             var impl = builder.ToBuilder();
-            impl.ServiceCollection.AddSingleton<IConfigureOptions<TOptions>>(provider => new ConfigureClientOptions<TClient,TOptions>(provider, impl.Registration, configureOptions));;
+            impl.ServiceCollection.AddSingleton<IConfigureOptions<TOptions>>(provider => new ConfigureClientOptions<TClient, TOptions>(provider, impl.Registration, configureOptions)); ;
             return builder;
         }
 

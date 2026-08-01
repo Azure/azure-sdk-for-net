@@ -38,7 +38,7 @@ namespace Microsoft.Extensions.Azure
             IConfiguration configuration)
         {
             var credentialsFromConfig = ClientFactory.CreateCredential(configuration);
-            var clientBuilder =((IAzureClientFactoryBuilderWithCredential)this).RegisterClientFactory<TClient, TOptions>(
+            var clientBuilder = ((IAzureClientFactoryBuilderWithCredential)this).RegisterClientFactory<TClient, TOptions>(
                 (options, credentials) => (TClient)ClientFactory.CreateClient(typeof(TClient), typeof(TOptions), options, configuration, credentials))
                 .ConfigureOptions(configuration);
 
@@ -180,7 +180,7 @@ namespace Microsoft.Extensions.Azure
             bool requiresCredential)
             where TOptions : class
         {
-            var clientRegistration = new ClientRegistration<TClient>(DefaultClientName, requiresCredential, (provider, options, credential) => clientFactory((TOptions) options, credential, provider));
+            var clientRegistration = new ClientRegistration<TClient>(DefaultClientName, requiresCredential, (provider, options, credential) => clientFactory((TOptions)options, credential, provider));
             _serviceCollection.AddSingleton(clientRegistration);
 
             _serviceCollection.TryAddSingleton(typeof(IConfigureOptions<AzureClientCredentialOptions<TClient>>), typeof(DefaultCredentialClientOptionsSetup<TClient>));
