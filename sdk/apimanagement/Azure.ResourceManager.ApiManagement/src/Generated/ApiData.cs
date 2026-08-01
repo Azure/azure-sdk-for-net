@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Properties specific to MCP API type. </summary>
         [WirePath("properties.mcpProperties")]
-        public McpProperties McpProperties
+        public ApiManagementMcpProperties McpProperties
         {
             get
             {

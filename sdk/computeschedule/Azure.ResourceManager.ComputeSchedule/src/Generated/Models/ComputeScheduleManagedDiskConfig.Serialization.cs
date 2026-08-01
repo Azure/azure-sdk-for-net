@@ -15,11 +15,11 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class ComputeScheduleManagedDiskConfig : SubResource, IJsonModel<ComputeScheduleManagedDiskConfig>
+    public partial class ComputeScheduleManagedDiskConfig : ComputeScheduleSubResourceInfo, IJsonModel<ComputeScheduleManagedDiskConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeScheduleSubResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleManagedDiskConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeScheduleSubResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeScheduleManagedDiskConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StorageAccountType? storageAccountType = default;
+            ComputeScheduleStorageAccountType? storageAccountType = default;
             ComputeScheduleDiskEncryptionSetConfig diskEncryptionSet = default;
-            VirtualMachineDiskSecurityProfile securityProfile = default;
+            ComputeScheduleVirtualMachineDiskSecurityProfile securityProfile = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(prop.Value.GetString());
+                    storageAccountType = new ComputeScheduleStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(prop.Value, options);
+                    securityProfile = ComputeScheduleVirtualMachineDiskSecurityProfile.DeserializeComputeScheduleVirtualMachineDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

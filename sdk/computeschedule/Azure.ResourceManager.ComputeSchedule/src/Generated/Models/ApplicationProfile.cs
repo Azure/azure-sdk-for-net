@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         public ApplicationProfile()
         {
-            GalleryApplications = new ChangeTrackingList<VmGalleryApplication>();
+            GalleryApplications = new ChangeTrackingList<ComputeScheduleVmGalleryApplication>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationProfile(IList<VmGalleryApplication> galleryApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationProfile(IList<ComputeScheduleVmGalleryApplication> galleryApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GalleryApplications = galleryApplications;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM. </summary>
-        public IList<VmGalleryApplication> GalleryApplications { get; } = new ChangeTrackingList<VmGalleryApplication>();
+        public IList<ComputeScheduleVmGalleryApplication> GalleryApplications { get; } = new ChangeTrackingList<ComputeScheduleVmGalleryApplication>();
     }
 }

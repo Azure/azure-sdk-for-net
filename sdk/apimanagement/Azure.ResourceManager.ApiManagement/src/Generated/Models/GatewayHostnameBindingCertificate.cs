@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingCertificate"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
         /// <param name="subject"> The subject of the certificate. </param>
-        /// <param name="expiry"> The expiration date of the certificate. </param>
+        /// <param name="expireOn"> The expiration date of the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayHostnameBindingCertificate(string thumbprint, string subject, DateTimeOffset? expiry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayHostnameBindingCertificate(string thumbprint, string subject, DateTimeOffset? expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Thumbprint = thumbprint;
             Subject = subject;
-            Expiry = expiry;
+            ExpireOn = expireOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The expiration date of the certificate. </summary>
         [WirePath("expiry")]
-        public DateTimeOffset? Expiry { get; }
+        public DateTimeOffset? ExpireOn { get; }
     }
 }

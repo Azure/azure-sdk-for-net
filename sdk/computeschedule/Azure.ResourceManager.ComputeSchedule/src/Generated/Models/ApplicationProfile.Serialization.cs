@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
-                foreach (VmGalleryApplication item in GalleryApplications)
+                foreach (ComputeScheduleVmGalleryApplication item in GalleryApplications)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IList<VmGalleryApplication> galleryApplications = default;
+            IList<ComputeScheduleVmGalleryApplication> galleryApplications = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<VmGalleryApplication> array = new List<VmGalleryApplication>();
+                    List<ComputeScheduleVmGalleryApplication> array = new List<ComputeScheduleVmGalleryApplication>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmGalleryApplication.DeserializeVmGalleryApplication(item, options));
+                        array.Add(ComputeScheduleVmGalleryApplication.DeserializeComputeScheduleVmGalleryApplication(item, options));
                     }
                     galleryApplications = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationProfile(galleryApplications ?? new ChangeTrackingList<VmGalleryApplication>(), additionalBinaryDataProperties);
+            return new ApplicationProfile(galleryApplications ?? new ChangeTrackingList<ComputeScheduleVmGalleryApplication>(), additionalBinaryDataProperties);
         }
     }
 }

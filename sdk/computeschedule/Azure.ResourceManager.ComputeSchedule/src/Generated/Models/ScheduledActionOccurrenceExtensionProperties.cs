@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal ScheduledActionOccurrenceExtensionProperties(ResourceIdentifier resourceId, ResourceIdentifier scheduledActionId)
         {
             ResourceId = resourceId;
-            NotificationSettings = new ChangeTrackingList<NotificationSettings>();
+            NotificationSettings = new ChangeTrackingList<ComputeScheduleNotificationSettings>();
             ScheduledActionId = scheduledActionId;
         }
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
         /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionOccurrenceExtensionProperties(ResourceIdentifier resourceId, IList<NotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, ResourceIdentifier scheduledActionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionOccurrenceExtensionProperties(ResourceIdentifier resourceId, IList<ComputeScheduleNotificationSettings> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, ResourceIdentifier scheduledActionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             NotificationSettings = notificationSettings;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The desired notification settings for the specified resource. </summary>
-        public IList<NotificationSettings> NotificationSettings { get; }
+        public IList<ComputeScheduleNotificationSettings> NotificationSettings { get; }
 
         /// <summary> The time the occurrence is scheduled for the resource. Specified in UTC. </summary>
         public DateTimeOffset ScheduledOn { get; }

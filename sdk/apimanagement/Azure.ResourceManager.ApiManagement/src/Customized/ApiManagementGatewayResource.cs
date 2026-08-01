@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.ApiManagement
                 data => data is null ? null : new GatewayApiData(data));
 
         /// <summary> Creates or updates the Gateway API. </summary>
-        public virtual async Task<Response<GatewayApiData>> CreateOrUpdateGatewayApiAsync(string apiId, AssociationContract associationContract, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GatewayApiData>> CreateOrUpdateGatewayApiAsync(string apiId, AssociationContract associationContract = default, CancellationToken cancellationToken = default)
         {
             Response<ApiData> response = await CreateOrUpdateAsync(apiId, associationContract, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value is null ? null : new GatewayApiData(response.Value), response.GetRawResponse());
         }
 
         /// <summary> Creates or updates the Gateway API. </summary>
-        public virtual Response<GatewayApiData> CreateOrUpdateGatewayApi(string apiId, AssociationContract associationContract, CancellationToken cancellationToken = default)
+        public virtual Response<GatewayApiData> CreateOrUpdateGatewayApi(string apiId, AssociationContract associationContract = default, CancellationToken cancellationToken = default)
         {
             Response<ApiData> response = CreateOrUpdate(apiId, associationContract, cancellationToken);
             return Response.FromValue(response.Value is null ? null : new GatewayApiData(response.Value), response.GetRawResponse());

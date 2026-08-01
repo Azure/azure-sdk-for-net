@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteNumberValue(Total);
             writer.WritePropertyName("statuses"u8);
             writer.WriteStartArray();
-            foreach (ResourceResultSummary item in Statuses)
+            foreach (ComputeScheduleResourceResultSummary item in Statuses)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             int total = default;
-            IList<ResourceResultSummary> statuses = default;
+            IList<ComputeScheduleResourceResultSummary> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("statuses"u8))
                 {
-                    List<ResourceResultSummary> array = new List<ResourceResultSummary>();
+                    List<ComputeScheduleResourceResultSummary> array = new List<ComputeScheduleResourceResultSummary>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceResultSummary.DeserializeResourceResultSummary(item, options));
+                        array.Add(ComputeScheduleResourceResultSummary.DeserializeComputeScheduleResourceResultSummary(item, options));
                     }
                     statuses = array;
                     continue;

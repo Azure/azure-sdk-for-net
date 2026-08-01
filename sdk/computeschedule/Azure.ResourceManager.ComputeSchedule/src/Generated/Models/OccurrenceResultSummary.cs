@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/>. </summary>
         /// <param name="total"> The total number of resources that the occurrence was supposed to act on. </param>
         /// <param name="statuses"> The summarized status of the resources. </param>
-        internal OccurrenceResultSummary(int total, IEnumerable<ResourceResultSummary> statuses)
+        internal OccurrenceResultSummary(int total, IEnumerable<ComputeScheduleResourceResultSummary> statuses)
         {
             Total = total;
             Statuses = statuses.ToList();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="total"> The total number of resources that the occurrence was supposed to act on. </param>
         /// <param name="statuses"> The summarized status of the resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceResultSummary(int total, IList<ResourceResultSummary> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OccurrenceResultSummary(int total, IList<ComputeScheduleResourceResultSummary> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Total = total;
             Statuses = statuses;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public int Total { get; }
 
         /// <summary> The summarized status of the resources. </summary>
-        public IList<ResourceResultSummary> Statuses { get; }
+        public IList<ComputeScheduleResourceResultSummary> Statuses { get; }
     }
 }

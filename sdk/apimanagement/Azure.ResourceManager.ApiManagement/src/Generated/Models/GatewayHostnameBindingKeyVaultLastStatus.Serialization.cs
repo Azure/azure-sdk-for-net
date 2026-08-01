@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeStampUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptedOn))
             {
                 writer.WritePropertyName("timeStampUtc"u8);
-                writer.WriteStringValue(TimeStampUtc.Value, "O");
+                writer.WriteStringValue(LastAttemptedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSuccessTimeStampUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastSucceededOn))
             {
                 writer.WritePropertyName("lastSuccessTimeStampUtc"u8);
-                writer.WriteStringValue(LastSuccessTimeStampUtc.Value, "O");
+                writer.WriteStringValue(LastSucceededOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            KeyVaultFetchCode? code = default;
-            DateTimeOffset? timeStampUtc = default;
-            DateTimeOffset? lastSuccessTimeStampUtc = default;
+            ApiManagementKeyVaultFetchCode? code = default;
+            DateTimeOffset? lastAttemptedOn = default;
+            DateTimeOffset? lastSucceededOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    code = prop.Value.GetString().ToKeyVaultFetchCode();
+                    code = prop.Value.GetString().ToApiManagementKeyVaultFetchCode();
                     continue;
                 }
                 if (prop.NameEquals("timeStampUtc"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    timeStampUtc = prop.Value.GetDateTimeOffset("O");
+                    lastAttemptedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastSuccessTimeStampUtc"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    lastSuccessTimeStampUtc = prop.Value.GetDateTimeOffset("O");
+                    lastSucceededOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GatewayHostnameBindingKeyVaultLastStatus(code, timeStampUtc, lastSuccessTimeStampUtc, additionalBinaryDataProperties);
+            return new GatewayHostnameBindingKeyVaultLastStatus(code, lastAttemptedOn, lastSucceededOn, additionalBinaryDataProperties);
         }
     }
 }

@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         /// <summary> Gets all the API gateways in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(CancellationToken cancellationToken)
-            => GetApiGatewaysAsync(default, default, cancellationToken);
+        public virtual AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(CancellationToken compatibilityCancellationToken)
+            => GetApiGatewaysAsync(default, default, compatibilityCancellationToken);
 
         /// <summary> Gets all the API gateways in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ApiGatewayResource> GetApiGateways(CancellationToken cancellationToken)
-            => GetApiGateways(default, default, cancellationToken);
+        public virtual Pageable<ApiGatewayResource> GetApiGateways(CancellationToken compatibilityCancellationToken)
+            => GetApiGateways(default, default, compatibilityCancellationToken);
 
         /// <summary> Gets all the API Management services in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(CancellationToken cancellationToken)
-            => GetApiManagementServicesAsync(default, default, cancellationToken);
+        public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(CancellationToken compatibilityCancellationToken)
+            => GetApiManagementServicesAsync(default, default, compatibilityCancellationToken);
 
         /// <summary> Gets all the API Management services in the subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ApiManagementServiceResource> GetApiManagementServices(CancellationToken cancellationToken)
-            => GetApiManagementServices(default, default, cancellationToken);
+        public virtual Pageable<ApiManagementServiceResource> GetApiManagementServices(CancellationToken compatibilityCancellationToken)
+            => GetApiManagementServices(default, default, compatibilityCancellationToken);
     }
 }

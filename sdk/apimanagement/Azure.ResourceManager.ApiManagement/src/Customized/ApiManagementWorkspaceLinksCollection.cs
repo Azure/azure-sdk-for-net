@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets all the API Management workspace links in the collection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetAllAsync(CancellationToken cancellationToken)
-            => GetAllAsync(default, default, cancellationToken);
+        public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetAllAsync(CancellationToken compatibilityCancellationToken)
+            => GetAllAsync(default, default, compatibilityCancellationToken);
 
         /// <summary> Gets all the API Management workspace links in the collection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ApiManagementWorkspaceLinksResource> GetAll(CancellationToken cancellationToken)
-            => GetAll(default, default, cancellationToken);
+        public virtual Pageable<ApiManagementWorkspaceLinksResource> GetAll(CancellationToken compatibilityCancellationToken)
+            => GetAll(default, default, compatibilityCancellationToken);
     }
 }
