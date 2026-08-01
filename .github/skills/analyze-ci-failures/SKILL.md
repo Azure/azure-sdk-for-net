@@ -28,6 +28,12 @@ The user must provide a **PR number**, **PR URL**, or **pipeline build ID**. If 
 
 Classify each failure using the CI check mapping and log symptom patterns below. Also inspect the PR's code directly (e.g., read generated files for compile errors, check for missing scaffolding files).
 
+For `Verify Generated Code` failures, inspect the generated-code diff in the log carefully:
+
+- Treat path casing as significant. A deleted generated file with no corresponding tracked addition can mean the generator changed only the filename casing, while the replacement file is untracked and omitted from `git diff`.
+- Compare the deleted filename with the generated type name and sibling files. If the expected filename differs only by casing (for example, `BackUpType.cs` → `BackupType.cs`), classify it as a case-only rename.
+- Remember that Windows uses a case-insensitive filesystem by default, so regeneration may update the file contents without making Git record the filename casing change.
+
 ### 3. Post a comment
 
 Compose a GitHub comment with:
@@ -45,7 +51,7 @@ These are the Azure DevOps and GitHub checks that run on SDK PRs. The check name
 | Check Name Pattern | What It Validates | Key Script |
 |---|---|---|
 | `Build Analyze PRBatch` | Umbrella: code generation, API export, snippets, spelling, CPM, build + pack | `eng/scripts/CodeChecks.ps1` |
-| `Verify Generated Code` | Generated code matches what the generator produces | `eng/scripts/CodeChecks.ps1` |
+| `Verify Generated Code` | Generated code, including filename casing, matches what the generator produces | `eng/scripts/CodeChecks.ps1` |
 | `Validate CPM Compliance` | Central Package Management policy | `eng/scripts/Validate-CpmCompliance.ps1` |
 | `Build` / `Pack` | Compilation + NuGet packaging (ApiCompat runs during pack only) | `dotnet pack` |
 | `Analyze` | Samples, READMEs, snippets compile | `eng/scripts/Build-Snippets.ps1` |
@@ -60,7 +66,8 @@ These are exact strings/patterns to search for in CI logs. They are specific to 
 | Log symptom | Root cause | Category |
 |---|---|---|
 | `Generated code is not up to date` | Generated code out of sync | Regenerate code |
-| `git diff --exit-code` failure in CodeChecks | Generated or API files changed after re-running scripts | Regenerate + export API |
+| `git diff --exit-code` failure in CodeChecks | A validation step changed tracked files; inspect the exact diff | Diff validation |
+| Generated file is deleted and the expected filename differs only by casing | Case-only filename rename was not recorded, commonly on Windows | Regenerate code + record filename casing |
 | `error CS####:` | C# compilation error | Build failure — inspect the specific error code |
 | `Build FAILED` | Compilation failure | Build failure |
 | `MembersMustExist` / `TypesMustExist` | ApiCompat breaking change (only surfaces in `dotnet pack`) | API compatibility |
@@ -70,6 +77,25 @@ These are exact strings/patterns to search for in CI logs. They are specific to 
 | README instruction format / `NuGet\\Install-Package` | README uses wrong install format (must use `dotnet add package`) | README validation |
 | `verify-links` broken URL | Broken markdown links | Link verification |
 | Path length exceeded | File path > 210 chars | File path issue |
+
+## Generated Code Fix Guidance
+
+For `Generated code is not up to date` or a `Verify Generated Code` diff, give exactly one regeneration instruction: from the affected package's `src` directory, run:
+
+```shell
+dotnet build /t:GenerateCode
+```
+
+Do not speculate that the spec or generator changed. Do not suggest running generator-repository scripts, installing generator dependencies, re-running an SDK generation pipeline, exporting the API surface, or changing the commit in `tsp-location.yaml` as alternative ways to fix this failure.
+
+If the remaining diff is a case-only filename rename and the author is on Windows, explain that the filesystem may not make Git notice the casing change. After regeneration, instruct them to compare `git ls-files` with the filename on disk, then force Git to refresh the indexed path:
+
+```shell
+git rm --cached <old-path>
+git add <correctly-cased-path>
+```
+
+Use the actual old and correctly-cased paths from the CI diff or generated output in the posted comment.
 
 ## New Package Checklist
 
