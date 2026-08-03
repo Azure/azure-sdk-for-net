@@ -91,24 +91,21 @@ namespace Azure.Generator.Provisioning.Providers
 
         private CSharpType? ParentResourceType => ParentResource?.Type;
 
-        private bool CanUseSingletonDefaultName
+        private bool CanUseSingletonDefaultName()
         {
-            get
+            if (_resourceProjection is null)
+                return false;
+
+            var resourceType = new ResourceTypePattern(_resourceProjection.ResourceType);
+            if (ParentResource?.ResourceProjection is { } parentProjection)
             {
-                if (_resourceProjection is null)
-                    return false;
-
-                var resourceType = new ResourceTypePattern(_resourceProjection.ResourceType);
-                if (ParentResource?.ResourceProjection is { } parentProjection)
-                {
-                    var parentResourceType = new ResourceTypePattern(parentProjection.ResourceType);
-                    return resourceType.Count == parentResourceType.Count + 1
-                        && resourceType.Take(parentResourceType.Count).SequenceEqual(parentResourceType);
-                }
-
-                // The first segment is the provider namespace.
-                return resourceType.Count == 2;
+                var parentResourceType = new ResourceTypePattern(parentProjection.ResourceType);
+                return resourceType.Count == parentResourceType.Count + 1
+                    && resourceType.Take(parentResourceType.Count).SequenceEqual(parentResourceType);
             }
+
+            // The first segment is the provider namespace.
+            return resourceType.Count == 2;
         }
 
         /// <inheritdoc/>
@@ -529,7 +526,7 @@ namespace Azure.Generator.Provisioning.Providers
                 string? defaultValue = null;
                 if (isResourceName
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName
-                    && CanUseSingletonDefaultName)
+                    && CanUseSingletonDefaultName())
                 {
                     defaultValue = singletonResourceName;
                     isSettable = false;
