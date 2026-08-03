@@ -223,7 +223,7 @@ ARM resource types contain a provider namespace followed by one or more resource
 - `Microsoft.AppConfiguration/configurationStores/keyValues` has two resource type levels.
 - `Microsoft.RecoveryServices/vaults/backupstorageconfig` has two resource type levels.
 
-The generator uses this hierarchy together with the ARM provider schema's `ParentResourceId` and extension-resource metadata to decide which relationship property to generate and whether `Name` can use a fixed singleton default.
+The generator uses this hierarchy together with the ARM provider schema's `ParentResourceId` and extension-resource metadata to decide which relationship property to generate and whether `Name` can use a fixed singleton name.
 
 #### Parent and Scope Resolution
 
@@ -270,12 +270,12 @@ _name = DefineProperty<string>(
     isRequired: true);
 ```
 
-For a TypeSpec `@singleton("default")` resource, the singleton default is safe only when it represents the complete Bicep name relative to the generated relationship:
+For a singleton resource that has only one valid name for its resource type, that fixed name is safe only when it represents the complete Bicep name relative to the generated relationship:
 
 1. When `Parent` resolves, the resource type must be the parent's resource type plus exactly one trailing type segment.
 2. When there is no generated `Parent`, the resource type must contain exactly one resource type segment after the provider namespace.
 
-In those cases, `Name` is getter-only and receives the singleton default:
+In those cases, `Name` is getter-only and receives the fixed singleton name as its default:
 
 ```csharp
 public BicepValue<string> Name { get; }
@@ -284,19 +284,19 @@ _name = DefineProperty<string>(
     nameof(Name),
     new[] { "name" },
     isRequired: true,
-    defaultValue: "default");
+    defaultValue: "singletonName");
 ```
 
-If either condition is not met, the generator treats the singleton name like a regular resource name: it remains required and settable, and the one-segment singleton default is omitted. The caller supplies all name segments not represented by a generated `Parent`.
+If either condition is not met, the generator treats the singleton name like a regular resource name: it remains required and settable, and the fixed one-segment name is not used as a default. The caller supplies all name segments not represented by a generated `Parent`.
 
 #### Supported Shapes
 
 | Resource shape | Generated relationship | Generated `Name` |
 |---|---|---|
 | Top-level regular resource | None | Required and settable |
-| Top-level singleton | None | Getter-only with the singleton default |
+| Top-level singleton | None | Getter-only with the fixed singleton name |
 | Regular child with its direct parent generated locally | Strongly typed `Parent` | Required and settable; contains the child segment |
-| Singleton child with its direct parent generated locally | Strongly typed `Parent` | Getter-only with the singleton default |
+| Singleton child with its direct parent generated locally | Strongly typed `Parent` | Getter-only with the fixed singleton name |
 | Child whose generated parent is more than one resource type level above it | Strongly typed `Parent` | Required and settable; contains the missing intermediate segments and the child segment |
 | Child of a virtual or cross-package parent | None | Required and settable; contains every resource name segment |
 | Writable regular extension resource | `ProvisionableResource Scope` | Required and settable |
@@ -309,7 +309,7 @@ For example, if a generated parent has resource type `Contoso/parents` and its s
 var setting = new SingletonSetting("setting")
 {
     Parent = parent,
-    Name = "intermediateName/default"
+    Name = "intermediateName/singletonName"
 };
 ```
 
