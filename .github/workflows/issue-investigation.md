@@ -149,11 +149,11 @@ If the issue is clearly Azure service behavior outside SDK control, add one comm
 
 > Hi @<ISSUE AUTHOR>. Thank you for reaching out and we regret that you're experiencing difficulties. The behavior that you're inquiring about is part of the Azure service; the client library has no insight nor influence over <AREA OF INQUIRY>. As a result, the maintainers of the Azure SDK packages are unable to assist.
 >
-> Unfortunately, Azure does not offer service support through GitHub and service teams do not monitor issues here. To ensure that the right team has visibility and can help, your best path forward would be to [open an Azure support request](https://learn.microsoft.com/services-hub/unified/support/open-support-requests?pivots=existing) or inquire on the [Microsoft Q&A site](https://learn.microsoft.com/answers/questions/). For feature suggestions, you may also want to consider the [Azure Feedback site](https://feedback.azure.com/d365community).
+> Unfortunately, Azure does not offer service support through GitHub and service teams do not monitor issues here. To ensure that the right team has visibility and can help, your best path forward would be to open an Azure support request or inquire on the Microsoft Q&A site. For feature suggestions, you may also want to consider the Azure Feedback site.
 >
 > I'm going to close this out; if I've misunderstood what you're describing, please let us know in a comment and we'd be happy to assist as we're able.
 
-Use exactly these service-support links in the service-side comment:
+Use exactly these service-support links in the service-side comment as plain URLs, not Markdown links:
 - Azure support request: `https://learn.microsoft.com/services-hub/unified/support/open-support-requests?pivots=existing`
 - Microsoft Q&A: `https://learn.microsoft.com/answers/questions/`
 - Azure Feedback: `https://feedback.azure.com/d365community`
