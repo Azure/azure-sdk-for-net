@@ -15,6 +15,20 @@ namespace Azure.Security.ConfidentialLedger.Tests
     {
         public Uri ConfidentialLedgerUrl => new(GetRecordedVariable("CONFIDENTIALLEDGER_URL"));
         public Uri ConfidentialLedgerIdentityUrl => new(GetRecordedVariable("CONFIDENTIALLEDGER_IDENTITY_URL"));
+
+        /// <summary>
+        /// Whether a Web Frontend Gateway endpoint has been configured via <c>CONFIDENTIALLEDGER_WEBFE_URL</c>.
+        /// The WebFE recorded tests self-skip when this is <c>false</c> so they never run against a
+        /// non-gateway ledger (for example in the live-test pipeline).
+        /// </summary>
+        public bool IsWebFrontendConfigured => !string.IsNullOrEmpty(GetRecordedOptionalVariable("CONFIDENTIALLEDGER_WEBFE_URL"));
+
+        /// <summary>
+        /// The Web Frontend Gateway endpoint used by the WebFE recorded tests
+        /// (<c>CONFIDENTIALLEDGER_WEBFE_URL</c>). Guard with <see cref="IsWebFrontendConfigured"/> first.
+        /// </summary>
+        public Uri ConfidentialLedgerWebFrontendUrl => new(GetRecordedVariable("CONFIDENTIALLEDGER_WEBFE_URL"));
+
         public string ConfidentialLedgerAdminOid => GetRecordedVariable("CONFIDENTIALLEDGER_CLIENT_OBJECTID");
         public string ClientPEM => GetRecordedOptionalVariable("CONFIDENTIALLEDGER_CLIENT_PEM");
         public string ClientPEMPk => GetRecordedOptionalVariable("CONFIDENTIALLEDGER_CLIENT_PEM_PK");
