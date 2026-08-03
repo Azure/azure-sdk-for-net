@@ -15,6 +15,27 @@ If you have encountered issues or want to suggest features, please [file an issu
 
 [Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
 
+## Table of Contents
+
+- [Getting started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Configuring Microsoft Foundry resource](#configuring-microsoft-foundry-resource)
+  - [Authenticate the client](#authenticate-the-client)
+- [Key concepts](#key-concepts)
+  - [Prebuilt analyzers](#prebuilt-analyzers)
+  - [Content types](#content-types)
+  - [Asynchronous operations](#asynchronous-operations)
+  - [Main classes](#main-classes)
+  - [Thread safety](#thread-safety)
+- [Examples](#examples)
+- [Troubleshooting](#troubleshooting)
+- [GitHub Copilot Skills](#github-copilot-skills)
+  - [Available Skills](#available-skills)
+  - [Using Skills in VS Code](#using-skills-in-vs-code)
+  - [Troubleshooting Skill Selection](#troubleshooting-skill-selection)
+- [Next steps](#next-steps)
+- [Contributing](#contributing)
+
 ## Getting started
 
 ### Install the package
@@ -323,6 +344,39 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 For more information, see [Diagnostics samples][diagnostics].
 
+## GitHub Copilot Skills
+
+This package includes [GitHub Copilot][github_copilot] skills under `.github/skills/` that provide interactive, AI-assisted workflows for common tasks. In VS Code, Copilot can use these skills to help with setup checks, running samples, and understanding the service.
+
+### Available Skills
+
+| Skill | Description | How to Use |
+|-------|-------------|------------|
+| [**cu-sdk-setup**][cu_sdk_setup_skill] | Interactive environment setup wizard — installs the SDK, configures `appsettings.json`, helps set up the Foundry resource and model deployments, runs model defaults, and verifies the setup with built-in checks | In VS Code Copilot Chat, ask: *"Help me set up the Content Understanding .NET SDK"* or reference the skill directly |
+| [**cu-sdk-sample-run**][cu_sdk_sample_run_skill] | Sample builder and runner — extracts code from sample markdown, builds a standalone .NET project, and optionally runs it | Ask: *"Run Sample02_AnalyzeUrl"* or *"Build and run a Content Understanding sample"* |
+| [**cu-sdk-common-knowledge**][cu_sdk_common_knowledge_skill] | Domain knowledge reference — answers questions about Content Understanding concepts, analyzers, field schemas, API operations, and .NET SDK usage | Ask: *"What prebuilt analyzers are available?"* or *"How do I create a custom analyzer?"* |
+
+### Using Skills in VS Code
+
+1. In VS Code, open the package folder `sdk/contentunderstanding/Azure.AI.ContentUnderstanding` (File → Open Folder). This is required for VS Code to discover the skills in `.github/skills/`.
+2. Ensure [GitHub Copilot][github_copilot] is installed and activated
+3. Open Copilot Chat from the Chat view or Command Palette
+4. Ask a question related to Content Understanding; Copilot can use the relevant skill when appropriate
+
+**Example prompts:**
+- *"Set up my .NET environment for Content Understanding"* → likely uses `cu-sdk-setup`
+- *"Run Sample03_AnalyzeInvoice"* → likely uses `cu-sdk-sample-run`
+- *"Explain how custom analyzers work"* → likely uses `cu-sdk-common-knowledge`
+
+### Troubleshooting Skill Selection
+
+If Copilot does not use the expected skill, try the following:
+
+1. Be explicit about intent and context in one prompt (for example: *"Use cu-sdk-sample-run to run Sample01_AnalyzeBinary"*).
+2. Include your goal and current state (for example: *"My appsettings.json is configured; help me run Sample02_AnalyzeUrl"*).
+3. Ask for a step-by-step interactive flow when needed (for example: *"Guide me step by step to check my environment setup"*).
+4. For build or runtime errors, mention the exact error text so Copilot can apply the right troubleshooting path.
+
 ## Next steps
 
 * [Sample 00: Configure model deployment defaults][sample00] - Required one-time setup to configure model deployments for prebuilt and custom analyzers
@@ -367,6 +421,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [opencode_email]: mailto:opencode@microsoft.com
+[github_copilot]: https://github.com/features/copilot
+[cu_sdk_setup_skill]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/cu-sdk-setup
+[cu_sdk_sample_run_skill]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/cu-sdk-sample-run
+[cu_sdk_common_knowledge_skill]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/.github/skills/cu-sdk-common-knowledge
 [style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [file_issue]: https://github.com/Azure/azure-sdk-for-net/issues/new?labels=Cognitive%20-%20Content%20Understanding&title=[ContentUnderstanding]%20&body=%23%23%20Library%20Version%0A%0A%23%23%20Repro%20Steps%0A%0A%23%23%20Expected%20Result%0A%0A%23%23%20Actual%20Result

@@ -9,7 +9,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.ContentUnderstanding;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.ContentUnderstanding.Tests
 {
@@ -39,7 +41,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <remarks>
         /// The API key is sanitized in recordings to prevent exposing secrets.
         /// </remarks>
-        public string ApiKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_KEY", options => options.IsSecret());
+        public string ApiKey => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the gpt-4.1 deployment name (optional).
@@ -59,12 +61,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the source resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? SourceResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID", options => options.IsSecret());
+        public string? SourceResourceId => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the source region for cross-resource copying (optional).
         /// </summary>
-        public string? SourceRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION", options => options.IsSecret());
+        public string? SourceRegion => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_SOURCE_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target endpoint for cross-resource copying (optional).
@@ -74,17 +76,45 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the target resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? TargetResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID", options => options.IsSecret());
+        public string? TargetResourceId => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target region for cross-resource copying (optional).
         /// </summary>
-        public string? TargetRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION", options => options.IsSecret());
+        public string? TargetRegion => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target API key for cross-resource copying (optional).
         /// </summary>
-        public string? TargetKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_KEY", options => options.IsSecret());
+        public string? TargetKey => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TARGET_KEY", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the SAS URL for the Azure Blob container with labeled training data
+        /// used by <c>Sample16_CreateAnalyzerWithLabels</c> (optional).
+        /// </summary>
+        /// <remarks>
+        /// If unset, the sample creates an analyzer without labeled training data.
+        /// The SAS URL is sanitized in recordings to prevent exposing secrets.
+        /// </remarks>
+        public string? TrainingDataSasUrl => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the optional path prefix within the training-data container
+        /// (e.g., <c>"receipt_labels/"</c>) used by <c>Sample16_CreateAnalyzerWithLabels</c>.
+        /// </summary>
+        public string? TrainingDataPrefix => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
+
+        /// <summary>
+        /// Gets the storage account name for auto-uploading labeled training data
+        /// (Option B in <c>Sample16_CreateAnalyzerWithLabels</c>). Optional.
+        /// </summary>
+        public string? TrainingDataStorageAccountName => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
+
+        /// <summary>
+        /// Gets the blob container name for auto-uploading labeled training data
+        /// (Option B in <c>Sample16_CreateAnalyzerWithLabels</c>). Optional.
+        /// </summary>
+        public string? TrainingDataContainerName => GetRecordedOptionalVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
 
         /// <summary>
         /// Creates a file path for a test asset file.
@@ -117,6 +147,24 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var path = CreatePath(filename);
             var bytes = File.ReadAllBytes(path);
             return BinaryData.FromBytes(bytes);
+        }
+
+        /// <summary>
+        /// Returns a developer credential for local Record/Live runs.
+        /// </summary>
+        /// <remarks>
+        /// The base implementation pins broker-based interactive auth to the Azure SDK test
+        /// tenant, which is not suitable for Content Understanding because the service and
+        /// associated training storage live in the user's home tenant. Prepend
+        /// <see cref="AzureCliCredential"/> so that <c>az login</c> is honored on dev boxes
+        /// (and in WSL) without requiring an interactive broker window. The base chain
+        /// remains as a fallback for environments without the Azure CLI.
+        /// </remarks>
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            return new ChainedTokenCredential(
+                new AzureCliCredential(),
+                base.CreateDeveloperCredential());
         }
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
