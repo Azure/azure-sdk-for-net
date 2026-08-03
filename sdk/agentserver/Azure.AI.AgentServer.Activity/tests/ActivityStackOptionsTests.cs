@@ -74,11 +74,11 @@ public class ActivityStackOptionsTests
     }
 
     [Test]
-    public void RegisterM365Services_DefaultsToFoundryConnections_WhenNoneSupplied()
+    public void RegisterM365Services_DefaultsToSdkNativeConnections_WhenNoneSupplied()
     {
         using var provider = BuildProvider(new ActivityServerOptions());
 
-        Assert.That(provider.GetRequiredService<IConnections>(), Is.InstanceOf<FoundryConnections>());
+        Assert.That(provider.GetRequiredService<IConnections>(), Is.InstanceOf<ConfigurationConnections>());
     }
 
     [Test]

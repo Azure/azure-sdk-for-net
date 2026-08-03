@@ -17,7 +17,8 @@ The consumer owns an ordinary Microsoft 365 Agents SDK application (the
 `AgentApplication` and its activity handlers). This library owns the Foundry-specific
 hosting concerns **only**:
 
-- the outbound-auth connection provider (`FoundryConnections`),
+- the outbound-auth connection configuration (`ConnectionEnvironment` / `ActivityEnvironment`,
+  feeding the SDK-native connection provider),
 - the activity endpoint mapping and request handling,
 - session and correlation-id resolution,
 - error-source classification (`user` / `platform` / `upstream` faults),
@@ -60,7 +61,7 @@ The activity protocol has authoritative spec documents; the spec wins over the c
 
 - `Azure.AI.AgentServer.Activity` — the **entire** public API surface.
 - `Azure.AI.AgentServer.Activity.Internal` — internal implementation
-  (`FoundryConnections`, `ActivityEndpointHandler`, `ActivityErrorSourceFilter`,
+  (`ActivityEndpointHandler`, `ActivityErrorSourceFilter`,
   `ConnectionEnvironment`, session/correlation resolvers). MUST stay internal.
 
 ### Public surface is intentionally static / extension-based
@@ -121,8 +122,9 @@ Never use blind `Task.Delay()` to wait for async state. Use `TaskCompletionSourc
 
 ## 5. Outbound authentication (highest-risk area)
 
-The outbound-auth / connection model (`FoundryConnections`, `ConnectionEnvironment`,
-`ActivityEnvironment`) is the most delicate part of this library. Rules:
+The outbound-auth / connection model (`ConnectionEnvironment`, `ActivityEnvironment`, and the
+derived `Connections:*` settings consumed by the SDK-native connection provider) is the most
+delicate part of this library. Rules:
 
 - **Never log credentials, tokens, keys, or PII** (constitution IX). Client/tenant
   ids logged for diagnostics MUST be truncated (the existing 8-char + `...` pattern).

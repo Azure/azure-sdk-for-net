@@ -15,6 +15,10 @@ internal static class ConnectionEnvironment
     public const string FoundryTenantId = "FOUNDRY_AGENT_TENANT_ID";
 
     // ── Microsoft 365 connection settings keys ───────────────────────────────
+    // The connection-provider selection keys (Type/Assembly) tell the SDK's ConfigurationConnections
+    // to build an MsalAuth provider; the Settings:* keys configure it.
+    public const string ConnectionType = "CONNECTIONS:SERVICE_CONNECTION:TYPE";
+    public const string ConnectionAssembly = "CONNECTIONS:SERVICE_CONNECTION:ASSEMBLY";
     public const string AuthType = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:AUTHTYPE";
     public const string ClientId = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:CLIENTID";
     public const string TenantId = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:TENANTID";
@@ -24,6 +28,12 @@ internal static class ConnectionEnvironment
     public const string ConnectionMapConnection = "CONNECTIONSMAP:0:CONNECTION";
 
     // ── Default values ───────────────────────────────────────────────────────
+    /// <summary>The M365 SDK connection provider type (MsalAuth) that reads the Settings:* keys.</summary>
+    public const string MsalAuthConnectionType = "MsalAuth";
+
+    /// <summary>The assembly that hosts the MsalAuth connection provider.</summary>
+    public const string MsalAuthAssembly = "Microsoft.Agents.Authentication.Msal";
+
     public const string DefaultAuthType = "UserManagedIdentity";
     public const string DigitalWorkerAuthType = "IdentityProxyManager";
     public const string DefaultServiceUrl = "*";

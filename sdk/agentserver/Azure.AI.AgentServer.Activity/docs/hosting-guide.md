@@ -363,9 +363,10 @@ options.Storage = new MemoryStorage();      // dev/local
 ### `Connections`
 
 Optional connection provider used to acquire outbound (Bot Connector) tokens. Leave
-`null` to use the Foundry-native provider that mints tokens from the container's
-managed identity. Supply your own `IConnections` to control outbound-auth entirely
-(for example, in a local test harness with a fake token provider).
+`null` to use the Microsoft 365 Agents SDK's native connection provider, configured from
+the Foundry-derived `Connections:*` settings (managed identity for the simple model, the
+identity-proxy exchange for the digital-worker model). Supply your own `IConnections` to
+control outbound-auth entirely (for example, in a local test harness with a fake token provider).
 
 ### `ConnectionConfiguration`
 

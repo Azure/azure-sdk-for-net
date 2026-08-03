@@ -61,12 +61,12 @@ public class FoundryActivityHostingTests
     }
 
     [Test]
-    public void AddFoundryActivity_SubstitutesFoundryConnections()
+    public void AddFoundryActivity_UsesSdkNativeConnections()
     {
         using var app = BuildApp();
 
         var connections = app.Services.GetRequiredService<IConnections>();
-        Assert.That(connections, Is.InstanceOf<FoundryConnections>());
+        Assert.That(connections, Is.InstanceOf<ConfigurationConnections>());
     }
 
     [Test]

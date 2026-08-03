@@ -44,7 +44,7 @@ public class ActivityBuilderExtensionsTests
         """{"type":"message","text":"hi","from":{"id":"u1"},"recipient":{"id":"b1"},"conversation":{"id":"c1"},"channelId":"msteams","serviceUrl":"http://localhost:1/","id":"a1"}""";
 
     [Test]
-    public void AddActivity_Generic_SubstitutesFoundryConnectionsAndRegistersHandler()
+    public void AddActivity_Generic_UsesSdkNativeConnectionsAndRegistersHandler()
     {
         var builder = AgentHost.CreateBuilder();
         builder.WebApplicationBuilder.WebHost.UseTestServer();
@@ -52,7 +52,7 @@ public class ActivityBuilderExtensionsTests
 
         using var app = builder.Build().App;
 
-        Assert.That(app.Services.GetRequiredService<IConnections>(), Is.InstanceOf<FoundryConnections>());
+        Assert.That(app.Services.GetRequiredService<IConnections>(), Is.InstanceOf<ConfigurationConnections>());
         Assert.That(app.Services.GetService<IAgentHttpAdapter>(), Is.Not.Null);
         Assert.That(app.Services.GetService<ActivityEndpointHandler>(), Is.Not.Null);
         Assert.That(app.Services.GetService<IAgent>(), Is.InstanceOf<EchoAgent>());
@@ -144,7 +144,7 @@ public class ActivityBuilderExtensionsTests
 
         using var app = builder.Build().App;
 
-        Assert.That(app.Services.GetRequiredService<IConnections>(), Is.InstanceOf<FoundryConnections>());
+        Assert.That(app.Services.GetRequiredService<IConnections>(), Is.InstanceOf<ConfigurationConnections>());
         Assert.That(app.Services.GetService<IAgent>(), Is.InstanceOf<EchoAgent>());
     }
 }

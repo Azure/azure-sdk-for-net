@@ -40,8 +40,10 @@ public class ActivityServerOptions
 
     /// <summary>
     /// Optional connection provider used to acquire outbound (Bot Connector) tokens. Leave
-    /// <c>null</c> to use the Foundry-native provider that mints tokens from the container's
-    /// managed identity. Supply your own to control outbound-auth entirely.
+    /// <c>null</c> to use the Microsoft 365 Agents SDK's native connection provider, configured from
+    /// the Foundry-derived <c>Connections:*</c> settings (managed identity for the simple model,
+    /// the identity-proxy exchange for the digital-worker model). Supply your own to control
+    /// outbound-auth entirely.
     /// </summary>
     public IConnections? Connections { get; set; }
 
@@ -58,9 +60,9 @@ public class ActivityServerOptions
     /// container before the Microsoft 365 Agents SDK services are added. Because the SDK registers
     /// its defaults only when a service is not already present, anything registered here wins — use
     /// it to plug in a custom adapter, authorization, channel-service factory, or any other service.
-    /// The one exception is <see cref="Microsoft.Agents.Authentication.IConnections"/>: the
-    /// outbound-auth provider is always substituted after this callback runs, so register a custom
-    /// connection provider through <see cref="Connections"/> instead.
+    /// To supply a custom outbound-auth provider, prefer <see cref="Connections"/> — a value there is
+    /// substituted after this callback runs and takes precedence over any
+    /// <see cref="Microsoft.Agents.Authentication.IConnections"/> registered here.
     /// </summary>
     public Action<IServiceCollection>? ConfigureServices { get; set; }
 }

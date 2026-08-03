@@ -24,11 +24,11 @@
 - `ActivityServerOptions` for configuring the built stack: outbound-auth model (`DigitalWorker`),
   turn-state `Storage`, the outbound `Connections` provider, the `Connections:*`
   `ConnectionConfiguration` mapping, and a `ConfigureServices` hook.
-- Foundry outbound-auth for the **simple** (agent-instance identity) model: the `FoundryConnections`
-  managed-identity Bot Connector token provider. The **digital worker** (blueprint identity + FMI
-  token exchange) model uses the Microsoft 365 Agents SDK's native connection provider. The public
-  `ActivityEnvironment` helper derives the M365 connection settings from the Foundry-native identity
-  without mutating the process environment.
+- Foundry outbound-auth is configuration-driven: `ActivityEnvironment` derives the M365
+  `Connections:*` settings from the Foundry-native identity (managed identity for the **simple**
+  agent-instance model, `IdentityProxyManager` for the **digital worker** blueprint + FMI exchange
+  model) and the SDK-native connection provider mints the outbound reply token. No process
+  environment is mutated.
 - Session resolution (`agent_session_id` query / `x-agent-session-id` header / environment /
   generated), sanitized session-id response header, `x-platform-error-source` error classification
   (`user` / `platform` / `upstream`), and distributed tracing via `ActivityProtocolActivitySource`.

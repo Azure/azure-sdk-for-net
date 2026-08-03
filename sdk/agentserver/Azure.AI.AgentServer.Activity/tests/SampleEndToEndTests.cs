@@ -36,7 +36,7 @@ namespace Azure.AI.AgentServer.Activity.Tests;
 ///   acknowledged with 202 plus the platform session-id header; raw-handler
 ///   samples return their own response body. These run in CI.</item>
 ///   <item><b>Live-only</b> — actual <i>outbound reply delivery</i> requires a
-///   real Bot Connector token minted by <see cref="FoundryConnections"/>, so it
+///   real Bot Connector token minted by the SDK-native connection provider, so it
 ///   is marked <c>[Category("Live")]</c> and excluded from CI (runnable locally
 ///   with user-supplied credentials and a Foundry project).</item>
 /// </list>
@@ -238,9 +238,9 @@ public class SampleEndToEndTests
         }
     }
 
-    // Live-only E2E (excluded from CI — Principle XIII). Outbound reply delivery
-    // requires a real Bot Connector token minted by FoundryConnections against a
-    // live Foundry project. Runnable locally with user-supplied credentials + a
+    // Live-only E2E. Outbound reply delivery
+    // requires a real Bot Connector token minted by the SDK-native connection provider
+    // against a live Foundry project. Runnable locally with user-supplied credentials + a
     // Foundry project via environment variables; MUST fail with a clear message
     // when that configuration is absent (never silently pass).
     [Test]

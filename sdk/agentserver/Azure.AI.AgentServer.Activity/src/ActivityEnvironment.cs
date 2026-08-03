@@ -89,6 +89,9 @@ public static class ActivityEnvironment
         }
 
         // Static defaults for M365 connection settings.
+        // Connection-provider selection: build the SDK-native MsalAuth provider from these settings.
+        Resolve(ConnectionEnvironment.ConnectionType, ConnectionEnvironment.MsalAuthConnectionType);
+        Resolve(ConnectionEnvironment.ConnectionAssembly, ConnectionEnvironment.MsalAuthAssembly);
         Resolve(ConnectionEnvironment.AuthType, authType);
         Resolve(ConnectionEnvironment.Scope0, scope);
         Resolve(ConnectionEnvironment.ConnectionMapServiceUrl, ConnectionEnvironment.DefaultServiceUrl);
