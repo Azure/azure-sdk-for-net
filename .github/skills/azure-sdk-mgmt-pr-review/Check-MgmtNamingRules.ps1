@@ -376,16 +376,22 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             'instance'
         }
         $openBrace = $line.IndexOf('{', $closeParenthesis)
-        $constraintText = if ($openBrace -gt $closeParenthesis) {
-            ($line.Substring($closeParenthesis + 1, $openBrace - $closeParenthesis - 1) -replace '\s+', ' ').Trim()
+        $trailingDeclaration = if ($openBrace -gt $closeParenthesis) {
+            $line.Substring($closeParenthesis + 1, $openBrace - $closeParenthesis - 1).Trim()
         } else {
             ''
         }
+        $constraintText = if ($trailingDeclaration -match '^(where\b.*)$') {
+            ($Matches[1] -replace '\s+', ' ').Trim()
+        } else {
+            ''
+        }
+        $overloadOwner = if ($invocationKind -eq 'extension') { $namespace } else { "$namespace|$typeName" }
         $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
         $methods[$key] = [pscustomobject]@{
             TypeName          = $typeName
             MemberName        = $memberName
-            OverloadKey       = "$namespace|$typeName|$memberName|$invocationKind|$receiverType|$constraintText"
+            OverloadKey       = "$overloadOwner|$memberName|$invocationKind|$receiverType|$constraintText"
             IsExtensionMethod = $invocationKind -eq 'extension'
             Parameters        = $parameters.ToArray()
             Line              = $lineIndex + 1
