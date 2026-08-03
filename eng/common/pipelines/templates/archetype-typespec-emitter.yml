@@ -303,7 +303,11 @@ extends:
         jobs:
         - job: Initialize
           steps:
+          # Regeneration does not read repository history. Avoid fetching the full
+          # history and tags for this large repository.
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
@@ -399,6 +403,8 @@ extends:
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
