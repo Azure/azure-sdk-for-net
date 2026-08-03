@@ -55,12 +55,12 @@ namespace Azure.Generator.Provisioning.Providers
         /// with their resolved isOutput/isRequired/bicepPath metadata.
         /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
         /// </summary>
-        private readonly List<ResourcePropertyInfo> _allProperties;
+        private readonly Lazy<List<ResourcePropertyInfo>> _allProperties;
         /// <summary>
         /// Lookup from InputModelProperty to ResourcePropertyInfo for O(1) access in
         /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
         /// </summary>
-        private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
+        private readonly Lazy<Dictionary<InputModelProperty, ResourcePropertyInfo>> _propertyLookup;
         /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
@@ -82,17 +82,36 @@ namespace Azure.Generator.Provisioning.Providers
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
         /// <summary>
-        /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
+        /// Gets the parent resource provider via the output library, or null for top-level resources.
         /// </summary>
-        private CSharpType? ParentResourceType
+        private ProvisioningResourceProvider? ParentResource
             => _resourceProjection is { IsExtensionResource: false, ParentResourceId: { } parentId }
-                ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)?.Type
+                ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)
                 : null;
+
+        private CSharpType? ParentResourceType => ParentResource?.Type;
+
+        private bool CanUseSingletonDefaultName()
+        {
+            if (_resourceProjection is null)
+                return false;
+
+            var resourceType = new ResourceTypePattern(_resourceProjection.ResourceType);
+            if (ParentResource?.ResourceProjection is { } parentProjection)
+            {
+                var parentResourceType = new ResourceTypePattern(parentProjection.ResourceType);
+                return resourceType.Count == parentResourceType.Count + 1
+                    && resourceType.Take(parentResourceType.Count).SequenceEqual(parentResourceType);
+            }
+
+            // The first segment is the provider namespace.
+            return resourceType.Count == 2;
+        }
 
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
         {
-            if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
+            if (!_propertyLookup.Value.TryGetValue(inputProp, out var propInfo))
                 return null;
 
             return new ProvisioningPropertyInfo(
@@ -118,8 +137,8 @@ namespace Azure.Generator.Provisioning.Providers
                 : null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
-            _allProperties = CollectAllProperties();
-            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            _allProperties = new(CollectAllProperties);
+            _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
@@ -134,8 +153,8 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
             _createBodyWritableProperties = [];
-            _allProperties = CollectAllProperties();
-            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            _allProperties = new(CollectAllProperties);
+            _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
@@ -195,7 +214,7 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            foreach (var propInfo in _allProperties)
+            foreach (var propInfo in _allProperties.Value)
             {
                 var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(propInfo.Property, this);
                 if (property != null)
@@ -502,10 +521,12 @@ namespace Azure.Generator.Provisioning.Providers
                 var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
-                // For singleton resources, the "name" property has one fixed default value and is not settable.
+                // Keep the singleton name fixed only when it is one resource-type level below
+                // its generated parent, or when it is a top-level resource without a parent.
                 string? defaultValue = null;
                 if (isResourceName
-                    && _resourceProjection?.SingletonResourceName is string singletonResourceName)
+                    && _resourceProjection?.SingletonResourceName is string singletonResourceName
+                    && CanUseSingletonDefaultName())
                 {
                     defaultValue = singletonResourceName;
                     isSettable = false;
