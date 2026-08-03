@@ -426,7 +426,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="status"> If specified, filter jobs by status. </param>
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
@@ -436,11 +436,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetJobs(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
+        internal virtual Pageable<BinaryData> GetJobs(int? maxPageSize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
             return new JobRouterClientGetJobsCollectionResult(
                 this,
-                maxpagesize,
+                maxPageSize,
                 status,
                 queueId,
                 channelId,
@@ -459,7 +459,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="status"> If specified, filter jobs by status. </param>
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
@@ -469,11 +469,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetJobsAsync(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetJobsAsync(int? maxPageSize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
             return new JobRouterClientGetJobsAsyncCollectionResult(
                 this,
-                maxpagesize,
+                maxPageSize,
                 status,
                 queueId,
                 channelId,
@@ -485,7 +485,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="status"> If specified, filter jobs by status. </param>
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
@@ -494,11 +494,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<RouterJob> GetJobs(int? maxpagesize = default, RouterJobStatusSelector? status = default, string queueId = default, string channelId = default, string classificationPolicyId = default, DateTimeOffset? scheduledBefore = default, DateTimeOffset? scheduledAfter = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<RouterJob> GetJobs(int? maxPageSize = default, RouterJobStatusSelector? status = default, string queueId = default, string channelId = default, string classificationPolicyId = default, DateTimeOffset? scheduledBefore = default, DateTimeOffset? scheduledAfter = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterClientGetJobsCollectionResultOfT(
                 this,
-                maxpagesize,
+                maxPageSize,
                 status?.ToString(),
                 queueId,
                 channelId,
@@ -510,7 +510,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="status"> If specified, filter jobs by status. </param>
         /// <param name="queueId"> If specified, filter jobs by queue. </param>
         /// <param name="channelId"> If specified, filter jobs by channel. </param>
@@ -519,11 +519,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<RouterJob> GetJobsAsync(int? maxpagesize = default, RouterJobStatusSelector? status = default, string queueId = default, string channelId = default, string classificationPolicyId = default, DateTimeOffset? scheduledBefore = default, DateTimeOffset? scheduledAfter = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<RouterJob> GetJobsAsync(int? maxPageSize = default, RouterJobStatusSelector? status = default, string queueId = default, string channelId = default, string classificationPolicyId = default, DateTimeOffset? scheduledBefore = default, DateTimeOffset? scheduledAfter = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterClientGetJobsAsyncCollectionResultOfT(
                 this,
-                maxpagesize,
+                maxPageSize,
                 status?.ToString(),
                 queueId,
                 channelId,
@@ -1134,7 +1134,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
@@ -1142,11 +1142,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetWorkers(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
+        internal virtual Pageable<BinaryData> GetWorkers(int? maxPageSize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
             return new JobRouterClientGetWorkersCollectionResult(
                 this,
-                maxpagesize,
+                maxPageSize,
                 state,
                 channelId,
                 queueId,
@@ -1163,7 +1163,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
@@ -1171,11 +1171,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetWorkersAsync(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetWorkersAsync(int? maxPageSize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
             return new JobRouterClientGetWorkersAsyncCollectionResult(
                 this,
-                maxpagesize,
+                maxPageSize,
                 state,
                 channelId,
                 queueId,
@@ -1185,18 +1185,18 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<RouterWorker> GetWorkers(int? maxpagesize = default, RouterWorkerStateSelector? state = default, string channelId = default, string queueId = default, bool? hasCapacity = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<RouterWorker> GetWorkers(int? maxPageSize = default, RouterWorkerStateSelector? state = default, string channelId = default, string queueId = default, bool? hasCapacity = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterClientGetWorkersCollectionResultOfT(
                 this,
-                maxpagesize,
+                maxPageSize,
                 state?.ToString(),
                 channelId,
                 queueId,
@@ -1206,18 +1206,18 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves existing workers. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<RouterWorker> GetWorkersAsync(int? maxpagesize = default, RouterWorkerStateSelector? state = default, string channelId = default, string queueId = default, bool? hasCapacity = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<RouterWorker> GetWorkersAsync(int? maxPageSize = default, RouterWorkerStateSelector? state = default, string channelId = default, string queueId = default, bool? hasCapacity = default, CancellationToken cancellationToken = default)
         {
             return new JobRouterClientGetWorkersAsyncCollectionResultOfT(
                 this,
-                maxpagesize,
+                maxPageSize,
                 state?.ToString(),
                 channelId,
                 queueId,

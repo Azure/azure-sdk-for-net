@@ -16,19 +16,19 @@ namespace Azure.Communication.JobRouter
     internal partial class JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT : Pageable<ClassificationPolicy>
     {
         private readonly JobRouterAdministrationClient _client;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JobRouterAdministrationClient client used to send requests. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(JobRouterAdministrationClient client, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(JobRouterAdministrationClient client, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetClassificationPoliciesRequest(nextLink, pageSize, _context) : _client.CreateGetClassificationPoliciesRequest(pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
