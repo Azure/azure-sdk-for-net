@@ -101,7 +101,7 @@ For Key Vault, consult:
 
 ## Support Policy Expectation
 
-The Azure SDK support policy supports the latest package version. Version currency is a mandatory decision point, not just background guidance.
+By policy, Azure SDK support is only available for the latest package version. Version currency is a mandatory decision point, not just background guidance.
 
 When a package ID and customer-reported package version are available:
 1. Determine the latest stable version from NuGet package metadata or package release context.
