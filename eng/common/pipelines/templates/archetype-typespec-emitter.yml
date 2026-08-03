@@ -303,7 +303,14 @@ extends:
         jobs:
         - job: Initialize
           steps:
+          # EXPERIMENT (do not merge from this repo; belongs in Azure/azure-sdk-tools).
+          # Full history is 4.8 GB against 119 MB at depth 1, with 7345 tags and 53104
+          # remote refs. Neither regen job reads history: they npm ci, generate config
+          # files, commit and push. The push-conflict retry in git-branch-push.ps1 needs
+          # only the local commit's parent, which is the checked-out tip and exists here.
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
@@ -398,7 +405,12 @@ extends:
             matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
+          # EXPERIMENT (do not merge from this repo; belongs in Azure/azure-sdk-tools).
+          # See the Initialize job above. This is the hot one: checkout dominates the
+          # ~6.3 min per-job setup, roughly 75.7 aggregate minutes across the matrix.
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
