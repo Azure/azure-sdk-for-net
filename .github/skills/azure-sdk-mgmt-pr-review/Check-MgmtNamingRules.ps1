@@ -284,8 +284,101 @@ function Get-TopLevelDefaultSeparator([string]$parameterText) {
     return -1
 }
 
+function Remove-LeadingAttributes([string]$text) {
+    $result = $text.TrimStart()
+    while ($result.StartsWith('[')) {
+        $depth = 0
+        $closeIndex = -1
+        for ($index = 0; $index -lt $result.Length; $index++) {
+            if ($result[$index] -eq '[') {
+                $depth++
+            } elseif ($result[$index] -eq ']') {
+                $depth--
+                if ($depth -eq 0) {
+                    $closeIndex = $index
+                    break
+                }
+            }
+        }
+
+        if ($closeIndex -lt 0) {
+            break
+        }
+
+        $result = $result.Substring($closeIndex + 1).TrimStart()
+    }
+
+    return $result
+}
+
+function Get-NormalizedMemberIdentity([string]$memberName) {
+    if ($memberName -notmatch '^(?<name>[A-Za-z_]\w*)(?:<(?<typeParameters>.*)>)?$') {
+        return $memberName
+    }
+
+    $name = $Matches['name']
+    $genericArity = if ($Matches['typeParameters']) {
+        @(Split-TopLevelParameters $Matches['typeParameters']).Count
+    } else {
+        0
+    }
+
+    return "$name``$genericArity"
+}
+
+function Get-MethodTypeParameters([string]$memberName) {
+    if ($memberName -notmatch '^[A-Za-z_]\w*<(?<typeParameters>.*)>$') {
+        return @()
+    }
+
+    return @(Split-TopLevelParameters $Matches['typeParameters'] | ForEach-Object { $_.Trim() })
+}
+
+function Replace-MethodTypeParameters([string]$text, [string[]]$typeParameters) {
+    $result = $text
+    $parameters = @($typeParameters)
+    for ($index = 0; $index -lt $parameters.Count; $index++) {
+        $typeParameter = $parameters[$index]
+        if ($typeParameter -match '^@?[A-Za-z_]\w*$') {
+            $result = $result -creplace "(?<![\w@.:])$([regex]::Escape($typeParameter))(?!\w)", "!$index"
+        }
+    }
+
+    return $result
+}
+
+function Get-NormalizedExtensionReceiver(
+    [string]$parameterType,
+    [string]$memberName
+) {
+    $receiver = Remove-LeadingAttributes $parameterType
+    if ($receiver -notmatch '^this\s+(?<type>.+)$') {
+        return $null
+    }
+
+    $receiver = Remove-LeadingAttributes $Matches['type']
+    while ($receiver -match '^scoped\s+(?<type>.+)$') {
+        $receiver = Remove-LeadingAttributes $Matches['type']
+    }
+
+    while ($receiver -match '^(?:ref|in|out|readonly)\s+(?<type>.+)$') {
+        $receiver = Remove-LeadingAttributes $Matches['type']
+    }
+
+    # Canonicalize syntax that does not identify a distinct extension receiver for this
+    # ambiguity check.
+    $receiver = $receiver -replace '\s+', ' '
+    $receiver = $receiver -replace '\s*(::|[.<>,\[\]\(\)\*&])\s*', '$1'
+    $receiver = $receiver -replace '\bglobal::', ''
+    $receiver = $receiver -replace '\?', ''
+    $receiver = Replace-MethodTypeParameters $receiver (Get-MethodTypeParameters $memberName)
+    return $receiver.Trim()
+}
+
 function Get-ApiMethodInfos([string[]]$apiLines) {
-    $methods = @{}
+    $methods = [System.Collections.Generic.Dictionary[string, object]]::new(
+        [System.StringComparer]::Ordinal
+    )
     $namespace = ''
     $typeName = ''
 
@@ -345,18 +438,27 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             })
         }
 
-        $receiverType = if ($parameters.Count -gt 0 -and $parameters[0].Type -match '^this\s') {
-            $parameters[0].Type
+        $receiverType = if ($parameters.Count -gt 0) {
+            Get-NormalizedExtensionReceiver $parameters[0].Type $memberName
         } else {
-            ''
+            $null
         }
+        $invocationKind = if ($null -ne $receiverType) {
+            'extension'
+        } elseif ($prefix -cmatch '(^|\s)static(\s|$)') {
+            'static'
+        } else {
+            'instance'
+        }
+        $memberIdentity = Get-NormalizedMemberIdentity $memberName
         $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
         $methods[$key] = [pscustomobject]@{
-            TypeName    = $typeName
-            MemberName  = $memberName
-            OverloadKey = "$namespace|$typeName|$memberName|$receiverType"
-            Parameters  = $parameters.ToArray()
-            Line        = $lineIndex + 1
+            TypeName          = $typeName
+            MemberName        = $memberName
+            OverloadKey       = "$namespace|$typeName|$memberIdentity|$invocationKind|$receiverType"
+            IsExtensionMethod = $invocationKind -eq 'extension'
+            Parameters        = $parameters.ToArray()
+            Line              = $lineIndex + 1
         }
     }
 
@@ -367,7 +469,7 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
 # receiver expression, so they never participate in the ambiguity analysed below.
 function Get-BindableParameters($method) {
     $parameters = @($method.Parameters)
-    if ($parameters.Count -gt 0 -and $parameters[0].Type -match '^this\s') {
+    if ($parameters.Count -gt 0 -and $method.IsExtensionMethod) {
         return @($parameters | Select-Object -Skip 1)
     }
 
@@ -502,7 +604,9 @@ if ($BaselineApiFilePath -and
     $baselineMethods = Get-ApiMethodInfos (Get-Content $BaselineApiFilePath)
 
     # Group the current surface by member so a flagged method can see its sibling overloads.
-    $currentOverloads = @{}
+    $currentOverloads = [System.Collections.Generic.Dictionary[string, object]]::new(
+        [System.StringComparer]::Ordinal
+    )
     foreach ($method in $currentMethods.Values) {
         if (-not $currentOverloads.ContainsKey($method.OverloadKey)) {
             $currentOverloads[$method.OverloadKey] = [System.Collections.Generic.List[object]]::new()
