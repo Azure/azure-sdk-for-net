@@ -85,7 +85,15 @@ namespace Azure.Security.ConfidentialLedger
     {
         public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_12_09_Preview) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
+        public bool EnableArchivedCollectionFallback { get { throw null; } set { } }
+        public Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.FailoverSelection Failover { get { throw null; } set { } }
+        public System.TimeSpan? FailoverNetworkTimeout { get { throw null; } set { } }
         public bool VerifyConnection { get { throw null; } set { } }
+        public enum FailoverSelection
+        {
+            Ordered = 0,
+            Random = 1,
+        }
         public enum ServiceVersion
         {
             V2022_05_13 = 1,

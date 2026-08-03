@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -16,7 +19,28 @@ namespace Azure.Security.ConfidentialLedger
     [CodeGenSuppress("PostLedgerEntryAsync", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class ConfidentialLedgerClient
     {
-        private const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
+        internal const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
+        private readonly ConfidentialLedgerFailoverService _failoverService;
+
+        /// <summary>
+        /// When true, GetCurrentLedgerEntry falls back to a historical query for a collection's latest
+        /// entry when the live entry has been archived (pruned) by the service. Set from
+        /// <see cref="ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback"/>.
+        /// </summary>
+        private readonly bool _enableArchivedCollectionFallback;
+
+        /// <summary>
+        /// Maximum number of additional times <c>GetLedgerEntry</c> re-polls the service while the
+        /// entry is still in the "Loading" state. Driven by the client's configured
+        /// <see cref="Azure.Core.RetryOptions.MaxRetries"/> so callers control the upper bound.
+        /// </summary>
+        private readonly int _maxLoadingRetries;
+
+        /// <summary>
+        /// Delay between "Loading" re-polls in <c>GetLedgerEntry</c>. Driven by the client's configured
+        /// <see cref="Azure.Core.RetryOptions.Delay"/>.
+        /// </summary>
+        private readonly TimeSpan _loadingPollDelay;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
@@ -62,18 +86,36 @@ namespace Azure.Security.ConfidentialLedger
                     throw new ArgumentNullException(nameof(credential));
             }
             var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
-            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions(), ledgerOptions: ledgerOptions).Cert;
+            var actualCertificateClientOptions = certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions();
+            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, actualCertificateClientOptions, ledgerOptions: ledgerOptions).Cert;
 
-            var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert, ledgerOptions?.VerifyConnection ?? true);
-            if (clientCertificate != null)
-            {
-                transportOptions.ClientCertificates.Add(clientCertificate);
-            }
+            // The transport pins against a SET of ledger identity certificates rather than a single one,
+            // because failover requests target other ledgers that present their own identity certificates.
+            // The primary ledger's certificate is trusted up front; failover certificates are added lazily.
+            bool verifyConnection = ledgerOptions?.VerifyConnection ?? true;
+            var trustStore = new ConfidentialLedgerCertificateTrustStore(verifyConnection);
+            trustStore.Trust(GetLedgerId(ledgerEndpoint), serviceCert);
+
+            var transportOptions = CreateTransportOptions(trustStore, clientCertificate);
             ClientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
+
+            // Failover discovery and per-ledger identity certificate lookups must use a pipeline with
+            // normal TLS validation (the identity service presents a publicly-trusted certificate, not a
+            // ledger identity certificate). Reusing the ledger pipeline would also be re-entrant because
+            // it now contains the FailoverPolicy.
+            HttpPipeline discoveryPipeline = HttpPipelineBuilder.Build(actualOptions);
+            Uri identityServiceEndpoint = actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint);
+            _failoverService = new ConfidentialLedgerFailoverService(
+                discoveryPipeline,
+                identityServiceEndpoint,
+                trustStore,
+                endpoint => GetIdentityServerTlsCert(endpoint, actualCertificateClientOptions, ledgerOptions: actualOptions).Cert,
+                actualOptions.Failover);
+
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint) },
+                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint), new FailoverPolicy(_failoverService, actualOptions.FailoverNetworkTimeout) },
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
@@ -81,6 +123,18 @@ namespace Azure.Security.ConfidentialLedger
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
+            _enableArchivedCollectionFallback = actualOptions.EnableArchivedCollectionFallback;
+            // Drive GetLedgerEntry "Loading" polling from the client's configured retry settings rather
+            // than hardcoded values, so callers control the upper bound and the delay between attempts.
+            _maxLoadingRetries = actualOptions.Retry.MaxRetries;
+            _loadingPollDelay = actualOptions.Retry.Delay;
+        }
+
+        private static string GetLedgerId(Uri endpoint)
+        {
+            string host = endpoint.Host;
+            int dotIndex = host.IndexOf('.');
+            return dotIndex > 0 ? host.Substring(0, dotIndex) : host;
         }
 
         internal class ConfidentialLedgerResponseClassifier : ResponseClassifier
@@ -206,42 +260,19 @@ namespace Azure.Security.ConfidentialLedger
             return (GetCertFromPEM(eccPem), eccPem);
         }
 
-        private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null, bool verifyConnection = true)
+        private static HttpPipelineTransportOptions CreateTransportOptions(ConfidentialLedgerCertificateTrustStore trustStore, X509Certificate2 clientCertificate)
         {
-            X509Chain certificateChain = new();
-            // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
-            certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            // Add the ledger identity TLS certificate to the ExtraStore.
-            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
-            // AllowUnknownCertificateAuthority will NOT allow validation of all unknown self-signed certificates.
-            // It extends trust to the ExtraStore, which in this case contains the trusted ledger identity TLS certificate.
-            // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
-            // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
-            certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-            certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-
-            // Define a validation function to ensure that certificates presented to the client only pass validation if
-            // they are trusted by the ledger identity TLS certificate.
-            bool CertValidationCheck(X509Certificate2 cert)
+            // Validation is delegated to the trust store, which accepts certificate chains terminating in
+            // any of the trusted ledger identity certificates (primary plus any discovered failover ledgers).
+            var options = new HttpPipelineTransportOptions
             {
-                if (!verifyConnection)
-                {
-                    return true;
-                }
-
-                // Validate the presented certificate chain, using the ChainPolicy defined above.
-                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
-                bool isChainValid = certificateChain.Build(cert);
-                if (!isChainValid)
-                    return false;
-
-                // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
-                var rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
-                var isChainRootedInTheTlsCert = rootCert.RawData.SequenceEqual(identityServiceCert.RawData);
-                return isChainRootedInTheTlsCert;
+                ServerCertificateCustomValidationCallback = args => trustStore.Validate(args.Certificate)
+            };
+            if (clientCertificate != null)
+            {
+                options.ClientCertificates.Add(clientCertificate);
             }
-
-            return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
+            return options;
         }
 
         private static X509Certificate2 GetCertFromPEM(string eccPem)
@@ -362,5 +393,155 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context)
             => PostLedgerEntryAsync(waitUntil, content, collectionId: collectionId, tags: null, context: context);
+
+        /// <summary>
+        /// Determines whether a <c>GetLedgerEntry</c> response represents the transient "Loading"
+        /// state (entry not yet committed) and the call should therefore be retried.
+        /// </summary>
+        /// <remarks>
+        /// The service returns a successful HTTP 200 response while the entry is being committed.
+        /// In that case the body has shape <c>{ "state": "Loading" }</c> and does not yet contain
+        /// the <c>"entry"</c> property. Once available the body has shape
+        /// <c>{ "state": "Ready", "entry": { ... } }</c>.
+        /// </remarks>
+        private static readonly byte[] s_loadingToken = System.Text.Encoding.UTF8.GetBytes("Loading");
+
+        private static bool IsLoadingResponse(Response response)
+        {
+            if (response == null || response.Status != (int)HttpStatusCode.OK)
+            {
+                return false;
+            }
+
+            BinaryData content = response.Content;
+            if (content == null)
+            {
+                return false;
+            }
+
+            ReadOnlySpan<byte> bytes = content.ToMemory().Span;
+            if (bytes.Length == 0)
+            {
+                return false;
+            }
+
+            // Fast pre-check: a Loading response must contain the literal "Loading" state token.
+            // Skip parsing (potentially large) bodies that cannot be a Loading response.
+            if (bytes.IndexOf(s_loadingToken) < 0)
+            {
+                return false;
+            }
+
+            try
+            {
+                using JsonDocument doc = JsonDocument.Parse(content);
+                if (doc.RootElement.ValueKind != JsonValueKind.Object)
+                {
+                    return false;
+                }
+
+                // Ready response always contains the "entry" property.
+                if (doc.RootElement.TryGetProperty("entry", out _))
+                {
+                    return false;
+                }
+
+                // Treat the response as loading only when the body explicitly indicates the
+                // "Loading" state, to avoid retrying on other successful-but-unexpected shapes.
+                return doc.RootElement.TryGetProperty("state", out var state) &&
+                    state.ValueKind == JsonValueKind.String &&
+                    string.Equals(state.GetString(), "Loading", StringComparison.Ordinal);
+            }
+            catch (JsonException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether an exception/response indicates that a collection's current entry is no
+        /// longer available in the live store because it has been archived (pruned) by the service.
+        /// The service returns <c>404 Not Found</c> for the <c>GetCurrentLedgerEntry</c> endpoint when
+        /// the collection has been pruned. A collection that never existed also returns 404; in that
+        /// case the historical-query fallback simply finds no entries and the original 404 is surfaced.
+        /// </summary>
+        private static bool IsArchivedCollectionNotFound(RequestFailedException ex)
+            => ex != null && ex.Status == (int)HttpStatusCode.NotFound;
+
+        /// <summary>
+        /// Builds a synthetic <c>GetCurrentLedgerEntry</c>-shaped response from a single historical
+        /// ledger entry (as returned by <c>GetLedgerEntries</c>). Historical and current entries share
+        /// the same entry schema, so the complete payload is retained, including optional tags. The
+        /// returned response always reports HTTP 200 since the entry was successfully retrieved from history.
+        /// </summary>
+        private static Response FormatArchivedCurrentEntry(BinaryData latestEntry) =>
+            new ArchivedCurrentEntryResponse(latestEntry.ToArray());
+
+        /// <summary>
+        /// Retrieves the latest historical entry for an archived (pruned) collection and returns it
+        /// shaped like a <c>GetCurrentLedgerEntry</c> response. Returns <c>null</c> when no historical
+        /// entry exists for the collection.
+        /// </summary>
+        private async Task<Response> TryGetArchivedCurrentEntryAsync(string collectionId, RequestContext context)
+        {
+            BinaryData latest = null;
+            await foreach (BinaryData entry in GetLedgerEntriesAsync(collectionId, fromTransactionId: null, toTransactionId: null, tag: null, context: context).ConfigureAwait(false))
+            {
+                // Entries are returned oldest-first; the last one is the latest committed entry.
+                latest = entry;
+            }
+
+            return latest == null ? null : FormatArchivedCurrentEntry(latest);
+        }
+
+        /// <summary>
+        /// Synchronous counterpart of <see cref="TryGetArchivedCurrentEntryAsync"/>.
+        /// </summary>
+        private Response TryGetArchivedCurrentEntry(string collectionId, RequestContext context)
+        {
+            BinaryData latest = null;
+            foreach (BinaryData entry in GetLedgerEntries(collectionId, fromTransactionId: null, toTransactionId: null, tag: null, context: context))
+            {
+                latest = entry;
+            }
+
+            return latest == null ? null : FormatArchivedCurrentEntry(latest);
+        }
+
+        /// <summary>
+        /// A minimal HTTP 200 response carrying a synthesized current-ledger-entry body, used when an
+        /// archived collection's latest entry is reconstructed from the ledger history.
+        /// </summary>
+        private sealed class ArchivedCurrentEntryResponse : Response
+        {
+            private System.IO.MemoryStream _stream;
+
+            public ArchivedCurrentEntryResponse(byte[] content)
+            {
+                _stream = new System.IO.MemoryStream(content ?? Array.Empty<byte>(), writable: false);
+            }
+
+            public override int Status => (int)HttpStatusCode.OK;
+            public override string ReasonPhrase => "OK";
+            public override Stream ContentStream
+            {
+                get => _stream;
+                set => _stream = value as System.IO.MemoryStream ?? new System.IO.MemoryStream();
+            }
+            public override string ClientRequestId { get; set; } = string.Empty;
+            public override void Dispose() => _stream?.Dispose();
+            protected override bool ContainsHeader(string name) => false;
+            protected override IEnumerable<HttpHeader> EnumerateHeaders() => Array.Empty<HttpHeader>();
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                value = null;
+                return false;
+            }
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                values = null;
+                return false;
+            }
+        }
     }
 }

@@ -25,6 +25,45 @@ namespace Azure.Security.ConfidentialLedger
         /// <value></value>
         public bool VerifyConnection { get; set; } = true;
 
+        /// <summary>
+        /// When set to <c>true</c>, <see cref="ConfidentialLedgerClient.GetCurrentLedgerEntry(string, RequestContext)"/> (and its async
+        /// variant) will automatically fall back to a historical range query when the requested collection's latest entry is no longer
+        /// available in the live key-value store because it was archived (pruned) by the service. In that case the most recent entry for
+        /// the collection is retrieved from the ledger history and returned as if it were the current entry.
+        /// </summary>
+        /// <remarks>
+        /// This mirrors the service-side collection pruning feature: when a ledger is configured to prune (archive) old collections, the
+        /// <c>GetCurrentLedgerEntry</c> endpoint returns <c>404 Not Found</c> for a pruned collection. With this option enabled the client
+        /// transparently performs a historical query for the collection and returns its latest committed entry. Defaults to <c>false</c>
+        /// so callers must explicitly opt in.
+        /// </remarks>
+        public bool EnableArchivedCollectionFallback { get; set; }
+
+        /// <summary>
+        /// Controls the order in which a read request is retried against the ledger's failover endpoints
+        /// when the primary ledger returns a transient failure. Defaults to <see cref="FailoverSelection.Ordered"/>,
+        /// which preserves the order reported by the identity service. Use <see cref="FailoverSelection.Random"/>
+        /// to shuffle the candidate endpoints and spread load across failover ledgers.
+        /// </summary>
+        public FailoverSelection Failover { get; set; } = FailoverSelection.Ordered;
+
+        /// <summary>
+        /// Optional per-attempt network timeout applied to each failover request. When set, every failover
+        /// attempt is granted this network timeout, so that time already spent on the failed primary attempt
+        /// does not consume the failover budget. When <c>null</c> the normal
+        /// <see cref="Azure.Core.RetryOptions.NetworkTimeout"/> applies. Defaults to <c>null</c>.
+        /// </summary>
+        public TimeSpan? FailoverNetworkTimeout { get; set; }
+
+        /// <summary> Strategy for ordering the failover endpoints that a read request is retried against. </summary>
+        public enum FailoverSelection
+        {
+            /// <summary> Try failover endpoints in the order reported by the identity service (priority order). </summary>
+            Ordered = 0,
+            /// <summary> Try failover endpoints in a randomized order to spread load across failover ledgers. </summary>
+            Random = 1,
+        }
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
