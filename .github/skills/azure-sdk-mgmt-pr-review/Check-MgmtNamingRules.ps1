@@ -345,11 +345,16 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             })
         }
 
+        $receiverType = if ($parameters.Count -gt 0 -and $parameters[0].Type -match '^this\s') {
+            $parameters[0].Type
+        } else {
+            ''
+        }
         $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
         $methods[$key] = [pscustomobject]@{
             TypeName    = $typeName
             MemberName  = $memberName
-            OverloadKey = "$namespace|$typeName|$memberName"
+            OverloadKey = "$namespace|$typeName|$memberName|$receiverType"
             Parameters  = $parameters.ToArray()
             Line        = $lineIndex + 1
         }
@@ -407,8 +412,8 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
         }
     }
 
-    # A sibling overload that is callable with zero arguments is what makes the collision
-    # unavoidable.
+    # A sibling overload with at least one bindable parameter, all optional, is what makes the
+    # collision unavoidable. A true zero-parameter sibling wins overload resolution instead.
     foreach ($overload in $overloads) {
         if ($overload.Line -eq $method.Line) {
             continue
