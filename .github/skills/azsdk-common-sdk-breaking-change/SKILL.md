@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.1.0"
   distribution: shared
-description: 'Detect and mitigate SDK Breaking changes for a SDK pacakge which is generated from TypeSpec. WHEN: "Detect SDK breaking changes for a service", "Detect SDK breaking changes for an SDK package", "Detect and mitigate SDK breaking changes for a service", "Detect and mitigate SDK breaking changes for an SDK package". INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_customized_code_update, azsdk_package_detect_breaking_change.'
+description: 'Detect and mitigate SDK Breaking changes for a SDK pacakge which is generated from TypeSpec. WHEN: "Detect SDK breaking changes for a service", "Detect SDK breaking changes for an SDK package", "Detect and mitigate SDK breaking changes for a service", "Detect and mitigate SDK breaking changes for an SDK package". INVOKES: skill: azsdk-common-generate-sdk-locally; MCP tools: azsdk_customized_code_update, azsdk_package_detect_breaking_change.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
@@ -14,10 +14,7 @@ compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, lang
 
 | Tool                                                   | Purpose                                                |
 | ------------------------------------------------------ | ------------------------------------------------------ |
-| `azure-sdk-mcp:azsdk_verify_setup`                     | Verify environment                                     |
-| `azure-sdk-mcp:azsdk_package_generate_code`            | Generate SDK                                           |
-| `azure-sdk-mcp:azsdk_package_build_code`               | Build package                                          |
-| `azure-sdk-mcp:azsdk_customized_code_update`           | Apply customizations (includes regeneration and build) |
+| `azure-sdk-mcp:azsdk_customized_code_update`           | Apply customizations                                   |
 | `azure-sdk-mcp:azsdk_package_detect_breaking_change`   | Detect SDK breaking changes                            |
 
 
@@ -38,7 +35,7 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 - tspProjectPath : the typespec project path
 - editScope: 2 if in `azure-rest-api-specs`, 1 if in an SDK language repo
 
-If any SDK breaking changes are mitigated through TypeSpec customization, return to step 2 and repeat the quality assurance workflow.
+If step 6 applies any TypeSpec customization, return to step 2 to regenerate the SDK, then repeat steps 3 through 6. Continue until no breaking changes are detected or the user declines further mitigation.
 
 ## Examples
 
