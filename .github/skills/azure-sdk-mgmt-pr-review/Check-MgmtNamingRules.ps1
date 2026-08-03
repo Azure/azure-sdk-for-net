@@ -363,7 +363,7 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             }
             $parameterTypes.Add($parameterType)
             $parameters.Add([pscustomobject]@{
-                Name           = $Matches['name']
+                Name           = ($Matches['name'] -creplace '^@', '')
                 Type           = $parameterType
                 UnderlyingType = $underlyingType
                 IsOptional     = $defaultSeparator -ge 0
@@ -470,7 +470,16 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
         }
     }
 
-    $hasAmbiguousSibling = $false
+    $methodRequiresExpandedParams = $false
+    for ($index = $requiredArgumentCount; $index -lt $bindable.Count; $index++) {
+        if ($bindable[$index].IsParams) {
+            $methodRequiresExpandedParams = $true
+            break
+        }
+    }
+
+    $exactArityBlockers = [System.Collections.Generic.List[object]]::new()
+    $ambiguousCandidates = [System.Collections.Generic.List[object]]::new()
     foreach ($overload in $overloads) {
         if ($overload.Line -eq $method.Line) {
             continue
@@ -509,19 +518,51 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
         # With all supplied arguments matched, this overload wins the tie-breaker over candidates
         # that need default substitution, so no unavoidable ambiguity remains.
         if ($siblingBindable.Count -eq $requiredArgumentCount) {
-            return $false
-        }
-
-        # A candidate that is applicable only in expanded params form loses to the restored
-        # member's normal-form applicability, so it does not create ambiguity.
-        if ($requiresExpandedParams) {
+            $exactArityBlockers.Add($siblingBindable)
             continue
         }
 
-        $hasAmbiguousSibling = $true
+        # Normal-form candidates win over expanded-form candidates. Only siblings using the same
+        # applicability form as the restored member can therefore create ambiguity.
+        if ($requiresExpandedParams -ne $methodRequiresExpandedParams) {
+            continue
+        }
+        if ($requiresExpandedParams -and $siblingBindable.Count -ne $bindable.Count) {
+            continue
+        }
+
+        $ambiguousCandidates.Add($siblingBindable)
     }
 
-    return $hasAmbiguousSibling
+    foreach ($candidate in $ambiguousCandidates) {
+        if ($exactArityBlockers.Count -eq 0) {
+            return $true
+        }
+
+        # An exact-arity overload blocks positional calls. A named call can still be ambiguous
+        # when every blocker uses a different name for at least one prefix parameter that the
+        # restored member and the longer candidate share.
+        $namedCallEscapesAllBlockers = $requiredArgumentCount -gt 0
+        foreach ($blocker in $exactArityBlockers) {
+            $blockerExcluded = $false
+            for ($index = 0; $index -lt $requiredArgumentCount; $index++) {
+                if ($bindable[$index].Name -ceq $candidate[$index].Name -and
+                    $blocker.Name -cnotcontains $bindable[$index].Name) {
+                    $blockerExcluded = $true
+                    break
+                }
+            }
+            if (-not $blockerExcluded) {
+                $namedCallEscapesAllBlockers = $false
+                break
+            }
+        }
+        if ($namedCallEscapesAllBlockers) {
+            return $true
+        }
+    }
+
+    return $false
 }
 
 #endregion
