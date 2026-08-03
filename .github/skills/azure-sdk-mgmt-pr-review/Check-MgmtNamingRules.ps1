@@ -661,9 +661,10 @@ function Get-BindableParameters($method) {
 #   GetAll(CancellationToken cancellationToken)   <- shim preserving the 1.3.1 signature
 #
 # If the shim's parameter is also optional, a zero-argument 'GetAll()' is applicable to both.
-# Neither is better under C# 12.6.4.3: both require default substitution for every parameter, so
-# the "all parameters have corresponding arguments" tie-breaker does not favour either, and there
-# is no general "fewer parameters wins" rule. The call fails with CS0121.
+# The same applies after a shared required prefix, such as Delete(waitUntil). Neither overload is
+# better under C# 12.6.4.3 when both require default substitution, so the call fails with CS0121.
+# An applicable overload with exactly the supplied argument count wins instead and disqualifies
+# the suppression.
 #
 # Making the shim's parameters required is the only variant that compiles, so flagging it as
 # OPTPARAM001 asks for a change that cannot be made. Detect that shape and stay silent.
@@ -681,40 +682,66 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
         return $false
     }
 
-    # Restoring the baseline defaults has to leave every bindable parameter optional; otherwise
-    # the method still requires an argument and cannot collide with an all-optional sibling.
+    # Determine how many leading arguments remain required after restoring the baseline defaults.
+    # Optional parameters must remain a trailing suffix for a positional call to reach the
+    # ambiguity point.
+    $requiredArgumentCount = 0
+    $seenOptional = $false
     foreach ($parameter in $bindable) {
-        if (-not $parameter.IsOptional -and $optionalToRequired -notcontains $parameter.Name) {
-            return $false
+        $isOptionalAfterRestore = $parameter.IsOptional -or $optionalToRequired.Contains($parameter.Name)
+        if ($isOptionalAfterRestore) {
+            $seenOptional = $true
+        } else {
+            if ($seenOptional) {
+                return $false
+            }
+            $requiredArgumentCount++
         }
     }
 
-    # A sibling overload with at least one bindable parameter, all optional, is what makes the
-    # collision unavoidable. A true zero-parameter sibling wins overload resolution instead.
+    $hasAmbiguousSibling = $false
     foreach ($overload in $overloads) {
         if ($overload.Line -eq $method.Line) {
             continue
         }
 
         $siblingBindable = @(Get-BindableParameters $overload)
-        if ($siblingBindable.Count -eq 0) {
+        if ($siblingBindable.Count -lt $requiredArgumentCount) {
             continue
         }
 
-        $allOptional = $true
-        foreach ($parameter in $siblingBindable) {
-            if (-not $parameter.IsOptional) {
-                $allOptional = $false
+        $prefixMatches = $true
+        for ($index = 0; $index -lt $requiredArgumentCount; $index++) {
+            if ($bindable[$index].Type -cne $siblingBindable[$index].Type) {
+                $prefixMatches = $false
                 break
             }
         }
-
-        if ($allOptional) {
-            return $true
+        if (-not $prefixMatches) {
+            continue
         }
+
+        $remainingOptional = $true
+        for ($index = $requiredArgumentCount; $index -lt $siblingBindable.Count; $index++) {
+            if (-not $siblingBindable[$index].IsOptional) {
+                $remainingOptional = $false
+                break
+            }
+        }
+        if (-not $remainingOptional) {
+            continue
+        }
+
+        # With all supplied arguments matched, this overload wins the tie-breaker over candidates
+        # that need default substitution, so no unavoidable ambiguity remains.
+        if ($siblingBindable.Count -eq $requiredArgumentCount) {
+            return $false
+        }
+
+        $hasAmbiguousSibling = $true
     }
 
-    return $false
+    return $hasAmbiguousSibling
 }
 
 #endregion
