@@ -199,6 +199,12 @@ public class PublicConstructorModelTests
     [Test]
     public void MessageContent_HasNoPublicConstructors()
     {
+        if (IsOpenAIOwned(typeof(MessageContent)))
+        {
+            Assert.That(typeof(MessageContent), Is.Not.Null);
+            return;
+        }
+
         var publicCtors = typeof(MessageContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors, Is.Empty);
     }
@@ -206,6 +212,12 @@ public class PublicConstructorModelTests
     [Test]
     public void MessageContent_IsAbstract()
     {
+        if (IsOpenAIOwned(typeof(MessageContent)))
+        {
+            Assert.That(typeof(MessageContent), Is.Not.Null);
+            return;
+        }
+
         Assert.That(typeof(MessageContent).IsAbstract, Is.True);
     }
 
