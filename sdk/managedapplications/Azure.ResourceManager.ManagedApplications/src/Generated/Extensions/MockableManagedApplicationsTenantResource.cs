@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApplicationResource>> GetByIdAsync(string applicationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedApplicationResource>> GetByIdAsync(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 };
                 HttpMessage message = ApplicationsRestClient.CreateGetByIdRequest(applicationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplicationData> response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApplicationResource> GetById(string applicationId, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedApplicationResource> GetById(string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 };
                 HttpMessage message = ApplicationsRestClient.CreateGetByIdRequest(applicationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplicationData> response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplicationResource>> CreateOrUpdateByIdAsync(WaitUntil waitUntil, string applicationId, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedApplicationResource>> CreateOrUpdateByIdAsync(WaitUntil waitUntil, string applicationId, ManagedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
@@ -276,10 +276,10 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ApplicationData.ToRequestContent(data), context);
+                HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ManagedApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedApplicationsArmOperation<ApplicationResource> operation = new ManagedApplicationsArmOperation<ApplicationResource>(
-                    new ApplicationResourceOperationSource(Client),
+                ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
+                    new ManagedApplicationResourceOperationSource(Client),
                     ApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplicationResource> CreateOrUpdateById(WaitUntil waitUntil, string applicationId, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedApplicationResource> CreateOrUpdateById(WaitUntil waitUntil, string applicationId, ManagedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ApplicationData.ToRequestContent(data), context);
+                HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ManagedApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedApplicationsArmOperation<ApplicationResource> operation = new ManagedApplicationsArmOperation<ApplicationResource>(
-                    new ApplicationResourceOperationSource(Client),
+                ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
+                    new ManagedApplicationResourceOperationSource(Client),
                     ApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplicationResource>> UpdateByIdAsync(WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedApplicationResource>> UpdateByIdAsync(WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -393,8 +393,8 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 };
                 HttpMessage message = ApplicationsRestClient.CreateUpdateByIdRequest(applicationId, ApplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedApplicationsArmOperation<ApplicationResource> operation = new ManagedApplicationsArmOperation<ApplicationResource>(
-                    new ApplicationResourceOperationSource(Client),
+                ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
+                    new ManagedApplicationResourceOperationSource(Client),
                     ApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplicationResource> UpdateById(WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedApplicationResource> UpdateById(WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
@@ -450,8 +450,8 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 };
                 HttpMessage message = ApplicationsRestClient.CreateUpdateByIdRequest(applicationId, ApplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedApplicationsArmOperation<ApplicationResource> operation = new ManagedApplicationsArmOperation<ApplicationResource>(
-                    new ApplicationResourceOperationSource(Client),
+                ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
+                    new ManagedApplicationResourceOperationSource(Client),
                     ApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,

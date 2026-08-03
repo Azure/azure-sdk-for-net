@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
 
         private JitRequests JitRequestsRestClient => _jitRequestsRestClient ??= new JitRequests(JitRequestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
-        /// <summary> Gets a collection of Applications in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Applications and their operations over a ApplicationResource. </returns>
-        public virtual ApplicationCollection GetApplications()
+        /// <summary> Gets a collection of ManagedApplications in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ManagedApplications and their operations over a ManagedApplicationResource. </returns>
+        public virtual ManagedApplicationCollection GetManagedApplications()
         {
-            return GetCachedClient(client => new ApplicationCollection(client, Id));
+            return GetCachedClient(client => new ManagedApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationResource>> GetApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedApplicationResource>> GetManagedApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            return await GetApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApplicationResource> GetApplication(string applicationName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedApplicationResource> GetManagedApplication(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            return GetApplications().Get(applicationName, cancellationToken);
+            return GetManagedApplications().Get(applicationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationDefinitions in the <see cref="ResourceGroupResource"/>. </summary>

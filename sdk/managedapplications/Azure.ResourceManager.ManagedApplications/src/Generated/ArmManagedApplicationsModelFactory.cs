@@ -51,6 +51,14 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ManagedApplicationsRegistryPackageLinks(createUiDefinitionLink, deploymentTemplateLink, default);
         }
 
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="managedResourceGroupId"> The managed resource group Id. </param>
         /// <param name="applicationDefinitionId"> The fully qualified path of managed application definition Id. </param>
         /// <param name="parameters"> Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string. </param>
@@ -69,26 +77,41 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="plan"> The plan information. </param>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <returns> A new <see cref="ManagedApplications.ApplicationData"/> instance for mocking. </returns>
-        public static ApplicationData ApplicationData(string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlan plan = default, string kind = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="ManagedApplications.ManagedApplicationData"/> instance for mocking. </returns>
+        public static ManagedApplicationData ManagedApplicationData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlan plan = default, string kind = default, ManagedServiceIdentity identity = default)
         {
-            return new ApplicationData(applicationDefinitionId is null && billingDetailsResourceUsageId is null ? default : new ApplicationProperties(
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedApplicationData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData,
                 default,
-                applicationDefinitionId,
-                default,
-                default,
-                default,
-                new ApplicationBillingDetailsDefinition(billingDetailsResourceUsageId, default),
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default), plan, kind, identity, default);
+                managedBy,
+                sku,
+                applicationDefinitionId is null && billingDetailsResourceUsageId is null ? default : new ApplicationProperties(
+                    default,
+                    applicationDefinitionId,
+                    default,
+                    default,
+                    default,
+                    new ApplicationBillingDetailsDefinition(billingDetailsResourceUsageId, default),
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
+                plan,
+                kind,
+                identity);
         }
 
         /// <param name="isJitAccessEnabled"> Whether the JIT access is enabled. </param>

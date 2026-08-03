@@ -13,34 +13,38 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedApplications
 {
     /// <summary> Information about managed application. </summary>
-    public partial class ApplicationData : TrackedResourceData
+    public partial class ManagedApplicationData : GenericResourceInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationData"/>. </summary>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
-        public ApplicationData(string kind)
+        public ManagedApplicationData(string kind)
         {
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="properties"> The managed application properties. </param>
         /// <param name="plan"> The plan information. </param>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationData(ApplicationProperties properties, ManagedApplicationsPlan plan, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedApplicationData(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku, ApplicationProperties properties, ManagedApplicationsPlan plan, string kind, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties, managedBy, sku)
         {
             Properties = properties;
             Plan = plan;
             Kind = kind;
             Identity = identity;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The managed application properties. </summary>

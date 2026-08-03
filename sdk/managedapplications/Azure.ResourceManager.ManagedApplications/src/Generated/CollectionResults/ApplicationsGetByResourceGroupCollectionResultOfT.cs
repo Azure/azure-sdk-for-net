@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedApplications.Models;
 
 namespace Azure.ResourceManager.ManagedApplications
 {
-    internal partial class ApplicationsGetByResourceGroupCollectionResultOfT : Pageable<ApplicationData>
+    internal partial class ApplicationsGetByResourceGroupCollectionResultOfT : Pageable<ManagedApplicationData>
     {
         private readonly Applications _client;
         private readonly string _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApplicationsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApplicationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ManagedApplicationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 }
                 ApplicationListResult result = ApplicationListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<ApplicationData>.FromValues((IReadOnlyList<ApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ManagedApplicationData>.FromValues((IReadOnlyList<ManagedApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

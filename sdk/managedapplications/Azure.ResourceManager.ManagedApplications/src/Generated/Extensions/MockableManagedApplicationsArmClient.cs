@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public virtual ApplicationResource GetApplicationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedApplicationResource"/> object. </returns>
+        public virtual ManagedApplicationResource GetManagedApplicationResource(ResourceIdentifier id)
         {
-            ApplicationResource.ValidateResourceId(id);
-            return new ApplicationResource(Client, id);
+            ManagedApplicationResource.ValidateResourceId(id);
+            return new ManagedApplicationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="JitRequestDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

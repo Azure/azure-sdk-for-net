@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.ManagedApplications
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ManagedApplicationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsArmClient.GetApplicationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsArmClient.GetManagedApplicationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public static ApplicationResource GetApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedApplicationResource"/> object. </returns>
+        public static ManagedApplicationResource GetManagedApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableManagedApplicationsArmClient(client).GetApplicationResource(id);
+            return GetMockableManagedApplicationsArmClient(client).GetManagedApplicationResource(id);
         }
 
         /// <summary>
@@ -81,27 +81,27 @@ namespace Azure.ResourceManager.ManagedApplications
         }
 
         /// <summary>
-        /// Gets a collection of Applications in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ManagedApplications in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsResourceGroupResource.GetApplications()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsResourceGroupResource.GetManagedApplications()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Applications and their operations over a ApplicationResource. </returns>
-        public static ApplicationCollection GetApplications(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ManagedApplications and their operations over a ManagedApplicationResource. </returns>
+        public static ManagedApplicationCollection GetManagedApplications(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedApplicationsResourceGroupResource(resourceGroupResource).GetApplications();
+            return GetMockableManagedApplicationsResourceGroupResource(resourceGroupResource).GetManagedApplications();
         }
 
         /// <summary>
         /// Gets the managed application.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsResourceGroupResource.GetApplicationAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsResourceGroupResource.GetManagedApplicationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -109,18 +109,18 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ApplicationResource>> GetApplicationAsync(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedApplicationResource>> GetManagedApplicationAsync(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableManagedApplicationsResourceGroupResource(resourceGroupResource).GetApplicationAsync(applicationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedApplicationsResourceGroupResource(resourceGroupResource).GetManagedApplicationAsync(applicationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the managed application.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsResourceGroupResource.GetApplication(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsResourceGroupResource.GetManagedApplication(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ApplicationResource> GetApplication(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
+        public static Response<ManagedApplicationResource> GetManagedApplication(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableManagedApplicationsResourceGroupResource(resourceGroupResource).GetApplication(applicationName, cancellationToken);
+            return GetMockableManagedApplicationsResourceGroupResource(resourceGroupResource).GetManagedApplication(applicationName, cancellationToken);
         }
 
         /// <summary>
@@ -300,36 +300,36 @@ namespace Azure.ResourceManager.ManagedApplications
         /// Lists all the applications within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsSubscriptionResource.GetApplicationsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsSubscriptionResource.GetManagedApplicationsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationResource> GetApplicationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedApplicationResource> GetManagedApplicationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedApplicationsSubscriptionResource(subscriptionResource).GetApplicationsAsync(cancellationToken);
+            return GetMockableManagedApplicationsSubscriptionResource(subscriptionResource).GetManagedApplicationsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the applications within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsSubscriptionResource.GetApplications(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsSubscriptionResource.GetManagedApplications(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationResource> GetApplications(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedApplicationResource> GetManagedApplications(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableManagedApplicationsSubscriptionResource(subscriptionResource).GetApplications(cancellationToken);
+            return GetMockableManagedApplicationsSubscriptionResource(subscriptionResource).GetManagedApplications(cancellationToken);
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="applicationId"> The ID of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<ApplicationResource>> GetByIdAsync(this TenantResource tenantResource, string applicationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedApplicationResource>> GetByIdAsync(this TenantResource tenantResource, string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="applicationId"> The ID of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<ApplicationResource> GetById(this TenantResource tenantResource, string applicationId, CancellationToken cancellationToken = default)
+        public static Response<ManagedApplicationResource> GetById(this TenantResource tenantResource, string applicationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// Creates or updates a managed application.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.CreateOrUpdateByIdAsync(WaitUntil, string, ApplicationData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.CreateOrUpdateByIdAsync(WaitUntil, string, ManagedApplicationData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="data"> Parameters supplied to create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<ArmOperation<ApplicationResource>> CreateOrUpdateByIdAsync(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ApplicationData data, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<ManagedApplicationResource>> CreateOrUpdateByIdAsync(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ManagedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// Creates or updates a managed application.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.CreateOrUpdateById(WaitUntil, string, ApplicationData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableManagedApplicationsTenantResource.CreateOrUpdateById(WaitUntil, string, ManagedApplicationData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="data"> Parameters supplied to create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static ArmOperation<ApplicationResource> CreateOrUpdateById(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ApplicationData data, CancellationToken cancellationToken = default)
+        public static ArmOperation<ManagedApplicationResource> CreateOrUpdateById(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ManagedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="patch"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<ArmOperation<ApplicationResource>> UpdateByIdAsync(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<ManagedApplicationResource>> UpdateByIdAsync(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="patch"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static ArmOperation<ApplicationResource> UpdateById(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
+        public static ArmOperation<ManagedApplicationResource> UpdateById(this TenantResource tenantResource, WaitUntil waitUntil, string applicationId, ApplicationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

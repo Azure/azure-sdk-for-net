@@ -1,4 +1,4 @@
 directory: specification/solutions/Solutions.Management
-commit: bd4ca33e375ea54f37934eca82466a863c751280
+commit: fbdb45ea58e8ad411eab702579004af75bcdc6fb
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ApplicationData item in Value)
+            foreach (ManagedApplicationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 return null;
             }
-            IList<ApplicationData> value = default;
+            IList<ManagedApplicationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ApplicationData> array = new List<ApplicationData>();
+                    List<ManagedApplicationData> array = new List<ManagedApplicationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationData.DeserializeApplicationData(item, options));
+                        array.Add(ManagedApplicationData.DeserializeManagedApplicationData(item, options));
                     }
                     value = array;
                     continue;

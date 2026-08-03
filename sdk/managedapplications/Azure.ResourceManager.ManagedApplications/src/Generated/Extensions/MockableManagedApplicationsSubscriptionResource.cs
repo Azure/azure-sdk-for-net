@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationResource> GetApplicationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedApplicationResource> GetManagedApplicationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationData, ApplicationResource>(new ApplicationsGetBySubscriptionAsyncCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplications"), data => new ApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetBySubscriptionAsyncCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationResource> GetApplications(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedApplicationResource> GetManagedApplications(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationData, ApplicationResource>(new ApplicationsGetBySubscriptionCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetApplications"), data => new ApplicationResource(Client, data));
+            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetBySubscriptionCollectionResultOfT(ApplicationsRestClient, Id.SubscriptionId, context, "MockableManagedApplicationsSubscriptionResource.GetManagedApplications"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>

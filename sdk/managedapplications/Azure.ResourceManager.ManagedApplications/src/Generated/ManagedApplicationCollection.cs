@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ManagedApplications
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplicationResource"/> and their operations.
-    /// Each <see cref="ApplicationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="ApplicationCollection"/> instance call the GetApplications method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ManagedApplicationResource"/> and their operations.
+    /// Each <see cref="ManagedApplicationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ManagedApplicationCollection"/> instance call the GetManagedApplications method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class ApplicationCollection : ArmCollection, IEnumerable<ApplicationResource>, IAsyncEnumerable<ApplicationResource>
+    public partial class ManagedApplicationCollection : ArmCollection, IEnumerable<ManagedApplicationResource>, IAsyncEnumerable<ManagedApplicationResource>
     {
         private readonly ClientDiagnostics _applicationsClientDiagnostics;
         private readonly Applications _applicationsRestClient;
 
-        /// <summary> Initializes a new instance of ApplicationCollection for mocking. </summary>
-        protected ApplicationCollection()
+        /// <summary> Initializes a new instance of ManagedApplicationCollection for mocking. </summary>
+        protected ManagedApplicationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedApplicationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagedApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplicationResource.ResourceType, out string applicationApiVersion);
-            _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedApplications", ApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationApiVersion ?? "2023-12-01-preview");
+            TryGetApiVersion(ManagedApplicationResource.ResourceType, out string managedApplicationApiVersion);
+            _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedApplications", ManagedApplicationResource.ResourceType.Namespace, Diagnostics);
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedApplicationApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, ManagedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, ApplicationData.ToRequestContent(data), context);
+                HttpMessage message = _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, ManagedApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedApplicationsArmOperation<ApplicationResource> operation = new ManagedApplicationsArmOperation<ApplicationResource>(
-                    new ApplicationResourceOperationSource(Client),
+                ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
+                    new ManagedApplicationResourceOperationSource(Client),
                     _applicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, ManagedApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, ApplicationData.ToRequestContent(data), context);
+                HttpMessage message = _applicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, ManagedApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ManagedApplicationsArmOperation<ApplicationResource> operation = new ManagedApplicationsArmOperation<ApplicationResource>(
-                    new ApplicationResourceOperationSource(Client),
+                ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
+                    new ManagedApplicationResourceOperationSource(Client),
                     _applicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ApplicationResource>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedApplicationResource>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.Get");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.Get");
             scope.Start();
             try
             {
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.ManagedApplications
                 };
                 HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplicationData> response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ApplicationResource> Get(string applicationName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedApplicationResource> Get(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.Get");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.Get");
             scope.Start();
             try
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.ManagedApplications
                 };
                 HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplicationData> response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.ManagedApplications
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationData, ApplicationResource>(new ApplicationsGetByResourceGroupAsyncCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ApplicationCollection.GetAll"), data => new ApplicationResource(Client, data));
+            return new AsyncPageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetByResourceGroupAsyncCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedApplicationCollection.GetAll"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.ManagedApplications
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationData, ApplicationResource>(new ApplicationsGetByResourceGroupCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ApplicationCollection.GetAll"), data => new ApplicationResource(Client, data));
+            return new PageableWrapper<ManagedApplicationData, ManagedApplicationResource>(new ApplicationsGetByResourceGroupCollectionResultOfT(_applicationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedApplicationCollection.GetAll"), data => new ManagedApplicationResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ManagedApplications
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.Exists");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.ManagedApplications
                 HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApplicationData> response = default;
+                Response<ManagedApplicationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                        response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplicationData)null, result);
+                        response = Response.FromValue((ManagedApplicationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ManagedApplications
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.Exists");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.Exists");
             scope.Start();
             try
             {
@@ -418,14 +418,14 @@ namespace Azure.ResourceManager.ManagedApplications
                 HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApplicationData> response = default;
+                Response<ManagedApplicationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                        response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplicationData)null, result);
+                        response = Response.FromValue((ManagedApplicationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ManagedApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -475,23 +475,23 @@ namespace Azure.ResourceManager.ManagedApplications
                 HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ApplicationData> response = default;
+                Response<ManagedApplicationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                        response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplicationData)null, result);
+                        response = Response.FromValue((ManagedApplicationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ApplicationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ManagedApplicationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.ManagedApplications
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ManagedApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ApplicationCollection.GetIfExists");
+            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ManagedApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -536,23 +536,23 @@ namespace Azure.ResourceManager.ManagedApplications
                 HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ApplicationData> response = default;
+                Response<ManagedApplicationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ApplicationData.FromResponse(result), result);
+                        response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ApplicationData)null, result);
+                        response = Response.FromValue((ManagedApplicationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ApplicationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ManagedApplicationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ApplicationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ManagedApplications
             }
         }
 
-        IEnumerator<ApplicationResource> IEnumerable<ApplicationResource>.GetEnumerator()
+        IEnumerator<ManagedApplicationResource> IEnumerable<ManagedApplicationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ManagedApplications
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ApplicationResource> IAsyncEnumerable<ApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedApplicationResource> IAsyncEnumerable<ManagedApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

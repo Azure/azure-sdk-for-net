@@ -6,24 +6,23 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedApplications
 {
-    // The C# generator flattens Application.properties into ApplicationData for the public API,
+    // The C# generator flattens Application.properties into ManagedApplicationData for the public API,
     // but the service still expects those flattened values under the wire-level "properties" envelope.
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    public partial class ApplicationData : TrackedResourceData
+    public partial class ManagedApplicationData
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedApplicationData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
