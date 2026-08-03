@@ -333,7 +333,7 @@ namespace Azure.Storage.Blobs.Test
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(plaintext), cancellationToken: s_cancellationToken);
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -383,7 +383,7 @@ namespace Azure.Storage.Blobs.Test
                     }
                 }
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -436,7 +436,7 @@ namespace Azure.Storage.Blobs.Test
                     }
                 }
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -470,7 +470,7 @@ namespace Azure.Storage.Blobs.Test
                 plaintext = GetRandomBuffer(Constants.KB);
                 await blob.UploadAsync(BinaryData.FromBytes(plaintext), cancellationToken: s_cancellationToken, overwrite: true);
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data
@@ -513,7 +513,7 @@ namespace Azure.Storage.Blobs.Test
                     },
                     cancellationToken: s_cancellationToken);
 
-                var encryptedData = await DownloadBypassDecryption(blob);
+                var (encryptedData, _) = await DownloadBypassDecryption(blob);
                 byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
 
                 // compare data

@@ -318,7 +318,7 @@ namespace Azure.Storage.Cryptography
             if (_transform.TransformMode == TransformMode.Decrypt && _forceSequentialNonce)
             {
                 ReadOnlySpan<byte> expectedNonceBytes = NextExpectedNonce();
-                if (!expectedNonceBytes.SequenceEqual(new ReadOnlySpan<byte>(_buffer, 0, expectedNonceBytes.Length)))
+                if (!expectedNonceBytes.SequenceEqual(authenticatedRegionCiphertext.Slice(0, expectedNonceBytes.Length)))
                 {
                     throw new CryptographicException("Encountered out-of-order authenticated region.");
                 }
@@ -327,7 +327,7 @@ namespace Azure.Storage.Cryptography
                     // this overwrite is a sanity check recommended by the experts.
                     // if we don't throw, we absolutely guarantee the value in the buffer is correct.
                     // do not remove this.
-                    expectedNonceBytes.CopyTo(_buffer);
+                    expectedNonceBytes.CopyTo(authenticatedRegionCiphertext);
                 }
             }
         }
