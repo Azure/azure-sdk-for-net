@@ -86,7 +86,7 @@ principles conflict, resolve in this priority order:
 |---|---|---|
 | **Core** | `Azure.AI.AgentServer.Core/src/` | Shared foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, server version header, inbound request logging, health endpoint |
 | **Core Tests** | `Azure.AI.AgentServer.Core/tests/` | NUnit tests for Core |
-| **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol: `InvocationHandler`, session resolution, client header forwarding |
+| **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol plus the preview `Invocations.Voice` submodule over `invocations_ws` |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
 | **Responses** | `Azure.AI.AgentServer.Responses/src/` | Responses protocol: TypeSpec-generated models, hosting extensions, SSE streaming, handlers |
 | **Responses Tests** | `Azure.AI.AgentServer.Responses/tests/` | NUnit tests for Responses |
@@ -102,6 +102,7 @@ principles conflict, resolve in this priority order:
 | Protocol | Location | Notes |
 |---|---|---|
 | Core / Invocations | This file | — |
+| Invocations Voice submodule | `Azure.AI.AgentServer.Invocations/src/Voice/AGENTS.md` | Voice Live Bridge Protocol 1.0 |
 | Responses | `Azure.AI.AgentServer.Responses/AGENTS.md` | Contract compliance (B1–B39, S-001–S-052) |
 
 > When adding a new protocol, create an `AGENTS.md` in the protocol directory.

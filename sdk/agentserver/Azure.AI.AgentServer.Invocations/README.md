@@ -1,6 +1,6 @@
 # Azure AI Agent Server Invocations library for .NET
 
-Azure.AI.AgentServer.Invocations is a .NET library for building ASP.NET Core servers that implement the Azure AI Invocations protocol. Subclass `InvocationHandler`, register it with the hosting builder, and the library handles routing, session resolution, client header forwarding, and invocation lifecycle management.
+Azure.AI.AgentServer.Invocations is a .NET library for building ASP.NET Core servers that implement the Azure AI Invocations protocol. Subclass `InvocationHandler`, register it with the hosting builder, and the library handles routing, session resolution, client header forwarding, and invocation lifecycle management. The library also includes a preview `Azure.AI.AgentServer.Invocations.Voice` submodule that implements Voice Live Bridge Protocol 1.0 over `invocations_ws`.
 
 [Source code][source] | [Package (NuGet)][nuget] | [Product documentation][product_doc]
 
@@ -62,6 +62,20 @@ The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` 
 ### InvocationWebSocketHandler
 
 Derives from `InvocationHandler` and adds the abstract `HandleWebSocketAsync` method for the `/invocations_ws` endpoint. The inherited `HandleAsync` returns 404 by default, so a WebSocket-only handler does not need to implement `HandleAsync` — multi-protocol handlers override both. See the [WebSocket protocol section](#websocket-protocol-invocations_ws) below.
+
+### Voice Live Bridge preview
+
+The `Azure.AI.AgentServer.Invocations.Voice` namespace provides a typed
+implementation of Voice Live Bridge Protocol 1.0 on the existing
+`/invocations_ws` endpoint. Derive from `VoiceHandler` and override
+`OnUserMessageAsync` plus any optional control callbacks your agent needs. The
+submodule owns activation, framing, response and item IDs, exact duplicate
+handling, ordered callbacks, multi-item output, proactive admission,
+self-cancellation, timeout and barge-in arbitration, DTMF, handoff, history
+mutation, and bounded per-connection cleanup while the application remains
+text-in and text-out. Voice Live continues to own audio, speech recognition,
+synthesis, voice activity detection, turn-taking, and barge-in. No additional
+NuGet package is required.
 
 ### InvocationContext
 
@@ -144,7 +158,7 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 - Calls `AcceptWebSocketAsync` before invoking your handler.
 - Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
 - Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
-- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. No framework-level OpenTelemetry span is created for the connection — ASP.NET Core auto-propagates the inbound W3C trace context, so any spans your handler starts are parented correctly without a per-connection wrapper.
+- Emits an `agentserver.connection` activity and a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. ASP.NET Core propagates the inbound W3C trace context, so the connection activity and handler spans remain in the caller's trace.
 - When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.

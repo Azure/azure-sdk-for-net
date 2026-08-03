@@ -15,12 +15,10 @@ namespace Azure.AI.AgentServer.Invocations.Internal;
 /// structured close-event log line.
 /// </summary>
 /// <remarks>
-/// No framework-level OpenTelemetry span is created for the connection.
-/// ASP.NET Core automatically propagates the inbound W3C trace context to
-/// the request <see cref="Activity"/>, so any spans the user handler starts
-/// inside <c>HandleWebSocketAsync</c> are parented correctly without a
-/// per-connection wrapper span. Telemetry for the connection is delivered
-/// as a single structured close-event log line carrying
+/// ASP.NET Core propagates the inbound W3C trace context to the request
+/// <see cref="Activity"/>. The endpoint creates an <c>agentserver.connection</c>
+/// child activity spanning the accepted socket through bounded close, and also
+/// emits a structured close-event log line carrying
 /// <c>azure.ai.agentserver.invocations_ws.session_id</c>,
 /// <c>azure.ai.agentserver.invocations_ws.close_code</c>, and
 /// <c>azure.ai.agentserver.invocations_ws.duration_ms</c>.
@@ -91,9 +89,9 @@ internal sealed class WebSocketEndpointHandler
         // Propagate invocation/session/x-request-id baggage onto the current request
         // Activity for downstream correlation. Reuses the same helper the HTTP
         // `POST /invocations` endpoint uses so HTTP and WS paths produce
-        // the same baggage shape. No framework-level WS span is created — ASP.NET
-        // Core auto-propagates the inbound W3C trace context to the request
-        // Activity, so any spans the handler starts inherit it directly.
+        // the same baggage shape. ASP.NET Core propagates the inbound W3C
+        // context to the request Activity; the connection Activity created
+        // after accept remains current so handler spans inherit it directly.
         _activitySource.PropagateInvocationBaggage(context, httpContext.Request.Headers);
 
         using var logScope = _logger.BeginScope(new Dictionary<string, object>
@@ -106,12 +104,21 @@ internal sealed class WebSocketEndpointHandler
         var closeCode = InvocationsWebSocketConstants.CloseNormal;
         string? errorCode = null;
         WebSocket? webSocket = null;
+        Activity? connectionActivity = null;
 
         try
         {
             try
             {
-                webSocket = await httpContext.WebSockets.AcceptWebSocketAsync();
+                var acceptedWebSocket = await httpContext.WebSockets.AcceptWebSocketAsync();
+                webSocket = new TrackingWebSocket(
+                    acceptedWebSocket,
+                    TimeSpan.FromSeconds(InvocationsWebSocketConstants.CleanupTimeoutSeconds));
+                connectionActivity = InvocationsTelemetry.ActivitySource.StartActivity(
+                    "agentserver.connection",
+                    ActivityKind.Internal);
+                connectionActivity?.SetTag("azure.ai.agentserver.invocations_ws.session_id", sessionId);
+                connectionActivity?.SetTag("network.protocol.name", "websocket");
             }
             catch (Exception acceptEx)
             {
@@ -159,9 +166,34 @@ internal sealed class WebSocketEndpointHandler
         }
         finally
         {
-            var durationMs = GetElapsedMilliseconds(startTimestamp);
+            if (webSocket is TrackingWebSocket trackingWebSocket && trackingWebSocket.SelectedCloseCode is int selectedCloseCode)
+            {
+                closeCode = selectedCloseCode;
+            }
+
             await CloseSocketAsync(webSocket, closeCode, sessionId);
+            if (webSocket is TrackingWebSocket closedTrackingWebSocket && closedTrackingWebSocket.SelectedCloseCode is int finalCloseCode)
+            {
+                closeCode = finalCloseCode;
+            }
+
+            var durationMs = GetElapsedMilliseconds(startTimestamp);
             EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode);
+            if (connectionActivity is not null)
+            {
+                connectionActivity.SetTag(InvocationsWebSocketConstants.AttrSpanCloseCode, closeCode);
+                connectionActivity.SetTag(InvocationsWebSocketConstants.AttrSpanDurationMs, durationMs);
+                if (errorCode is not null)
+                {
+                    connectionActivity.SetTag(InvocationsWebSocketConstants.AttrSpanErrorCode, errorCode);
+                }
+
+                connectionActivity.SetStatus(
+                    closeCode == InvocationsWebSocketConstants.CloseNormal && errorCode is null
+                        ? ActivityStatusCode.Ok
+                        : ActivityStatusCode.Error);
+                connectionActivity.Stop();
+            }
         }
     }
 
@@ -191,16 +223,41 @@ internal sealed class WebSocketEndpointHandler
 
         try
         {
-            await webSocket.CloseAsync(status, description, CancellationToken.None);
+            if (webSocket is TrackingWebSocket trackingWebSocket)
+            {
+                trackingWebSocket.RecordCloseCode((int)status);
+                trackingWebSocket.CleanupDeadline.Start();
+                using var closeCancellation = trackingWebSocket.CleanupDeadline.CreateCancellationTokenSource();
+                await webSocket.CloseAsync(status, description, closeCancellation.Token);
+            }
+            else
+            {
+                using var closeCancellation = new CancellationTokenSource(
+                    TimeSpan.FromSeconds(InvocationsWebSocketConstants.CleanupTimeoutSeconds));
+                await webSocket.CloseAsync(status, description, closeCancellation.Token);
+            }
         }
-        catch (Exception ex) when (ex is WebSocketException or ObjectDisposedException or OperationCanceledException)
+        catch (Exception ex) when (ex is WebSocketException or ObjectDisposedException or OperationCanceledException or IOException)
         {
             // Connection already gone — nothing to recover.
             _logger.LogDebug(ex, "Error closing WebSocket session {SessionId}", sessionId);
+            try
+            {
+                webSocket.Abort();
+            }
+            catch (Exception abortException) when (abortException is WebSocketException or ObjectDisposedException)
+            {
+            }
         }
         finally
         {
-            webSocket.Dispose();
+            try
+            {
+                webSocket.Dispose();
+            }
+            catch (ObjectDisposedException)
+            {
+            }
         }
     }
 
