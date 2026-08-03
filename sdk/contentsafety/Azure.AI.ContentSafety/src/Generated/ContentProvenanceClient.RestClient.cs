@@ -25,7 +25,7 @@ namespace Azure.AI.ContentSafety
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
-            uri.AppendPath(":detect", false);
+            uri.AppendPath("/provenance:detect", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -45,7 +45,7 @@ namespace Azure.AI.ContentSafety
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
-            uri.AppendPath("/operations/", false);
+            uri.AppendPath("/provenance/operations/", false);
             uri.AppendPath(operationId, true);
             if (_apiVersion != null)
             {
