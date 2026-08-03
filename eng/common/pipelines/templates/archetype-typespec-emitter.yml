@@ -313,6 +313,8 @@ extends:
         - job: Initialize
           steps:
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
@@ -410,6 +412,8 @@ extends:
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
           - checkout: self
+            fetchDepth: 1
+            fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
