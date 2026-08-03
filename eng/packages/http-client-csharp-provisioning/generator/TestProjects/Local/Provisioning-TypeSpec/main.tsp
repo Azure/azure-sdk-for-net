@@ -8,7 +8,6 @@ import "./profileRevision.tsp";
 import "./resourceModelProperty.tsp";
 import "./extensionAssignment.tsp";
 import "./singletonSetting.tsp";
-import "./virtualParentSingletonSetting.tsp";
 import "./privateLinkResource.tsp";
 
 using TypeSpec.Versioning;
