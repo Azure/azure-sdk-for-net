@@ -347,9 +347,91 @@ function Replace-MethodTypeParameters([string]$text, [string[]]$typeParameters) 
     return $result
 }
 
+function Get-ApiReferenceTypeNames([string[]]$apiLines) {
+    $referenceTypes = [System.Collections.Generic.Dictionary[string, bool]]::new(
+        [System.StringComparer]::Ordinal
+    )
+    $namespace = ''
+
+    foreach ($line in $apiLines) {
+        if ($line -match '^\s*namespace\s+([\w.]+)') {
+            $namespace = $Matches[1]
+            continue
+        }
+
+        if ($line -match '^\s*public\s+(?:(?:partial|abstract|static|sealed|readonly)\s+)*(?:class|interface|record\s+class|record(?!\s+struct))\s+(?<name>\w+)') {
+            $referenceTypes["$namespace.$($Matches['name'])"] = $true
+        }
+    }
+
+    return $referenceTypes
+}
+
+function Test-KnownReferenceType([string]$typeName, [string]$namespace, $referenceTypes) {
+    if ($typeName -cmatch '^(?:string|object|dynamic|System\.String|System\.Object)$') {
+        return $true
+    }
+
+    $qualifiedType = if ($typeName.Contains('.')) {
+        $typeName
+    } else {
+        "$namespace.$typeName"
+    }
+    if ($referenceTypes.ContainsKey($qualifiedType)) {
+        return $true
+    }
+
+    if ($typeName.Contains('.')) {
+        $runtimeType = [Type]::GetType($typeName, $false)
+        if (-not $runtimeType) {
+            foreach ($assembly in [AppDomain]::CurrentDomain.GetAssemblies()) {
+                $runtimeType = $assembly.GetType($typeName, $false)
+                if ($runtimeType) {
+                    break
+                }
+            }
+        }
+        return $runtimeType -and -not $runtimeType.IsValueType
+    }
+
+    return $false
+}
+
+function Normalize-NullableAnnotations([string]$typeText, [string]$namespace, $referenceTypes) {
+    return [regex]::Replace(
+        $typeText,
+        '(?<type>@?[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\?',
+        {
+            param($match)
+            if (Test-KnownReferenceType $match.Groups['type'].Value $namespace $referenceTypes) {
+                return $match.Groups['type'].Value
+            }
+            return $match.Value
+        }
+    )
+}
+
+function Remove-TupleElementNames([string]$typeText) {
+    if (-not ($typeText.StartsWith('(') -and $typeText.EndsWith(')'))) {
+        return $typeText
+    }
+
+    $elements = foreach ($element in (Split-TopLevelParameters $typeText.Substring(1, $typeText.Length - 2))) {
+        $elementType = $element.Trim()
+        if ($elementType -match '^(?<type>.+?)\s+@?[A-Za-z_]\w*$') {
+            $elementType = $Matches['type']
+        }
+        Remove-TupleElementNames $elementType
+    }
+
+    return "($($elements -join ','))"
+}
+
 function Get-NormalizedExtensionReceiver(
     [string]$parameterType,
-    [string]$memberName
+    [string]$memberName,
+    [string]$namespace,
+    $referenceTypes
 ) {
     $receiver = Remove-LeadingAttributes $parameterType
     if ($receiver -notmatch '^this\s+(?<type>.+)$') {
@@ -370,7 +452,8 @@ function Get-NormalizedExtensionReceiver(
     $receiver = $receiver -replace '\s+', ' '
     $receiver = $receiver -replace '\s*(::|[.<>,\[\]\(\)\*&])\s*', '$1'
     $receiver = $receiver -replace '\bglobal::', ''
-    $receiver = $receiver -replace '\?', ''
+    $receiver = Normalize-NullableAnnotations $receiver $namespace $referenceTypes
+    $receiver = Remove-TupleElementNames $receiver
     $receiver = Replace-MethodTypeParameters $receiver (Get-MethodTypeParameters $memberName)
     return $receiver.Trim()
 }
@@ -379,6 +462,7 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
     $methods = [System.Collections.Generic.Dictionary[string, object]]::new(
         [System.StringComparer]::Ordinal
     )
+    $referenceTypes = Get-ApiReferenceTypeNames $apiLines
     $namespace = ''
     $typeName = ''
 
@@ -439,7 +523,7 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
         }
 
         $receiverType = if ($parameters.Count -gt 0) {
-            Get-NormalizedExtensionReceiver $parameters[0].Type $memberName
+            Get-NormalizedExtensionReceiver $parameters[0].Type $memberName $namespace $referenceTypes
         } else {
             $null
         }
@@ -451,11 +535,12 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             'instance'
         }
         $memberIdentity = Get-NormalizedMemberIdentity $memberName
+        $overloadOwner = if ($invocationKind -eq 'extension') { $namespace } else { "$namespace|$typeName" }
         $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
         $methods[$key] = [pscustomobject]@{
             TypeName          = $typeName
             MemberName        = $memberName
-            OverloadKey       = "$namespace|$typeName|$memberIdentity|$invocationKind|$receiverType"
+            OverloadKey       = "$overloadOwner|$memberIdentity|$invocationKind|$receiverType"
             IsExtensionMethod = $invocationKind -eq 'extension'
             Parameters        = $parameters.ToArray()
             Line              = $lineIndex + 1
