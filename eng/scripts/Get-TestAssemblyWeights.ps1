@@ -25,6 +25,11 @@ Azure DevOps pipeline ID to query. The default is net - pullrequest.
 .PARAMETER AccessToken
 Azure DevOps access token used to query Analytics.
 
+.PARAMETER MinimumCoveragePercent
+Minimum percentage of target assemblies that must have runtime history after both query windows.
+The default of 10 rejects empty or nearly empty Analytics results without requiring comprehensive
+coverage. At least one observation is required whenever target assemblies exist.
+
 .PARAMETER MaxRetryAttempts
 Maximum number of attempts for transient Analytics request failures.
 
@@ -42,6 +47,7 @@ param (
   [Parameter()][string]$ProjectId = "29ec6040-b234-4e31-b139-33dc4287b756",
   [Parameter()][string]$AccessToken = $env:SYSTEM_ACCESSTOKEN,
   [Parameter()][int]$DefaultWeight = 1,
+  [Parameter()][int]$MinimumCoveragePercent = 10,
   [Parameter()][int]$QueryBatchSize = 20,
   [Parameter()][int]$ThrottleLimit = 5,
   [Parameter()][int]$MaxRetryAttempts = 3,
@@ -236,6 +242,35 @@ function Add-TestResultDurations {
   }
 }
 
+function Assert-MinimumDataCoverage {
+  param(
+    [Parameter(Mandatory = $true)][AllowEmptyCollection()][string[]]$Assemblies,
+    [Parameter(Mandatory = $true)][hashtable]$Durations,
+    [Parameter(Mandatory = $true)][int]$MinimumCoveragePercent
+  )
+
+  # Packages without candidate test assemblies legitimately have no Analytics observations.
+  if ($Assemblies.Count -eq 0) {
+    return
+  }
+
+  $observedCount = @($Assemblies | Where-Object {
+    $runs = $Durations[$_]
+    $runs -and $runs.Count -gt 0
+  }).Count
+  $requiredCount = [math]::Max(
+    1,
+    [int][math]::Ceiling($Assemblies.Count * $MinimumCoveragePercent / 100.0)
+  )
+  $coveragePercent = [math]::Round($observedCount * 100.0 / $Assemblies.Count, 1)
+
+  if ($observedCount -lt $requiredCount) {
+    throw "Azure DevOps Analytics runtime history covers $observedCount of $($Assemblies.Count) test assembly candidates ($coveragePercent%), below the required $requiredCount ($MinimumCoveragePercent% minimum)."
+  }
+
+  Write-Host "Runtime history coverage: $observedCount/$($Assemblies.Count) assemblies ($coveragePercent%; required: $requiredCount)."
+}
+
 function Get-ResolvedPackageWeights {
   param(
     [Parameter(Mandatory = $true)]$PackageAssemblies,
@@ -280,6 +315,9 @@ if ([string]::IsNullOrWhiteSpace($AccessToken)) {
 }
 if ($DefaultWeight -le 0) {
   throw "DefaultWeight must be greater than zero."
+}
+if ($MinimumCoveragePercent -le 0 -or $MinimumCoveragePercent -gt 100) {
+  throw "MinimumCoveragePercent must be between 1 and 100."
 }
 if ($ThrottleLimit -le 0) {
   throw "ThrottleLimit must be greater than zero."
@@ -342,6 +380,13 @@ if ($allAssemblies.Count -gt 0) {
     Add-TestResultDurations -Rows $fallbackRows -Durations $durations
   }
 }
+
+# Reject successful but catastrophically sparse query results before one-second fallbacks can
+# collapse many packages into a small number of oversized buckets.
+Assert-MinimumDataCoverage `
+  -Assemblies $allAssemblies `
+  -Durations $durations `
+  -MinimumCoveragePercent $MinimumCoveragePercent
 
 $resolvedWeights = Get-ResolvedPackageWeights `
   -PackageAssemblies $targetMap.PackageAssemblies `

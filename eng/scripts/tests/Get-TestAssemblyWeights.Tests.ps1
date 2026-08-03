@@ -115,6 +115,42 @@ Describe "Get-TestAssemblyWeights" {
     $parameters.Keys | Should -Contain "RetryBaseDelaySeconds"
   }
 
+  It "requires one observation for a low assembly count" {
+    $durations = @{
+      "assembly-1.dll" = [System.Collections.Generic.List[int]]@(10)
+    }
+
+    {
+      Assert-MinimumDataCoverage `
+        -Assemblies @(1..5 | ForEach-Object { "assembly-$_.dll" }) `
+        -Durations $durations `
+        -MinimumCoveragePercent 10
+    } | Should -Not -Throw
+  }
+
+  It "rejects catastrophically sparse runtime history" {
+    $durations = @{}
+    1..9 | ForEach-Object {
+      $durations["assembly-$_.dll"] = [System.Collections.Generic.List[int]]@(10)
+    }
+
+    {
+      Assert-MinimumDataCoverage `
+        -Assemblies @(1..100 | ForEach-Object { "assembly-$_.dll" }) `
+        -Durations $durations `
+        -MinimumCoveragePercent 10
+    } | Should -Throw "*covers 9 of 100*below the required 10*"
+  }
+
+  It "does not require history when packages have no candidate assemblies" {
+    {
+      Assert-MinimumDataCoverage `
+        -Assemblies @() `
+        -Durations @{} `
+        -MinimumCoveragePercent 10
+    } | Should -Not -Throw
+  }
+
   It "averages observed runtimes and assigns fallback per unknown assembly" {
     $durations = @{}
     Add-TestResultDurations -Rows @(

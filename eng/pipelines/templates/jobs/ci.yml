@@ -221,13 +221,12 @@ jobs:
           PRMatrixSetting: ProjectNames
           # Runtime weighting first creates small balanced buckets. Linux and Windows
           # combine three buckets while slower macOS keeps one bucket per job. If
-          # runtime weighting fails, the default preserves count-based batching.
+          # runtime weighting fails, the presteps retain count-based batching.
           PRJobBatchSize: 10
-          PRWeightedBucketsPerJob:
-            Linux: 3
-            Windows: 3
-            Mac: 1
-          PRWeightedBatchingApplied: $(TestRuntimeWeightingApplied)
+          PRJobBatchSizeByPool:
+            Linux: $(TestMatrixEntriesPerJobLinux)
+            Windows: $(TestMatrixEntriesPerJobWindows)
+            Mac: $(TestMatrixEntriesPerJobMac)
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'

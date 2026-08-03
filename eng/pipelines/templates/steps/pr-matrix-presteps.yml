@@ -79,7 +79,6 @@ steps:
     - pwsh: |
         $weightsFile = "$(Build.ArtifactStagingDirectory)/test-weights.json"
         Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
-        Write-Host "##vso[task.setvariable variable=TestRuntimeWeightingApplied]false"
 
         # Direct and indirect packages are batched separately. Neither group benefits from
         # runtime weighting unless it contains at least two packages to distribute.
@@ -101,8 +100,8 @@ steps:
             -OutputFile $weightsFile
         }
         catch {
-          Write-Host "##vso[task.logissue type=warning]Azure DevOps Analytics is unavailable. Falling back to count-based test batching (10 packages per job)."
-          Write-Host "Analytics error: $($_.Exception.Message)"
+          $reason = $_.Exception.Message -replace "`r?`n", " "
+          Write-Host "##vso[task.logissue type=warning]Runtime-weighted test batching could not be applied: $reason Falling back to count-based test batching (10 packages per job)."
           Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
         }
       displayName: Query test assembly runtimes for balanced batching
@@ -118,8 +117,11 @@ steps:
             -WeightsFile $weightsFile `
             -Target 240
 
-          # Enable the smaller per-OS matrix batches only after weighting completes successfully.
-          Write-Host "##vso[task.setvariable variable=TestRuntimeWeightingApplied]true"
+          # PackageInfo entries now represent weighted buckets. Slower macOS runs one
+          # bucket per job, while Linux and Windows amortize setup over three buckets.
+          Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobLinux]3"
+          Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobWindows]3"
+          Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobMac]1"
         }
       displayName: Apply test-runtime weighted batching
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
