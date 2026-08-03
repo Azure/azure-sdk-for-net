@@ -946,6 +946,11 @@ function Get-SpecPullRequestValidationPlan {
             "--configuration"
             "Release"
             "/p:RunApiCompat=false"
+            "/p:IncludeTests=false"
+            "/p:IncludeSamples=false"
+            "/p:IncludePerf=false"
+            "/p:IncludeStress=false"
+            "/p:IncludeIntegrationTests=false"
         )
         ApiExportArguments = @{
             PackagePath = $projectFolder
@@ -1043,14 +1048,16 @@ function GeneratePackage()
 
                 if ($hasBreakingChange) {
                     Write-Host "Breaking changes detected. Packing with API compatibility disabled to produce the APIView artifact."
-                    $artifactPackArguments = $validationPlan.ArtifactPackArguments
-                    dotnet @artifactPackArguments
-                    if (!$?) {
-                        Write-Host "[WARNING] Failed to pack the existing sdk build output: $packageName for service: $service. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-                        $result = "warning"
-                    }
                 } else {
+                    Write-Host "[WARNING] The initial package validation failed without recognized breaking-change diagnostics. Retrying with API compatibility disabled to preserve any build artifact."
+                }
+
+                $artifactPackArguments = $validationPlan.ArtifactPackArguments
+                dotnet @artifactPackArguments
+                if (!$?) {
                     Write-Host "[WARNING] Failed to build and pack the sdk package: $packageName for service: $service. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    $result = "warning"
+                } elseif (!$hasBreakingChange) {
                     $result = "warning"
                 }
             }

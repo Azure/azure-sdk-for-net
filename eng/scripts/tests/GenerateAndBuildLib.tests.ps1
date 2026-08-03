@@ -29,6 +29,11 @@ Describe "Get-SpecPullRequestValidationPlan" {
             "--configuration"
             "Release"
             "/p:RunApiCompat=false"
+            "/p:IncludeTests=false"
+            "/p:IncludeSamples=false"
+            "/p:IncludePerf=false"
+            "/p:IncludeStress=false"
+            "/p:IncludeIntegrationTests=false"
         )
         $plan.ApiExportArguments.PackagePath | Should -Be "/repo/sdk/network/Azure.ResourceManager.Network"
         $plan.ApiExportArguments.SdkRepoPath | Should -Be "/repo"
