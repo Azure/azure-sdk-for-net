@@ -159,14 +159,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             {
                 Assert.ThrowsAsync<ArgumentException>(async () =>
                 {
-                    await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshotsAsync(beginSnap, endSnap)) { }
+                    await foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshotsAsync(beginSnap, endSnap))
+                    { }
                 });
             }
             else
             {
                 Assert.Throws<ArgumentException>(() =>
                 {
-                    foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshots(beginSnap, endSnap)) { }
+                    foreach (ShareChangeFeedEvent _ in h.Client.GetChangesBetweenSnapshots(beginSnap, endSnap))
+                    { }
                 });
             }
         }
@@ -339,6 +341,21 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
                 Mock<BlobClient> metaBlob = new Mock<BlobClient>(MockBehavior.Loose);
                 h.Container.Setup(c => c.GetBlobClient("meta/segments.json")).Returns(metaBlob.Object);
+
+                // Default: no reset marker exists. Tests that exercise reset detection can
+                // override this by re-setting up c.GetBlobClient("meta/reset-latest.json")
+                // through the Container mock directly.
+                Mock<BlobClient> resetPointerBlob = new Mock<BlobClient>(MockBehavior.Loose);
+                h.Container.Setup(c => c.GetBlobClient("meta/reset-latest.json")).Returns(resetPointerBlob.Object);
+                RequestFailedException resetNotFound = new RequestFailedException(
+                    status: 404,
+                    message: "The specified blob does not exist.",
+                    errorCode: BlobErrorCode.BlobNotFound.ToString(),
+                    innerException: null);
+                resetPointerBlob.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
+                    .ThrowsAsync(resetNotFound);
+                resetPointerBlob.Setup(b => b.DownloadStreaming(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
+                    .Throws(resetNotFound);
 
                 if (metaBlobExists)
                 {

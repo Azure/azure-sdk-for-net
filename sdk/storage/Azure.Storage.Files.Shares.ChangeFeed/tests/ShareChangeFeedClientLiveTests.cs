@@ -192,7 +192,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         firstPageEventTimes.Add(e.EventTime);
                     }
                     continuationToken = page.ContinuationToken;
-                    if (firstPageEventTimes.Count >= 10) break;
+                    if (firstPageEventTimes.Count >= 10)
+                        break;
                 }
             }
             else
@@ -204,7 +205,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         firstPageEventTimes.Add(e.EventTime);
                     }
                     continuationToken = page.ContinuationToken;
-                    if (firstPageEventTimes.Count >= 10) break;
+                    if (firstPageEventTimes.Count >= 10)
+                        break;
                 }
             }
 
@@ -222,7 +224,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         {
                             secondPageEventTimes.Add(e.EventTime);
                         }
-                        if (secondPageEventTimes.Count >= 10) break;
+                        if (secondPageEventTimes.Count >= 10)
+                            break;
                     }
                 }
                 else
@@ -233,7 +236,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         {
                             secondPageEventTimes.Add(e.EventTime);
                         }
-                        if (secondPageEventTimes.Count >= 10) break;
+                        if (secondPageEventTimes.Count >= 10)
+                            break;
                     }
                 }
 

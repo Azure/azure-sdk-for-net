@@ -57,6 +57,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static ShareChangeFeedReasonType ControlEvent { get; } = new ShareChangeFeedReasonType("ControlEvent");
         /// <summary> A file was created with truncation via REST API. </summary>
         public static ShareChangeFeedReasonType RestCreateTruncate { get; } = new ShareChangeFeedReasonType("RestCreateTruncate");
+        /// <summary>
+        /// A change feed reset marker. Emitted synthetically by the SDK when the service records
+        /// a reset event (for example, HardFailover or classic account migration) in
+        /// <c>meta/reset-latest.json</c>. Log-sequence continuity is broken at this point and the
+        /// consumer must decide whether to re-baseline or continue reading past the marker.
+        /// See <see cref="ShareChangeFeedResetEvent"/>.
+        /// </summary>
+        public static ShareChangeFeedReasonType Reset { get; } = new ShareChangeFeedReasonType("Reset");
 
         public static implicit operator ShareChangeFeedReasonType(string value) => new ShareChangeFeedReasonType(value);
 

@@ -66,6 +66,22 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public ChangeFeedCursor InnerCursor { get; set; }
 
         /// <summary>
+        /// GUID of the most recent reset marker observed by this consumer, or <c>null</c> when
+        /// no reset marker has been observed. Compared against the pointer's
+        /// <see cref="ShareChangeFeedResetPointer.LatestResetId"/> at resume time to detect
+        /// resets that occurred while the caller held the token.
+        /// </summary>
+        public System.Guid? LastSeenResetId { get; set; }
+
+        /// <summary>
+        /// FILETIME ticks of the most recent reset marker observed by this consumer, or
+        /// <c>null</c> when no reset marker has been observed. FILETIME is monotonic per stamp
+        /// and is used as the actual ordering key when comparing against
+        /// <see cref="ShareChangeFeedResetPointer.LatestResetFileTime"/>.
+        /// </summary>
+        public long? LastSeenResetFileTime { get; set; }
+
+        /// <summary>
         /// Parameterless constructor for <c>JsonSerializer</c>.
         /// </summary>
         public ShareChangeFeedSnapshotCursor() { }
@@ -79,7 +95,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string endSnapshot,
             long beginCvId,
             long endCvId,
-            ChangeFeedCursor innerCursor)
+            ChangeFeedCursor innerCursor,
+            System.Guid? lastSeenResetId = null,
+            long? lastSeenResetFileTime = null)
         {
             CursorVersion = 1;
             UrlHost = urlHost;
@@ -88,6 +106,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             BeginCvId = beginCvId;
             EndCvId = endCvId;
             InnerCursor = innerCursor;
+            LastSeenResetId = lastSeenResetId;
+            LastSeenResetFileTime = lastSeenResetFileTime;
         }
     }
 }

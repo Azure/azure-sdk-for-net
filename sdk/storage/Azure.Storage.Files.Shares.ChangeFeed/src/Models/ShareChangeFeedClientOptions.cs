@@ -36,5 +36,25 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// the underlying segments may change between calls.
         /// </remarks>
         public bool IncludeNonFinalizedEvents { get; set; }
+
+        /// <summary>
+        /// Controls how the <see cref="ShareChangeFeedClient"/> reacts when it discovers a
+        /// change feed reset marker during enumeration.
+        /// </summary>
+        /// <remarks>
+        /// When <c>null</c> (the default), the client applies a per-API smart default:
+        /// batched APIs
+        /// (<see cref="ShareChangeFeedClient.GetChanges(System.DateTimeOffset?, System.DateTimeOffset?)"/>,
+        /// <see cref="ShareChangeFeedClient.GetChangesBetweenSnapshots(string, string)"/>, and
+        /// their continuation-token / async counterparts) default to
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>; streaming APIs
+        /// (<see cref="ShareChangeFeedClient.GetChanges()"/> and
+        /// <see cref="ShareChangeFeedClient.GetChanges(string)"/> plus their async counterparts)
+        /// default to <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>.
+        ///
+        /// Explicitly setting this property applies the chosen policy to every method on the
+        /// client, overriding the per-API smart default.
+        /// </remarks>
+        public ShareChangeFeedResetPolicy? ResetPolicy { get; set; }
     }
 }
