@@ -148,8 +148,7 @@ The code above will result in the creation of a `ProjectsAgentVersion` object, w
 
 #### Agent version drafts
 
-**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `DraftAgents=V1Preview`.
-The `AAIP001` warning needs to be ignored.
+**Note:** This is a preview feature; to use it the `AAIP001` warning needs to be ignored.
 
 ```C#
 #pragma warning disable AAIP001
@@ -158,35 +157,12 @@ The `AAIP001` warning needs to be ignored.
 If the Agent Version is not ready for production, it may be created with the `Draft` flag set to `true`. The draft Agent version
 is a string like `draft-1784249270168`. The draft will not be set as the Agent's latest version.
 
-To use Agents version drafts, we need to provide the `Foundry-Features` preview header with `DraftAgents=V1Preview` value in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
 Create `AgentAdministrationClient` with the draft feature enabled:
 
 ```C# Snippet:Sample_CreateAgentClient_AgentsDraft
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("DraftAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 Create a draft version:
@@ -387,8 +363,7 @@ Console.WriteLine($"The session {session2.AgentSessionId} was created.");
 
 ### External Agents
 
-**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `ExternalAgents=V1Preview`.
-The `AAIP001` warning needs to be ignored.
+**Note:** This is a preview feature; to use it the `AAIP001` warning needs to be ignored.
 
 In this example we will demonstrate management of External Agents step by step. External Agents are the third-party Agents
 hosted outside Foundry (for example, on GCP or AWS). Registration is metadata-only: Foundry records the agent definition to
@@ -520,8 +495,7 @@ while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSes
 
 ### Skills
 
-**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `Skills=V1Preview`.
-The `AAIP001` warning needs to be ignored.
+**Note:** This is a preview feature; to use it the `AAIP001` warning needs to be ignored.
 
 Skills can be used to provide portable packages of instructions for Agents. `Azure.AI.Projects.Agents` allows
 managing skills in Microsoft Foundry. Skills may be created from a folder with instructions or on-the-fly.
@@ -548,9 +522,7 @@ For more information on skills, please see the [Microsoft Learn](https://learn.m
 
 ### Agent endpoints
 
-**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
-The `AAIP001` warning needs to be ignored. In the sample below the `Foundry-Features` header needs to be `HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview`
-because we are using three experimental features: hosted agents, skills and Agent endpoints.
+**Note:** This is a preview feature; to use it the `AAIP001` warning needs to be ignored.
 
 The hosted agent can be further configured by using the `PatchAgentObject` and `PatchAgentObjectAsync` methods.
 1. Retrieve the agent
@@ -627,9 +599,7 @@ managing these tasks.
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```
 
