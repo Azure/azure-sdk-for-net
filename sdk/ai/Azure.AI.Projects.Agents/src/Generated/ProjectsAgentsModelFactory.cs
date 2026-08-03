@@ -15,35 +15,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ProjectsAgentsModelFactory
     {
-        /// <summary> The ProjectsAgentRecord. </summary>
-        /// <param name="id"> The unique identifier of the agent. </param>
-        /// <param name="name"> The name of the agent. </param>
-        /// <param name="state"> The operational state of the agent. Controls whether the agent endpoint accepts or rejects requests. </param>
-        /// <param name="stateSource"> The source of the agent's operational state. When the agent is disabled, indicates where the disabled state originates from. Empty when not derived from a specific source. </param>
-        /// <param name="versions"> The latest version of the agent. </param>
-        /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
-        /// <param name="instanceIdentity"> The instance identity of the agent. </param>
-        /// <param name="blueprint"> The blueprint for the agent. </param>
-        /// <param name="blueprintReference"> The blueprint for the agent. </param>
-        /// <param name="agentCard"></param>
-        /// <returns> A new <see cref="Agents.ProjectsAgentRecord"/> instance for mocking. </returns>
-        public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
-        {
-            return new ProjectsAgentRecord(
-                "agent",
-                id,
-                name,
-                state,
-                stateSource,
-                versions,
-                agentEndpoint,
-                instanceIdentity,
-                blueprint,
-                blueprintReference,
-                agentCard,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The AgentObjectVersions. </summary>
         /// <param name="latest"></param>
         /// <returns> A new <see cref="Agents.AgentObjectVersions"/> instance for mocking. </returns>
@@ -1008,7 +979,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -1082,6 +1053,36 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs,
                 additionalBinaryDataProperties: null,
                 internalContainer);
+        }
+
+        /// <summary> A file search tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
+        /// <param name="rankingOptions"> Ranking options for search. </param>
+        /// <param name="filters"></param>
+        /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
+        /// <returns> A new <see cref="Agents.FileSearchToolboxTool"/> instance for mocking. </returns>
+        public static FileSearchToolboxTool FileSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, long? maxNumResults = default, object rankingOptions = default, BinaryData filters = default, IEnumerable<string> vectorStoreIds = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            vectorStoreIds ??= new ChangeTrackingList<string>();
+
+            return new FileSearchToolboxTool(
+                ToolboxToolType.FileSearch,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                maxNumResults,
+                rankingOptions,
+                filters,
+                vectorStoreIds.ToList());
         }
 
         /// <summary> A web search tool stored in a toolbox. </summary>
@@ -1790,7 +1791,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
         {
-            return ProjectsAgentRecord(id: id, name: name, state: default, stateSource: default, versions: default, agentEndpoint: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentCard: default);
+            return ProjectsAgentRecord(id: id, name: name, state: default);
         }
 
         /// <summary> The ProjectsAgentVersion. </summary>
@@ -1812,38 +1813,6 @@ namespace Azure.AI.Projects.Agents
         public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
         {
             return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, draft: default, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuidInternal: default);
-        }
-
-        /// <summary> The hosted agent definition. </summary>
-        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
-        /// <param name="tools">
-        /// An array of tools the hosted agent's model may call while generating a response. You
-        ///             can specify which tool to use by setting the `tool_choice` parameter.
-        /// </param>
-        /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
-        /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
-        /// <param name="memory"> The memory configuration for the hosted agent. </param>
-        /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
-        /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
-        /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<Agents.ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
-        {
-            tools ??= new ChangeTrackingList<Agents.ProjectsAgentTool>();
-            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
-            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HostedAgentDefinition(
-                ProjectsAgentKind.Hosted,
-                contentFilterConfiguration,
-                additionalBinaryDataProperties: null,
-                cpu,
-                memory,
-                environmentVariables,
-                default,
-                versions.ToList(),
-                default,
-                default);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

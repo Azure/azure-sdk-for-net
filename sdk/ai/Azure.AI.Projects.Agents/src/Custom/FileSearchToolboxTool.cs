@@ -7,8 +7,5 @@ namespace Azure.AI.Projects.Agents;
 
 public partial class FileSearchToolboxTool
 {
-    [CodeGenMember("RankingOptions")]
-    internal InternalRankingOptions RankingOptionsInternal { get; set; }
-
-    internal FileSearchToolRankingOptions RankingOptions { get => RankingOptionsInternal; set => InternalRankingOptions.AsInternalRankingOptions(value); }
+    //internal FileSearchToolRankingOptions RankingOptions { get => RankingOptionsInternal; set => InternalRankingOptions.AsInternalRankingOptions(value); }
 }

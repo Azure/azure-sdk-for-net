@@ -76,10 +76,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("max_num_results"u8);
                 writer.WriteNumberValue(MaxNumResults.Value);
             }
-            if (Optional.IsDefined(RankingOptionsInternal))
+            if (Optional.IsDefined(RankingOptions))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(RankingOptionsInternal, options);
+                writer.WriteObjectValue<object>(RankingOptions, options);
             }
             if (Optional.IsDefined(Filters))
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? maxNumResults = default;
-            InternalRankingOptions rankingOptionsInternal = default;
+            object rankingOptions = default;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
             foreach (var prop in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    rankingOptionsInternal = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
+                    rankingOptions = prop.Value.GetObject();
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -236,7 +236,7 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
                 maxNumResults,
-                rankingOptionsInternal,
+                rankingOptions,
                 filters,
                 vectorStoreIds ?? new ChangeTrackingList<string>());
         }

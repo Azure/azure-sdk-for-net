@@ -58,6 +58,5 @@ public partial class ProjectsAgentRecord
 [CodeGenType("ComputerTool")] internal partial class InternalComputerTool { }
 [CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }
 [CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
-[CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }
 [CodeGenType("ToolSearchExecutionType")] public partial struct ToolSearchExecutionKind { }
 [CodeGenType("AgentObjectVersions")] public partial class AgentObjectVersions { }

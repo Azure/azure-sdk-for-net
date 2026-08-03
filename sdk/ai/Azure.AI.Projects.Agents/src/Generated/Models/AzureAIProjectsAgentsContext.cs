@@ -11,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(A2APreviewTool))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.A2APreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(A2APreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.A2APreviewToolboxTool is experimental and may change in future versions.
@@ -34,7 +33,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentsSkill))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentVersionFromCodeMetadata))]
-    [ModelReaderWriterBuildable(typeof(AzureAISearchTool))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolboxTool))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolIndex))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolOptions))]
@@ -93,7 +91,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
-    [ModelReaderWriterBuildable(typeof(InternalRankingOptions))]
     [ModelReaderWriterBuildable(typeof(InternalUpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InvocationsProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(InvocationsWsProtocolConfiguration))]

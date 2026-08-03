@@ -364,7 +364,7 @@ public class AgentsTests : AgentsTestBase
         // Use the tool to create an Agent
         DeclarativeAgentDefinition definition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
-            Tools = { ProjectsAgentTool.AsProjectTool(toolBox.Tools[0]) }
+            Tools = { toolBox.Tools[0] }
         };
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(definition));
         if (agentVersion.Definition is DeclarativeAgentDefinition declarativeDefinition)
