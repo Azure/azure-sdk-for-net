@@ -3,14 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
-    ///
+    /// Extension class to add custom Azure tools to the list of OpenAI tool types.
     /// </summary>
+    [Experimental("OPENAI001")]
     public static class ResponseToolKindExtensions
     {
         extension(ResponseToolKind)

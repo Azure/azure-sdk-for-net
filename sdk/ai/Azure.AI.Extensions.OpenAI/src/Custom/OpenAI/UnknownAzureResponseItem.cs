@@ -19,6 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// the matching generated <c>Deserialize*</c> method, falling back to OpenAI's own deserialization for kinds
     /// it does not recognize.
     /// </summary>
+    [Experimental("OPENAI001")]
     internal partial class UnknownAzureResponseItem : ResponseItem
     {
         // The single source of truth for the Azure-specific item discriminators this package can strongly type.

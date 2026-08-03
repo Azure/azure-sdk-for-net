@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
 using OpenAI.Responses;
@@ -19,6 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// the matching generated <c>Deserialize*</c> method, falling back to OpenAI's own deserialization for kinds it
     /// does not recognize. It mirrors <see cref="UnknownAzureResponseItem"/> for the tool axis.
     /// </summary>
+    [Experimental("OPENAI001")]
     internal partial class UnknownAzureResponseTool : ResponseTool
     {
         // The single source of truth for the Azure-specific tool discriminators this package can strongly type.

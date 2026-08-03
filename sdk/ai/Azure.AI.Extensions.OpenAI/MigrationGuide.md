@@ -294,5 +294,5 @@ change in a later release.
 
 If you hit a migration issue not covered here, please
 [open an issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose) with the
-`Azure.AI.Extensions.OpenAI` label. See the [CHANGELOG](CHANGELOG.md) for the complete list of
+`Azure.AI.Extensions.OpenAI` label. See the [CHANGELOG](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/CHANGELOG.md) for the complete list of
 changes in this release.

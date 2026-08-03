@@ -12,6 +12,7 @@ namespace Azure.AI.Extensions.OpenAI;
 /// opaque Azure response items in each streaming update into their strongly-typed subtypes as the
 /// stream is consumed.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class NormalizingAsyncStreamingCollectionResult : AsyncCollectionResult<StreamingResponseUpdate>
 {
     private readonly AsyncCollectionResult<StreamingResponseUpdate> _innerResult;

@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 
@@ -27,6 +28,7 @@ public static partial class AzureAIExtensions
     /// <summary> Converts an OpenAI response item into an agent response item. </summary>
     /// <param name="responseItem"> The OpenAI response item to convert. </param>
     /// <returns> The agent response item representation. </returns>
+    [Experimental("OPENAI001")]
     internal static ResponseItem AsAgentResponseItem(this ResponseItem responseItem)
     {
         BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
@@ -48,6 +50,7 @@ public static partial class AzureAIExtensions
 
     // Round-trips a tool through the Azure context so a tool that OpenAI could not strongly type re-dispatches
     // to its concrete Azure subtype, mirroring AsAgentResponseItem for the tool axis.
+    [Experimental("OPENAI001")]
     private static ResponseTool AsAgentResponseTool(ResponseTool responseTool)
     {
         BinaryData serializedTool = ModelReaderWriter.Write(responseTool, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
@@ -56,12 +59,14 @@ public static partial class AzureAIExtensions
 
     // Whether an already-materialized tool still needs client-side normalization, keyed off the known Azure tool
     // discriminator set (see NeedsAgentItemNormalization for the rationale).
+    [Experimental("OPENAI001")]
     private static bool NeedsAgentToolNormalization(ResponseTool tool)
         => tool is not null
             && UnknownAzureResponseTool.TryGetAzureToolType(tool.Kind, out Type azureType)
             && !azureType.IsInstanceOfType(tool);
 
     // Returns the strongly-typed Azure subtype for a tool that needs it, or the tool unchanged otherwise.
+    [Experimental("OPENAI001")]
     private static ResponseTool NormalizeAgentResponseTool(ResponseTool tool)
         => NeedsAgentToolNormalization(tool) ? AsAgentResponseTool(tool) : tool;
 
@@ -103,6 +108,7 @@ public static partial class AzureAIExtensions
     /// tool list in place. Non-Azure unknowns round-trip back to the same opaque type, so this is a
     /// no-op for them. Temporary client-side bridge, mirroring <see cref="NormalizeAgentOutputItems"/>.
     /// </summary>
+    [Experimental("OPENAI001")]
     internal static void NormalizeAgentTools(ResponseResult response)
     {
         if (response is null)
@@ -189,6 +195,60 @@ public static partial class AzureAIExtensions
         public string AgentConversationId => response.Patch.GetStringEx("$.conversation.id"u8);
     }
 
+    // ResponsesClient
+    /// <summary> Creates a response for an existing project conversation and agent. </summary>
+    /// <param name="responseClient"> The response client used to send the request. </param>
+    /// <param name="conversation"> The project conversation to continue. </param>
+    /// <param name="agentRef"> The agent that should create the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
+    public static ClientResult<ResponseResult> CreateResponse(this ResponsesClient responseClient, ConversationResource conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    {
+        using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
+        ClientResult protocolResult = responseClient.CreateResponse(
+            content,
+            cancellationToken.ToRequestOptions() ?? new RequestOptions());
+        ResponseResult convenienceValue = (ResponseResult)protocolResult;
+        NormalizeAgentResponse(convenienceValue);
+        return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
+    }
+
+    /// <summary> Asynchronously creates a response for an existing project conversation and agent. </summary>
+    /// <param name="responseClient"> The response client used to send the request. </param>
+    /// <param name="conversation"> The project conversation to continue. </param>
+    /// <param name="agentRef"> The agent that should create the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
+    public static async Task<ClientResult<ResponseResult>> CreateResponseAsync(this ResponsesClient responseClient, ConversationResource conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    {
+        using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
+        ClientResult protocolResult = await responseClient.CreateResponseAsync(
+            content,
+            cancellationToken.ToRequestOptions() ?? new RequestOptions()).ConfigureAwait(false);
+        ResponseResult convenienceValue = (ResponseResult)protocolResult;
+        NormalizeAgentResponse(convenienceValue);
+        return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
+    }
+
+    [Experimental("OPENAI001")]
+    private static BinaryContent RemoveItems(ConversationResource conversation, AgentReference agentRef)
+    {
+        CreateResponseOptions responseOptions = new()
+        {
+        };
+        SetCreateResponseAgent(responseOptions, agentRef);
+        SetCreateResponseAgentConversationId(responseOptions, conversation.Id);
+        using BinaryContent contentBytes = BinaryContent.Create(responseOptions, ModelSerializationExtensions.WireOptions);
+        using var stream = new MemoryStream();
+        contentBytes.WriteTo(stream);
+        string json = Encoding.UTF8.GetString(stream.ToArray());
+        JsonObject options = JsonObject.Parse(json).AsObject();
+        options.Remove("input");
+        return BinaryContent.CreateJson(options.ToJsonString());
+    }
+
     /// <summary> Gets the Azure file status value recorded on an OpenAI file. </summary>
     /// <param name="file"> The OpenAI file to inspect. </param>
     /// <returns> The Azure file status, or null when no status is available. </returns>
@@ -210,20 +270,32 @@ public static partial class AzureAIExtensions
         return null;
     }
 
+    internal static AgentReference GetCreateResponseAgent(CreateResponseOptions options)
+        => options.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
+
+    internal static void SetCreateResponseAgent(CreateResponseOptions options, AgentReference value)
+        => options.Patch.SetOrClearEx("$.agent_reference"u8, "$.agent_reference"u8, value);
+
+    internal static string GetCreateResponseAgentConversationId(CreateResponseOptions options)
+        => options.Patch.GetStringEx("$.conversation.id"u8);
+
+    internal static void SetCreateResponseAgentConversationId(CreateResponseOptions options, string value)
+        => options.Patch.SetOrClearEx("$.conversation.id"u8, "$.conversation"u8, value);
+
     extension(CreateResponseOptions options)
     {
         /// <summary> Gets or sets the agent associated with the response options. </summary>
         public AgentReference Agent
         {
-            get => options.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-            set => options.Patch.SetOrClearEx("$.agent_reference"u8, "$.agent_reference"u8, value);
+            get => GetCreateResponseAgent(options);
+            set => SetCreateResponseAgent(options, value);
         }
 
         /// <summary> Gets or sets the agent conversation ID associated with the response options. </summary>
         public string AgentConversationId
         {
-            get => options.Patch.GetStringEx("$.conversation.id"u8);
-            set => options.Patch.SetOrClearEx("$.conversation.id"u8, "$.conversation"u8, value);
+            get => GetCreateResponseAgentConversationId(options);
+            set => SetCreateResponseAgentConversationId(options, value);
         }
     }
 }

@@ -33,8 +33,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (_cache.TryRead(out Uri? redirectUri))
             {
-                // Set up for the redirect
-                request.Uri.Reset(redirectUri);
+                if (RedirectPolicyHelper.IsTrustedIngestionRedirect(request.Uri.ToUri(), redirectUri))
+                {
+                    // Set up for the redirect
+                    request.Uri.Reset(redirectUri);
+                }
             }
 
             if (async)
@@ -54,6 +57,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (!TryGetRedirectUri(response, out redirectUri))
                 {
                     AzureMonitorExporterEventSource.Log.RedirectHeaderParseFailed();
+                    break;
+                }
+
+                if (!RedirectPolicyHelper.IsTrustedIngestionRedirect(request.Uri.ToUri(), redirectUri))
+                {
                     break;
                 }
 

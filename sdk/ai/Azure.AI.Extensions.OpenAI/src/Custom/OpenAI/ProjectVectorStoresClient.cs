@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 using OpenAI.VectorStores;
 
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Provides vector store operations for an Azure AI project through the OpenAI vector store API. </summary>
+[Experimental("OPENAI001")]
 public partial class ProjectVectorStoresClient : VectorStoreClient
 {
     internal ProjectVectorStoresClient(ClientPipeline pipeline, OpenAIClientOptions options)

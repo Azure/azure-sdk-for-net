@@ -39,6 +39,7 @@ internal sealed class StreamingTelemetryContext
         _toolOutputs = toolOutputs;
     }
 
+    [Experimental("OPENAI001")]
     internal static StreamingTelemetryContext Create(CreateResponseOptions options, Uri endpoint, string defaultModelName)
     {
         OpenTelemetryResponseScope.ExtractOptionsContext(options, defaultModelName, out string agentName, out string agentId, out string model, out string conversationId, out var inputTexts, out var toolOutputs);

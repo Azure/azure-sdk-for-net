@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
-    ///
+    /// Extension class to add Azure specific items to the OpenAI item kind extensible enumeration.
     /// </summary>
+    [Experimental("OPENAI001")]
     public static class ResponseItemKindExtensions
     {
         extension(global::OpenAI.Responses.ResponseItemKind)

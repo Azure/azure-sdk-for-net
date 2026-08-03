@@ -45,9 +45,11 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal OAuthConsentRequestResponseItem(string id, AgentReference agentReference, string responseId, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OAuthConsentRequest)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         InternalConsentLink = internalConsentLink;
         ServerLabel = serverLabel;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        Id = id;
     }
 
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
@@ -66,6 +68,7 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal OAuthConsentRequestResponseItem(ResponseItemKind type, string id, AgentReference agentReference, string responseId, string itemId, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         Id = itemId;
         InternalConsentLink = internalConsentLink;
         ServerLabel = serverLabel;

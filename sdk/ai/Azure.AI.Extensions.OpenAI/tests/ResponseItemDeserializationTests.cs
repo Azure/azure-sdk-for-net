@@ -68,8 +68,9 @@ public class ResponseItemDeserializationTests
         string json = $$"""{ "type": "{{discriminator.ToString()}}" }""";
 
         ResponseItem item = ModelReaderWriter.Read<ResponseItem>(BinaryData.FromString(json));
+#pragma warning disable OPENAI001
         ResponseItem agentItem = item.AsAgentResponseItem();
-
+#pragma warning restore OPENAI001
         Assert.That(agentItem, Is.InstanceOf(expectedType), $"AsAgentResponseItem for '{discriminator}' should yield {expectedType.Name} but was {agentItem?.GetType().Name}.");
     }
 }

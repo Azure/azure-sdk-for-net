@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using System.Threading;
 using OpenAI;
@@ -16,9 +17,12 @@ namespace Azure.AI.Extensions.OpenAI;
 /// <summary> Provides OpenAI clients scoped to an Azure AI project. </summary>
 public partial class ProjectOpenAIClient : OpenAIClient
 {
+    [Experimental("OPENAI001")]
     private ProjectConversationsClient _cachedConversationClient;
+    [Experimental("OPENAI001")]
     private ProjectResponsesClient _cachedResponseClient;
     private ProjectFilesClient _cachedFileClient;
+    [Experimental("OPENAI001")]
     private ProjectVectorStoresClient _cachedVectorStoreClient;
 
     private readonly ProjectOpenAIClientOptions _options;
@@ -81,11 +85,13 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <summary> Gets the project conversations client as the default conversation client. </summary>
     /// <returns> The project conversations client. </returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Experimental("OPENAI001")]
     public override ConversationClient GetConversationClient()
         => GetProjectConversationsClient();
 
     /// <summary> Gets a client for project conversation operations. </summary>
     /// <returns> The project conversations client. </returns>
+    [Experimental("OPENAI001")]
     public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
         return Volatile.Read(ref _cachedConversationClient)
@@ -109,6 +115,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     /// <summary> Gets a client for project vector store operations. </summary>
     /// <returns> The project vector stores client. </returns>
+    [Experimental("OPENAI001")]
     public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
         return Volatile.Read(ref _cachedVectorStoreClient)
@@ -118,6 +125,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     /// <summary> Gets a client for project response operations. </summary>
     /// <returns> The project responses client. </returns>
+    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClient()
     {
         return Volatile.Read(ref _cachedResponseClient)
@@ -129,6 +137,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <returns> The project responses client configured with the default agent. </returns>
+    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgent(AgentReference defaultAgent, string defaultConversationId = null)
     {
         Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));
@@ -144,6 +153,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <param name="options"> The options used to configure the project responses client. </param>
     /// <returns> The project responses client configured for the agent endpoint. </returns>
+    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, ProjectOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(agentName, nameof(agentName));
@@ -168,6 +178,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
     /// <param name="defaultModel"> The default model used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <returns> The project responses client configured with the default model. </returns>
+    [Experimental("OPENAI001")]
     public virtual ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null)
     {
         Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));

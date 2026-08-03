@@ -22,6 +22,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Additional concepts](#additional-concepts)
 - [Examples](#examples)
   - [Declarative Agents](#declarative-agents)
+    - [Agent version drafts](#agent-version-drafts)
   - [Hosted Agents](#hosted-agents)
     - [Hosted Agents from Docker images](#hosted-docker-based)
     - [Hosted Agents from Code](#hosted-code-based)
@@ -145,6 +146,78 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 The code above will result in the creation of a `ProjectsAgentVersion` object, which is the data object containing the Agent's name and version.
 
+#### Agent version drafts
+
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `DraftAgents=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
+```C#
+#pragma warning disable AAIP001
+```
+
+If the Agent Version is not ready for production, it may be created with the `Draft` flag set to `true`. The draft Agent version
+is a string like `draft-1784249270168`. The draft will not be set as the Agent's latest version.
+
+To use Agents version drafts, we need to provide the `Foundry-Features` preview header with `DraftAgents=V1Preview` value in our REST requests. It can be done using `PipelinePolicy`.
+
+```C# Snippet:Sample_Agents_ExperimentalHeader
+internal class FeaturePolicy(string feature) : PipelinePolicy
+{
+    private const string _FEATURE_HEADER = "Foundry-Features";
+
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        message.Request.Headers.Add(_FEATURE_HEADER, feature);
+        ProcessNext(message, pipeline, currentIndex);
+    }
+
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        message.Request.Headers.Add(_FEATURE_HEADER, feature);
+        await ProcessNextAsync(message, pipeline, currentIndex);
+    }
+}
+```
+
+Create `AgentAdministrationClient` with the draft feature enabled:
+
+```C# Snippet:Sample_CreateAgentClient_AgentsDraft
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AgentAdministrationClientOptions options = new();
+options.AddPolicy(new FeaturePolicy("DraftAgents=V1Preview"), PipelinePosition.PerCall);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+```
+
+Create a draft version:
+
+```C# Snippet:Sample_CreateDraft_AgentsDraft_Async
+agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent which gives wrong answers with 0.1 probability."
+};
+ProjectsAgentVersion agentVersionDraft = await agentsClient.CreateAgentVersionAsync(
+    agentName: agent.Name,
+    options: new(agentDefinition)
+    {
+        Draft = true
+    }
+);
+Console.WriteLine($"Agent created draft name: {agentVersionDraft.Name}, version: {agentVersionDraft.Version}");
+agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest.Version}.");
+```
+
+By default, draft versions are not listed. To include them, `includeDrafts` needs to be set to `true`.
+
+```C# Snippet:Sample_ListReleaseAgentsWithDrafts_AgentsDraft_Async
+Console.WriteLine($"Here are \"release\" versions of the agent {agent.Name}:");
+await foreach (ProjectsAgentVersion agentVersion in agentsClient.GetAgentVersionsAsync(agentName: agent.Name, includeDrafts: true))
+{
+    Console.WriteLine($"    {agentVersion.Version}, is draft: {agentVersion.Draft ?? false}");
+}
+```
+
 ### Hosted Agents
 
 Hosted agents simplify custom agent deployment in a fully controlled environment ([see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents)).
@@ -194,17 +267,49 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 #### Hosted Agents from Code<a id="hosted-code-based"></a>
 
 Hosted Agents can also be deployed using local code. To deploy the Agent from code, please prepare the folder with the Agent code and dependencies.
-In the example below, we use Python source code.
+In the example below, we use C# source code.
 
-1. Create a folder containing the agent code and dependencies. In our example, it should be located in the `Assets/AgentsCode` folder next to the sample itself (this folder is not provided).
-2. Copy the contents of a [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py) to the file main.py in the `Assets` folder.
-3. Create the `requirements.txt` in the `Assets` folder with the following contents.
+1. Create a project and add `Azure.AI.AgentServer.Responses` package as a dependency.
 
+```bash
+dotnet new console --name EchoAgent --output EchoAgent
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
 ```
-azure-ai-agentserver-core
-azure-ai-agentserver-invocations
-azure-ai-agentserver-responses
+
+2. Populate the code in Program.cs
+
+```C#
+using Azure.AI.AgentServer.Responses;
+using Azure.AI.AgentServer.Responses.Models;
+
+ResponsesServer.Run<EchoHandler>();
+
+public class EchoHandler : ResponseHandler
+{
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
+            });
+    }
+}
 ```
+
+3. Compile the application.
+
+```bash
+dotnet publish
+```
+
+This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
+4. Copy the contents of `publish` folder to `Assets/AgentsCode`.
+**Note:** In this example we are uploading the project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCode` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 Prepare the metadata for Agent:
 
@@ -218,9 +323,9 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
         CodeConfiguration = new(
-            runtime: "python_3_14",
-            entryPoint: ["python", "main.py"],
-            dependencyResolution: CodeDependencyResolution.RemoteBuild
+            runtime: "dotnet_10",
+            entryPoint: ["dotnet", "EchoAgent.dll"],
+            dependencyResolution: CodeDependencyResolution.Bundled
         ),
     };
     AgentVersionFromCodeMetadata metadata = new(agentDefinition);
