@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
 using NUnit.Framework;
 using Verifier = Azure.SdkAnalyzers.Tests.AzureAnalyzerVerifier<Azure.SdkAnalyzers.CodeAnalysisSuppressionAnalyzer>;
@@ -34,7 +35,7 @@ namespace Azure.SdkAnalyzers.Tests
 namespace Azure.Test {{ public class TestClient {{ }} }}
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -45,7 +46,7 @@ namespace Azure.Test {{ public class TestClient {{ }} }}
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [TestCase("AZC\\u0030007")]
@@ -56,7 +57,7 @@ namespace Azure.Test { public class TestClient { } }
 namespace Azure.Test {{ public class TestClient {{ }} }}
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -67,7 +68,7 @@ namespace Azure.Test {{ public class TestClient {{ }} }}
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -104,7 +105,7 @@ namespace Azure.Test { public class TestClient { } }
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -115,7 +116,7 @@ namespace Azure.Test { public class TestClient { } }
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -126,13 +127,11 @@ namespace Azure.Test { public class TestClient { } }
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [TestCase("SuppressMessage", "AZC0015")]
         [TestCase("SuppressMessageAttribute", "AZC0015")]
-        [TestCase("SuppressMessage", "AZC0041")]
-        [TestCase("SuppressMessageAttribute", "AZC0041")]
         public async Task ReportsSuppressionAttribute(string attributeName, string diagnosticId)
         {
             string code = $@"
@@ -144,7 +143,25 @@ namespace Azure.Test
 }}
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
+        }
+
+        [TestCase("SuppressMessage")]
+        [TestCase("SuppressMessageAttribute")]
+        public async Task DoesNotReportSelfSuppressionAttribute(string attributeName)
+        {
+            string code = $@"
+using System.Diagnostics.CodeAnalysis;
+namespace Azure.Test
+{{
+    [{attributeName}(""Usage"", ""AZC0041:Self suppression"", Justification = ""Required"")]
+    public class TestClient {{ }}
+}}
+";
+
+            // Roslyn applies SuppressMessage after analyzer execution, so an attribute targeting
+            // AZC0041 also suppresses the diagnostic raised for that same attribute.
+            await VerifyAnalyzerAsync(code);
         }
 
         [TestCase("checkId: {|AZC0041:\"AZC0015\"|}, category: \"Usage\"")]
@@ -161,7 +178,7 @@ namespace Azure.Test
 }}
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -187,7 +204,7 @@ namespace Azure.Test
 }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -199,7 +216,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -214,7 +231,7 @@ namespace Azure.Test
 }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -228,7 +245,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            await VerifyAnalyzerAsync(code);
         }
 
         [Test]
@@ -291,6 +308,16 @@ namespace Azure.Test { public class TestClient { } }
                 additionalFiles.ToImmutable(),
                 new TestOptionsProvider(projectName, markedPaths));
             return CodeAnalysisSuppressionAnalyzer.ShouldSkipProject(options, CancellationToken.None);
+        }
+
+        private static Task VerifyAnalyzerAsync(string code)
+        {
+            var test = Verifier.CreateAnalyzer(code);
+
+            // AZC0041 intentionally reports the pragma inserted by the test framework's generic
+            // suppression check, because NotConfigurable diagnostics cannot be pragma-disabled.
+            test.TestBehaviors |= TestBehaviors.SkipSuppressionCheck;
+            return test.RunAsync();
         }
 
         private sealed class InMemoryAdditionalText : AdditionalText
