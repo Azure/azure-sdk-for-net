@@ -121,7 +121,8 @@ internal static class BicepTypeMapping
         "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
         "O" or "o" => value.ToUniversalTime().ToString(RoundtripZFormat, CultureInfo.InvariantCulture),
         "R" => value.ToString("r", CultureInfo.InvariantCulture),
-        _ => FormatOrDefault(format, value.ToString("o", CultureInfo.InvariantCulture), f => value.ToString(f, CultureInfo.InvariantCulture))
+        "T" => value.ToString("HH:mm:ss", CultureInfo.InvariantCulture),
+        _ => value.ToString("o", CultureInfo.InvariantCulture)
     };
 
     private static string FormatDurationAsString(TimeSpan value, string? format) => format switch
@@ -134,7 +135,7 @@ internal static class BicepTypeMapping
         "milliseconds" => Convert.ToInt32(Math.Round(value.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
         "milliseconds-int64" => Convert.ToInt64(Math.Round(value.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
         "milliseconds-float" or "milliseconds-double" => value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
-        _ => FormatOrDefault(format, value.ToString(), f => value.ToString(f, CultureInfo.InvariantCulture))
+        _ => value.ToString()
     };
 
     private static BicepExpression FormatIntegerAsExpression(int value, string? format) =>
@@ -165,18 +166,6 @@ internal static class BicepTypeMapping
             "milliseconds-float" or "milliseconds-double" => BicepSyntax.Value(value.TotalMilliseconds),
             _ => BicepSyntax.Value(FormatDurationAsString(value, format))
         };
-
-    private static string FormatOrDefault(string format, string defaultValue, Func<string, string> formatter)
-    {
-        try
-        {
-            return formatter(format);
-        }
-        catch (FormatException)
-        {
-            return defaultValue;
-        }
-    }
 
     /// <summary>
     /// Get the value of an enum.  This is either the name of the enum value or

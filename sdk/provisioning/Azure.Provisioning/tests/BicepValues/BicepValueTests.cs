@@ -514,7 +514,7 @@ public class BicepValueTests
                 resource invalidFormat 'Test.Provider/invalidFormats@2024-01-01' = {
                   name: 'invalid-format'
                   properties: {
-                    dateTime: 'invali29'
+                    dateTime: '2026-07-29T09:30:00.0000000+00:00'
                   }
                 }
                 """);
