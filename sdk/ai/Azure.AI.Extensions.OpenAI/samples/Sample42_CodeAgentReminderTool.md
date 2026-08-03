@@ -77,6 +77,7 @@ AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentT
 ```
 
 2. For brevity we will create the method, returning the `AgentVersionFromCodeMetadata` object. It contains all environment variables needed to access toolbox from the Hosted Agent.
+**Note:** In this example we are uploading the project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCodeReminder` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 ```C# Snippet:Sample_CodeAgentReminderToolMetadata_CodeAgentReminderTool
 private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAgentName, string toolboxName, string foundryProjectEndpoint, string modelDeploymentName)
@@ -201,27 +202,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 }
 ```
 
-7. To get the response from a specific session, we need to set session ID in a header, which can be done through policy.
-
-```C# Snippet:Sample_SessionHeaderPolicy_CodeAgentReminderTool
-private class SessionHeaderPolicy(string agentSessionID) : PipelinePolicy
-{
-    private static readonly string _SESSION_HEADER = "x-agent-session-id";
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-8. Create a session and wait for it to arrive to active state.
+7. Create a session and wait for it to arrive to active state.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForSession_CodeAgentReminderTool_Sync
@@ -255,38 +236,18 @@ if (session.Status != AgentSessionStatus.Active)
 }
 ```
 
-9. Create the response client to communicate with an Agent and get the response and list the response items.
+8. Create the response client to communicate with an Agent and get the response and list the response items.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Sync
 Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = responseClient.CreateResponse(prompt);
-Console.WriteLine("Response items:");
-foreach (ResponseItem item in response.OutputItems)
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectCreateResponseOptions responseOptions = new()
 {
-    if (item is FunctionCallOutputResponseItem functionResponse)
-    {
-        Console.WriteLine($"    Function output {functionResponse.FunctionOutput}");
-    }
-    else if (item is FunctionCallResponseItem functionCall)
-    {
-        Console.WriteLine($"    Calling function {functionCall.FunctionName} with arguments {functionCall.FunctionArguments}");
-    }
-}
-Console.WriteLine(response.GetOutputText());
-responseTime = response.CreatedAt;
-```
-
-Asynchronous sample:
-```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
-Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = await responseClient.CreateResponseAsync(prompt);
+    InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
+    SessionId = session.AgentSessionId,
+};
+ResponseResult response = responseClient.CreateResponse(responseOptions);
 if (response.Error != null)
 {
     throw new InvalidOperationException($"Unable to get the response from an Agent. Error Code: {response.Error.Code}; {response.Error.Message}");
@@ -307,7 +268,37 @@ Console.WriteLine(response.GetOutputText());
 responseTime = response.CreatedAt;
 ```
 
-10. In this example the reminder tool will create a routine. Generally, it will be named as `reminder-mycodeagentremindertool-1784584974173`, however, the naming scheme may be changed. In this example, we will take a routine, which was created within one minute after the response.
+Asynchronous sample:
+```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
+Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+ProjectCreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
+    SessionId = session.AgentSessionId,
+};
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
+if (response.Error != null)
+{
+    throw new InvalidOperationException($"Unable to get the response from an Agent. Error Code: {response.Error.Code}; {response.Error.Message}");
+}
+Console.WriteLine("Response items:");
+foreach (ResponseItem item in response.OutputItems)
+{
+    if (item is FunctionCallOutputResponseItem functionResponse)
+    {
+        Console.WriteLine($"    Function output {functionResponse.FunctionOutput}");
+    }
+    else if (item is FunctionCallResponseItem functionCall)
+    {
+        Console.WriteLine($"    Calling function {functionCall.FunctionName} with arguments {functionCall.FunctionArguments}");
+    }
+}
+Console.WriteLine(response.GetOutputText());
+responseTime = response.CreatedAt;
+```
+
+9. In this example the reminder tool will create a routine. Generally, it will be named as `reminder-mycodeagentremindertool-1784584974173`, however, the naming scheme may be changed. In this example, we will take a routine, which was created within one minute after the response.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetCreatedTrigger_CodeAgentReminderTool_Sync
@@ -361,7 +352,7 @@ if (created == null)
 Console.WriteLine($"The last created routine is {created.Name}, assuming it was created by ReminderPreviewToolboxTool.");
 ```
 
-11. Create the `CheckRunResult` method, handling routine run errors.
+10. Create the `CheckRunResult` method, handling routine run errors.
 
 ```C# Snippet:Sample_CheckRunResult_CodeAgentReminderTool
 protected static void CheckRunResult(RoutineRun completedRun, int minutesWait, bool runCreated)
@@ -388,7 +379,7 @@ protected static void CheckRunResult(RoutineRun completedRun, int minutesWait, b
 }
 ```
 
-12. Wait for the routine run to complete.
+11. Wait for the routine run to complete.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForRoutine_CodeAgentReminderTool_Sync
@@ -448,7 +439,7 @@ while (DateTime.UtcNow < deadline)
 CheckRunResult(completedRun, minutesWait, runWasTriggered);
 ```
 
-13. Output the routine run status.
+12. Output the routine run status.
 
 Synchronous sample:
 ```C# Snippet:Sample_OutputStatus_CodeAgentReminderTool_Sync
@@ -476,7 +467,7 @@ Console.WriteLine($"The run has completed with status {completedRun.Status}, res
 // Console.WriteLine($"Response: {result.GetOutputText()}");
 ```
 
-14. Delete Toolbox and Agent we have created.
+13. Delete toolbox and Agent we have created.
 
 Synchronous sample:
 ```C# Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Sync
