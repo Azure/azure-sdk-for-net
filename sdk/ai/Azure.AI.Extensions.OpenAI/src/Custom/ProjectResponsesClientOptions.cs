@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Represents options for configuring a project responses client. </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
 public partial class ProjectResponsesClientOptions : ProjectOAIResponsesClientOptions
 {
     /// <summary> Initializes a new instance of <see cref="ProjectResponsesClientOptions"/>. </summary>
@@ -33,19 +36,16 @@ public partial class ProjectResponsesClientOptions : ProjectOAIResponsesClientOp
 
         ProjectResponsesClientOptions destination = new()
         {
-            // OpenAIClientOptions / ResponsesClientOptions shared surface
             Endpoint = source.Endpoint,
             OrganizationId = source.OrganizationId,
             ProjectId = source.ProjectId,
             UserAgentApplicationId = source.UserAgentApplicationId,
-            // ClientPipelineOptions base surface
             RetryPolicy = source.RetryPolicy,
             MessageLoggingPolicy = source.MessageLoggingPolicy,
             Transport = source.Transport,
             NetworkTimeout = source.NetworkTimeout,
             ClientLoggingOptions = source.ClientLoggingOptions,
             EnableDistributedTracing = source.EnableDistributedTracing,
-            // Project-specific surface
             ApiVersion = source.ApiVersion,
             AgentName = source.AgentName,
             TokenProvider = source.TokenProvider,

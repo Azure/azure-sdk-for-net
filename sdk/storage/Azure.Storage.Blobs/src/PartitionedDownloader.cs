@@ -441,16 +441,17 @@ namespace Azure.Storage.Blobs
             foreach (Func<Task<Response<BlobDownloadStreamingResult>>> getResponse in allResponses)
             {
                 partitionChecksum.Clear();
-                await CopyToInternal(await getResponse().ConfigureAwait(false), destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
+                long copied = await CopyToInternal(await getResponse().ConfigureAwait(false), destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
                 if (UseMasterCrc)
                 {
                     StorageCrc64Composer.Compose(
                         (composedCrcBuf, 0L),
-                        (partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                            ?? initialResponse.Value.Details.ContentLength)
+                        (partitionChecksum, copied)
                     ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
                 }
             }
+            await FinalizeDownloadInternal(destination, composedCrcBuf?.AsMemory(0, Crc64Len) ?? default, async, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         private async Task HandleOneShotDownload(
@@ -490,7 +491,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task CopyToInternal(
+        private async Task<long> CopyToInternal(
             Response<BlobDownloadStreamingResult> response,
             Stream destination,
             Memory<byte> checksumBuffer,
@@ -506,7 +507,7 @@ namespace Azure.Storage.Blobs
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
                 : rawSource;
 
-            await source.CopyToInternal(
+            long copied = await source.CopyToInternal(
                 destination,
                 async,
                 cancellationToken)
@@ -528,6 +529,8 @@ namespace Azure.Storage.Blobs
                     throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                 }
             }
+
+            return copied;
         }
 
         /// <summary>

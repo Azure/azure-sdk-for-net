@@ -8,6 +8,8 @@ using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
+#pragma warning disable AAIP001
+#pragma warning disable OPENAI001
 
 [Category("Smoke")]
 [Parallelizable(ParallelScope.All)]

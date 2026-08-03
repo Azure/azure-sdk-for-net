@@ -43,7 +43,8 @@ public class Sample_RoutinesGithub : SamplesRoutineBase
         #endregion
         // Clean up any pre-existing routine with the same name.
         try
-        { await routinesClient.DeleteAsync(routineName); } catch { }
+        { await routinesClient.DeleteAsync(routineName); }
+        catch { }
 
         #region Snippet:Sample_CreateRoutine_RoutinesGithub_Async
         RoutineAction action = new AgentResponsesApiRoutineAction

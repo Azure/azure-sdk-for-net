@@ -18,6 +18,7 @@ namespace Azure.AI.Extensions.OpenAI;
 #pragma warning disable SCME0001
 
 /// <summary> Provides response operations for an Azure AI project through the OpenAI responses API. </summary>
+[Experimental("OPENAI001")]
 public partial class ProjectResponsesClient : ResponsesClient
 {
     private readonly string _defaultModelName;
@@ -704,11 +705,14 @@ public partial class ProjectResponsesClient : ResponsesClient
 
     private void ApplyClientDefaults(CreateResponseOptions options)
     {
-        if (options.Agent is null && !string.IsNullOrEmpty(_defaultAgentName))
+        if (AzureAIExtensions.GetCreateResponseAgent(options) is null && !string.IsNullOrEmpty(_defaultAgentName))
         {
-            options.Agent = new AgentReference(_defaultAgentName, _defaultAgentVersion);
+            AzureAIExtensions.SetCreateResponseAgent(options, new AgentReference(_defaultAgentName, _defaultAgentVersion));
         }
-        options.AgentConversationId ??= _defaultConversationId;
+        if (AzureAIExtensions.GetCreateResponseAgentConversationId(options) is null)
+        {
+            AzureAIExtensions.SetCreateResponseAgentConversationId(options, _defaultConversationId);
+        }
         if (options.Model is null)
         {
             if (!string.IsNullOrEmpty(_defaultModelName))

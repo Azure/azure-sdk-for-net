@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -14,6 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// </summary>
     internal sealed class ResponseToolKindTypeBuilder : ModelReaderWriterTypeBuilder
     {
+        [Experimental("OPENAI001")]
         protected override Type BuilderType => typeof(ResponseToolKind);
 
         protected override object CreateInstance() => new ResponseToolKindModel();

@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -16,6 +17,7 @@ namespace Azure.AI.Extensions.OpenAI
         //  - ResponseItemKind / ResponseToolKind: referenced extensible enums with no IPersistableModel
         //    implementation, which generated discriminator reads route through ModelReaderWriter.
         // These factories are consulted before the referenced OpenAI context, so they take precedence.
+        [Experimental("OPENAI001")]
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
         {
             factories[typeof(ResponseItem)] = static () => new AzureResponseItemTypeBuilder();
