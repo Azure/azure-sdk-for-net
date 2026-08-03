@@ -527,6 +527,98 @@ namespace Azure.Storage.Blobs
             return await SetHttpHeadersAsync(timeout, blobCacheControl, blobContentType, blobContentMd5, blobContentEncoding, blobContentLanguage, leaseId, blobContentDisposition, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// [Protocol Method] Set the immutability policy on the specified blob.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetImmutabilityPolicy(DateTimeOffset immutabilityPolicyExpiry, int? timeout = default, RequestConditions requestConditions = default, string immutabilityPolicyMode = default, string snapshot = default, string versionId = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.SetImmutabilityPolicy");
+            scope.Start();
+            try
+            {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+                if (requestConditions?.IfModifiedSince != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
+                }
+
+                using HttpMessage message = CreateSetImmutabilityPolicyRequest(immutabilityPolicyExpiry, timeout, requestConditions, immutabilityPolicyMode, snapshot, versionId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Set the immutability policy on the specified blob.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="immutabilityPolicyExpiry"> The date-time that indicates the time at which the blob immutability policy will expire. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetImmutabilityPolicyAsync(DateTimeOffset immutabilityPolicyExpiry, int? timeout = default, RequestConditions requestConditions = default, string immutabilityPolicyMode = default, string snapshot = default, string versionId = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlobRestClient.SetImmutabilityPolicy");
+            scope.Start();
+            try
+            {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+                if (requestConditions?.IfModifiedSince != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.");
+                }
+
+                using HttpMessage message = CreateSetImmutabilityPolicyRequest(immutabilityPolicyExpiry, timeout, requestConditions, immutabilityPolicyMode, snapshot, versionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Set the immutability policy on the specified blob. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
