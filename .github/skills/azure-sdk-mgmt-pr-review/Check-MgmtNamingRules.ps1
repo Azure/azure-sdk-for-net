@@ -284,190 +284,6 @@ function Get-TopLevelDefaultSeparator([string]$parameterText) {
     return -1
 }
 
-function Remove-LeadingAttributes([string]$text) {
-    $result = $text.TrimStart()
-    while ($result.StartsWith('[')) {
-        $depth = 0
-        $closeIndex = -1
-        for ($index = 0; $index -lt $result.Length; $index++) {
-            if ($result[$index] -eq '[') {
-                $depth++
-            } elseif ($result[$index] -eq ']') {
-                $depth--
-                if ($depth -eq 0) {
-                    $closeIndex = $index
-                    break
-                }
-            }
-        }
-
-        if ($closeIndex -lt 0) {
-            break
-        }
-
-        $result = $result.Substring($closeIndex + 1).TrimStart()
-    }
-
-    return $result
-}
-
-function Get-NormalizedMemberIdentity([string]$memberName) {
-    if ($memberName -notmatch '^(?<name>[A-Za-z_]\w*)(?:<(?<typeParameters>.*)>)?$') {
-        return $memberName
-    }
-
-    $name = $Matches['name']
-    $genericArity = if ($Matches['typeParameters']) {
-        @(Split-TopLevelParameters $Matches['typeParameters']).Count
-    } else {
-        0
-    }
-
-    return "$name``$genericArity"
-}
-
-function Get-MethodTypeParameters([string]$memberName) {
-    if ($memberName -notmatch '^[A-Za-z_]\w*<(?<typeParameters>.*)>$') {
-        return @()
-    }
-
-    return @(Split-TopLevelParameters $Matches['typeParameters'] | ForEach-Object { $_.Trim() })
-}
-
-function Replace-MethodTypeParameters([string]$text, [string[]]$typeParameters) {
-    $result = $text
-    $parameters = @($typeParameters)
-    for ($index = 0; $index -lt $parameters.Count; $index++) {
-        $typeParameter = $parameters[$index]
-        if ($typeParameter -match '^@?[A-Za-z_]\w*$') {
-            $result = $result -creplace "(?<![\w@.:])$([regex]::Escape($typeParameter))(?!\w)", "!$index"
-        }
-    }
-
-    return $result
-}
-
-function Get-ApiReferenceTypeNames([string[]]$apiLines) {
-    $referenceTypes = [System.Collections.Generic.Dictionary[string, bool]]::new(
-        [System.StringComparer]::Ordinal
-    )
-    $namespace = ''
-
-    foreach ($line in $apiLines) {
-        if ($line -match '^\s*namespace\s+([\w.]+)') {
-            $namespace = $Matches[1]
-            continue
-        }
-
-        if ($line -match '^\s*public\s+(?:(?:partial|abstract|static|sealed|readonly)\s+)*(?:class|interface|record\s+class|record(?!\s+struct))\s+(?<name>\w+)') {
-            $referenceTypes["$namespace.$($Matches['name'])"] = $true
-        }
-    }
-
-    return $referenceTypes
-}
-
-function Test-KnownReferenceType(
-    [string]$typeName,
-    [string]$namespace,
-    $referenceTypes,
-    $referenceTypeParameters,
-    [int]$genericArity = 0
-) {
-    if ($typeName -cmatch '^(?:string|object|dynamic|System\.String|System\.Object)$') {
-        return $true
-    }
-    if ($referenceTypeParameters.ContainsKey($typeName)) {
-        return $true
-    }
-
-    $qualifiedType = if ($typeName.Contains('.')) {
-        $typeName
-    } else {
-        "$namespace.$typeName"
-    }
-    if ($referenceTypes.ContainsKey($qualifiedType)) {
-        return $true
-    }
-
-    if ($typeName.Contains('.')) {
-        $runtimeTypeName = if ($genericArity -gt 0) { "$typeName``$genericArity" } else { $typeName }
-        $runtimeType = [Type]::GetType($runtimeTypeName, $false)
-        if (-not $runtimeType) {
-            foreach ($assembly in [AppDomain]::CurrentDomain.GetAssemblies()) {
-                $runtimeType = $assembly.GetType($runtimeTypeName, $false)
-                if ($runtimeType) {
-                    break
-                }
-            }
-        }
-        return $runtimeType -and -not $runtimeType.IsValueType
-    }
-
-    return $false
-}
-
-function Normalize-NullableAnnotations(
-    [string]$typeText,
-    [string]$namespace,
-    $referenceTypes,
-    $referenceTypeParameters
-) {
-    $result = [regex]::Replace(
-        $typeText,
-        '(?<type>@?[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\?',
-        {
-            param($match)
-            if (Test-KnownReferenceType $match.Groups['type'].Value $namespace $referenceTypes $referenceTypeParameters) {
-                return $match.Groups['type'].Value
-            }
-            return $match.Value
-        }
-    )
-
-    if ($result -match '^(?<type>(?<base>@?[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)<(?<arguments>.*)>)\?$') {
-        $arity = @(Split-TopLevelParameters $Matches['arguments']).Count
-        if (Test-KnownReferenceType $Matches['base'] $namespace $referenceTypes $referenceTypeParameters $arity) {
-            $result = $Matches['type']
-        }
-    }
-
-    return ($result -replace '(\])\?$', '$1')
-}
-
-function Remove-TupleElementNames([string]$typeText) {
-    $result = ''
-    for ($index = 0; $index -lt $typeText.Length; $index++) {
-        if ($typeText[$index] -ne '(') {
-            $result += $typeText[$index]
-            continue
-        }
-
-        $closeIndex = Find-MatchingParenthesis $typeText $index
-        if ($closeIndex -lt 0) {
-            $result += $typeText.Substring($index)
-            break
-        }
-
-        $inner = Remove-TupleElementNames $typeText.Substring($index + 1, $closeIndex - $index - 1)
-        $elements = @(Split-TopLevelParameters $inner)
-        if ($elements.Count -gt 1) {
-            $inner = (($elements | ForEach-Object {
-                $elementType = $_.Trim()
-                if ($elementType -match '^(?<type>.+?)\s+@?[A-Za-z_]\w*$') {
-                    $elementType = $Matches['type']
-                }
-                $elementType
-            }) -join ',')
-        }
-
-        $result += "($inner)"
-        $index = $closeIndex
-    }
-
-    return $result
-}
-
 function Find-MatchingParenthesis([string]$text, [int]$openIndex) {
     $depth = 0
     for ($index = $openIndex; $index -lt $text.Length; $index++) {
@@ -484,72 +300,10 @@ function Find-MatchingParenthesis([string]$text, [int]$openIndex) {
     return -1
 }
 
-function Get-GenericConstraintInfo([string]$line, [string[]]$typeParameters) {
-    $referenceTypeParameters = [System.Collections.Generic.Dictionary[string, bool]]::new(
-        [System.StringComparer]::Ordinal
-    )
-    $constraints = [System.Collections.Generic.List[string]]::new()
-
-    foreach ($match in [regex]::Matches(
-        $line,
-        '\bwhere\s+(?<name>@?[A-Za-z_]\w*)\s*:\s*(?<value>.*?)(?=\s+where\s+|\s*\{|$)'
-    )) {
-        $name = $match.Groups['name'].Value
-        $value = $match.Groups['value'].Value.Trim()
-        if ($value -match '(^|[\s,])class\??(?=[\s,]|$)') {
-            $referenceTypeParameters[$name] = $true
-        }
-
-        $normalizedName = Replace-MethodTypeParameters $name $typeParameters
-        $normalizedValue = Replace-MethodTypeParameters $value $typeParameters
-        $normalizedValue = $normalizedValue -replace '\s+', ' '
-        $normalizedValue = $normalizedValue -replace '\s*([<>,\[\]\(\)&])\s*', '$1'
-        $constraints.Add("${normalizedName}:$normalizedValue")
-    }
-
-    return [pscustomobject]@{
-        Key                     = (@($constraints | Sort-Object) -join ';')
-        ReferenceTypeParameters = $referenceTypeParameters
-    }
-}
-
-function Get-NormalizedExtensionReceiver(
-    [string]$parameterType,
-    [string]$memberName,
-    [string]$namespace,
-    $referenceTypes,
-    $constraintInfo
-) {
-    $receiver = Remove-LeadingAttributes $parameterType
-    if ($receiver -notmatch '^this\s+(?<type>.+)$') {
-        return $null
-    }
-
-    $receiver = Remove-LeadingAttributes $Matches['type']
-    while ($receiver -match '^scoped\s+(?<type>.+)$') {
-        $receiver = Remove-LeadingAttributes $Matches['type']
-    }
-
-    while ($receiver -match '^(?:ref|in|out|readonly)\s+(?<type>.+)$') {
-        $receiver = Remove-LeadingAttributes $Matches['type']
-    }
-
-    # Canonicalize syntax that does not identify a distinct extension receiver for this
-    # ambiguity check.
-    $receiver = $receiver -replace '\s+', ' '
-    $receiver = $receiver -replace '\s*(::|[.<>,\[\]\(\)\*&])\s*', '$1'
-    $receiver = $receiver -replace '\bglobal::', ''
-    $receiver = Normalize-NullableAnnotations $receiver $namespace $referenceTypes $constraintInfo.ReferenceTypeParameters
-    $receiver = Remove-TupleElementNames $receiver
-    $receiver = Replace-MethodTypeParameters $receiver (Get-MethodTypeParameters $memberName)
-    return $receiver.Trim()
-}
-
 function Get-ApiMethodInfos([string[]]$apiLines) {
     $methods = [System.Collections.Generic.Dictionary[string, object]]::new(
         [System.StringComparer]::Ordinal
     )
-    $referenceTypes = Get-ApiReferenceTypeNames $apiLines
     $namespace = ''
     $typeName = ''
 
@@ -609,28 +363,29 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             })
         }
 
-        $typeParameters = Get-MethodTypeParameters $memberName
-        $constraintInfo = Get-GenericConstraintInfo $line $typeParameters
-        $receiverType = if ($parameters.Count -gt 0) {
-            Get-NormalizedExtensionReceiver $parameters[0].Type $memberName $namespace $referenceTypes $constraintInfo
+        $receiverType = if ($parameters.Count -gt 0 -and $parameters[0].Type -cmatch '^this\s') {
+            $parameters[0].Type
         } else {
-            $null
+            ''
         }
-        $invocationKind = if ($null -ne $receiverType) {
+        $invocationKind = if ($receiverType) {
             'extension'
         } elseif ($prefix -cmatch '(^|\s)static(\s|$)') {
             'static'
         } else {
             'instance'
         }
-        $memberIdentity = Get-NormalizedMemberIdentity $memberName
-        $overloadOwner = if ($invocationKind -eq 'extension') { $namespace } else { "$namespace|$typeName" }
-        $constraintKey = $constraintInfo.Key
+        $openBrace = $line.IndexOf('{', $closeParenthesis)
+        $constraintText = if ($openBrace -gt $closeParenthesis) {
+            ($line.Substring($closeParenthesis + 1, $openBrace - $closeParenthesis - 1) -replace '\s+', ' ').Trim()
+        } else {
+            ''
+        }
         $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
         $methods[$key] = [pscustomobject]@{
             TypeName          = $typeName
             MemberName        = $memberName
-            OverloadKey       = "$overloadOwner|$memberIdentity|$invocationKind|$receiverType|$constraintKey"
+            OverloadKey       = "$namespace|$typeName|$memberName|$invocationKind|$receiverType|$constraintText"
             IsExtensionMethod = $invocationKind -eq 'extension'
             Parameters        = $parameters.ToArray()
             Line              = $lineIndex + 1
