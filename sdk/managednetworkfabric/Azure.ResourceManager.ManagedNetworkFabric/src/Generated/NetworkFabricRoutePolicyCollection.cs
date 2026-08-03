@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkFabricRoutePolicyResource.ResourceType, out string networkFabricRoutePolicyApiVersion);
             _routePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricRoutePolicyResource.ResourceType.Namespace, Diagnostics);
-            _routePoliciesRestClient = new RoutePolicies(_routePoliciesClientDiagnostics, Pipeline, Endpoint, networkFabricRoutePolicyApiVersion ?? "2025-07-15");
+            _routePoliciesRestClient = new RoutePolicies(_routePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricRoutePolicyApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerJobAgentResource.ResourceType, out string sqlServerJobAgentApiVersion);
             _jobAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobAgentResource.ResourceType.Namespace, Diagnostics);
-            _jobAgentsRestClient = new JobAgents(_jobAgentsClientDiagnostics, Pipeline, Endpoint, sqlServerJobAgentApiVersion ?? "2025-02-01-preview");
+            _jobAgentsRestClient = new JobAgents(_jobAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobAgentApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

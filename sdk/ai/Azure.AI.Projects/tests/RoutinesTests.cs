@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Memory;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable AAIP001
@@ -310,6 +313,77 @@ public class RoutinesTests : ProjectsClientTestBase
         //Assert.That(backwards.Count, Is.EqualTo(2));
         //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         //Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [RecordedTest]
+    public async Task TestRoutineToolboxes()
+    {
+        // To re-record this test please use the hosted agent, created in the sample Sample42_CodeAgentReminderTool.md from Azure.AI.Extensions.OpenAI package.
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectsAgentRecord agentRecord = await projectClient.AgentAdministrationClient.GetAgentAsync("myCodeAgentReminderTool");
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentRecord.Name, options: responsesOptions));
+
+        ResponseResult response = await responseClient.CreateResponseAsync("Please remind me to go to lunch after one minute.");
+        Console.WriteLine("Response items:");
+        bool functionCallMet = false, functionCallOutMet = false;
+        foreach (ResponseItem item in response.OutputItems)
+        {
+            if (item is FunctionCallOutputResponseItem)
+            {
+                functionCallOutMet = true;
+            }
+            else if (item is FunctionCallResponseItem)
+            {
+                functionCallMet = true;
+            }
+        }
+        Assert.That(functionCallMet, Is.True);
+        Assert.That(functionCallOutMet, Is.True);
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        ProjectsRoutine created = null;
+        await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
+        {
+            // The routine created no earlier than response and not later than one minute after response.
+            if (routine.CreatedAt >= response.CreatedAt && routine.CreatedAt < response.CreatedAt.AddMinutes(1))
+            {
+                created = routine;
+                break;
+            }
+            // If the latest routine was created before the response, our routine was not created.
+            else if (routine.CreatedAt < response.CreatedAt)
+            {
+                break;
+            }
+        }
+        Assert.That(created, Is.Not.Null);
+        int minutesWait = 10;
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
+        RoutineRun completedRun = null;
+        while (DateTime.UtcNow < deadline)
+        {
+            await Delay(60000);
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
+            {
+                if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    completedRun = run;
+                }
+            }
+            if (completedRun is not null)
+            {
+                break;
+            }
+        }
+        Assert.That(completedRun, Is.Not.Null, $"The run did not complete within {minutesWait} minutes.");
+        Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("killed"), "The run was forcefully stopped.");
+        Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("failed"), $"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");
+        Assert.That(completedRun.Status.ToLower(), Is.EqualTo("finished"));
+        Assert.That(completedRun.ResponseId, Is.Not.Null);
     }
 
     #region Helpers

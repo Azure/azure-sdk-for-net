@@ -26,7 +26,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2026-06-06";
+        public const string DefaultSasVersion = "2026-10-06";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -243,6 +243,7 @@ namespace Azure.Storage
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
             public const string MetadataHeaderPrefix = "x-ms-meta-";
             public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
+            public const string ApacheArrowContentType = "application/vnd.apache.arrow.stream";
 
             internal static class Append
             {
@@ -312,6 +313,7 @@ namespace Azure.Storage
             public const string FilePermissionInherit = "Inherit";
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;
+            public const int DefaultGetRangeListPageSize = 10000;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
 

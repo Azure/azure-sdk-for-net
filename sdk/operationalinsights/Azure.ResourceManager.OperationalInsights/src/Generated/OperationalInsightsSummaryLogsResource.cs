@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(ResourceType, out string operationalInsightsSummaryLogsApiVersion);
             _summaryLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _summaryLogsRestClient = new SummaryLogs(_summaryLogsClientDiagnostics, Pipeline, Endpoint, operationalInsightsSummaryLogsApiVersion ?? "2025-07-01");
+            _summaryLogsRestClient = new SummaryLogs(_summaryLogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsSummaryLogsApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

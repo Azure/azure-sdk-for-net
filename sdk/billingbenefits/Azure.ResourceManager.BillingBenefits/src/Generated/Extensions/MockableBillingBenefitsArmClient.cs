@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
         private ClientDiagnostics DiscountsClientDiagnostics => _discountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(DiscountsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(DiscountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics ContributorsClientDiagnostics => _contributorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Contributors ContributorsRestClient => _contributorsRestClient ??= new Contributors(ContributorsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private Contributors ContributorsRestClient => _contributorsRestClient ??= new Contributors(ContributorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics CreditsClientDiagnostics => _creditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Credits CreditsRestClient => _creditsRestClient ??= new Credits(CreditsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private Credits CreditsRestClient => _creditsRestClient ??= new Credits(CreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics ConditionalCreditsClientDiagnostics => _conditionalCreditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConditionalCredits ConditionalCreditsRestClient => _conditionalCreditsRestClient ??= new ConditionalCredits(ConditionalCreditsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private ConditionalCredits ConditionalCreditsRestClient => _conditionalCreditsRestClient ??= new ConditionalCredits(ConditionalCreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics ConditionalCreditContributorsClientDiagnostics => _conditionalCreditContributorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConditionalCreditContributors ConditionalCreditContributorsRestClient => _conditionalCreditContributorsRestClient ??= new ConditionalCreditContributors(ConditionalCreditContributorsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private ConditionalCreditContributors ConditionalCreditContributorsRestClient => _conditionalCreditContributorsRestClient ??= new ConditionalCreditContributors(ConditionalCreditContributorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics ApplicableMaccsClientDiagnostics => _applicableMaccsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicableMaccs ApplicableMaccsRestClient => _applicableMaccsRestClient ??= new ApplicableMaccs(ApplicableMaccsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private ApplicableMaccs ApplicableMaccsRestClient => _applicableMaccsRestClient ??= new ApplicableMaccs(ApplicableMaccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         /// <summary> Gets an object representing a <see cref="ContributorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

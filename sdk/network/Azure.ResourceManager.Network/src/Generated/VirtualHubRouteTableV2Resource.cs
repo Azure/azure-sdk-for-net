@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualHubRouteTableV2ApiVersion);
             _virtualHubRouteTableV2sClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualHubRouteTableV2sRestClient = new VirtualHubRouteTableV2s(_virtualHubRouteTableV2sClientDiagnostics, Pipeline, Endpoint, virtualHubRouteTableV2ApiVersion ?? "2025-07-01");
+            _virtualHubRouteTableV2sRestClient = new VirtualHubRouteTableV2s(_virtualHubRouteTableV2sClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualHubRouteTableV2ApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

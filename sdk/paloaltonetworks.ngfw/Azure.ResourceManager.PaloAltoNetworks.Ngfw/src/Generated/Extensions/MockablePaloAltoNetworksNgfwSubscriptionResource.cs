@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 
         private ClientDiagnostics FirewallsClientDiagnostics => _firewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-08");
 
         private ClientDiagnostics LocalRulestacksClientDiagnostics => _localRulestacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-08");
 
         private ClientDiagnostics PaloAltoNetworksCloudngfwOperationsClientDiagnostics => _paloAltoNetworksCloudngfwOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PaloAltoNetworksCloudngfwOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwOperations(PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+        private PaloAltoNetworksCloudngfwOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwOperations(PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-08");
 
         /// <summary>
         /// List FirewallResource resources by subscription ID

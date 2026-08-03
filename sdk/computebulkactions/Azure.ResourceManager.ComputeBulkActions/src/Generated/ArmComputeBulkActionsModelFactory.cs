@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 using Azure.ResourceManager.Models;
@@ -379,13 +378,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static ComputeBulkActionsManagedDiskInfo ComputeBulkActionsManagedDiskInfo(ResourceIdentifier id = default, ComputeBulkActionsStorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default, ComputeBulkActionsVMDiskSecurityProfile securityProfile = default)
         {
             return new ComputeBulkActionsManagedDiskInfo(id, default, storageAccountType, diskEncryptionSetId is null ? default : new ComputeBulkActionsDiskEncryptionSetReference(diskEncryptionSetId, default), securityProfile);
-        }
-
-        /// <param name="id"> The ID of the sub-resource. </param>
-        /// <returns> A new <see cref="Models.ComputeBulkActionsDiskEncryptionSetReference"/> instance for mocking. </returns>
-        public static ComputeBulkActionsDiskEncryptionSetReference ComputeBulkActionsDiskEncryptionSetReference(ResourceIdentifier id = default)
-        {
-            return new ComputeBulkActionsDiskEncryptionSetReference(id, default);
         }
 
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ImageBuilder
         {
             TryGetApiVersion(ImageTemplateResource.ResourceType, out string imageTemplateApiVersion);
             _virtualMachineImageTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ImageTemplateResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Endpoint, imageTemplateApiVersion ?? "2025-10-01");
+            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, imageTemplateApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
