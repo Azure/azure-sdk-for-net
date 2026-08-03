@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.EventHubs
 {
@@ -16,10 +13,6 @@ namespace Azure.Provisioning.EventHubs
     public partial class EventHubsNspAccessRule : ProvisionableConstruct
     {
         private EventHubsNspAccessRuleProperties _properties;
-        private BicepValue<ResourceIdentifier> _id;
-        private BicepValue<string> _name;
-        private BicepValue<ResourceType> _type;
-        private SystemData _systemData;
 
         /// <summary> Creates a new EventHubsNspAccessRule. </summary>
         public EventHubsNspAccessRule()
@@ -36,55 +29,11 @@ namespace Azure.Provisioning.EventHubs
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                Initialize();
-                return _name;
-            }
-        }
-
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<ResourceType> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-        }
-
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
-        {
-            get
-            {
-                Initialize();
-                return _systemData;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for EventHubsNspAccessRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<EventHubsNspAccessRuleProperties>(nameof(Properties), new string[] { "properties" }, isOutput: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
-            _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

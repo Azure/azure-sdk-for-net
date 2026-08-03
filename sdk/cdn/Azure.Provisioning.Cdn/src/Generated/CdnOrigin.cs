@@ -93,45 +93,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<OriginResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<OriginProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointStatus. </summary>
-        public BicepValue<PrivateEndpointStatus> PrivateEndpointStatus
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                return Properties.PrivateEndpointStatus;
-            }
-        }
-
         /// <summary> Gets or sets the HostName. </summary>
         public BicepValue<string> HostName
         {
@@ -316,6 +277,62 @@ namespace Azure.Provisioning.Cdn
                     Properties = new OriginProperties();
                 }
                 Properties.PrivateLinkApprovalMessage = value;
+            }
+        }
+
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<OriginResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<OriginProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the PrivateEndpointStatus. </summary>
+        public BicepValue<PrivateEndpointStatus> PrivateEndpointStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                return Properties.PrivateEndpointStatus;
+            }
+        }
+
+        /// <summary> Gets or sets the HostName. </summary>
+        public new BicepValue<string> HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.HostName = value;
             }
         }
 

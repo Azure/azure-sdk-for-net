@@ -6,21 +6,16 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The definition of a parameter that can be passed to a script of a Gallery Script Version. </summary>
-    public partial class GalleryScriptParameter : ProvisionableConstruct
+    public partial class GalleryScriptParameter : GenericGalleryParameter
     {
         private BicepValue<GalleryScriptParameterType> _parameterType;
         private BicepValue<string> _minValue;
         private BicepValue<string> _maxValue;
         private BicepList<string> _enumValues;
-        private BicepValue<string> _name;
-        private BicepValue<bool> _required;
-        private BicepValue<string> _defaultValue;
-        private BicepValue<string> _description;
 
         /// <summary> Creates a new GalleryScriptParameter. </summary>
         public GalleryScriptParameter()
@@ -87,66 +82,6 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                Initialize();
-                return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Required. </summary>
-        public BicepValue<bool> Required
-        {
-            get
-            {
-                Initialize();
-                return _required;
-            }
-            set
-            {
-                Initialize();
-                _required.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultValue. </summary>
-        public BicepValue<string> DefaultValue
-        {
-            get
-            {
-                Initialize();
-                return _defaultValue;
-            }
-            set
-            {
-                Initialize();
-                _defaultValue.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GalleryScriptParameter. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -155,10 +90,6 @@ namespace Azure.Provisioning.Compute
             _minValue = DefineProperty<string>(nameof(MinValue), new string[] { "minValue" });
             _maxValue = DefineProperty<string>(nameof(MaxValue), new string[] { "maxValue" });
             _enumValues = DefineListProperty<string>(nameof(EnumValues), new string[] { "enumValues" });
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _required = DefineProperty<bool>(nameof(Required), new string[] { "required" });
-            _defaultValue = DefineProperty<string>(nameof(DefaultValue), new string[] { "defaultValue" });
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             DefineAdditionalProperties();
         }
 
