@@ -565,6 +565,7 @@ function Invoke-GenerateAndBuildSDK () {
         [string]$sdkRootPath,
         [string]$autorestConfigYaml = "",
         [string]$downloadUrlPrefix = "",
+        [string]$runMode = "",
         [object]$generatedSDKPackages
     )
     $readmeFile = $readmeAbsolutePath -replace "\\", "/"
@@ -687,7 +688,7 @@ function Invoke-GenerateAndBuildSDK () {
         # $packageName = $package.packageName
         Write-Host "projectFolder:$projectFolder"
 
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -serviceType $serviceType -runMode $runMode -generatedSDKPackages $generatedSDKPackages
     }
 }
 
@@ -919,6 +920,40 @@ function New-MgmtPackageScaffolding()
     Write-Host "Management SDK scaffolding complete for $packageName"
 }
 
+function Get-SpecPullRequestValidationPlan {
+    param(
+        [string]$srcPath,
+        [string]$projectFolder,
+        [string]$sdkRootPath
+    )
+
+    return [PSCustomObject]@{
+        PackArguments = @(
+            "pack"
+            $srcPath
+            "--configuration"
+            "Release"
+            "/p:ValidateRunApiCompat=true"
+            "/p:IncludeTests=false"
+            "/p:IncludeSamples=false"
+            "/p:IncludePerf=false"
+            "/p:IncludeStress=false"
+            "/p:IncludeIntegrationTests=false"
+        )
+        ArtifactPackArguments = @(
+            "pack"
+            $srcPath
+            "--configuration"
+            "Release"
+            "/p:RunApiCompat=false"
+        )
+        ApiExportArguments = @{
+            PackagePath = $projectFolder
+            SdkRepoPath = $sdkRootPath
+        }
+    }
+}
+
 function GeneratePackage()
 {
     param(
@@ -927,6 +962,7 @@ function GeneratePackage()
         [string]$path,
         [string]$downloadUrlPrefix="",
         [string]$serviceType="data-plane",
+        [string]$runMode="",
         [switch]$skipGenerate,
         [object]$generatedSDKPackages,
         [string]$specRepoRoot=""
@@ -978,7 +1014,83 @@ function GeneratePackage()
         if (![string]::IsNullOrWhiteSpace($version)) {
             New-ChangeLogIfNotExists -projectFolder $projectFolder -version $version
         }
-        
+
+        if ($runMode -eq "spec-pull-request") {
+            $validationPlan = Get-SpecPullRequestValidationPlan `
+                -srcPath $srcPath `
+                -projectFolder $projectFolder `
+                -sdkRootPath $sdkRootPath
+            $logFilePath = Join-Path $srcPath 'log.txt'
+            $packArguments = $validationPlan.PackArguments + @("/flp:v=m;LogFile=$logFilePath")
+
+            Write-Host "Start package-scoped Release build, pack, and API compatibility validation: $srcPath"
+            dotnet @packArguments
+            if (!$?) {
+                if (Test-Path $logFilePath) {
+                    $logFile = Get-Content -Path $logFilePath | Select-Object -SkipLast 1
+                    $regex = "error( ?):( ?)(?<breakingChange>.*) .*\["
+                    foreach ($line in $logFile) {
+                        if ($line -match $regex) {
+                            $breakingChangeItems += $matches["breakingChange"]
+                        }
+                    }
+                    if ($breakingChangeItems.Count -gt 0) {
+                        $breakingChanges = $breakingChangeItems -join ",`n"
+                        $content = "Breaking Changes: $breakingChanges"
+                        $hasBreakingChange = $true
+                    }
+                }
+
+                if ($hasBreakingChange) {
+                    Write-Host "Breaking changes detected. Packing with API compatibility disabled to produce the APIView artifact."
+                    $artifactPackArguments = $validationPlan.ArtifactPackArguments
+                    dotnet @artifactPackArguments
+                    if (!$?) {
+                        Write-Host "[WARNING] Failed to pack the existing sdk build output: $packageName for service: $service. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                        $result = "warning"
+                    }
+                } else {
+                    Write-Host "[WARNING] Failed to build and pack the sdk package: $packageName for service: $service. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    $result = "warning"
+                }
+            }
+
+            if (Test-Path $logFilePath) {
+                Remove-Item $logFilePath
+            }
+
+            Push-Location $sdkRootPath
+            $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
+            if (-not (Test-Path $artifactsPath)) {
+                Write-Host "[ERROR] Artifact folder not found for $artifactsPath. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            } else {
+                $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+            }
+
+            if ($artifacts.count -eq 0) {
+                Write-Host "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            } else {
+                $apiViewArtifact = $artifacts[0]
+            }
+            Pop-Location
+
+            if ($artifacts.count -gt 0) {
+                $fileName = Split-Path $artifacts[0] -Leaf
+                $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
+                $installInstructions = [PSCustomObject]@{
+                    full = $full
+                    lite = $full
+                }
+            }
+
+            Write-Host "Start to export api for $packageName"
+            $apiExportArguments = $validationPlan.ApiExportArguments
+            & $sdkRootPath/eng/scripts/Export-API.ps1 @apiExportArguments
+            if (!$?) {
+                Write-Host "[WARNING] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $result = "warning"
+            }
+        } else {
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
@@ -1071,6 +1183,7 @@ function GeneratePackage()
                 Remove-Item $logFilePath
             }
         }
+        }
     }
 
     $changelog = [PSCustomObject]@{
@@ -1115,6 +1228,7 @@ function UpdateExistingSDKByInputFiles()
         [string]$headSha = "",
         [string]$repoHttpsUrl,
         [string]$downloadUrlPrefix="",
+        [string]$runMode="",
         [object]$generatedSDKPackages
     )
 
@@ -1151,7 +1265,7 @@ function UpdateExistingSDKByInputFiles()
         $serviceType = $matches["serviceType"]
         $projectFolder = Join-Path $sdkRootPath $sdkPath
         $projectFolder = Resolve-Path -Path $projectFolder
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -runMode $runMode -generatedSDKPackages $generatedSDKPackages
     }
 
 }
