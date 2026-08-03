@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
@@ -14,13 +13,10 @@ namespace Azure.Provisioning.MachineLearning
     /// Base definition for datastore contents configuration.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/>, <see cref="MachineLearningAzureFileDatastore"/>, and <see cref="OneLakeDatastore"/>.
     /// </summary>
-    public partial class MachineLearningDatastoreProperties : ProvisionableConstruct
+    public partial class MachineLearningDatastoreProperties : MachineLearningResourceBase
     {
         private MachineLearningDatastoreCredentials _credentials;
         private BicepValue<bool> _isDefault;
-        private BicepValue<string> _description;
-        private BicepDictionary<string> _properties;
-        private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new MachineLearningDatastoreProperties. </summary>
         public MachineLearningDatastoreProperties()
@@ -52,60 +48,12 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<string> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MachineLearningDatastoreProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _credentials = DefineModelProperty<MachineLearningDatastoreCredentials>(nameof(Credentials), new string[] { "credentials" }, isRequired: true);
             _isDefault = DefineProperty<bool>(nameof(IsDefault), new string[] { "isDefault" }, isOutput: true);
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }
 

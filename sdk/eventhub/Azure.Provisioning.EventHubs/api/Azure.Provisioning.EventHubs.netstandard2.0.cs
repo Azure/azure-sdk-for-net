@@ -526,11 +526,7 @@ namespace Azure.Provisioning.EventHubs
     public partial class EventHubsNspAccessRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public EventHubsNspAccessRule() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.EventHubs.EventHubsNspAccessRuleProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum EventHubsNspAccessRuleDirection
