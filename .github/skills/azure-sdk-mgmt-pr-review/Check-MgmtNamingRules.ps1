@@ -493,9 +493,11 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
         }
 
         $remainingOptional = $true
+        $requiresExpandedParams = $false
         for ($index = $requiredArgumentCount; $index -lt $siblingBindable.Count; $index++) {
-            if (-not $siblingBindable[$index].IsOptional -and
-                -not $siblingBindable[$index].IsParams) {
+            if ($siblingBindable[$index].IsParams) {
+                $requiresExpandedParams = $true
+            } elseif (-not $siblingBindable[$index].IsOptional) {
                 $remainingOptional = $false
                 break
             }
@@ -508,6 +510,12 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
         # that need default substitution, so no unavoidable ambiguity remains.
         if ($siblingBindable.Count -eq $requiredArgumentCount) {
             return $false
+        }
+
+        # A candidate that is applicable only in expanded params form loses to the restored
+        # member's normal-form applicability, so it does not create ambiguity.
+        if ($requiresExpandedParams) {
+            continue
         }
 
         $hasAmbiguousSibling = $true
