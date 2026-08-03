@@ -24,8 +24,6 @@ namespace Azure.Storage.Blobs
     [CodeGenSuppress("DownloadAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(string), typeof(string), typeof(EncryptionAlgorithmTypeInternal?), typeof(string), typeof(RequestConditions), typeof(CancellationToken))]
     [CodeGenSuppress("SetImmutabilityPolicy", typeof(DateTimeOffset), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("SetImmutabilityPolicyAsync", typeof(DateTimeOffset), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("SetImmutabilityPolicy", typeof(int?), typeof(RequestConditions), typeof(DateTimeOffset?), typeof(BlobImmutabilityPolicyMode?), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("SetImmutabilityPolicyAsync", typeof(int?), typeof(RequestConditions), typeof(DateTimeOffset?), typeof(BlobImmutabilityPolicyMode?), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CreateSetImmutabilityPolicyRequest", typeof(DateTimeOffset), typeof(int?), typeof(RequestConditions), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     internal partial class BlobRestClient
     {

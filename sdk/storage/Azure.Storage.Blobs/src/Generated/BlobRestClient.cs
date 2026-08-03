@@ -527,6 +527,34 @@ namespace Azure.Storage.Blobs
             return await SetHttpHeadersAsync(timeout, blobCacheControl, blobContentType, blobContentMd5, blobContentEncoding, blobContentLanguage, leaseId, blobContentDisposition, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
+        /// <summary> Set the immutability policy on the specified blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetImmutabilityPolicy(int? timeout = default, RequestConditions requestConditions = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, string snapshot = default, string versionId = default, CancellationToken cancellationToken = default)
+        {
+            return SetImmutabilityPolicy(immutabilityPolicyExpiry, timeout, requestConditions, immutabilityPolicyMode?.ToSerialString(), snapshot, versionId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Set the immutability policy on the specified blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
+        /// <param name="immutabilityPolicyMode"> Indicates the immutability policy mode of the blob. </param>
+        /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
+        /// <param name="versionId"> Specifies the version ID of the blob. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetImmutabilityPolicyAsync(int? timeout = default, RequestConditions requestConditions = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, string snapshot = default, string versionId = default, CancellationToken cancellationToken = default)
+        {
+            return await SetImmutabilityPolicyAsync(immutabilityPolicyExpiry, timeout, requestConditions, immutabilityPolicyMode?.ToSerialString(), snapshot, versionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// [Protocol Method] Deletes the immutability policy on the specified blob.
         /// <list type="bullet">
