@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.PreviewAlertRule.Models;
 
 namespace Azure.ResourceManager.PreviewAlertRule
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.PreviewAlertRule
     [ModelReaderWriterBuildable(typeof(PreviewAlertRuleContent))]
     [ModelReaderWriterBuildable(typeof(PreviewAlertRuleRequestProperties))]
     [ModelReaderWriterBuildable(typeof(PreviewAlertRuleResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RulePreviewDimensionNameAndValue))]
     [ModelReaderWriterBuildable(typeof(RulePreviewEvaluatedPeriod))]
     [ModelReaderWriterBuildable(typeof(RulePreviewEvaluation))]
