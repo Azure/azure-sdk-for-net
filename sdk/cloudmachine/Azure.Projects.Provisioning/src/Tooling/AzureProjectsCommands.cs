@@ -10,8 +10,17 @@ using Azure.Identity;
 
 namespace Azure.Projects;
 
+/// <summary>
+/// Provides command-line extensions for initializing and managing Azure project infrastructure.
+/// </summary>
 public static class AzureProjectsCommands
 {
+    /// <summary>
+    /// Attempts to execute a project infrastructure command based on the provided arguments.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to operate on.</param>
+    /// <param name="args">The command-line arguments to process.</param>
+    /// <returns><see langword="true"/> if a command was recognized and executed; otherwise, <see langword="false"/>.</returns>
     public static bool TryExecuteCommand(this ProjectInfrastructure infrastructure, string[] args)
     {
         if (args.Length < 1)

@@ -14,6 +14,9 @@ using Azure.Provisioning.Roles;
 
 namespace Azure.Projects;
 
+/// <summary>
+/// Represents the provisioning infrastructure for an Azure project, managing features, constructs, and connections.
+/// </summary>
 [DebuggerTypeProxy(typeof(ProjectInfrastructureDebugView))]
 public partial class ProjectInfrastructure
 {
@@ -28,6 +31,9 @@ public partial class ProjectInfrastructure
     /// </summary>
     public string ProjectId { get; private set; }
 
+    /// <summary>
+    /// Gets the user-assigned managed identity for this project.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public UserAssignedIdentity Identity { get; private set; }
 
@@ -37,12 +43,23 @@ public partial class ProjectInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
 
+    /// <summary>
+    /// Gets the collection of features registered with this infrastructure.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public FeatureCollection Features => _features;
 
+    /// <summary>
+    /// Gets the connection store used to persist feature connection information.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ConnectionStore Connections => _connectionStore;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProjectInfrastructure"/> class with a specified connection store.
+    /// </summary>
+    /// <param name="connections">The connection store to use for persisting connection information.</param>
+    /// <param name="projectId">The project identifier. If <see langword="null"/>, the Id is read from or created in the project configuration.</param>
     public ProjectInfrastructure(ConnectionStore connections, string? projectId = default)
     {
         ProjectId = projectId ?? ProjectClient.ReadOrCreateProjectId();
@@ -76,22 +93,43 @@ public partial class ProjectInfrastructure
         }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProjectInfrastructure"/> class using a default <see cref="AppConfigConnectionStore"/>.
+    /// </summary>
+    /// <param name="projectId">The project identifier. If <see langword="null"/>, the Id is read from or created in the project configuration.</param>
     public ProjectInfrastructure(string? projectId = default)
         : this(new AppConfigConnectionStore(), projectId)
     { }
 
+    /// <summary>
+    /// Adds a feature to this infrastructure and emits its prerequisite features.
+    /// </summary>
+    /// <typeparam name="T">The type of feature to add.</typeparam>
+    /// <param name="feature">The feature to add.</param>
+    /// <returns>The added feature.</returns>
     public T AddFeature<T>(T feature) where T : AzureProjectFeature
     {
         feature.EmitFeatures(this);
         return feature;
     }
 
+    /// <summary>
+    /// Registers a named provisioning construct with this infrastructure.
+    /// </summary>
+    /// <param name="id">The identifier for the construct.</param>
+    /// <param name="construct">The provisioning construct to register.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void AddConstruct(string id, NamedProvisionableConstruct construct)
     {
         _constrcuts.Add(id, construct);
     }
 
+    /// <summary>
+    /// Retrieves a previously registered provisioning construct by its identifier.
+    /// </summary>
+    /// <typeparam name="T">The expected type of the construct.</typeparam>
+    /// <param name="id">The identifier of the construct to retrieve.</param>
+    /// <returns>The construct cast to <typeparamref name="T"/>.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public T GetConstruct<T>(string id) where T : NamedProvisionableConstruct
     {
@@ -102,6 +140,12 @@ public partial class ProjectInfrastructure
         throw new InvalidOperationException($"Construct of type {typeof(T).FullName} not found.");
     }
 
+    /// <summary>
+    /// Adds a required role assignment for the project identity on the specified provisionable resource.
+    /// </summary>
+    /// <param name="provisionable">The resource to assign the role on.</param>
+    /// <param name="roleName">The display name of the role.</param>
+    /// <param name="roleId">The identifier of the role definition.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void AddSystemRole(Provisionable provisionable, string roleName, string roleId)
     {
@@ -117,6 +161,11 @@ public partial class ProjectInfrastructure
         }
     }
 
+    /// <summary>
+    /// Builds the provisioning plan by emitting all registered features and constructs.
+    /// </summary>
+    /// <param name="context">Optional build options for the provisioning plan.</param>
+    /// <returns>The compiled <see cref="ProvisioningPlan"/>.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = default)
     {

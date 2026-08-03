@@ -8,6 +8,8 @@
 
 ### Breaking Changes
 
+- Renamed the `Scorer` enum to `QuestionAnsweringScorer`.
+
 ### Bugs Fixed
 
 ### Other Changes
