@@ -939,20 +939,21 @@ namespace Azure.Generator.Provisioning.Tests
                 .ToDictionary(
                     group => group.Key,
                     group => group.ToList());
+            var resourcesByIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
+            foreach (var provider in providers.Where(provider => provider.ResourceProjection is not null))
+            {
+                foreach (var resourceIdPattern in provider.ResourceProjection!.ResourceIdPatterns)
+                {
+                    resourcesByIdPattern[resourceIdPattern.SerializedPath] = provider;
+                }
+            }
 
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resources", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, providers);
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByIdPattern", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(
-                    outputLibrary,
-                    providers
-                        .Where(provider => provider.ResourceProjection is not null)
-                        .SelectMany(
-                            provider => provider.ResourceProjection!.ResourceIdPatterns,
-                            (provider, resourceIdPattern) => (resourceIdPattern.SerializedPath, provider))
-                        .ToDictionary(item => item.SerializedPath, item => item.provider));
+                .SetValue(outputLibrary, resourcesByIdPattern);
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, resourcesByModel);
