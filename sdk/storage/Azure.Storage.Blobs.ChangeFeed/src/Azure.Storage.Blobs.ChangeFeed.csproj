@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="$(AzureStorageChangeFeedCommonSources)IChangeFeedEvent.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)ChangeFeedConfiguration.cs" LinkBase="Shared\ChangeFeed" />
+    <Compile Include="$(AzureStorageChangeFeedCommonSources)ChangeFeedErrors.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)ChangeFeedExtensionsBase.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)ChangeFeedBase.cs" LinkBase="Shared\ChangeFeed" />
     <Compile Include="$(AzureStorageChangeFeedCommonSources)ChangeFeedFactoryBase.cs" LinkBase="Shared\ChangeFeed" />

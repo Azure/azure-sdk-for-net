@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             string continuation)
         {
             if (string.IsNullOrEmpty(continuation))
-                throw new ArgumentNullException(nameof(continuation));
+                throw ChangeFeedErrors.NullContinuation(nameof(continuation));
             _client = client;
             _maxTransferSize = maxTransferSize;
             _policy = policy;
