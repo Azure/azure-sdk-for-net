@@ -126,23 +126,6 @@ Write-Host "Scanning: $ApiFilePath" -ForegroundColor Cyan
 $lines = Get-Content $ApiFilePath
 $totalLines = $lines.Count
 
-# The package's source tree, used to read attributes that the API listing files drop.
-# Derive it from -PackagePath when given, otherwise from the 'api' directory holding the
-# API file (<package>/api/<package>.<tfm>.cs -> <package>/src).
-$sourceRoot = $null
-if ($PackagePath) {
-    $sourceRoot = Join-Path $PackagePath 'src'
-} else {
-    $apiParent = Split-Path -Parent (Resolve-Path $ApiFilePath)
-    if ($apiParent -and (Split-Path -Leaf $apiParent) -eq 'api') {
-        $sourceRoot = Join-Path (Split-Path -Parent $apiParent) 'src'
-    }
-}
-
-if ($sourceRoot -and -not (Test-Path $sourceRoot)) {
-    $sourceRoot = $null
-}
-
 # Load baseline API file for filtering (if provided)
 $baselineLines = @{}
 $baselineTypeKeys = @{}
@@ -386,112 +369,6 @@ function Get-BindableParameters($method) {
     return $parameters
 }
 
-function Find-MatchingParenthesis([string]$text, [int]$openIndex) {
-    if ($openIndex -lt 0) {
-        return -1
-    }
-
-    $depth = 0
-    for ($index = $openIndex; $index -lt $text.Length; $index++) {
-        if ($text[$index] -eq '(') {
-            $depth++
-        } elseif ($text[$index] -eq ')') {
-            $depth--
-            if ($depth -eq 0) {
-                return $index
-            }
-        }
-    }
-
-    return -1
-}
-
-# Collects the members that exist only to preserve a previously shipped (GA) contract.
-#
-# '[EditorBrowsable(EditorBrowsableState.Never)]' is the repo-wide marker for exactly that: a
-# hand-written shim, hidden from IntelliSense, whose signature is dictated by what already
-# shipped rather than by the current generator output. Whether such a shim takes its arguments
-# as optional or required is a deliberate authoring decision that OPTPARAM001 must not
-# second-guess -- often the shim cannot make them optional at all without colliding with its
-# replacement, and where it could, the shipped shape still wins.
-#
-# The attribute is not emitted into the api/*.cs listing files, so this has to read the package
-# source. Members are keyed by type, name and raw parameter count (extension-method receivers
-# included, matching how the API listing spells them).
-function Get-GaContractShimKeys([string]$sourceRoot) {
-    $keys = @{}
-    if (-not $sourceRoot -or -not (Test-Path $sourceRoot)) {
-        return $keys
-    }
-
-    $hiddenPattern = '\[\s*(?:System\.ComponentModel\.)?EditorBrowsable\s*\(\s*(?:System\.ComponentModel\.)?EditorBrowsableState\.Never\s*\)\s*\]'
-    $typePattern = '^\s*(?:public|internal|protected)\s+(?:(?:static|sealed|abstract|partial|readonly|unsafe|new)\s+)*(?:class|struct|record)\s+(?<name>\w+)'
-    $memberPattern = '^\s*(?:public|protected)\s+(?:(?:static|virtual|override|sealed|abstract|new|partial|async|readonly|unsafe|extern)\s+)*'
-
-    foreach ($file in Get-ChildItem -Path $sourceRoot -Filter '*.cs' -Recurse -File) {
-        $sourceLines = @(Get-Content $file.FullName)
-        $currentType = $null
-        $hidden = $false
-
-        for ($index = 0; $index -lt $sourceLines.Count; $index++) {
-            $line = $sourceLines[$index]
-
-            if ($line -match $typePattern) {
-                $currentType = $Matches['name']
-                $hidden = $false
-                continue
-            }
-
-            if ($line -match $hiddenPattern) {
-                $hidden = $true
-                continue
-            }
-
-            # Doc comments and other attributes may sit between the marker and the declaration.
-            if (-not $hidden -or -not $currentType -or $line -match '^\s*(?://|\[|$)') {
-                continue
-            }
-
-            if ($line -notmatch $memberPattern) {
-                continue
-            }
-
-            # Only methods/constructors are relevant; a hidden property has no parameter list.
-            $open = $line.IndexOf('(')
-            if ($open -lt 0) {
-                $hidden = $false
-                continue
-            }
-
-            # Signatures occasionally wrap, so keep appending lines until the parameter list closes.
-            $declaration = $line
-            $scan = $index
-            while ((Find-MatchingParenthesis $declaration $open) -lt 0 -and
-                   $scan -lt $sourceLines.Count - 1) {
-                $scan++
-                $declaration += ' ' + $sourceLines[$scan]
-            }
-
-            $hidden = $false
-
-            $close = Find-MatchingParenthesis $declaration $open
-            if ($close -lt 0) {
-                continue
-            }
-
-            if ($declaration.Substring(0, $open) -notmatch '(?<name>[A-Za-z_]\w*)\s*(?:<[^<>]*>)?\s*$') {
-                continue
-            }
-
-            $memberName = $Matches['name']
-            $parameterCount = @(Split-TopLevelParameters $declaration.Substring($open + 1, $close - $open - 1)).Count
-            $keys["$currentType|$memberName|$parameterCount"] = $true
-        }
-    }
-
-    return $keys
-}
-
 # Returns true when restoring the baseline defaults on $method would make it ambiguous with a
 # sibling overload, so OPTPARAM001 cannot be satisfied without breaking compilation.
 #
@@ -618,7 +495,6 @@ if ($BaselineApiFilePath -and
     ($ExcludeRules -notcontains 'OPTPARAM001' -or $ExcludeRules -notcontains 'OPTPARAM002')) {
     $currentMethods = Get-ApiMethodInfos $lines
     $baselineMethods = Get-ApiMethodInfos (Get-Content $BaselineApiFilePath)
-    $gaContractShims = Get-GaContractShimKeys $sourceRoot
 
     # Group the current surface by member so a flagged method can see its sibling overloads.
     $currentOverloads = @{}
@@ -656,13 +532,7 @@ if ($BaselineApiFilePath -and
             }
         }
 
-        # A parameter that went optional -> required is only a real finding when the member is
-        # actually free to take it as optional. Two cases where it is not:
-        #   * the member is a declared GA-contract shim ([EditorBrowsable(Never)] in source), or
-        #   * restoring the default would collide with a sibling overload (CS0121).
-        $shimKey = "$($currentMethod.TypeName)|$($currentMethod.MemberName)|$($currentMethod.Parameters.Count)"
         if ($optionalToRequired.Count -gt 0 -and
-            -not $gaContractShims.ContainsKey($shimKey) -and
             -not (Test-AmbiguityForcedRequired $currentMethod $optionalToRequired $currentOverloads[$currentMethod.OverloadKey])) {
             $parameterNames = ($optionalToRequired | ForEach-Object { "'$_'" }) -join ', '
             $violations.Add([NamingViolation]::new(
