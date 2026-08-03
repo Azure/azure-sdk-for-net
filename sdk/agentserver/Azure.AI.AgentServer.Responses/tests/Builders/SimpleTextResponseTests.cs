@@ -100,7 +100,7 @@ public class SimpleTextResponseTests
         Assert.That(doneItem.Status, Is.EqualTo(OpenAI.Responses.MessageStatus.Completed));
         XAssert.Single(doneItem.Content);
 
-        var finalContent = XAssert.IsType<MessageContentOutputTextContent>(doneItem.Content[0]);
+        var finalContent = XAssert.IsContentPart(doneItem.Content[0], OpenAI.Responses.ResponseContentPartKind.OutputText);
         Assert.That(finalContent.Text, Is.EqualTo("Hello, world!"));
     }
 

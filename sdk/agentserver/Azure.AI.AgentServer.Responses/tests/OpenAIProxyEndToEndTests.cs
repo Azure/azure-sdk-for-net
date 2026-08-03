@@ -16,7 +16,7 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 
-using AzureMessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
+using AzureMessageRole = OpenAI.Responses.MessageRole;
 using SdkResponseStatus = OpenAI.Responses.ResponseStatus;
 
 namespace Azure.AI.AgentServer.Responses.Tests;

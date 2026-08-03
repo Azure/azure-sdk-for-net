@@ -58,7 +58,7 @@ public class ResponseContextImplTests
             MessageRole.Assistant,
             new List<MessageContent>
             {
-                new MessageContentInputTextContent("I'm a resolved item")
+                OpenAI.Responses.ResponseContentPart.CreateInputTextPart("I'm a resolved item")
             });
 
         var provider = new StubProvider();
@@ -104,7 +104,7 @@ public class ResponseContextImplTests
         var provider = new RecordingProvider();
         provider.AddItem("ref_1", TestModels.OutputItemMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -128,7 +128,7 @@ public class ResponseContextImplTests
         var provider = new StubProvider();
         provider.AddItem("ref_middle", TestModels.OutputItemMessage(
             "ref_middle", MessageStatus.Completed, MessageRole.Assistant,
-            new List<MessageContent> { new MessageContentInputTextContent("middle ref") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("middle ref") }));
 
         var request = CreateRequestWithJsonInput("""
             [
@@ -208,7 +208,7 @@ public class ResponseContextImplTests
         var provider = new RecordingProvider();
         provider.AddItem("ref_1", TestModels.OutputItemMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -225,7 +225,7 @@ public class ResponseContextImplTests
         var provider = new RecordingProvider();
         provider.AddItem("ref_1", TestModels.OutputItemMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("resolved") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("resolved") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -397,7 +397,7 @@ public class ResponseContextImplTests
     {
         return TestModels.OutputItemMessage(
             id, MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent(text) });
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart(text) });
     }
 
     // ═══════════════════════════════════════════════════════════════════════

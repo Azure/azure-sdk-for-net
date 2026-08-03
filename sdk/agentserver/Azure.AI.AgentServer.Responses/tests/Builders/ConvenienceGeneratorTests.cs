@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -575,13 +577,14 @@ public class ConvenienceGeneratorTests
 
         Assert.That(events, Has.Count.EqualTo(2));
         var added = XAssert.IsType<ResponseOutputItemAddedEvent>(events[0]);
-        var addedItem = XAssert.IsType<StructuredOutputsOutputItem>(added.Item);
-        Assert.That(addedItem.Output.ToString(), Does.Contain("42"));
-        Assert.That(addedItem.Id, Does.StartWith("fco_"));
+        using var addedJson = JsonDocument.Parse(ModelReaderWriter.Write(added.Item).ToString());
+        Assert.That(addedJson.RootElement.GetProperty("type").GetString(), Is.EqualTo("structured_outputs"));
+        Assert.That(addedJson.RootElement.GetProperty("output").ToString(), Does.Contain("42"));
+        Assert.That(addedJson.RootElement.GetProperty("id").GetString(), Does.StartWith("fco_"));
 
         var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
-        var doneItem = XAssert.IsType<StructuredOutputsOutputItem>(done.Item);
-        Assert.That(doneItem.Output.ToString(), Does.Contain("42"));
+        using var doneJson = JsonDocument.Parse(ModelReaderWriter.Write(done.Item).ToString());
+        Assert.That(doneJson.RootElement.GetProperty("output").ToString(), Does.Contain("42"));
     }
 
     [Test]

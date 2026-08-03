@@ -282,7 +282,7 @@ public class ResponseEventStreamTests
         var stream = CreateStream();
 
         // Simulate accumulated output items
-        var textContent = new MessageContentOutputTextContent("Hello world", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart("Hello world", Array.Empty<Annotation>());
         var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
@@ -329,7 +329,7 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("partial", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart("partial", Array.Empty<Annotation>());
         var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
@@ -374,7 +374,7 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("so far", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart("so far", Array.Empty<Annotation>());
         var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,

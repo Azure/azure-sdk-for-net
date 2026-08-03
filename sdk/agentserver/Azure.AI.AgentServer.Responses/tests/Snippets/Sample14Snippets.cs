@@ -66,13 +66,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var files = items
                     .OfType<ItemMessage>()
                     .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputFileContent>()
+                    .Where(part => part.Kind == OpenAI.Responses.ResponseContentPartKind.InputFile)
                     .ToList();
 
                 string reply;
-                if (files.Count > 0 && DataUrl.TryDecodeBytes(files[0].FileData, out byte[] fileBytes))
+                if (files.Count > 0 && files[0].InputFileBytes != null)
                 {
-                    string filename = files[0].Filename ?? "unknown";
+                    byte[] fileBytes = files[0].InputFileBytes.ToArray();
+                    string filename = files[0].InputFilename ?? "unknown";
                     reply = $"Received file '{filename}' ({fileBytes.Length} bytes inline).";
                 }
                 else
@@ -108,14 +109,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var files = items
                     .OfType<ItemMessage>()
                     .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputFileContent>()
+                    .Where(part => part.Kind == OpenAI.Responses.ResponseContentPartKind.InputFile)
                     .ToList();
 
                 string reply;
-                if (files.Count > 0 && files[0].FileUrl != null)
+                if (files.Count > 0 && files[0].InputFileUri != null)
                 {
-                    string filename = files[0].Filename ?? "unknown";
-                    reply = $"Received file '{filename}' via URL: {files[0].FileUrl}";
+                    string filename = files[0].InputFilename ?? "unknown";
+                    reply = $"Received file '{filename}' via URL: {files[0].InputFileUri}";
                 }
                 else
                 {
@@ -150,14 +151,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var files = items
                     .OfType<ItemMessage>()
                     .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputFileContent>()
+                    .Where(part => part.Kind == OpenAI.Responses.ResponseContentPartKind.InputFile)
                     .ToList();
 
                 string reply;
-                if (files.Count > 0 && files[0].FileId != null)
+                if (files.Count > 0 && files[0].InputFileId != null)
                 {
-                    string filename = files[0].Filename ?? "unknown";
-                    reply = $"Received file '{filename}' with ID: {files[0].FileId}";
+                    string filename = files[0].InputFilename ?? "unknown";
+                    reply = $"Received file '{filename}' with ID: {files[0].InputFileId}";
                 }
                 else
                 {

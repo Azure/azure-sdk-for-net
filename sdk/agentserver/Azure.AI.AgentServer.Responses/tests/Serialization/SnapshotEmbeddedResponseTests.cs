@@ -28,10 +28,9 @@ public class SnapshotEmbeddedResponseTests
             role: MessageRole.Assistant,
             content: new List<MessageContent>
             {
-                new MessageContentOutputTextContent(
-                    text: "Hello",
-                    annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>()),
+                ResponseContentPart.CreateOutputTextPart(
+                    "Hello",
+                    Array.Empty<Annotation>()),
             }));
     }
 

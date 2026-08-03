@@ -62,7 +62,7 @@ public class ResponseMutationsTests
             MessageStatus.Completed,
             new MessageContent[]
             {
-                new MessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+                OpenAI.Responses.ResponseContentPart.CreateOutputTextPart("Hello ", Array.Empty<Annotation>())
             });
         response.OutputItems.Add(msg);
 
@@ -179,7 +179,7 @@ public class ResponseMutationsTests
             MessageStatus.Completed,
             new MessageContent[]
             {
-                new MessageContentOutputTextContent("Partial", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+                OpenAI.Responses.ResponseContentPart.CreateOutputTextPart("Partial", Array.Empty<Annotation>())
             });
         response.OutputItems.Add(msg);
 
@@ -252,7 +252,7 @@ public class ResponseMutationsTests
             MessageStatus.Completed,
             new MessageContent[]
             {
-                new MessageContentOutputTextContent("Partial output", Array.Empty<Annotation>(), Array.Empty<LogProb>())
+                OpenAI.Responses.ResponseContentPart.CreateOutputTextPart("Partial output", Array.Empty<Annotation>())
             });
         response.OutputItems.Add(msg);
 

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-global using ApplyPatchCreateFileOperationParam = Azure.AI.AgentServer.Responses.Models.ApplyPatchCreateFileOperation;
-global using ApplyPatchDeleteFileOperationParam = Azure.AI.AgentServer.Responses.Models.ApplyPatchDeleteFileOperation;
+global using ApplyPatchCreateFileOperationParam = OpenAI.Responses.ApplyPatchCreateFileOperation;
+global using ApplyPatchDeleteFileOperationParam = OpenAI.Responses.ApplyPatchDeleteFileOperation;
 global using ApplyPatchToolCallItemParam = OpenAI.Responses.ApplyPatchCallItem;
 global using ApplyPatchToolCallOutputItemParam = OpenAI.Responses.ApplyPatchCallOutputItem;
-global using ApplyPatchUpdateFileOperationParam = Azure.AI.AgentServer.Responses.Models.ApplyPatchUpdateFileOperation;
+global using ApplyPatchUpdateFileOperationParam = OpenAI.Responses.ApplyPatchUpdateFileOperation;
 global using CompactionSummaryItemParam = Azure.AI.AgentServer.Responses.Tests.Helpers.CompactionSummaryItemParam;
 global using ComputerCallOutputItemParam = Azure.AI.AgentServer.Responses.Tests.Helpers.ComputerCallOutputItemParam;
 global using ConversationParamValidator = Azure.AI.AgentServer.Responses.Tests.Helpers.ConversationParamValidator;
@@ -32,6 +32,9 @@ global using ItemWebSearchToolCall = Azure.AI.AgentServer.Responses.Tests.Helper
 global using ItemWebSearchToolCallStatus = OpenAI.Responses.WebSearchCallStatus;
 global using MCPApprovalResponse = Azure.AI.AgentServer.Responses.Tests.Helpers.MCPApprovalResponse;
 global using MemorySearchToolCallItemResource = Azure.AI.Extensions.OpenAI.MemorySearchToolCall;
+global using LogProb = OpenAI.Responses.ResponseTokenLogProbabilityDetails;
+global using MessageRole = OpenAI.Responses.MessageRole;
+global using MessageStatus = OpenAI.Responses.MessageStatus;
 global using Metadata = System.Collections.Generic.Dictionary<string, string>;
 global using OAuthConsentRequestOutputItem = Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem;
 global using OutputContent = Azure.AI.Extensions.OpenAI.OutputMessageContent;
@@ -46,4 +49,6 @@ global using ResponseAudioDeltaEvent = OpenAI.Responses.StreamingResponseOutputT
 global using ResponseAudioDoneEvent = OpenAI.Responses.StreamingResponseOutputTextDoneUpdate;
 global using ResponseAudioTranscriptDeltaEvent = OpenAI.Responses.StreamingResponseOutputTextDeltaUpdate;
 global using ResponseAudioTranscriptDoneEvent = OpenAI.Responses.StreamingResponseOutputTextDoneUpdate;
-global using ResponseLogProb = Azure.AI.AgentServer.Responses.Models.LogProb;
+global using ResponseContentPart = OpenAI.Responses.ResponseContentPart;
+global using ResponseContentPartKind = OpenAI.Responses.ResponseContentPartKind;
+global using ResponseLogProb = OpenAI.Responses.ResponseTokenLogProbabilityDetails;

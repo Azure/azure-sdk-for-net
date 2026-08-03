@@ -87,13 +87,13 @@ internal class ItemMcpToolCall : McpToolCallItem
     public string Name => ToolName;
     public string FunctionName => ToolName;
     public string FunctionArguments => ToolArguments.ToString();
-    public Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus Status { get; set; } = Azure.AI.AgentServer.Responses.Models.MCPToolCallStatus.Completed;
+    public string Status { get; set; } = "completed";
     public IList<ResponseItem> OutputItems { get; } = new List<ResponseItem>();
 }
 
 internal class ItemMcpListTools : McpToolDefinitionListItem
 {
-    public ItemMcpListTools(string id, string serverLabel, IEnumerable<MCPListToolsTool> tools) : base(serverLabel, Array.Empty<McpToolDefinition>()) => Id = id;
+    public ItemMcpListTools(string id, string serverLabel, IEnumerable<McpToolDefinition> tools) : base(serverLabel, Array.Empty<McpToolDefinition>()) => Id = id;
 }
 
 internal class MCPApprovalResponse : McpToolCallApprovalResponseItem

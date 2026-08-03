@@ -19,8 +19,6 @@ using OpenAI.Responses;
 using CodeInterpreterTool = OpenAI.Responses.CodeInterpreterTool;
 using FileSearchTool = OpenAI.Responses.FileSearchTool;
 using FunctionTool = OpenAI.Responses.FunctionTool;
-// Disambiguate types that exist in both Azure and OpenAI namespaces
-using MessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
 using WebSearchPreviewTool = OpenAI.Responses.WebSearchPreviewTool;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Interop;
@@ -56,7 +54,7 @@ public class OpenAIWireComplianceTests
         Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(1));
-        var text = XAssert.IsType<MessageContentInputTextContent>(content[0]);
+        var text = XAssert.IsContentPart(content[0], ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo("Hello without type"));
     }
 
@@ -138,7 +136,7 @@ public class OpenAIWireComplianceTests
         var msg = XAssert.IsType<ItemMessage>(items[0]);
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(1));
-        XAssert.IsType<MessageContentInputImageContent>(content[0]);
+        XAssert.IsContentPart(content[0], ResponseContentPartKind.InputImage);
     }
 
     [Test]
@@ -160,7 +158,7 @@ public class OpenAIWireComplianceTests
         var msg = XAssert.IsType<ItemMessage>(items[0]);
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(1));
-        XAssert.IsType<MessageContentInputImageContent>(content[0]);
+        XAssert.IsContentPart(content[0], ResponseContentPartKind.InputImage);
     }
 
     [Test]
@@ -312,7 +310,7 @@ public class OpenAIWireComplianceTests
         Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(1));
-        var text = XAssert.IsType<MessageContentInputTextContent>(content[0]);
+        var text = XAssert.IsContentPart(content[0], ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo("Hello"));
     }
 
@@ -330,7 +328,7 @@ public class OpenAIWireComplianceTests
         Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.Developer));
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(1));
-        var text = XAssert.IsType<MessageContentInputTextContent>(content[0]);
+        var text = XAssert.IsContentPart(content[0], ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo("System prompt"));
     }
 
@@ -355,8 +353,8 @@ public class OpenAIWireComplianceTests
         var msg = XAssert.IsType<ItemMessage>(items[0]);
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(2));
-        XAssert.IsType<MessageContentInputTextContent>(content[0]);
-        XAssert.IsType<MessageContentInputImageContent>(content[1]);
+        XAssert.IsContentPart(content[0], ResponseContentPartKind.InputText);
+        XAssert.IsContentPart(content[1], ResponseContentPartKind.InputImage);
     }
 
     [Test]
@@ -751,9 +749,9 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_ItemMessage_ToResponseItem()
     {
-        var msg = TestModels.ItemMessage(MessageRole.User, new List<Models.MessageContent>
+        var msg = TestModels.ItemMessage(MessageRole.User, new List<MessageContent>
         {
-            new MessageContentInputTextContent("Hello from Azure"),
+            ResponseContentPart.CreateInputTextPart("Hello from Azure"),
         });
 
         var openAiItem = msg.Translate().To<ResponseItem>();
@@ -976,7 +974,7 @@ public class OpenAIWireComplianceTests
         Assert.That(items, Has.Count.EqualTo(1));
         var msg = XAssert.IsType<ItemMessage>(items[0]);
         Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
-        var text = XAssert.IsType<MessageContentInputTextContent>(msg.GetContentExpanded()[0]);
+        var text = XAssert.IsContentPart(msg.GetContentExpanded()[0], ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo("Hello world"));
     }
 
@@ -1000,8 +998,8 @@ public class OpenAIWireComplianceTests
         var items = await GetExpandedInput("""
             { "model": "test", "input": [{ "type": "message", "role": "user", "content": "shorthand" }] }
             """);
-        var text = XAssert.IsType<MessageContentInputTextContent>(
-            ((ItemMessage)items[0]).GetContentExpanded()[0]);
+        var text = XAssert.IsContentPart(
+            ((ItemMessage)items[0]).GetContentExpanded()[0], ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo("shorthand"));
     }
 
@@ -1011,8 +1009,8 @@ public class OpenAIWireComplianceTests
         var items = await GetExpandedInput("""
             { "model": "test", "input": [{ "type": "message", "role": "user", "content": "" }] }
             """);
-        var text = XAssert.IsType<MessageContentInputTextContent>(
-            ((ItemMessage)items[0]).GetContentExpanded()[0]);
+        var text = XAssert.IsContentPart(
+            ((ItemMessage)items[0]).GetContentExpanded()[0], ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo(""));
     }
 

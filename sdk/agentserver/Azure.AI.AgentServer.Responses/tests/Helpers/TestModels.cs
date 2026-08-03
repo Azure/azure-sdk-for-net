@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using OpenAI.Responses;
-using AgentMessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
-using AgentMessageStatus = Azure.AI.AgentServer.Responses.Models.MessageStatus;
+using AgentMessageRole = OpenAI.Responses.MessageRole;
+using AgentMessageStatus = OpenAI.Responses.MessageStatus;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Helpers;
 

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -35,11 +34,6 @@ internal static class XAssert
     /// </summary>
     public static T IsType<T>(object obj)
     {
-        if (TryConvert<T>(obj, out T? converted))
-        {
-            return converted;
-        }
-
         Assert.That(obj, Is.InstanceOf<T>());
         return (T)obj;
     }
@@ -50,35 +44,14 @@ internal static class XAssert
     /// </summary>
     public static T IsAssignableFrom<T>(object obj)
     {
-        if (TryConvert<T>(obj, out T? converted))
-        {
-            return converted;
-        }
-
         Assert.That(obj, Is.InstanceOf<T>());
         return (T)obj;
     }
 
-    private static bool TryConvert<T>(object obj, out T? converted)
+    public static ResponseContentPart IsContentPart(ResponseContentPart part, ResponseContentPartKind kind)
     {
-        if (obj is ResponseContentPart part)
-        {
-            object? result = typeof(T) == typeof(MessageContentInputTextContent) && part.Kind == ResponseContentPartKind.InputText
-                ? new MessageContentInputTextContent(part.Text ?? string.Empty)
-                : typeof(T) == typeof(MessageContentOutputTextContent) && part.Kind == ResponseContentPartKind.OutputText
-                    ? new MessageContentOutputTextContent(part.Text ?? string.Empty, [], [])
-                    : typeof(T) == typeof(MessageContentRefusalContent) && part.Kind == ResponseContentPartKind.Refusal
-                        ? new MessageContentRefusalContent(part.Refusal ?? string.Empty)
-                        : null;
-            if (result is T typed)
-            {
-                converted = typed;
-                return true;
-            }
-        }
-
-        converted = default;
-        return false;
+        Assert.That(part.Kind, Is.EqualTo(kind));
+        return part;
     }
 
     /// <summary>

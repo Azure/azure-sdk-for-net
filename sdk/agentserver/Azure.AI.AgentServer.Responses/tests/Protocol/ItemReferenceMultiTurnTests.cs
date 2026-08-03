@@ -269,8 +269,8 @@ public class ItemReferenceMultiTurnTests : IDisposable
         var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
         yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
-        var textContent = new MessageContentOutputTextContent(
-            "Echo reply", Array.Empty<Annotation>(), Array.Empty<LogProb>());
+        var textContent = ResponseContentPart.CreateOutputTextPart(
+            "Echo reply", Array.Empty<Annotation>());
         var msg = TestModels.OutputItemMessage(
             $"msg_{Guid.NewGuid():N}",
             MessageStatus.Completed,

@@ -241,7 +241,7 @@ public class CreateResponseExtensionsTests
         Assert.That(itemMsg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
@@ -322,7 +322,7 @@ public class CreateResponseExtensionsTests
 
         // GetContentExpanded should still work correctly
         var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        var textContent = XAssert.IsContentPart(XAssert.Single(content), ResponseContentPartKind.InputText);
         Assert.That(textContent.Text, Is.EqualTo("Hello world"));
     }
 
@@ -343,7 +343,7 @@ public class CreateResponseExtensionsTests
         Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
 
         var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        var textContent = XAssert.IsContentPart(XAssert.Single(content), ResponseContentPartKind.InputText);
         Assert.That(textContent.Text, Is.EqualTo("Already expanded"));
     }
 

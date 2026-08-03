@@ -139,7 +139,7 @@ public class ResponseExtensionsTests
         Assert.That(itemMsg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.Developer));
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("You are helpful."));
     }
 
@@ -173,7 +173,7 @@ public class ResponseExtensionsTests
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("You are a helpful assistant."));
     }
 
@@ -194,7 +194,7 @@ public class ResponseExtensionsTests
         {
             TestModels.ItemMessage(MessageRole.Developer, new List<MessageContent>
             {
-                new MessageContentInputTextContent("Be helpful."),
+                ResponseContentPart.CreateInputTextPart("Be helpful."),
             }),
         };
 
@@ -205,7 +205,7 @@ public class ResponseExtensionsTests
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Be helpful."));
     }
 

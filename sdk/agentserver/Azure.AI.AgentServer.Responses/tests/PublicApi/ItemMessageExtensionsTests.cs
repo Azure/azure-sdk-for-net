@@ -17,7 +17,7 @@ public class ItemMessageExtensionsTests
         var msg = TestModels.ItemMessage(MessageRole.User, BinaryData.FromString(json));
         Assert.That(msg.Content, Is.Not.Null);
         var content = XAssert.Single(msg.GetContentExpanded());
-        var text = XAssert.IsType<MessageContentInputTextContent>(content);
+        var text = XAssert.IsContentPart(content, ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo("Hello"));
     }
 
@@ -26,13 +26,13 @@ public class ItemMessageExtensionsTests
     {
         var content = new List<MessageContent>
         {
-            new MessageContentInputTextContent("Hello world"),
+            ResponseContentPart.CreateInputTextPart("Hello world"),
         };
         var msg = TestModels.ItemMessage(MessageRole.User, content);
 
         var expanded = msg.GetContentExpanded();
         var textContent = XAssert.Single(expanded);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
@@ -64,7 +64,7 @@ public class ItemMessageExtensionsTests
         var result = msg.GetContentExpanded();
 
         var textContent = XAssert.Single(result);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
@@ -78,10 +78,10 @@ public class ItemMessageExtensionsTests
         var result = msg.GetContentExpanded();
 
         Assert.That(result.Count, Is.EqualTo(2));
-        XAssert.IsType<MessageContentInputTextContent>(result[0]);
-        XAssert.IsType<MessageContentInputTextContent>(result[1]);
-        Assert.That(((MessageContentInputTextContent)result[0]).Text, Is.EqualTo("Hi"));
-        Assert.That(((MessageContentInputTextContent)result[1]).Text, Is.EqualTo("there"));
+        var first = XAssert.IsContentPart(result[0], ResponseContentPartKind.InputText);
+        var second = XAssert.IsContentPart(result[1], ResponseContentPartKind.InputText);
+        Assert.That(first.Text, Is.EqualTo("Hi"));
+        Assert.That(second.Text, Is.EqualTo("there"));
     }
 
     [Test]

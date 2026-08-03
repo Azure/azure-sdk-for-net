@@ -127,10 +127,9 @@ public class RawEventInteropTests
                 sequenceNumber: 7, outputIndex: 0,
                 item: TestModels.OutputItemMessage(
                     id: itemId,
-                    content: new[] { new MessageContentOutputTextContent(
-                        text: "Hello!",
-                        annotations: Array.Empty<Annotation>(),
-                        logprobs: Array.Empty<LogProb>()) },
+                    content: new MessageContent[] { ResponseContentPart.CreateOutputTextPart(
+                        "Hello!",
+                        Array.Empty<Annotation>()) },
                     status: MessageStatus.Completed)),
 
             new ResponseCompletedEvent { SequenceNumber = checked((int)(8)), Response = response },

@@ -66,8 +66,8 @@ public class MultiOutputTests
         // Assert: each message has correct content in done event
         var done0 = XAssert.IsType<OutputItemMessage>(((ResponseOutputItemDoneEvent)events[6]).Item);
         var done1 = XAssert.IsType<OutputItemMessage>(((ResponseOutputItemDoneEvent)events[11]).Item);
-        var content0 = XAssert.IsType<MessageContentOutputTextContent>(done0.Content[0]);
-        var content1 = XAssert.IsType<MessageContentOutputTextContent>(done1.Content[0]);
+        var content0 = XAssert.IsContentPart(done0.Content[0], OpenAI.Responses.ResponseContentPartKind.OutputText);
+        var content1 = XAssert.IsContentPart(done1.Content[0], OpenAI.Responses.ResponseContentPartKind.OutputText);
         Assert.That(content0.Text, Is.EqualTo("First"));
         Assert.That(content1.Text, Is.EqualTo("Second"));
     }

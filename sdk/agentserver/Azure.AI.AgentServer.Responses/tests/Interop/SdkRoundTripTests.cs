@@ -25,7 +25,7 @@ using OpenAI;
 using OpenAI.Responses;
 
 // Disambiguate shared type names
-using AzureMessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
+using AzureMessageRole = OpenAI.Responses.MessageRole;
 using SdkResponseStatus = OpenAI.Responses.ResponseStatus;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Interop;
@@ -292,7 +292,7 @@ public class SdkRoundTripTests
         Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(1));
-        var text = XAssert.IsType<MessageContentInputTextContent>(content[0]);
+        var text = XAssert.IsContentPart(content[0], ResponseContentPartKind.InputText);
         Assert.That(text.Text, Is.EqualTo("Hello from SDK"));
     }
 

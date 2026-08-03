@@ -268,10 +268,9 @@ public class ProcessEventsTests : IDisposable
 
     private static OutputItemMessage CreateOutputMessage(string id, string text)
     {
-        var content = new MessageContentOutputTextContent(
-            text: text,
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(
+            text,
+            Array.Empty<Annotation>());
         return TestModels.OutputItemMessage(
             id: id,
             content: new List<MessageContent> { content },

@@ -94,10 +94,9 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_OutputItemMessage()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(
+            "Hello world",
+            Array.Empty<Annotation>());
         Assert.That(content, Is.Not.Null);
 
         var outputMsg = TestModels.OutputItemMessage(
@@ -110,10 +109,9 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseOutputItemDoneEvent()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(
+            "Hello world",
+            Array.Empty<Annotation>());
         var outputMsg = TestModels.OutputItemMessage(
             id: "msg_test",
             status: MessageStatus.Completed,
