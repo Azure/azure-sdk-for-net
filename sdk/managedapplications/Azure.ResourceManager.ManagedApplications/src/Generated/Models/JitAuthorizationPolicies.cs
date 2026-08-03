@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="principalId"> The the principal id that will be granted JIT access. </param>
         /// <param name="roleDefinitionId"> The role definition id that will be granted to the Principal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public JitAuthorizationPolicies(string principalId, string roleDefinitionId)
+        public JitAuthorizationPolicies(string principalId, ResourceIdentifier roleDefinitionId)
         {
             Argument.AssertNotNull(principalId, nameof(principalId));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="principalId"> The the principal id that will be granted JIT access. </param>
         /// <param name="roleDefinitionId"> The role definition id that will be granted to the Principal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitAuthorizationPolicies(string principalId, string roleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitAuthorizationPolicies(string principalId, ResourceIdentifier roleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public string PrincipalId { get; set; }
 
         /// <summary> The role definition id that will be granted to the Principal. </summary>
-        public string RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; set; }
     }
 }

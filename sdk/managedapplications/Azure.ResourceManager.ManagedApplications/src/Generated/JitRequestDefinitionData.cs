@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications.Models;
 using Azure.ResourceManager.Models;
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ManagedApplications
         internal JitRequestProperties Properties { get; set; }
 
         /// <summary> The parent application id. </summary>
-        public string ApplicationResourceId
+        public ResourceIdentifier ApplicationResourceId
         {
             get
             {

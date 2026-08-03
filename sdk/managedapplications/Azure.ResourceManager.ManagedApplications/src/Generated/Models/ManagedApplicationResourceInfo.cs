@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 using Azure.ResourceManager.Models;
 
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedApplicationResourceInfo(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedApplicationResourceInfo(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Resource name. </summary>
         public string Name { get; }

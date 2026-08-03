@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedApplications
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ManagedApplications
     // The C# generator flattens Application.properties into ManagedApplicationData for the public API,
     // but the service still expects those flattened values under the wire-level "properties" envelope.
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    public partial class ManagedApplicationData
+    public partial class ManagedApplicationData : TrackedResourceData
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

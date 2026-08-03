@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 return null;
             }
-            string applicationResourceId = default;
+            ResourceIdentifier applicationResourceId = default;
             string publisherTenantId = default;
             IList<JitAuthorizationPolicies> jitAuthorizationPolicies = default;
             JitSchedulingPolicy jitSchedulingPolicy = default;
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 if (prop.NameEquals("applicationResourceId"u8))
                 {
-                    applicationResourceId = prop.Value.GetString();
+                    applicationResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publisherTenantId"u8))

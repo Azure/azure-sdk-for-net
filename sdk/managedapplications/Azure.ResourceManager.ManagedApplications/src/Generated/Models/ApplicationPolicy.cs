@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="policyDefinitionId"> The policy definition Id. </param>
         /// <param name="parameters"> The policy parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationPolicy(string name, string policyDefinitionId, string parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationPolicy(string name, ResourceIdentifier policyDefinitionId, string parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             PolicyDefinitionId = policyDefinitionId;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public string Name { get; set; }
 
         /// <summary> The policy definition Id. </summary>
-        public string PolicyDefinitionId { get; set; }
+        public ResourceIdentifier PolicyDefinitionId { get; set; }
 
         /// <summary> The policy parameters. </summary>
         public string Parameters { get; set; }

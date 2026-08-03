@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 using Azure.ResourceManager.Models;
 
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             string @type = default;
             string location = default;
@@ -170,7 +171,11 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

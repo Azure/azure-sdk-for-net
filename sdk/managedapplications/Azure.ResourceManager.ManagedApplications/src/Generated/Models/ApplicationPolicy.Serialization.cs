@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 return null;
             }
             string name = default;
-            string policyDefinitionId = default;
+            ResourceIdentifier policyDefinitionId = default;
             string parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +145,11 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (prop.NameEquals("policyDefinitionId"u8))
                 {
-                    policyDefinitionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))

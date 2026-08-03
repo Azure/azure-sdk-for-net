@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationProperties(string managedResourceGroupId, string applicationDefinitionId, BinaryData parameters, BinaryData outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationProperties(ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedResourceGroupId = managedResourceGroupId;
             ApplicationDefinitionId = applicationDefinitionId;
@@ -63,10 +64,10 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         }
 
         /// <summary> The managed resource group Id. </summary>
-        public string ManagedResourceGroupId { get; set; }
+        public ResourceIdentifier ManagedResourceGroupId { get; set; }
 
         /// <summary> The fully qualified path of managed application definition Id. </summary>
-        public string ApplicationDefinitionId { get; set; }
+        public ResourceIdentifier ApplicationDefinitionId { get; set; }
 
         /// <summary>
         /// Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string.

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="plan"> The plan information. </param>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        internal ApplicationPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku, ApplicationProperties properties, ManagedApplicationsPlanPatch plan, string kind, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties, managedBy, sku)
+        internal ApplicationPatch(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku, ApplicationProperties properties, ManagedApplicationsPlanPatch plan, string kind, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties, managedBy, sku)
         {
             Properties = properties;
             Plan = plan;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The managed resource group Id. </summary>
-        public string ManagedResourceGroupId
+        public ResourceIdentifier ManagedResourceGroupId
         {
             get
             {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         }
 
         /// <summary> The fully qualified path of managed application definition Id. </summary>
-        public string ApplicationDefinitionId
+        public ResourceIdentifier ApplicationDefinitionId
         {
             get
             {

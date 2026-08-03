@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="principalId"> The provider's principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </param>
         /// <param name="roleDefinitionId"> The provider's role definition identifier. This role will define all the permissions that the provider must have on the managed application's container resource group. This role definition cannot have permission to delete the resource group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>
-        public ApplicationAuthorization(string principalId, string roleDefinitionId)
+        public ApplicationAuthorization(string principalId, ResourceIdentifier roleDefinitionId)
         {
             Argument.AssertNotNull(principalId, nameof(principalId));
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="principalId"> The provider's principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </param>
         /// <param name="roleDefinitionId"> The provider's role definition identifier. This role will define all the permissions that the provider must have on the managed application's container resource group. This role definition cannot have permission to delete the resource group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationAuthorization(string principalId, string roleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationAuthorization(string principalId, ResourceIdentifier roleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public string PrincipalId { get; set; }
 
         /// <summary> The provider's role definition identifier. This role will define all the permissions that the provider must have on the managed application's container resource group. This role definition cannot have permission to delete the resource group. </summary>
-        public string RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; set; }
     }
 }

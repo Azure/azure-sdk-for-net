@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -215,8 +216,8 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 return null;
             }
-            string managedResourceGroupId = default;
-            string applicationDefinitionId = default;
+            ResourceIdentifier managedResourceGroupId = default;
+            ResourceIdentifier applicationDefinitionId = default;
             BinaryData parameters = default;
             BinaryData outputs = default;
             ProvisioningState? provisioningState = default;
@@ -235,12 +236,20 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             {
                 if (prop.NameEquals("managedResourceGroupId"u8))
                 {
-                    managedResourceGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationDefinitionId"u8))
                 {
-                    applicationDefinitionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    applicationDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))

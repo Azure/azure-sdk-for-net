@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
-        internal GenericResourceInfo(string id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties)
+        internal GenericResourceInfo(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ManagedApplicationsSku sku) : base(id, name, @type, location, tags, systemData, additionalBinaryDataProperties)
         {
             ManagedBy = managedBy;
             Sku = sku;

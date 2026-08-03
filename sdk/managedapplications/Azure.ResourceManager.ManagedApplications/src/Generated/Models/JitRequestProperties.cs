@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="jitAuthorizationPolicies"> The JIT authorization policies. </param>
         /// <param name="jitSchedulingPolicy"> The JIT request properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationResourceId"/>, <paramref name="jitAuthorizationPolicies"/> or <paramref name="jitSchedulingPolicy"/> is null. </exception>
-        public JitRequestProperties(string applicationResourceId, IEnumerable<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy)
+        public JitRequestProperties(ResourceIdentifier applicationResourceId, IEnumerable<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy)
         {
             Argument.AssertNotNull(applicationResourceId, nameof(applicationResourceId));
             Argument.AssertNotNull(jitAuthorizationPolicies, nameof(jitAuthorizationPolicies));
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitRequestProperties(string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitRequestProperties(ResourceIdentifier applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         }
 
         /// <summary> The parent application id. </summary>
-        public string ApplicationResourceId { get; set; }
+        public ResourceIdentifier ApplicationResourceId { get; set; }
 
         /// <summary> The publisher tenant id. </summary>
         public string PublisherTenantId { get; }

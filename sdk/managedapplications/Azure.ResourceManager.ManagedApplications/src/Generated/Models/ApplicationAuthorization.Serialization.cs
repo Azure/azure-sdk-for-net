@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 return null;
             }
             string principalId = default;
-            string roleDefinitionId = default;
+            ResourceIdentifier roleDefinitionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (prop.NameEquals("roleDefinitionId"u8))
                 {
-                    roleDefinitionId = prop.Value.GetString();
+                    roleDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

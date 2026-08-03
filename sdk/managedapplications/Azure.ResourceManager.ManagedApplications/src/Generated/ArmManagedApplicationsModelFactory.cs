@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 using Azure.ResourceManager.Models;
 
@@ -51,14 +52,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ManagedApplicationsRegistryPackageLinks(createUiDefinitionLink, deploymentTemplateLink, default);
         }
 
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
-        /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="managedResourceGroupId"> The managed resource group Id. </param>
         /// <param name="applicationDefinitionId"> The fully qualified path of managed application definition Id. </param>
         /// <param name="parameters"> Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string. </param>
@@ -78,40 +71,25 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="ManagedApplications.ManagedApplicationData"/> instance for mocking. </returns>
-        public static ManagedApplicationData ManagedApplicationData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlan plan = default, string kind = default, ManagedServiceIdentity identity = default)
+        public static ManagedApplicationData ManagedApplicationData(ResourceIdentifier managedResourceGroupId = default, ResourceIdentifier applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlan plan = default, string kind = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedApplicationData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                systemData,
+            return new ManagedApplicationData(applicationDefinitionId is null && billingDetailsResourceUsageId is null ? default : new ApplicationProperties(
                 default,
-                managedBy,
-                sku,
-                applicationDefinitionId is null && billingDetailsResourceUsageId is null ? default : new ApplicationProperties(
-                    default,
-                    applicationDefinitionId,
-                    default,
-                    default,
-                    default,
-                    new ApplicationBillingDetailsDefinition(billingDetailsResourceUsageId, default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
-                plan,
-                kind,
-                identity);
+                applicationDefinitionId,
+                default,
+                default,
+                default,
+                new ApplicationBillingDetailsDefinition(billingDetailsResourceUsageId, default),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default), plan, kind, identity, default);
         }
 
         /// <param name="isJitAccessEnabled"> Whether the JIT access is enabled. </param>
@@ -138,7 +116,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="principalId"> The provider's principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </param>
         /// <param name="roleDefinitionId"> The provider's role definition identifier. This role will define all the permissions that the provider must have on the managed application's container resource group. This role definition cannot have permission to delete the resource group. </param>
         /// <returns> A new <see cref="Models.ApplicationAuthorization"/> instance for mocking. </returns>
-        public static ApplicationAuthorization ApplicationAuthorization(string principalId = default, string roleDefinitionId = default)
+        public static ApplicationAuthorization ApplicationAuthorization(string principalId = default, ResourceIdentifier roleDefinitionId = default)
         {
             return new ApplicationAuthorization(principalId, roleDefinitionId, default);
         }
@@ -204,7 +182,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
         /// <returns> A new <see cref="Models.GenericResourceInfo"/> instance for mocking. </returns>
-        public static GenericResourceInfo GenericResourceInfo(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default)
+        public static GenericResourceInfo GenericResourceInfo(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -246,7 +224,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <returns> A new <see cref="Models.ManagedApplicationResourceInfo"/> instance for mocking. </returns>
-        public static ManagedApplicationResourceInfo ManagedApplicationResourceInfo(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default)
+        public static ManagedApplicationResourceInfo ManagedApplicationResourceInfo(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -287,7 +265,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Models.ApplicationPatch"/> instance for mocking. </returns>
-        public static ApplicationPatch ApplicationPatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, string managedResourceGroupId = default, string applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlanPatch plan = default, string kind = default, ManagedServiceIdentity identity = default)
+        public static ApplicationPatch ApplicationPatch(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, SystemData systemData = default, string managedBy = default, ManagedApplicationsSku sku = default, ResourceIdentifier managedResourceGroupId = default, ResourceIdentifier applicationDefinitionId = default, BinaryData parameters = default, BinaryData outputs = default, ProvisioningState? provisioningState = default, ApplicationJitAccessPolicy jitAccessPolicy = default, string publisherTenantId = default, IEnumerable<ApplicationAuthorization> authorizations = default, ApplicationManagementMode? managementMode = default, ApplicationPackageContact customerSupport = default, ApplicationPackageSupportUrls supportUrls = default, IEnumerable<ApplicationArtifact> artifacts = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default, string billingDetailsResourceUsageId = default, ManagedApplicationsPlanPatch plan = default, string kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -396,7 +374,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="resourceId"> The Azure resource ID for the issued token. This is either the managed application ID or the user-assigned identity ID. </param>
         /// <param name="tokenType"> The type of the token. </param>
         /// <returns> A new <see cref="Models.ManagedIdentityToken"/> instance for mocking. </returns>
-        public static ManagedIdentityToken ManagedIdentityToken(string accessToken = default, string expiresIn = default, string expiresOn = default, string notBefore = default, string authorizationAudience = default, string resourceId = default, string tokenType = default)
+        public static ManagedIdentityToken ManagedIdentityToken(string accessToken = default, string expiresIn = default, string expiresOn = default, string notBefore = default, string authorizationAudience = default, ResourceIdentifier resourceId = default, string tokenType = default)
         {
             return new ManagedIdentityToken(
                 accessToken,
@@ -425,7 +403,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="deploymentMode"> The managed application deployment mode. </param>
         /// <param name="managementMode"> The managed application management mode. </param>
         /// <returns> A new <see cref="ManagedApplications.ApplicationDefinitionData"/> instance for mocking. </returns>
-        public static ApplicationDefinitionData ApplicationDefinitionData(ApplicationLockLevel lockLevel = default, string displayName = default, bool? isEnabled = default, IEnumerable<ApplicationAuthorization> authorizations = default, IEnumerable<ApplicationDefinitionArtifact> artifacts = default, string description = default, string packageFileUri = default, string storageAccountId = default, BinaryData mainTemplate = default, BinaryData createUiDefinition = default, ApplicationPackageLockingPolicy lockingPolicy = default, IEnumerable<ApplicationPolicy> policies = default, IEnumerable<ApplicationNotificationEndpoint> notificationEndpoints = default, DeploymentMode? deploymentMode = default, ApplicationManagementMode? managementMode = default)
+        public static ApplicationDefinitionData ApplicationDefinitionData(ApplicationLockLevel lockLevel = default, string displayName = default, bool? isEnabled = default, IEnumerable<ApplicationAuthorization> authorizations = default, IEnumerable<ApplicationDefinitionArtifact> artifacts = default, string description = default, string packageFileUri = default, ResourceIdentifier storageAccountId = default, BinaryData mainTemplate = default, BinaryData createUiDefinition = default, ApplicationPackageLockingPolicy lockingPolicy = default, IEnumerable<ApplicationPolicy> policies = default, IEnumerable<ApplicationNotificationEndpoint> notificationEndpoints = default, DeploymentMode? deploymentMode = default, ApplicationManagementMode? managementMode = default)
         {
             return new ApplicationDefinitionData(isEnabled is null && createUiDefinition is null && notificationEndpoints is null && deploymentMode is null && managementMode is null ? default : new ApplicationDefinitionProperties(
                 default,
@@ -477,7 +455,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="policyDefinitionId"> The policy definition Id. </param>
         /// <param name="parameters"> The policy parameters. </param>
         /// <returns> A new <see cref="Models.ApplicationPolicy"/> instance for mocking. </returns>
-        public static ApplicationPolicy ApplicationPolicy(string name = default, string policyDefinitionId = default, string parameters = default)
+        public static ApplicationPolicy ApplicationPolicy(string name = default, ResourceIdentifier policyDefinitionId = default, string parameters = default)
         {
             return new ApplicationPolicy(name, policyDefinitionId, parameters, default);
         }
@@ -500,7 +478,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
         /// <returns> A new <see cref="ManagedApplications.JitRequestDefinitionData"/> instance for mocking. </returns>
-        public static JitRequestDefinitionData JitRequestDefinitionData(string applicationResourceId = default, string publisherTenantId = default, IEnumerable<JitAuthorizationPolicies> jitAuthorizationPolicies = default, JitSchedulingPolicy jitSchedulingPolicy = default, ProvisioningState? provisioningState = default, JitRequestState? jitRequestState = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default)
+        public static JitRequestDefinitionData JitRequestDefinitionData(ResourceIdentifier applicationResourceId = default, string publisherTenantId = default, IEnumerable<JitAuthorizationPolicies> jitAuthorizationPolicies = default, JitSchedulingPolicy jitSchedulingPolicy = default, ProvisioningState? provisioningState = default, JitRequestState? jitRequestState = default, ApplicationClientDetails createdBy = default, ApplicationClientDetails updatedBy = default)
         {
             return new JitRequestDefinitionData(applicationResourceId is null && publisherTenantId is null && jitAuthorizationPolicies is null && jitSchedulingPolicy is null && provisioningState is null && jitRequestState is null && createdBy is null && updatedBy is null ? default : new JitRequestProperties(
                 applicationResourceId,
@@ -517,7 +495,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="principalId"> The the principal id that will be granted JIT access. </param>
         /// <param name="roleDefinitionId"> The role definition id that will be granted to the Principal. </param>
         /// <returns> A new <see cref="Models.JitAuthorizationPolicies"/> instance for mocking. </returns>
-        public static JitAuthorizationPolicies JitAuthorizationPolicies(string principalId = default, string roleDefinitionId = default)
+        public static JitAuthorizationPolicies JitAuthorizationPolicies(string principalId = default, ResourceIdentifier roleDefinitionId = default)
         {
             return new JitAuthorizationPolicies(principalId, roleDefinitionId, default);
         }

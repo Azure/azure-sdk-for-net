@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             IList<ApplicationDefinitionArtifact> artifacts = default;
             string description = default;
             string packageFileUri = default;
-            string storageAccountId = default;
+            ResourceIdentifier storageAccountId = default;
             BinaryData mainTemplate = default;
             BinaryData createUiDefinition = default;
             ApplicationNotificationPolicy notificationPolicy = default;
@@ -299,7 +300,11 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (prop.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mainTemplate"u8))

@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedApplications
 {
     /// <summary> Information about managed application. </summary>
-    public partial class ManagedApplicationData : GenericResourceInfo, IJsonModel<ManagedApplicationData>
+    public partial class ManagedApplicationData : TrackedResourceData, IJsonModel<ManagedApplicationData>
     {
         /// <summary> Initializes a new instance of <see cref="ManagedApplicationData"/> for deserialization. </summary>
         internal ManagedApplicationData()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedApplications
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedApplicationResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedApplicationData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedApplications
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedApplications
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedApplicationData IPersistableModel<ManagedApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedApplicationData)PersistableModelCreateCore(data, options);
+        ManagedApplicationData IPersistableModel<ManagedApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.ManagedApplications
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedApplicationData IJsonModel<ManagedApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedApplicationData)JsonModelCreateCore(ref reader, options);
+        ManagedApplicationData IJsonModel<ManagedApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedApplicationResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedApplicationData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -116,85 +116,13 @@ namespace Azure.ResourceManager.ManagedApplications
             {
                 return null;
             }
-            string id = default;
-            string name = default;
-            string @type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string managedBy = default;
-            ManagedApplicationsSku sku = default;
             ApplicationProperties properties = default;
             ManagedApplicationsPlan plan = default;
             string kind = default;
             ManagedServiceIdentity identity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedApplicationsContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("managedBy"u8))
-                {
-                    managedBy = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("sku"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = ManagedApplicationsSku.DeserializeManagedApplicationsSku(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     properties = ApplicationProperties.DeserializeApplicationProperties(prop.Value, options);
@@ -228,20 +156,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedApplicationData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                systemData,
-                additionalBinaryDataProperties,
-                managedBy,
-                sku,
-                properties,
-                plan,
-                kind,
-                identity);
+            return new ManagedApplicationData(properties, plan, kind, identity, additionalBinaryDataProperties);
         }
     }
 }

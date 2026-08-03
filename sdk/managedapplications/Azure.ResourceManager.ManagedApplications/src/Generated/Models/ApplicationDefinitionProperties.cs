@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="managementPolicy"> The managed application management policy that determines publisher's access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationDefinitionProperties(ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, string packageFileUri, string storageAccountId, BinaryData mainTemplate, BinaryData createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicy lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationDefinitionProperties(ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, string packageFileUri, ResourceIdentifier storageAccountId, BinaryData mainTemplate, BinaryData createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicy lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public string PackageFileUri { get; set; }
 
         /// <summary> The storage account id for bring your own storage scenario. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
 
         /// <summary>
         /// The inline main template json which has resources to be provisioned. It can be a JObject or well-formed JSON string.

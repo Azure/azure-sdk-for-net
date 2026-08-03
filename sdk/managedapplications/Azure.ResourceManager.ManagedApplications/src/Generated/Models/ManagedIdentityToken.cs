@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedApplications.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <param name="resourceId"> The Azure resource ID for the issued token. This is either the managed application ID or the user-assigned identity ID. </param>
         /// <param name="tokenType"> The type of the token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedIdentityToken(string accessToken, string expiresIn, string expiresOn, string notBefore, string authorizationAudience, string resourceId, string tokenType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedIdentityToken(string accessToken, string expiresIn, string expiresOn, string notBefore, string authorizationAudience, ResourceIdentifier resourceId, string tokenType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessToken = accessToken;
             ExpiresIn = expiresIn;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public string AuthorizationAudience { get; }
 
         /// <summary> The Azure resource ID for the issued token. This is either the managed application ID or the user-assigned identity ID. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The type of the token. </summary>
         public string TokenType { get; }

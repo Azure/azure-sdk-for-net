@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ManagedApplications.Models;
 using Azure.ResourceManager.Models;
 
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.ManagedApplications
         }
 
         /// <summary> The storage account id for bring your own storage scenario. </summary>
-        public string StorageAccountId
+        public ResourceIdentifier StorageAccountId
         {
             get
             {
