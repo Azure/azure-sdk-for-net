@@ -360,6 +360,23 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void DerivedModelPropertyHidingBasePropertyUsesNewModifier()
+        {
+            var baseProperty = CreateProperty("HostName");
+            var derivedProperty = CreateProperty("HostName", isRequired: true);
+            var baseModel = CreateModel("BaseOriginProperties", [baseProperty]);
+            var derivedModel = CreateModel("OriginProperties", [derivedProperty], baseModel);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, derivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+            var modelProvider = new ProvisioningModelProvider(derivedModel);
+
+            var property = modelProvider.Properties.Single(property => property.Name == "HostName");
+
+            Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.New), Is.True);
+        }
+
+        [Test]
         public void ReadOnlyResourceModelReferencedByWritableParentBodyIsSettable()
         {
             var childNameProperty = CreateProperty("Name", isRequired: true);
@@ -431,11 +448,24 @@ namespace Azure.Generator.Provisioning.Tests
                 resourceName: "ProfileRevision",
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)],
                 parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}");
-            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [sharedModel]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [sharedModel],
+                customizationSources:
+                [
+                    """
+                    namespace Azure.Provisioning.Tests;
+
+                    public partial class Profile
+                    {
+                    }
+                    """
+                ]);
             var providers = CreateAndRegisterResourceProviders(writableResource, readOnlySiblingResource);
             var writableProvider = providers[0];
             var readOnlySiblingProvider = providers[1];
 
+            Assert.That(writableProvider.Name, Is.EqualTo("Profile"));
+            Assert.That(readOnlySiblingProvider.Name, Is.EqualTo("ProfileRevision"));
             var writablePropertyInfo = ((IProvisioningPropertyInfo)writableProvider).GetProvisioningPropertyInfo(valueProperty);
             var readOnlySiblingPropertyInfo = ((IProvisioningPropertyInfo)readOnlySiblingProvider).GetProvisioningPropertyInfo(valueProperty);
 
