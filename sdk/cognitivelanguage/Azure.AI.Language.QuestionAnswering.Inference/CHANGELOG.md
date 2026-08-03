@@ -8,7 +8,7 @@
 
 ### Breaking Changes
 
-- Renamed the `Scorer` enum to `QuestionAnsweringScorer`.
+- Renamed the `Scorer` type to `QuestionAnsweringScorer`. The `AnswersOptions.QueryPreferences.Scorer` property name is unchanged.
 
 ### Bugs Fixed
 
