@@ -139,7 +139,6 @@ public class BicepDictionary<T> :
             if (_values.TryGetValue(key, out var result))
             {
                 result.Assign(value);
-                SetSelfForItem(result, key);
             }
             else
             {

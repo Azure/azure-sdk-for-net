@@ -137,7 +137,6 @@ public class BicepList<T> :
                 _kind = BicepValueKind.Literal;
             }
             _values[index].Assign(value);
-            SetSelfForItem(_values[index], index);
         }
     }
 
