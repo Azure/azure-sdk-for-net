@@ -169,61 +169,22 @@ Describe "Update-MgmtPackageFolder function" -Tag "UnitTest" {
     }
 }
 
-Describe "Get-SDKSolutionBuildPath function" -Tag "UnitTest" {
-    BeforeEach {
-        $script:testRootDir = Join-Path ([System.IO.Path]::GetTempPath()) "sdk-solution-build-test-$(Get-Random)"
-        $script:testProjectFolder = Join-Path $script:testRootDir "sdk" "compute" "Azure.ResourceManager.Compute"
-        New-Item -ItemType Directory -Path $script:testProjectFolder -Force | Out-Null
-    }
+Describe "Get-SDKValidationBuildArguments function" -Tag "UnitTest" {
+    It "scopes service.proj validation to the generated package and its tests" {
+        $sdkRootPath = Join-Path ([System.IO.Path]::GetTempPath()) "sdk-validation-build-test"
 
-    AfterEach {
-        if (Test-Path $script:testRootDir) {
-            Remove-Item -Recurse -Force $script:testRootDir
-        }
-    }
+        $result = @(Get-SDKValidationBuildArguments `
+            -sdkRootPath $sdkRootPath `
+            -service "monitorpipelinegroups" `
+            -packageName "Azure.ResourceManager.Monitor.PipelineGroups")
 
-    It "selects the management package solution so tests are compiled" {
-        $solutionPath = Join-Path $script:testProjectFolder "Azure.ResourceManager.Compute.slnx"
-        Set-Content -Path (Join-Path $script:testProjectFolder "A.Unrelated.sln") -Value ""
-        Set-Content -Path $solutionPath -Value "<Solution />"
-
-        $result = Get-SDKSolutionBuildPath `
-            -projectFolder $script:testProjectFolder `
-            -sdkRootPath $script:testRootDir `
-            -serviceType "resource-manager"
-
-        $result | Should -Be $solutionPath
-    }
-
-    It "selects the first solution by name when none matches the package" {
-        $expectedPath = Join-Path $script:testProjectFolder "A.Management.slnx"
-        Set-Content -Path (Join-Path $script:testProjectFolder "Z.Management.sln") -Value ""
-        Set-Content -Path $expectedPath -Value "<Solution />"
-
-        $result = Get-SDKSolutionBuildPath `
-            -projectFolder $script:testProjectFolder `
-            -sdkRootPath $script:testRootDir `
-            -serviceType "resource-manager"
-
-        $result | Should -Be $expectedPath
-    }
-
-    It "selects service.proj for data-plane packages" {
-        $result = Get-SDKSolutionBuildPath `
-            -projectFolder $script:testProjectFolder `
-            -sdkRootPath $script:testRootDir `
-            -serviceType "data-plane"
-
-        $result | Should -Be (Join-Path $script:testRootDir "eng" "service.proj")
-    }
-
-    It "fails when a management package has no solution" {
-        {
-            Get-SDKSolutionBuildPath `
-                -projectFolder $script:testProjectFolder `
-                -sdkRootPath $script:testRootDir `
-                -serviceType "resource-manager"
-        } | Should -Throw "Management SDK solution not found*"
+        $result | Should -HaveCount 8
+        $result | Should -Contain "/p:Scope=monitorpipelinegroups"
+        $result | Should -Contain "/p:Project=Azure.ResourceManager.Monitor.PipelineGroups"
+        $result | Should -Contain "/p:IncludeSamples=false"
+        $result | Should -Contain "/p:IncludePerf=false"
+        $result | Should -Contain "/p:IncludeStress=false"
+        $result[-1] | Should -Be (Join-Path $sdkRootPath "eng" "service.proj")
     }
 }
 
