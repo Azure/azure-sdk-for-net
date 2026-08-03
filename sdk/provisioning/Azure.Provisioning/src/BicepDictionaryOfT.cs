@@ -104,14 +104,6 @@ public class BicepDictionary<T> :
         item.Format = Format;
     }
 
-    private protected override void OnFormatChanged()
-    {
-        foreach (var kv in _values)
-        {
-            SetSelfForItem(kv.Value, kv.Key);
-        }
-    }
-
     private void RemoveSelfForItem(BicepValue<T> item)
     {
         item.SetSelf(null);
@@ -255,12 +247,12 @@ public class BicepDictionary<T> :
     IEnumerator<KeyValuePair<string, IBicepValue>> IEnumerable<KeyValuePair<string, IBicepValue>>.GetEnumerator() =>
         _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).GetEnumerator();
 
-    private protected override BicepExpression CompileLiteralValue()
+    private protected override BicepExpression CompileLiteralValue(string? format)
     {
         Dictionary<string, BicepExpression> compiledValues = [];
         foreach (var kv in _values)
         {
-            compiledValues[kv.Key] = kv.Value.Compile();
+            compiledValues[kv.Key] = kv.Value.Compile(format);
         }
         return BicepSyntax.Object(compiledValues);
     }

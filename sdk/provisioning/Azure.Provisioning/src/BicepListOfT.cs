@@ -153,14 +153,6 @@ public class BicepList<T> :
         item.Format = Format;
     }
 
-    private protected override void OnFormatChanged()
-    {
-        for (int i = 0; i < _values.Count; i++)
-        {
-            SetSelfForItem(_values[i], i);
-        }
-    }
-
     private void RemoveSelfForItem(BicepValue<T> item)
     {
         item.SetSelf(null);
@@ -284,8 +276,8 @@ public class BicepList<T> :
         new(expression) { _referenceFactory = referenceFactory };
     private Func<BicepExpression, T>? _referenceFactory = null;
 
-    private protected override BicepExpression CompileLiteralValue()
+    private protected override BicepExpression CompileLiteralValue(string? format)
     {
-        return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
+        return BicepSyntax.Array(_values.Select(v => v.Compile(format)).ToArray());
     }
 }
