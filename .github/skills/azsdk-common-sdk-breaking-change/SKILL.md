@@ -30,7 +30,7 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 
 2. Follow `azsdk-common-generate-sdk-locally` skill to gererate SDK only.
 3. **Detect SDK breaking Changes** - Run `azure-sdk-mcp:azsdk_package_detect_breaking_change`
-4. **Display the detected Breaking changes** if any breaking change detected in step 3
+4. **Display detected breaking changes** — If step 3 detects breaking changes, display a `## Detected Breaking Changes` title followed by a Markdown table. Include exactly one breaking change per row with these columns: `Breaking Change`, `Category`, and `Resolution`. Preserve the category and resolution returned by the detection tool; do not replace them with a summary.
 5. **Prompt the user to choose breaking changes to mitigate** — Present the list from step 3 as a multiple-choice selection.
 6. **Mitigate SDK breaking changes** - Run `azure-sdk-mcp:azsdk_customized_code_update` with parameters:
 - packagePath: The SDk package path
