@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum BackupPolicyType
     {
         /// <summary> Periodic. </summary>
-        Periodic,
+        Periodic = 0,
         /// <summary> Continuous. </summary>
-        Continuous
+        Continuous = 1
     }
 }

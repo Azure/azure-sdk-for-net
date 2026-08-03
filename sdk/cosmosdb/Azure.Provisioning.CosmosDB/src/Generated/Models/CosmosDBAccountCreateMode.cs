@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBAccountCreateMode
     {
         /// <summary> Default. </summary>
-        Default,
+        Default = 0,
         /// <summary> Restore. </summary>
-        Restore
+        Restore = 1
     }
 }

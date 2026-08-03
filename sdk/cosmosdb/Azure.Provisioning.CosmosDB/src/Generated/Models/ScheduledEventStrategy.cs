@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum ScheduledEventStrategy
     {
         /// <summary> Ignore. </summary>
-        Ignore,
+        Ignore = 0,
         /// <summary> StopAny. </summary>
-        StopAny,
+        StopAny = 1,
         /// <summary> StopByRack. </summary>
-        StopByRack
+        StopByRack = 2
     }
 }

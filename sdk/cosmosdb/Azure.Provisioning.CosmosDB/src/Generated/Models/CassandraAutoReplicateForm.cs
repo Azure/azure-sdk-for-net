@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CassandraAutoReplicateForm
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> SystemKeyspaces. </summary>
-        SystemKeyspaces,
+        SystemKeyspaces = 1,
         /// <summary> AllKeyspaces. </summary>
-        AllKeyspaces
+        AllKeyspaces = 2
     }
 }

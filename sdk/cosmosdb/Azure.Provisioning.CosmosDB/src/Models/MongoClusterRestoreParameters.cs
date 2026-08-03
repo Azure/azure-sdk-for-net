@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ComponentModel;
 using Azure.Provisioning.Primitives;
@@ -23,7 +21,7 @@ public partial class MongoClusterRestoreParameters : ProvisionableConstruct
         get { Initialize(); return _pointInTimeUTC!; }
         set { Initialize(); _pointInTimeUTC!.Assign(value); }
     }
-    private BicepValue<DateTimeOffset>? _pointInTimeUTC;
+    private BicepValue<DateTimeOffset> _pointInTimeUTC;
 
     /// <summary>
     /// Resource ID to locate the source cluster to restore.
@@ -33,7 +31,7 @@ public partial class MongoClusterRestoreParameters : ProvisionableConstruct
         get { Initialize(); return _sourceResourceId!; }
         set { Initialize(); _sourceResourceId!.Assign(value); }
     }
-    private BicepValue<string>? _sourceResourceId;
+    private BicepValue<string> _sourceResourceId;
 
     /// <summary>
     /// Creates a new MongoClusterRestoreParameters.

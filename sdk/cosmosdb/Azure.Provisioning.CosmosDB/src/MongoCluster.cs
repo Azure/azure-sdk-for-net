@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ComponentModel;
 using Azure.Core;
@@ -26,7 +24,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _name!; }
         set { Initialize(); _name!.Assign(value); }
     }
-    private BicepValue<string>? _name;
+    private BicepValue<string> _name;
 
     /// <summary>
     /// Gets or sets the Location.
@@ -36,7 +34,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _location!; }
         set { Initialize(); _location!.Assign(value); }
     }
-    private BicepValue<AzureLocation>? _location;
+    private BicepValue<AzureLocation> _location;
 
     /// <summary>
     /// The administrator&apos;s login for the mongo cluster.
@@ -46,7 +44,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _administratorLogin!; }
         set { Initialize(); _administratorLogin!.Assign(value); }
     }
-    private BicepValue<string>? _administratorLogin;
+    private BicepValue<string> _administratorLogin;
 
     /// <summary>
     /// The password of the administrator login.
@@ -56,7 +54,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _administratorLoginPassword!; }
         set { Initialize(); _administratorLoginPassword!.Assign(value); }
     }
-    private BicepValue<string>? _administratorLoginPassword;
+    private BicepValue<string> _administratorLoginPassword;
 
     /// <summary>
     /// The mode to create a mongo cluster.
@@ -66,7 +64,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _createMode!; }
         set { Initialize(); _createMode!.Assign(value); }
     }
-    private BicepValue<CosmosDBAccountCreateMode>? _createMode;
+    private BicepValue<CosmosDBAccountCreateMode> _createMode;
 
     /// <summary>
     /// The list of node group specs in the cluster.
@@ -76,7 +74,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _nodeGroupSpecs!; }
         set { Initialize(); _nodeGroupSpecs!.Assign(value); }
     }
-    private BicepList<NodeGroupSpec>? _nodeGroupSpecs;
+    private BicepList<NodeGroupSpec> _nodeGroupSpecs;
 
     /// <summary>
     /// Parameters used for restore operations.
@@ -86,7 +84,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _restoreParameters!; }
         set { Initialize(); AssignOrReplace(ref _restoreParameters, value); }
     }
-    private MongoClusterRestoreParameters? _restoreParameters;
+    private MongoClusterRestoreParameters _restoreParameters;
 
     /// <summary>
     /// The Mongo DB server version. Defaults to the latest available version
@@ -97,7 +95,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _serverVersion!; }
         set { Initialize(); _serverVersion!.Assign(value); }
     }
-    private BicepValue<string>? _serverVersion;
+    private BicepValue<string> _serverVersion;
 
     /// <summary>
     /// Gets or sets the Tags.
@@ -107,7 +105,7 @@ public partial class MongoCluster : ProvisionableResource
         get { Initialize(); return _tags!; }
         set { Initialize(); _tags!.Assign(value); }
     }
-    private BicepDictionary<string>? _tags;
+    private BicepDictionary<string> _tags;
 
     /// <summary>
     /// A status of the mongo cluster.
@@ -116,7 +114,7 @@ public partial class MongoCluster : ProvisionableResource
     {
         get { Initialize(); return _clusterStatus!; }
     }
-    private BicepValue<MongoClusterStatus>? _clusterStatus;
+    private BicepValue<MongoClusterStatus> _clusterStatus;
 
     /// <summary>
     /// The default mongo connection string for the cluster.
@@ -125,7 +123,7 @@ public partial class MongoCluster : ProvisionableResource
     {
         get { Initialize(); return _connectionString!; }
     }
-    private BicepValue<string>? _connectionString;
+    private BicepValue<string> _connectionString;
 
     /// <summary>
     /// Earliest restore timestamp in UTC ISO8601 format.
@@ -134,7 +132,7 @@ public partial class MongoCluster : ProvisionableResource
     {
         get { Initialize(); return _earliestRestoreTime!; }
     }
-    private BicepValue<string>? _earliestRestoreTime;
+    private BicepValue<string> _earliestRestoreTime;
 
     /// <summary>
     /// Gets the Id.
@@ -143,7 +141,7 @@ public partial class MongoCluster : ProvisionableResource
     {
         get { Initialize(); return _id!; }
     }
-    private BicepValue<ResourceIdentifier>? _id;
+    private BicepValue<ResourceIdentifier> _id;
 
     /// <summary>
     /// A provisioning state of the mongo cluster.
@@ -152,7 +150,7 @@ public partial class MongoCluster : ProvisionableResource
     {
         get { Initialize(); return _provisioningState!; }
     }
-    private BicepValue<CosmosDBProvisioningState>? _provisioningState;
+    private BicepValue<CosmosDBProvisioningState> _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
@@ -161,7 +159,7 @@ public partial class MongoCluster : ProvisionableResource
     {
         get { Initialize(); return _systemData!; }
     }
-    private SystemData? _systemData;
+    private SystemData _systemData;
 
     /// <summary>
     /// Creates a new MongoCluster.
@@ -173,7 +171,7 @@ public partial class MongoCluster : ProvisionableResource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the MongoCluster.</param>
-    public MongoCluster(string bicepIdentifier, string? resourceVersion = default)
+    public MongoCluster(string bicepIdentifier, string resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/mongoClusters", resourceVersion ?? "2024-07-01")
     {
     }
@@ -222,6 +220,6 @@ public partial class MongoCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the MongoCluster.</param>
     /// <returns>The existing MongoCluster resource.</returns>
-    public static MongoCluster FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    public static MongoCluster FromExisting(string bicepIdentifier, string resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

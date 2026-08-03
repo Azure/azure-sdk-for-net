@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum AnalyticalStorageSchemaType
     {
         /// <summary> WellDefined. </summary>
-        WellDefined,
+        WellDefined = 0,
         /// <summary> FullFidelity. </summary>
-        FullFidelity
+        FullFidelity = 1
     }
 }

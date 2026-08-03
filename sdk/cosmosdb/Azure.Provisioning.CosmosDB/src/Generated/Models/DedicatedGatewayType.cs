@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum DedicatedGatewayType
     {
         /// <summary> IntegratedCache. </summary>
-        IntegratedCache,
+        IntegratedCache = 0,
         /// <summary> DistributedQuery. </summary>
-        DistributedQuery
+        DistributedQuery = 1
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum DefaultPriorityLevel
     {
         /// <summary> High. </summary>
-        High,
+        High = 0,
         /// <summary> Low. </summary>
-        Low
+        Low = 1
     }
 }

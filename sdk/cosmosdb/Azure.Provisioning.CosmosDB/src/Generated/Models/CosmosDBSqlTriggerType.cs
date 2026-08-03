@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBSqlTriggerType
     {
         /// <summary> Pre. </summary>
-        Pre,
+        Pre = 0,
         /// <summary> Post. </summary>
-        Post
+        Post = 1
     }
 }

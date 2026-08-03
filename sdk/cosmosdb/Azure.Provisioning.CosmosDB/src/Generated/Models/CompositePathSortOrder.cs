@@ -14,9 +14,9 @@ namespace Azure.Provisioning.CosmosDB
     {
         /// <summary> Ascending. </summary>
         [DataMember(Name = "ascending")]
-        Ascending,
+        Ascending = 0,
         /// <summary> Descending. </summary>
         [DataMember(Name = "descending")]
-        Descending
+        Descending = 1
     }
 }

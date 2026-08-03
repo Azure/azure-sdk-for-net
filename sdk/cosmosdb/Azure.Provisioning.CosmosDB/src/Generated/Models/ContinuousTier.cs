@@ -8,11 +8,11 @@
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> Enum to indicate type of Continuous backup tier. </summary>
-    internal enum ContinuousTier
+    public enum ContinuousTier
     {
         /// <summary> Continuous7Days. </summary>
-        Continuous7Days,
+        Continuous7Days = 0,
         /// <summary> Continuous30Days. </summary>
-        Continuous30Days
+        Continuous30Days = 1
     }
 }

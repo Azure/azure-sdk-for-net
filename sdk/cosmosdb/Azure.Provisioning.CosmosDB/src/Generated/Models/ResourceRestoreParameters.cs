@@ -5,76 +5,20 @@
 
 #nullable disable
 
-using System;
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> Parameters to indicate the information about the restore. </summary>
-    public partial class ResourceRestoreParameters : ProvisionableConstruct
+    public partial class ResourceRestoreParameters : RestoreParametersBase
     {
-        private BicepValue<string> _restoreSource;
-        private BicepValue<DateTimeOffset> _restoreTimestampInUtc;
-        private BicepValue<bool> _isRestoreWithTtlDisabled;
-
         /// <summary> Creates a new ResourceRestoreParameters. </summary>
         public ResourceRestoreParameters()
         {
-        }
-
-        /// <summary> Gets or sets the RestoreSource. </summary>
-        public BicepValue<string> RestoreSource
-        {
-            get
-            {
-                Initialize();
-                return _restoreSource;
-            }
-            set
-            {
-                Initialize();
-                _restoreSource.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RestoreTimestampInUtc. </summary>
-        public BicepValue<DateTimeOffset> RestoreTimestampInUtc
-        {
-            get
-            {
-                Initialize();
-                return _restoreTimestampInUtc;
-            }
-            set
-            {
-                Initialize();
-                _restoreTimestampInUtc.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsRestoreWithTtlDisabled. </summary>
-        public BicepValue<bool> IsRestoreWithTtlDisabled
-        {
-            get
-            {
-                Initialize();
-                return _isRestoreWithTtlDisabled;
-            }
-            set
-            {
-                Initialize();
-                _isRestoreWithTtlDisabled.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for ResourceRestoreParameters. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _restoreSource = DefineProperty<string>(nameof(RestoreSource), new string[] { "restoreSource" });
-            _restoreTimestampInUtc = DefineProperty<DateTimeOffset>(nameof(RestoreTimestampInUtc), new string[] { "restoreTimestampInUtc" });
-            _isRestoreWithTtlDisabled = DefineProperty<bool>(nameof(IsRestoreWithTtlDisabled), new string[] { "restoreWithTtlDisabled" });
             DefineAdditionalProperties();
         }
 

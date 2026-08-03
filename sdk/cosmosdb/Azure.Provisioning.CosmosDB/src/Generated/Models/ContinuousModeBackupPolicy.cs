@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The object representing continuous mode backup policy. </summary>
-    internal partial class ContinuousModeBackupPolicy : CosmosDBAccountBackupPolicy
+    public partial class ContinuousModeBackupPolicy : CosmosDBAccountBackupPolicy
     {
         private ContinuousModeProperties _continuousModeProperties;
 

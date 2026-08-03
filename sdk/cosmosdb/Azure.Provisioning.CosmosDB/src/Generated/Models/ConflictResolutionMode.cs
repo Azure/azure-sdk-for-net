@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum ConflictResolutionMode
     {
         /// <summary> LastWriterWins. </summary>
-        LastWriterWins,
+        LastWriterWins = 0,
         /// <summary> Custom. </summary>
-        Custom
+        Custom = 1
     }
 }

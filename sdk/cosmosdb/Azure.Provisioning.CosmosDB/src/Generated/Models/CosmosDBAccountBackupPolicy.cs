@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB
     /// The object representing the policy for taking backups on an account.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PeriodicModeBackupPolicy"/> and <see cref="ContinuousModeBackupPolicy"/>.
     /// </summary>
-    internal partial class CosmosDBAccountBackupPolicy : ProvisionableConstruct
+    public partial class CosmosDBAccountBackupPolicy : ProvisionableConstruct
     {
         private BackupPolicyMigrationState _migrationState;
 

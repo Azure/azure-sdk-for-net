@@ -14,12 +14,12 @@ namespace Azure.Provisioning.CosmosDB
     {
         /// <summary> Euclidean. </summary>
         [DataMember(Name = "euclidean")]
-        Euclidean,
+        Euclidean = 0,
         /// <summary> Cosine. </summary>
         [DataMember(Name = "cosine")]
-        Cosine,
+        Cosine = 1,
         /// <summary> Dotproduct. </summary>
         [DataMember(Name = "dotproduct")]
-        Dotproduct
+        Dotproduct = 2
     }
 }

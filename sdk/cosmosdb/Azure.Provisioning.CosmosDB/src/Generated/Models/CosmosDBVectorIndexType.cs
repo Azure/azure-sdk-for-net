@@ -14,12 +14,12 @@ namespace Azure.Provisioning.CosmosDB
     {
         /// <summary> Flat. </summary>
         [DataMember(Name = "flat")]
-        Flat,
+        Flat = 0,
         /// <summary> DiskAnn. </summary>
         [DataMember(Name = "diskANN")]
-        DiskAnn,
+        DiskAnn = 1,
         /// <summary> QuantizedFlat. </summary>
         [DataMember(Name = "quantizedFlat")]
-        QuantizedFlat
+        QuantizedFlat = 2
     }
 }

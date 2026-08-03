@@ -5,23 +5,17 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The CosmosDBSqlClientEncryptionKeyProperties. </summary>
-    public partial class CosmosDBSqlClientEncryptionKeyProperties : ProvisionableConstruct
+    public partial class CosmosDBSqlClientEncryptionKeyProperties : CosmosDBSqlClientEncryptionKeyResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _id;
-        private BicepValue<string> _encryptionAlgorithm;
-        private BicepValue<BinaryData> _wrappedDataEncryptionKey;
-        private CosmosDBKeyWrapMetadata _keyWrapMetadata;
 
         /// <summary> Creates a new CosmosDBSqlClientEncryptionKeyProperties. </summary>
         public CosmosDBSqlClientEncryptionKeyProperties()
@@ -58,66 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<string> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EncryptionAlgorithm. </summary>
-        public BicepValue<string> EncryptionAlgorithm
-        {
-            get
-            {
-                Initialize();
-                return _encryptionAlgorithm;
-            }
-            set
-            {
-                Initialize();
-                _encryptionAlgorithm.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the WrappedDataEncryptionKey. </summary>
-        public BicepValue<BinaryData> WrappedDataEncryptionKey
-        {
-            get
-            {
-                Initialize();
-                return _wrappedDataEncryptionKey;
-            }
-            set
-            {
-                Initialize();
-                _wrappedDataEncryptionKey.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the KeyWrapMetadata. </summary>
-        public CosmosDBKeyWrapMetadata KeyWrapMetadata
-        {
-            get
-            {
-                Initialize();
-                return _keyWrapMetadata;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _keyWrapMetadata, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CosmosDBSqlClientEncryptionKeyProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -125,10 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
-            _encryptionAlgorithm = DefineProperty<string>(nameof(EncryptionAlgorithm), new string[] { "encryptionAlgorithm" });
-            _wrappedDataEncryptionKey = DefineProperty<BinaryData>(nameof(WrappedDataEncryptionKey), new string[] { "wrappedDataEncryptionKey" });
-            _keyWrapMetadata = DefineModelProperty<CosmosDBKeyWrapMetadata>(nameof(KeyWrapMetadata), new string[] { "keyWrapMetadata" });
             DefineAdditionalProperties();
         }
 

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBFleetspaceServiceTier
     {
         /// <summary> GeneralPurpose. </summary>
-        GeneralPurpose,
+        GeneralPurpose = 0,
         /// <summary> BusinessCritical. </summary>
-        BusinessCritical
+        BusinessCritical = 1
     }
 }

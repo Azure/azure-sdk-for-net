@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The object representing periodic mode backup policy. </summary>
-    internal partial class PeriodicModeBackupPolicy : CosmosDBAccountBackupPolicy
+    public partial class PeriodicModeBackupPolicy : CosmosDBAccountBackupPolicy
     {
         private PeriodicModeProperties _periodicModeProperties;
 

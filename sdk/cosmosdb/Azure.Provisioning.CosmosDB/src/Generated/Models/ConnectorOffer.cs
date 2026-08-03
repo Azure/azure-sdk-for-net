@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CosmosDB
     public enum ConnectorOffer
     {
         /// <summary> Small. </summary>
-        Small
+        Small = 0
     }
 }

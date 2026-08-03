@@ -7,29 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedCosmosDBSqlContainerResourceInfo. </summary>
-    public partial class ExtendedCosmosDBSqlContainerResourceInfo : ProvisionableConstruct
+    public partial class ExtendedCosmosDBSqlContainerResourceInfo : CosmosDBSqlContainerResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _containerName;
-        private CosmosDBIndexingPolicy _indexingPolicy;
-        private CosmosDBContainerPartitionKey _partitionKey;
-        private BicepValue<int> _defaultTtl;
-        private CosmosDBUniqueKeyPolicy _uniqueKeyPolicy;
-        private ConflictResolutionPolicy _conflictResolutionPolicy;
-        private CosmosDBClientEncryptionPolicy _clientEncryptionPolicy;
-        private BicepValue<long> _analyticalStorageTtl;
-        private ResourceRestoreParameters _restoreParameters;
-        private BicepValue<CosmosDBAccountCreateMode> _createMode;
-        private BicepList<ComputedProperty> _computedProperties;
-        private VectorEmbeddingPolicy _vectorEmbeddingPolicy;
-        private FullTextPolicy _fullTextPolicy;
 
         /// <summary> Creates a new ExtendedCosmosDBSqlContainerResourceInfo. </summary>
         public ExtendedCosmosDBSqlContainerResourceInfo()
@@ -66,235 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the ContainerName. </summary>
-        public BicepValue<string> ContainerName
-        {
-            get
-            {
-                Initialize();
-                return _containerName;
-            }
-            set
-            {
-                Initialize();
-                _containerName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IndexingPolicy. </summary>
-        public CosmosDBIndexingPolicy IndexingPolicy
-        {
-            get
-            {
-                Initialize();
-                return _indexingPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _indexingPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the PartitionKey. </summary>
-        public CosmosDBContainerPartitionKey PartitionKey
-        {
-            get
-            {
-                Initialize();
-                return _partitionKey;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _partitionKey, value);
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultTtl. </summary>
-        public BicepValue<int> DefaultTtl
-        {
-            get
-            {
-                Initialize();
-                return _defaultTtl;
-            }
-            set
-            {
-                Initialize();
-                _defaultTtl.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the UniqueKeyPolicy. </summary>
-        internal CosmosDBUniqueKeyPolicy UniqueKeyPolicy
-        {
-            get
-            {
-                Initialize();
-                return _uniqueKeyPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _uniqueKeyPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ConflictResolutionPolicy. </summary>
-        public ConflictResolutionPolicy ConflictResolutionPolicy
-        {
-            get
-            {
-                Initialize();
-                return _conflictResolutionPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _conflictResolutionPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ClientEncryptionPolicy. </summary>
-        public CosmosDBClientEncryptionPolicy ClientEncryptionPolicy
-        {
-            get
-            {
-                Initialize();
-                return _clientEncryptionPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _clientEncryptionPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the AnalyticalStorageTtl. </summary>
-        public BicepValue<long> AnalyticalStorageTtl
-        {
-            get
-            {
-                Initialize();
-                return _analyticalStorageTtl;
-            }
-            set
-            {
-                Initialize();
-                _analyticalStorageTtl.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RestoreParameters. </summary>
-        public ResourceRestoreParameters RestoreParameters
-        {
-            get
-            {
-                Initialize();
-                return _restoreParameters;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _restoreParameters, value);
-            }
-        }
-
-        /// <summary> Gets or sets the CreateMode. </summary>
-        public BicepValue<CosmosDBAccountCreateMode> CreateMode
-        {
-            get
-            {
-                Initialize();
-                return _createMode;
-            }
-            set
-            {
-                Initialize();
-                _createMode.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ComputedProperties. </summary>
-        public BicepList<ComputedProperty> ComputedProperties
-        {
-            get
-            {
-                Initialize();
-                return _computedProperties;
-            }
-            set
-            {
-                Initialize();
-                _computedProperties.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the VectorEmbeddingPolicy. </summary>
-        internal VectorEmbeddingPolicy VectorEmbeddingPolicy
-        {
-            get
-            {
-                Initialize();
-                return _vectorEmbeddingPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _vectorEmbeddingPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the FullTextPolicy. </summary>
-        public FullTextPolicy FullTextPolicy
-        {
-            get
-            {
-                Initialize();
-                return _fullTextPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _fullTextPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the UniqueKeys. </summary>
-        public BicepList<CosmosDBUniqueKey> UniqueKeys
-        {
-            get
-            {
-                return UniqueKeyPolicy is null ? default : UniqueKeyPolicy.UniqueKeys;
-            }
-            set
-            {
-                if (UniqueKeyPolicy is null)
-                {
-                    UniqueKeyPolicy = new CosmosDBUniqueKeyPolicy();
-                }
-                UniqueKeyPolicy.UniqueKeys = value;
-            }
-        }
-
-        /// <summary> Gets or sets the VectorEmbeddings. </summary>
-        public BicepList<CosmosDBVectorEmbedding> VectorEmbeddings
-        {
-            get
-            {
-                return VectorEmbeddingPolicy is null ? default : VectorEmbeddingPolicy.VectorEmbeddings;
-            }
-            set
-            {
-                if (VectorEmbeddingPolicy is null)
-                {
-                    VectorEmbeddingPolicy = new VectorEmbeddingPolicy();
-                }
-                VectorEmbeddingPolicy.VectorEmbeddings = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedCosmosDBSqlContainerResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -302,19 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _containerName = DefineProperty<string>(nameof(ContainerName), new string[] { "id" }, isRequired: true);
-            _indexingPolicy = DefineModelProperty<CosmosDBIndexingPolicy>(nameof(IndexingPolicy), new string[] { "indexingPolicy" });
-            _partitionKey = DefineModelProperty<CosmosDBContainerPartitionKey>(nameof(PartitionKey), new string[] { "partitionKey" });
-            _defaultTtl = DefineProperty<int>(nameof(DefaultTtl), new string[] { "defaultTtl" });
-            _uniqueKeyPolicy = DefineModelProperty<CosmosDBUniqueKeyPolicy>(nameof(UniqueKeyPolicy), new string[] { "uniqueKeyPolicy" });
-            _conflictResolutionPolicy = DefineModelProperty<ConflictResolutionPolicy>(nameof(ConflictResolutionPolicy), new string[] { "conflictResolutionPolicy" });
-            _clientEncryptionPolicy = DefineModelProperty<CosmosDBClientEncryptionPolicy>(nameof(ClientEncryptionPolicy), new string[] { "clientEncryptionPolicy" });
-            _analyticalStorageTtl = DefineProperty<long>(nameof(AnalyticalStorageTtl), new string[] { "analyticalStorageTtl" });
-            _restoreParameters = DefineModelProperty<ResourceRestoreParameters>(nameof(RestoreParameters), new string[] { "restoreParameters" });
-            _createMode = DefineProperty<CosmosDBAccountCreateMode>(nameof(CreateMode), new string[] { "createMode" });
-            _computedProperties = DefineListProperty<ComputedProperty>(nameof(ComputedProperties), new string[] { "computedProperties" });
-            _vectorEmbeddingPolicy = DefineModelProperty<VectorEmbeddingPolicy>(nameof(VectorEmbeddingPolicy), new string[] { "vectorEmbeddingPolicy" });
-            _fullTextPolicy = DefineModelProperty<FullTextPolicy>(nameof(FullTextPolicy), new string[] { "fullTextPolicy" });
             DefineAdditionalProperties();
         }
 

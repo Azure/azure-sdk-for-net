@@ -7,12 +7,11 @@
 
 using System;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> Parameters to indicate the information about the restore. </summary>
-    public partial class CosmosDBAccountRestoreParameters : ProvisionableConstruct
+    public partial class CosmosDBAccountRestoreParameters : RestoreParametersBase
     {
         private BicepValue<CosmosDBAccountRestoreMode> _restoreMode;
         private BicepValue<string> _restoreSource;
@@ -21,7 +20,6 @@ namespace Azure.Provisioning.CosmosDB
         private BicepList<GremlinDatabaseRestoreResourceInfo> _gremlinDatabasesToRestore;
         private BicepList<string> _tablesToRestore;
         private BicepValue<string> _sourceBackupLocation;
-        private BicepValue<bool> _isRestoreWithTtlDisabled;
 
         /// <summary> Creates a new CosmosDBAccountRestoreParameters. </summary>
         public CosmosDBAccountRestoreParameters()
@@ -44,7 +42,7 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the RestoreSource. </summary>
-        public BicepValue<string> RestoreSource
+        public new BicepValue<string> RestoreSource
         {
             get
             {
@@ -59,7 +57,7 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the RestoreTimestampInUtc. </summary>
-        public BicepValue<DateTimeOffset> RestoreTimestampInUtc
+        public new BicepValue<DateTimeOffset> RestoreTimestampInUtc
         {
             get
             {
@@ -133,21 +131,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the IsRestoreWithTtlDisabled. </summary>
-        public BicepValue<bool> IsRestoreWithTtlDisabled
-        {
-            get
-            {
-                Initialize();
-                return _isRestoreWithTtlDisabled;
-            }
-            set
-            {
-                Initialize();
-                _isRestoreWithTtlDisabled.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CosmosDBAccountRestoreParameters. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -159,7 +142,6 @@ namespace Azure.Provisioning.CosmosDB
             _gremlinDatabasesToRestore = DefineListProperty<GremlinDatabaseRestoreResourceInfo>(nameof(GremlinDatabasesToRestore), new string[] { "gremlinDatabasesToRestore" });
             _tablesToRestore = DefineListProperty<string>(nameof(TablesToRestore), new string[] { "tablesToRestore" });
             _sourceBackupLocation = DefineProperty<string>(nameof(SourceBackupLocation), new string[] { "sourceBackupLocation" });
-            _isRestoreWithTtlDisabled = DefineProperty<bool>(nameof(IsRestoreWithTtlDisabled), new string[] { "restoreWithTtlDisabled" });
             DefineAdditionalProperties();
         }
 

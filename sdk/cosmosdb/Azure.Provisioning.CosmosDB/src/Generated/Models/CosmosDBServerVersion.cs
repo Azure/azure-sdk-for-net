@@ -14,24 +14,24 @@ namespace Azure.Provisioning.CosmosDB
     {
         /// <summary> Three2. </summary>
         [DataMember(Name = "3.2")]
-        Three2,
+        Three2 = 0,
         /// <summary> Three6. </summary>
         [DataMember(Name = "3.6")]
-        Three6,
+        Three6 = 1,
         /// <summary> Four0. </summary>
         [DataMember(Name = "4.0")]
-        Four0,
+        Four0 = 2,
         /// <summary> Four2. </summary>
         [DataMember(Name = "4.2")]
-        Four2,
+        Four2 = 3,
         /// <summary> Five0. </summary>
         [DataMember(Name = "5.0")]
-        Five0,
+        Five0 = 4,
         /// <summary> Six0. </summary>
         [DataMember(Name = "6.0")]
-        Six0,
+        Six0 = 5,
         /// <summary> Seven0. </summary>
         [DataMember(Name = "7.0")]
-        Seven0
+        Seven0 = 6
     }
 }

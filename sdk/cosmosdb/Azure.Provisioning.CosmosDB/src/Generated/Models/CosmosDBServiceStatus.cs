@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBServiceStatus
     {
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> Running. </summary>
-        Running,
+        Running = 1,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 2,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 3,
         /// <summary> Error. </summary>
-        Error,
+        Error = 4,
         /// <summary> Stopped. </summary>
-        Stopped
+        Stopped = 5
     }
 }

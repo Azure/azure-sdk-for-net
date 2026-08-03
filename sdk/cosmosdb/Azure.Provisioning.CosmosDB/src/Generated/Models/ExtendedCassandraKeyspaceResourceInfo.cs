@@ -7,17 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedCassandraKeyspaceResourceInfo. </summary>
-    public partial class ExtendedCassandraKeyspaceResourceInfo : ProvisionableConstruct
+    public partial class ExtendedCassandraKeyspaceResourceInfo : CassandraKeyspaceResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _keyspaceName;
 
         /// <summary> Creates a new ExtendedCassandraKeyspaceResourceInfo. </summary>
         public ExtendedCassandraKeyspaceResourceInfo()
@@ -54,21 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the KeyspaceName. </summary>
-        public BicepValue<string> KeyspaceName
-        {
-            get
-            {
-                Initialize();
-                return _keyspaceName;
-            }
-            set
-            {
-                Initialize();
-                _keyspaceName.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedCassandraKeyspaceResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -76,7 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _keyspaceName = DefineProperty<string>(nameof(KeyspaceName), new string[] { "id" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

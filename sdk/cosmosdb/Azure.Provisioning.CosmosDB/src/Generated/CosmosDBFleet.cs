@@ -152,7 +152,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(3, 50, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(3, 50, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary></summary>
         public static partial class ResourceVersions

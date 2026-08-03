@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBBackupStorageRedundancy
     {
         /// <summary> Geo. </summary>
-        Geo,
+        Geo = 0,
         /// <summary> Local. </summary>
-        Local,
+        Local = 1,
         /// <summary> Zone. </summary>
-        Zone
+        Zone = 2
     }
 }

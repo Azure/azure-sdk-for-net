@@ -26,7 +26,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new RestorableCosmosDBAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public RestorableCosmosDBAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/locations/restorableDatabaseAccounts", resourceVersion ?? "2026-03-15")
+        internal RestorableCosmosDBAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/locations/restorableDatabaseAccounts", resourceVersion ?? "2026-03-15")
         {
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal RestorableDatabaseAccountProperties Properties
         {
             get
@@ -73,25 +73,15 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 
@@ -110,71 +100,39 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the AccountName. </summary>
+        /// <summary> Gets the AccountName. </summary>
         public BicepValue<string> AccountName
         {
             get
             {
-                return Properties is null ? default : Properties.AccountName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RestorableDatabaseAccountProperties();
-                }
-                Properties.AccountName = value;
+                return Properties.AccountName;
             }
         }
 
-        /// <summary> Gets or sets the CreatedOn. </summary>
+        /// <summary> Gets the CreatedOn. </summary>
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RestorableDatabaseAccountProperties();
-                }
-                Properties.CreatedOn = value;
+                return Properties.CreatedOn;
             }
         }
 
-        /// <summary> Gets or sets the OldestRestorableOn. </summary>
+        /// <summary> Gets the OldestRestorableOn. </summary>
         public BicepValue<DateTimeOffset> OldestRestorableOn
         {
             get
             {
-                return Properties is null ? default : Properties.OldestRestorableOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RestorableDatabaseAccountProperties();
-                }
-                Properties.OldestRestorableOn = value;
+                return Properties.OldestRestorableOn;
             }
         }
 
-        /// <summary> Gets or sets the DeletedOn. </summary>
+        /// <summary> Gets the DeletedOn. </summary>
         public BicepValue<DateTimeOffset> DeletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.DeletedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RestorableDatabaseAccountProperties();
-                }
-                Properties.DeletedOn = value;
+                return Properties.DeletedOn;
             }
         }
 
@@ -183,10 +141,6 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new RestorableDatabaseAccountProperties();
-                }
                 return Properties.ApiType;
             }
         }
@@ -196,10 +150,6 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new RestorableDatabaseAccountProperties();
-                }
                 return Properties.RestorableLocations;
             }
         }

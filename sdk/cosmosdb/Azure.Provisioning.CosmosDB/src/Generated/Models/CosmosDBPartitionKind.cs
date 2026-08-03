@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBPartitionKind
     {
         /// <summary> Hash. </summary>
-        Hash,
+        Hash = 0,
         /// <summary> Range. </summary>
-        Range,
+        Range = 1,
         /// <summary> MultiHash. </summary>
-        MultiHash
+        MultiHash = 2
     }
 }

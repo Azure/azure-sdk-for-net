@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBAccountOfferType
     {
         /// <summary> Standard. </summary>
-        Standard
+        Standard = 0
     }
 }

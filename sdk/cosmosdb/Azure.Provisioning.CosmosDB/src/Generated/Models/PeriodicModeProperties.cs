@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> Configuration values for periodic mode backup. </summary>
-    internal partial class PeriodicModeProperties : ProvisionableConstruct
+    public partial class PeriodicModeProperties : ProvisionableConstruct
     {
         private BicepValue<int> _backupIntervalInMinutes;
         private BicepValue<int> _backupRetentionIntervalInHours;

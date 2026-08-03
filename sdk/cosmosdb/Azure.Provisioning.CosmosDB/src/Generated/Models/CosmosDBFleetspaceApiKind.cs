@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBFleetspaceApiKind
     {
         /// <summary> NoSQL. </summary>
-        NoSQL
+        NoSQL = 0
     }
 }

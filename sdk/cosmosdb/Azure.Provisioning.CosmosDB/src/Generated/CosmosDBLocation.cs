@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new CosmosDBLocation. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CosmosDBLocation(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/locations", resourceVersion ?? "2026-03-15")
+        internal CosmosDBLocation(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/locations", resourceVersion ?? "2026-03-15")
         {
         }
 
@@ -62,18 +62,13 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public CosmosDBLocationProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 

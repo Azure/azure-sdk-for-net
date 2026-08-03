@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CosmosDB
     public enum DefaultConsistencyLevel
     {
         /// <summary> Eventual. </summary>
-        Eventual,
+        Eventual = 0,
         /// <summary> Session. </summary>
-        Session,
+        Session = 1,
         /// <summary> BoundedStaleness. </summary>
-        BoundedStaleness,
+        BoundedStaleness = 2,
         /// <summary> Strong. </summary>
-        Strong,
+        Strong = 3,
         /// <summary> ConsistentPrefix. </summary>
-        ConsistentPrefix
+        ConsistentPrefix = 4
     }
 }

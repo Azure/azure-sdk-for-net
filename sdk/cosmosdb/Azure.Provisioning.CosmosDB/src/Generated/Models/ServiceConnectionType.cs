@@ -13,9 +13,9 @@ namespace Azure.Provisioning.CosmosDB
     public enum ServiceConnectionType
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Vpn. </summary>
         [DataMember(Name = "VPN")]
-        Vpn
+        Vpn = 1
     }
 }

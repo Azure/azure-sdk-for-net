@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBPublicNetworkAccess
     {
         /// <summary> Enabled. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 1,
         /// <summary> SecuredByPerimeter. </summary>
-        SecuredByPerimeter
+        SecuredByPerimeter = 2
     }
 }

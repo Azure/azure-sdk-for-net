@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBAccountKind
     {
         /// <summary> GlobalDocumentDB. </summary>
-        GlobalDocumentDB,
+        GlobalDocumentDB = 0,
         /// <summary> MongoDB. </summary>
-        MongoDB,
+        MongoDB = 1,
         /// <summary> Parse. </summary>
-        Parse
+        Parse = 2
     }
 }

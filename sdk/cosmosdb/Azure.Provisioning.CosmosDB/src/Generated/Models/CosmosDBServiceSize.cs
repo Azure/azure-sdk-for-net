@@ -14,12 +14,12 @@ namespace Azure.Provisioning.CosmosDB
     {
         /// <summary> CosmosD4S. </summary>
         [DataMember(Name = "Cosmos.D4s")]
-        CosmosD4S,
+        CosmosD4S = 0,
         /// <summary> CosmosD8S. </summary>
         [DataMember(Name = "Cosmos.D8s")]
-        CosmosD8S,
+        CosmosD8S = 1,
         /// <summary> CosmosD16S. </summary>
         [DataMember(Name = "Cosmos.D16s")]
-        CosmosD16S
+        CosmosD16S = 2
     }
 }

@@ -14,15 +14,15 @@ namespace Azure.Provisioning.CosmosDB
     {
         /// <summary> Float32. </summary>
         [DataMember(Name = "float32")]
-        Float32,
+        Float32 = 0,
         /// <summary> Uint8. </summary>
         [DataMember(Name = "uint8")]
-        Uint8,
+        Uint8 = 1,
         /// <summary> Int8. </summary>
         [DataMember(Name = "int8")]
-        Int8,
+        Int8 = 2,
         /// <summary> Float16. </summary>
         [DataMember(Name = "float16")]
-        Float16
+        Float16 = 3
     }
 }

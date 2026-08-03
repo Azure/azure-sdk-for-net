@@ -7,22 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedThroughputSettingsResourceInfo. </summary>
-    public partial class ExtendedThroughputSettingsResourceInfo : ProvisionableConstruct
+    public partial class ExtendedThroughputSettingsResourceInfo : ThroughputSettingsResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<int> _throughput;
-        private AutoscaleSettingsResourceInfo _autoscaleSettings;
-        private BicepValue<string> _minimumThroughput;
-        private BicepValue<string> _offerReplacePending;
-        private BicepValue<string> _instantMaximumThroughput;
-        private BicepValue<string> _softAllowedMaximumThroughput;
 
         /// <summary> Creates a new ExtendedThroughputSettingsResourceInfo. </summary>
         public ExtendedThroughputSettingsResourceInfo()
@@ -59,76 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Throughput. </summary>
-        public BicepValue<int> Throughput
-        {
-            get
-            {
-                Initialize();
-                return _throughput;
-            }
-            set
-            {
-                Initialize();
-                _throughput.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AutoscaleSettings. </summary>
-        public AutoscaleSettingsResourceInfo AutoscaleSettings
-        {
-            get
-            {
-                Initialize();
-                return _autoscaleSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _autoscaleSettings, value);
-            }
-        }
-
-        /// <summary> Gets the MinimumThroughput. </summary>
-        public BicepValue<string> MinimumThroughput
-        {
-            get
-            {
-                Initialize();
-                return _minimumThroughput;
-            }
-        }
-
-        /// <summary> Gets the OfferReplacePending. </summary>
-        public BicepValue<string> OfferReplacePending
-        {
-            get
-            {
-                Initialize();
-                return _offerReplacePending;
-            }
-        }
-
-        /// <summary> Gets the InstantMaximumThroughput. </summary>
-        public BicepValue<string> InstantMaximumThroughput
-        {
-            get
-            {
-                Initialize();
-                return _instantMaximumThroughput;
-            }
-        }
-
-        /// <summary> Gets the SoftAllowedMaximumThroughput. </summary>
-        public BicepValue<string> SoftAllowedMaximumThroughput
-        {
-            get
-            {
-                Initialize();
-                return _softAllowedMaximumThroughput;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedThroughputSettingsResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -136,12 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _throughput = DefineProperty<int>(nameof(Throughput), new string[] { "throughput" });
-            _autoscaleSettings = DefineModelProperty<AutoscaleSettingsResourceInfo>(nameof(AutoscaleSettings), new string[] { "autoscaleSettings" });
-            _minimumThroughput = DefineProperty<string>(nameof(MinimumThroughput), new string[] { "minimumThroughput" }, isOutput: true);
-            _offerReplacePending = DefineProperty<string>(nameof(OfferReplacePending), new string[] { "offerReplacePending" }, isOutput: true);
-            _instantMaximumThroughput = DefineProperty<string>(nameof(InstantMaximumThroughput), new string[] { "instantMaximumThroughput" }, isOutput: true);
-            _softAllowedMaximumThroughput = DefineProperty<string>(nameof(SoftAllowedMaximumThroughput), new string[] { "softAllowedMaximumThroughput" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

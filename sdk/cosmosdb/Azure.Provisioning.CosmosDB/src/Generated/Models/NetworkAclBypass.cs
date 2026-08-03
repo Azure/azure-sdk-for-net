@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum NetworkAclBypass
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> AzureServices. </summary>
-        AzureServices
+        AzureServices = 1
     }
 }

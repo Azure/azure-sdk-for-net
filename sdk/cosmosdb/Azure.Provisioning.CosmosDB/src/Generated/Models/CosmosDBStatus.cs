@@ -11,24 +11,24 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBStatus
     {
         /// <summary> Uninitialized. </summary>
-        Uninitialized,
+        Uninitialized = 0,
         /// <summary> Initializing. </summary>
-        Initializing,
+        Initializing = 1,
         /// <summary> InternallyReady. </summary>
-        InternallyReady,
+        InternallyReady = 2,
         /// <summary> Online. </summary>
-        Online,
+        Online = 3,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 4,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 5,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 6,
         /// <summary> Canceled. </summary>
-        Canceled,
+        Canceled = 7,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 8,
         /// <summary> Creating. </summary>
-        Creating
+        Creating = 9
     }
 }

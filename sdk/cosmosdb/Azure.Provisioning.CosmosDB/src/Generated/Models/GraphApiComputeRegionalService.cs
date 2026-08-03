@@ -5,19 +5,14 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> Resource for a regional service location. </summary>
-    public partial class GraphApiComputeRegionalService : ProvisionableConstruct
+    public partial class GraphApiComputeRegionalService : CosmosDBRegionalService
     {
         private BicepValue<string> _graphApiComputeEndpoint;
-        private BicepValue<string> _name;
-        private BicepValue<AzureLocation> _location;
-        private BicepValue<CosmosDBServiceStatus> _status;
 
         /// <summary> Creates a new GraphApiComputeRegionalService. </summary>
         public GraphApiComputeRegionalService()
@@ -34,44 +29,11 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                Initialize();
-                return _name;
-            }
-        }
-
-        /// <summary> Gets the Location. </summary>
-        public BicepValue<AzureLocation> Location
-        {
-            get
-            {
-                Initialize();
-                return _location;
-            }
-        }
-
-        /// <summary> Gets the Status. </summary>
-        public BicepValue<CosmosDBServiceStatus> Status
-        {
-            get
-            {
-                Initialize();
-                return _status;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GraphApiComputeRegionalService. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _graphApiComputeEndpoint = DefineProperty<string>(nameof(GraphApiComputeEndpoint), new string[] { "graphApiComputeEndpoint" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _status = DefineProperty<CosmosDBServiceStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

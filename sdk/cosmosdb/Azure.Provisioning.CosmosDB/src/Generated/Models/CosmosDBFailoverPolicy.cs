@@ -33,7 +33,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the LocationName. </summary>
+        /// <summary> Gets the LocationName. </summary>
         public BicepValue<AzureLocation> LocationName
         {
             get
@@ -41,25 +41,15 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _locationName;
             }
-            set
-            {
-                Initialize();
-                _locationName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the FailoverPriority. </summary>
+        /// <summary> Gets the FailoverPriority. </summary>
         public BicepValue<int> FailoverPriority
         {
             get
             {
                 Initialize();
                 return _failoverPriority;
-            }
-            set
-            {
-                Initialize();
-                _failoverPriority.Assign(value);
             }
         }
 

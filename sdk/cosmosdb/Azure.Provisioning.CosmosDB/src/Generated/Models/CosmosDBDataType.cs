@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBDataType
     {
         /// <summary> String. </summary>
-        String,
+        String = 0,
         /// <summary> Number. </summary>
-        Number,
+        Number = 1,
         /// <summary> Point. </summary>
-        Point,
+        Point = 2,
         /// <summary> Polygon. </summary>
-        Polygon,
+        Polygon = 3,
         /// <summary> LineString. </summary>
-        LineString,
+        LineString = 4,
         /// <summary> MultiPolygon. </summary>
-        MultiPolygon
+        MultiPolygon = 5
     }
 }

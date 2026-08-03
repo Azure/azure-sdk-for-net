@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBSpatialType
     {
         /// <summary> Point. </summary>
-        Point,
+        Point = 0,
         /// <summary> LineString. </summary>
-        LineString,
+        LineString = 1,
         /// <summary> Polygon. </summary>
-        Polygon,
+        Polygon = 2,
         /// <summary> MultiPolygon. </summary>
-        MultiPolygon
+        MultiPolygon = 3
     }
 }

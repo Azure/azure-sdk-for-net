@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CassandraAuthenticationMethod
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Cassandra. </summary>
-        Cassandra,
+        Cassandra = 1,
         /// <summary> Ldap. </summary>
-        Ldap
+        Ldap = 2
     }
 }

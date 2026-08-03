@@ -14,12 +14,12 @@ namespace Azure.Provisioning.CosmosDB
     {
         /// <summary> Consistent. </summary>
         [DataMember(Name = "consistent")]
-        Consistent,
+        Consistent = 0,
         /// <summary> Lazy. </summary>
         [DataMember(Name = "lazy")]
-        Lazy,
+        Lazy = 1,
         /// <summary> None. </summary>
         [DataMember(Name = "none")]
-        None
+        None = 2
     }
 }

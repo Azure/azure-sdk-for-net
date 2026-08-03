@@ -7,22 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedMongoDBCollectionResourceInfo. </summary>
-    public partial class ExtendedMongoDBCollectionResourceInfo : ProvisionableConstruct
+    public partial class ExtendedMongoDBCollectionResourceInfo : MongoDBCollectionResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _collectionName;
-        private BicepDictionary<string> _shardKey;
-        private BicepList<MongoDBIndex> _indexes;
-        private BicepValue<int> _analyticalStorageTtl;
-        private ResourceRestoreParameters _restoreParameters;
-        private BicepValue<CosmosDBAccountCreateMode> _createMode;
 
         /// <summary> Creates a new ExtendedMongoDBCollectionResourceInfo. </summary>
         public ExtendedMongoDBCollectionResourceInfo()
@@ -59,96 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the CollectionName. </summary>
-        public BicepValue<string> CollectionName
-        {
-            get
-            {
-                Initialize();
-                return _collectionName;
-            }
-            set
-            {
-                Initialize();
-                _collectionName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ShardKey. </summary>
-        public BicepDictionary<string> ShardKey
-        {
-            get
-            {
-                Initialize();
-                return _shardKey;
-            }
-            set
-            {
-                Initialize();
-                _shardKey.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Indexes. </summary>
-        public BicepList<MongoDBIndex> Indexes
-        {
-            get
-            {
-                Initialize();
-                return _indexes;
-            }
-            set
-            {
-                Initialize();
-                _indexes.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AnalyticalStorageTtl. </summary>
-        public BicepValue<int> AnalyticalStorageTtl
-        {
-            get
-            {
-                Initialize();
-                return _analyticalStorageTtl;
-            }
-            set
-            {
-                Initialize();
-                _analyticalStorageTtl.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RestoreParameters. </summary>
-        public ResourceRestoreParameters RestoreParameters
-        {
-            get
-            {
-                Initialize();
-                return _restoreParameters;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _restoreParameters, value);
-            }
-        }
-
-        /// <summary> Gets or sets the CreateMode. </summary>
-        public BicepValue<CosmosDBAccountCreateMode> CreateMode
-        {
-            get
-            {
-                Initialize();
-                return _createMode;
-            }
-            set
-            {
-                Initialize();
-                _createMode.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedMongoDBCollectionResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -156,12 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _collectionName = DefineProperty<string>(nameof(CollectionName), new string[] { "id" }, isRequired: true);
-            _shardKey = DefineDictionaryProperty<string>(nameof(ShardKey), new string[] { "shardKey" });
-            _indexes = DefineListProperty<MongoDBIndex>(nameof(Indexes), new string[] { "indexes" });
-            _analyticalStorageTtl = DefineProperty<int>(nameof(AnalyticalStorageTtl), new string[] { "analyticalStorageTtl" });
-            _restoreParameters = DefineModelProperty<ResourceRestoreParameters>(nameof(RestoreParameters), new string[] { "restoreParameters" });
-            _createMode = DefineProperty<CosmosDBAccountCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             DefineAdditionalProperties();
         }
 

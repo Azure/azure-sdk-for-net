@@ -7,20 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedCassandraTableResourceInfo. </summary>
-    public partial class ExtendedCassandraTableResourceInfo : ProvisionableConstruct
+    public partial class ExtendedCassandraTableResourceInfo : CassandraTableResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _tableName;
-        private BicepValue<int> _defaultTtl;
-        private CassandraSchema _schema;
-        private BicepValue<int> _analyticalStorageTtl;
 
         /// <summary> Creates a new ExtendedCassandraTableResourceInfo. </summary>
         public ExtendedCassandraTableResourceInfo()
@@ -57,66 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the TableName. </summary>
-        public BicepValue<string> TableName
-        {
-            get
-            {
-                Initialize();
-                return _tableName;
-            }
-            set
-            {
-                Initialize();
-                _tableName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultTtl. </summary>
-        public BicepValue<int> DefaultTtl
-        {
-            get
-            {
-                Initialize();
-                return _defaultTtl;
-            }
-            set
-            {
-                Initialize();
-                _defaultTtl.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Schema. </summary>
-        public CassandraSchema Schema
-        {
-            get
-            {
-                Initialize();
-                return _schema;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _schema, value);
-            }
-        }
-
-        /// <summary> Gets or sets the AnalyticalStorageTtl. </summary>
-        public BicepValue<int> AnalyticalStorageTtl
-        {
-            get
-            {
-                Initialize();
-                return _analyticalStorageTtl;
-            }
-            set
-            {
-                Initialize();
-                _analyticalStorageTtl.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedCassandraTableResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -124,10 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _tableName = DefineProperty<string>(nameof(TableName), new string[] { "id" }, isRequired: true);
-            _defaultTtl = DefineProperty<int>(nameof(DefaultTtl), new string[] { "defaultTtl" });
-            _schema = DefineModelProperty<CassandraSchema>(nameof(Schema), new string[] { "schema" });
-            _analyticalStorageTtl = DefineProperty<int>(nameof(AnalyticalStorageTtl), new string[] { "analyticalStorageTtl" });
             DefineAdditionalProperties();
         }
 

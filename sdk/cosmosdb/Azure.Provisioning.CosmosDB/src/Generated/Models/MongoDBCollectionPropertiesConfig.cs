@@ -5,75 +5,20 @@
 
 #nullable disable
 
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The MongoDBCollectionPropertiesConfig. </summary>
-    public partial class MongoDBCollectionPropertiesConfig : ProvisionableConstruct
+    public partial class MongoDBCollectionPropertiesConfig : CosmosDBBaseConfig
     {
-        private BicepValue<int> _throughput;
-        private AutoscaleSettings _autoscaleSettings;
-
         /// <summary> Creates a new MongoDBCollectionPropertiesConfig. </summary>
         public MongoDBCollectionPropertiesConfig()
         {
-        }
-
-        /// <summary> Gets or sets the Throughput. </summary>
-        public BicepValue<int> Throughput
-        {
-            get
-            {
-                Initialize();
-                return _throughput;
-            }
-            set
-            {
-                Initialize();
-                _throughput.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AutoscaleSettings. </summary>
-        internal AutoscaleSettings AutoscaleSettings
-        {
-            get
-            {
-                Initialize();
-                return _autoscaleSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _autoscaleSettings, value);
-            }
-        }
-
-        /// <summary> Gets or sets the MaxThroughput. </summary>
-        public BicepValue<int> AutoscaleMaxThroughput
-        {
-            get
-            {
-                return AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;
-            }
-            set
-            {
-                if (AutoscaleSettings is null)
-                {
-                    AutoscaleSettings = new AutoscaleSettings();
-                }
-                AutoscaleSettings.MaxThroughput = value;
-            }
         }
 
         /// <summary> Define all the provisionable properties for MongoDBCollectionPropertiesConfig. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _throughput = DefineProperty<int>(nameof(Throughput), new string[] { "throughput" });
-            _autoscaleSettings = DefineModelProperty<AutoscaleSettings>(nameof(AutoscaleSettings), new string[] { "autoscaleSettings" });
             DefineAdditionalProperties();
         }
 

@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CosmosDB
     public enum BackupPolicyMigrationStatus
     {
         /// <summary> Invalid. </summary>
-        Invalid,
+        Invalid = 0,
         /// <summary> InProgress. </summary>
-        InProgress,
+        InProgress = 1,
         /// <summary> Completed. </summary>
-        Completed,
+        Completed = 2,
         /// <summary> Failed. </summary>
-        Failed
+        Failed = 3
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBMinimalTlsVersion
     {
         /// <summary> Tls. </summary>
-        Tls,
+        Tls = 0,
         /// <summary> Tls11. </summary>
-        Tls11,
+        Tls11 = 1,
         /// <summary> Tls12. </summary>
-        Tls12
+        Tls12 = 2
     }
 }

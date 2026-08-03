@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBAccountRestoreMode
     {
         /// <summary> PointInTime. </summary>
-        PointInTime
+        PointInTime = 0
     }
 }

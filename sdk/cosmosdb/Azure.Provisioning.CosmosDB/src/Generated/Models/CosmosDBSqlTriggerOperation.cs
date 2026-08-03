@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBSqlTriggerOperation
     {
         /// <summary> All. </summary>
-        All,
+        All = 0,
         /// <summary> Create. </summary>
-        Create,
+        Create = 1,
         /// <summary> Update. </summary>
-        Update,
+        Update = 2,
         /// <summary> Delete. </summary>
-        Delete,
+        Delete = 3,
         /// <summary> Replace. </summary>
-        Replace
+        Replace = 4
     }
 }

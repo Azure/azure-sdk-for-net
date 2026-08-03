@@ -7,25 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedGremlinGraphResourceInfo. </summary>
-    public partial class ExtendedGremlinGraphResourceInfo : ProvisionableConstruct
+    public partial class ExtendedGremlinGraphResourceInfo : GremlinGraphResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _graphName;
-        private CosmosDBIndexingPolicy _indexingPolicy;
-        private CosmosDBContainerPartitionKey _partitionKey;
-        private BicepValue<int> _defaultTtl;
-        private CosmosDBUniqueKeyPolicy _uniqueKeyPolicy;
-        private ConflictResolutionPolicy _conflictResolutionPolicy;
-        private BicepValue<long> _analyticalStorageTtl;
-        private ResourceRestoreParameters _restoreParameters;
-        private BicepValue<CosmosDBAccountCreateMode> _createMode;
 
         /// <summary> Creates a new ExtendedGremlinGraphResourceInfo. </summary>
         public ExtendedGremlinGraphResourceInfo()
@@ -62,158 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the GraphName. </summary>
-        public BicepValue<string> GraphName
-        {
-            get
-            {
-                Initialize();
-                return _graphName;
-            }
-            set
-            {
-                Initialize();
-                _graphName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IndexingPolicy. </summary>
-        public CosmosDBIndexingPolicy IndexingPolicy
-        {
-            get
-            {
-                Initialize();
-                return _indexingPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _indexingPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the PartitionKey. </summary>
-        public CosmosDBContainerPartitionKey PartitionKey
-        {
-            get
-            {
-                Initialize();
-                return _partitionKey;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _partitionKey, value);
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultTtl. </summary>
-        public BicepValue<int> DefaultTtl
-        {
-            get
-            {
-                Initialize();
-                return _defaultTtl;
-            }
-            set
-            {
-                Initialize();
-                _defaultTtl.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the UniqueKeyPolicy. </summary>
-        internal CosmosDBUniqueKeyPolicy UniqueKeyPolicy
-        {
-            get
-            {
-                Initialize();
-                return _uniqueKeyPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _uniqueKeyPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ConflictResolutionPolicy. </summary>
-        public ConflictResolutionPolicy ConflictResolutionPolicy
-        {
-            get
-            {
-                Initialize();
-                return _conflictResolutionPolicy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _conflictResolutionPolicy, value);
-            }
-        }
-
-        /// <summary> Gets or sets the AnalyticalStorageTtl. </summary>
-        public BicepValue<long> AnalyticalStorageTtl
-        {
-            get
-            {
-                Initialize();
-                return _analyticalStorageTtl;
-            }
-            set
-            {
-                Initialize();
-                _analyticalStorageTtl.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RestoreParameters. </summary>
-        public ResourceRestoreParameters RestoreParameters
-        {
-            get
-            {
-                Initialize();
-                return _restoreParameters;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _restoreParameters, value);
-            }
-        }
-
-        /// <summary> Gets or sets the CreateMode. </summary>
-        public BicepValue<CosmosDBAccountCreateMode> CreateMode
-        {
-            get
-            {
-                Initialize();
-                return _createMode;
-            }
-            set
-            {
-                Initialize();
-                _createMode.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the UniqueKeys. </summary>
-        public BicepList<CosmosDBUniqueKey> UniqueKeys
-        {
-            get
-            {
-                return UniqueKeyPolicy is null ? default : UniqueKeyPolicy.UniqueKeys;
-            }
-            set
-            {
-                if (UniqueKeyPolicy is null)
-                {
-                    UniqueKeyPolicy = new CosmosDBUniqueKeyPolicy();
-                }
-                UniqueKeyPolicy.UniqueKeys = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedGremlinGraphResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -221,15 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _graphName = DefineProperty<string>(nameof(GraphName), new string[] { "id" }, isRequired: true);
-            _indexingPolicy = DefineModelProperty<CosmosDBIndexingPolicy>(nameof(IndexingPolicy), new string[] { "indexingPolicy" });
-            _partitionKey = DefineModelProperty<CosmosDBContainerPartitionKey>(nameof(PartitionKey), new string[] { "partitionKey" });
-            _defaultTtl = DefineProperty<int>(nameof(DefaultTtl), new string[] { "defaultTtl" });
-            _uniqueKeyPolicy = DefineModelProperty<CosmosDBUniqueKeyPolicy>(nameof(UniqueKeyPolicy), new string[] { "uniqueKeyPolicy" });
-            _conflictResolutionPolicy = DefineModelProperty<ConflictResolutionPolicy>(nameof(ConflictResolutionPolicy), new string[] { "conflictResolutionPolicy" });
-            _analyticalStorageTtl = DefineProperty<long>(nameof(AnalyticalStorageTtl), new string[] { "analyticalStorageTtl" });
-            _restoreParameters = DefineModelProperty<ResourceRestoreParameters>(nameof(RestoreParameters), new string[] { "restoreParameters" });
-            _createMode = DefineProperty<CosmosDBAccountCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             DefineAdditionalProperties();
         }
 

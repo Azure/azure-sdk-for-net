@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ComponentModel;
 using Azure.Core;
@@ -25,7 +23,7 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
         get { Initialize(); return _name!; }
         set { Initialize(); _name!.Assign(value); }
     }
-    private BicepValue<string>? _name;
+    private BicepValue<string> _name;
 
     /// <summary>
     /// The end IP address of the mongo cluster firewall rule. Must be IPv4
@@ -36,7 +34,7 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
         get { Initialize(); return _endIPAddress!; }
         set { Initialize(); _endIPAddress!.Assign(value); }
     }
-    private BicepValue<string>? _endIPAddress;
+    private BicepValue<string> _endIPAddress;
 
     /// <summary>
     /// The start IP address of the mongo cluster firewall rule. Must be IPv4
@@ -47,7 +45,7 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
         get { Initialize(); return _startIPAddress!; }
         set { Initialize(); _startIPAddress!.Assign(value); }
     }
-    private BicepValue<string>? _startIPAddress;
+    private BicepValue<string> _startIPAddress;
 
     /// <summary>
     /// Gets the Id.
@@ -56,7 +54,7 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
     {
         get { Initialize(); return _id!; }
     }
-    private BicepValue<ResourceIdentifier>? _id;
+    private BicepValue<ResourceIdentifier> _id;
 
     /// <summary>
     /// The provisioning state of the firewall rule.
@@ -65,7 +63,7 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
     {
         get { Initialize(); return _provisioningState!; }
     }
-    private BicepValue<CosmosDBProvisioningState>? _provisioningState;
+    private BicepValue<CosmosDBProvisioningState> _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
@@ -74,17 +72,17 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
     {
         get { Initialize(); return _systemData!; }
     }
-    private SystemData? _systemData;
+    private SystemData _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent MongoCluster.
     /// </summary>
-    public MongoCluster? Parent
+    public MongoCluster Parent
     {
         get { Initialize(); return _parent!.Value; }
         set { Initialize(); _parent!.Value = value; }
     }
-    private ResourceReference<MongoCluster>? _parent;
+    private ResourceReference<MongoCluster> _parent;
 
     /// <summary>
     /// Creates a new CosmosDBFirewallRule.
@@ -96,7 +94,7 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBFirewallRule.</param>
-    public CosmosDBFirewallRule(string bicepIdentifier, string? resourceVersion = default)
+    public CosmosDBFirewallRule(string bicepIdentifier, string resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/mongoClusters/firewallRules", resourceVersion ?? "2024-07-01")
     {
     }
@@ -137,6 +135,6 @@ public partial class CosmosDBFirewallRule : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBFirewallRule.</param>
     /// <returns>The existing CosmosDBFirewallRule resource.</returns>
-    public static CosmosDBFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    public static CosmosDBFirewallRule FromExisting(string bicepIdentifier, string resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

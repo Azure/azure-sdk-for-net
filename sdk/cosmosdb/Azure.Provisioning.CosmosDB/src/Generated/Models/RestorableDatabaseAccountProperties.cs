@@ -26,7 +26,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets or sets the AccountName. </summary>
+        /// <summary> Gets the AccountName. </summary>
         public BicepValue<string> AccountName
         {
             get
@@ -34,14 +34,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _accountName;
             }
-            set
-            {
-                Initialize();
-                _accountName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CreatedOn. </summary>
+        /// <summary> Gets the CreatedOn. </summary>
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -49,14 +44,9 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _createdOn;
             }
-            set
-            {
-                Initialize();
-                _createdOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the OldestRestorableOn. </summary>
+        /// <summary> Gets the OldestRestorableOn. </summary>
         public BicepValue<DateTimeOffset> OldestRestorableOn
         {
             get
@@ -64,25 +54,15 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _oldestRestorableOn;
             }
-            set
-            {
-                Initialize();
-                _oldestRestorableOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DeletedOn. </summary>
+        /// <summary> Gets the DeletedOn. </summary>
         public BicepValue<DateTimeOffset> DeletedOn
         {
             get
             {
                 Initialize();
                 return _deletedOn;
-            }
-            set
-            {
-                Initialize();
-                _deletedOn.Assign(value);
             }
         }
 

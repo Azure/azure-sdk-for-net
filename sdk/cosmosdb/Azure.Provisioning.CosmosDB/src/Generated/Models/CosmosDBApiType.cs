@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBApiType
     {
         /// <summary> MongoDB. </summary>
-        MongoDB,
+        MongoDB = 0,
         /// <summary> Gremlin. </summary>
-        Gremlin,
+        Gremlin = 1,
         /// <summary> Cassandra. </summary>
-        Cassandra,
+        Cassandra = 2,
         /// <summary> Table. </summary>
-        Table,
+        Table = 3,
         /// <summary> Sql. </summary>
-        Sql,
+        Sql = 4,
         /// <summary> GremlinV2. </summary>
-        GremlinV2
+        GremlinV2 = 5
     }
 }

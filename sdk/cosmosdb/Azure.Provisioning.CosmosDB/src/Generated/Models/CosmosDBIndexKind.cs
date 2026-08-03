@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBIndexKind
     {
         /// <summary> Hash. </summary>
-        Hash,
+        Hash = 0,
         /// <summary> Range. </summary>
-        Range,
+        Range = 1,
         /// <summary> Spatial. </summary>
-        Spatial
+        Spatial = 2
     }
 }

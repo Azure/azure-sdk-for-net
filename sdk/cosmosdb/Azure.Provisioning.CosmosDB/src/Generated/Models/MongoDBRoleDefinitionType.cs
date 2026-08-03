@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB
     public enum MongoDBRoleDefinitionType
     {
         /// <summary> BuiltInRole. </summary>
-        BuiltInRole,
+        BuiltInRole = 0,
         /// <summary> CustomRole. </summary>
-        CustomRole
+        CustomRole = 1
     }
 }

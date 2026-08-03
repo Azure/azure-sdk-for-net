@@ -7,20 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedCosmosDBSqlTriggerResourceInfo. </summary>
-    public partial class ExtendedCosmosDBSqlTriggerResourceInfo : ProvisionableConstruct
+    public partial class ExtendedCosmosDBSqlTriggerResourceInfo : CosmosDBSqlTriggerResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _triggerName;
-        private BicepValue<string> _body;
-        private BicepValue<CosmosDBSqlTriggerType> _triggerType;
-        private BicepValue<CosmosDBSqlTriggerOperation> _triggerOperation;
 
         /// <summary> Creates a new ExtendedCosmosDBSqlTriggerResourceInfo. </summary>
         public ExtendedCosmosDBSqlTriggerResourceInfo()
@@ -57,66 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the TriggerName. </summary>
-        public BicepValue<string> TriggerName
-        {
-            get
-            {
-                Initialize();
-                return _triggerName;
-            }
-            set
-            {
-                Initialize();
-                _triggerName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Body. </summary>
-        public BicepValue<string> Body
-        {
-            get
-            {
-                Initialize();
-                return _body;
-            }
-            set
-            {
-                Initialize();
-                _body.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the TriggerType. </summary>
-        public BicepValue<CosmosDBSqlTriggerType> TriggerType
-        {
-            get
-            {
-                Initialize();
-                return _triggerType;
-            }
-            set
-            {
-                Initialize();
-                _triggerType.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the TriggerOperation. </summary>
-        public BicepValue<CosmosDBSqlTriggerOperation> TriggerOperation
-        {
-            get
-            {
-                Initialize();
-                return _triggerOperation;
-            }
-            set
-            {
-                Initialize();
-                _triggerOperation.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedCosmosDBSqlTriggerResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -124,10 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _triggerName = DefineProperty<string>(nameof(TriggerName), new string[] { "id" }, isRequired: true);
-            _body = DefineProperty<string>(nameof(Body), new string[] { "body" });
-            _triggerType = DefineProperty<CosmosDBSqlTriggerType>(nameof(TriggerType), new string[] { "triggerType" });
-            _triggerOperation = DefineProperty<CosmosDBSqlTriggerOperation>(nameof(TriggerOperation), new string[] { "triggerOperation" });
             DefineAdditionalProperties();
         }
 

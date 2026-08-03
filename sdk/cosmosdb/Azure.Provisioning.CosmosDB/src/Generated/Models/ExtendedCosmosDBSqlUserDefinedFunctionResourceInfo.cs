@@ -7,18 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
-    public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : ProvisionableConstruct
+    public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : CosmosDBSqlUserDefinedFunctionResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _functionName;
-        private BicepValue<string> _body;
 
         /// <summary> Creates a new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
         public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo()
@@ -55,36 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the FunctionName. </summary>
-        public BicepValue<string> FunctionName
-        {
-            get
-            {
-                Initialize();
-                return _functionName;
-            }
-            set
-            {
-                Initialize();
-                _functionName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Body. </summary>
-        public BicepValue<string> Body
-        {
-            get
-            {
-                Initialize();
-                return _body;
-            }
-            set
-            {
-                Initialize();
-                _body.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -92,8 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _functionName = DefineProperty<string>(nameof(FunctionName), new string[] { "id" }, isRequired: true);
-            _body = DefineProperty<string>(nameof(Body), new string[] { "body" });
             DefineAdditionalProperties();
         }
 

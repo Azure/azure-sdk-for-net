@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new CosmosDBPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CosmosDBPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/privateLinkResources", resourceVersion ?? "2026-03-15")
+        internal CosmosDBPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/privateLinkResources", resourceVersion ?? "2026-03-15")
         {
         }
 
@@ -63,18 +63,13 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal CosmosDBPrivateLinkResourceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -98,10 +93,6 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBPrivateLinkResourceProperties();
-                }
                 return Properties.GroupId;
             }
         }
@@ -111,10 +102,6 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBPrivateLinkResourceProperties();
-                }
                 return Properties.RequiredMembers;
             }
         }
@@ -124,10 +111,6 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBPrivateLinkResourceProperties();
-                }
                 return Properties.RequiredZoneNames;
             }
         }

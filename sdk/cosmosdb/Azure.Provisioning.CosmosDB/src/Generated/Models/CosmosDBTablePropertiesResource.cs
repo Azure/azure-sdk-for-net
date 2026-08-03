@@ -7,19 +7,15 @@
 
 using Azure;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary> The CosmosDBTablePropertiesResource. </summary>
-    public partial class CosmosDBTablePropertiesResource : ProvisionableConstruct
+    public partial class CosmosDBTablePropertiesResource : CosmosDBTableResourceInfo
     {
         private BicepValue<string> _rid;
         private BicepValue<float> _timestamp;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _tableName;
-        private ResourceRestoreParameters _restoreParameters;
-        private BicepValue<CosmosDBAccountCreateMode> _createMode;
 
         /// <summary> Creates a new CosmosDBTablePropertiesResource. </summary>
         public CosmosDBTablePropertiesResource()
@@ -56,51 +52,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the TableName. </summary>
-        public BicepValue<string> TableName
-        {
-            get
-            {
-                Initialize();
-                return _tableName;
-            }
-            set
-            {
-                Initialize();
-                _tableName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the RestoreParameters. </summary>
-        public ResourceRestoreParameters RestoreParameters
-        {
-            get
-            {
-                Initialize();
-                return _restoreParameters;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _restoreParameters, value);
-            }
-        }
-
-        /// <summary> Gets or sets the CreateMode. </summary>
-        public BicepValue<CosmosDBAccountCreateMode> CreateMode
-        {
-            get
-            {
-                Initialize();
-                return _createMode;
-            }
-            set
-            {
-                Initialize();
-                _createMode.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CosmosDBTablePropertiesResource. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -108,9 +59,6 @@ namespace Azure.Provisioning.CosmosDB
             _rid = DefineProperty<string>(nameof(Rid), new string[] { "_rid" }, isOutput: true);
             _timestamp = DefineProperty<float>(nameof(Timestamp), new string[] { "_ts" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "_etag" }, isOutput: true);
-            _tableName = DefineProperty<string>(nameof(TableName), new string[] { "id" }, isRequired: true);
-            _restoreParameters = DefineModelProperty<ResourceRestoreParameters>(nameof(RestoreParameters), new string[] { "restoreParameters" });
-            _createMode = DefineProperty<CosmosDBAccountCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             DefineAdditionalProperties();
         }
 
