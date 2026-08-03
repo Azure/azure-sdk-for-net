@@ -144,7 +144,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
         Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-        ProjectCreateResponseOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
             SessionId = session.AgentSessionId,
@@ -301,7 +301,7 @@ public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
         #region Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Sync
         Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-        ProjectCreateResponseOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
             SessionId = session.AgentSessionId,
