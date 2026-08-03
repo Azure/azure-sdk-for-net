@@ -31,43 +31,16 @@ dotnet add package Azure.AI.AgentServer.Activity --prerelease
 The fastest path registers handlers inline on the `AgentApplication` the host builds for you — no
 agent class required:
 
-```csharp
-using Azure.AI.AgentServer.Activity;
-using Microsoft.Agents.Builder.App;
-using Microsoft.Agents.Core.Models;
-
-ActivityServer.Run((AgentApplication app) =>
-{
-    app.OnActivity(ActivityTypes.Message, async (turnContext, turnState, cancellationToken) =>
-    {
-        await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
-    });
-}, args);
+```C# Snippet:Activity_Sample1_EchoAgent
 ```
 
 Or host an agent class by type — the standard Microsoft 365 Agents SDK style, where handlers are
 registered in the constructor:
 
-```csharp
-using Azure.AI.AgentServer.Activity;
-using Microsoft.Agents.Builder;
-using Microsoft.Agents.Builder.App;
-using Microsoft.Agents.Builder.State;
-using Microsoft.Agents.Core.Models;
+```C# Snippet:Activity_Sample8_Agent
+```
 
-public sealed class EchoAgent : AgentApplication
-{
-    public EchoAgent(AgentApplicationOptions options) : base(options)
-    {
-        OnActivity(ActivityTypes.Message, OnMessageAsync, rank: RouteRank.Last);
-    }
-
-    private Task OnMessageAsync(ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken)
-        => turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
-}
-
-// Program.cs
-ActivityServer.Run<EchoAgent>(args);
+```C# Snippet:Activity_Sample8_OneLiner
 ```
 
 ## Key concepts
@@ -98,7 +71,7 @@ Configuration for the built stack. Every property is optional.
 | `DigitalWorker` | Selects the outbound-auth model (default `false` = simple agent-instance identity). |
 | `Storage` | The turn-state storage backend (default: in-memory `MemoryStorage`). |
 | `Connections` | The outbound-auth token provider (default: Foundry managed-identity connections). |
-| `ConnectionConfiguration` | The M365 `CONNECTIONS__*` mapping (default: derived from the Foundry-native identity). |
+| `ConnectionConfiguration` | The M365 `Connections:*` mapping (default: derived from the Foundry-native identity). |
 | `ConfigureServices` | A callback to register additional services before the SDK defaults. |
 
 ### Outbound auth models
@@ -124,7 +97,7 @@ Three levels of control, from most opinionated to least:
   Activity endpoints alongside your own routes. This is also the two-line conversion path for an
   existing Microsoft 365 Agents SDK app.
 
-```csharp
+```C# Snippet:Activity_Sample10_SelfHost
 var builder = WebApplication.CreateBuilder(args);
 builder.AddAgent<EchoAgent>();                            // unchanged Microsoft 365 Agents SDK
 builder.Services.AddSingleton<IStorage, MemoryStorage>(); // unchanged

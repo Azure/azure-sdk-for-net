@@ -46,7 +46,7 @@ public class ActivityServerOptions
     public IConnections? Connections { get; set; }
 
     /// <summary>
-    /// Optional connection configuration (the M365 <c>CONNECTIONS__*</c> mapping) for the built
+    /// Optional connection configuration (the M365 <c>Connections:*</c> mapping) for the built
     /// stack. Leave <c>null</c> to derive the settings from the Foundry-native identity (via
     /// <see cref="ActivityEnvironment.GetHostedAgentConfiguration(bool)"/>). When supplied, these
     /// settings are used as-is instead of the derived values.

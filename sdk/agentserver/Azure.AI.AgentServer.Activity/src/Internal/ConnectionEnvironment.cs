@@ -15,16 +15,17 @@ internal static class ConnectionEnvironment
     public const string FoundryTenantId = "FOUNDRY_AGENT_TENANT_ID";
 
     // ── Microsoft 365 connection settings keys ───────────────────────────────
-    public const string AuthType = "CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHTYPE";
-    public const string ClientId = "CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID";
-    public const string TenantId = "CONNECTIONS__SERVICE_CONNECTION__SETTINGS__TENANTID";
-    public const string Scope0 = "CONNECTIONS__SERVICE_CONNECTION__SETTINGS__SCOPES__0";
-    public const string Authority = "CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHORITY";
-    public const string ConnectionMapServiceUrl = "CONNECTIONSMAP__0__SERVICEURL";
-    public const string ConnectionMapConnection = "CONNECTIONSMAP__0__CONNECTION";
+    public const string AuthType = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:AUTHTYPE";
+    public const string ClientId = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:CLIENTID";
+    public const string TenantId = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:TENANTID";
+    public const string Scope0 = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:SCOPES:0";
+    public const string Authority = "CONNECTIONS:SERVICE_CONNECTION:SETTINGS:AUTHORITY";
+    public const string ConnectionMapServiceUrl = "CONNECTIONSMAP:0:SERVICEURL";
+    public const string ConnectionMapConnection = "CONNECTIONSMAP:0:CONNECTION";
 
     // ── Default values ───────────────────────────────────────────────────────
     public const string DefaultAuthType = "UserManagedIdentity";
+    public const string DigitalWorkerAuthType = "IdentityProxyManager";
     public const string DefaultServiceUrl = "*";
     public const string DefaultConnectionName = "SERVICE_CONNECTION";
 

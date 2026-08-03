@@ -327,7 +327,7 @@ Microsoft 365 Agents SDK stack from the Foundry container environment.
 | `DigitalWorker` | `bool` | `false` | Selects the [outbound-auth model](#outbound-auth-models). |
 | `Storage` | `IStorage?` | `null` (→ `MemoryStorage`) | Turn-state storage backend. |
 | `Connections` | `IConnections?` | `null` (→ Foundry-native) | Outbound-token connection provider. |
-| `ConnectionConfiguration` | `IReadOnlyDictionary<string,string?>?` | `null` (→ derived) | The M365 `CONNECTIONS__*` mapping. |
+| `ConnectionConfiguration` | `IReadOnlyDictionary<string,string?>?` | `null` (→ derived) | The M365 `Connections:*` mapping. |
 | `ConfigureServices` | `Action<IServiceCollection>?` | `null` | Register additional/override services. |
 
 ### `DigitalWorker`
@@ -369,7 +369,7 @@ managed identity. Supply your own `IConnections` to control outbound-auth entire
 
 ### `ConnectionConfiguration`
 
-Optional connection configuration (the M365 `CONNECTIONS__*` mapping) for the built
+Optional connection configuration (the M365 `Connections:*` mapping) for the built
 stack. Leave `null` to derive the settings from the Foundry-native identity via
 [`ActivityEnvironment.GetHostedAgentConfiguration(bool)`](#activityenvironment). When
 supplied, these settings are used **as-is** instead of the derived values.
@@ -459,7 +459,7 @@ requires the blueprint/agentic identity rather than the plain instance Bot Conne
 ## `ActivityEnvironment`
 
 `ActivityEnvironment` reads the Foundry-hosted container environment and returns the
-Microsoft 365 Agents SDK configuration (the `CONNECTIONS__*` mapping) that the host
+Microsoft 365 Agents SDK configuration (the `Connections:*` mapping) that the host
 uses to wire outbound auth. You normally never call it — the host calls it for you —
 but it is public so you can inspect or reuse the derived settings.
 
@@ -670,4 +670,4 @@ verifying replies actually reach the channel.
 | Forgetting `app.MapFoundryActivity()` | Endpoint returns `404`; no `/readiness` | Both **register** (`AddFoundryActivity`) and **map** (`MapFoundryActivity`) are required. |
 | Setting `DigitalWorker = true` for a plain Teams bot | Outbound token has the wrong audience | Keep the default (`false`) unless you need the blueprint/agentic identity. |
 | Using the raw `RequestDelegate` overload for an `AgentApplication` | You have to re-implement the activity protocol yourself | Use the adapter-backed `MapFoundryActivity()` (no `RequestDelegate`) to run an agent. |
-| Overriding `ConnectionConfiguration` partially | Outbound auth breaks — supplied config is used as-is | Supply the **complete** `CONNECTIONS__*` mapping, or leave it `null` to derive from the environment. |
+| Overriding `ConnectionConfiguration` partially | Outbound auth breaks — supplied config is used as-is | Supply the **complete** `Connections:*` mapping, or leave it `null` to derive from the environment. |

@@ -26,7 +26,7 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 internal static class ActivityStack
 {
     /// <summary>
-    /// Resolves the M365 <c>CONNECTIONS__*</c> connection settings for the selected outbound-auth
+    /// Resolves the M365 <c>Connections:*</c> connection settings for the selected outbound-auth
     /// model, as a configuration map (never mutates the environment). A caller-supplied
     /// <see cref="ActivityServerOptions.ConnectionConfiguration"/> is used as-is when present;
     /// otherwise the settings are derived from the Foundry-native identity.
@@ -84,18 +84,30 @@ internal static class ActivityStack
         services.AddAgentApplicationOptions();
         services.AddAgentCore<CloudAdapter>();
 
-        // Substitute the outbound-auth connection provider. RemoveAll + add (rather than TryAdd or
-        // Replace) guarantees the Foundry/caller provider wins even when AddAgentCore already
-        // registered the SDK default (ConfigurationConnections).
-        services.RemoveAll<IConnections>();
+        // Select the outbound-auth connection provider. RemoveAll + add (rather than TryAdd or
+        // Replace) guarantees the chosen provider wins even when AddAgentCore already registered the
+        // SDK default (ConfigurationConnections).
         if (options.Connections is not null)
         {
+            // Caller-supplied provider wins for every model.
+            services.RemoveAll<IConnections>();
             services.AddSingleton(options.Connections);
         }
-        else
+        else if (!options.DigitalWorker)
         {
+            // Simple model: the agent-instance managed identity mints the Bot Connector reply token
+            // directly via FoundryConnections.
+            services.RemoveAll<IConnections>();
             services.AddSingleton<IConnections, FoundryConnections>();
         }
+        // Digital-worker model (no caller override): keep the Microsoft 365 Agents SDK's native
+        // connection provider (ConfigurationConnections builds MsalAuth from the Connections:*
+        // config). Its MsalAuth implements IAgenticTokenProvider — which the connector's
+        // CreateAgenticClientAsync requires to mint the agentic (blueprint + FMI) outbound reply
+        // token. The AUTHTYPE=IdentityProxyManager setting is supplied by
+        // ActivityEnvironment.GetHostedAgentConfiguration. Substituting FoundryConnections here
+        // would break the agentic reply because FoundryAccessTokenProvider is not an
+        // IAgenticTokenProvider.
     }
 
     /// <summary>

@@ -22,12 +22,13 @@
   of `MapFoundryActivity` for owning the request pipeline in a self-hosted app. This is also the
   two-line conversion path for an existing Microsoft 365 Agents SDK application.
 - `ActivityServerOptions` for configuring the built stack: outbound-auth model (`DigitalWorker`),
-  turn-state `Storage`, the outbound `Connections` provider, the `CONNECTIONS__*`
+  turn-state `Storage`, the outbound `Connections` provider, the `Connections:*`
   `ConnectionConfiguration` mapping, and a `ConfigureServices` hook.
-- Foundry outbound-auth: the `FoundryConnections` managed-identity Bot Connector token provider for
-  both the **simple** (agent-instance identity) and **digital worker** (blueprint identity + FMI
-  token exchange) models; `ActivityEnvironment` derives the M365 connection settings from the
-  Foundry-native identity without mutating the process environment.
+- Foundry outbound-auth for the **simple** (agent-instance identity) model: the `FoundryConnections`
+  managed-identity Bot Connector token provider. The **digital worker** (blueprint identity + FMI
+  token exchange) model uses the Microsoft 365 Agents SDK's native connection provider. The public
+  `ActivityEnvironment` helper derives the M365 connection settings from the Foundry-native identity
+  without mutating the process environment.
 - Session resolution (`agent_session_id` query / `x-agent-session-id` header / environment /
   generated), sanitized session-id response header, `x-platform-error-source` error classification
   (`user` / `platform` / `upstream`), and distributed tracing via `ActivityProtocolActivitySource`.

@@ -8,8 +8,7 @@ namespace Azure.AI.AgentServer.Activity
     }
     public static partial class ActivityEnvironment
     {
-        public static System.Collections.Generic.IReadOnlyDictionary<string, string?> GetHostedAgentConfiguration() { throw null; }
-        public static System.Collections.Generic.IReadOnlyDictionary<string, string?> GetHostedAgentConfiguration(bool digitalWorker) { throw null; }
+        public static System.Collections.Generic.IReadOnlyDictionary<string, string?> GetHostedAgentConfiguration(bool digitalWorker = false) { throw null; }
     }
     public static partial class ActivityServer
     {

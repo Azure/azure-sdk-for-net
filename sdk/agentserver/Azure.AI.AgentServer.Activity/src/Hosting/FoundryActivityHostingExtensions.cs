@@ -50,7 +50,7 @@ public static class FoundryActivityHostingExtensions
         var options = new ActivityServerOptions();
         configure?.Invoke(options);
 
-        // Overlay the derived Microsoft 365 connection settings (CONNECTIONS__*) onto the host
+        // Overlay the derived Microsoft 365 connection settings (Connections:*) onto the host
         // configuration so the SDK adapter and the Foundry connection provider read them. This
         // never mutates the process environment; a ConfigurationManager is both an
         // IConfigurationBuilder and an IConfiguration, so adding an in-memory source is safe.
@@ -67,7 +67,7 @@ public static class FoundryActivityHostingExtensions
     /// Registers the Foundry Activity protocol services directly onto a service collection. Prefer
     /// <see cref="AddFoundryActivity(IHostApplicationBuilder, System.Action{ActivityServerOptions})"/>,
     /// which also overlays the derived connection configuration; use this overload only when you
-    /// manage configuration yourself and have already ensured the <c>CONNECTIONS__*</c> settings are
+    /// manage configuration yourself and have already ensured the <c>Connections:*</c> settings are
     /// present in the application configuration.
     /// </summary>
     /// <param name="services">The service collection.</param>

@@ -77,6 +77,22 @@ public class ActivityEnvironmentTests
     }
 
     [Test]
+    public void GetHostedAgentConfiguration_DigitalWorker_UsesIdentityProxyManagerAuthType()
+    {
+        var config = ActivityEnvironment.GetHostedAgentConfiguration(digitalWorker: true);
+
+        Assert.That(config[ConnectionEnvironment.AuthType], Is.EqualTo(ConnectionEnvironment.DigitalWorkerAuthType));
+    }
+
+    [Test]
+    public void GetHostedAgentConfiguration_SimpleMode_UsesUserManagedIdentityAuthType()
+    {
+        var config = ActivityEnvironment.GetHostedAgentConfiguration(digitalWorker: false);
+
+        Assert.That(config[ConnectionEnvironment.AuthType], Is.EqualTo(ConnectionEnvironment.DefaultAuthType));
+    }
+
+    [Test]
     public void GetHostedAgentConfiguration_SimpleMode_DerivesClientIdFromInstanceVar()
     {
         Environment.SetEnvironmentVariable(ConnectionEnvironment.FoundryInstanceClientId, "instance-client-id");

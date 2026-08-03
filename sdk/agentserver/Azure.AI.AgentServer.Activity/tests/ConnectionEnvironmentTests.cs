@@ -25,13 +25,13 @@ public class ConnectionEnvironmentTests
     {
         Assert.Multiple(() =>
         {
-            Assert.That(ConnectionEnvironment.AuthType, Is.EqualTo("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHTYPE"));
-            Assert.That(ConnectionEnvironment.ClientId, Is.EqualTo("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID"));
-            Assert.That(ConnectionEnvironment.TenantId, Is.EqualTo("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__TENANTID"));
-            Assert.That(ConnectionEnvironment.Scope0, Is.EqualTo("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__SCOPES__0"));
-            Assert.That(ConnectionEnvironment.Authority, Is.EqualTo("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHORITY"));
-            Assert.That(ConnectionEnvironment.ConnectionMapServiceUrl, Is.EqualTo("CONNECTIONSMAP__0__SERVICEURL"));
-            Assert.That(ConnectionEnvironment.ConnectionMapConnection, Is.EqualTo("CONNECTIONSMAP__0__CONNECTION"));
+            Assert.That(ConnectionEnvironment.AuthType, Is.EqualTo("CONNECTIONS:SERVICE_CONNECTION:SETTINGS:AUTHTYPE"));
+            Assert.That(ConnectionEnvironment.ClientId, Is.EqualTo("CONNECTIONS:SERVICE_CONNECTION:SETTINGS:CLIENTID"));
+            Assert.That(ConnectionEnvironment.TenantId, Is.EqualTo("CONNECTIONS:SERVICE_CONNECTION:SETTINGS:TENANTID"));
+            Assert.That(ConnectionEnvironment.Scope0, Is.EqualTo("CONNECTIONS:SERVICE_CONNECTION:SETTINGS:SCOPES:0"));
+            Assert.That(ConnectionEnvironment.Authority, Is.EqualTo("CONNECTIONS:SERVICE_CONNECTION:SETTINGS:AUTHORITY"));
+            Assert.That(ConnectionEnvironment.ConnectionMapServiceUrl, Is.EqualTo("CONNECTIONSMAP:0:SERVICEURL"));
+            Assert.That(ConnectionEnvironment.ConnectionMapConnection, Is.EqualTo("CONNECTIONSMAP:0:CONNECTION"));
         });
     }
 
