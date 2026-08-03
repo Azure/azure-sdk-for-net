@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added sealed, one-shot `AsyncStreamingClientResult<T>` for asynchronous streaming responses, with factories for custom producers, server-sent events, and newline-delimited JSON.
+- Added sealed, one-shot experimental `AsyncStreamingClientResult<T>` (and the `AsyncStreamingClientResult` factory class) for asynchronous streaming responses, with factories for custom producers, server-sent events, and newline-delimited JSON. These types are marked experimental (`SCME0005`) and are subject to change or removal in future updates.
 
 ### Bugs Fixed
 
