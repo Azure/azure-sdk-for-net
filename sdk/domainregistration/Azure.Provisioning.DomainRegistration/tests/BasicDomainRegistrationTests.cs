@@ -60,6 +60,7 @@ public class BasicDomainRegistrationTests
     }
 
     [Test]
+    [Ignore("Restore the test when next version of azure.provisioning that properly supports datetime format releases.")]
     public async Task CreateAppServiceDomain()
     {
         await using Trycep test = CreateAppServiceDomainTest();
