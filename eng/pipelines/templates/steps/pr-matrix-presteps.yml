@@ -81,6 +81,19 @@ steps:
         Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
         Write-Host "##vso[task.setvariable variable=TestRuntimeWeightingApplied]false"
 
+        # Direct and indirect packages are batched separately. Neither group benefits from
+        # runtime weighting unless it contains at least two packages to distribute.
+        $packageInfos = @(
+          Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -File -Recurse |
+            ForEach-Object { Get-Content $_.FullName -Raw | ConvertFrom-Json }
+        )
+        $directPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $false }).Count
+        $indirectPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $true }).Count
+        if ($directPackageCount -le 1 -and $indirectPackageCount -le 1) {
+          Write-Host "Runtime-weighted batching is unnecessary for $directPackageCount direct and $indirectPackageCount indirect package(s). Using count-based batching."
+          return
+        }
+
         try {
           eng/scripts/Get-TestAssemblyWeights.ps1 `
             -RepoRoot "$(Build.SourcesDirectory)" `
