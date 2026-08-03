@@ -1205,6 +1205,12 @@ namespace Azure.AI.Extensions.OpenAI
         public virtual System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource> UpdateProjectConversation(string conversationId, OpenAI.Conversations.ConversationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource>> UpdateProjectConversationAsync(string conversationId, OpenAI.Conversations.ConversationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
+    public partial class ProjectCreateResponseOptions : OpenAI.Responses.CreateResponseOptions
+    {
+        public ProjectCreateResponseOptions() { }
+        public string SessionId { get { throw null; } set { } }
+    }
     public partial class ProjectFilesClient : OpenAI.Files.OpenAIFileClient
     {
         protected ProjectFilesClient() { }
