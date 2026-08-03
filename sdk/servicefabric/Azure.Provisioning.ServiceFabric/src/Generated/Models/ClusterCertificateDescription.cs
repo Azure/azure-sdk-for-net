@@ -72,7 +72,7 @@ namespace Azure.Provisioning.ServiceFabric
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _thumbprint = DefineProperty<BinaryData>(nameof(Thumbprint), new string[] { "thumbprint" }, isRequired: true);
+            _thumbprint = DefineProperty<BinaryData>(nameof(Thumbprint), new string[] { "thumbprint" }, isRequired: true, format: "base64");
             _thumbprintSecondary = DefineProperty<string>(nameof(ThumbprintSecondary), new string[] { "thumbprintSecondary" });
             _x509StoreName = DefineProperty<ClusterCertificateStoreName>(nameof(X509StoreName), new string[] { "x509StoreName" });
             DefineAdditionalProperties();

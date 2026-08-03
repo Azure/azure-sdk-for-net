@@ -91,7 +91,7 @@ namespace Azure.Provisioning.ServiceFabric
             _instanceCount = DefineProperty<int>(nameof(InstanceCount), new string[] { "instanceCount" });
             _instanceCloseDelayDuration = DefineProperty<string>(nameof(InstanceCloseDelayDuration), new string[] { "instanceCloseDelayDuration" });
             _minInstanceCount = DefineProperty<int>(nameof(MinInstanceCount), new string[] { "minInstanceCount" });
-            _minInstancePercentage = DefineProperty<BinaryData>(nameof(MinInstancePercentage), new string[] { "minInstancePercentage" });
+            _minInstancePercentage = DefineProperty<BinaryData>(nameof(MinInstancePercentage), new string[] { "minInstancePercentage" }, format: "base64");
             DefineAdditionalProperties();
         }
 
