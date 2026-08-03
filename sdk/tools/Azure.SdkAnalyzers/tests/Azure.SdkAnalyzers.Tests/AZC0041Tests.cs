@@ -70,6 +70,18 @@ namespace Azure.Test { public class TestClient { } }
         }
 
         [Test]
+        public async Task ReportsSelfSuppressionBeforeGovernedSuppression()
+        {
+            string code = @"
+#pragma warning disable {|AZC0041:AZC0041|}
+#pragma warning disable {|AZC0041:AZC0007|}
+namespace Azure.Test { public class TestClient { } }
+";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
         public async Task DoesNotReportUngovernedPragma()
         {
             string code = @"
@@ -102,15 +114,17 @@ namespace Azure.Test { public class TestClient { } }
             await Verifier.CreateAnalyzer(code).RunAsync();
         }
 
-        [TestCase("SuppressMessage")]
-        [TestCase("SuppressMessageAttribute")]
-        public async Task ReportsSuppressionAttribute(string attributeName)
+        [TestCase("SuppressMessage", "AZC0015")]
+        [TestCase("SuppressMessageAttribute", "AZC0015")]
+        [TestCase("SuppressMessage", "AZC0041")]
+        [TestCase("SuppressMessageAttribute", "AZC0041")]
+        public async Task ReportsSuppressionAttribute(string attributeName, string diagnosticId)
         {
             string code = $@"
 using System.Diagnostics.CodeAnalysis;
 namespace Azure.Test
 {{
-    [{attributeName}(""Usage"", {{|AZC0041:""AZC0015:Unexpected return type""|}}, Justification = ""Required"")]
+    [{attributeName}(""Usage"", {{|AZC0041:""{diagnosticId}:Unexpected return type""|}}, Justification = ""Required"")]
     public class TestClient {{ }}
 }}
 ";

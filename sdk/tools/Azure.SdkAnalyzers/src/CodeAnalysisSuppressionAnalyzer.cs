@@ -138,7 +138,7 @@ namespace Azure.SdkAnalyzers
             foreach (ExpressionSyntax errorCode in pragma.ErrorCodes)
             {
                 string diagnosticId = NormalizePragmaDiagnosticId(errorCode);
-                if (AllowListDiagnosticSuppressor.SupportedDiagnosticIds.Contains(diagnosticId))
+                if (IsGovernedDiagnosticId(diagnosticId))
                 {
                     context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0041, errorCode.GetLocation(), diagnosticId));
                 }
@@ -177,10 +177,16 @@ namespace Azure.SdkAnalyzers
 
             // Suppression attributes permit values such as "AZC0015:Unexpected return type".
             string diagnosticId = checkId.Split(':')[0].Trim();
-            if (AllowListDiagnosticSuppressor.SupportedDiagnosticIds.Contains(diagnosticId))
+            if (IsGovernedDiagnosticId(diagnosticId))
             {
                 context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0041, checkIdArgument.Expression.GetLocation(), diagnosticId));
             }
+        }
+
+        private static bool IsGovernedDiagnosticId(string diagnosticId)
+        {
+            return string.Equals(diagnosticId, nameof(Descriptors.AZC0041), StringComparison.Ordinal) ||
+                AllowListDiagnosticSuppressor.SupportedDiagnosticIds.Contains(diagnosticId);
         }
 
         // Locate checkId when supplied positionally or with the constructor's `name:` syntax.
