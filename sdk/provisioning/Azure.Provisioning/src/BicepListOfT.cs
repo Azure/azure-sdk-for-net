@@ -150,7 +150,6 @@ public class BicepList<T> :
     {
         var itemSelf = GetItemSelf(index);
         item.SetSelf(itemSelf);
-        item.Format = Format;
     }
 
     private void RemoveSelfForItem(BicepValue<T> item)

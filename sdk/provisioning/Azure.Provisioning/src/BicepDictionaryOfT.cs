@@ -101,7 +101,6 @@ public class BicepDictionary<T> :
     {
         var itemSelf = GetItemSelf(key);
         item.SetSelf(itemSelf);
-        item.Format = Format;
     }
 
     private void RemoveSelfForItem(BicepValue<T> item)
