@@ -4,7 +4,7 @@ BeforeAll {
     . (Join-Path $PSScriptRoot ".." "automation" "GenerateAndBuildLib.ps1")
 }
 
-Describe "Get-ApiCompatBreakingChangeItems" {
+Describe "Get-ApiCompatBreakingChangeItems" -Tag "UnitTest" {
     It "returns only ApiCompat diagnostics" {
         $logFilePath = Join-Path $TestDrive "log.txt"
         @(
@@ -26,7 +26,7 @@ Describe "Get-ApiCompatBreakingChangeItems" {
     }
 }
 
-Describe "GeneratePackage spec pull request validation" {
+Describe "GeneratePackage spec pull request validation" -Tag "UnitTest" {
     BeforeEach {
         $script:sdkRootPath = Join-Path $TestDrive "repo"
         $script:projectFolder = Join-Path $sdkRootPath "sdk" "network" "Azure.ResourceManager.Network"
