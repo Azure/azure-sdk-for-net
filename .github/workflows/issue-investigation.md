@@ -138,6 +138,11 @@ If there is a likely duplicate, add one comment explaining the likely duplicate 
 
 If there is not enough context to determine package/API, reproduce, or assess ownership, add one concise comment asking for the specific missing information. Do not add labels and do not assign Copilot.
 
+The insufficient-context comment MUST NOT be a generic acknowledgement. It must include:
+- A short statement that more information is needed before investigation can proceed.
+- A bullet list of the exact missing details, such as full error message/stack trace, minimal reproduction steps, expected behavior, actual behavior, package version, runtime/OS, or a minimal code sample.
+- A note that the team can continue once those details are provided.
+
 ### Working as Designed or Service-Side
 
 If the issue is clearly Azure service behavior outside SDK control, add one comment using this style and close the issue as not planned:
@@ -178,4 +183,4 @@ If the issue is already adequately routed or a human should decide without addit
 
 ## Output Requirements
 
-Use at most one user-visible comment. Do not add new state labels such as `auto-fix-candidate`, `auto-fix-attempted`, `auto-fix-skipped`, or `Service`. Do not use Azure OpenAI secrets or external LLM endpoints. If no action is needed, you MUST call `noop` with a message explaining why.
+Use at most one user-visible comment. Every user-visible comment must state the investigation decision and the next action; never post only a generic acknowledgement such as "thank you for reaching out." Do not add new state labels such as `auto-fix-candidate`, `auto-fix-attempted`, `auto-fix-skipped`, or `Service`. Do not use Azure OpenAI secrets or external LLM endpoints. If no action is needed, you MUST call `noop` with a message explaining why.
