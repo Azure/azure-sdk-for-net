@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -73,12 +74,26 @@ namespace Azure.Test { public class TestClient { } }
         public async Task ReportsSelfSuppressionBeforeGovernedSuppression()
         {
             string code = @"
-#pragma warning disable {|AZC0041:AZC0041|}
-#pragma warning disable {|AZC0041:AZC0007|}
+#pragma warning disable AZC0041
+#pragma warning disable AZC0007
 namespace Azure.Test { public class TestClient { } }
 ";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            var refAssemblies = await AzureTestReferences.DefaultReferenceAssemblies.ResolveAsync(
+                Microsoft.CodeAnalysis.LanguageNames.CSharp, CancellationToken.None);
+            var syntaxTree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree.ParseText(code);
+            var compilation = Microsoft.CodeAnalysis.CSharp.CSharpCompilation.Create(
+                "TestAssembly",
+                new[] { syntaxTree },
+                refAssemblies,
+                new Microsoft.CodeAnalysis.CSharp.CSharpCompilationOptions(
+                    Microsoft.CodeAnalysis.OutputKind.DynamicallyLinkedLibrary));
+            var withAnalyzers = ((Microsoft.CodeAnalysis.Compilation)compilation).WithAnalyzers(
+                ImmutableArray.Create<Microsoft.CodeAnalysis.Diagnostics.DiagnosticAnalyzer>(
+                    new Azure.SdkAnalyzers.CodeAnalysisSuppressionAnalyzer()));
+
+            var diagnostics = await withAnalyzers.GetAnalyzerDiagnosticsAsync(CancellationToken.None);
+            Assert.That(diagnostics.Count(diagnostic => diagnostic.Id == nameof(Descriptors.AZC0041)), Is.EqualTo(2));
         }
 
         [Test]
