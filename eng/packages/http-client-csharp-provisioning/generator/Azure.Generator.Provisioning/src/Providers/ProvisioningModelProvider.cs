@@ -68,16 +68,7 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         protected override CSharpType? BuildBaseType()
-        {
-            // Derived discriminated types inherit from their base model type
-            if (_inputModel.DiscriminatorValue != null && _inputModel.BaseModel != null)
-            {
-                var baseProvider = CodeModelGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
-                if (baseProvider != null)
-                    return baseProvider.Type;
-            }
-            return new CSharpType(typeof(ProvisionableConstruct));
-        }
+            => base.BuildBaseType() ?? new CSharpType(typeof(ProvisionableConstruct));
 
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty property)
@@ -100,28 +91,35 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-            // Collect properties from the model and its base chain.
-            // Non-discriminated models use ProvisionableConstruct as C# base (not the TypeSpec base),
-            // so inherited properties must be explicitly collected here.
-            var model = _inputModel;
-            while (model != null)
+            foreach (var prop in _inputModel.Properties)
             {
-                foreach (var prop in model.Properties)
-                {
-                    if (prop.IsDiscriminator) continue;
-                    if (!seen.Add(prop.Name)) continue;
+                if (prop.IsDiscriminator) continue;
 
-                    var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
-                    if (property != null)
-                        properties.Add(property);
+                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
+                if (property != null)
+                {
+                    if (HidesBaseProperty(property.Name))
+                    {
+                        property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
+                    }
+                    properties.Add(property);
                 }
-                // Discriminated types use C# inheritance, so only collect own properties
-                if (_inputModel.DiscriminatorValue != null) break;
-                model = model.BaseModel;
             }
             return [.. properties];
+        }
+
+        private bool HidesBaseProperty(string propertyName)
+        {
+            var baseModel = BaseModelProvider;
+            while (baseModel != null)
+            {
+                if (baseModel.CanonicalView.Properties.Any(property => string.Equals(property.Name, propertyName, StringComparison.Ordinal)))
+                {
+                    return true;
+                }
+                baseModel = baseModel.BaseModelProvider;
+            }
+            return false;
         }
 
         protected override ConstructorProvider[] BuildConstructors()
