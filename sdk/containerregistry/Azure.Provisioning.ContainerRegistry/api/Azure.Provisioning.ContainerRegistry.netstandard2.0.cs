@@ -115,6 +115,34 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TokenId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryAgentPool from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryAgentPool : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ContainerRegistryAgentPool(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<int> Count { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryOS> OS { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Tier { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualNetworkSubnetResourceId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryAgentPool FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2017_03_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2019_05_01;
+            public static readonly string V2021_09_01;
+            public static readonly string V2022_12_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2025_04_01;
+        }
+    }
     public partial class ContainerRegistryAuthCredential : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryAuthCredential() { }
@@ -123,6 +151,40 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<string> PasswordSecretIdentifier { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UsernameSecretIdentifier { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskBaseImageDependency from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryBaseImageDependency : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryBaseImageDependency() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageDependencyType> DependencyType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Digest { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Registry { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Repository { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskBaseImageDependencyType from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryBaseImageDependencyType
+    {
+        BuildTime = 0,
+        RunTime = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskBaseImageTrigger from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryBaseImageTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryBaseImageTrigger() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageTriggerType> BaseImageTriggerType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryTriggerStatus> Status { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> UpdateTriggerEndpoint { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryUpdateTriggerPayloadType> UpdateTriggerPayloadType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskBaseImageTriggerType from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryBaseImageTriggerType
+    {
+        All = 0,
+        Runtime = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryBuiltInRole : System.IEquatable<Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole>
@@ -171,6 +233,16 @@ namespace Azure.Provisioning.ContainerRegistry
     {
         LocalDirectory = 0,
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskVariant from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryCpuVariant
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="v6")]
+        V6 = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="v7")]
+        V7 = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="v8")]
+        V8 = 2,
+    }
     public partial class ContainerRegistryCredentialHealth : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryCredentialHealth() { }
@@ -187,6 +259,14 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryCredentialName
     {
         Credential1 = 0,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCredentials from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryCredentials() { }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerRegistry.CustomRegistryCredentials> CustomRegistries { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.SourceRegistryLoginMode> SourceRegistryLoginMode { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerRegistryCredentialSet : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -210,6 +290,58 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2025_11_01;
         }
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryDockerBuildContent from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryDockerBuildContent : Azure.Provisioning.ContainerRegistry.ContainerRegistryRunContent
+    {
+        public ContainerRegistryDockerBuildContent() { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryRunArgument> Arguments { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DockerFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> ImageNames { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsPushEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> NoCache { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryDockerBuildStep from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryDockerBuildStep : Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskStepProperties
+    {
+        public ContainerRegistryDockerBuildStep() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryRunArgument> Arguments { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DockerFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> ImageNames { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsPushEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> NoCache { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryEncodedTaskRunContent from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryEncodedTaskRunContent : Azure.Provisioning.ContainerRegistry.ContainerRegistryRunContent
+    {
+        public ContainerRegistryEncodedTaskRunContent() { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EncodedTaskContent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EncodedValuesContent { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryEncodedTaskStep from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryEncodedTaskStep : Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskStepProperties
+    {
+        public ContainerRegistryEncodedTaskStep() { }
+        public Azure.Provisioning.BicepValue<string> EncodedTaskContent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EncodedValuesContent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ContainerRegistryEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryEncryption() { }
@@ -230,6 +362,48 @@ namespace Azure.Provisioning.ContainerRegistry
         Enabled = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="disabled")]
         Disabled = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryFileTaskRunContent from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryFileTaskRunContent : Azure.Provisioning.ContainerRegistry.ContainerRegistryRunContent
+    {
+        public ContainerRegistryFileTaskRunContent() { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TaskFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValuesFilePath { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryFileTaskStep from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryFileTaskStep : Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskStepProperties
+    {
+        public ContainerRegistryFileTaskStep() { }
+        public Azure.Provisioning.BicepValue<string> TaskFilePath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ValuesFilePath { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageDescriptor from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryImageDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryImageDescriptor() { }
+        public Azure.Provisioning.BicepValue<string> Digest { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Registry { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Repository { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskImageUpdateTrigger from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryImageUpdateTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryImageUpdateTrigger() { }
+        public Azure.Provisioning.BicepValue<System.Guid> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryImageDescriptor> Images { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Timestamp { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerRegistryIPRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -269,6 +443,47 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryIPRule> IPRules { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskOS from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryOS
+    {
+        Windows = 0,
+        Linux = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskArchitecture from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryOSArchitecture
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="amd64")]
+        Amd64 = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="x86")]
+        X86 = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="386")]
+        ThreeHundredEightySix = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="arm")]
+        Arm = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="arm64")]
+        Arm64 = 4,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskOverrideStepProperties from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryOverrideTaskStepProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryOverrideTaskStepProperties() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryRunArgument> Arguments { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ContextPath { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> File { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> UpdateTriggerToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskOverridableValue> Values { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskPlatformProperties from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryPlatformProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryPlatformProperties() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryOSArchitecture> Architecture { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryOS> OS { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryCpuVariant> Variant { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ContainerRegistryPolicies : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryPolicies() { }
@@ -306,6 +521,18 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2025_04_01;
             public static readonly string V2025_11_01;
         }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use ContainerRegistryPrivateEndpointConnection instead.")]
+    public partial class ContainerRegistryPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryPrivateEndpointConnectionData() { }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerRegistryPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -401,6 +628,90 @@ namespace Azure.Provisioning.ContainerRegistry
         AbacRepositoryPermissions = 0,
         LegacyRegistryPermissions = 1,
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskArgument from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryRunArgument : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryRunArgument() { }
+        public Azure.Provisioning.BicepValue<bool> IsSecret { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRunContent from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryRunContent : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryRunContent() { }
+        public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsArchiveEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> LogTemplate { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryRun from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryRunData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryRunData() { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> CustomRegistries { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> FinishOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryImageUpdateTrigger ImageUpdateTrigger { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsArchiveEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedOn { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryImageDescriptor LogArtifact { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryImageDescriptor> OutputImages { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryProvisioningState> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RunErrorMessage { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RunId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryRunType> RunType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceRegistryAuth { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistrySourceTriggerDescriptor SourceTrigger { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryRunStatus> Status { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Task { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryTimerTriggerDescriptor TimerTrigger { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> UpdateTriggerToken { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunStatus from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryRunStatus
+    {
+        Queued = 0,
+        Started = 1,
+        Running = 2,
+        Succeeded = 3,
+        Failed = 4,
+        Canceled = 5,
+        Error = 6,
+        Timeout = 7,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunType from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryRunType
+    {
+        QuickBuild = 0,
+        QuickRun = 1,
+        AutoBuild = 2,
+        AutoRun = 3,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSecretObject from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistrySecretObject : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistrySecretObject() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistrySecretObjectType> ObjectType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSecretObjectType from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistrySecretObjectType
+    {
+        Opaque = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Vaultsecret")]
+        VaultSecret = 1,
+    }
     public partial class ContainerRegistryService : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryService(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -465,6 +776,145 @@ namespace Azure.Provisioning.ContainerRegistry
         Basic = 1,
         Standard = 2,
         Premium = 3,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceTrigger from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistrySourceTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistrySourceTrigger() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.SourceCodeRepoProperties SourceRepository { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistrySourceTriggerEvent> SourceTriggerEvents { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryTriggerStatus> Status { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceTriggerDescriptor from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistrySourceTriggerDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistrySourceTriggerDescriptor() { }
+        public Azure.Provisioning.BicepValue<string> BranchName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CommitId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EventType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProviderType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PullRequestId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> RepositoryUri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceTriggerEvent from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistrySourceTriggerEvent
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="commit")]
+        Commit = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="pullrequest")]
+        PullRequest = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTask from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTask : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ContainerRegistryTask(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<int> AgentCpu { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AgentPoolName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryCredentials Credentials { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsSystemTask { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> LogTemplate { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskStatus> Status { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskStepProperties Step { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryTriggerProperties Trigger { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryTask FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2018_09_01;
+            public static readonly string V2019_04_01;
+        }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSetValue from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTaskOverridableValue : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryTaskOverridableValue() { }
+        public Azure.Provisioning.BicepValue<bool> IsSecret { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRun from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTaskRun : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ContainerRegistryTaskRun(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ForceUpdateTag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryRunContent RunRequest { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryRunData RunResult { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryTaskRun FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2017_03_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2019_05_01;
+            public static readonly string V2021_09_01;
+            public static readonly string V2022_12_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2025_04_01;
+        }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunContent from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTaskRunContent : Azure.Provisioning.ContainerRegistry.ContainerRegistryRunContent
+    {
+        public ContainerRegistryTaskRunContent() { }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryOverrideTaskStepProperties OverrideTaskStepProperties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TaskId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskStatus from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryTaskStatus
+    {
+        Disabled = 0,
+        Enabled = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskStepProperties from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTaskStepProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryTaskStepProperties() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageDependency> BaseImageDependencies { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ContextAccessToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ContextPath { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskTimerTrigger from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTimerTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryTimerTrigger() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Schedule { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryTriggerStatus> Status { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskTimerTriggerDescriptor from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTimerTriggerDescriptor : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryTimerTriggerDescriptor() { }
+        public Azure.Provisioning.BicepValue<string> ScheduleOccurrence { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TimerTriggerName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerRegistryTlsCertificateProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -554,6 +1004,21 @@ namespace Azure.Provisioning.ContainerRegistry
         [System.Runtime.Serialization.DataMemberAttribute(Name="disabled")]
         Disabled = 1,
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskTriggerProperties from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class ContainerRegistryTriggerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ContainerRegistryTriggerProperties() { }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistryBaseImageTrigger BaseImageTrigger { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistrySourceTrigger> SourceTriggers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerRegistry.ContainerRegistryTimerTrigger> TimerTriggers { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskTriggerStatus from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryTriggerStatus
+    {
+        Disabled = 0,
+        Enabled = 1,
+    }
     public partial class ContainerRegistryTrustPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerRegistryTrustPolicy() { }
@@ -564,6 +1029,12 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryTrustPolicyType
     {
         Notary = 0,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskUpdateTriggerPayloadType from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum ContainerRegistryUpdateTriggerPayloadType
+    {
+        Default = 0,
+        Token = 1,
     }
     public partial class ContainerRegistryWebhook : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -619,6 +1090,15 @@ namespace Azure.Provisioning.ContainerRegistry
         Enabled = 0,
         Disabled = 1,
     }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskCustomRegistryCredentials from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class CustomRegistryCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CustomRegistryCredentials() { }
+        public Azure.Provisioning.BicepValue<string> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistrySecretObject Password { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.ContainerRegistrySecretObject UserName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class GarbageCollectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public GarbageCollectionProperties() { }
@@ -648,5 +1128,45 @@ namespace Azure.Provisioning.ContainerRegistry
             public static readonly string V2025_04_01;
             public static readonly string V2025_11_01;
         }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskAuthInfo from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class SourceCodeRepoAuthInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SourceCodeRepoAuthInfo() { }
+        public Azure.Provisioning.BicepValue<int> ExpireInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RefreshToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Token { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.SourceCodeRepoAuthTokenType> TokenType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskTokenType from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum SourceCodeRepoAuthTokenType
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="PAT")]
+        Pat = 0,
+        OAuth = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceProperties from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public partial class SourceCodeRepoProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public SourceCodeRepoProperties() { }
+        public Azure.Provisioning.BicepValue<string> Branch { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> RepositoryUri { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerRegistry.SourceCodeRepoAuthInfo SourceControlAuthProperties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.SourceControlType> SourceControlType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceControlType from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum SourceControlType
+    {
+        Github = 0,
+        VisualStudioTeamService = 1,
+    }
+    [System.ObsoleteAttribute("This type is deprecated and will be removed in a future version. Use Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceRegistryLoginMode from the Azure.Provisioning.ContainerRegistry.Tasks package instead.")]
+    public enum SourceRegistryLoginMode
+    {
+        None = 0,
+        Default = 1,
     }
 }
