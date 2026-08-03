@@ -53,12 +53,18 @@ parameters:
 - name: PRMatrixKey
   type: string
   default: 'ArtifactName'
+# Number of packages per job when PackageInfo has not been consolidated by weighted batching.
 - name: PRJobBatchSize
   type: number
   default: 10
-- name: PRJobBatchSizeOverrides
+# Per-pool number of consolidated weighted buckets to combine into each job.
+- name: PRWeightedBucketsPerJob
   type: object
   default: {}
+# Runtime value indicating whether PackageInfo entries represent weighted buckets instead of packages.
+- name: PRWeightedBatchingApplied
+  type: string
+  default: 'false'
 - name: PRMatrixIndirectFilters
   type: object
   default: []
@@ -145,14 +151,23 @@ jobs:
         - pwsh: |
             '${{ convertToJson(parameters.MatrixConfigs) }}' | Set-Content matrix.json
 
-            $batchSize = ${{ parameters.PRJobBatchSize }}
-            $overrides = '${{ convertToJson(parameters.PRJobBatchSizeOverrides) }}' | ConvertFrom-Json
-            $poolOverride = $overrides.PSObject.Properties |
-              Where-Object { $_.Name -eq '${{ pool.name }}' } |
-              Select-Object -First 1
-            if ($poolOverride) {
-              $batchSize = [int]$poolOverride.Value
-              Write-Host "Using batch size override for ${{ pool.name }}: $batchSize"
+            # PackageInfo entries represent packages normally and weighted buckets after consolidation.
+            $packageInfoEntriesPerJob = ${{ parameters.PRJobBatchSize }}
+            $weightedBatchingApplied = '${{ parameters.PRWeightedBatchingApplied }}' -eq 'true'
+            if ($weightedBatchingApplied) {
+              $weightedBucketsPerJob = '${{ convertToJson(parameters.PRWeightedBucketsPerJob) }}' | ConvertFrom-Json
+              $poolBucketCount = $weightedBucketsPerJob.PSObject.Properties |
+                Where-Object { $_.Name -eq '${{ pool.name }}' } |
+                Select-Object -First 1
+              if (-not $poolBucketCount) {
+                throw "No weighted bucket count is configured for ${{ pool.name }}."
+              }
+
+              $packageInfoEntriesPerJob = [int]$poolBucketCount.Value
+              Write-Host "Using $packageInfoEntriesPerJob weighted buckets per ${{ pool.name }} job."
+            }
+            else {
+              Write-Host "Using $packageInfoEntriesPerJob packages per ${{ pool.name }} job."
             }
 
             ./eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1 `
@@ -164,7 +179,7 @@ jobs:
               -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
               -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
               -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
-              -PackagesPerPRJob $batchSize `
+              -PackagesPerPRJob $packageInfoEntriesPerJob `
               -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }}
           displayName: Create ${{ pool.name }} PR Matrix
           name: vm_job_matrix_pr_${{ pool.name }}

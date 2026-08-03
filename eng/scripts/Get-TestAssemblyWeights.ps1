@@ -24,6 +24,12 @@ Azure DevOps pipeline ID to query. The default is net - pullrequest.
 
 .PARAMETER AccessToken
 Azure DevOps access token used to query Analytics.
+
+.PARAMETER MaxRetryAttempts
+Maximum number of attempts for transient Analytics request failures.
+
+.PARAMETER RetryBaseDelaySeconds
+Delay in seconds between retry attempts.
 #>
 
 [CmdletBinding()]
@@ -37,7 +43,9 @@ param (
   [Parameter()][string]$AccessToken = $env:SYSTEM_ACCESSTOKEN,
   [Parameter()][int]$DefaultWeight = 1,
   [Parameter()][int]$QueryBatchSize = 20,
-  [Parameter()][int]$ThrottleLimit = 5
+  [Parameter()][int]$ThrottleLimit = 5,
+  [Parameter()][int]$MaxRetryAttempts = 3,
+  [Parameter()][int]$RetryBaseDelaySeconds = 2
 )
 
 Set-StrictMode -Version 4
@@ -148,7 +156,9 @@ function Invoke-TestResultsQueries {
     [Parameter(Mandatory = $true)][object[]]$Queries,
     [Parameter(Mandatory = $true)][string]$AccessToken,
     [Parameter(Mandatory = $true)][int]$ThrottleLimit,
-    [Parameter(Mandatory = $true)][string]$WindowLabel
+    [Parameter(Mandatory = $true)][string]$WindowLabel,
+    [Parameter(Mandatory = $true)][int]$MaxRetryAttempts,
+    [Parameter(Mandatory = $true)][int]$RetryBaseDelaySeconds
   )
 
   if ($Queries.Count -eq 0) {
@@ -161,10 +171,11 @@ function Invoke-TestResultsQueries {
       $rows = @()
       $nextUrl = $query.Url
       while ($nextUrl) {
+        # PowerShell retries transient web failures such as connection errors, 408, 429, and 5xx.
         $response = Invoke-RestMethod -Uri $nextUrl -Headers @{
           Authorization = "Bearer $using:AccessToken"
           Accept = "application/json"
-        }
+        } -MaximumRetryCount $using:MaxRetryAttempts -RetryIntervalSec $using:RetryBaseDelaySeconds
         $rows += @($response.value)
         $nextLinkProperty = $response.PSObject.Properties['@odata.nextLink']
         $nextUrl = if ($nextLinkProperty) { $nextLinkProperty.Value } else { $null }
@@ -273,6 +284,12 @@ if ($DefaultWeight -le 0) {
 if ($ThrottleLimit -le 0) {
   throw "ThrottleLimit must be greater than zero."
 }
+if ($MaxRetryAttempts -le 0) {
+  throw "MaxRetryAttempts must be greater than zero."
+}
+if ($RetryBaseDelaySeconds -le 0) {
+  throw "RetryBaseDelaySeconds must be greater than zero."
+}
 
 $stopwatch = [Diagnostics.Stopwatch]::StartNew()
 $targetMap = Get-TargetAssemblyMap -RepoRoot $RepoRoot -PackageInfoFolder $PackageInfoFolder
@@ -298,7 +315,9 @@ if ($allAssemblies.Count -gt 0) {
     -Queries $recentQueries `
     -AccessToken $AccessToken `
     -ThrottleLimit $ThrottleLimit `
-    -WindowLabel "24-hour")
+    -WindowLabel "24-hour" `
+    -MaxRetryAttempts $MaxRetryAttempts `
+    -RetryBaseDelaySeconds $RetryBaseDelaySeconds)
   Add-TestResultDurations -Rows $recentRows -Durations $durations
 
   $missingAssemblies = @($allAssemblies | Where-Object { -not $durations.ContainsKey($_) })
@@ -317,7 +336,9 @@ if ($allAssemblies.Count -gt 0) {
       -Queries $fallbackQueries `
       -AccessToken $AccessToken `
       -ThrottleLimit $ThrottleLimit `
-      -WindowLabel "30-day fallback")
+      -WindowLabel "30-day fallback" `
+      -MaxRetryAttempts $MaxRetryAttempts `
+      -RetryBaseDelaySeconds $RetryBaseDelaySeconds)
     Add-TestResultDurations -Rows $fallbackRows -Durations $durations
   }
 }

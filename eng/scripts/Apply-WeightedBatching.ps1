@@ -12,7 +12,8 @@ ProjectNames parameter in the matrix generation.
 Used by the Build and Analyze pre-steps with LOC-derived weights, but the script itself is
 weight-source-agnostic — any numeric weight file (package name -> integer) will work.
 
-After this script runs, set PRJobBatchSize to 1 so each consolidated file becomes its own job.
+After this script runs, configure PRWeightedBucketsPerJob to control how many consolidated
+PackageInfo buckets are combined into each job.
 
 .PARAMETER PackageInfoFolder
 Path to the folder containing PackageInfo JSON files.

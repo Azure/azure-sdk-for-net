@@ -108,6 +108,13 @@ Describe "Get-TestAssemblyWeights" {
     $queries[1].Url | Should -Match "c.dll"
   }
 
+  It "accepts retry settings when invoking Analytics queries" {
+    $parameters = (Get-Command Invoke-TestResultsQueries).Parameters
+
+    $parameters.Keys | Should -Contain "MaxRetryAttempts"
+    $parameters.Keys | Should -Contain "RetryBaseDelaySeconds"
+  }
+
   It "averages observed runtimes and assigns fallback per unknown assembly" {
     $durations = @{}
     Add-TestResultDurations -Rows @(

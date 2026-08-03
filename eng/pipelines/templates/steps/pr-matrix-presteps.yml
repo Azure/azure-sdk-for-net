@@ -77,20 +77,37 @@ steps:
 
   - ${{ if eq(parameters.EnableTestRuntimeWeighting, true) }}:
     - pwsh: |
-        eng/scripts/Get-TestAssemblyWeights.ps1 `
-          -RepoRoot "$(Build.SourcesDirectory)" `
-          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
-          -OutputFile "$(Build.ArtifactStagingDirectory)/test-weights.json"
+        $weightsFile = "$(Build.ArtifactStagingDirectory)/test-weights.json"
+        Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
+        Write-Host "##vso[task.setvariable variable=TestRuntimeWeightingApplied]false"
+
+        try {
+          eng/scripts/Get-TestAssemblyWeights.ps1 `
+            -RepoRoot "$(Build.SourcesDirectory)" `
+            -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+            -OutputFile $weightsFile
+        }
+        catch {
+          Write-Host "##vso[task.logissue type=warning]Azure DevOps Analytics is unavailable. Falling back to count-based test batching (10 packages per job)."
+          Write-Host "Analytics error: $($_.Exception.Message)"
+          Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
+        }
       displayName: Query test assembly runtimes for balanced batching
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
       env:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
     - pwsh: |
-        eng/scripts/Apply-WeightedBatching.ps1 `
-          -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
-          -WeightsFile "$(Build.ArtifactStagingDirectory)/test-weights.json" `
-          -Target 240
+        $weightsFile = "$(Build.ArtifactStagingDirectory)/test-weights.json"
+        if (Test-Path $weightsFile) {
+          eng/scripts/Apply-WeightedBatching.ps1 `
+            -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+            -WeightsFile $weightsFile `
+            -Target 240
+
+          # Enable the smaller per-OS matrix batches only after weighting completes successfully.
+          Write-Host "##vso[task.setvariable variable=TestRuntimeWeightingApplied]true"
+        }
       displayName: Apply test-runtime weighted batching
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
 
