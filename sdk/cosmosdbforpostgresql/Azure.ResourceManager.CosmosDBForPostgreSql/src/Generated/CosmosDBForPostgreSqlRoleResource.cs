@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             TryGetApiVersion(ResourceType, out string cosmosDBForPostgreSqlRoleApiVersion);
             _rolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", ResourceType.Namespace, Diagnostics);
-            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlRoleApiVersion ?? "2023-03-02-preview");
+            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlRoleApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(
-                    new CosmosDBForPostgreSqlRoleOperationSource(Client),
+                    new CosmosDBForPostgreSqlRoleResourceOperationSource(Client),
                     _rolesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(
-                    new CosmosDBForPostgreSqlRoleOperationSource(Client),
+                    new CosmosDBForPostgreSqlRoleResourceOperationSource(Client),
                     _rolesClientDiagnostics,
                     Pipeline,
                     message.Request,

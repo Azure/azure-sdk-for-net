@@ -41,6 +41,11 @@ namespace Azure.Generator.Management.Utilities
                 // when this filter is introduced.
                 foreach (var resourceMethod in resourceMetadata.Methods)
                 {
+                    if (resourceMethod.Kind == ResourceOperationKind.CheckExistence)
+                    {
+                        continue;
+                    }
+
                     var inputClient = resourceMethod.InputClient;
                     if (!referencedClients.Contains(inputClient))
                     {
@@ -96,6 +101,10 @@ namespace Azure.Generator.Management.Utilities
                             methodsInResource.Add(method);
                             methodsInCollection.Add(method);
                             break;
+                        case ResourceOperationKind.CheckExistence:
+                            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/56996
+                            // Temporarily omit check-existence operations until their public SDK shape is designed.
+                            break;
                         case ResourceOperationKind.Update:
                             hasUpdateMethod = true;
                             methodsInResource.Add(method);
@@ -107,6 +116,16 @@ namespace Azure.Generator.Management.Utilities
                         case ResourceOperationKind.Action:
                             // actions should all go to the resource
                             methodsInResource.Add(method);
+                            break;
+                        case ResourceOperationKind.CollectionAction:
+                            if (isSingleton)
+                            {
+                                methodsInResource.Add(method);
+                            }
+                            else
+                            {
+                                methodsInCollection.Add(method);
+                            }
                             break;
                         case ResourceOperationKind.List:
                             // list method goes to resource if the method's resource scope matches the resource's ID pattern

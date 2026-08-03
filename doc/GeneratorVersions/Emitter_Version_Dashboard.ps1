@@ -56,8 +56,10 @@ function Test-NpmVersionExists([string]$PackageName, [string]$Version) {
         return $false
     }
     try {
+        $global:LASTEXITCODE = $null
         $result = npm view "$PackageName@$Version" version --registry=https://registry.npmjs.org/ 2>$null
-        if ($LASTEXITCODE -eq 0 -and $result) {
+        $resolvedVersion = ($result | Out-String).Trim()
+        if ($LASTEXITCODE -eq 0 -and $resolvedVersion -eq $Version) {
             return $true
         }
     }

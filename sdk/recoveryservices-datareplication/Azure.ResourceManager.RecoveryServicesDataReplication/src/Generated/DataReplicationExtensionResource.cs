@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(ResourceType, out string dataReplicationExtensionApiVersion);
             _replicationExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _replicationExtensionRestClient = new ReplicationExtension(_replicationExtensionClientDiagnostics, Pipeline, Endpoint, dataReplicationExtensionApiVersion ?? "2024-09-01");
+            _replicationExtensionRestClient = new ReplicationExtension(_replicationExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationExtensionApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationExtensionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
-                    new DataReplicationExtensionOperationSource(Client),
+                    new DataReplicationExtensionResourceOperationSource(Client),
                     _replicationExtensionClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationExtensionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
-                    new DataReplicationExtensionOperationSource(Client),
+                    new DataReplicationExtensionResourceOperationSource(Client),
                     _replicationExtensionClientDiagnostics,
                     Pipeline,
                     message.Request,

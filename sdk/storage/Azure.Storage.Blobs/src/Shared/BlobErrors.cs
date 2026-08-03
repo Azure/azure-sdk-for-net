@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -41,5 +42,21 @@ namespace Azure.Storage.Blobs
 
         public static ArgumentException ParsingFullHttpRangeFailed(string range)
             => new ArgumentException("Could not obtain the total length from HTTP range " + range);
+
+        public static void VerifyParallelismGreaterThanOne(int parallelism)
+        {
+            if (parallelism <= 1)
+            {
+                throw new ArgumentException("Parallel must be greater than 1 for parallel download.", nameof(parallelism));
+            }
+        }
+
+        public static void VerifyNoExtraData(int extraDataLength)
+        {
+            if (extraDataLength > 0)
+            {
+                throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
+            }
+        }
     }
 }

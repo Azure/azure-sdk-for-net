@@ -305,11 +305,25 @@ function Update-MgmtPackageFolder() {
     $projectFolder = (Join-Path $sdkPath "sdk" $packageName "Azure.ResourceManager.*")
     $mgmtPackageName = ""
     $projectFolder = $projectFolder -replace "\\", "/"
-    if (Test-Path -Path $projectFolder) {
+    $projectFolders = @(Get-ChildItem -Path $projectFolder -Directory -ErrorAction SilentlyContinue)
+    if ($projectFolders.Count -gt 0) {
       Write-Host "Path exists!"
-      $folderinfo = Get-ChildItem -Path $projectFolder
+      if ($projectFolders.Count -eq 1) {
+        $folderinfo = $projectFolders[0]
+      } else {
+        $autorestProjectFolders = @($projectFolders | Where-Object {
+          Test-Path -Path (Join-Path $_.FullName "src" $AUTOREST_CONFIG_FILE)
+        })
+        if ($autorestProjectFolders.Count -eq 1) {
+          $folderinfo = $autorestProjectFolders[0]
+        } else {
+          $projectFolderNames = $projectFolders.Name -join ", "
+          Write-Host "[ERROR] Multiple management SDK packages match sdk/${packageName}: $projectFolderNames. Cannot infer which package to generate for readme '$readme'."
+          exit 1
+        }
+      }
       $mgmtPackageName = $folderinfo.Name
-      $projectFolder = "$sdkPath/sdk/$packageName/$mgmtPackageName"
+      $projectFolder = $folderinfo.FullName -replace "\\", "/"
     } else {
       Write-Host "[ERROR] Project directory doesn't exist. It is a new .NET SDK. We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
       exit 1

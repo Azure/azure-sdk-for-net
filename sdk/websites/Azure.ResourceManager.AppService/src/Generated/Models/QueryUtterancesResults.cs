@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Suggested utterances where the detector can be applicable
-    /// Serialized Name: QueryUtterancesResults
-    /// </summary>
+    /// <summary> Suggested utterances where the detector can be applicable. </summary>
     public partial class QueryUtterancesResults
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
         public QueryUtterancesResults()
@@ -55,32 +24,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
-        /// <param name="query">
-        /// Search Query.
-        /// Serialized Name: QueryUtterancesResults.query
-        /// </param>
-        /// <param name="results">
-        /// Array of utterance results for search query.
-        /// Serialized Name: QueryUtterancesResults.results
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryUtterancesResults(string query, IList<QueryUtterancesResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="query"> Search Query. </param>
+        /// <param name="results"> Array of utterance results for search query. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QueryUtterancesResults(string query, IList<QueryUtterancesResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             Results = results;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Search Query.
-        /// Serialized Name: QueryUtterancesResults.query
-        /// </summary>
+        /// <summary> Search Query. </summary>
         [WirePath("query")]
         public string Query { get; set; }
-        /// <summary>
-        /// Array of utterance results for search query.
-        /// Serialized Name: QueryUtterancesResults.results
-        /// </summary>
+
+        /// <summary> Array of utterance results for search query. </summary>
         [WirePath("results")]
         public IList<QueryUtterancesResult> Results { get; }
     }

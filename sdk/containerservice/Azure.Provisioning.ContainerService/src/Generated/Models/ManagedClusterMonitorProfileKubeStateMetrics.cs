@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _metricLabelsAllowlist = DefineProperty<string>(nameof(MetricLabelsAllowlist), new string[] { "metricLabelsAllowlist" });
             _metricAnnotationsAllowList = DefineProperty<string>(nameof(MetricAnnotationsAllowList), new string[] { "metricAnnotationsAllowList" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterMonitorProfileKubeStateMetrics that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

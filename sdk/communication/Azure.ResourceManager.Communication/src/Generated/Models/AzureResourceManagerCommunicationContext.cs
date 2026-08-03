@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
@@ -51,7 +50,6 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(LinkNotificationHubContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegenerateCommunicationServiceKeyContent))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameProperties))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResource))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResourceData))]

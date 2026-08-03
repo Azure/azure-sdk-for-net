@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class OriginGroupOverrideActionProperties
     {
         // Backward compatibility: old API had ActionType property and constructor with WritableSubResource
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public OriginGroupOverrideActionType ActionType
         {
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         // Backward compatibility: old API had ctor(OriginGroupOverrideActionType, WritableSubResource)
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup) : this()
         {
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         // Backward compatibility: old API had ctor(WritableSubResource)
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public OriginGroupOverrideActionProperties(WritableSubResource originGroup) : this()
         {

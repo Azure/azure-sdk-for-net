@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -68,6 +67,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetData))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetIPRules))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetListResult))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetVirtualNetworkRules))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeter))]
@@ -100,7 +100,6 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetentionDescription))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupProperties))]

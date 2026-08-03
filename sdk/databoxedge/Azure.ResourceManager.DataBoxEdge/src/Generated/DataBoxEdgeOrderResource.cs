@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeOrderApiVersion);
             _ordersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _ordersRestClient = new Orders(_ordersClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeOrderApiVersion ?? "2023-12-01");
+            _ordersRestClient = new Orders(_ordersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeOrderApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _ordersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DataBoxEdgeOrderData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeOrderResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(
-                    new DataBoxEdgeOrderOperationSource(Client),
+                    new DataBoxEdgeOrderResourceOperationSource(Client),
                     _ordersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _ordersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DataBoxEdgeOrderData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeOrderResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(
-                    new DataBoxEdgeOrderOperationSource(Client),
+                    new DataBoxEdgeOrderResourceOperationSource(Client),
                     _ordersClientDiagnostics,
                     Pipeline,
                     message.Request,

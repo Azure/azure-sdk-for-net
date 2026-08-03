@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2026-07-10)
+
+### Features Added
+
+- Regenerated with the TypeSpec-based provisioning generator.
+- Updated default API version to `2026-03-18`.
+
+### Breaking Changes
+
+- Removed the generated `CommunicationServiceKeys` type and `CommunicationService.GetKeys()` helper.
+
+### Other Changes
+
+- Preserved the existing public resource type names while migrating to the TypeSpec-based generator's internal resource naming.
 
 ## 1.0.0-beta.4 (2026-03-03)
 

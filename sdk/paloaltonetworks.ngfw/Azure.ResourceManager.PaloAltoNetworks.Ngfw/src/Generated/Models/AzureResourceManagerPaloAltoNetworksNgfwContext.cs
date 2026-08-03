@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
@@ -102,7 +101,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(PreRulestackRuleResource))]
     [ModelReaderWriterBuildable(typeof(ProductSerialNumberRequestStatus))]
     [ModelReaderWriterBuildable(typeof(ProductSerialNumberStatus))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuleEntry))]
     [ModelReaderWriterBuildable(typeof(RulestackAppIdListResult))]
     [ModelReaderWriterBuildable(typeof(RulestackChangelog))]

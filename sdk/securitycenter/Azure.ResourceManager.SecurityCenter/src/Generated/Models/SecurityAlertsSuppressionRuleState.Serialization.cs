@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal static partial class SecurityAlertsSuppressionRuleStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecurityAlertsSuppressionRuleState value) => value switch
         {
             SecurityAlertsSuppressionRuleState.Enabled => "Enabled",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityAlertsSuppressionRuleState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SecurityAlertsSuppressionRuleState ToSecurityAlertsSuppressionRuleState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SecurityAlertsSuppressionRuleState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SecurityAlertsSuppressionRuleState.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Expired")) return SecurityAlertsSuppressionRuleState.Expired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return SecurityAlertsSuppressionRuleState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return SecurityAlertsSuppressionRuleState.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Expired"))
+            {
+                return SecurityAlertsSuppressionRuleState.Expired;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityAlertsSuppressionRuleState value.");
         }
     }

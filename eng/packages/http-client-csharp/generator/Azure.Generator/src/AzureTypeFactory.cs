@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Pipeline;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
@@ -151,8 +152,12 @@ namespace Azure.Generator
             {
                 "Azure.Core.ResourceIdentifier" => typeof(ResourceIdentifier),
                 "Azure.Core.AzureLocation" => typeof(AzureLocation),
+                "Azure.Core.Pipeline.ClientDiagnostics" => typeof(ClientDiagnostics),
                 "Azure.ResponseError" => typeof(ResponseError),
                 "Azure.ETag" => typeof(ETag),
+                "Azure.Core.Expressions.DataFactory.DataFactorySecret" => typeof(DataFactorySecret),
+                "Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference" => typeof(DataFactoryLinkedServiceReference),
+                "Azure.Core.Expressions.DataFactory.DataFactorySecretString" => typeof(DataFactorySecretString),
                 _ => base.CreateFrameworkType(fullyQualifiedTypeName)
             };
         }

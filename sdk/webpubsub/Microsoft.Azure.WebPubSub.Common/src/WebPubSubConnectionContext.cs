@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -103,6 +104,8 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="states">Connection states. Value in <see cref="BinaryData"/> type.</param>
         /// <param name="headers">Connection request headers.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [RequiresUnreferencedCode("This constructor uses reflection-based JSON serialization for arbitrary object state values.")]
+        [RequiresDynamicCode("This constructor uses reflection-based JSON serialization for arbitrary object state values.")]
         public WebPubSubConnectionContext(WebPubSubEventType eventType, string eventName, string hub, string connectionId, string userId, string signature, string origin, IReadOnlyDictionary<string, object> states, IReadOnlyDictionary<string, string[]> headers)
             : this(
                 eventType,

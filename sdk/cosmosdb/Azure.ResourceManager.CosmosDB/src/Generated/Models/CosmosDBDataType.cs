@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBDataType : IEquatable<CosmosDBDataType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBDataType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBDataType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StringValue = "String";
         private const string NumberValue = "Number";
         private const string PointValue = "Point";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string LineStringValue = "LineString";
         private const string MultiPolygonValue = "MultiPolygon";
 
-        /// <summary> String. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBDataType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the String. </summary>
         public static CosmosDBDataType String { get; } = new CosmosDBDataType(StringValue);
-        /// <summary> Number. </summary>
+
+        /// <summary> Gets the Number. </summary>
         public static CosmosDBDataType Number { get; } = new CosmosDBDataType(NumberValue);
-        /// <summary> Point. </summary>
+
+        /// <summary> Gets the Point. </summary>
         public static CosmosDBDataType Point { get; } = new CosmosDBDataType(PointValue);
-        /// <summary> Polygon. </summary>
+
+        /// <summary> Gets the Polygon. </summary>
         public static CosmosDBDataType Polygon { get; } = new CosmosDBDataType(PolygonValue);
-        /// <summary> LineString. </summary>
+
+        /// <summary> Gets the LineString. </summary>
         public static CosmosDBDataType LineString { get; } = new CosmosDBDataType(LineStringValue);
-        /// <summary> MultiPolygon. </summary>
+
+        /// <summary> Gets the MultiPolygon. </summary>
         public static CosmosDBDataType MultiPolygon { get; } = new CosmosDBDataType(MultiPolygonValue);
+
         /// <summary> Determines if two <see cref="CosmosDBDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBDataType left, CosmosDBDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBDataType left, CosmosDBDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBDataType(string value) => new CosmosDBDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBDataType?(string value) => value == null ? null : new CosmosDBDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

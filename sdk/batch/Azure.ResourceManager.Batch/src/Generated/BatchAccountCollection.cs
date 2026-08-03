@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(BatchAccountResource.ResourceType, out string batchAccountApiVersion);
             _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountResource.ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Endpoint, batchAccountApiVersion ?? "2025-06-01");
+            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
-                    new BatchAccountOperationSource(Client),
+                    new BatchAccountResourceOperationSource(Client),
                     _batchAccountClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
-                    new BatchAccountOperationSource(Client),
+                    new BatchAccountResourceOperationSource(Client),
                     _batchAccountClientDiagnostics,
                     Pipeline,
                     message.Request,

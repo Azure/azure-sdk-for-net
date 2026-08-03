@@ -1,0 +1,59 @@
+parameters:
+  - name: Artifacts
+    type: object
+    default: []
+  - name: TestPipeline
+    type: boolean
+    default: false
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: SDKType
+    type: string
+    default: all
+  - name: BuildSnippets
+    type: boolean
+    default: true
+  - name: DependsOn
+    type: string
+    default: ''
+  - name: CloudConfig
+    type: object
+    default: {}
+  - name: Matrix
+    type: string
+  - name: UsePlatformContainer
+    type: boolean
+    default: false
+  - name: OSName
+    type: string
+
+jobs:
+  - job:
+    displayName: "Build"
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
+    strategy:
+      matrix: $[ ${{ parameters.Matrix }} ]
+
+    variables:
+    - name: SDKType
+      value: ${{ parameters.SDKType }}
+
+    pool:
+      ${{ if eq(parameters.OSName, 'macOS') }}:
+        vmImage: $(OSVmImage)
+      ${{ else }}:
+        image: $(OSVmImage)
+      name: $(Pool)
+      os: ${{ parameters.OSName }}
+    ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+      container: $[ variables['Container'] ]
+
+    steps:
+      - template: /eng/pipelines/templates/steps/build.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          TestPipeline: ${{ parameters.TestPipeline }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}

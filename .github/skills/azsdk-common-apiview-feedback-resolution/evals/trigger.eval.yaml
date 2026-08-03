@@ -1,0 +1,99 @@
+name: azsdk-common-apiview-feedback-resolution-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-apiview-feedback-resolution skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-apiview-feedback-resolution
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: trigger-resolve-apiview-feedback-on-my-pr
+    prompt: "resolve APIView feedback on my PR"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+  - name: trigger-fix-apiview-comments
+    prompt: "fix APIView comments"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+  - name: trigger-address-api-review-feedback
+    prompt: "address API review feedback"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+  - name: trigger-apiview-shows-issues-with-my-sdk
+    prompt: "APIView shows issues with my SDK"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+  - name: trigger-help-me-with-apiview-suggestions
+    prompt: "help me with APIView suggestions"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+  - name: trigger-fix-comments-apiview-url-1
+    prompt: "Help me fix these comments: https://spa.apiview.dev/review/0qw98r9qwur9q823r?activeApiRevisionId=afiq948tquajf8jq9f"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+  - name: trigger-address-feedback-apiview-url-2
+    prompt: "Address this feedback: https://spa.apiview.dev/review/akldfja9qjta498tjaejg0?activeApiRevisionId=odiufa9sefighj98439"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+  - name: trigger-resolve-comments-staging-url
+    prompt: "Resolve these comments: https://apiviewstagingtest.com/review/akldfja9qjta498tjaejg0?activeApiRevisionId=odiufa9sefighj98439"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+
+  - name: anti-trigger-deploy-my-azure-function
+    prompt: "deploy my Azure Function"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-apiview-feedback-resolution"]
+  - name: anti-trigger-fix-my-pipeline-build-error
+    prompt: "fix my pipeline build error"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-apiview-feedback-resolution"]
+  - name: anti-trigger-create-a-new-typespec-definition
+    prompt: "create a new TypeSpec definition"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-apiview-feedback-resolution"]
+  - name: anti-trigger-how-do-i-release-an-sdk-package
+    prompt: "how do I release an SDK package"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-apiview-feedback-resolution"]
+  - name: anti-trigger-set-up-azure-storage-account
+    prompt: "set up Azure Storage account"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-apiview-feedback-resolution"]

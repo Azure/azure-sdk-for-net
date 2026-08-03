@@ -55,12 +55,13 @@ public abstract class AuthenticationPolicy : PipelinePolicy
                 $"Scope must be provided in configuration for '{settings.Credential!.CredentialSource}' authentication.");
         }
 
-        if (settings.CredentialProvider is null)
+        AuthenticationTokenProvider? provider = settings.Credential?.TokenProvider;
+        if (provider is null)
         {
             throw new InvalidOperationException("No AuthenticationTokenProvider was provided.");
         }
 
-        return new BearerTokenPolicy(settings.CredentialProvider, scope);
+        return new BearerTokenPolicy(provider, scope);
     }
 
     [Experimental("SCME0002")]
@@ -68,11 +69,12 @@ public abstract class AuthenticationPolicy : PipelinePolicy
     {
         string apiKey;
 
-        if (settings.CredentialProvider is AuthenticationTokenProvider apiKeyProvider)
+        AuthenticationTokenProvider? provider = settings.Credential?.TokenProvider;
+        if (provider is AuthenticationTokenProvider apiKeyProvider)
         {
             // Scope is meaningless for API-key auth; silently ignore any value
             // present on the credential section so that callers who set
-            // CredentialProvider for an ApiKey configuration (for example, via
+            // TokenProvider for an ApiKey configuration (for example, via
             // a custom CredentialResolver that fetches a refreshable key) are
             // not rejected just because Scope happens to also be set.
             GetTokenOptions options = new(new Dictionary<string, object>

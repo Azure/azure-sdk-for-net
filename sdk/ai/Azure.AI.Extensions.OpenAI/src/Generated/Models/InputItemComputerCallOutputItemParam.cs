@@ -45,10 +45,10 @@ namespace Azure.AI.Extensions.OpenAI
         public string Id { get; set; }
 
         /// <summary> The ID of the computer tool call that produced the output. </summary>
-        public string CallId { get; }
+        public string CallId { get; set; }
 
-        /// <summary> Gets the Output. </summary>
-        public ComputerScreenshotImage Output { get; }
+        /// <summary> Gets or sets the Output. </summary>
+        public ComputerScreenshotImage Output { get; set; }
 
         /// <summary> Gets or sets the AcknowledgedSafetyChecks. </summary>
         public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; set; }

@@ -376,12 +376,12 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModified" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true);
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModified" }, isOutput: true, format: "O");
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<BatchAccountPoolProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _provisioningStateTransitOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningStateTransitOn), new string[] { "provisioningStateTransitionTime" }, isOutput: true);
+            _provisioningStateTransitOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningStateTransitOn), new string[] { "provisioningStateTransitionTime" }, isOutput: true, format: "O");
             _allocationState = DefineProperty<BatchAccountPoolAllocationState>(nameof(AllocationState), new string[] { "allocationState" }, isOutput: true);
-            _allocationStateTransitionOn = DefineProperty<DateTimeOffset>(nameof(AllocationStateTransitionOn), new string[] { "allocationStateTransitionTime" }, isOutput: true);
+            _allocationStateTransitionOn = DefineProperty<DateTimeOffset>(nameof(AllocationStateTransitionOn), new string[] { "allocationStateTransitionTime" }, isOutput: true, format: "O");
             _vmSize = DefineProperty<string>(nameof(VmSize), new string[] { "vmSize" });
             _deploymentConfiguration = DefineModelProperty<BatchDeploymentConfiguration>(nameof(DeploymentConfiguration), new string[] { "deploymentConfiguration" });
             _currentDedicatedNodes = DefineProperty<int>(nameof(CurrentDedicatedNodes), new string[] { "currentDedicatedNodes" }, isOutput: true);
@@ -399,6 +399,10 @@ namespace Azure.Provisioning.Batch
             _resizeOperationStatus = DefineModelProperty<BatchResizeOperationStatus>(nameof(ResizeOperationStatus), new string[] { "resizeOperationStatus" }, isOutput: true);
             _mountConfiguration = DefineListProperty<BatchMountConfiguration>(nameof(MountConfiguration), new string[] { "mountConfiguration" });
             _upgradePolicy = DefineModelProperty<UpgradePolicy>(nameof(UpgradePolicy), new string[] { "upgradePolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PoolProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

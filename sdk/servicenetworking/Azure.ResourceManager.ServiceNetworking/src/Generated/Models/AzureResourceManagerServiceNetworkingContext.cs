@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
@@ -28,7 +27,6 @@ namespace Azure.ResourceManager.ServiceNetworking
     [ModelReaderWriterBuildable(typeof(FrontendListResult))]
     [ModelReaderWriterBuildable(typeof(FrontendProperties))]
     [ModelReaderWriterBuildable(typeof(FrontendUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecurityPolicyConfigurations))]
     [ModelReaderWriterBuildable(typeof(SecurityPolicyListResult))]
     [ModelReaderWriterBuildable(typeof(SecurityPolicyProperties))]

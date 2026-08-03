@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             TryGetApiVersion(EdgeOrderAddressResource.ResourceType, out string edgeOrderAddressApiVersion);
             _addressResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderAddressResource.ResourceType.Namespace, Diagnostics);
-            _addressResourcesRestClient = new AddressResources(_addressResourcesClientDiagnostics, Pipeline, Endpoint, edgeOrderAddressApiVersion ?? "2024-02-01");
+            _addressResourcesRestClient = new AddressResources(_addressResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderAddressApiVersion ?? "2024-02-01");
             ValidateResourceId(id);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
-                    new EdgeOrderAddressOperationSource(Client),
+                    new EdgeOrderAddressResourceOperationSource(Client),
                     _addressResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
-                    new EdgeOrderAddressOperationSource(Client),
+                    new EdgeOrderAddressResourceOperationSource(Client),
                     _addressResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -48,27 +48,20 @@ public sealed class CredentialSettings
     /// </summary>
     /// <remarks>
     /// This value determines the type of authentication policy to use. For example, "ApiKeyCredential" creates an <see cref="ApiKeyAuthenticationPolicy"/>.
+    /// <para>
+    /// Matching is case-insensitive: values read from configuration are normalized to lowercase before storage,
+    /// so resolvers should compare against lowercase constants. Each resolver decides which forms it accepts
+    /// (for example, both short <c>"broker"</c> and long <c>"brokercredential"</c>).
+    /// </para>
     /// </remarks>
     public string? CredentialSource
     {
         get => field;
-        set => field = NormalizeCredentialSource(value);
-    }
-
-    private static string? NormalizeCredentialSource(string? value)
-    {
-        if (value is null)
+        set
         {
-            return null;
+            string? lower = value?.ToLowerInvariant();
+            field = lower == "apikey" ? "apikeycredential" : lower;
         }
-
-        string lower = value.ToLowerInvariant();
-
-        return lower switch
-        {
-            "apikey" => "apikeycredential",
-            _ => lower
-        };
     }
 
     /// <summary>
@@ -80,4 +73,9 @@ public sealed class CredentialSettings
     /// Gets or sets additional properties for the credential.
     /// </summary>
     public IConfigurationSection? AdditionalProperties { get; set; }
+
+    /// <summary>
+    /// Gets or sets the <see cref="AuthenticationTokenProvider"/> for this credential.
+    /// </summary>
+    public AuthenticationTokenProvider? TokenProvider { get; set; }
 }

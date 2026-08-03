@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 NetworkInterfaceListResult result = NetworkInterfaceListResult.FromResponse(response);
-                yield return Page<HciVmNetworkInterfaceData>.FromValues((IReadOnlyList<HciVmNetworkInterfaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HciVmNetworkInterfaceData>.FromValues((IReadOnlyList<HciVmNetworkInterfaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

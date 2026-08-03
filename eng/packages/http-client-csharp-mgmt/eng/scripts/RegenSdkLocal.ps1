@@ -99,6 +99,21 @@ Write-Host "=== Local Mgmt SDK Regeneration ==="
 Write-Host "Mgmt Generator: $mgmtPackageRoot"
 Write-Host "SDK Root: $sdkRepoRoot"
 
+function Format-FullError {
+    param([System.Management.Automation.ErrorRecord]$ErrorRecord)
+
+    $parts = @($ErrorRecord.ToString())
+    if ($ErrorRecord.ScriptStackTrace) {
+        $parts += "PowerShell stack trace:"
+        $parts += $ErrorRecord.ScriptStackTrace
+    }
+    if ($ErrorRecord.Exception.StackTrace) {
+        $parts += ".NET exception stack trace:"
+        $parts += $ErrorRecord.Exception.StackTrace
+    }
+    return $parts -join [Environment]::NewLine
+}
+
 # Step 1: Build generator
 Write-Host "`n[1/3] Building Mgmt generator..."
 Push-Location $mgmtPackageRoot
@@ -180,6 +195,7 @@ Write-Host "Selected $($selectedFolders.Count) SDKs for regeneration"
 Write-Host "`n[3/3] Regenerating ($Parallel parallel jobs)..."
 $totalStart = Get-Date
 $workerScript = Join-Path $PSScriptRoot "Invoke-SdkRegeneration.ps1"
+$formatFullErrorDefinition = ${function:Format-FullError}.ToString()
 
 # Run regeneration (parallel or sequential)
 if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
@@ -191,10 +207,12 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $localSpecRepo = $using:LocalSpecRepoPath
         $saveInputsFlag = $using:SaveInputs
         $debugFlag = $using:DebugGenerator
-        
+        $formatFullError = [scriptblock]::Create($using:formatFullErrorDefinition)
+        Set-Item -Path function:Format-FullError -Value $formatFullError
+
         $result = @{ Library = $folder.Library; Success = $false; Error = ""; Elapsed = 0 }
         $start = Get-Date
-        
+
         try {
             $workerArgs = @{
                 ProjectPath = $folder.Path
@@ -211,20 +229,20 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
                 $result.Success = $workerResult.Success
                 $result.Error = $workerResult.Error
             } else {
-                throw "Worker script did not return valid result"
+                throw "Worker script did not return valid result. Full output:$([Environment]::NewLine)$($output -join [Environment]::NewLine)"
             }
         }
         catch {
-            $result.Error = $_.ToString()
+            $result.Error = Format-FullError $_
         }
-        
+
         $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
-        
+
         # Output progress
         if ($result.Success) {
             Write-Host "  $($result.Library): OK ($($result.Elapsed)s)"
         } else {
-            Write-Host "  $($result.Library): FAILED - $($result.Error)"
+            Write-Host "  $($result.Library): FAILED ($($result.Elapsed)s)"
         }
         
         $result
@@ -253,11 +271,11 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
                 $result.Success = $workerResult.Success
                 $result.Error = $workerResult.Error
             } else {
-                throw "Worker script did not return valid result"
+                throw "Worker script did not return valid result. Full output:$([Environment]::NewLine)$($output -join [Environment]::NewLine)"
             }
         }
         catch {
-            $result.Error = $_.ToString()
+            $result.Error = Format-FullError $_
         }
         
         $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
@@ -265,7 +283,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         if ($result.Success) {
             Write-Host "    OK ($($result.Elapsed)s)"
         } else {
-            Write-Host "    FAILED: $($result.Error)"
+            Write-Host "    FAILED ($($result.Elapsed)s)"
         }
         $results += $result
     }
@@ -277,4 +295,11 @@ $passed = @($results | Where-Object { $_.Success -eq $true }).Count
 $failed = @($results | Where-Object { $_.Success -ne $true }).Count
 Write-Host "`n=== Summary: $passed passed, $failed failed (${totalElapsed}s total) ==="
 
-if ($failed -gt 0) { exit 1 }
+if ($failed -gt 0) {
+    Write-Host "`n=== Failure details ==="
+    foreach ($failedResult in @($results | Where-Object { $_.Success -ne $true })) {
+        Write-Host "`n--- $($failedResult.Library) ---"
+        Write-Host $failedResult.Error
+    }
+    exit 1
+}

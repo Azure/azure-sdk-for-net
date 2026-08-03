@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "ResponseAsBoolClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool",
       "doc": "Test for @responseAsBool decorator.",
       "methods": [],
@@ -41,7 +42,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -53,17 +55,20 @@
           "$id": "5",
           "kind": "client",
           "name": "HeadAsBoolean",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean",
           "methods": [
             {
               "$id": "6",
               "kind": "basic",
               "name": "exists",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "7",
                 "name": "exists",
+                "isExactName": false,
                 "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
                 "parameters": [],
@@ -73,14 +78,16 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   },
                   {
                     "statusCodes": [
                       404
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "HEAD",
@@ -112,11 +119,13 @@
               "$id": "9",
               "kind": "basic",
               "name": "notExists",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "10",
                 "name": "notExists",
+                "isExactName": false,
                 "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
                 "parameters": [],
@@ -126,14 +135,16 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   },
                   {
                     "statusCodes": [
                       404
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "HEAD",
@@ -191,7 +202,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

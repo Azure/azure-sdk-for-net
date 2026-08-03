@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationPolicyResource.ResourceType, out string dataReplicationPolicyApiVersion);
             _policyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationPolicyResource.ResourceType.Namespace, Diagnostics);
-            _policyRestClient = new Policy(_policyClientDiagnostics, Pipeline, Endpoint, dataReplicationPolicyApiVersion ?? "2024-09-01");
+            _policyRestClient = new Policy(_policyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPolicyApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyName, DataReplicationPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
+                    new DataReplicationPolicyResourceOperationSource(Client),
                     _policyClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyName, DataReplicationPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
+                    new DataReplicationPolicyResourceOperationSource(Client),
                     _policyClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(ResourceType, out string iotOperationsDataflowGraphApiVersion);
             _dataflowGraphClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _dataflowGraphRestClient = new DataflowGraph(_dataflowGraphClientDiagnostics, Pipeline, Endpoint, iotOperationsDataflowGraphApiVersion ?? "2025-10-01");
+            _dataflowGraphRestClient = new DataflowGraph(_dataflowGraphClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsDataflowGraphApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowGraphData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowGraphResource> operation = new IotOperationsArmOperation<IotOperationsDataflowGraphResource>(
-                    new IotOperationsDataflowGraphOperationSource(Client),
+                    new IotOperationsDataflowGraphResourceOperationSource(Client),
                     _dataflowGraphClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowGraphData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowGraphResource> operation = new IotOperationsArmOperation<IotOperationsDataflowGraphResource>(
-                    new IotOperationsDataflowGraphOperationSource(Client),
+                    new IotOperationsDataflowGraphResourceOperationSource(Client),
                     _dataflowGraphClientDiagnostics,
                     Pipeline,
                     message.Request,

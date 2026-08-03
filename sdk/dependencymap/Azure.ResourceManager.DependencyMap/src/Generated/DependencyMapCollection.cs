@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             TryGetApiVersion(DependencyMapResource.ResourceType, out string dependencyMapApiVersion);
             _mapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DependencyMap", DependencyMapResource.ResourceType.Namespace, Diagnostics);
-            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
+            _mapsRestClient = new Maps(_mapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dependencyMapApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
-                    new DependencyMapOperationSource(Client),
+                    new DependencyMapResourceOperationSource(Client),
                     _mapsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
-                    new DependencyMapOperationSource(Client),
+                    new DependencyMapResourceOperationSource(Client),
                     _mapsClientDiagnostics,
                     Pipeline,
                     message.Request,

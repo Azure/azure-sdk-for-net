@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 OriginGroupListResult result = OriginGroupListResult.FromResponse(response);
-                yield return Page<CdnOriginGroupData>.FromValues((IReadOnlyList<CdnOriginGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnOriginGroupData>.FromValues((IReadOnlyList<CdnOriginGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

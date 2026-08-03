@@ -103,7 +103,7 @@ namespace Azure.Security.ConfidentialLedger
             _useWebFrontend = actualOptions.UseWebFrontend;
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(cachePrimaryNode: !actualOptions.UseWebFrontend) },
+                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint, cachePrimaryNode: !actualOptions.UseWebFrontend) },
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },

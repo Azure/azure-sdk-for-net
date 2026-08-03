@@ -75,6 +75,16 @@ namespace Azure.AI.VoiceLive
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(ReferenceSource))
+            {
+                writer.WritePropertyName("reference_source"u8);
+                writer.WriteStringValue(ReferenceSource.Value.ToString());
+            }
+            if (Optional.IsDefined(Channels))
+            {
+                writer.WritePropertyName("channels"u8);
+                writer.WriteNumberValue(Channels.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -118,6 +128,8 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             string @type = default;
+            EchoCancellationReferenceSource? referenceSource = default;
+            int? channels = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -126,12 +138,30 @@ namespace Azure.AI.VoiceLive
                     @type = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("reference_source"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    referenceSource = new EchoCancellationReferenceSource(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("channels"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    channels = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AudioEchoCancellation(@type, additionalBinaryDataProperties);
+            return new AudioEchoCancellation(@type, referenceSource, channels, additionalBinaryDataProperties);
         }
     }
 }

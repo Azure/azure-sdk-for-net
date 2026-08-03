@@ -6,9 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -99,7 +97,6 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(ProfileProperties))]
     [ModelReaderWriterBuildable(typeof(ProfileUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(RedirectConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleData))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleProperties))]
@@ -113,7 +110,6 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(RulesEngineRule))]
     [ModelReaderWriterBuildable(typeof(RulesEngineUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TimeseriesProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownRouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(WebApplicationCustomRule))]

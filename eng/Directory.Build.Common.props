@@ -334,6 +334,7 @@
     <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
     <AzureCoreTestFramework>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj</AzureCoreTestFramework>
     <AzureCoreAmqpSharedSources>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.Amqp/src/Shared/</AzureCoreAmqpSharedSources>
+    <SystemClientModelSharedSource>$(MSBuildThisFileDirectory)/../sdk/core/System.ClientModel/src/Convenience/</SystemClientModelSharedSource>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">

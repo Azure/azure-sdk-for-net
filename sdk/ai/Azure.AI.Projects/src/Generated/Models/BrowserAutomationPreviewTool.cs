@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+    [Experimental("AAIP001")]
     internal partial class BrowserAutomationPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>
@@ -23,23 +25,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
-        internal BrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
+        internal BrowserAutomationPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrowserAutomationToolParameters browserAutomationPreview) : base(@type, additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
             BrowserAutomationPreview = browserAutomationPreview;
         }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
-
         /// <summary> The Browser Automation Tool parameters. </summary>
-        public BrowserAutomationToolParameters BrowserAutomationPreview { get; }
+        public BrowserAutomationToolParameters BrowserAutomationPreview { get; set; }
     }
 }

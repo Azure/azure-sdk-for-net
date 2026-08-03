@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverResource.ResourceType, out string dnsResolverApiVersion);
             _dnsResolversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolversRestClient = new DnsResolvers(_dnsResolversClientDiagnostics, Pipeline, Endpoint, dnsResolverApiVersion ?? "2025-10-01-preview");
+            _dnsResolversRestClient = new DnsResolvers(_dnsResolversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolversRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverName, DnsResolverData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverResource> operation = new DnsResolverArmOperation<DnsResolverResource>(
-                    new DnsResolverOperationSource(Client),
+                    new DnsResolverResourceOperationSource(Client),
                     _dnsResolversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolversRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverName, DnsResolverData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverResource> operation = new DnsResolverArmOperation<DnsResolverResource>(
-                    new DnsResolverOperationSource(Client),
+                    new DnsResolverResourceOperationSource(Client),
                     _dnsResolversClientDiagnostics,
                     Pipeline,
                     message.Request,

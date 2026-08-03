@@ -82,6 +82,10 @@ namespace Azure.Provisioning.ServiceNetworking
             _policyType = DefineProperty<ApplicationGatewayForContainersSecurityPolicyType>(nameof(PolicyType), new string[] { "policyType" }, isOutput: true);
             _wafPolicy = DefineModelProperty<WafPolicy>(nameof(WafPolicy), new string[] { "wafPolicy" });
             _provisioningState = DefineProperty<ServiceNetworkingProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecurityPolicyProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

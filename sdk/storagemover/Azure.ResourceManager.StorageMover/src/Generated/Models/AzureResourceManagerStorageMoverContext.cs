@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(ProjectList))]
     [ModelReaderWriterBuildable(typeof(ProjectProperties))]
     [ModelReaderWriterBuildable(typeof(ProjectUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(S3WithHmacEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(S3WithHmacEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ScheduleRecurrence))]

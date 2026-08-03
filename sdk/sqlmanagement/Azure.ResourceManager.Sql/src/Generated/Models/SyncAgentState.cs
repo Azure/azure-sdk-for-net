@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SyncAgentState : IEquatable<SyncAgentState>
     {
         private readonly string _value;
+        /// <summary> Online. </summary>
+        private const string OnlineValue = "Online";
+        /// <summary> Offline. </summary>
+        private const string OfflineValue = "Offline";
+        /// <summary> NeverConnected. </summary>
+        private const string NeverConnectedValue = "NeverConnected";
 
         /// <summary> Initializes a new instance of <see cref="SyncAgentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncAgentState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OnlineValue = "Online";
-        private const string OfflineValue = "Offline";
-        private const string NeverConnectedValue = "NeverConnected";
+            _value = value;
+        }
 
         /// <summary> Online. </summary>
         public static SyncAgentState Online { get; } = new SyncAgentState(OnlineValue);
+
         /// <summary> Offline. </summary>
         public static SyncAgentState Offline { get; } = new SyncAgentState(OfflineValue);
+
         /// <summary> NeverConnected. </summary>
         public static SyncAgentState NeverConnected { get; } = new SyncAgentState(NeverConnectedValue);
+
         /// <summary> Determines if two <see cref="SyncAgentState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyncAgentState left, SyncAgentState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyncAgentState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyncAgentState left, SyncAgentState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncAgentState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyncAgentState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyncAgentState(string value) => new SyncAgentState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyncAgentState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyncAgentState?(string value) => value == null ? null : new SyncAgentState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyncAgentState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyncAgentState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

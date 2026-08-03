@@ -14,20 +14,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class CspmMonitorGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOffering"/>. </summary>
-        public CspmMonitorGcpOffering()
+        public CspmMonitorGcpOffering() : base(OfferingType.CspmMonitorGcp)
         {
-            OfferingType = OfferingType.CspmMonitorGcp;
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
-        internal CspmMonitorGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection) : base(offeringType, description, serializedAdditionalRawData)
+        internal CspmMonitorGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection) : base(offeringType, description, additionalBinaryDataProperties)
         {
             NativeCloudConnection = nativeCloudConnection;
-            OfferingType = offeringType;
         }
 
         /// <summary> The native cloud connection configuration. </summary>

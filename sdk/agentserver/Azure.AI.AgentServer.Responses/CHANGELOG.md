@@ -1,9 +1,27 @@
 # Release History
 
-## 1.0.0-beta.5 (2026-05-15)
+## 1.0.0-beta.7 (2026-07-07)
+
+### Features Added
+- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state. The value follows the native id convention: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. It embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope. When no explicit session ID is supplied, the derived agent session scope now falls back to the response's own partition key instead of a random value, so the chain id is stable from the first turn of a conversation onward.
+
+## 1.0.0-beta.6 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: the per-request call ID (`x-agent-foundry-call-id`) and global user ID (`x-agent-user-id`) are read from inbound requests and exposed on `ResponseContext.PlatformContext`. The per-request call ID is forwarded on all outbound Foundry Storage calls; `x-agent-user-id` is used only for container-side partitioning and is not forwarded to 1P services.
+
+### Breaking Changes
+- `ResponseContext.Isolation` is now `ResponseContext.PlatformContext` (type `PlatformContext` with `UserIdKey` / `CallId`).
+- `ResponsesProvider` methods now take a `PlatformContext context` parameter (previously `IsolationContext isolation`).
+- In-process partition enforcement is now keyed on the user ID (`x-agent-user-id`) instead of the chat isolation key.
+
+## 1.0.0-beta.5 (2026-05-21)
 
 ### Features Added
 
+- Replaced `invoke_agent` SERVER span with baggage-only propagation. W3C trace context propagation is now handled automatically by ASP.NET Core, so handler spans are parented directly under the caller's span.
+- Response ID, conversation ID, and streaming mode are propagated as Activity baggage for downstream correlation.
+- Simplified `ResponsesActivitySource` to focus on baggage propagation rather than span creation.
 - All error responses (4xx/5xx) now include the `x-platform-error-source` header classifying
   error origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or
   `upstream` (developer handler failure) per container-image-spec §8.

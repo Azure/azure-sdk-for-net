@@ -68,8 +68,8 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchPoolNodeCountsListResult result = (BatchPoolNodeCountsListResult)response;
-                yield return Page<BatchPoolNodeCounts>.FromValues((IReadOnlyList<BatchPoolNodeCounts>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.OdataNextLink;
+                yield return Page<BatchPoolNodeCounts>.FromValues((IReadOnlyList<BatchPoolNodeCounts>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

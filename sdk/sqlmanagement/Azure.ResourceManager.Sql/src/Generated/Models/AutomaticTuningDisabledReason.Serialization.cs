@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class AutomaticTuningDisabledReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutomaticTuningDisabledReason value) => value switch
         {
             AutomaticTuningDisabledReason.Default => "Default",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningDisabledReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AutomaticTuningDisabledReason ToAutomaticTuningDisabledReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutomaticTuningDisabledReason.Default;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AutomaticTuningDisabledReason.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoConfigured")) return AutomaticTuningDisabledReason.AutoConfigured;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InheritedFromServer")) return AutomaticTuningDisabledReason.InheritedFromServer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QueryStoreOff")) return AutomaticTuningDisabledReason.QueryStoreOff;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QueryStoreReadOnly")) return AutomaticTuningDisabledReason.QueryStoreReadOnly;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSupported")) return AutomaticTuningDisabledReason.NotSupported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default"))
+            {
+                return AutomaticTuningDisabledReason.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return AutomaticTuningDisabledReason.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoConfigured"))
+            {
+                return AutomaticTuningDisabledReason.AutoConfigured;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InheritedFromServer"))
+            {
+                return AutomaticTuningDisabledReason.InheritedFromServer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QueryStoreOff"))
+            {
+                return AutomaticTuningDisabledReason.QueryStoreOff;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QueryStoreReadOnly"))
+            {
+                return AutomaticTuningDisabledReason.QueryStoreReadOnly;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSupported"))
+            {
+                return AutomaticTuningDisabledReason.NotSupported;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningDisabledReason value.");
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal readonly partial struct CcpAuthType : IEquatable<CcpAuthType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> APIKey. </summary>
+        private const string APIKeyValue = "APIKey";
+        /// <summary> OAuth2. </summary>
+        private const string OAuth2Value = "OAuth2";
+        /// <summary> AWS. </summary>
+        private const string AWSValue = "AWS";
+        /// <summary> GCP. </summary>
+        private const string GCPValue = "GCP";
+        /// <summary> Session. </summary>
+        private const string SessionValue = "Session";
+        /// <summary> JwtToken. </summary>
+        private const string JwtTokenValue = "JwtToken";
+        /// <summary> GitHub. </summary>
+        private const string GitHubValue = "GitHub";
+        /// <summary> ServiceBus. </summary>
+        private const string ServiceBusValue = "ServiceBus";
+        /// <summary> Oracle. </summary>
+        private const string OracleValue = "Oracle";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="CcpAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CcpAuthType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string APIKeyValue = "APIKey";
-        private const string OAuth2Value = "OAuth2";
-        private const string AWSValue = "AWS";
-        private const string GCPValue = "GCP";
-        private const string SessionValue = "Session";
-        private const string JwtTokenValue = "JwtToken";
-        private const string GitHubValue = "GitHub";
-        private const string ServiceBusValue = "ServiceBus";
-        private const string OracleValue = "Oracle";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static CcpAuthType Basic { get; } = new CcpAuthType(BasicValue);
+
         /// <summary> APIKey. </summary>
         public static CcpAuthType APIKey { get; } = new CcpAuthType(APIKeyValue);
+
         /// <summary> OAuth2. </summary>
         public static CcpAuthType OAuth2 { get; } = new CcpAuthType(OAuth2Value);
+
         /// <summary> AWS. </summary>
         public static CcpAuthType AWS { get; } = new CcpAuthType(AWSValue);
+
         /// <summary> GCP. </summary>
         public static CcpAuthType GCP { get; } = new CcpAuthType(GCPValue);
+
         /// <summary> Session. </summary>
         public static CcpAuthType Session { get; } = new CcpAuthType(SessionValue);
+
         /// <summary> JwtToken. </summary>
         public static CcpAuthType JwtToken { get; } = new CcpAuthType(JwtTokenValue);
+
         /// <summary> GitHub. </summary>
         public static CcpAuthType GitHub { get; } = new CcpAuthType(GitHubValue);
+
         /// <summary> ServiceBus. </summary>
         public static CcpAuthType ServiceBus { get; } = new CcpAuthType(ServiceBusValue);
+
         /// <summary> Oracle. </summary>
         public static CcpAuthType Oracle { get; } = new CcpAuthType(OracleValue);
+
         /// <summary> None. </summary>
         public static CcpAuthType None { get; } = new CcpAuthType(NoneValue);
+
         /// <summary> Determines if two <see cref="CcpAuthType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CcpAuthType left, CcpAuthType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CcpAuthType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CcpAuthType left, CcpAuthType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CcpAuthType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CcpAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CcpAuthType(string value) => new CcpAuthType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CcpAuthType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CcpAuthType?(string value) => value == null ? null : new CcpAuthType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CcpAuthType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CcpAuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

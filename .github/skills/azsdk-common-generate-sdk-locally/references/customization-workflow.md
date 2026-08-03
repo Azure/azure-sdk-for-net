@@ -6,15 +6,15 @@ The customization workflow is an AI-assisted process that applies TypeSpec decor
 
 The customization tool (`azure-sdk-mcp:azsdk_customized_code_update`) can be triggered from multiple sources:
 
-| Entry Point | Description | Example |
-|-------------|-------------|---------|
-| **Build failures** | Compilation errors, analyzer violations, linting failures after SDK generation | `error CS0246: The type or namespace name 'FooModel' could not be found` |
-| **Breaking changes** | Output from breaking changes analysis tools detecting renamed/removed properties, changed types | `Breaking changes detected: FooOptions.timeout property type changed from int to Duration` |
-| **User prompts** | Natural language requests to modify SDK behavior | "Rename FooClient to BarClient for .NET" |
-| **API review feedback** | Feedback from APIView or PR comments on SDK naming/structure | "Model name doesn't follow .NET casing conventions" |
-| **.NET analyzer errors** | AZC0030 (naming violations), AZC0012 (generic type names), etc. | `AZC0030: Model name ends with 'Parameters'` |
-| **Customization drift** | Existing customization code references renamed/removed TypeSpec entities | `cannot find symbol: method getField(String)` |
-| **Duplicate field conflicts** | TypeSpec adds a property that already exists in manual customization code | `variable operationId is already defined in class AnalyzeOperationDetails` |
+| Entry Point                   | Description                                                                                     | Example                                                                                    |
+| ----------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Build failures**            | Compilation errors, analyzer violations, linting failures after SDK generation                  | `error CS0246: The type or namespace name 'FooModel' could not be found`                   |
+| **Breaking changes**          | Output from breaking changes analysis tools detecting renamed/removed properties, changed types | `Breaking changes detected: FooOptions.timeout property type changed from int to Duration` |
+| **User prompts**              | Natural language requests to modify SDK behavior                                                | "Rename FooClient to BarClient for .NET"                                                   |
+| **API review feedback**       | Feedback from APIView or PR comments on SDK naming/structure                                    | "Model name doesn't follow .NET casing conventions"                                        |
+| **.NET analyzer errors**      | AZC0030 (naming violations), AZC0012 (generic type names), etc.                                 | `AZC0030: Model name ends with 'Parameters'`                                               |
+| **Customization drift**       | Existing customization code references renamed/removed TypeSpec entities                        | `cannot find symbol: method getField(String)`                                              |
+| **Duplicate field conflicts** | TypeSpec adds a property that already exists in manual customization code                       | `variable operationId is already defined in class AnalyzeOperationDetails`                 |
 
 ## When to Use
 
@@ -44,17 +44,17 @@ The customization tool (`azure-sdk-mcp:azsdk_customized_code_update`) can be tri
 
 ## Common Scenarios
 
-| Scenario | Phase | Customization |
-|----------|-------|--------------|
-| Type name conflict with reserved keyword | A | Rename via `@@clientName` in `client.tsp` |
-| Property renamed in new API version | A | Add `@@clientName` to preserve backward compatibility |
-| .NET analyzer error (AZC0030, AZC0012) | A | Apply scoped `@@clientName` decorators to fix naming violations |
-| Hide internal operation from SDK | A | Apply `@@access` decorator with language scope |
-| Create subclient architecture | A | Use `@client` and `@clientInitialization` decorators |
-| API review naming feedback | A | Apply scoped `@@clientName` for specific language |
-| Duplicate field from customization conflict | B | Remove duplicate `addField()` from customization class |
-| Customization references renamed property | B | Update references in `_patch.py`, `*Customization.java`, or partial classes |
-| Feature request with no TypeSpec solution | Manual | Tool provides guidance to create customization infrastructure |
+| Scenario                                    | Phase  | Customization                                                               |
+| ------------------------------------------- | ------ | --------------------------------------------------------------------------- |
+| Type name conflict with reserved keyword    | A      | Rename via `@@clientName` in `client.tsp`                                   |
+| Property renamed in new API version         | A      | Add `@@clientName` to preserve backward compatibility                       |
+| .NET analyzer error (AZC0030, AZC0012)      | A      | Apply scoped `@@clientName` decorators to fix naming violations             |
+| Hide internal operation from SDK            | A      | Apply `@@access` decorator with language scope                              |
+| Create subclient architecture               | A      | Use `@client` and `@clientInitialization` decorators                        |
+| API review naming feedback                  | A      | Apply scoped `@@clientName` for specific language                           |
+| Duplicate field from customization conflict | B      | Remove duplicate `addField()` from customization class                      |
+| Customization references renamed property   | B      | Update references in `_patch.py`, `*Customization.java`, or partial classes |
+| Feature request with no TypeSpec solution   | Manual | Tool provides guidance to create customization infrastructure               |
 
 ## Two-Phase Workflow
 
@@ -70,6 +70,7 @@ When neither phase resolves the issue, or no customization files exist, the tool
 ## Retry Logic
 
 The tool handles retries internally with a two-pass classification approach:
+
 1. First pass: classify feedback → apply TypeSpec fixes → regenerate → build
 2. Second pass: re-classify remaining items with build error context → apply code patches → rebuild
 3. If the tool response indicates build still failing, you can re-run `azure-sdk-mcp:azsdk_customized_code_update` with the updated error output

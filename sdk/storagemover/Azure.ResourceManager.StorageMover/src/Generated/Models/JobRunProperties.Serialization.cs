@@ -14,7 +14,6 @@ using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> Job run properties. </summary>
     internal partial class JobRunProperties : IJsonModel<JobRunProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -357,11 +356,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("agentResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeAgentResourceIdValue(prop, ref agentResourceId);
                     continue;
                 }
                 if (prop.NameEquals("executionStartTime"u8))
@@ -524,11 +519,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeSourceResourceIdValue(prop, ref sourceResourceId);
                     continue;
                 }
                 if (prop.NameEquals("sourceProperties"u8))
@@ -547,11 +538,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("targetResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeTargetResourceIdValue(prop, ref targetResourceId);
                     continue;
                 }
                 if (prop.NameEquals("targetProperties"u8))

@@ -24,11 +24,17 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Whether this property is output-only (read-only in Bicep).</summary>
         public bool IsOutput { get; }
 
+        /// <summary>Whether this property should expose a public setter.</summary>
+        public bool IsSettable { get; }
+
         /// <summary>Whether this property is required.</summary>
         public bool IsRequired { get; }
 
         /// <summary>Optional default value (e.g., for singleton resource names).</summary>
         public string? DefaultValue { get; }
+
+        /// <summary>Optional Bicep literal serialization format.</summary>
+        public string? Format { get; }
 
         private ProvisioningPropertyProvider(
             FieldProvider backingField,
@@ -38,15 +44,19 @@ namespace Azure.Generator.Provisioning.Providers
             TypeProvider enclosingType,
             string[] bicepPath,
             bool isOutput,
+            bool isSettable,
             bool isRequired,
-            string? defaultValue)
+            string? defaultValue,
+            string? format)
             : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
         {
             BackingField = backingField;
             BicepPath = bicepPath;
             IsOutput = isOutput;
+            IsSettable = isSettable;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
+            Format = format;
         }
 
         /// <summary>
@@ -57,9 +67,11 @@ namespace Azure.Generator.Provisioning.Providers
             string resolvedName,
             CSharpType bicepType,
             bool isOutput,
+            bool isSettable,
             bool isRequired,
             string[] bicepPath,
             string? defaultValue,
+            string? format,
             TypeProvider enclosingType)
         {
             var field = new FieldProvider(
@@ -75,7 +87,7 @@ namespace Azure.Generator.Provisioning.Providers
             ];
 
             MethodPropertyBody body;
-            if (isOutput)
+            if (!isSettable)
             {
                 body = new MethodPropertyBody(getter);
             }
@@ -100,7 +112,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             return new ProvisioningPropertyProvider(
                 field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isRequired, defaultValue);
+                bicepPath, isOutput, isSettable, isRequired, defaultValue, format);
         }
     }
 }

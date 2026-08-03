@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmVirtualHardDiskProperties"/>. </summary>
         /// <param name="blockSizeInBytes"> Block size in bytes. </param>
         /// <param name="diskSizeInGB"> Size of the disk in GB. </param>
-        /// <param name="dynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
+        /// <param name="isDynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
         /// <param name="logicalSectorInBytes"> Logical sector in bytes. </param>
         /// <param name="physicalSectorInBytes"> Physical sector in bytes. </param>
         /// <param name="downloadUri"> URL for downloading or accessing the virtual hard disk. This URL points to a secure link from where the VHD can be downloaded or accessed directly. </param>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, long? diskSizeInGB, bool? dynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, string localVhdPath, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmVirtualHardDiskProperties(int? blockSizeInBytes, long? diskSizeInGB, bool? isDynamic, int? logicalSectorInBytes, int? physicalSectorInBytes, Uri downloadUri, HciVmHyperVGeneration? hyperVGeneration, HciVmDiskFileFormat? diskFileFormat, bool? isCreatingFromLocal, string localVhdPath, HciVmProvisioningState? provisioningState, ResourceIdentifier containerId, HciVmVirtualHardDiskStatus status, long? maxShares, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlockSizeInBytes = blockSizeInBytes;
             DiskSizeInGB = diskSizeInGB;
-            Dynamic = dynamic;
+            IsDynamic = isDynamic;
             LogicalSectorInBytes = logicalSectorInBytes;
             PhysicalSectorInBytes = physicalSectorInBytes;
             DownloadUri = downloadUri;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public long? DiskSizeInGB { get; set; }
 
         /// <summary> Boolean for enabling dynamic sizing on the virtual hard disk. </summary>
-        public bool? Dynamic { get; set; }
+        public bool? IsDynamic { get; set; }
 
         /// <summary> Logical sector in bytes. </summary>
         public int? LogicalSectorInBytes { get; set; }

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetMode : IEquatable<ComputeFleetMode>
     {
         private readonly string _value;
-        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via VMSS. </summary>
+        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via virtual machine scale sets. </summary>
         private const string ManagedValue = "Managed";
-        /// <summary> Instance mode for Compute Fleet will directly provision VM instances. </summary>
-        private const string InstanceValue = "Instance";
+        /// <summary> Launch mode for Compute Fleet will directly launch VM instances to be managed by the customer. </summary>
+        private const string LaunchValue = "Launch";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             _value = value;
         }
 
-        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via VMSS. </summary>
+        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via virtual machine scale sets. </summary>
         public static ComputeFleetMode Managed { get; } = new ComputeFleetMode(ManagedValue);
 
-        /// <summary> Instance mode for Compute Fleet will directly provision VM instances. </summary>
-        public static ComputeFleetMode Instance { get; } = new ComputeFleetMode(InstanceValue);
+        /// <summary> Launch mode for Compute Fleet will directly launch VM instances to be managed by the customer. </summary>
+        public static ComputeFleetMode Launch { get; } = new ComputeFleetMode(LaunchValue);
 
         /// <summary> Determines if two <see cref="ComputeFleetMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

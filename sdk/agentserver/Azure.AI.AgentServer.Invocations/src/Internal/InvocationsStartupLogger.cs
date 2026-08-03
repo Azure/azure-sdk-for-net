@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -20,7 +21,11 @@ internal sealed class InvocationsStartupLogger : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Invocations protocol registered");
+        _logger.LogInformation(
+            "Invocations protocol registered (route: /invocations, /invocations_ws); ws_keepalive_interval={WsKeepAliveInterval}",
+            FoundryEnvironment.WebSocketKeepAliveInterval == Timeout.InfiniteTimeSpan
+                ? "disabled"
+                : FoundryEnvironment.WebSocketKeepAliveInterval.ToString());
 
         return Task.CompletedTask;
     }

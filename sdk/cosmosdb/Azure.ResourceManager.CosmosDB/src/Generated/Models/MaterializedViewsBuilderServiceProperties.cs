@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,10 +15,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class MaterializedViewsBuilderServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderServiceProperties"/>. </summary>
-        public MaterializedViewsBuilderServiceProperties()
+        public MaterializedViewsBuilderServiceProperties() : base(CosmosDBServiceType.MaterializedViewsBuilder)
         {
             Locations = new ChangeTrackingList<MaterializedViewsBuilderRegionalService>();
-            ServiceType = CosmosDBServiceType.MaterializedViewsBuilder;
         }
 
         /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderServiceProperties"/>. </summary>
@@ -26,12 +26,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="locations"> An array that contains all of the locations for the service. </param>
         internal MaterializedViewsBuilderServiceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties, IReadOnlyList<MaterializedViewsBuilderRegionalService> locations) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             Locations = locations;
-            ServiceType = serviceType;
         }
 
         /// <summary> An array that contains all of the locations for the service. </summary>
