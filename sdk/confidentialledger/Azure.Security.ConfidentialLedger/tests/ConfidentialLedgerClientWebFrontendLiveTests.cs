@@ -16,19 +16,28 @@ namespace Azure.Security.ConfidentialLedger.Tests
     /// (<see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/> = <c>true</c>).
     /// </summary>
     /// <remarks>
-    /// These tests are currently marked <see cref="LiveOnlyAttribute"/> because they require a
-    /// gateway-fronted ledger to record against and no recordings exist yet. To bring them online:
-    /// <list type="number">
-    ///   <item><description>Point <c>CONFIDENTIALLEDGER_WEBFE_URL</c> (or <c>CONFIDENTIALLEDGER_URL</c>) at a
-    ///   Web Frontend Gateway ledger, and set <c>CONFIDENTIALLEDGER_IDENTITY_URL</c> and
-    ///   <c>CONFIDENTIALLEDGER_CLIENT_OBJECTID</c>.</description></item>
-    ///   <item><description>Record: <c>AZURE_TEST_MODE=Record dotnet test --filter FullyQualifiedName~WebFrontendLiveTests</c>.</description></item>
-    ///   <item><description>Push the recordings: <c>test-proxy push -a sdk/confidentialledger/Azure.Security.ConfidentialLedger/assets.json</c>
-    ///   (updates the <c>assets.json</c> tag).</description></item>
-    ///   <item><description>Remove the <see cref="LiveOnlyAttribute"/> so the tests replay in CI (Playback).</description></item>
-    /// </list>
-    /// Until then, the WebFE code path is covered by the deterministic <c>MockTransport</c> unit tests in
+    /// <para>
+    /// <see cref="PostLedgerEntry_WebFrontendClient_Completes"/> is a recorded test that validates a
+    /// <see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/> client end to end against a real
+    /// gateway-fronted ledger (public TLS, no CCF identity bootstrap, submit + wait for commit). Under
+    /// healthy conditions the gateway commits synchronously (HTTP 200); the client handles 200 and 202
+    /// identically from the caller's perspective.
+    /// </para>
+    /// <para>
+    /// The remaining tests are <see cref="LiveOnlyAttribute"/> because they exercise the queued
+    /// (HTTP 202 + <c>operationId</c>) path, which the gateway only takes when the underlying CCF cluster
+    /// is temporarily unreachable - a condition that cannot be reproduced on demand for a recording. That
+    /// path is covered deterministically by the <c>MockTransport</c> unit tests in
     /// <see cref="ConfidentialLedgerClientWebFrontendTests"/>.
+    /// </para>
+    /// <para>
+    /// To record against a gateway ledger: set <c>CONFIDENTIALLEDGER_WEBFE_URL</c> to the gateway endpoint.
+    /// For canary the identity endpoint is <c>https://canary.identity.confidential-ledger.core.azure.com</c>
+    /// (it differs from prod and is only used by the environment readiness probe - WebFE mode never calls the
+    /// identity service). Then run
+    /// <c>AZURE_TEST_MODE=Record dotnet test --filter FullyQualifiedName~WebFrontendLiveTests</c> and
+    /// <c>test-proxy push -a sdk/confidentialledger/Azure.Security.ConfidentialLedger/assets.json</c>.
+    /// </para>
     /// </remarks>
     public class ConfidentialLedgerClientWebFrontendLiveTests : RecordedTestBase<ConfidentialLedgerEnvironment>
     {
@@ -65,12 +74,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        [LiveOnly]
-        public async Task PostLedgerEntry_QueuedSubmission_Completes()
+        public async Task PostLedgerEntry_WebFrontendClient_Completes()
         {
-            // WaitUntil.Completed drives the gateway's queued-write flow end to end: submit -> 202 (or 200)
-            // -> poll GET /app/operations/{operationId} -> committed. On completion the operation's Id is
-            // the underlying CCF transaction id.
+            // Validates a UseWebFrontend=true client end to end against the gateway: submit with
+            // WaitUntil.Completed and wait for commit. A healthy gateway commits synchronously (HTTP 200,
+            // Direct polling); if the CCF cluster is unreachable it returns 202 and the operation polls
+            // GET /app/operations/{operationId}. Either way Id is the CCF transaction id on completion.
             Operation operation = await Client.PostLedgerEntryAsync(
                 waitUntil: WaitUntil.Completed,
                 RequestContent.Create(new { contents = Recording.GenerateAssetName("webfe-entry") }));
