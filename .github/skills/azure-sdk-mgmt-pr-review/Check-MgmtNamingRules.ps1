@@ -355,11 +355,19 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             }
 
             $parameterType = ($Matches['type'] -replace '\s+', ' ').Trim()
+            $isParams = $parameterType -cmatch '^params\s+'
+            $underlyingType = if ($isParams) {
+                ($parameterType -creplace '^params\s+', '').Trim()
+            } else {
+                $parameterType
+            }
             $parameterTypes.Add($parameterType)
             $parameters.Add([pscustomobject]@{
-                Name       = $Matches['name']
-                Type       = $parameterType
-                IsOptional = $defaultSeparator -ge 0
+                Name           = $Matches['name']
+                Type           = $parameterType
+                UnderlyingType = $underlyingType
+                IsOptional     = $defaultSeparator -ge 0
+                IsParams       = $isParams
             })
         }
 
@@ -449,7 +457,9 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
     $requiredArgumentCount = 0
     $seenOptional = $false
     foreach ($parameter in $bindable) {
-        $isOptionalAfterRestore = $parameter.IsOptional -or $optionalToRequired.Contains($parameter.Name)
+        $isOptionalAfterRestore = $parameter.IsOptional -or
+            $parameter.IsParams -or
+            $optionalToRequired.Contains($parameter.Name)
         if ($isOptionalAfterRestore) {
             $seenOptional = $true
         } else {
@@ -473,7 +483,7 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
 
         $prefixMatches = $true
         for ($index = 0; $index -lt $requiredArgumentCount; $index++) {
-            if ($bindable[$index].Type -cne $siblingBindable[$index].Type) {
+            if ($bindable[$index].UnderlyingType -cne $siblingBindable[$index].UnderlyingType) {
                 $prefixMatches = $false
                 break
             }
@@ -484,7 +494,8 @@ function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) 
 
         $remainingOptional = $true
         for ($index = $requiredArgumentCount; $index -lt $siblingBindable.Count; $index++) {
-            if (-not $siblingBindable[$index].IsOptional) {
+            if (-not $siblingBindable[$index].IsOptional -and
+                -not $siblingBindable[$index].IsParams) {
                 $remainingOptional = $false
                 break
             }
