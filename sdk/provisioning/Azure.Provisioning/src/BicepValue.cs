@@ -55,7 +55,20 @@ public abstract class BicepValue : IBicepValue
     internal bool _isSecure;
 
     // Optional format defining how values should be serialized
-    internal string? Format { get; set; } = null;
+    private string? _format;
+    internal string? Format
+    {
+        get => _format;
+        set
+        {
+            _format = value;
+            OnFormatChanged();
+        }
+    }
+
+    private protected virtual void OnFormatChanged()
+    {
+    }
 
     // Indicate whether this value is empty or should be included in output
     [EditorBrowsable(EditorBrowsableState.Never)]

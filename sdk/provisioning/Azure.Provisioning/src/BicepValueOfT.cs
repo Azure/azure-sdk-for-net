@@ -40,6 +40,14 @@ public class BicepValue<T> : BicepValue
 
     private protected override object? GetLiteralValue() => Value;
 
+    private protected override void OnFormatChanged()
+    {
+        if (_kind == BicepValueKind.Literal && Value is BicepValue nested)
+        {
+            nested.Format = Format;
+        }
+    }
+
     // Get the closest primitive to T
     private protected override BicepExpression GetBicepType() =>
         BicepSyntax.Types.Create<T>();
@@ -117,6 +125,7 @@ public class BicepValue<T> : BicepValue
 
         // Everything else is handled by the base Assign
         base.Assign(source);
+        OnFormatChanged();
     }
 
     // Convert literals, raw expressions, and vars/params/outputs

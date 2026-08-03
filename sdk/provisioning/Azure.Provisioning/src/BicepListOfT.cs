@@ -153,6 +153,14 @@ public class BicepList<T> :
         item.Format = Format;
     }
 
+    private protected override void OnFormatChanged()
+    {
+        for (int i = 0; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
+    }
+
     private void RemoveSelfForItem(BicepValue<T> item)
     {
         item.SetSelf(null);

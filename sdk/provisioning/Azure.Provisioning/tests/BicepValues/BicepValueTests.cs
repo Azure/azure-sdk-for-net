@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -300,6 +301,79 @@ public class BicepValueTests
     }
 
     [Test]
+    public async Task ValidateRfc7231DateTimeNestedListProperty()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new DateTimeCollectionResource("dateTimeCollection")
+                {
+                    Name = "date-time-collection",
+                    NestedRfc7231DateTimes =
+                    [
+                        new BicepList<DateTimeOffset>([
+                            new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero)
+                        ])
+                    ]
+                };
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource dateTimeCollection 'Test.Provider/dateTimeCollections@2024-01-01' = {
+                  name: 'date-time-collection'
+                  properties: {
+                    nestedRfc7231DateTimes: [
+                      [
+                        'Wed, 29 Jul 2026 09:30:00 GMT'
+                      ]
+                    ]
+                  }
+                }
+                """);
+    }
+
+    [Test]
+    public async Task ValidateRfc7231DateTimeNestedDictionaryProperty()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                var infra = new Infrastructure();
+                var resource = new DateTimeCollectionResource("dateTimeCollection")
+                {
+                    Name = "date-time-collection"
+                };
+                resource.NestedRfc7231DateTimeMap.Add(
+                    "outer",
+                    new BicepDictionary<DateTimeOffset>(
+                        new Dictionary<string, BicepValue<DateTimeOffset>>
+                        {
+                            ["created"] = new DateTimeOffset(2026, 7, 29, 9, 30, 0, TimeSpan.Zero)
+                        }));
+                infra.Add(resource);
+                return infra;
+            })
+            .Compare(
+                """
+                resource dateTimeCollection 'Test.Provider/dateTimeCollections@2024-01-01' = {
+                  name: 'date-time-collection'
+                  properties: {
+                    nestedRfc7231DateTimeMap: {
+                      outer: {
+                        created: 'Wed, 29 Jul 2026 09:30:00 GMT'
+                      }
+                    }
+                  }
+                }
+                """);
+    }
+
+    [Test]
     public async Task ValidateDurationListProperty()
     {
         await using Trycep test = new();
@@ -476,6 +550,20 @@ public class BicepValueTests
         }
         private BicepDictionary<DateTimeOffset>? _rfc7231DateTimeMap;
 
+        public BicepList<BicepList<DateTimeOffset>> NestedRfc7231DateTimes
+        {
+            get { Initialize(); return _nestedRfc7231DateTimes!; }
+            set { Initialize(); _nestedRfc7231DateTimes!.Assign(value); }
+        }
+        private BicepList<BicepList<DateTimeOffset>>? _nestedRfc7231DateTimes;
+
+        public BicepDictionary<BicepDictionary<DateTimeOffset>> NestedRfc7231DateTimeMap
+        {
+            get { Initialize(); return _nestedRfc7231DateTimeMap!; }
+            set { Initialize(); _nestedRfc7231DateTimeMap!.Assign(value); }
+        }
+        private BicepDictionary<BicepDictionary<DateTimeOffset>>? _nestedRfc7231DateTimeMap;
+
         public BicepList<TimeSpan> Durations
         {
             get { Initialize(); return _durations!; }
@@ -495,6 +583,8 @@ public class BicepValueTests
             _dateTimes = DefineListProperty<DateTimeOffset>("DateTimes", ["properties", "dateTimes"]);
             _rfc7231DateTimes = DefineListProperty<DateTimeOffset>("Rfc7231DateTimes", ["properties", "rfc7231DateTimes"], isOutput: false, isRequired: false, format: "R");
             _rfc7231DateTimeMap = DefineDictionaryProperty<DateTimeOffset>("Rfc7231DateTimeMap", ["properties", "rfc7231DateTimeMap"], isOutput: false, isRequired: false, format: "R");
+            _nestedRfc7231DateTimes = DefineListProperty<BicepList<DateTimeOffset>>("NestedRfc7231DateTimes", ["properties", "nestedRfc7231DateTimes"], isOutput: false, isRequired: false, format: "R");
+            _nestedRfc7231DateTimeMap = DefineDictionaryProperty<BicepDictionary<DateTimeOffset>>("NestedRfc7231DateTimeMap", ["properties", "nestedRfc7231DateTimeMap"], isOutput: false, isRequired: false, format: "R");
             _durations = DefineListProperty<TimeSpan>("Durations", ["properties", "durations"], isOutput: false, isRequired: false, format: "P");
         }
     }
