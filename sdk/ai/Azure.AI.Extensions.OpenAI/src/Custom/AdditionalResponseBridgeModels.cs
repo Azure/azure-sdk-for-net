@@ -10,6 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Local shell call. </summary>
+[Experimental("AAIP002")]
 public class OutputItemLocalShellToolCall : ResponseItem
 {
     /// <summary> Initializes a new instance of <see cref="OutputItemLocalShellToolCall"/>. </summary>
@@ -36,6 +37,7 @@ public class OutputItemLocalShellToolCall : ResponseItem
 }
 
 /// <summary> Local shell call output. </summary>
+[Experimental("AAIP002")]
 public partial class OutputItemLocalShellToolCallOutput : ResponseItem
 {
     /// <summary> Initializes a new instance of <see cref="OutputItemLocalShellToolCallOutput"/>. </summary>
@@ -57,6 +59,7 @@ public partial class OutputItemLocalShellToolCallOutput : ResponseItem
 }
 
 /// <summary> Compaction item. </summary>
+[Experimental("AAIP002")]
 public class OutputItemCompactionBody : ResponseItem
 {
     /// <summary> Initializes a new instance of <see cref="OutputItemCompactionBody"/>. </summary>
@@ -75,6 +78,7 @@ public class OutputItemCompactionBody : ResponseItem
 }
 
 /// <summary> Local shell exec action. </summary>
+[Experimental("AAIP002")]
 public partial class LocalShellExecAction
 {
     /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/>. </summary>
@@ -104,6 +108,7 @@ public partial class LocalShellExecAction
 }
 
 /// <summary> Local shell call status. </summary>
+[Experimental("AAIP002")]
 public enum ItemLocalShellToolCallStatus
 {
     /// <summary> The local shell call is in progress. </summary>
@@ -115,6 +120,7 @@ public enum ItemLocalShellToolCallStatus
 }
 
 /// <summary> Local shell call output status. </summary>
+[Experimental("AAIP002")]
 public enum ItemLocalShellToolCallOutputStatus
 {
     /// <summary> The local shell call output is in progress. </summary>
@@ -126,11 +132,13 @@ public enum ItemLocalShellToolCallOutputStatus
 }
 
 /// <summary> Output message content. </summary>
+[Experimental("AAIP002")]
 public abstract class OutputMessageContent
 {
 }
 
 /// <summary> Output text content. </summary>
+[Experimental("AAIP002")]
 public class OutputMessageContentOutputTextContent : OutputMessageContent
 {
     /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>
@@ -152,6 +160,7 @@ public class OutputMessageContentOutputTextContent : OutputMessageContent
 }
 
 /// <summary> Output refusal content. </summary>
+[Experimental("AAIP002")]
 public partial class OutputMessageContentRefusalContent : OutputMessageContent
 {
     /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
