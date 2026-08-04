@@ -84,6 +84,28 @@ string apiKey = "<Document Translator Resource API Key>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
+#### Create DocumentTranslationClient with Custom Settings (Experimental)
+
+`DocumentTranslationClient` can also be initialized using the experimental `DocumentTranslationClientSettings` class (diagnostic ID `SCME0002`), which supports loading configuration from `Microsoft.Extensions.Configuration`. Because this API is experimental, you must suppress the diagnostic to use it:
+
+```csharp
+#pragma warning disable SCME0002
+var settings = new DocumentTranslationClientSettings { Endpoint = new Uri(endpoint) };
+var client = new DocumentTranslationClient(settings);
+#pragma warning restore SCME0002
+```
+
+Similarly, `SingleDocumentTranslationClient` supports the experimental `SingleDocumentTranslationClientSettings` class:
+
+```csharp
+#pragma warning disable SCME0002
+var settings = new SingleDocumentTranslationClientSettings { Endpoint = new Uri(endpoint) };
+SingleDocumentTranslationClient singleClient = new SingleDocumentTranslationClient(settings);
+#pragma warning restore SCME0002
+```
+
+> **Note:** `DocumentTranslationClientSettings` and `SingleDocumentTranslationClientSettings` are marked with `[Experimental("SCME0002")]` and may change in future releases.
+
 #### Create DocumentTranslationClient with Azure Active Directory Credential
 
 Client API key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication.
@@ -388,7 +410,7 @@ SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(new
 ```
 
 ### Single Document Translation
-Start a single document translation.
+Start a single document translation using the public `Translate` or `TranslateAsync` convenience methods on `SingleDocumentTranslationClient`.
 
 ```C# Snippet:StartSingleDocumentTranslation
 try

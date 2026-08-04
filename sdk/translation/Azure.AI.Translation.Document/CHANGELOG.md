@@ -4,11 +4,17 @@
 
 ### Features Added
 
+- `SingleDocumentTranslationClient.Translate` and `TranslateAsync` convenience overloads are now public, allowing callers to submit single-document translation requests directly without working with low-level `RequestContent` objects.
+- Added `DocumentTranslationClientSettings` and `SingleDocumentTranslationClientSettings` classes to support configuration-based client initialization via `Microsoft.Extensions.Configuration`. These types are marked experimental (diagnostic ID `SCME0002`) and may change in future releases.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated code generation to the new TypeSpec-based Azure Data Plane SDK generator.
+- Fixed diagnostic scopes in Pageable methods.
 
 ## 2.0.0 (2024-11-15)
 
