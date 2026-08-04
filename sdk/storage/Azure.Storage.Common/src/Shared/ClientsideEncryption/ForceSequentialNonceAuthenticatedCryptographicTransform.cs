@@ -50,7 +50,11 @@ internal class ForceSequentialNonceAuthenticatedCryptographicTransform : IAuthen
             BitConverter.GetBytes(_next).CopyTo(expected.Slice(NonceLength - longBytes));
             if (!expected.SequenceEqual(actual))
             {
-                throw new CryptographicException("Encountered out-of-order authenticated region.");
+                string nonceToString(ReadOnlySpan<byte> span)
+                {
+                    return BitConverter.ToInt64(span.Slice(NonceLength - longBytes).ToArray(), 0).ToString();
+                }
+                throw new CryptographicException($"Encountered out-of-order authenticated region. Expected {nonceToString(expected)}, got {nonceToString(actual)}.");
             }
             _next += 1;
         }

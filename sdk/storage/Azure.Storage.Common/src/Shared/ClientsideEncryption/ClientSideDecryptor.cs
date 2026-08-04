@@ -56,6 +56,9 @@ namespace Azure.Storage.Cryptography
         /// Whether to ignore padding. Generally for partial blob downloads where the end of
         /// the blob (where the padding occurs) was not downloaded. V1 only.
         /// </param>
+        /// <param name="initialAuthRegion">
+        /// For CSEv2, the region the download begins at. Used to prevent region reorder attacks.
+        /// </param>
         /// <param name="async">Whether to perform this function asynchronously.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>
@@ -70,6 +73,7 @@ namespace Azure.Storage.Cryptography
             EncryptionData encryptionData,
             bool ivInStream,
             bool noPadding,
+            long initialAuthRegion,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -90,6 +94,7 @@ namespace Azure.Storage.Cryptography
                     return await DecryptInternalV2_0(
                         ciphertext,
                         encryptionData,
+                        initialAuthRegion,
                         CryptoStreamMode.Read,
                         async,
                         cancellationToken).ConfigureAwait(false);
@@ -124,6 +129,7 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
+            const long csev2FirstRegion = 0;
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
 #pragma warning disable CS0618 // obsolete
@@ -139,6 +145,7 @@ namespace Azure.Storage.Cryptography
                     return await DecryptInternalV2_0(
                         plaintextDestination,
                         encryptionData,
+                        csev2FirstRegion,
                         CryptoStreamMode.Write,
                         async,
                         cancellationToken).ConfigureAwait(false);
@@ -151,6 +158,7 @@ namespace Azure.Storage.Cryptography
         private async Task<Stream> DecryptInternalV2_0(
             Stream ciphertext,
             EncryptionData encryptionData,
+            long initialAuthRegion,
             CryptoStreamMode mode,
             bool async,
             CancellationToken cancellationToken)
@@ -166,21 +174,30 @@ namespace Azure.Storage.Cryptography
                 cancellationToken).ConfigureAwait(false);
             var authRegionDataLength = encryptionData.EncryptedRegionInfo.DataLength;
 
-            return WrapStreamV2_0(ciphertext, mode, contentEncryptionKey.ToArray(), authRegionDataLength);
+            return WrapStreamV2_0(ciphertext, mode, contentEncryptionKey.ToArray(), authRegionDataLength, initialAuthRegion);
         }
 
         private static Stream WrapStreamV2_0(
             Stream contentStream,
             CryptoStreamMode mode,
             byte[] contentEncryptionKey,
-            int authRegionPlaintextSize)
+            int authRegionPlaintextSize,
+            long initialAuthRegion)
         {
             // gcm disposed by stream
-            var gcm = new GcmAuthenticatedCryptographicTransform(contentEncryptionKey, TransformMode.Decrypt);
-            var nonceCountingGcm = new ForceSequentialNonceAuthenticatedCryptographicTransform(gcm, 1);
+            IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(
+                contentEncryptionKey, TransformMode.Decrypt);
+            if (initialAuthRegion >= 0)
+            {
+                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, initialAuthRegion + 1);
+            }
+            else
+            {
+                throw new Exception("Invalid auth region");
+            }
             return new AuthenticatedRegionCryptoStream(
                 contentStream,
-                nonceCountingGcm,
+                transform,
                 authRegionPlaintextSize,
                 mode);
         }
