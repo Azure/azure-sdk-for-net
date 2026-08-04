@@ -152,6 +152,7 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="memoryStoreName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0005")]
     public virtual async Task<OperationResult> UpdateMemoriesAsync(bool waitUntilCompleted, string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(memoryStoreName, nameof(memoryStoreName));
@@ -182,6 +183,7 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="memoryStoreName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0005")]
     public virtual OperationResult UpdateMemories(bool waitUntilCompleted, string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(memoryStoreName, nameof(memoryStoreName));

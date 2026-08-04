@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -118,7 +119,12 @@ namespace Client.Plugin
                 parameters: parameters,
                 returnType: isAsync
                     ? new CSharpType(typeof(Task<>), operationResultType)
-                    : operationResultType);
+                    : operationResultType,
+                attributes:
+                [
+                    .. method.Signature.Attributes,
+                    new AttributeStatement(typeof(ExperimentalAttribute), Literal("SCME0005"))
+                ]);
 
             method.Update(signature: method.Signature);
         }

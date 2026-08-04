@@ -45,6 +45,7 @@ public partial class EvaluatorGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0005")]
     public virtual OperationResult Create(bool waitUntilCompleted, EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(job, nameof(job));
@@ -77,6 +78,7 @@ public partial class EvaluatorGenerationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0005")]
     public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(job, nameof(job));
