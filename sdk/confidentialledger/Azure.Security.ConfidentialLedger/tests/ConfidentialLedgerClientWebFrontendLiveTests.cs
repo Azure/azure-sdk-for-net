@@ -17,25 +17,26 @@ namespace Azure.Security.ConfidentialLedger.Tests
     /// </summary>
     /// <remarks>
     /// <para>
-    /// <see cref="PostLedgerEntry_WebFrontendClient_Completes"/> is a recorded test that validates a
-    /// <see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/> client end to end against a real
-    /// gateway-fronted ledger (public TLS, no CCF identity bootstrap, submit + wait for commit). Under
-    /// healthy conditions the gateway commits synchronously (HTTP 200); the client handles 200 and 202
-    /// identically from the caller's perspective.
+    /// These recorded tests validate a <see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/> client
+    /// end to end against a real gateway-fronted ledger (public TLS, no CCF identity bootstrap).
+    /// <see cref="PostLedgerEntry_WebFrontendClient_Completes"/> covers a healthy gateway, which commits
+    /// synchronously (HTTP 200). The other two were recorded with the underlying CCF cluster taken offline,
+    /// so the gateway queues the write (HTTP 202 + <c>x-ms-webfe-operation-id</c>) and
+    /// <c>GET /app/operations/{operationId}</c> reports <c>"queued"</c>:
+    /// <see cref="PostLedgerEntry_Started_GetOperationStatus"/> submits and reads the queued status, and
+    /// <see cref="RehydratePostLedgerEntryOperation_WhileLedgerDown_PollsQueued"/> resumes an operation from
+    /// only its persisted id and confirms it stays pending while the ledger is down.
     /// </para>
     /// <para>
-    /// The remaining tests are <see cref="LiveOnlyAttribute"/> because they exercise the queued
-    /// (HTTP 202 + <c>operationId</c>) path, which the gateway only takes when the underlying CCF cluster
-    /// is temporarily unreachable - a condition that cannot be reproduced on demand for a recording. That
-    /// path is covered deterministically by the <c>MockTransport</c> unit tests in
-    /// <see cref="ConfidentialLedgerClientWebFrontendTests"/>.
+    /// The queued -&gt; committed transition (the operation completing once CCF recovers) depends on recovery
+    /// timing that is not reproducible in a single recording; it is covered deterministically by the
+    /// <c>MockTransport</c> unit tests in <see cref="ConfidentialLedgerClientWebFrontendTests"/>.
     /// </para>
     /// <para>
-    /// To record against a gateway ledger: set <c>CONFIDENTIALLEDGER_WEBFE_URL</c> to the gateway endpoint.
-    /// For canary the identity endpoint is <c>https://canary.identity.confidential-ledger.core.azure.com</c>
-    /// (it differs from prod and is only used by the environment readiness probe - WebFE mode never calls the
-    /// identity service). Then run
-    /// <c>AZURE_TEST_MODE=Record dotnet test --filter FullyQualifiedName~WebFrontendLiveTests</c> and
+    /// To re-record: set <c>CONFIDENTIALLEDGER_WEBFE_URL</c> to the gateway endpoint (for canary the identity
+    /// endpoint is <c>https://canary.identity.confidential-ledger.core.azure.com</c>, which differs from prod
+    /// and is only used by the environment readiness probe - WebFE mode never calls the identity service),
+    /// then run <c>AZURE_TEST_MODE=Record dotnet test --filter FullyQualifiedName~WebFrontendLiveTests</c> and
     /// <c>test-proxy push -a sdk/confidentialledger/Azure.Security.ConfidentialLedger/assets.json</c>.
     /// </para>
     /// </remarks>
@@ -90,7 +91,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        [LiveOnly]
         public async Task PostLedgerEntry_Started_GetOperationStatus()
         {
             // WaitUntil.Started returns immediately after submission. The returned Id is the gateway
@@ -109,12 +109,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        [LiveOnly]
-        public async Task RehydratePostLedgerEntryOperation_ResumesPolling()
+        public async Task RehydratePostLedgerEntryOperation_WhileLedgerDown_PollsQueued()
         {
-            // Submit and capture only the operation id, then resume completion through a freshly
-            // rehydrated operation - the cross-process resume scenario RehydratePostLedgerEntryOperation
-            // is designed for.
+            // Submit while CCF is unreachable: the gateway queues the write and returns an operation id
+            // (HTTP 202). Capture only that id, as a caller would persist it across a process restart.
             Operation submitted = await Client.PostLedgerEntryAsync(
                 waitUntil: WaitUntil.Started,
                 RequestContent.Create(new { contents = Recording.GenerateAssetName("webfe-entry") }));
@@ -122,11 +120,36 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string operationId = submitted.Id;
             Assert.IsNotNull(operationId);
 
+            // Rehydrate from only the persisted id - no network I/O until the first poll.
+            Operation resumed = Client.RehydratePostLedgerEntryOperation(operationId);
+            Assert.IsFalse(resumed.HasCompleted);
+
+            // First poll hits GET /app/operations/{operationId}. While the ledger is down the operation
+            // remains queued, so the operation stays pending and Id is still the gateway operation id.
+            // (Once CCF recovers a later poll would report "committed" and flip Id to the transaction id.)
+            await resumed.UpdateStatusAsync();
+            Assert.IsFalse(resumed.HasCompleted);
+            Assert.AreEqual(operationId, resumed.Id);
+        }
+
+        [RecordedTest]
+        public async Task RehydratePostLedgerEntryOperation_ResumesToCommitted()
+        {
+            // Resume an operation that was queued while CCF was offline (its id was persisted by the caller).
+            // Once the ledger recovers the gateway commits the queued write, so polling the id drives the
+            // rehydrated operation to completion and Id flips from the gateway operation id to the CCF
+            // transaction id. Requires CONFIDENTIALLEDGER_WEBFE_OPERATION_ID to be a now-recovered queued id.
+            string operationId = TestEnvironment.WebFrontendQueuedOperationId;
+            if (string.IsNullOrEmpty(operationId))
+            {
+                Assert.Ignore("Set CONFIDENTIALLEDGER_WEBFE_OPERATION_ID to an operation id that was queued while the ledger was down (and has since recovered) to record/replay this test.");
+            }
+
             Operation resumed = Client.RehydratePostLedgerEntryOperation(operationId);
             await resumed.WaitForCompletionResponseAsync();
 
             Assert.IsTrue(resumed.HasCompleted);
-            Assert.IsNotNull(resumed.Id);
+            Assert.AreNotEqual(operationId, resumed.Id);
         }
     }
 }
