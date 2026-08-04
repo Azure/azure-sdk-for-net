@@ -35,7 +35,7 @@ public static class FoundryActivityHostingExtensions
 {
     /// <summary>
     /// Registers the Foundry Activity protocol services onto a host application builder: the
-    /// Foundry outbound-auth connection provider, the derived connection configuration overlay, the
+    /// SDK-native outbound-auth connection provider, the derived connection configuration overlay, the
     /// platform middleware services, health checks, and the shared endpoint handler.
     /// </summary>
     /// <param name="builder">The host application builder (for example a <c>WebApplicationBuilder</c>).</param>
@@ -51,7 +51,7 @@ public static class FoundryActivityHostingExtensions
         configure?.Invoke(options);
 
         // Overlay the derived Microsoft 365 connection settings (Connections:*) onto the host
-        // configuration so the SDK adapter and the Foundry connection provider read them. This
+        // configuration so the SDK adapter and the SDK-native connection provider read them. This
         // never mutates the process environment; a ConfigurationManager is both an
         // IConfigurationBuilder and an IConfiguration, so adding an in-memory source is safe.
         if (builder.Configuration is IConfigurationBuilder configurationBuilder)

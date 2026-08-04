@@ -138,7 +138,7 @@ public static class ActivityBuilderExtensions
 
     /// <summary>
     /// Overlays the derived Microsoft 365 connection settings (<c>Connections:*</c>) onto the host
-    /// configuration so the SDK adapter and the Foundry connection provider read them. Never mutates
+    /// configuration so the SDK adapter and the SDK-native connection provider read them. Never mutates
     /// the process environment.
     /// </summary>
     private static void OverlayConnectionConfiguration(AgentHostBuilder builder, ActivityServerOptions options)

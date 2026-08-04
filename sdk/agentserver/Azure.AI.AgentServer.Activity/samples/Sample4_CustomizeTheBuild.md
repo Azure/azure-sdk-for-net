@@ -5,7 +5,7 @@ The default `ActivityServer.Run(...)` path builds the whole Microsoft 365 Agents
 | Option | Overrides |
 |---|---|
 | `Storage` | The turn-state storage backend (default: in-memory). |
-| `Connections` | The outbound-auth token provider (default: Foundry managed-identity connections). |
+| `Connections` | The outbound-auth connection provider (default: the SDK-native connection provider, configured from the derived `Connections:*` settings). |
 | `ConnectionConfiguration` | The `Connections:*` mapping (default: derived from the Foundry-native identity). |
 | `ConfigureServices` | A callback to register any additional services before the SDK defaults. |
 

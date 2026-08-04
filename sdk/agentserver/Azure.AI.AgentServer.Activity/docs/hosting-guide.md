@@ -326,7 +326,7 @@ Microsoft 365 Agents SDK stack from the Foundry container environment.
 |----------|------|---------|---------|
 | `DigitalWorker` | `bool` | `false` | Selects the [outbound-auth model](#outbound-auth-models). |
 | `Storage` | `IStorage?` | `null` (→ `MemoryStorage`) | Turn-state storage backend. |
-| `Connections` | `IConnections?` | `null` (→ Foundry-native) | Outbound-token connection provider. |
+| `Connections` | `IConnections?` | `null` (→ SDK-native) | Outbound-token connection provider. |
 | `ConnectionConfiguration` | `IReadOnlyDictionary<string,string?>?` | `null` (→ derived) | The M365 `Connections:*` mapping. |
 | `ConfigureServices` | `Action<IServiceCollection>?` | `null` | Register additional/override services. |
 

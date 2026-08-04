@@ -4,9 +4,15 @@
 namespace Azure.AI.AgentServer.Activity.Internal;
 
 /// <summary>
-/// Well-known environment-variable names and default values used to configure the
-/// Microsoft 365 Agents SDK connection stack inside a Foundry hosted container.
+/// Well-known Foundry environment-variable names, Microsoft 365 Agents SDK configuration keys, and
+/// default values used to configure the SDK connection stack inside a Foundry hosted container.
 /// </summary>
+/// <remarks>
+/// The <c>FOUNDRY_AGENT_*</c> constants are process environment-variable names. The
+/// <c>CONNECTIONS:*</c> / <c>CONNECTIONSMAP:*</c> constants are colon-delimited
+/// <see cref="Microsoft.Extensions.Configuration.IConfiguration"/> keys that are overlaid via
+/// <c>AddInMemoryCollection</c>; they are never read from the process environment.
+/// </remarks>
 internal static class ConnectionEnvironment
 {
     // ── Foundry-native inputs ────────────────────────────────────────────────

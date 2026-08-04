@@ -70,7 +70,7 @@ Configuration for the built stack. Every property is optional.
 |----------|-------------|
 | `DigitalWorker` | Selects the outbound-auth model (default `false` = simple agent-instance identity). |
 | `Storage` | The turn-state storage backend (default: in-memory `MemoryStorage`). |
-| `Connections` | The outbound-auth token provider (default: Foundry managed-identity connections). |
+| `Connections` | The outbound-auth connection provider (default: the SDK-native connection provider, configured from the derived `Connections:*` settings). |
 | `ConnectionConfiguration` | The M365 `Connections:*` mapping (default: derived from the Foundry-native identity). |
 | `ConfigureServices` | A callback to register additional services before the SDK defaults. |
 
