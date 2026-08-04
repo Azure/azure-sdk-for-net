@@ -1,0 +1,26 @@
+name: azsdk-common-sdk-breaking-change-trigger-eval
+description: Trigger and anti-trigger tests for theazsdk-common-sdk-breaking-change skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-sdk-breaking-change
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: trigger-detect-sdk-breaking-changes-for-service
+    prompt: "Detect and mitigate SDK breaking changes for the service webpubsub"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-sdk-breaking-change"]
