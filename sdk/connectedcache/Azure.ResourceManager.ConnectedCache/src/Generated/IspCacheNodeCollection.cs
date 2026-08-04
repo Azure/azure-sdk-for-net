@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             TryGetApiVersion(IspCacheNodeResource.ResourceType, out string ispCacheNodeApiVersion);
             _ispCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCacheNodeResource.ResourceType.Namespace, Diagnostics);
-            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, ispCacheNodeApiVersion ?? "2026-06-01");
+            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ispCacheNodeApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

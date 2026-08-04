@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             TryGetApiVersion(EnterpriseMccCustomerResource.ResourceType, out string enterpriseMccCustomerApiVersion);
             _enterpriseMccCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
-            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Endpoint, enterpriseMccCustomerApiVersion ?? "2026-06-01");
+            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCustomerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

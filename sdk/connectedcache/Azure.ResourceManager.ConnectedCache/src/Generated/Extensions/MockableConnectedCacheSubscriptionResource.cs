@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
 
         private ClientDiagnostics IspCustomersClientDiagnostics => _ispCustomersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IspCustomers IspCustomersRestClient => _ispCustomersRestClient ??= new IspCustomers(IspCustomersClientDiagnostics, Pipeline, Endpoint, "2026-06-01");
+        private IspCustomers IspCustomersRestClient => _ispCustomersRestClient ??= new IspCustomers(IspCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics EnterpriseMccCustomersClientDiagnostics => _enterpriseMccCustomersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnterpriseMccCustomers EnterpriseMccCustomersRestClient => _enterpriseMccCustomersRestClient ??= new EnterpriseMccCustomers(EnterpriseMccCustomersClientDiagnostics, Pipeline, Endpoint, "2026-06-01");
+        private EnterpriseMccCustomers EnterpriseMccCustomersRestClient => _enterpriseMccCustomersRestClient ??= new EnterpriseMccCustomers(EnterpriseMccCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary>
         /// This api gets information about all ispCustomer resources under the given subscription
