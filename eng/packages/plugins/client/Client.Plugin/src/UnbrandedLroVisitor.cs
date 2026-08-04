@@ -123,7 +123,7 @@ namespace Client.Plugin
                 attributes:
                 [
                     .. method.Signature.Attributes,
-                    new AttributeStatement(typeof(ExperimentalAttribute), Literal("SCME0005"))
+                    new AttributeStatement(typeof(ExperimentalAttribute), Literal("SCME0006"))
                 ]);
 
             method.Update(signature: method.Signature);

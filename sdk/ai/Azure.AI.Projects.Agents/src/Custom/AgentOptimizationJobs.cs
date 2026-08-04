@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -37,7 +37,7 @@ public partial class AgentOptimizationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("SCME0005")]
+    [Experimental("SCME0006")]
     public virtual OperationResult Create(bool waitUntilCompleted, OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return Create(
@@ -69,7 +69,7 @@ public partial class AgentOptimizationJobs
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("SCME0005")]
+    [Experimental("SCME0006")]
     public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         return await CreateAsync(

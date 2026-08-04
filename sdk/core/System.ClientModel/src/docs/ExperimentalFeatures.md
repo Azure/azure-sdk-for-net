@@ -160,7 +160,49 @@ Or in your project file:
 </PropertyGroup>
 ```
 
-## SCME0005 - Long-Running Operation Methods
+## SCME0005 - AsyncStreamingClientResult Experimental APIs
+
+### Description
+
+The `AsyncStreamingClientResult` and `AsyncStreamingClientResult<T>` types are experimental features for reading asynchronous streaming service responses, including custom producers, server-sent events, and newline-delimited JSON. These APIs are subject to change or removal in future updates as we gather feedback and refine the implementation.
+
+### Affected APIs
+
+- `System.ClientModel.AsyncStreamingClientResult`
+- `System.ClientModel.AsyncStreamingClientResult<T>`
+
+### Example Usage
+
+```csharp
+#pragma warning disable SCME0005
+// `response` is an established PipelineResponse with a content stream.
+await using AsyncStreamingClientResult<BinaryData> result =
+    AsyncStreamingClientResult.CreateJsonLines(response);
+
+await foreach (BinaryData item in result)
+{
+    // Process each streamed value.
+}
+#pragma warning restore SCME0005
+```
+
+### Suppression
+
+If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
+
+```csharp
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+```
+
+Or in your project file:
+
+```xml
+<PropertyGroup>
+  <NoWarn>$(NoWarn);SCME0005</NoWarn>
+</PropertyGroup>
+```
+
+## SCME0006 - Long-Running Operation Methods
 
 ### Description
 
@@ -175,13 +217,13 @@ System.ClientModel long-running operation methods are experimental while the API
 If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
 
 ```csharp
-#pragma warning disable SCME0005 // API is for evaluation purposes only and is subject to change or removal in future updates.
+#pragma warning disable SCME0006 // API is for evaluation purposes only and is subject to change or removal in future updates.
 ```
 
 Or in your project file:
 
 ```xml
 <PropertyGroup>
-  <NoWarn>$(NoWarn);SCME0005</NoWarn>
+  <NoWarn>$(NoWarn);SCME0006</NoWarn>
 </PropertyGroup>
 ```

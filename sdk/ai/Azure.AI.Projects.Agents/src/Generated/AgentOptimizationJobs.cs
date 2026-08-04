@@ -48,7 +48,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0005")]
+        [Experimental("SCME0006")]
         internal virtual OperationResult Create(bool waitUntilCompleted, BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
@@ -72,7 +72,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0005")]
+        [Experimental("SCME0006")]
         internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
@@ -95,7 +95,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0005")]
+        [Experimental("SCME0006")]
         internal virtual OperationResult Create(bool waitUntilCompleted, OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             OperationResult result = Create(waitUntilCompleted, job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions());
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0005")]
+        [Experimental("SCME0006")]
         internal virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             OperationResult result = await CreateAsync(waitUntilCompleted, job, foundryFeatures?.ToString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);

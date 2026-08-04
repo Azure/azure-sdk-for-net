@@ -508,7 +508,7 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0005")]
+        [Experimental("SCME0006")]
         public virtual OperationResult UpdateMemories(bool waitUntilCompleted, string name, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemories");
@@ -539,7 +539,7 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0005")]
+        [Experimental("SCME0006")]
         public virtual async Task<OperationResult> UpdateMemoriesAsync(bool waitUntilCompleted, string name, BinaryContent content, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemories");

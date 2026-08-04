@@ -221,6 +221,7 @@ namespace Azure.AI.Projects.Agents
         WorkflowAgentsV1Preview = 0,
         ExternalAgentsV1Preview = 1,
         DraftAgentsV1Preview = 2,
+        VoiceAgentsV1Preview = 3,
     }
     public abstract partial class AgentEndpointAuthorizationScheme : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>
     {
@@ -450,6 +451,23 @@ namespace Azure.AI.Projects.Agents
         public static implicit operator Azure.AI.Projects.Agents.AgentState (string value) { throw null; }
         public static implicit operator Azure.AI.Projects.Agents.AgentState? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.Agents.AgentState left, Azure.AI.Projects.Agents.AgentState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentStateSource : System.IEquatable<Azure.AI.Projects.Agents.AgentStateSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentStateSource(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentStateSource AgentBlueprint { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentStateSource AgentInstanceIdentity { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.AgentStateSource other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.AgentStateSource left, Azure.AI.Projects.Agents.AgentStateSource right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentStateSource (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentStateSource? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.AgentStateSource left, Azure.AI.Projects.Agents.AgentStateSource right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AgentToolboxes
@@ -1878,6 +1896,7 @@ namespace Azure.AI.Projects.Agents
         public Azure.AI.Projects.Agents.AgentIdentity InstanceIdentity { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentState State { get { throw null; } }
+        public Azure.AI.Projects.Agents.AgentStateSource? StateSource { get { throw null; } }
         public Azure.AI.Projects.Agents.ProjectsAgentVersion GetLatestVersion() { throw null; }
         protected virtual Azure.AI.Projects.Agents.ProjectsAgentRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

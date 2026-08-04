@@ -283,6 +283,14 @@ namespace TestNs
         }
 
         [Test]
+        public void SupportedSuppressions_IncludeAaip002()
+        {
+            var suppressor = new AllowListDiagnosticSuppressor();
+            IEnumerable<string> ids = suppressor.SupportedSuppressions.Select(s => s.SuppressedDiagnosticId);
+            Assert.That(ids, Does.Contain("AAIP002"), "AAIP002 should be opted into scoped suppression.");
+        }
+
+        [Test]
         public async Task SourceGeneratedScope_SuppressesInDotGCsFile()
         {
             IReadOnlyList<Diagnostic> diagnostics = await RunAsync(
