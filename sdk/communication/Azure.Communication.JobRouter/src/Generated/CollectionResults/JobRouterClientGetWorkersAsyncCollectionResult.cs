@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
     internal partial class JobRouterClientGetWorkersAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly JobRouterClient _client;
-        private readonly int? _maxpagesize;
+        private readonly int? _maxPageSize;
         private readonly string _state;
         private readonly string _channelId;
         private readonly string _queueId;
@@ -28,17 +28,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of JobRouterClientGetWorkersAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The JobRouterClient client used to send requests. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="state"> If specified, select workers by worker state. </param>
         /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public JobRouterClientGetWorkersAsyncCollectionResult(JobRouterClient client, int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public JobRouterClientGetWorkersAsyncCollectionResult(JobRouterClient client, int? maxPageSize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _state = state;
             _channelId = channelId;
             _queueId = queueId;
@@ -81,7 +81,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetWorkersRequest(nextLink, pageSize, _context) : _client.CreateGetWorkersRequest(pageSize, _state, _channelId, _queueId, _hasCapacity, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();

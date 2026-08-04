@@ -244,13 +244,13 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetDistributionPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetDistributionPolicies(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetDistributionPolicies");
+            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary>
@@ -261,31 +261,31 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetDistributionPolicies");
+            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<DistributionPolicy> GetDistributionPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<DistributionPolicy> GetDistributionPolicies(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
+            return new JobRouterAdministrationClientGetDistributionPoliciesCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
+            return new JobRouterAdministrationClientGetDistributionPoliciesAsyncCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetDistributionPolicies");
         }
 
         /// <summary>
@@ -556,13 +556,13 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetClassificationPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetClassificationPolicies(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetClassificationPolicies");
+            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary>
@@ -573,31 +573,31 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetClassificationPolicies");
+            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<ClassificationPolicy> GetClassificationPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<ClassificationPolicy> GetClassificationPolicies(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
+            return new JobRouterAdministrationClientGetClassificationPoliciesCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
+            return new JobRouterAdministrationClientGetClassificationPoliciesAsyncCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetClassificationPolicies");
         }
 
         /// <summary>
@@ -868,13 +868,13 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetExceptionPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetExceptionPolicies(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetExceptionPolicies");
+            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary>
@@ -885,31 +885,31 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetExceptionPolicies");
+            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<ExceptionPolicy> GetExceptionPolicies(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<ExceptionPolicy> GetExceptionPolicies(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
+            return new JobRouterAdministrationClientGetExceptionPoliciesCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
+            return new JobRouterAdministrationClientGetExceptionPoliciesAsyncCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetExceptionPolicies");
         }
 
         /// <summary>
@@ -1180,13 +1180,13 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetQueues(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetQueues(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetQueuesCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetQueues");
+            return new JobRouterAdministrationClientGetQueuesCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary>
@@ -1197,31 +1197,31 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetQueuesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetQueuesAsync(int? maxPageSize, RequestContext context)
         {
-            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResult(this, maxpagesize, context, "JobRouterAdministrationClient.GetQueues");
+            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResult(this, maxPageSize, context, "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<RouterQueue> GetQueues(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<RouterQueue> GetQueues(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetQueuesCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
+            return new JobRouterAdministrationClientGetQueuesCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<RouterQueue> GetQueuesAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<RouterQueue> GetQueuesAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResultOfT(this, maxpagesize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
+            return new JobRouterAdministrationClientGetQueuesAsyncCollectionResultOfT(this, maxPageSize, cancellationToken.ToRequestContext(), "JobRouterAdministrationClient.GetQueues");
         }
 
         /// <summary>

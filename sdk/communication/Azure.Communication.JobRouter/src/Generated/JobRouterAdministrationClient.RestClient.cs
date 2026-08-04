@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetDistributionPoliciesRequest(int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDistributionPoliciesRequest(int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -75,9 +75,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateNextGetDistributionPoliciesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetDistributionPoliciesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -102,9 +102,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -173,7 +173,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetClassificationPoliciesRequest(int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetClassificationPoliciesRequest(int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -182,9 +182,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -194,7 +194,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateNextGetClassificationPoliciesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetClassificationPoliciesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -209,9 +209,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -280,7 +280,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetExceptionPoliciesRequest(int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetExceptionPoliciesRequest(int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -289,9 +289,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -301,7 +301,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateNextGetExceptionPoliciesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetExceptionPoliciesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -316,9 +316,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -387,7 +387,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateGetQueuesRequest(int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetQueuesRequest(int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -396,9 +396,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -408,7 +408,7 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
-        internal HttpMessage CreateNextGetQueuesRequest(Uri nextPage, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetQueuesRequest(Uri nextPage, int? maxPageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -423,9 +423,9 @@ namespace Azure.Communication.JobRouter
             {
                 uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize));
+                uri.UpdateQuery("maxpagesize", TypeFormatters.ConvertToString(maxPageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
