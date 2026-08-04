@@ -32,8 +32,8 @@ namespace Azure.Security.ConfidentialLedger
         /// </code>
         ///
         /// A <c>404</c> response with <c>error.code == "OperationNotFound"</c> indicates the operation
-        /// status has been evicted after its 24-hour TTL elapsed. The underlying write may or may not have
-        /// committed and the caller must reconcile out of band (for example via
+        /// status has been evicted after the gateway's operation-record retention period. The underlying
+        /// write may or may not have committed and the caller must reconcile out of band (for example via
         /// <see cref="GetLedgerEntries(string, string, string, string, RequestContext)"/>).
         /// </remarks>
         /// <param name="operationId"> The Web Frontend Gateway operation id returned on the <c>202 Accepted</c> response. </param>
@@ -108,7 +108,7 @@ namespace Azure.Security.ConfidentialLedger
         /// queued, <see cref="Operation.Id"/> returns <paramref name="operationId"/>; once the gateway
         /// reports the operation as committed, <see cref="Operation.Id"/> flips to the CCF transaction id.
         /// <para>
-        /// A queued operation may take a long time (up to 24 hours during an outage) to reach a terminal
+        /// A queued operation may take a long time (potentially many hours during a prolonged outage) to reach a terminal
         /// state. Callers are strongly encouraged to use a bounded
         /// <see cref="System.Threading.CancellationToken"/> when waiting for completion. A
         /// <c>404 OperationNotFound</c> response indicates the operation status has been evicted; the

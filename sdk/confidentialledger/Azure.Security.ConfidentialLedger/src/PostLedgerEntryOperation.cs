@@ -130,12 +130,12 @@ namespace Azure.Security.ConfidentialLedger
                     .ConfigureAwait(false)
                 : _client.GetOperationStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
-            // 404 from /app/operations/{id} means the operation status was evicted from the
-            // gateway cache (24h TTL). The underlying write may or may not have committed; the
-            // operation is terminally unresolvable here and the caller must reconcile out of band.
+            // 404 from /app/operations/{id} means the operation status was evicted from the gateway's
+            // record store after its retention period. The underlying write may or may not have committed;
+            // the operation is terminally unresolvable here and the caller must reconcile out of band.
             if (statusResponse.Status == (int)HttpStatusCode.NotFound)
             {
-                var message = $"Web Frontend Gateway operation '{Id}' was not found (HTTP 404). The operation status has been evicted (24h TTL) and the outcome of the underlying ledger write must be reconciled out of band.";
+                var message = $"Web Frontend Gateway operation '{Id}' was not found (HTTP 404). The operation status has been evicted from the gateway after its retention period and the outcome of the underlying ledger write must be reconciled out of band.";
                 return OperationState.Failure(statusResponse, new RequestFailedException(statusResponse.Status, message));
             }
 

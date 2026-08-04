@@ -36,7 +36,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <remarks>
         /// In Web Frontend mode, <c>POST /app/transactions</c> may return <c>202 Accepted</c> when
         /// the underlying CCF cluster is temporarily unreachable. The write is queued by the gateway
-        /// (with a 24-hour TTL) and the SDK exposes the long-running operation via the Web FE
+        /// (retained for the gateway's operation-record retention period) and the SDK exposes the long-running operation via the Web FE
         /// operation id until it commits, at which point <see cref="Azure.Operation.Id"/> flips to
         /// the CCF transaction id. Because a queued operation may take hours to complete, callers
         /// are strongly encouraged to use <see cref="Azure.WaitUntil.Started"/>, persist

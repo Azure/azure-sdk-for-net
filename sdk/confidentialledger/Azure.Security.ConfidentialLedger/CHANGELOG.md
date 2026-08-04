@@ -10,7 +10,7 @@
   - Client-certificate (mTLS) authentication is rejected at construction time — only `TokenCredential` is supported by the gateway.
   - Primary-node redirect caching (added in 1.4.1-beta.5) is automatically disabled, since the gateway brokers node routing on the server side.
 - Added `ConfidentialLedgerClient.GetOperationStatus` / `GetOperationStatusAsync` for direct polling of the gateway operation queue.
-- Added `ConfidentialLedgerClient.RehydratePostLedgerEntryOperation(string operationId)` for resuming a previously-started write submission across process restarts (no I/O is performed until polling begins). Operation IDs remain valid on the server for 24 hours.
+- Added `ConfidentialLedgerClient.RehydratePostLedgerEntryOperation(string operationId)` for resuming a previously-started write submission across process restarts (no I/O is performed until polling begins). Operation IDs remain valid on the server for the gateway's operation-record retention period.
 
 ### Breaking Changes
 

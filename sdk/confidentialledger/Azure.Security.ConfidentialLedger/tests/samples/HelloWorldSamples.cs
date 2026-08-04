@@ -328,7 +328,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine($"Submitted ledger entry. Operation Id: {operationId}");
 
             // The application can persist operationId and exit. The submission is durable on the
-            // server for up to 24 hours.
+            // server for the gateway's operation-record retention period.
 
             #endregion
 
@@ -338,7 +338,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             // operation Id. Rehydration performs no I/O until you start polling.
             Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
 
-            // The Web Frontend write queue can stay pending for up to 24 hours during an outage.
+            // The Web Frontend write queue can stay pending for an extended period during an outage.
             // Always bound the wait with a CancellationToken so the call cannot hang indefinitely.
             using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
             Response completed = resumed.WaitForCompletionResponse(cts.Token);
