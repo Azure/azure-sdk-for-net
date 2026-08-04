@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class MemberExpression(BicepExpression value, string member) : BicepExpression
+public partial class MemberExpression(BicepExpression value, string member) : BicepExpression
 {
     public BicepExpression Value { get; } = value;
     public string Member { get; } = member;

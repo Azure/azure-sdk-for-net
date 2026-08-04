@@ -3,15 +3,16 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class IndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
+public partial class IndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
 {
     public BicepExpression Value { get; } = value;
     public BicepExpression Index { get; } = index;
+    public bool FromEnd { get; set; }
     internal override BicepWriter Write(BicepWriter writer) =>
         writer.Append(Value).Append('[').Append(Index).Append(']');
 }
 
-public class SafeIndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
+public partial class SafeIndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
 {
     public BicepExpression Value { get; } = value;
     public BicepExpression Index { get; } = index;

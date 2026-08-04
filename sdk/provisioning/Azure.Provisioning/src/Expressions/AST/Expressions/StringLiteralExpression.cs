@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class StringLiteralExpression(string value) : LiteralExpression(value)
+public partial class StringLiteralExpression(string value) : LiteralExpression(value)
 {
     public new string Value { get => (string)base.Value!; }
     internal override BicepWriter Write(BicepWriter writer) => Value == null ?

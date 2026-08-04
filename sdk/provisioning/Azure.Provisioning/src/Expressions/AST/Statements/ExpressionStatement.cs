@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class ExpressionStatement(BicepExpression expression) : BicepStatement
+public partial class ExpressionStatement(BicepExpression expression) : BicepStatement
 {
     public BicepExpression Expression { get; } = expression;
     internal override BicepWriter Write(BicepWriter writer) =>

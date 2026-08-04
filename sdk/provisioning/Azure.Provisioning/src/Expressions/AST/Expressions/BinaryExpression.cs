@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Provisioning.Expressions;
 
-public class BinaryExpression(BicepExpression left, BinaryBicepOperator op, BicepExpression right) : BicepExpression
+public partial class BinaryExpression(BicepExpression left, BinaryBicepOperator op, BicepExpression right) : BicepExpression
 {
     public BicepExpression Left { get; } = left;
     public BinaryBicepOperator Operator { get; } = op;
