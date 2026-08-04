@@ -537,6 +537,7 @@ namespace System.ClientModel.Primitives
     public partial class ModelReaderWriterOptions
     {
         public ModelReaderWriterOptions(string format) { }
+        public ModelReaderWriterOptions(string format, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public object? ProxiedModel { get { throw null; } }

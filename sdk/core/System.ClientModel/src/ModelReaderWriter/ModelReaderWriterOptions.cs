@@ -38,12 +38,25 @@ public class ModelReaderWriterOptions
         Format = format;
     }
 
-    internal ModelReaderWriterOptions(ModelReaderWriterOptions options)
+    /// <summary>
+    /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/> in the specified format
+    /// that reuses the proxies registered on <paramref name="options"/>.
+    /// </summary>
+    /// <param name="format">The format to read and write models. Pass in 'W' to use the service-defined wire format.</param>
+    /// <param name="options">The options containing the proxies to reuse.</param>
+    public ModelReaderWriterOptions(string format, ModelReaderWriterOptions options)
     {
-        Format = options.Format;
+        Argument.AssertNotNull(options, nameof(options));
+
+        Format = format;
         _proxies = options._proxies;
         IsCoreOwned = true;
         _userOptions = options;
+    }
+
+    internal ModelReaderWriterOptions(ModelReaderWriterOptions options)
+        : this(options.Format, options)
+    {
     }
 
     internal bool HasProxies => _proxies?.Count > 0;

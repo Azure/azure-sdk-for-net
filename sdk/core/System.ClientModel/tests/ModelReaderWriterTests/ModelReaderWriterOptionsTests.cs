@@ -127,7 +127,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private static object? GetProxies(ModelReaderWriterOptions passedInOptions)
         {
-            return passedInOptions.GetType().GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions);
+            return typeof(ModelReaderWriterOptions).GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions);
         }
 
         private class JsonModelProxy : IJsonModel<JsonModel>
@@ -533,6 +533,29 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             disabled.AddProxy<SimpleModel>(proxyDisabled);
             Assert.IsNotNull(ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), disabled));
             Assert.IsFalse(proxyDisabled.CreateWasCalled, "Proxy should decline when the options flag is off.");
+        }
+
+        [Test]
+        public void FormatAndOptionsConstructor_OverridesFormatAndPreservesProxyOptions()
+        {
+            var userOptions = new FlaggedOptions(useProxy: true);
+            var proxy = new OptionsAwareProxy();
+            userOptions.AddProxy<SimpleModel>(proxy);
+
+            var wireOptions = new ModelReaderWriterOptions("W", userOptions);
+            SimpleModel? result = ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), wireOptions);
+
+            Assert.AreEqual("W", wireOptions.Format);
+            Assert.IsTrue(wireOptions.IsCoreOwned);
+            Assert.AreSame(GetProxies(userOptions), GetProxies(wireOptions));
+            Assert.IsNotNull(result);
+            Assert.IsTrue(proxy.CreateWasCalled, "The conditional proxy should receive the original derived options.");
+        }
+
+        [Test]
+        public void FormatAndOptionsConstructor_RejectsNullOptions()
+        {
+            Assert.Throws<ArgumentNullException>(() => new ModelReaderWriterOptions("W", null!));
         }
 
         [Test]
