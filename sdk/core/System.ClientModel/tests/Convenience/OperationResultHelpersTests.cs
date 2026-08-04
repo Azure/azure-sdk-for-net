@@ -214,6 +214,57 @@ public class OperationResultHelpersTests
     }
 
     [Test]
+    public void InitialServerErrorThrows()
+    {
+        MockPipelineTransport transport = new(
+            "Transport",
+            _ => new MockPipelineResponse(500).SetContent("""{"error":"failed"}"""));
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+
+        ClientResultException exception = Assert.Throws<ClientResultException>(() =>
+            OperationResultHelpers.ProcessMessage(
+                pipeline,
+                message,
+                options: null,
+                OperationFinalStateVia.OperationLocation,
+                waitUntilCompleted: false))!;
+
+        Assert.AreEqual(500, exception.Status);
+    }
+
+    [Test]
+    public void PollingServerErrorThrows()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", _ =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Operation-Location", "/operations/1");
+                return response;
+            }
+
+            return new MockPipelineResponse(500).SetContent("""{"error":"failed"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.OperationLocation,
+            waitUntilCompleted: false);
+
+        ClientResultException exception = Assert.Throws<ClientResultException>(() => operation.UpdateStatus())!;
+
+        Assert.AreEqual(500, exception.Status);
+        Assert.Greater(requestCount, 1);
+    }
+
+    [Test]
     public async Task WaitUsesSuppliedCancellationTokenForPollingRequest()
     {
         using CancellationTokenSource cancellationSource = new();

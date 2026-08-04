@@ -26,6 +26,7 @@ namespace Client.Plugin
     /// </summary>
     internal class UnbrandedLroVisitor : ScmLibraryVisitor
     {
+        private static readonly CSharpType OperationResultType = new(typeof(OperationResult));
         private readonly Dictionary<ClientProvider, List<MethodProvider>> _compatibilityMethods = [];
 
         protected override TypeProvider? PostVisitType(TypeProvider type)
@@ -98,28 +99,27 @@ namespace Client.Plugin
         {
             var client = (ClientProvider)method.EnclosingType;
             return client.LastContractView?.Methods.Any(previous =>
-                previous.Signature.Name == method.Signature.Name &&
-                previous.Signature.Parameters.Count == method.Signature.Parameters.Count &&
-                previous.Signature.Parameters.Zip(method.Signature.Parameters)
-                    .All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type))) == true;
+                MethodSignature.MethodSignatureComparer.Equals(previous.Signature, method.Signature)) == true;
         }
 
         private static void UpdateMethodSignature(ScmMethodProvider method)
         {
-            var operationResultType = new CSharpType(typeof(OperationResult));
             var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
-            var parameters = new List<ParameterProvider>(method.Signature.Parameters);
-            parameters.Insert(0, new ParameterProvider(
-                "waitUntilCompleted",
-                FormattableStringFactory.Create(
-                    "Whether the method should wait until the long-running operation has completed on the service."),
-                typeof(bool)));
+            List<ParameterProvider> parameters =
+            [
+                new(
+                    "waitUntilCompleted",
+                    FormattableStringFactory.Create(
+                        "Whether the method should wait until the long-running operation has completed on the service."),
+                    typeof(bool)),
+                .. method.Signature.Parameters
+            ];
 
             method.Signature.Update(
                 parameters: parameters,
                 returnType: isAsync
-                    ? new CSharpType(typeof(Task<>), operationResultType)
-                    : operationResultType,
+                    ? new CSharpType(typeof(Task<>), OperationResultType)
+                    : OperationResultType,
                 attributes:
                 [
                     .. method.Signature.Attributes,
