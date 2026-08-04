@@ -51,6 +51,7 @@ namespace Azure.Security.CodeTransparency
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new CodeTransparencyClientOptions();
+            ApplyRetryDefaults(options);
             string name = endpoint.Host.Split('.')[0];
             CodeTransparencyCertificateClient certificateClient = options.CreateCertificateClient();
             HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
@@ -78,6 +79,33 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options = default) : this(endpoint, null, options)
         {
+        }
+
+        // Azure.Core RetryOptions defaults, treated as "unconfigured" so an explicit caller override wins.
+        private const int FrameworkDefaultMaxRetries = 3;
+        private static readonly TimeSpan s_frameworkDefaultRetryDelay = TimeSpan.FromSeconds(0.8);
+
+        // Higher Code Transparency retry defaults. Registering an entry can stay pending for a while, and a
+        // redirected read of a not-yet-committed entry is answered with a retriable 503, so allow more,
+        // shorter-spaced (exponential) retries. Still fully overridable via CodeTransparencyClientOptions.Retry.
+        private const int DefaultMaxRetries = 10;
+        private static readonly TimeSpan s_defaultRetryDelay = TimeSpan.FromMilliseconds(200);
+
+        /// <summary>
+        /// Raises the retry defaults for pending-registration handling, without overriding values the
+        /// caller has explicitly configured on <c>CodeTransparencyClientOptions.Retry</c>.
+        /// </summary>
+        private static void ApplyRetryDefaults(CodeTransparencyClientOptions options)
+        {
+            if (options.Retry.MaxRetries == FrameworkDefaultMaxRetries)
+            {
+                options.Retry.MaxRetries = DefaultMaxRetries;
+            }
+
+            if (options.Retry.Delay == s_frameworkDefaultRetryDelay)
+            {
+                options.Retry.Delay = s_defaultRetryDelay;
+            }
         }
 
         private static List<(string IssuerHost, byte[] ReceiptBytes)> GetReceiptsFromTransparentStatementStatic(byte[] transparentStatementCoseSign1Bytes)

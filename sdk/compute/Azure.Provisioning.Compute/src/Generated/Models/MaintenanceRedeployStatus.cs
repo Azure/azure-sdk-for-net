@@ -102,10 +102,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _isCustomerInitiatedMaintenanceAllowed = DefineProperty<bool>(nameof(IsCustomerInitiatedMaintenanceAllowed), new string[] { "isCustomerInitiatedMaintenanceAllowed" });
-            _preMaintenanceWindowStartOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowStartOn), new string[] { "preMaintenanceWindowStartTime" });
-            _preMaintenanceWindowEndOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowEndOn), new string[] { "preMaintenanceWindowEndTime" });
-            _maintenanceWindowStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowStartOn), new string[] { "maintenanceWindowStartTime" });
-            _maintenanceWindowEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowEndOn), new string[] { "maintenanceWindowEndTime" });
+            _preMaintenanceWindowStartOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowStartOn), new string[] { "preMaintenanceWindowStartTime" }, format: "O");
+            _preMaintenanceWindowEndOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowEndOn), new string[] { "preMaintenanceWindowEndTime" }, format: "O");
+            _maintenanceWindowStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowStartOn), new string[] { "maintenanceWindowStartTime" }, format: "O");
+            _maintenanceWindowEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowEndOn), new string[] { "maintenanceWindowEndTime" }, format: "O");
             _lastOperationResultCode = DefineProperty<MaintenanceOperationResultCodeType>(nameof(LastOperationResultCode), new string[] { "lastOperationResultCode" });
             _lastOperationMessage = DefineProperty<string>(nameof(LastOperationMessage), new string[] { "lastOperationMessage" });
             DefineAdditionalProperties();
