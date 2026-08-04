@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Type of scorer to be used. </summary>
-    public readonly partial struct Scorer : IEquatable<Scorer>
+    public readonly partial struct QuestionAnsweringScorer : IEquatable<QuestionAnsweringScorer>
     {
         private readonly string _value;
         /// <summary> Set this value for scoring based on classic algorithms like wordnet, tfidf, ngram etc. </summary>
@@ -21,10 +21,10 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <summary> Set this scorer to use AI search semantic based ranking. Semantic ranking should be configured for this to be used. </summary>
         private const string SemanticValue = "Semantic";
 
-        /// <summary> Initializes a new instance of <see cref="Scorer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuestionAnsweringScorer"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Scorer(string value)
+        public QuestionAnsweringScorer(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -32,38 +32,38 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         }
 
         /// <summary> Set this value for scoring based on classic algorithms like wordnet, tfidf, ngram etc. </summary>
-        public static Scorer Classic { get; } = new Scorer(ClassicValue);
+        public static QuestionAnsweringScorer Classic { get; } = new QuestionAnsweringScorer(ClassicValue);
 
         /// <summary> Set this value for scoring based on transformer based models. </summary>
-        public static Scorer Transformer { get; } = new Scorer(TransformerValue);
+        public static QuestionAnsweringScorer Transformer { get; } = new QuestionAnsweringScorer(TransformerValue);
 
         /// <summary> Set this scorer to use AI search semantic based ranking. Semantic ranking should be configured for this to be used. </summary>
-        public static Scorer Semantic { get; } = new Scorer(SemanticValue);
+        public static QuestionAnsweringScorer Semantic { get; } = new QuestionAnsweringScorer(SemanticValue);
 
-        /// <summary> Determines if two <see cref="Scorer"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="QuestionAnsweringScorer"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Scorer left, Scorer right) => left.Equals(right);
+        public static bool operator ==(QuestionAnsweringScorer left, QuestionAnsweringScorer right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Scorer"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="QuestionAnsweringScorer"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Scorer left, Scorer right) => !left.Equals(right);
+        public static bool operator !=(QuestionAnsweringScorer left, QuestionAnsweringScorer right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Scorer"/>. </summary>
+        /// <summary> Converts a string to a <see cref="QuestionAnsweringScorer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Scorer(string value) => new Scorer(value);
+        public static implicit operator QuestionAnsweringScorer(string value) => new QuestionAnsweringScorer(value);
 
-        /// <summary> Converts a string to a <see cref="Scorer"/>. </summary>
+        /// <summary> Converts a string to a <see cref="QuestionAnsweringScorer"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Scorer?(string value) => value == null ? null : new Scorer(value);
+        public static implicit operator QuestionAnsweringScorer?(string value) => value == null ? null : new QuestionAnsweringScorer(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Scorer other && Equals(other);
+        public override bool Equals(object obj) => obj is QuestionAnsweringScorer other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Scorer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(QuestionAnsweringScorer other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

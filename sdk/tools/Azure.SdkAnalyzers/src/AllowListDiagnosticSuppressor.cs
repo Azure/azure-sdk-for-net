@@ -30,6 +30,7 @@ namespace Azure.SdkAnalyzers
         {
             "AZC0007",
             "AZC0030",
+            "AZC0031",
             "AZC0034",
             "AZC0035",
             "CS0618",
