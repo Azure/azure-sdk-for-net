@@ -2,21 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Tests.Shared;
-using Iced.Intel;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Adapter.Internal;
 using Moq;
-using NUnit;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test
