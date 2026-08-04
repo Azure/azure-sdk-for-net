@@ -76,7 +76,11 @@ namespace Azure.Security.ConfidentialLedger
         { }
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operationInternal.RawResponse;
+        public override Response GetRawResponse() =>
+            _operationInternal.RawResponse
+            ?? throw new InvalidOperationException(
+                "No response is available yet. This operation was rehydrated via RehydratePostLedgerEntryOperation and has not polled the service. " +
+                "Call UpdateStatus/UpdateStatusAsync (or WaitForCompletionResponse) before accessing GetRawResponse().");
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
@@ -175,12 +179,21 @@ namespace Azure.Security.ConfidentialLedger
             switch (status)
             {
                 case "committed":
-                    if (!string.IsNullOrEmpty(transactionId))
+                    if (string.IsNullOrEmpty(transactionId))
                     {
-                        // Swap the public Id from the gateway operation id to the CCF transaction id
-                        // so downstream code can use it with GetReceipt / GetLedgerEntry / etc.
-                        _id = transactionId;
+                        // A committed operation must carry the CCF transaction id; without it the caller
+                        // has no usable id for GetReceipt / GetLedgerEntry, so surface a terminal failure
+                        // rather than reporting success with the (now meaningless) gateway operation id.
+                        return OperationState.Failure(
+                            statusResponse,
+                            new RequestFailedException(
+                                statusResponse.Status,
+                                $"Web Frontend Gateway operation '{Id}' reported status 'committed' without a transactionId; the CCF transaction cannot be resolved and the write must be reconciled out of band."));
                     }
+
+                    // Swap the public Id from the gateway operation id to the CCF transaction id
+                    // so downstream code can use it with GetReceipt / GetLedgerEntry / etc.
+                    _id = transactionId;
                     return OperationState.Success(statusResponse);
 
                 case "failed":
@@ -190,8 +203,17 @@ namespace Azure.Security.ConfidentialLedger
                     return OperationState.Failure(statusResponse, new RequestFailedException(statusResponse.Status, failureMessage, code, innerException: null));
 
                 case "queued":
-                default:
                     return OperationState.Pending(statusResponse);
+
+                default:
+                    // Any other (or missing / mis-cased) status is unexpected. Fail terminally rather than
+                    // polling forever - with WaitUntil.Completed and no cancellation token the caller would
+                    // otherwise hang indefinitely.
+                    return OperationState.Failure(
+                        statusResponse,
+                        new RequestFailedException(
+                            statusResponse.Status,
+                            $"Web Frontend Gateway operation '{Id}' returned an unrecognized status '{status ?? "<null>"}'. Expected 'queued', 'committed', or 'failed'."));
             }
         }
 

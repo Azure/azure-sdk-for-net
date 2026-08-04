@@ -157,8 +157,10 @@ namespace Azure.Security.ConfidentialLedger
                 {
                     // The Web Frontend Gateway can respond with either 200 (synchronous commit, mirrors
                     // legacy CCF behavior) or 202 (write was queued and an operation id was returned
-                    // for polling). Both must flow back to the caller without throwing.
-                    message.ResponseClassifier = ResponseClassifier200202;
+                    // for polling). Both must flow back to the caller without throwing. Layer "202 is a
+                    // success" over the message's existing classifier so any RequestContext.AddClassifier
+                    // the caller supplied is preserved rather than replaced.
+                    message.ResponseClassifier = new WebFrontendAccept202Classifier(message.ResponseClassifier);
                 }
                 var response = _pipeline.ProcessMessage(message, context);
 
@@ -209,7 +211,9 @@ namespace Azure.Security.ConfidentialLedger
                 using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
                 if (_useWebFrontend)
                 {
-                    message.ResponseClassifier = ResponseClassifier200202;
+                    // Layer "202 is a success" over the message's existing classifier so any
+                    // RequestContext.AddClassifier the caller supplied is preserved rather than replaced.
+                    message.ResponseClassifier = new WebFrontendAccept202Classifier(message.ResponseClassifier);
                 }
                 var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
 

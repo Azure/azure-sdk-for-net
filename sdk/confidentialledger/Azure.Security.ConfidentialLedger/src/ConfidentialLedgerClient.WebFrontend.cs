@@ -127,50 +127,6 @@ namespace Azure.Security.ConfidentialLedger
             return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.WebFrontend);
         }
 
-        /// <summary>
-        /// [Protocol Method] Gets the current depth of the Web Frontend Gateway write queue.
-        /// Diagnostic endpoint; not intended for general application use.
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetWriteQueueStatusAsync(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetWriteQueueStatus");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetWriteQueueStatusRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the current depth of the Web Frontend Gateway write queue.
-        /// Diagnostic endpoint; not intended for general application use.
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetWriteQueueStatus(RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetWriteQueueStatus");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetWriteQueueStatusRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         internal HttpMessage CreateGetOperationStatusRequest(string operationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -186,21 +142,23 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetWriteQueueStatusRequest(RequestContext context)
+        // A response classifier that layers "202 Accepted is a success" on top of the message's existing
+        // classifier (which already reflects the operation defaults and any RequestContext.AddClassifier the
+        // caller supplied), so composing does not discard the caller's classifications.
+        private sealed class WebFrontendAccept202Classifier : ResponseClassifier
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
-            uri.AppendPath("/app/queue/status", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
+            private readonly ResponseClassifier _inner;
 
-        private static ResponseClassifier _responseClassifier200202;
-        internal static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+            public WebFrontendAccept202Classifier(ResponseClassifier inner) => _inner = inner;
+
+            public override bool IsErrorResponse(HttpMessage message)
+                => message.Response.Status != 202 && _inner.IsErrorResponse(message);
+
+            public override bool IsRetriableResponse(HttpMessage message) => _inner.IsRetriableResponse(message);
+
+            public override bool IsRetriableException(Exception exception) => _inner.IsRetriableException(exception);
+
+            public override bool IsRetriable(HttpMessage message, Exception exception) => _inner.IsRetriable(message, exception);
+        }
     }
 }

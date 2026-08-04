@@ -329,5 +329,71 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string body = Encoding.UTF8.GetString(response.Content.ToArray());
             Assert.That(body, Does.Contain("\"status\":\"queued\""));
         }
+
+        // W12: GetRawResponse on a rehydrated operation before the first poll throws a clear error
+        //      instead of returning null (which would NRE for callers inspecting the response/headers).
+        [Test]
+        public void RehydratePostLedgerEntryOperation_GetRawResponseBeforePoll_Throws()
+        {
+            var transport = new MockTransport(req => new MockResponse(200));
+            var client = CreateClient(transport);
+            var operation = client.RehydratePostLedgerEntryOperation(OperationId);
+
+            Assert.AreEqual(0, transport.Requests.Count);
+            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
+        }
+
+        // W13: A "committed" status without a transactionId is terminal failure — the caller would
+        //      otherwise get success with the gateway UUID and no usable transaction id.
+        [Test]
+        public async Task PostLedgerEntry_CommittedWithoutTransactionId_Throws()
+        {
+            var transport = new MockTransport(req =>
+            {
+                if (req.Method == RequestMethod.Post)
+                {
+                    var queued = new MockResponse(202);
+                    queued.AddHeader(ConfidentialLedgerConstants.OperationIdHeaderName, OperationId);
+                    queued.SetContent("{\"operationId\":\"" + OperationId + "\",\"status\":\"queued\"}");
+                    return queued;
+                }
+                var committed = new MockResponse(200);
+                committed.SetContent("{\"operationId\":\"" + OperationId + "\",\"status\":\"committed\"}");
+                return committed;
+            });
+
+            var client = CreateClient(transport);
+            var operation = await client.PostLedgerEntryAsync(WaitUntil.Started, RequestContent.Create(new { contents = "x" }));
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionResponseAsync());
+            Assert.That(ex.Message, Does.Contain("without a transactionId"));
+            Assert.IsTrue(operation.HasCompleted);
+        }
+
+        // W14: An unrecognized (or mis-cased) status fails terminally rather than polling forever.
+        [Test]
+        public async Task PostLedgerEntry_UnrecognizedStatus_Throws()
+        {
+            var transport = new MockTransport(req =>
+            {
+                if (req.Method == RequestMethod.Post)
+                {
+                    var queued = new MockResponse(202);
+                    queued.AddHeader(ConfidentialLedgerConstants.OperationIdHeaderName, OperationId);
+                    queued.SetContent("{\"operationId\":\"" + OperationId + "\",\"status\":\"queued\"}");
+                    return queued;
+                }
+                var weird = new MockResponse(200);
+                weird.SetContent("{\"operationId\":\"" + OperationId + "\",\"status\":\"Committed\"}");
+                return weird;
+            });
+
+            var client = CreateClient(transport);
+            var operation = await client.PostLedgerEntryAsync(WaitUntil.Started, RequestContent.Create(new { contents = "x" }));
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionResponseAsync());
+            Assert.That(ex.Message, Does.Contain("unrecognized status"));
+            Assert.IsTrue(operation.HasCompleted);
+        }
     }
 }
