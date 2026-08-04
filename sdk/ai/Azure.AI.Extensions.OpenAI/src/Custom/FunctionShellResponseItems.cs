@@ -17,6 +17,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("OutputItemFunctionShellCall")]
 [CodeGenSuppress(nameof(OutputItemFunctionShellCall))]
 [CodeGenSuppress(nameof(OutputItemFunctionShellCall), typeof(ResponseItemKind), typeof(string), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(FunctionShellAction), typeof(LocalShellCallStatus), typeof(FunctionShellCallEnvironment), typeof(string), typeof(IDictionary<string, BinaryData>))]
+[Experimental("AAIP002")]
 public partial class OutputItemFunctionShellCall : ResponseItem
 {
     internal OutputItemFunctionShellCall() : base(ResponseItemKind.FunctionShellCall)
@@ -65,6 +66,7 @@ public partial class OutputItemFunctionShellCall : ResponseItem
 [CodeGenType("OutputItemFunctionShellCallOutput")]
 [CodeGenSuppress(nameof(OutputItemFunctionShellCallOutput))]
 [CodeGenSuppress(nameof(OutputItemFunctionShellCallOutput), typeof(ResponseItemKind), typeof(string), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(LocalShellCallOutputStatusEnum), typeof(IList<FunctionShellCallOutputContent>), typeof(long?), typeof(string), typeof(IDictionary<string, BinaryData>))]
+[Experimental("AAIP002")]
 public partial class OutputItemFunctionShellCallOutput : ResponseItem
 {
     internal OutputItemFunctionShellCallOutput() : base(ResponseItemKind.FunctionShellCallOutput)
@@ -110,6 +112,7 @@ public partial class OutputItemFunctionShellCallOutput : ResponseItem
 }
 
 /// <summary> Shell exec action. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellAction
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellAction"/>. </summary>
@@ -131,6 +134,7 @@ public partial class FunctionShellAction
 }
 
 /// <summary> Shell exec action parameter. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellActionParam
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellActionParam"/>. </summary>
@@ -152,6 +156,7 @@ public partial class FunctionShellActionParam
 }
 
 /// <summary> Shell call input item. </summary>
+[Experimental("AAIP002")]
 public class FunctionShellCallItemParam
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParam"/>. </summary>
@@ -178,6 +183,7 @@ public class FunctionShellCallItemParam
 }
 
 /// <summary> Shell call output input item. </summary>
+[Experimental("AAIP002")]
 public class FunctionShellCallOutputItemParam
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputItemParam"/>. </summary>
@@ -201,6 +207,7 @@ public class FunctionShellCallOutputItemParam
 }
 
 /// <summary> Function shell call item status. </summary>
+[Experimental("AAIP002")]
 public enum FunctionShellCallItemStatus
 {
     /// <summary> The shell call is in progress. </summary>
@@ -212,16 +219,19 @@ public enum FunctionShellCallItemStatus
 }
 
 /// <summary> Function shell call environment. </summary>
+[Experimental("AAIP002")]
 public abstract partial class FunctionShellCallEnvironment
 {
 }
 
 /// <summary> Function shell call parameter environment. </summary>
+[Experimental("AAIP002")]
 public abstract partial class FunctionShellCallItemParamEnvironment
 {
 }
 
 /// <summary> Container reference. </summary>
+[Experimental("AAIP002")]
 public partial class ContainerReferenceResource : FunctionShellCallEnvironment
 {
     /// <summary> Initializes a new instance of <see cref="ContainerReferenceResource"/>. </summary>
@@ -235,11 +245,13 @@ public partial class ContainerReferenceResource : FunctionShellCallEnvironment
 }
 
 /// <summary> Local environment. </summary>
+[Experimental("AAIP002")]
 public partial class LocalEnvironmentResource : FunctionShellCallEnvironment
 {
 }
 
 /// <summary> Container reference parameter environment. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallItemParamEnvironmentContainerReferenceParam : FunctionShellCallItemParamEnvironment
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironmentContainerReferenceParam"/>. </summary>
@@ -253,11 +265,13 @@ public partial class FunctionShellCallItemParamEnvironmentContainerReferencePara
 }
 
 /// <summary> Local parameter environment. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment
 {
 }
 
 /// <summary> Shell call output content. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallOutputContent
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputContent"/>. </summary>
@@ -279,6 +293,7 @@ public partial class FunctionShellCallOutputContent
 }
 
 /// <summary> Shell call output content parameter. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallOutputContentParam
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputContentParam"/>. </summary>
@@ -300,16 +315,19 @@ public partial class FunctionShellCallOutputContentParam
 }
 
 /// <summary> Shell call outcome. </summary>
+[Experimental("AAIP002")]
 public abstract partial class FunctionShellCallOutputOutcome
 {
 }
 
 /// <summary> Shell call parameter outcome. </summary>
+[Experimental("AAIP002")]
 public abstract partial class FunctionShellCallOutputOutcomeParam
 {
 }
 
 /// <summary> Shell call exit outcome. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcome"/>. </summary>
@@ -323,11 +341,13 @@ public partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutpu
 }
 
 /// <summary> Shell call timeout outcome. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome
 {
 }
 
 /// <summary> Shell call exit parameter outcome. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallOutputExitOutcomeParam : FunctionShellCallOutputOutcomeParam
 {
     /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcomeParam"/>. </summary>
@@ -341,11 +361,13 @@ public partial class FunctionShellCallOutputExitOutcomeParam : FunctionShellCall
 }
 
 /// <summary> Shell call timeout parameter outcome. </summary>
+[Experimental("AAIP002")]
 public partial class FunctionShellCallOutputTimeoutOutcomeParam : FunctionShellCallOutputOutcomeParam
 {
 }
 
 /// <summary> Shell call status. </summary>
+[Experimental("AAIP002")]
 public enum LocalShellCallStatus
 {
     /// <summary> The shell call is in progress. </summary>
@@ -357,6 +379,7 @@ public enum LocalShellCallStatus
 }
 
 /// <summary> Shell call output status. </summary>
+[Experimental("AAIP002")]
 public enum LocalShellCallOutputStatusEnum
 {
     /// <summary> The shell call output is in progress. </summary>
