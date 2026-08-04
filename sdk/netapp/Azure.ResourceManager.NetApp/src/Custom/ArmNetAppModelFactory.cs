@@ -25,16 +25,6 @@ namespace Azure.ResourceManager.NetApp.Models
     [CodeGenSuppress("CapacityPoolData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(Guid?), typeof(long), typeof(NetAppFileServiceLevel), typeof(string), typeof(float?), typeof(float?), typeof(CapacityPoolQosType?), typeof(bool?), typeof(CapacityPoolEncryptionType?))]
     public static partial class ArmNetAppModelFactory
     {
-        /// <summary> Source Cluster properties for a cluster peer request. </summary>
-        /// <param name="peerIPAddresses"> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </param>
-        /// <returns> A new <see cref="Models.PeerClusterForVolumeMigrationContent"/> instance for mocking. </returns>
-        public static PeerClusterForVolumeMigrationContent PeerClusterForVolumeMigrationContent(IEnumerable<string> peerIPAddresses = default)
-        {
-            peerIPAddresses ??= new ChangeTrackingList<string>();
-
-            return new PeerClusterForVolumeMigrationContent(peerIPAddresses.ToList());
-        }
-
         /// <summary> Migrate Backups Request. </summary>
         /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
         /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
@@ -295,16 +285,6 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppVolumeGroupMetadata metadata = NetAppVolumeGroupMetadata(groupDescription, applicationType, applicationIdentifier, globalPlacementRules, volumesCount);
             metadata.DeploymentSpecId = deploymentSpecId;
             return metadata;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AvailabilityZoneMapping"/>. </summary>
-        /// <param name="availabilityZone"> Logical availability zone. </param>
-        /// <param name="isAvailable"> Available availability zone. </param>
-        /// <returns> A new <see cref="Models.AvailabilityZoneMapping"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = null, bool? isAvailable = null)
-        {
-            return new AvailabilityZoneMapping(availabilityZone, isAvailable, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumePatch"/>. </summary>
@@ -719,64 +699,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
         {
             return CapacityPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, poolId: poolId, size: size, serviceLevel: serviceLevel, provisioningState: provisioningState, totalThroughputMibps: totalThroughputMibps, utilizedThroughputMibps: utilizedThroughputMibps, customThroughputMibpsInt: customThroughputMibps, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, encryptionType: encryptionType, eTag: etag);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
-        {
-            return CreateNetAppVolumePatchCompat(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                serviceLevel: serviceLevel,
-                usageThreshold: usageThreshold,
-                protocolTypes: protocolTypes,
-                throughputMibps: throughputMibps,
-                dataProtection: dataProtection,
-                isDefaultQuotaEnabled: isDefaultQuotaEnabled,
-                defaultUserQuotaInKiBs: defaultUserQuotaInKiBs,
-                defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs,
-                unixPermissions: unixPermissions,
-                isCoolAccessEnabled: isCoolAccessEnabled,
-                coolnessPeriod: coolnessPeriod,
-                coolAccessRetrievalPolicy: coolAccessRetrievalPolicy,
-                coolAccessTieringPolicy: coolAccessTieringPolicy,
-                isSnapshotDirectoryVisible: isSnapshotDirectoryVisible,
-                smbAccessBasedEnumeration: smbAccessBasedEnumeration,
-                smbNonBrowsable: smbNonBrowsable,
-                exportRules: exportRules);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
-        {
-            return CreateNetAppVolumePatchCompat(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                serviceLevel: serviceLevel,
-                usageThreshold: usageThreshold,
-                protocolTypes: protocolTypes,
-                throughputMibps: throughputMibps,
-                dataProtection: dataProtection,
-                isDefaultQuotaEnabled: isDefaultQuotaEnabled,
-                defaultUserQuotaInKiBs: defaultUserQuotaInKiBs,
-                defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs,
-                unixPermissions: unixPermissions,
-                isCoolAccessEnabled: isCoolAccessEnabled,
-                coolnessPeriod: coolnessPeriod,
-                coolAccessRetrievalPolicy: coolAccessRetrievalPolicy,
-                coolAccessTieringPolicy: default,
-                isSnapshotDirectoryVisible: isSnapshotDirectoryVisible,
-                smbAccessBasedEnumeration: smbAccessBasedEnumeration,
-                smbNonBrowsable: smbNonBrowsable,
-                exportRules: exportRules);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
