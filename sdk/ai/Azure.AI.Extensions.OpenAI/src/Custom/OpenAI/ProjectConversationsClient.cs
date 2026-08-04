@@ -46,7 +46,7 @@ public partial class ProjectConversationsClient : ConversationClient
         {
             ClientResult protocolResult = base.CreateConversation(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
             var result = protocolResult.ToAgentClientResult<ProjectConversation>();
-            scope?.RecordConversationId(result.Value.Id);
+            scope?.RecordConversationId(result.Value?.Id);
             return result;
         }
         catch (Exception ex)
@@ -68,7 +68,7 @@ public partial class ProjectConversationsClient : ConversationClient
         {
             ClientResult protocolResult = await base.CreateConversationAsync(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             var result = protocolResult.ToAgentClientResult<ProjectConversation>();
-            scope?.RecordConversationId(result.Value.Id);
+            scope?.RecordConversationId(result.Value?.Id);
             return result;
         }
         catch (Exception ex)
