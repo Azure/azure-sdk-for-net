@@ -11,11 +11,6 @@ This is the first stable release of the Azure Connected Cache management library
 ### Other Changes
 
 - This package was migrated from beta to stable.
-
-## 1.0.0-beta.3 (2026-06-03)
-
-### Other Changes
-
 - Upgraded dependent Azure.Core to 1.57.0.
 - Upgraded dependent Azure.ResourceManager to 1.14.0.
 
