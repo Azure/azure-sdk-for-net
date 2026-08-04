@@ -17,15 +17,15 @@ compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, lang
 | `azure-sdk-mcp:azsdk_customized_code_update`         | Apply customizations        |
 | `azure-sdk-mcp:azsdk_package_detect_breaking_change` | Detect SDK breaking changes |
 
-Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-client` CLI.
+Prerequisites: azure-sdk-mcp server must be running.
 
 ## Steps
 
-1. **Select language** — Confirm one or more target languages. Present them to the user in exactly this order: Go, Java, JavaScript, Python, .NET.
+1. **Select language** — First extract one or more target languages from the user's prompt. If the prompt specifies any target languages, use them without asking the user to confirm. If it does not specify a target language, prompt the user to choose one or more from this list, presented in exactly this order: Go, Java, JavaScript, Python, .NET.
 
-- For each selected language in step 1, execute steps 2 through 11 **one language at a time** — fully complete all steps for one language before starting the next. Process multiple selected languages in the same order they appear in the list above.
+- For each selected language in step 1, execute steps 2 through 6 **one language at a time** — fully complete all steps for one language before starting the next. Process multiple selected languages in the same order they appear in the list above.
 
-2. Follow `azsdk-common-generate-sdk-locally` skill to gererate SDK only.
+2. Follow `azsdk-common-generate-sdk-locally` skill to generate SDK only.
 3. **Detect SDK breaking Changes** - Run `azure-sdk-mcp:azsdk_package_detect_breaking_change`
 4. **Display detected breaking changes** — If step 3 detects breaking changes, display a `## Detected Breaking Changes` title followed by a Markdown table. Include exactly one breaking change per row with these columns: `Breaking Change`, `Category`, and `Resolution`. Preserve the category and resolution returned by the detection tool; do not replace them with a summary.
 5. **Prompt the user to choose breaking changes to mitigate** — Present the list from step 3 as a multiple-choice selection.
@@ -47,7 +47,5 @@ If step 6 applies any TypeSpec customization, return to step 2 to regenerate the
 
 ## Troubleshooting
 
-- Run `azure-sdk-mcp:azsdk_verify_setup` to confirm MCP and tools.
-- If build fails with type conflicts, breaking changes, analyzer errors, or customization drift, use `azure-sdk-mcp:azsdk_customized_code_update` to apply customizations.
-- The customization tool uses a two-phase approach: TypeSpec decorators first (Phase A), then code repairs if needed (Phase B).
-- Without MCP, use `npx tsp-client` CLI.
+- Requires `azure-sdk-mcp` server. Prompt user to configure MCP if unavailable.
+- Requires a local clone of the target SDK repository. If unavailable, prompt the user to clone it before continuing.
