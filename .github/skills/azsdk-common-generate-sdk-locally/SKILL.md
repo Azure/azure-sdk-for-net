@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.1.0"
   distribution: shared
-description: 'Generate, build, and test Azure SDKs locally from TypeSpec with automatic customization. WHEN: "generate SDK locally", "build SDK", "run SDK tests", "run CI checks", "validate package", "run checks", "update changelog", "fix SDK build errors", "fix breaking changes", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version.'
+description: 'Generate, build, and test Azure SDKs locally from TypeSpec with automatic customization. WHEN: "generate SDK locally", "build SDK", "run SDK tests", "run CI checks", "validate package", "run checks", "update changelog", "fix SDK build errors", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version". DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review. INVOKES: azsdk_verify_setup, azsdk_package_generate_code, azsdk_package_build_code, azsdk_package_run_check, azsdk_package_run_tests, azsdk_customized_code_update, azsdk_package_update_changelog_content, azsdk_package_update_metadata, azsdk_package_update_version.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
@@ -14,8 +14,8 @@ This skill generates, builds, and tests Azure SDKs locally from TypeSpec with au
 
 ## Triggers
 
-USE FOR: generate, build, and test Azure SDKs locally from TypeSpec with automatic customization; update changelog; fix SDK build errors; fix breaking changes; resolve SDK generation errors; customize TypeSpec; rename SDK client or model; hide operation from SDK; fix analyzer errors; resolve customization drift; create subclient; update metadata; update version
-WHEN: "generate SDK locally", "build SDK", "run SDK tests", "update changelog", "fix SDK build errors", "fix breaking changes", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version"
+USE FOR: generate, build, and test Azure SDKs locally from TypeSpec with automatic customization; update changelog; fix SDK build errors; resolve SDK generation errors; customize TypeSpec; rename SDK client or model; hide operation from SDK; fix analyzer errors; resolve customization drift; create subclient; update metadata; update version
+WHEN: "generate SDK locally", "build SDK", "run SDK tests", "update changelog", "fix SDK build errors", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version"
 DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review
 
 ## Rules
@@ -70,7 +70,6 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 - "Build and test the Python SDK package"
 - "Run CI checks for my SDK package"
 - "Fix the SDK build errors on this PR"
-- "The SDK generation has breaking changes, resolve them"
 - "Rename FooClient to BarClient for .NET"
 - "Hide the internal polling operation from the Python SDK"
 - "Fix .NET analyzer errors AZC0030 and AZC0012"
