@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography.Models;
 using static Azure.Storage.Cryptography.Models.ClientSideEncryptionVersionExtensions;
 
@@ -187,13 +188,11 @@ namespace Azure.Storage.Cryptography
             // gcm disposed by stream
             IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(
                 contentEncryptionKey, TransformMode.Decrypt);
-            if (initialAuthRegion >= 0)
+            if (!CompatSwitches.CseV2AllowMisorderedAuthRegions)
             {
+                Argument.AssertInRange(initialAuthRegion, 0, long.MaxValue, nameof(initialAuthRegion));
+                // regions are 0-indexed, but nonce values are 1-indexed
                 transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, initialAuthRegion + 1);
-            }
-            else
-            {
-                throw new Exception("Invalid auth region");
             }
             return new AuthenticatedRegionCryptoStream(
                 contentStream,
