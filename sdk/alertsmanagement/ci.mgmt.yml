@@ -7,6 +7,8 @@ extends:
     ServiceDirectory: alertsmanagement
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.Provisioning.AlertsManagement
+      safeName: AzureProvisioningAlertsManagement
     - name: Azure.ResourceManager.AlertsManagement
       safeName: AzureResourceManagerAlertsManagement
     - name: Azure.ResourceManager.PrometheusRuleGroups
