@@ -23,6 +23,12 @@ internal enum OperationFinalStateVia
 
 internal static class OperationResultHelpers
 {
+    internal static ClientResult ToClientResult(OperationResult operation) =>
+        ClientResult.FromResponse(operation.GetRawResponse());
+
+    internal static async Task<ClientResult> ToClientResultAsync(Task<OperationResult> operation) =>
+        ToClientResult(await operation.ConfigureAwait(false));
+
     public static OperationResult ProcessMessage(
         ClientPipeline pipeline,
         PipelineMessage message,

@@ -25,11 +25,26 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<OptimizationJob> Create(OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = Create(false, job, operationId, cancellationToken);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual OperationResult Create(bool waitUntilCompleted, OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
         return Create(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         );
     }
 
@@ -41,11 +56,26 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<OptimizationJob>> CreateAsync(OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = await CreateAsync(false, job, operationId, cancellationToken).ConfigureAwait(false);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
+    }
+
+    /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="job"> The job to create. </param>
+    /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, OptimizationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    {
         return await CreateAsync(
-            job: job,
-            foundryFeatures: default,
+            waitUntilCompleted: waitUntilCompleted,
+            content: job,
+            foundryFeatures: default(string),
             operationId: operationId,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
     }
 

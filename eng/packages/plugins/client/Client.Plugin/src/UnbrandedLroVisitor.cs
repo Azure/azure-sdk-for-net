@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System;
 using System.Linq;
@@ -22,20 +23,85 @@ namespace Client.Plugin
     /// <summary>
     /// Updates long-running methods to use the System.ClientModel LRO abstraction.
     /// </summary>
-    internal class SystemClientModelLroVisitor : ScmLibraryVisitor
+    internal class UnbrandedLroVisitor : ScmLibraryVisitor
     {
+        private readonly Dictionary<ClientProvider, List<MethodProvider>> _compatibilityMethods = [];
+
+        protected override TypeProvider? PostVisitType(TypeProvider type)
+        {
+            if (type is ClientProvider client &&
+                _compatibilityMethods.TryGetValue(client, out List<MethodProvider>? methods))
+            {
+                client.Update(methods: [.. client.Methods, .. methods]);
+            }
+
+            return base.PostVisitType(type);
+        }
+
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
             if (IsLroMethod(method))
             {
+                if (method.Kind == ScmMethodKind.Protocol && RequiresCompatibilityMethod(method))
+                {
+                    AddCompatibilityMethod(method);
+                }
+
                 UpdateMethodSignature(method);
             }
 
             return method;
         }
 
+        private void AddCompatibilityMethod(ScmMethodProvider method)
+        {
+            MethodSignature original = method.Signature;
+            bool isAsync = original.Modifiers.HasFlag(MethodSignatureModifiers.Async);
+            MethodSignature signature = new(
+                original.Name,
+                original.Description,
+                original.Modifiers & ~MethodSignatureModifiers.Async,
+                original.ReturnType,
+                original.ReturnDescription,
+                original.Parameters,
+                original.Attributes,
+                original.GenericArguments,
+                original.GenericParameterConstraints,
+                original.ExplicitInterface,
+                original.NonDocumentComment);
+
+            ValueExpression operation = This.Invoke(
+                original.Name,
+                [Literal(false), .. original.Parameters]);
+            MethodProvider compatibilityMethod = new(
+                signature,
+                Return(Static(typeof(OperationResultHelpers)).Invoke(
+                    isAsync ? nameof(OperationResultHelpers.ToClientResultAsync) : nameof(OperationResultHelpers.ToClientResult),
+                    operation)),
+                method.EnclosingType,
+                method.XmlDocs);
+
+            var client = (ClientProvider)method.EnclosingType;
+            if (!_compatibilityMethods.TryGetValue(client, out List<MethodProvider>? methods))
+            {
+                methods = [];
+                _compatibilityMethods.Add(client, methods);
+            }
+            methods.Add(compatibilityMethod);
+        }
+
         private static bool IsLroMethod(ScmMethodProvider method) =>
             method is { ServiceMethod: InputLongRunningServiceMethod, EnclosingType: ClientProvider };
+
+        private static bool RequiresCompatibilityMethod(ScmMethodProvider method)
+        {
+            var client = (ClientProvider)method.EnclosingType;
+            return client.LastContractView?.Methods.Any(previous =>
+                previous.Signature.Name == method.Signature.Name &&
+                previous.Signature.Parameters.Count == method.Signature.Parameters.Count &&
+                previous.Signature.Parameters.Zip(method.Signature.Parameters)
+                    .All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type))) == true;
+        }
 
         private static void UpdateMethodSignature(ScmMethodProvider method)
         {
