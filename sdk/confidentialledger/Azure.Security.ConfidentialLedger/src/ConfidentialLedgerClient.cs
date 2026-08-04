@@ -17,7 +17,7 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerClient
     {
         private const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
-        private readonly bool _useWebFrontend;
+        private readonly bool _useLedgerGateway;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
@@ -65,9 +65,9 @@ namespace Azure.Security.ConfidentialLedger
             var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
 
             HttpPipelineTransportOptions transportOptions;
-            if (actualOptions.UseWebFrontend)
+            if (actualOptions.UseLedgerGateway)
             {
-                // The Web Frontend Gateway terminates TLS with a publicly-rooted certificate
+                // The Ledger Gateway terminates TLS with a publicly-rooted certificate
                 // (e.g. DigiCert Global Root G2 -> Microsoft Azure RSA TLS Issuing CA), which is
                 // already present in every client's OS trust store. As a result, none of the CCF
                 // identity-service bootstrap is required: we do not need to fetch the per-ledger
@@ -77,7 +77,7 @@ namespace Azure.Security.ConfidentialLedger
                 if (clientCertificate != null)
                 {
                     throw new ArgumentException(
-                        $"Client certificate (mTLS) authentication is not supported when {nameof(ConfidentialLedgerClientOptions.UseWebFrontend)} is enabled. Use a {nameof(TokenCredential)} instead.",
+                        $"Client certificate (mTLS) authentication is not supported when {nameof(ConfidentialLedgerClientOptions.UseLedgerGateway)} is enabled. Use a {nameof(TokenCredential)} instead.",
                         nameof(clientCertificate));
                 }
 
@@ -100,10 +100,10 @@ namespace Azure.Security.ConfidentialLedger
             }
             ClientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
-            _useWebFrontend = actualOptions.UseWebFrontend;
+            _useLedgerGateway = actualOptions.UseLedgerGateway;
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint, cachePrimaryNode: !actualOptions.UseWebFrontend) },
+                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint, cachePrimaryNode: !actualOptions.UseLedgerGateway) },
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
@@ -153,14 +153,14 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
-                if (_useWebFrontend)
+                if (_useLedgerGateway)
                 {
-                    // The Web Frontend Gateway can respond with either 200 (synchronous commit, mirrors
+                    // The Ledger Gateway can respond with either 200 (synchronous commit, mirrors
                     // legacy CCF behavior) or 202 (write was queued and an operation id was returned
                     // for polling). Both must flow back to the caller without throwing. Layer "202 is a
                     // success" over the message's existing classifier so any RequestContext.AddClassifier
                     // the caller supplied is preserved rather than replaced.
-                    message.ResponseClassifier = new WebFrontendAccept202Classifier(message.ResponseClassifier);
+                    message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
                 var response = _pipeline.ProcessMessage(message, context);
 
@@ -209,11 +209,11 @@ namespace Azure.Security.ConfidentialLedger
             try
             {
                 using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
-                if (_useWebFrontend)
+                if (_useLedgerGateway)
                 {
                     // Layer "202 is a success" over the message's existing classifier so any
                     // RequestContext.AddClassifier the caller supplied is preserved rather than replaced.
-                    message.ResponseClassifier = new WebFrontendAccept202Classifier(message.ResponseClassifier);
+                    message.ResponseClassifier = new LedgerGatewayAccept202Classifier(message.ResponseClassifier);
                 }
                 var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
 
@@ -233,7 +233,7 @@ namespace Azure.Security.ConfidentialLedger
 
         private PostLedgerEntryOperation CreatePostLedgerEntryOperation(Response response)
         {
-            // 202 indicates the Web Frontend Gateway has queued the write and returned an operation
+            // 202 indicates the Ledger Gateway has queued the write and returned an operation
             // id for asynchronous polling. The operation id is published in the
             // x-ms-webfe-operation-id header; if absent for any reason, fall back to the response
             // body (a JSON object containing an "operationId" property).
@@ -249,13 +249,13 @@ namespace Azure.Security.ConfidentialLedger
                 {
                     throw new RequestFailedException(
                         response.Status,
-                        $"The Confidential Ledger Web Frontend Gateway returned HTTP 202 without a '{ConfidentialLedgerConstants.OperationIdHeaderName}' header or a body-level 'operationId' field, so the write cannot be tracked.");
+                        $"The Confidential Ledger Gateway returned HTTP 202 without a '{ConfidentialLedgerConstants.OperationIdHeaderName}' header or a body-level 'operationId' field, so the write cannot be tracked.");
                 }
 
-                return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.WebFrontend, response);
+                return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.LedgerGateway, response);
             }
 
-            // Standard synchronous-commit path. Works for both legacy CCF and Web Frontend Gateway
+            // Standard synchronous-commit path. Works for both legacy CCF and the Ledger Gateway
             // when the latter chooses to commit synchronously (returning 200).
             response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
             return new PostLedgerEntryOperation(this, transactionId, PostLedgerEntryOperation.PollingMode.Direct, response);

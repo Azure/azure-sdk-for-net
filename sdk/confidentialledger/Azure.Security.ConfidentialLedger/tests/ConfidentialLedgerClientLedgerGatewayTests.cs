@@ -14,12 +14,12 @@ using NUnit.Framework;
 namespace Azure.Security.ConfidentialLedger.Tests
 {
     /// <summary>
-    /// Unit tests that exercise the Web Frontend Gateway code path (<see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/>).
+    /// Unit tests that exercise the Ledger Gateway code path (<see cref="ConfidentialLedgerClientOptions.UseLedgerGateway"/>).
     /// All tests use a <see cref="MockTransport"/> so no live ledger is required.
     /// </summary>
-    public class ConfidentialLedgerClientWebFrontendTests : ClientTestBase
+    public class ConfidentialLedgerClientLedgerGatewayTests : ClientTestBase
     {
-        public ConfidentialLedgerClientWebFrontendTests(bool isAsync) : base(isAsync) { }
+        public ConfidentialLedgerClientLedgerGatewayTests(bool isAsync) : base(isAsync) { }
 
         private const string LedgerHost = "https://contoso.confidential-ledger.azure.com";
         private const string OperationId = "11111111-1111-1111-1111-111111111111";
@@ -29,7 +29,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         private static ConfidentialLedgerClientOptions BuildOptions(MockTransport transport)
             => new ConfidentialLedgerClientOptions
             {
-                UseWebFrontend = true,
+                UseLedgerGateway = true,
                 Retry = { Delay = TimeSpan.Zero, MaxRetries = 0 },
                 Transport = transport,
             };
@@ -40,42 +40,42 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 new MockCredential(),
                 BuildOptions(transport)));
 
-        // W1: UseWebFrontend default is false (preserves legacy behavior).
+        // W1: UseLedgerGateway default is false (preserves legacy behavior).
         [Test]
-        public void UseWebFrontendDefaultsToFalse()
+        public void UseLedgerGatewayDefaultsToFalse()
         {
             var options = new ConfidentialLedgerClientOptions();
-            Assert.IsFalse(options.UseWebFrontend);
+            Assert.IsFalse(options.UseLedgerGateway);
         }
 
-        // W2: Ctor with UseWebFrontend = true does NOT call the identity service
+        // W2: Ctor with UseLedgerGateway = true does NOT call the identity service
         // (no cert client is configured; the call would fail otherwise).
         [Test]
-        public void CtorSkipsIdentityServiceBootstrapInWebFrontendMode()
+        public void CtorSkipsIdentityServiceBootstrapInLedgerGatewayMode()
         {
             // No certificate client options provided -> would throw if the ctor tried to fetch the
             // identity-service cert via the default network client. The fact that this succeeds
-            // proves UseWebFrontend skips that bootstrap.
+            // proves UseLedgerGateway skips that bootstrap.
             Assert.DoesNotThrow(() =>
             {
                 _ = new ConfidentialLedgerClient(
                     new Uri(LedgerHost),
                     new MockCredential(),
-                    new ConfidentialLedgerClientOptions { UseWebFrontend = true });
+                    new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
             });
         }
 
-        // W3: mTLS (client certificate) is rejected in Web Frontend mode.
+        // W3: mTLS (client certificate) is rejected in Ledger Gateway mode.
         // Skipped on .NET Framework 4.6.2 because the X509 CertificateRequest API used to
         // synthesize a throw-away self-signed certificate was added in 4.7.2; the production
         // code path under test is TFM-agnostic and fully exercised on modern frameworks.
 #if !NET462
         [Test]
-        public void CtorRejectsClientCertificateInWebFrontendMode()
+        public void CtorRejectsClientCertificateInLedgerGatewayMode()
         {
             using var ecdsa = System.Security.Cryptography.ECDsa.Create();
             var req = new System.Security.Cryptography.X509Certificates.CertificateRequest(
-                "CN=acl-webfe-test",
+                "CN=acl-gateway-test",
                 ecdsa,
                 System.Security.Cryptography.HashAlgorithmName.SHA256);
             using var clientCert = req.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddDays(1));
@@ -85,10 +85,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 _ = new ConfidentialLedgerClient(
                     new Uri(LedgerHost),
                     clientCert,
-                    new ConfidentialLedgerClientOptions { UseWebFrontend = true });
+                    new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
             });
             Assert.That(ex.ParamName, Is.EqualTo("clientCertificate"));
-            Assert.That(ex.Message, Does.Contain(nameof(ConfidentialLedgerClientOptions.UseWebFrontend)));
+            Assert.That(ex.Message, Does.Contain(nameof(ConfidentialLedgerClientOptions.UseLedgerGateway)));
         }
 #endif
 

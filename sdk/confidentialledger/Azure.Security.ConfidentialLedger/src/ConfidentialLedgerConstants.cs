@@ -14,7 +14,7 @@ namespace Azure.Security.ConfidentialLedger
         public const string TransactionIdHeaderName = "x-ms-ccf-transaction-id";
 
         /// <summary>
-        /// The header value containing the Web Frontend Gateway operation Id returned on a 202 Accepted
+        /// The header value containing the Ledger Gateway operation Id returned on a 202 Accepted
         /// response from <c>POST /app/transactions</c> when the write has been queued.
         /// </summary>
         public const string OperationIdHeaderName = "x-ms-webfe-operation-id";

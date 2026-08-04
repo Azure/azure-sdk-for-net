@@ -48,7 +48,7 @@ namespace Azure.Security.ConfidentialLedger
         /// When <c>false</c>, the cache is disabled: 307/308 responses are still followed (and the
         /// <c>Authorization</c> header is still preserved across the redirect) but no host pinning is
         /// performed. Use this when the upstream gateway may redirect to any healthy host (for example,
-        /// the Confidential Ledger Web Frontend Gateway).
+        /// the Confidential Ledger Gateway).
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not an absolute URI.</exception>

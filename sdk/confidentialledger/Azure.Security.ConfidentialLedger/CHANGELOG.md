@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added opt-in support for the Azure Confidential Ledger Web Frontend Gateway via `ConfidentialLedgerClientOptions.UseWebFrontend`. When enabled:
+- Added opt-in support for the Azure Confidential Ledger Gateway via `ConfidentialLedgerClientOptions.UseLedgerGateway`. When enabled:
   - The SDK skips the per-ledger CCF identity-service TLS bootstrap. The gateway uses publicly-rooted certificates, so the OS trust store is sufficient.
   - `ConfidentialLedgerClient.PostLedgerEntry` accepts an HTTP 202 response and returns an operation whose `Id` is the gateway-assigned `operationId` (read from the `x-ms-webfe-operation-id` response header, with a fallback to the response body). The operation transparently polls `GET /app/operations/{operationId}` and surfaces the underlying CCF transaction once committed.
   - Client-certificate (mTLS) authentication is rejected at construction time — only `TokenCredential` is supported by the gateway.

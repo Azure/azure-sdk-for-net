@@ -12,12 +12,12 @@ using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 namespace Azure.Security.ConfidentialLedger.Tests
 {
     /// <summary>
-    /// Recorded end-to-end tests for the Confidential Ledger Web Frontend Gateway path
-    /// (<see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/> = <c>true</c>).
+    /// Recorded end-to-end tests for the Confidential Ledger Gateway path
+    /// (<see cref="ConfidentialLedgerClientOptions.UseLedgerGateway"/> = <c>true</c>).
     /// </summary>
     /// <remarks>
     /// <para>
-    /// These recorded tests validate a <see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/> client
+    /// These recorded tests validate a <see cref="ConfidentialLedgerClientOptions.UseLedgerGateway"/> client
     /// end to end against a real gateway-fronted ledger (public TLS, no CCF identity bootstrap).
     /// <see cref="PostLedgerEntry_WebFrontendClient_Completes"/> covers a healthy gateway, which commits
     /// synchronously (HTTP 200). The other two were recorded with the underlying CCF cluster taken offline,
@@ -30,12 +30,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
     /// <para>
     /// The queued -&gt; committed transition (the operation completing once CCF recovers) depends on recovery
     /// timing that is not reproducible in a single recording; it is covered deterministically by the
-    /// <c>MockTransport</c> unit tests in <see cref="ConfidentialLedgerClientWebFrontendTests"/>.
+    /// <c>MockTransport</c> unit tests in <see cref="ConfidentialLedgerClientLedgerGatewayTests"/>.
     /// </para>
     /// <para>
     /// To re-record: set <c>CONFIDENTIALLEDGER_WEBFE_URL</c> to the gateway endpoint (for canary the identity
     /// endpoint is <c>https://canary.identity.confidential-ledger.core.azure.com</c>, which differs from prod
-    /// and is only used by the environment readiness probe - WebFE mode never calls the identity service),
+    /// and is only used by the environment readiness probe - gateway mode never calls the identity service),
     /// then run <c>AZURE_TEST_MODE=Record dotnet test --filter FullyQualifiedName~WebFrontendLiveTests</c> and
     /// <c>test-proxy push -a sdk/confidentialledger/Azure.Security.ConfidentialLedger/assets.json</c>.
     /// </para>
@@ -56,28 +56,28 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             // Only run when a gateway endpoint is explicitly configured. This keeps the tests inert in the
             // live-test pipeline (which does execute [LiveOnly] tests) against a non-gateway ledger.
-            if (!TestEnvironment.IsWebFrontendConfigured)
+            if (!TestEnvironment.IsLedgerGatewayConfigured)
             {
-                Assert.Ignore("Set CONFIDENTIALLEDGER_WEBFE_URL to a Web Frontend Gateway-fronted ledger to run the WebFE recorded tests.");
+                Assert.Ignore("Set CONFIDENTIALLEDGER_WEBFE_URL to a Ledger Gateway-fronted ledger to run the Ledger Gateway recorded tests.");
             }
 
             Credential = TestEnvironment.Credential;
 
-            // In Web Frontend mode the gateway terminates TLS with a publicly-rooted certificate, so no
+            // In Ledger Gateway mode the gateway terminates TLS with a publicly-rooted certificate, so no
             // CCF identity-service bootstrap and no custom TLS validation certificate are required. The
             // client is instrumented so requests flow through the test-proxy for recording/playback.
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
-                    TestEnvironment.ConfidentialLedgerWebFrontendUrl,
+                    TestEnvironment.ConfidentialLedgerGatewayUrl,
                     credential: Credential,
                     options: InstrumentClientOptions(
-                        new ConfidentialLedgerClientOptions(ServiceVersion.V2024_12_09_Preview) { UseWebFrontend = true })));
+                        new ConfidentialLedgerClientOptions(ServiceVersion.V2024_12_09_Preview) { UseLedgerGateway = true })));
         }
 
         [RecordedTest]
         public async Task PostLedgerEntry_WebFrontendClient_Completes()
         {
-            // Validates a UseWebFrontend=true client end to end against the gateway: submit with
+            // Validates a UseLedgerGateway=true client end to end against the gateway: submit with
             // WaitUntil.Completed and wait for commit. A healthy gateway commits synchronously (HTTP 200,
             // Direct polling); if the CCF cluster is unreachable it returns 202 and the operation polls
             // GET /app/operations/{operationId}. Either way Id is the CCF transaction id on completion.
@@ -139,7 +139,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             // Once the ledger recovers the gateway commits the queued write, so polling the id drives the
             // rehydrated operation to completion and Id flips from the gateway operation id to the CCF
             // transaction id. Requires CONFIDENTIALLEDGER_WEBFE_OPERATION_ID to be a now-recovered queued id.
-            string operationId = TestEnvironment.WebFrontendQueuedOperationId;
+            string operationId = TestEnvironment.LedgerGatewayQueuedOperationId;
             if (string.IsNullOrEmpty(operationId))
             {
                 Assert.Ignore("Set CONFIDENTIALLEDGER_WEBFE_OPERATION_ID to an operation id that was queued while the ledger was down (and has since recovered) to record/replay this test.");

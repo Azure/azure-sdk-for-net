@@ -298,31 +298,31 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
         }
 
         [Test]
-        public void WebFrontendQueuedSubmission()
+        public void LedgerGatewayQueuedSubmission()
         {
-            #region Snippet:CreateClientWebFrontend
+            #region Snippet:CreateClientLedgerGateway
 
 #if SNIPPET
             var ledgerClient = new ConfidentialLedgerClient(
                 ledgerEndpoint: new Uri("https://my-ledger-url.confidential-ledger.azure.com"),
                 credential: new DefaultAzureCredential(),
-                options: new ConfidentialLedgerClientOptions { UseWebFrontend = true });
+                options: new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
 #else
             var ledgerClient = new ConfidentialLedgerClient(
                 ledgerEndpoint: TestEnvironment.ConfidentialLedgerUrl,
                 credential: TestEnvironment.Credential,
-                options: new ConfidentialLedgerClientOptions { UseWebFrontend = true });
+                options: new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
 #endif
 
             #endregion
 
             #region Snippet:PostLedgerEntryWaitUntilStarted
 
-            // When UseWebFrontend = true and waitUntil is Started, the SDK accepts a 202 Accepted
+            // When UseLedgerGateway = true and waitUntil is Started, the SDK accepts a 202 Accepted
             // response and returns an operation whose Id is the gateway-assigned operationId.
             Operation operation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Started,
-                RequestContent.Create(new { contents = "Hello from the Web Frontend!" }));
+                RequestContent.Create(new { contents = "Hello from the Ledger Gateway!" }));
 
             string operationId = operation.Id;
             Console.WriteLine($"Submitted ledger entry. Operation Id: {operationId}");
@@ -338,7 +338,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             // operation Id. Rehydration performs no I/O until you start polling.
             Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
 
-            // The Web Frontend write queue can stay pending for an extended period during an outage.
+            // The Ledger Gateway write queue can stay pending for an extended period during an outage.
             // Always bound the wait with a CancellationToken so the call cannot hang indefinitely.
             using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
             Response completed = resumed.WaitForCompletionResponse(cts.Token);

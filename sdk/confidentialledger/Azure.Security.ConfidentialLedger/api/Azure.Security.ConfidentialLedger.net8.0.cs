@@ -88,7 +88,7 @@ namespace Azure.Security.ConfidentialLedger
     {
         public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_12_09_Preview) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
-        public bool UseWebFrontend { get { throw null; } set { } }
+        public bool UseLedgerGateway { get { throw null; } set { } }
         public bool VerifyConnection { get { throw null; } set { } }
         public enum ServiceVersion
         {

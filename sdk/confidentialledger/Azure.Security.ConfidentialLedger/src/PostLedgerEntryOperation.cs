@@ -16,7 +16,7 @@ namespace Azure.Security.ConfidentialLedger
     /// until completion. Two polling modes are supported:
     /// <list type="bullet">
     ///   <item><description><see cref="PollingMode.Direct"/>: polls <c>GET /app/transactions/{transactionId}/status</c> on CCF.</description></item>
-    ///   <item><description><see cref="PollingMode.WebFrontend"/>: polls <c>GET /app/operations/{operationId}</c> on the Web Frontend Gateway, then flips <see cref="Id"/> to the CCF transaction id once the operation reaches the <c>committed</c> state.</description></item>
+    ///   <item><description><see cref="PollingMode.LedgerGateway"/>: polls <c>GET /app/operations/{operationId}</c> on the Ledger Gateway, then flips <see cref="Id"/> to the CCF transaction id once the operation reaches the <c>committed</c> state.</description></item>
     /// </list>
     /// </summary>
     internal class PostLedgerEntryOperation : Operation, IOperation
@@ -29,16 +29,16 @@ namespace Azure.Security.ConfidentialLedger
             /// <summary>
             /// Poll <c>/app/transactions/{transactionId}/status</c>. <see cref="Id"/> is the CCF
             /// transaction id for the entire lifetime of the operation. This is the legacy mode used
-            /// when <see cref="ConfidentialLedgerClientOptions.UseWebFrontend"/> is <c>false</c>.
+            /// when <see cref="ConfidentialLedgerClientOptions.UseLedgerGateway"/> is <c>false</c>.
             /// </summary>
             Direct,
 
             /// <summary>
-            /// Poll <c>/app/operations/{operationId}</c> on the Web Frontend Gateway. <see cref="Id"/>
-            /// starts as the Web Frontend operation id and is replaced with the CCF transaction id
+            /// Poll <c>/app/operations/{operationId}</c> on the Ledger Gateway. <see cref="Id"/>
+            /// starts as the Ledger Gateway operation id and is replaced with the CCF transaction id
             /// once the gateway reports the operation as <c>committed</c>.
             /// </summary>
-            WebFrontend,
+            LedgerGateway,
         }
 
         private readonly ConfidentialLedgerClient _client;
@@ -48,17 +48,17 @@ namespace Azure.Security.ConfidentialLedger
 
         internal string exceptionMessage => _mode switch
         {
-            PollingMode.WebFrontend => $"Web Frontend Gateway operation '{Id}' did not complete successfully.",
+            PollingMode.LedgerGateway => $"Ledger Gateway operation '{Id}' did not complete successfully.",
             _ => $"Operation failed. OperationId '{Id}' is the transactionId related to the Ledger entry posted as part of this operation.",
         };
 
         /// <summary>
         /// Initializes a previously run operation. In <see cref="PollingMode.Direct"/>, <paramref name="id"/>
-        /// is the CCF transaction id. In <see cref="PollingMode.WebFrontend"/>, <paramref name="id"/> is the
+        /// is the CCF transaction id. In <see cref="PollingMode.LedgerGateway"/>, <paramref name="id"/> is the
         /// gateway operation id (which is later swapped for the transaction id once available).
         /// </summary>
         /// <param name="client"> The <see cref="ConfidentialLedgerClient"/>. </param>
-        /// <param name="id"> The transaction id (Direct) or operation id (WebFrontend) returned by the service. </param>
+        /// <param name="id"> The transaction id (Direct) or operation id (LedgerGateway) returned by the service. </param>
         /// <param name="mode"> Identifies which endpoint to poll. </param>
         /// <param name="initialResponse"> The raw response that produced <paramref name="id"/>, exposed through <see cref="GetRawResponse"/> until the first poll completes. <c>null</c> for rehydration scenarios where no I/O has occurred yet. </param>
         public PostLedgerEntryOperation(ConfidentialLedgerClient client, string id, PollingMode mode = PollingMode.Direct, Response initialResponse = null)
@@ -94,7 +94,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             return _mode switch
             {
-                PollingMode.WebFrontend => await UpdateWebFrontendStateAsync(async, cancellationToken).ConfigureAwait(false),
+                PollingMode.LedgerGateway => await UpdateLedgerGatewayStateAsync(async, cancellationToken).ConfigureAwait(false),
                 _ => await UpdateDirectStateAsync(async, cancellationToken).ConfigureAwait(false),
             };
         }
@@ -125,7 +125,7 @@ namespace Azure.Security.ConfidentialLedger
             return OperationState.Pending(statusResponse);
         }
 
-        private async ValueTask<OperationState> UpdateWebFrontendStateAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<OperationState> UpdateLedgerGatewayStateAsync(bool async, CancellationToken cancellationToken)
         {
             var statusResponse = async
                 ? await _client.GetOperationStatusAsync(
@@ -139,7 +139,7 @@ namespace Azure.Security.ConfidentialLedger
             // the operation is terminally unresolvable here and the caller must reconcile out of band.
             if (statusResponse.Status == (int)HttpStatusCode.NotFound)
             {
-                var message = $"Web Frontend Gateway operation '{Id}' was not found (HTTP 404). The operation status has been evicted from the gateway after its retention period and the outcome of the underlying ledger write must be reconciled out of band.";
+                var message = $"Ledger Gateway operation '{Id}' was not found (HTTP 404). The operation status has been evicted from the gateway after its retention period and the outcome of the underlying ledger write must be reconciled out of band.";
                 return OperationState.Failure(statusResponse, new RequestFailedException(statusResponse.Status, message));
             }
 
@@ -188,7 +188,7 @@ namespace Azure.Security.ConfidentialLedger
                             statusResponse,
                             new RequestFailedException(
                                 statusResponse.Status,
-                                $"Web Frontend Gateway operation '{Id}' reported status 'committed' without a transactionId; the CCF transaction cannot be resolved and the write must be reconciled out of band."));
+                                $"Ledger Gateway operation '{Id}' reported status 'committed' without a transactionId; the CCF transaction cannot be resolved and the write must be reconciled out of band."));
                     }
 
                     // Swap the public Id from the gateway operation id to the CCF transaction id
@@ -197,7 +197,7 @@ namespace Azure.Security.ConfidentialLedger
                     return OperationState.Success(statusResponse);
 
                 case "failed":
-                    var failureMessage = $"Web Frontend Gateway operation '{Id}' failed."
+                    var failureMessage = $"Ledger Gateway operation '{Id}' failed."
                         + (code != null ? $" Code: {code}." : string.Empty)
                         + (detail != null ? $" Detail: {detail}" : string.Empty);
                     return OperationState.Failure(statusResponse, new RequestFailedException(statusResponse.Status, failureMessage, code, innerException: null));
@@ -213,7 +213,7 @@ namespace Azure.Security.ConfidentialLedger
                         statusResponse,
                         new RequestFailedException(
                             statusResponse.Status,
-                            $"Web Frontend Gateway operation '{Id}' returned an unrecognized status '{status ?? "<null>"}'. Expected 'queued', 'committed', or 'failed'."));
+                            $"Ledger Gateway operation '{Id}' returned an unrecognized status '{status ?? "<null>"}'. Expected 'queued', 'committed', or 'failed'."));
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary>
         /// In <see cref="PollingMode.Direct"/>, the CCF transaction id of the posted ledger entry.
-        /// In <see cref="PollingMode.WebFrontend"/>, initially the Web Frontend Gateway operation id;
+        /// In <see cref="PollingMode.LedgerGateway"/>, initially the Ledger Gateway operation id;
         /// once the gateway reports the operation as <c>committed</c>, this is replaced by the CCF
         /// transaction id returned by the gateway.
         /// </summary>

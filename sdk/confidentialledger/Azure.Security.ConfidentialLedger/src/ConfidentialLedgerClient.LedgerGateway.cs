@@ -11,7 +11,7 @@ namespace Azure.Security.ConfidentialLedger
     public partial class ConfidentialLedgerClient
     {
         /// <summary>
-        /// [Protocol Method] Gets the status of a queued ledger entry by Web Frontend Gateway operation id.
+        /// [Protocol Method] Gets the status of a queued ledger entry by Ledger Gateway operation id.
         /// Returned when a prior call to <see cref="PostLedgerEntry(WaitUntil, RequestContent, string, string, RequestContext)"/>
         /// or its async counterpart received a <c>202 Accepted</c> response.
         /// </summary>
@@ -20,7 +20,7 @@ namespace Azure.Security.ConfidentialLedger
         ///
         /// Schema for the response:
         /// <code>{
-        ///   operationId:   string,                # The Web Frontend operation id (UUID).
+        ///   operationId:   string,                # The Ledger Gateway operation id (UUID).
         ///   status:        "queued" | "committed" | "failed",
         ///   collectionId:  string,                # Present when status == "committed".
         ///   transactionId: string,                # Present when status == "committed".
@@ -36,7 +36,7 @@ namespace Azure.Security.ConfidentialLedger
         /// write may or may not have committed and the caller must reconcile out of band (for example via
         /// <see cref="GetLedgerEntries(string, string, string, string, RequestContext)"/>).
         /// </remarks>
-        /// <param name="operationId"> The Web Frontend Gateway operation id returned on the <c>202 Accepted</c> response. </param>
+        /// <param name="operationId"> The Ledger Gateway operation id returned on the <c>202 Accepted</c> response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -61,7 +61,7 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the status of a queued ledger entry by Web Frontend Gateway operation id.
+        /// [Protocol Method] Gets the status of a queued ledger entry by Ledger Gateway operation id.
         /// Returned when a prior call to <see cref="PostLedgerEntry(WaitUntil, RequestContent, string, string, RequestContext)"/>
         /// or its async counterpart received a <c>202 Accepted</c> response.
         /// </summary>
@@ -69,7 +69,7 @@ namespace Azure.Security.ConfidentialLedger
         /// See <see cref="GetOperationStatusAsync(string, RequestContext)"/> for the response body schema and
         /// the semantics of a <c>404 OperationNotFound</c> response.
         /// </remarks>
-        /// <param name="operationId"> The Web Frontend Gateway operation id returned on the <c>202 Accepted</c> response. </param>
+        /// <param name="operationId"> The Ledger Gateway operation id returned on the <c>202 Accepted</c> response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -95,7 +95,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary>
         /// Reconstructs a <see cref="Operation"/> that represents a queued ledger entry previously
-        /// initiated against the Confidential Ledger Web Frontend Gateway. Use this to resume polling
+        /// initiated against the Confidential Ledger Gateway. Use this to resume polling
         /// for an operation whose id was persisted by the caller (typically after the original process
         /// has been restarted or when delegating completion to a different worker).
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.Security.ConfidentialLedger
         /// underlying write may or may not have committed and the caller must reconcile out of band.
         /// </para>
         /// </remarks>
-        /// <param name="operationId"> The Web Frontend Gateway operation id previously returned on a <c>202 Accepted</c> response. </param>
+        /// <param name="operationId"> The Ledger Gateway operation id previously returned on a <c>202 Accepted</c> response. </param>
         /// <param name="cancellationToken"> Reserved for future use; this call performs no I/O. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +124,7 @@ namespace Azure.Security.ConfidentialLedger
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             _ = cancellationToken; // Reserved; no network I/O is performed here.
 
-            return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.WebFrontend);
+            return new PostLedgerEntryOperation(this, operationId, PostLedgerEntryOperation.PollingMode.LedgerGateway);
         }
 
         internal HttpMessage CreateGetOperationStatusRequest(string operationId, RequestContext context)
@@ -145,11 +145,11 @@ namespace Azure.Security.ConfidentialLedger
         // A response classifier that layers "202 Accepted is a success" on top of the message's existing
         // classifier (which already reflects the operation defaults and any RequestContext.AddClassifier the
         // caller supplied), so composing does not discard the caller's classifications.
-        private sealed class WebFrontendAccept202Classifier : ResponseClassifier
+        private sealed class LedgerGatewayAccept202Classifier : ResponseClassifier
         {
             private readonly ResponseClassifier _inner;
 
-            public WebFrontendAccept202Classifier(ResponseClassifier inner) => _inner = inner;
+            public LedgerGatewayAccept202Classifier(ResponseClassifier inner) => _inner = inner;
 
             public override bool IsErrorResponse(HttpMessage message)
                 => message.Response.Status != 202 && _inner.IsErrorResponse(message);
