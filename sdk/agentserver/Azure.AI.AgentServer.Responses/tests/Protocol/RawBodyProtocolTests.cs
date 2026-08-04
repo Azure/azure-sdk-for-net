@@ -27,15 +27,15 @@ public sealed class RawBodyProtocolTests : ProtocolTestBase
         };
     }
 
-    private static async IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> YieldDefault(
+    private static async IAsyncEnumerable<ResponseStreamEvent> YieldDefault(
         Azure.AI.AgentServer.Responses.Models.CreateResponse request,
         ResponseContext context,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Azure.AI.AgentServer.Responses.Models.ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
         response.SetCompleted();
-        yield return new Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = 0, Response = response };
     }
 
     /// <summary>Parses the captured BinaryData into a JsonElement for assertion convenience.</summary>

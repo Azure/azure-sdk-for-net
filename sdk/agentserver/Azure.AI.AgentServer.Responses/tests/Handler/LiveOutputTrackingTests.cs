@@ -12,7 +12,7 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Handler;
 
 /// <summary>
-/// Tests that the in-memory Models.ResponseObject.Output list is updated in real-time
+/// Tests that the in-memory Models.ResponseObject.OutputItems list is updated in real-time
 /// as output_item.added and output_item.done events flow through the handler.
 /// </summary>
 public class LiveOutputTrackingTests : IDisposable
@@ -38,12 +38,12 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(item);
+            completedResponse.OutputItems.Add(item);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: item),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = item },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -63,14 +63,14 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(item0);
-            completedResponse.Output.Add(item1);
+            completedResponse.OutputItems.Add(item0);
+            completedResponse.OutputItems.Add(item1);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: item0),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 1, item: item1),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = item0 },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(1)), Item = item1 },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -87,7 +87,7 @@ public class LiveOutputTrackingTests : IDisposable
         var item = CreateOutputMessage("msg_ctx", "Context");
         string? capturedResponseId = null;
 
-        _handler.EventFactory = (_, ctx, ct) => CaptureAfterAdd(ctx, item, c => capturedResponseId = c.ResponseId, ct);
+        _handler.EventFactory = (_, ctx, ct) => CaptureAfterAdd(ctx, item, c => capturedResponseId = c.Id, ct);
 
         await PostDefaultRequest();
 
@@ -107,13 +107,13 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(final_);
+            completedResponse.OutputItems.Add(final_);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: stub),
-                new ResponseOutputItemDoneEvent(0, outputIndex: 0, item: final_),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = stub },
+                new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = final_ },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -134,15 +134,15 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(item0);
-            completedResponse.Output.Add(item1Done);
+            completedResponse.OutputItems.Add(item0);
+            completedResponse.OutputItems.Add(item1Done);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: item0),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 1, item: item1),
-                new ResponseOutputItemDoneEvent(0, outputIndex: 1, item: item1Done),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = item0 },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(1)), Item = item1 },
+                new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(1)), Item = item1Done },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -165,13 +165,13 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(final_);
+            completedResponse.OutputItems.Add(final_);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: stub),
-                new ResponseOutputItemDoneEvent(0, outputIndex: 0, item: final_),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = stub },
+                new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = final_ },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -193,12 +193,12 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(item);
+            completedResponse.OutputItems.Add(item);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemDoneEvent(0, outputIndex: 0, item: item),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = item },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -211,45 +211,41 @@ public class LiveOutputTrackingTests : IDisposable
     [Test]
     public async Task DoneWithNullItem_IsIgnored()
     {
-        // The null! item causes the event constructor to throw ArgumentNullException
-        // before response.created is yielded → pre-created error → 500
         _handler.EventFactory = (_, ctx, ct) =>
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemDoneEvent(0, outputIndex: 0, item: null!),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = null! },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var requestBody = JsonSerializer.Serialize(new { model = "test-model" });
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
         var httpResponse = await _client.PostAsync("/responses", content);
-        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
     public async Task AddedWithNullItem_IsIgnored()
     {
-        // The null! item causes the event constructor to throw ArgumentNullException
-        // before response.created is yielded → pre-created error → 500
         _handler.EventFactory = (_, ctx, ct) =>
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: null!),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = null! },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var requestBody = JsonSerializer.Serialize(new { model = "test-model" });
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
         var httpResponse = await _client.PostAsync("/responses", content);
-        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        Assert.That(httpResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
@@ -262,13 +258,13 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(second);
+            completedResponse.OutputItems.Add(second);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: first),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: second),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = first },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = second },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -288,12 +284,12 @@ public class LiveOutputTrackingTests : IDisposable
         {
             var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
             var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-            completedResponse.Output.Add(item);
+            completedResponse.OutputItems.Add(item);
             completedResponse.SetCompleted();
             return YieldEvents(ct,
-                new ResponseCreatedEvent(0, response),
-                new ResponseOutputItemAddedEvent(0, outputIndex: 2, item: item),
-                new ResponseCompletedEvent(0, completedResponse));
+                new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+                new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(2)), Item = item },
+                new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse });
         };
 
         var body = await PostDefaultRequest();
@@ -318,11 +314,10 @@ public class LiveOutputTrackingTests : IDisposable
 
     private static OutputItemMessage CreateOutputMessage(string id, string text)
     {
-        var content = new MessageContentOutputTextContent(
-            text: text,
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
-        return new OutputItemMessage(
+        var content = ResponseContentPart.CreateOutputTextPart(
+            text,
+            Array.Empty<Annotation>());
+        return TestModels.OutputItemMessage(
             id: id,
             content: new List<MessageContent> { content },
             status: MessageStatus.Completed);
@@ -347,16 +342,16 @@ public class LiveOutputTrackingTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
-        yield return new ResponseOutputItemAddedEvent(0, outputIndex: 0, item: item);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = item };
 
         // Capture context after the event has been processed by the handler pipeline
         capture(ctx);
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model");
-        completedResponse.Output.Add(item);
+        completedResponse.OutputItems.Add(item);
         completedResponse.SetCompleted();
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse };
         await Task.CompletedTask;
     }
 

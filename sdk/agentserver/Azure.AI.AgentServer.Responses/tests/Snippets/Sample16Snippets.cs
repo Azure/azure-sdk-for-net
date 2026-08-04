@@ -92,9 +92,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 yield return stream.EmitCreated();
                 yield return stream.EmitInProgress();
 
-                // Get a builder for explicit event control.
-                var builder = stream.AddOutputItemStructuredOutputs();
-
                 var payload = BinaryData.FromObjectAsJson(new
                 {
                     classification = "urgent",
@@ -105,9 +102,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     },
                 });
 
-                var item = new StructuredOutputsOutputItem(payload, builder.ItemId);
-                yield return builder.EmitAdded(item);
-                yield return builder.EmitDone(item);
+                foreach (var evt in stream.OutputItemStructuredOutputs(payload))
+                    yield return evt;
 
                 yield return stream.EmitCompleted();
                 await Task.CompletedTask;

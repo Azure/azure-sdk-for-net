@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests;
 
@@ -28,12 +29,12 @@ internal static class XAssert
     }
 
     /// <summary>
-    /// Asserts that the object is exactly the specified type (not a derived type) and returns the cast value.
-    /// xUnit equivalent: Assert.IsType&lt;T&gt;(obj)
+    /// Asserts that the object is assignable to the specified type and returns the cast value.
+    /// OpenAI response models can materialize as internal derived types.
     /// </summary>
     public static T IsType<T>(object obj)
     {
-        Assert.That(obj, Is.TypeOf<T>());
+        Assert.That(obj, Is.InstanceOf<T>());
         return (T)obj;
     }
 
@@ -45,6 +46,12 @@ internal static class XAssert
     {
         Assert.That(obj, Is.InstanceOf<T>());
         return (T)obj;
+    }
+
+    public static ResponseContentPart IsContentPart(ResponseContentPart part, ResponseContentPartKind kind)
+    {
+        Assert.That(part.Kind, Is.EqualTo(kind));
+        return part;
     }
 
     /// <summary>

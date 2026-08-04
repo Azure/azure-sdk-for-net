@@ -78,8 +78,8 @@ internal sealed class ResponseContextImpl : ResponseContext
             _conversationId,
             _request.PreviousResponseId,
             ResponseId,
-            _request.AgentReference,
-            _request.AgentSessionId);
+            agentReference: null,
+            sessionId: null);
 
     /// <inheritdoc/>
     public override PlatformContext PlatformContext => _platformContext;

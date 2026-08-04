@@ -33,8 +33,8 @@ public class BuilderAccumulationTests
 
         msg.EmitDone();
 
-        XAssert.Single(response.Output);
-        var output = XAssert.IsType<OutputItemMessage>(response.Output[0]);
+        XAssert.Single(response.OutputItems);
+        var output = XAssert.IsType<OutputItemMessage>(response.OutputItems[0]);
         Assert.That(output.Id, Is.EqualTo(msg.ItemId));
     }
 
@@ -48,8 +48,8 @@ public class BuilderAccumulationTests
 
         fc.EmitDone();
 
-        XAssert.Single(response.Output);
-        var output = XAssert.IsType<OutputItemFunctionToolCall>(response.Output[0]);
+        XAssert.Single(response.OutputItems);
+        var output = XAssert.IsType<OutputItemFunctionToolCall>(response.OutputItems[0]);
         Assert.That(output.Id, Is.EqualTo(fc.ItemId));
     }
 
@@ -71,9 +71,9 @@ public class BuilderAccumulationTests
         fc.EmitArgumentsDone("{}");
         fc.EmitDone();
 
-        Assert.That(response.Output.Count, Is.EqualTo(2));
-        XAssert.IsType<OutputItemMessage>(response.Output[0]);
-        XAssert.IsType<OutputItemFunctionToolCall>(response.Output[1]);
+        Assert.That(response.OutputItems.Count, Is.EqualTo(2));
+        XAssert.IsType<OutputItemMessage>(response.OutputItems[0]);
+        XAssert.IsType<OutputItemFunctionToolCall>(response.OutputItems[1]);
     }
 
     [Test]
@@ -91,8 +91,8 @@ public class BuilderAccumulationTests
 
         var completed = stream.EmitCompleted();
 
-        XAssert.Single(completed.Response.Output);
-        XAssert.IsType<OutputItemMessage>(completed.Response.Output[0]);
+        XAssert.Single(completed.Response.OutputItems);
+        XAssert.IsType<OutputItemMessage>(completed.Response.OutputItems[0]);
     }
 
     [Test]
@@ -119,7 +119,7 @@ public class BuilderAccumulationTests
         var completed = stream.EmitCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(completed.Response.OutputText, Is.Null);
+        Assert.That(completed.Response.GetOutputText(), Is.Not.Null);
     }
 
     [Test]
@@ -143,6 +143,6 @@ public class BuilderAccumulationTests
         var completed = stream.EmitCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(completed.Response.OutputText, Is.Null);
+        Assert.That(completed.Response.GetOutputText(), Is.Not.Null);
     }
 }

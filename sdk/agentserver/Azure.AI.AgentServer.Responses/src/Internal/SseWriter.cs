@@ -41,11 +41,16 @@ internal sealed class SseWriter
     /// <param name="cancellationToken">Cancellation token.</param>
     public async Task WriteEventAsync(ResponseStreamEvent evt, long sequenceNumber, CancellationToken cancellationToken)
     {
-        var eventType = evt.EventType.ToString();
+        var eventType = evt.Kind.ToString();
         var json = JsonSerializer.Serialize(evt, evt.GetType(), _jsonOptions);
 
         // Inject the SDK-assigned sequence number into the serialized JSON
         var node = JsonNode.Parse(json)!;
+        if (TryGetEmbeddedResponse(evt, out var response))
+        {
+            node["response"] = JsonSerializer.SerializeToNode(response, _jsonOptions);
+        }
+
         node["sequence_number"] = sequenceNumber;
         json = node.ToJsonString(_jsonOptions);
 
@@ -70,5 +75,21 @@ internal sealed class SseWriter
 
         await _session.Stream.WriteAsync(bytes, CancellationToken.None).ConfigureAwait(false);
         await _session.Stream.FlushAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    private static bool TryGetEmbeddedResponse(ResponseStreamEvent evt, out ResponseObject? response)
+    {
+        response = evt switch
+        {
+            ResponseCreatedEvent created => created.Response as ResponseObject,
+            ResponseInProgressEvent inProgress => inProgress.Response as ResponseObject,
+            ResponseCompletedEvent completed => completed.Response as ResponseObject,
+            ResponseFailedEvent failed => failed.Response as ResponseObject,
+            ResponseIncompleteEvent incomplete => incomplete.Response as ResponseObject,
+            ResponseQueuedEvent queued => queued.Response as ResponseObject,
+            _ => null,
+        };
+
+        return response is not null;
     }
 }

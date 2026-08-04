@@ -85,16 +85,16 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var conversationId = request.GetConversationId();
                 var response = new ResponseObject(context.ResponseId, request.Model ?? "")
                 {
-                    Status = Models.ResponseStatus.InProgress,
+                    Status = ResponseStatus.InProgress,
                     Metadata = request.Metadata!,
                     AgentReference = request.AgentReference,
                     Background = request.Background,
                     Conversation = conversationId != null
-                        ? new ConversationReference(conversationId) : null,
+                        ? new ConversationParam(conversationId) : null,
                     PreviousResponseId = request.PreviousResponseId,
                 };
-                yield return new ResponseCreatedEvent(seq++, response);
-                yield return new ResponseInProgressEvent(seq++, response);
+                yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(seq++)), Response = response };
+                yield return new ResponseInProgressEvent { SequenceNumber = checked((int)(seq++)), Response = response };
 
                 // Stream from the upstream. Translate content events (output
                 // items, deltas, etc.) and yield them directly. Skip upstream
@@ -130,10 +130,10 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     // Clear upstream response_id on output items so the
                     // orchestrator's auto-stamp fills in this server's ID.
                     if (evt is ResponseOutputItemAddedEvent added)
-                        added.Item.ResponseId = null;
+                        added.Item.Id = null;
                     else if (evt is ResponseOutputItemDoneEvent done)
                     {
-                        done.Item.ResponseId = null;
+                        done.Item.Id = null;
                         outputItems.Add(done.Item);
                     }
 
@@ -143,17 +143,17 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // Emit terminal event — the handler decides the outcome.
                 if (upstreamFailed)
                 {
-                    response.Status = Models.ResponseStatus.Failed;
-                    response.Error = new ResponseErrorInfo(
-                        Models.ResponseErrorCode.ServerError, "Upstream request failed");
-                    yield return new ResponseFailedEvent(seq++, response);
+                    response.Status = ResponseStatus.Failed;
+                    response.Error = ResponsesModelFactory.ResponseErrorInfo(
+                        OpenAI.Responses.ResponseErrorCode.ServerError, "Upstream request failed");
+                    yield return new ResponseFailedEvent { SequenceNumber = checked((int)(seq++)), Response = response };
                 }
                 else
                 {
-                    response.Status = Models.ResponseStatus.Completed;
+                    response.Status = ResponseStatus.Completed;
                     foreach (var item in outputItems)
-                        response.Output.Add(item);
-                    yield return new ResponseCompletedEvent(seq++, response);
+                        response.OutputItems.Add(item);
+                    yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(seq++)), Response = response };
                 }
             }
         }

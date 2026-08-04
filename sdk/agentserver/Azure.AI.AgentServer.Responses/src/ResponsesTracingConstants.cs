@@ -116,6 +116,9 @@ internal static class ResponsesTracingConstants
         /// <summary><c>azure.ai.agentserver.response_id</c></summary>
         public const string ResponseId = "azure.ai.agentserver.response_id";
 
+        /// <summary><c>azure.ai.agentserver.response_id</c></summary>
+        public const string Id = ResponseId;
+
         /// <summary><c>azure.ai.agentserver.conversation_id</c></summary>
         public const string ConversationId = "azure.ai.agentserver.conversation_id";
 

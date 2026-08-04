@@ -44,7 +44,7 @@ public class ReasoningSummaryPartBuilderTests
         var (_, reasoning) = CreateReasoningScope();
         var summary = reasoning.AddSummaryPart();
         var evt = summary.EmitAdded();
-        Assert.That(evt.Part.Text, Is.EqualTo(""));
+        Assert.That(((OpenAI.Responses.ReasoningSummaryTextPart)evt.Part).Text, Is.EqualTo(""));
     }
 
     // ── EmitTextDelta ─────────────────────────────────────────
@@ -57,7 +57,7 @@ public class ReasoningSummaryPartBuilderTests
         summary.EmitAdded();
         var evt = summary.EmitTextDelta("chunk");
         XAssert.IsType<ResponseReasoningSummaryTextDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("chunk"));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("chunk"));
     }
 
     [Test]
@@ -80,8 +80,8 @@ public class ReasoningSummaryPartBuilderTests
         summary.EmitAdded();
         var d1 = summary.EmitTextDelta("Hello, ");
         var d2 = summary.EmitTextDelta("world!");
-        Assert.That(d1.Delta, Is.EqualTo("Hello, "));
-        Assert.That(d2.Delta, Is.EqualTo("world!"));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("Hello, "));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("world!"));
     }
 
     // ── EmitTextDone ──────────────────────────────────────────
@@ -141,7 +141,7 @@ public class ReasoningSummaryPartBuilderTests
         summary.EmitAdded();
         summary.EmitTextDone("Final text");
         var evt = summary.EmitDone();
-        Assert.That(evt.Part.Text, Is.EqualTo("Final text"));
+        Assert.That(((OpenAI.Responses.ReasoningSummaryTextPart)evt.Part).Text, Is.EqualTo("Final text"));
     }
 
     [Test]

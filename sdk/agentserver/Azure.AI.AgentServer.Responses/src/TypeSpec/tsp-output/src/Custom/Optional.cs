@@ -9,10 +9,6 @@ namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
 /// Custom overrides for Optional collection-defined checks that add null safety.
-/// Placing these methods here prevents the TypeSpec emitter from generating them.
-/// The generated serializers call IsCollectionDefined before iterating collections,
-/// but null collections are not ChangeTrackingList/Dictionary instances, so the
-/// generated check incorrectly returns true for null, causing NullReferenceException.
 /// </summary>
 internal static partial class Optional
 {

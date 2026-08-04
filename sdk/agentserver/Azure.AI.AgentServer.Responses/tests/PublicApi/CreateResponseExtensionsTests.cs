@@ -135,7 +135,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("auto"),
+            ToolChoice = OpenAI.Responses.ResponseToolChoice.CreateAutoChoice(),
         };
 
         var result = request.GetToolChoiceExpanded();
@@ -150,7 +150,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("required"),
+            ToolChoice = OpenAI.Responses.ResponseToolChoice.CreateRequiredChoice(),
         };
 
         var result = request.GetToolChoiceExpanded();
@@ -165,7 +165,7 @@ public class CreateResponseExtensionsTests
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("none"),
+            ToolChoice = OpenAI.Responses.ResponseToolChoice.CreateNoneChoice(),
         };
 
         Assert.That(request.GetToolChoiceExpanded(), Is.Null);
@@ -174,10 +174,9 @@ public class CreateResponseExtensionsTests
     [Test]
     public void GetToolChoiceExpanded_ObjectForm_DeserializesCorrectly()
     {
-        var json = """{"type":"allowed_tools","mode":"auto","tools":[]}""";
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromString(json),
+            ToolChoice = OpenAI.Responses.ResponseToolChoice.CreateAutoChoice(),
         };
 
         var result = request.GetToolChoiceExpanded();
@@ -187,25 +186,27 @@ public class CreateResponseExtensionsTests
     }
 
     [Test]
-    public void GetToolChoiceExpanded_UnrecognizedString_ThrowsFormatException()
+    public void GetToolChoiceExpanded_AutoChoice_ReturnsAllowedAuto()
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromObjectAsJson("invalid_value"),
+            ToolChoice = OpenAI.Responses.ResponseToolChoice.CreateAutoChoice(),
         };
 
-        Assert.Throws<FormatException>(() => request.GetToolChoiceExpanded());
+        var allowed = XAssert.IsType<ToolChoiceAllowed>(request.GetToolChoiceExpanded());
+        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
     }
 
     [Test]
-    public void GetToolChoiceExpanded_NumberValue_ThrowsFormatException()
+    public void GetToolChoiceExpanded_AutoChoice_ReturnsEmptyTools()
     {
         var request = new CreateResponse
         {
-            ToolChoice = BinaryData.FromString("42"),
+            ToolChoice = OpenAI.Responses.ResponseToolChoice.CreateAutoChoice(),
         };
 
-        Assert.Throws<FormatException>(() => request.GetToolChoiceExpanded());
+        var allowed = XAssert.IsType<ToolChoiceAllowed>(request.GetToolChoiceExpanded());
+        Assert.That(allowed.Tools, Is.Empty);
     }
 
     // ── GetInputExpanded ──────────────────────────────────────────────
@@ -237,10 +238,10 @@ public class CreateResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.User));
+        Assert.That(itemMsg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
@@ -257,7 +258,7 @@ public class CreateResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.User));
+        Assert.That(itemMsg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
     }
 
     [Test]
@@ -273,7 +274,7 @@ public class CreateResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.User));
+        Assert.That(itemMsg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
     }
 
     [Test]
@@ -316,12 +317,12 @@ public class CreateResponseExtensionsTests
         var itemMsg = XAssert.IsType<ItemMessage>(XAssert.Single(result));
 
         // Content BinaryData should now be a JSON array, not a string
-        using var doc = System.Text.Json.JsonDocument.Parse(itemMsg.Content.ToMemory());
+        using var doc = System.Text.Json.JsonDocument.Parse(BinaryData.FromObjectAsJson(itemMsg.Content).ToMemory());
         Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
 
         // GetContentExpanded should still work correctly
         var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        var textContent = XAssert.IsContentPart(XAssert.Single(content), ResponseContentPartKind.InputText);
         Assert.That(textContent.Text, Is.EqualTo("Hello world"));
     }
 
@@ -338,11 +339,11 @@ public class CreateResponseExtensionsTests
         var result = request.GetInputExpanded();
 
         var itemMsg = XAssert.IsType<ItemMessage>(XAssert.Single(result));
-        using var doc = System.Text.Json.JsonDocument.Parse(itemMsg.Content.ToMemory());
+        using var doc = System.Text.Json.JsonDocument.Parse(BinaryData.FromObjectAsJson(itemMsg.Content).ToMemory());
         Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
 
         var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        var textContent = XAssert.IsContentPart(XAssert.Single(content), ResponseContentPartKind.InputText);
         Assert.That(textContent.Text, Is.EqualTo("Already expanded"));
     }
 

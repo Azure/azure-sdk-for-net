@@ -22,7 +22,7 @@ public class RawEventInteropTests
 
         // Use NextSequenceNumber() for a manually constructed event
         var seq = stream.NextSequenceNumber();
-        var manualEvent = new ResponseCreatedEvent(seq, stream.Response);
+        var manualEvent = new ResponseCreatedEvent { SequenceNumber = checked((int)(seq)), Response = stream.Response };
 
         Assert.That(manualEvent.SequenceNumber, Is.EqualTo(0));
 
@@ -71,23 +71,16 @@ public class RawEventInteropTests
 
         // Use raw event for a custom output item manually
         var rawSeq = stream.NextSequenceNumber(); // 7
-        var manualItem = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: "raw_item_001",
-            callId: "call_raw",
-            @namespace: null,
-            name: "manual_fn",
-            arguments: "{}",
-            status: ItemFunctionToolCallStatus.InProgress);
-        var rawAddedEvent = new ResponseOutputItemAddedEvent(rawSeq, 1, manualItem);
+        var manualItem = new OutputItemFunctionToolCall("call_raw", "manual_fn", BinaryData.FromString("{}"))
+        {
+            Id = "raw_item_001",
+            Status = OpenAI.Responses.FunctionCallStatus.InProgress,
+        };
+        var rawAddedEvent = new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(rawSeq)), OutputIndex = checked((int)(1)), Item = manualItem };
         events.Add(rawAddedEvent);
 
         var rawSeq2 = stream.NextSequenceNumber(); // 8
-        var rawDoneEvent = new ResponseOutputItemDoneEvent(rawSeq2, 1, manualItem);
+        var rawDoneEvent = new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(rawSeq2)), OutputIndex = checked((int)(1)), Item = manualItem };
         events.Add(rawDoneEvent);
 
         events.Add(stream.EmitCompleted());    // 9
@@ -112,47 +105,34 @@ public class RawEventInteropTests
 
         var events = new List<ResponseStreamEvent>
         {
-            new ResponseCreatedEvent(sequenceNumber: 0, response: response),
-            new ResponseInProgressEvent(sequenceNumber: 1, response: response),
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseInProgressEvent { SequenceNumber = checked((int)(1)), Response = response },
 
-            new ResponseOutputItemAddedEvent(
+            TestModels.ResponseOutputItemAddedEvent(
                 sequenceNumber: 2, outputIndex: 0,
-                item: new OutputItemMessage(
+                item: TestModels.OutputItemMessage(
                     id: itemId,
                     content: Array.Empty<MessageContent>(),
                     status: MessageStatus.InProgress)),
 
-            new ResponseContentPartAddedEvent(
-                sequenceNumber: 3, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                part: new OutputContentOutputTextContent(
-                    text: "", annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>())),
+            new ResponseContentPartAddedEvent { SequenceNumber = 3, ItemId = itemId, OutputIndex = 0, ContentIndex = 0, Part = OpenAI.Responses.ResponseContentPart.CreateOutputTextPart("", Array.Empty<OpenAI.Responses.ResponseMessageAnnotation>()) },
 
-            new ResponseTextDeltaEvent(
-                sequenceNumber: 4, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                delta: "Hello!", logprobs: Array.Empty<ResponseLogProb>()),
+            new ResponseTextDeltaEvent { SequenceNumber = 4, ItemId = itemId, OutputIndex = 0, ContentIndex = 0, Delta = "Hello!" },
 
-            new ResponseTextDoneEvent(
-                sequenceNumber: 5, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                text: "Hello!", logprobs: Array.Empty<ResponseLogProb>()),
+            new ResponseTextDoneEvent { SequenceNumber = 5, ItemId = itemId, OutputIndex = 0, ContentIndex = 0, Text = "Hello!" },
 
-            new ResponseContentPartDoneEvent(
-                sequenceNumber: 6, itemId: itemId, outputIndex: 0, contentIndex: 0,
-                part: new OutputContentOutputTextContent(
-                    text: "Hello!", annotations: Array.Empty<Annotation>(),
-                    logprobs: Array.Empty<LogProb>())),
+            new ResponseContentPartDoneEvent { SequenceNumber = 6, ItemId = itemId, OutputIndex = 0, ContentIndex = 0, Part = OpenAI.Responses.ResponseContentPart.CreateOutputTextPart("Hello!", Array.Empty<OpenAI.Responses.ResponseMessageAnnotation>()) },
 
-            new ResponseOutputItemDoneEvent(
+            TestModels.ResponseOutputItemDoneEvent(
                 sequenceNumber: 7, outputIndex: 0,
-                item: new OutputItemMessage(
+                item: TestModels.OutputItemMessage(
                     id: itemId,
-                    content: new[] { new MessageContentOutputTextContent(
-                        text: "Hello!",
-                        annotations: Array.Empty<Annotation>(),
-                        logprobs: Array.Empty<LogProb>()) },
+                    content: new MessageContent[] { ResponseContentPart.CreateOutputTextPart(
+                        "Hello!",
+                        Array.Empty<Annotation>()) },
                     status: MessageStatus.Completed)),
 
-            new ResponseCompletedEvent(sequenceNumber: 8, response: response),
+            new ResponseCompletedEvent { SequenceNumber = checked((int)(8)), Response = response },
         };
 
         // Assert: all events created successfully

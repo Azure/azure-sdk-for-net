@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -66,12 +67,17 @@ public class TextContentBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new OutputContentOutputTextContent(
-            text: "",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
-        return new ResponseContentPartAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        var part = OpenAI.Responses.ResponseContentPart.CreateOutputTextPart(
+            "",
+            Array.Empty<OpenAI.Responses.ResponseMessageAnnotation>());
+        return new ResponseContentPartAddedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Part = part,
+        };
     }
 
     /// <summary>
@@ -87,9 +93,14 @@ public class TextContentBuilder
             throw new InvalidOperationException("Cannot emit deltas after EmitTextDone has been called.");
 
         _deltaFragments.Add(text);
-        return new ResponseTextDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
-            text, Array.Empty<ResponseLogProb>());
+        return new ResponseTextDeltaEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Delta = text,
+        };
     }
 
     /// <summary>
@@ -112,9 +123,14 @@ public class TextContentBuilder
         _textDone = true;
         _finalText = finalText ?? string.Concat(_deltaFragments);
 
-        return new ResponseTextDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex,
-            _finalText, Array.Empty<ResponseLogProb>());
+        return new ResponseTextDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Text = _finalText,
+        };
     }
 
     /// <summary>
@@ -133,8 +149,15 @@ public class TextContentBuilder
 
         _annotations.Add(annotation);
         var annotationIndex = _annotationIndex++;
-        return new ResponseOutputTextAnnotationAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, annotationIndex, annotation);
+        return new ResponseOutputTextAnnotationAddedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            AnnotationIndex = checked((int)annotationIndex),
+            Annotation = ToOpenAIAnnotation(annotation),
+        };
     }
 
     /// <summary>
@@ -150,11 +173,18 @@ public class TextContentBuilder
             throw new InvalidOperationException("Must call EmitTextDone() before EmitDone().");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new OutputContentOutputTextContent(
-            text: _finalText ?? string.Empty,
-            annotations: _annotations,
-            logprobs: Array.Empty<LogProb>());
-        return new ResponseContentPartDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        var part = OpenAI.Responses.ResponseContentPart.CreateOutputTextPart(
+            _finalText ?? string.Empty,
+            _annotations.Select(ToOpenAIAnnotation).ToArray());
+        return new ResponseContentPartDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Part = part,
+        };
     }
+
+    internal static OpenAI.Responses.ResponseMessageAnnotation ToOpenAIAnnotation(Annotation annotation) => annotation;
 }

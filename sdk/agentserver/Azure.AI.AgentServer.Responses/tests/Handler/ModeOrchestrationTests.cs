@@ -123,7 +123,7 @@ public class ModeOrchestrationTests : IDisposable
         await _client.PostAsync("/responses", content);
 
         Assert.That(_handler.LastRequest, Is.Not.Null);
-        Assert.That(_handler.LastRequest.Stream, Is.False);
+        Assert.That(_handler.LastRequest.StreamingEnabled, Is.False);
         Assert.That(_handler.LastRequest.Background, Is.False);
     }
 
@@ -147,9 +147,9 @@ public class ModeOrchestrationTests : IDisposable
     {
         await Task.CompletedTask;
         var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> DelayedEventStream(
@@ -158,10 +158,10 @@ public class ModeOrchestrationTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await delayTask;
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     public void Dispose()

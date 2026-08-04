@@ -14,9 +14,11 @@ public class ItemMessageExtensionsTests
     public void Content_IsAccessibleAsBinaryData()
     {
         var json = """[{"type":"input_text","text":"Hello"}]""";
-        var msg = new ItemMessage(MessageRole.User, BinaryData.FromString(json));
+        var msg = TestModels.ItemMessage(MessageRole.User, BinaryData.FromString(json));
         Assert.That(msg.Content, Is.Not.Null);
-        XAssert.Contains("Hello", msg.Content.ToString());
+        var content = XAssert.Single(msg.GetContentExpanded());
+        var text = XAssert.IsContentPart(content, ResponseContentPartKind.InputText);
+        Assert.That(text.Text, Is.EqualTo("Hello"));
     }
 
     [Test]
@@ -24,13 +26,13 @@ public class ItemMessageExtensionsTests
     {
         var content = new List<MessageContent>
         {
-            new MessageContentInputTextContent("Hello world"),
+            ResponseContentPart.CreateInputTextPart("Hello world"),
         };
-        var msg = new ItemMessage(MessageRole.User, content);
+        var msg = TestModels.ItemMessage(MessageRole.User, content);
 
         var expanded = msg.GetContentExpanded();
         var textContent = XAssert.Single(expanded);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
@@ -48,8 +50,7 @@ public class ItemMessageExtensionsTests
     {
         // Use the internal parameterless constructor via deserialization
         var json = """{"type":"message","id":"msg1","status":"completed","role":"user"}""";
-        using var doc = System.Text.Json.JsonDocument.Parse(json);
-        var msg = ItemMessage.DeserializeItemMessage(doc.RootElement, System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
+        var msg = TestModels.FromJsonString<ItemMessage>(json);
         var result = msg.GetContentExpanded();
         Assert.That(result, Is.Empty);
     }
@@ -57,13 +58,13 @@ public class ItemMessageExtensionsTests
     [Test]
     public void GetContentExpanded_StringContent_ReturnsSingleTextContent()
     {
-        var msg = new ItemMessage(MessageRole.User,
+        var msg = TestModels.ItemMessage(MessageRole.User,
             BinaryData.FromObjectAsJson("Hello world"));
 
         var result = msg.GetContentExpanded();
 
         var textContent = XAssert.Single(result);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
@@ -71,22 +72,22 @@ public class ItemMessageExtensionsTests
     public void GetContentExpanded_ArrayContent_DeserializesCorrectly()
     {
         var json = """[{"type":"input_text","text":"Hi"},{"type":"input_text","text":"there"}]""";
-        var msg = new ItemMessage(MessageRole.User,
+        var msg = TestModels.ItemMessage(MessageRole.User,
             BinaryData.FromString(json));
 
         var result = msg.GetContentExpanded();
 
         Assert.That(result.Count, Is.EqualTo(2));
-        XAssert.IsType<MessageContentInputTextContent>(result[0]);
-        XAssert.IsType<MessageContentInputTextContent>(result[1]);
-        Assert.That(((MessageContentInputTextContent)result[0]).Text, Is.EqualTo("Hi"));
-        Assert.That(((MessageContentInputTextContent)result[1]).Text, Is.EqualTo("there"));
+        var first = XAssert.IsContentPart(result[0], ResponseContentPartKind.InputText);
+        var second = XAssert.IsContentPart(result[1], ResponseContentPartKind.InputText);
+        Assert.That(first.Text, Is.EqualTo("Hi"));
+        Assert.That(second.Text, Is.EqualTo("there"));
     }
 
     [Test]
     public void GetContentExpanded_NonStringNonArray_ThrowsFormatException()
     {
-        var msg = new ItemMessage(MessageRole.User,
+        var msg = TestModels.ItemMessage(MessageRole.User,
             BinaryData.FromString("42"));
 
         var ex = Assert.Throws<FormatException>(() => msg.GetContentExpanded());

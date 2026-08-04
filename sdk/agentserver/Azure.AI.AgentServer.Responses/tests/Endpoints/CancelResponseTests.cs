@@ -82,7 +82,7 @@ public class CancelResponseTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         var cancelled = false;
         try
@@ -97,7 +97,7 @@ public class CancelResponseTests : IDisposable
         if (cancelled)
         {
             response.SetIncomplete();
-            yield return new ResponseIncompleteEvent(0, response);
+            yield return new ResponseIncompleteEvent { SequenceNumber = checked((int)(0)), Response = response };
         }
     }
 

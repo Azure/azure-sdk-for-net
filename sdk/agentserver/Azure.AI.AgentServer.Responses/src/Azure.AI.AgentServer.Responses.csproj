@@ -33,9 +33,10 @@
     <None Remove="TypeSpec/tsp-output/**" />
   </ItemGroup>
 
-  <!-- Re-include hand-written custom partials (Optional, CodeGenStubs, etc.) -->
+  <!-- Re-include hand-written customization stubs that shape generation. -->
   <ItemGroup>
     <Compile Include="TypeSpec/tsp-output/src/Custom/*.cs" />
   </ItemGroup>
+
 
 </Project>

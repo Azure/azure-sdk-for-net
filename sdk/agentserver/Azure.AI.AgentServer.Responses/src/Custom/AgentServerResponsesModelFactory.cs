@@ -59,15 +59,22 @@ internal static partial class AgentServerResponsesModelFactory
         return new ApiErrorResponse(error, additionalBinaryDataProperties: null);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseErrorInfo"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="OpenAI.Responses.ResponseError"/> instance for mocking.</summary>
     /// <param name="code">The error code.</param>
     /// <param name="message">The error message.</param>
-    /// <returns>A new <see cref="Models.ResponseErrorInfo"/> instance.</returns>
+    /// <returns>A new <see cref="OpenAI.Responses.ResponseError"/> instance.</returns>
     public static ResponseErrorInfo ResponseErrorInfo(
         ResponseErrorCode code = default,
         string message = default!)
     {
-        return new ResponseErrorInfo(code, message, additionalBinaryDataProperties: null);
+#pragma warning disable AZC0150 // OpenAI response models do not expose this package's ModelReaderWriterContext.
+        return System.ClientModel.Primitives.ModelReaderWriter.Read<ResponseErrorInfo>(
+            BinaryData.FromObjectAsJson(new
+            {
+                code = code.ToString(),
+                message,
+            }))!;
+#pragma warning restore AZC0150
     }
 
     /// <summary>Creates a <see cref="Models.ResponseObject"/> instance for mocking.</summary>
@@ -88,67 +95,45 @@ internal static partial class AgentServerResponsesModelFactory
     {
         output ??= new List<OutputItem>();
 
-        return new ResponseObject(
-            metadata: null,
-            topLogprobs: null,
-            temperature: null,
-            topP: null,
-            user: null,
-            safetyIdentifier: null,
-            promptCacheKey: null,
-            serviceTier: null,
-            promptCacheRetention: null,
-            previousResponseId: null,
-            model: model,
-            reasoning: null,
-            background: null,
-            maxOutputTokens: null,
-            maxToolCalls: null,
-            text: null,
-            tools: new List<Tool>(),
-            toolChoice: null,
-            prompt: null,
-            truncation: null,
-            id: id,
-            @object: null,
-            status: status,
-            createdAt: createdAt,
-            completedAt: null,
-            error: error,
-            incompleteDetails: null,
-            output: output.ToList(),
-            instructions: null,
-            outputText: null,
-            usage: null,
-            parallelToolCalls: default,
-            conversation: null,
-            agent: null,
-            agentSessionId: null,
-            agentReference: null,
-            additionalBinaryDataProperties: null);
+        var response = new ResponseObject(id, model)
+        {
+            Status = status,
+            CreatedAt = createdAt,
+            Error = error,
+        };
+        foreach (var item in output)
+        {
+            response.Output.Add(item);
+        }
+        return response;
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseCreatedEvent"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="OpenAI.Responses.StreamingResponseCreatedUpdate"/> instance for mocking.</summary>
     /// <param name="sequenceNumber">The SSE sequence number.</param>
     /// <param name="response">The response object.</param>
-    /// <returns>A new <see cref="Models.ResponseCreatedEvent"/> instance.</returns>
+    /// <returns>A new <see cref="OpenAI.Responses.StreamingResponseCreatedUpdate"/> instance.</returns>
     public static ResponseCreatedEvent ResponseCreatedEvent(
         ResponseObject response = default!,
         long sequenceNumber = default)
     {
-        return new ResponseCreatedEvent(
-            ResponseStreamEventType.ResponseCreated,
-            sequenceNumber,
-            additionalBinaryDataProperties: null,
-            response: response);
+        return new ResponseCreatedEvent
+        {
+            SequenceNumber = checked((int)sequenceNumber),
+            Response = response,
+        };
     }
 
-    /// <summary>Creates a <see cref="Models.DeleteResponseResult"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="OpenAI.Responses.ResponseDeletionResult"/> instance for mocking.</summary>
     /// <param name="id">The ID of the deleted response.</param>
-    /// <returns>A new <see cref="Models.DeleteResponseResult"/> with <c>Deleted = true</c>.</returns>
+    /// <returns>A new <see cref="OpenAI.Responses.ResponseDeletionResult"/> with <c>Deleted = true</c>.</returns>
     public static DeleteResponseResult DeleteResponseResult(string id = default!)
     {
-        return new DeleteResponseResult(id, true, "response", additionalBinaryDataProperties: null);
+        return new DeleteResponseResult
+        {
+            ResponseId = id,
+            Deleted = true,
+            Object = "response",
+        };
     }
 
     /// <summary>Creates an <see cref="Models.AgentsPagedResultOutputItem"/> instance for mocking.</summary>
@@ -173,13 +158,13 @@ internal static partial class AgentServerResponsesModelFactory
             additionalBinaryDataProperties: null);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseUsage"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="ResponseUsage"/> instance for mocking.</summary>
     /// <param name="inputTokens">The number of input tokens.</param>
     /// <param name="inputTokensDetails">A detailed breakdown of the input tokens.</param>
     /// <param name="outputTokens">The number of output tokens.</param>
     /// <param name="outputTokensDetails">A detailed breakdown of the output tokens.</param>
     /// <param name="totalTokens">The total number of tokens used.</param>
-    /// <returns>A new <see cref="Models.ResponseUsage"/> instance.</returns>
+    /// <returns>A new <see cref="ResponseUsage"/> instance.</returns>
     public static ResponseUsage ResponseUsage(
         long inputTokens = default,
         ResponseUsageInputTokensDetails inputTokensDetails = default!,
@@ -187,9 +172,16 @@ internal static partial class AgentServerResponsesModelFactory
         ResponseUsageOutputTokensDetails outputTokensDetails = default!,
         long totalTokens = default)
     {
-        inputTokensDetails ??= new ResponseUsageInputTokensDetails(cachedTokens: 0);
-        outputTokensDetails ??= new ResponseUsageOutputTokensDetails(reasoningTokens: 0);
+        inputTokensDetails ??= new ResponseUsageInputTokensDetails();
+        outputTokensDetails ??= new ResponseUsageOutputTokensDetails();
 
-        return new ResponseUsage(inputTokens, inputTokensDetails, outputTokens, outputTokensDetails, totalTokens);
+        return new ResponseUsage
+        {
+            InputTokenCount = checked((int)inputTokens),
+            InputTokenDetails = inputTokensDetails,
+            OutputTokenCount = checked((int)outputTokens),
+            OutputTokenDetails = outputTokensDetails,
+            TotalTokenCount = checked((int)totalTokens),
+        };
     }
 }

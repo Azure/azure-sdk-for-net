@@ -42,7 +42,7 @@ public class BgStreamDisconnectTests : ProtocolTestBase
 
         // Wait for handler to signal it's past the disconnect point
         await readyForDisconnect.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         // Disconnect the SSE client
         cts.Cancel();
@@ -156,7 +156,7 @@ public class BgStreamDisconnectTests : ProtocolTestBase
 
         for (var i = 0; i < totalOutputs; i++)
         {
-            yield return new ResponseOutputItemDoneEvent();
+            yield return TestModels.ResponseOutputItemDoneEvent(0, TestModels.OutputItemMessage("msg_test", MessageStatus.Completed, Array.Empty<MessageContent>()));
 
             if (i == disconnectAfter - 1)
             {

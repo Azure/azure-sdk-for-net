@@ -15,7 +15,7 @@ public static class ItemExtensions
     /// Extracts all text content from a sequence of <see cref="Item"/> instances as a single string.
     /// Filters for <see cref="ItemMessage"/> items, expands their content via
     /// <see cref="ItemMessageExtensions.GetContentExpanded"/>, and joins all
-    /// <see cref="MessageContentInputTextContent.Text"/> values with newline separators.
+    /// input text content values with newline separators.
     /// </summary>
     /// <param name="items">The input items to extract text from.</param>
     /// <returns>
@@ -28,8 +28,8 @@ public static class ItemExtensions
         var texts = items
             .OfType<ItemMessage>()
             .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputTextContent>()
-            .Select(tc => tc.Text);
+            .Where(content => content.Kind == OpenAI.Responses.ResponseContentPartKind.InputText)
+            .Select(content => content.Text);
 
         return string.Join("\n", texts);
     }

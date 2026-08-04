@@ -65,9 +65,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var imageUrls = items
                     .OfType<ItemMessage>()
                     .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputImageContent>()
-                    .Where(img => img.ImageUrl != null)
-                    .Select(img => img.ImageUrl)
+                    .Where(part => part.Kind == OpenAI.Responses.ResponseContentPartKind.InputImage)
+                    .Where(part => part.InputImageUri != null)
+                    .Select(part => part.InputImageUri.ToString())
                     .ToList();
 
                 // Describe what we received (a real handler would call a vision model).
@@ -104,14 +104,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var images = items
                     .OfType<ItemMessage>()
                     .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputImageContent>()
-                    .Where(img => img.ImageUrl != null)
+                    .Where(part => part.Kind == OpenAI.Responses.ResponseContentPartKind.InputImage)
+                    .Where(part => part.InputImageUri != null)
                     .ToList();
 
                 string reply;
-                if (images.Count > 0 && DataUrl.TryDecodeBytes(images[0].ImageUrl, out byte[] imageBytes))
+                if (images.Count > 0 && DataUrl.TryDecodeBytes(images[0].InputImageUri.ToString(), out byte[] imageBytes))
                 {
-                    string? mediaType = DataUrl.GetMediaType(images[0].ImageUrl);
+                    string? mediaType = DataUrl.GetMediaType(images[0].InputImageUri.ToString());
                     reply = $"Received a {mediaType ?? "unknown"} image ({imageBytes.Length} bytes).";
                 }
                 else
@@ -148,12 +148,12 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var images = items
                     .OfType<ItemMessage>()
                     .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputImageContent>()
-                    .Where(img => img.FileId != null)
+                    .Where(part => part.Kind == OpenAI.Responses.ResponseContentPartKind.InputImage)
+                    .Where(part => part.InputImageFileId != null)
                     .ToList();
 
                 string reply = images.Count > 0
-                    ? $"Received {images.Count} image(s) by file ID. First: {images[0].FileId}"
+                    ? $"Received {images.Count} image(s) by file ID. First: {images[0].InputImageFileId}"
                     : "No file_id images found in the input.";
 
                 foreach (var evt in stream.OutputItemMessage(reply))

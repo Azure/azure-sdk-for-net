@@ -44,7 +44,7 @@ public class CancellationTests : IDisposable
     {
         await Task.CompletedTask;
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         // Simulate handler throwing OperationCanceledException
         throw new OperationCanceledException();

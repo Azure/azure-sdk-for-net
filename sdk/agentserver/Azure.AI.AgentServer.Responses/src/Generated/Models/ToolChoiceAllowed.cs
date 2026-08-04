@@ -74,7 +74,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   message.
         ///   `required` requires the model to call one or more of the allowed tools.
         /// </summary>
-        public ToolChoiceAllowedMode Mode { get; set; }
+        public ToolChoiceAllowedMode Mode { get; }
 
         /// <summary>
         /// A list of tool definitions that the model should be allowed to call.

@@ -206,9 +206,9 @@ public class HandlerDrivenPersistenceTests : IDisposable
         started.TrySetResult();
         await gate.WaitAsync(ct);
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     /// <summary>

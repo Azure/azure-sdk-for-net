@@ -124,21 +124,21 @@ public class CrossModeConsistencyTests : IDisposable
     {
         await Task.CompletedTask;
         var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
-        var textContent = new MessageContentOutputTextContent(
-            "Hello world", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var msg = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart(
+            "Hello world", Array.Empty<Annotation>());
+        var msg = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });
-        yield return new ResponseOutputItemAddedEvent(0, 0, msg);
-        yield return new ResponseOutputItemDoneEvent(0, 0, msg);
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = msg };
+        yield return new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = msg };
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test");
-        completedResponse.Output.Add(msg);
+        completedResponse.OutputItems.Add(msg);
         completedResponse.SetCompleted();
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse };
     }
 
     public void Dispose()

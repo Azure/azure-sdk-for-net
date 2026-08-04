@@ -143,10 +143,10 @@ public class ErrorHandlingTests : IDisposable
         // Get the x-request-id header value
         var headerRequestId = response.Headers.GetValues("x-request-id").First();
 
-        // Verify error.additionalInfo.request_id matches the response header
+        // Verify error.additional_info.request_id matches the response header
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
         var error = body.GetProperty("error");
-        Assert.That(error.TryGetProperty("additionalInfo", out var additionalInfo), Is.True);
+        Assert.That(error.TryGetProperty("additional_info", out var additionalInfo), Is.True);
         Assert.That(additionalInfo.TryGetProperty("request_id", out var requestIdProp), Is.True);
         Assert.That(requestIdProp.GetString(), Is.EqualTo(headerRequestId));
     }

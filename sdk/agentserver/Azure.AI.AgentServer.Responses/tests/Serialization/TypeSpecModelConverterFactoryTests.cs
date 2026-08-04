@@ -119,7 +119,7 @@ public class TypeSpecModelConverterFactoryTests
     public void Serialize_ResponseError_ProducesCorrectStructure()
     {
         var options = CreateOptions();
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "Something went wrong");
+        var error = ResponsesModelFactory.ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode.ServerError, "Something went wrong");
 
         var json = JsonSerializer.Serialize(error, options);
         using var doc = JsonDocument.Parse(json);
@@ -133,8 +133,8 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var metadata = new Metadata();
-        metadata.AdditionalProperties["user_id"] = "u123";
-        metadata.AdditionalProperties["session"] = "s456";
+        metadata["user_id"] = "u123";
+        metadata["session"] = "s456";
 
         var json = JsonSerializer.Serialize(metadata, options);
         using var doc = JsonDocument.Parse(json);
@@ -175,13 +175,13 @@ public class TypeSpecModelConverterFactoryTests
     public void Deserialize_ResponseError_PreservesCodeAndMessage()
     {
         var options = CreateOptions();
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test error");
+        var error = ResponsesModelFactory.ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode.ServerError, "test error");
 
         var json = JsonSerializer.Serialize(error, options);
-        var deserialized = JsonSerializer.Deserialize<Models.ResponseErrorInfo>(json, options);
+        var deserialized = JsonSerializer.Deserialize<ResponseErrorInfo>(json, options);
 
         Assert.That(deserialized, Is.Not.Null);
-        Assert.That(deserialized!.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(deserialized!.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(deserialized.Message, Is.EqualTo("test error"));
     }
 
@@ -219,7 +219,7 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var evt = new ResponseCreatedEvent(42, response);
+        var evt = new ResponseCreatedEvent { SequenceNumber = checked((int)(42)), Response = response };
 
         var json = JsonSerializer.Serialize<ResponseStreamEvent>(evt, options);
         var deserialized = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
@@ -236,7 +236,7 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var evt = new ResponseCompletedEvent(99, response);
+        var evt = new ResponseCompletedEvent { SequenceNumber = checked((int)(99)), Response = response };
 
         var json = JsonSerializer.Serialize<ResponseStreamEvent>(evt, options);
         var deserialized = JsonSerializer.Deserialize<ResponseStreamEvent>(json, options);
@@ -256,7 +256,7 @@ public class TypeSpecModelConverterFactoryTests
         var original = new Models.ResponseObject("resp_roundtrip", "gpt-4o-mini")
         {
             Status = ResponseStatus.Failed,
-            Error = new Models.ResponseErrorInfo(ResponseErrorCode.InvalidPrompt, "bad prompt"),
+            Error = ResponsesModelFactory.ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode.InvalidPrompt, "bad prompt"),
             CreatedAt = new DateTimeOffset(2026, 1, 15, 8, 30, 0, TimeSpan.Zero),
         };
 
@@ -276,7 +276,7 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var response = CreateTestResponse();
-        var original = new ResponseCreatedEvent(7, response);
+        var original = new ResponseCreatedEvent { SequenceNumber = checked((int)(7)), Response = response };
 
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<ResponseCreatedEvent>(json, options);
@@ -292,15 +292,15 @@ public class TypeSpecModelConverterFactoryTests
     {
         var options = CreateOptions();
         var original = new Metadata();
-        original.AdditionalProperties["key1"] = "value1";
-        original.AdditionalProperties["key2"] = "value2";
+        original["key1"] = "value1";
+        original["key2"] = "value2";
 
         var json = JsonSerializer.Serialize(original, options);
         var restored = JsonSerializer.Deserialize<Metadata>(json, options);
 
         Assert.That(restored, Is.Not.Null);
-        Assert.That(restored!.AdditionalProperties["key1"], Is.EqualTo("value1"));
-        Assert.That(restored.AdditionalProperties["key2"], Is.EqualTo("value2"));
+        Assert.That(restored!["key1"], Is.EqualTo("value1"));
+        Assert.That(restored["key2"], Is.EqualTo("value2"));
     }
 
     [Test]

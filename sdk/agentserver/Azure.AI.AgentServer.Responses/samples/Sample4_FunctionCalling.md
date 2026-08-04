@@ -25,14 +25,12 @@ public class WeatherHandler : ResponseHandler
 
         // Check if the input contains a function call output (turn 2)
         var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
-        var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+        var toolOutput = inputItems.OfType<FunctionCallOutputResponseItem>().FirstOrDefault();
 
         if (toolOutput is not null)
         {
             // Turn 2: function output received — return the weather as a text message
-            var weatherJson = toolOutput.Output is not null
-                ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
-                : "{}";
+            var weatherJson = toolOutput.FunctionOutput;
 
             yield return stream.EmitCreated();
             yield return stream.EmitInProgress();
@@ -76,14 +74,12 @@ public class WeatherHandlerFullControl : ResponseHandler
 
         // Check if the input contains a function call output (turn 2)
         var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
-        var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+        var toolOutput = inputItems.OfType<FunctionCallOutputResponseItem>().FirstOrDefault();
 
         if (toolOutput is not null)
         {
             // Turn 2: function output received — return the weather as a text message
-            var weatherJson = toolOutput.Output is not null
-                ? JsonSerializer.Deserialize<string>(toolOutput.Output) ?? "{}"
-                : "{}";
+            var weatherJson = toolOutput.FunctionOutput;
 
             yield return stream.EmitCreated();
             yield return stream.EmitInProgress();

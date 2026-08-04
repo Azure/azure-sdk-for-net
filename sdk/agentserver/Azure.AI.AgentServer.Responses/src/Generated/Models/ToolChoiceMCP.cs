@@ -35,7 +35,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The label of the MCP server to use. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary> Gets or sets the Name. </summary>
         public string Name { get; set; }

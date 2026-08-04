@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -54,7 +55,7 @@ internal static class ResponseMutations
         ResponseUsage? usage = null)
     {
         response.Status = ResponseStatus.Failed;
-        response.Error = new Models.ResponseErrorInfo(code, message);
+        response.Error = AgentServerResponsesModelFactory.ResponseErrorInfo(code, message);
 
         if (usage is not null)
         {
@@ -105,7 +106,10 @@ internal static class ResponseMutations
 
         if (reason is not null)
         {
-            response.IncompleteDetails = new ResponseIncompleteDetails { Reason = reason };
+#pragma warning disable AZC0150 // OpenAI response models do not expose this package's ModelReaderWriterContext.
+            response.IncompleteDetails = ModelReaderWriter.Read<ResponseIncompleteDetails>(
+                BinaryData.FromObjectAsJson(new { reason = reason.ToString() }))!;
+#pragma warning restore AZC0150
         }
 
         if (usage is not null)
@@ -190,9 +194,10 @@ internal static class ResponseMutations
     /// </summary>
     internal static void StampAgentReference(ResponseExecution execution, CreateResponse request)
     {
-        if (request.AgentReference is not null)
+        var agentReference = request.GetAgentReference();
+        if (agentReference is not null)
         {
-            execution.Response!.AgentReference = request.AgentReference;
+            execution.Response!.AgentReference = agentReference;
         }
     }
 
@@ -203,9 +208,10 @@ internal static class ResponseMutations
     /// </summary>
     internal static void StampAgentSessionId(ResponseExecution execution, CreateResponse request)
     {
-        if (!string.IsNullOrEmpty(request.AgentSessionId))
+        var agentSessionId = request.GetAgentSessionId();
+        if (!string.IsNullOrEmpty(agentSessionId))
         {
-            execution.Response!.AgentSessionId = request.AgentSessionId;
+            execution.Response!.AgentSessionId = agentSessionId;
         }
     }
 
@@ -219,12 +225,12 @@ internal static class ResponseMutations
     /// </summary>
     internal static void StampRequestEchoFields(ResponseExecution execution, CreateResponse request)
     {
-        execution.Response!.Background = request.Background;
+        execution.Response!.Background = request.BackgroundModeEnabled;
         execution.Response!.PreviousResponseId = request.PreviousResponseId;
 
         var conversationId = request.GetConversationId();
         execution.Response!.Conversation = conversationId != null
-            ? new ConversationReference(conversationId)
+            ? new ConversationParam(conversationId)
             : null;
     }
 
@@ -264,14 +270,18 @@ internal static class ResponseMutations
             return;
         }
 
-        if (string.IsNullOrEmpty(item.ResponseId))
+#pragma warning disable SCME0001 // JsonPatch is the supported extension-data path for OpenAI-owned response items.
+        if (!item.Patch.Contains("$.response_id"u8))
         {
-            item.ResponseId = responseId;
+            item.Patch.Set("$.response_id"u8, responseId);
         }
 
-        if (item.AgentReference is null && agentReference is not null)
+        if (agentReference is not null && !item.Patch.Contains("$.agent_reference"u8))
         {
-            item.AgentReference = agentReference;
+            item.Patch.Set(
+                "$.agent_reference"u8,
+                BinaryData.FromString(System.Text.Json.JsonSerializer.Serialize(agentReference, SharedJsonOptions.Instance)));
         }
+#pragma warning restore SCME0001
     }
 }

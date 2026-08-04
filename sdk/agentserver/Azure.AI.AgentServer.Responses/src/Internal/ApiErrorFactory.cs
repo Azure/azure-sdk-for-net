@@ -74,7 +74,7 @@ internal static class ApiErrorFactory
     /// </summary>
     internal static ApiErrorResult PayloadValidation(PayloadValidationException ex)
     {
-        var detailsList = new List<Models.Error>();
+        var detailsList = new List<Error>();
         foreach (var validationError in ex.Errors)
         {
             detailsList.Add(ModelFactory.Error(
@@ -98,7 +98,7 @@ internal static class ApiErrorFactory
     /// Creates a <see cref="Error"/> with <c>type: "server_error"</c>.
     /// Used when constructing <see cref="ResponsesApiException"/> to throw.
     /// </summary>
-    internal static Models.Error NewServerError(string message)
+    internal static Error NewServerError(string message)
         => ModelFactory.Error(code: "server_error", message: message, type: "server_error");
 
     /// <summary>
@@ -155,10 +155,10 @@ internal static class ApiErrorFactory
     /// Maps any handler exception to a <see cref="ResponseErrorInfo"/> with the correct
     /// <see cref="ResponseErrorCode"/> and message.
     /// </summary>
-    internal static Models.ResponseErrorInfo ToResponseError(Exception exception)
+    internal static ResponseErrorInfo ToResponseError(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new Models.ResponseErrorInfo(ParseResponseErrorCode(code), message);
+        return AgentServerResponsesModelFactory.ResponseErrorInfo(ParseResponseErrorCode(code), message);
     }
 
     // --- SSE standalone error event ---
@@ -169,7 +169,12 @@ internal static class ApiErrorFactory
     /// The message is sanitized — internal details are never exposed.
     /// </summary>
     internal static ResponseErrorEvent SseErrorEvent(string? safeMessage = null)
-        => new(0, "server_error", safeMessage ?? GenericServerErrorMessage, null!);
+        => new()
+        {
+            SequenceNumber = 0,
+            Code = "server_error",
+            Message = safeMessage ?? GenericServerErrorMessage,
+        };
 
     /// <summary>
     /// Maps any handler exception to a <see cref="ResponseErrorEvent"/> with the correct
@@ -178,7 +183,12 @@ internal static class ApiErrorFactory
     internal static ResponseErrorEvent ToSseErrorEvent(Exception exception)
     {
         var (code, message) = ExceptionErrorInfo(exception);
-        return new ResponseErrorEvent(0, code, message, null!);
+        return new ResponseErrorEvent
+        {
+            SequenceNumber = 0,
+            Code = code,
+            Message = message,
+        };
     }
 
     // --- Helpers ---

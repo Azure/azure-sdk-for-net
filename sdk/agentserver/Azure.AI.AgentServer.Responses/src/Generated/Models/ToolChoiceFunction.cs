@@ -33,6 +33,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The name of the function to call. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
     }
 }

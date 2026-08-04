@@ -62,13 +62,19 @@ public static class ResponseExtensions
     public static void SetToolChoice(this ResponseObject response, ToolChoiceOptions toolChoice)
     {
         Argument.AssertNotNull(response, nameof(response));
-        response.ToolChoice = BinaryData.FromObjectAsJson(toolChoice.ToSerialString());
+        response.ToolChoice = toolChoice.Kind switch
+        {
+            OpenAI.Responses.ResponseToolChoiceKind.Auto => BinaryData.FromObjectAsJson("auto"),
+            OpenAI.Responses.ResponseToolChoiceKind.Required => BinaryData.FromObjectAsJson("required"),
+            OpenAI.Responses.ResponseToolChoiceKind.None => BinaryData.FromObjectAsJson("none"),
+            _ => ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, OpenAI.OpenAIContext.Default),
+        };
     }
 
     /// <summary>
     /// Expands the <see cref="ResponseObject.Instructions"/> BinaryData into a typed list of
     /// <see cref="Item"/> objects. A plain string is wrapped as a single <see cref="ItemMessage"/>
-    /// with <see cref="MessageRole.Developer"/> role and the instruction text.
+    /// with developer role and the instruction text.
     /// </summary>
     /// <param name="response">The response.</param>
     /// <returns>

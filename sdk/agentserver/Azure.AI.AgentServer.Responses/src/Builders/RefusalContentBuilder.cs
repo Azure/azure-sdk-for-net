@@ -59,9 +59,15 @@ public class RefusalContentBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new OutputContentRefusalContent(refusal: "");
-        return new ResponseContentPartAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        var part = OpenAI.Responses.ResponseContentPart.CreateRefusalPart("");
+        return new ResponseContentPartAddedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Part = part,
+        };
     }
 
     /// <summary>
@@ -76,8 +82,14 @@ public class RefusalContentBuilder
         if (_refusalDone)
             throw new InvalidOperationException("Cannot emit deltas after EmitRefusalDone has been called.");
 
-        return new ResponseRefusalDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, text);
+        return new ResponseRefusalDeltaEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Delta = text,
+        };
     }
 
     /// <summary>
@@ -95,8 +107,14 @@ public class RefusalContentBuilder
 
         _refusalDone = true;
         _finalRefusal = finalRefusal;
-        return new ResponseRefusalDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, finalRefusal);
+        return new ResponseRefusalDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Refusal = finalRefusal,
+        };
     }
 
     /// <summary>
@@ -112,9 +130,14 @@ public class RefusalContentBuilder
             throw new InvalidOperationException("Must call EmitRefusalDone() before EmitDone().");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new OutputContentRefusalContent(
-            refusal: _finalRefusal ?? string.Empty);
-        return new ResponseContentPartDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _contentIndex, part);
+        var part = OpenAI.Responses.ResponseContentPart.CreateRefusalPart(_finalRefusal ?? string.Empty);
+        return new ResponseContentPartDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            ContentIndex = checked((int)_contentIndex),
+            Part = part,
+        };
     }
 }

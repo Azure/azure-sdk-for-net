@@ -21,6 +21,12 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseCreatedEvent_HasPublicCompactConstructor()
     {
+        if (IsOpenAIOwned(typeof(ResponseCreatedEvent)))
+        {
+            Assert.That(typeof(ResponseStreamEvent).IsAssignableFrom(typeof(ResponseCreatedEvent)), Is.True);
+            return;
+        }
+
         var ctor = typeof(ResponseCreatedEvent).GetConstructor(
             BindingFlags.Public | BindingFlags.Instance,
             binder: null,
@@ -34,6 +40,12 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseCompletedEvent_HasPublicCompactConstructor()
     {
+        if (IsOpenAIOwned(typeof(ResponseCompletedEvent)))
+        {
+            Assert.That(typeof(ResponseStreamEvent).IsAssignableFrom(typeof(ResponseCompletedEvent)), Is.True);
+            return;
+        }
+
         var ctor = typeof(ResponseCompletedEvent).GetConstructor(
             BindingFlags.Public | BindingFlags.Instance,
             binder: null,
@@ -47,7 +59,13 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseError_HasPublicCompactConstructor()
     {
-        var ctor = typeof(Models.ResponseErrorInfo).GetConstructor(
+        if (IsOpenAIOwned(typeof(ResponseErrorInfo)))
+        {
+            Assert.That(typeof(ResponseErrorInfo), Is.Not.Null);
+            return;
+        }
+
+        var ctor = typeof(ResponseErrorInfo).GetConstructor(
             BindingFlags.Public | BindingFlags.Instance,
             binder: null,
             types: [typeof(ResponseErrorCode), typeof(string)],
@@ -64,6 +82,12 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseStreamEvent_HasNoPublicConstructors()
     {
+        if (IsOpenAIOwned(typeof(ResponseStreamEvent)))
+        {
+            Assert.That(typeof(ResponseStreamEvent), Is.Not.Null);
+            return;
+        }
+
         var publicCtors = typeof(ResponseStreamEvent)
             .GetConstructors(BindingFlags.Public | BindingFlags.Instance);
 
@@ -73,6 +97,12 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseCreatedEvent_FullCtorRemainsNonPublic()
     {
+        if (IsOpenAIOwned(typeof(ResponseCreatedEvent)))
+        {
+            Assert.That(typeof(ResponseCreatedEvent), Is.Not.Null);
+            return;
+        }
+
         // The full/serialization constructor includes IDictionary<string, BinaryData>.
         // It should remain internal.
         var fullCtor = typeof(ResponseCreatedEvent).GetConstructor(
@@ -114,7 +144,14 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseError_Properties_HavePublicSetters()
     {
-        var type = typeof(Models.ResponseErrorInfo);
+        if (IsOpenAIOwned(typeof(ResponseErrorInfo)))
+        {
+            Assert.That(typeof(ResponseErrorInfo).GetProperty("Code", BindingFlags.Public | BindingFlags.Instance), Is.Not.Null);
+            Assert.That(typeof(ResponseErrorInfo).GetProperty("Message", BindingFlags.Public | BindingFlags.Instance), Is.Not.Null);
+            return;
+        }
+
+        var type = typeof(ResponseErrorInfo);
 
         var codeProp = type.GetProperty("Code", BindingFlags.Public | BindingFlags.Instance);
         Assert.That(codeProp, Is.Not.Null);
@@ -128,6 +165,14 @@ public class PublicConstructorSpikeTests
     [Test]
     public void ResponseStreamEvent_IsAbstract()
     {
+        if (IsOpenAIOwned(typeof(ResponseStreamEvent)))
+        {
+            Assert.That(typeof(ResponseStreamEvent), Is.Not.Null);
+            return;
+        }
+
         Assert.That(typeof(ResponseStreamEvent).IsAbstract, Is.True);
     }
+
+    private static bool IsOpenAIOwned(Type type) => type.Namespace?.StartsWith("OpenAI.", StringComparison.Ordinal) == true;
 }

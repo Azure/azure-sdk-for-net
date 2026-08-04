@@ -120,11 +120,11 @@ public class TokenUsageProtocolTests : ProtocolTestBase
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         yield return stream.EmitCreated();
 
-        var usage = new ResponseUsage(
+        var usage = TestModels.ResponseUsage(
             10,
-            new ResponseUsageInputTokensDetails(0),
+            0,
             5,
-            new ResponseUsageOutputTokensDetails(0),
+            0,
             15);
 
         yield return stream.EmitCompleted(usage);

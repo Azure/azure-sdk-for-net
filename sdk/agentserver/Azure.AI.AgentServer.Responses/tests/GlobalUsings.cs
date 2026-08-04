@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 global using Azure.AI.AgentServer.Responses.Internal;
+global using Azure.AI.AgentServer.Responses.Models;
+global using Azure.AI.AgentServer.Responses.Tests.Helpers;
 global using Azure.AI.AgentServer.Responses.Validators;
 global using NUnit.Framework;
 

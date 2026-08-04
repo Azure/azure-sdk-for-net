@@ -36,12 +36,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this code interpreter call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemCodeInterpreterToolCall(
-            id: _itemId,
-            status: ItemCodeInterpreterToolCallStatus.InProgress,
-            containerId: "",
-            code: "",
-            outputs: Array.Empty<BinaryData>());
+        var item = new OutputItemCodeInterpreterToolCall("")
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.CodeInterpreterCallStatus.InProgress,
+            ContainerId = "",
+        };
         return EmitAdded(item);
     }
 
@@ -51,8 +51,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallInProgressEvent"/>.</returns>
     public virtual ResponseCodeInterpreterCallInProgressEvent EmitInProgress()
     {
-        return new ResponseCodeInterpreterCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseCodeInterpreterCallInProgressEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+        };
     }
 
     /// <summary>
@@ -61,8 +65,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallInterpretingEvent"/>.</returns>
     public virtual ResponseCodeInterpreterCallInterpretingEvent EmitInterpreting()
     {
-        return new ResponseCodeInterpreterCallInterpretingEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseCodeInterpreterCallInterpretingEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+        };
     }
 
     /// <summary>
@@ -72,8 +80,13 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallCodeDeltaEvent"/> with the delta.</returns>
     public virtual ResponseCodeInterpreterCallCodeDeltaEvent EmitCodeDelta(string delta)
     {
-        return new ResponseCodeInterpreterCallCodeDeltaEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, delta);
+        return new ResponseCodeInterpreterCallCodeDeltaEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+            Delta = delta,
+        };
     }
 
     /// <summary>
@@ -84,8 +97,13 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     public virtual ResponseCodeInterpreterCallCodeDoneEvent EmitCodeDone(string code)
     {
         _finalCode = code;
-        return new ResponseCodeInterpreterCallCodeDoneEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, code);
+        return new ResponseCodeInterpreterCallCodeDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+            Code = code,
+        };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -130,8 +148,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseCodeInterpreterCallCompletedEvent"/>.</returns>
     public virtual ResponseCodeInterpreterCallCompletedEvent EmitCompleted()
     {
-        return new ResponseCodeInterpreterCallCompletedEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseCodeInterpreterCallCompletedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+        };
     }
 
     /// <summary>
@@ -140,12 +162,12 @@ public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItem
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this code interpreter call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemCodeInterpreterToolCall(
-            id: _itemId,
-            status: ItemCodeInterpreterToolCallStatus.Completed,
-            containerId: "",
-            code: _finalCode ?? "",
-            outputs: Array.Empty<BinaryData>());
+        var item = new OutputItemCodeInterpreterToolCall(_finalCode ?? "")
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.CodeInterpreterCallStatus.Completed,
+            ContainerId = "",
+        };
         return EmitDone(item);
     }
 }

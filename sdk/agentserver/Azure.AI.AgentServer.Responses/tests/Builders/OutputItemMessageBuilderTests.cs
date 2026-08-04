@@ -109,7 +109,7 @@ public class OutputItemMessageBuilderTests
         var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(msg.ItemId));
         Assert.That(item.Content, Is.Empty);
-        Assert.That(item.Status, Is.EqualTo(MessageStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(OpenAI.Responses.MessageStatus.InProgress));
     }
 
     [Test]
@@ -193,10 +193,10 @@ public class OutputItemMessageBuilderTests
 
         var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(msg.ItemId));
-        Assert.That(item.Status, Is.EqualTo(MessageStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(OpenAI.Responses.MessageStatus.Completed));
         XAssert.Single(item.Content);
 
-        var content = XAssert.IsType<MessageContentOutputTextContent>(item.Content[0]);
+        var content = XAssert.IsType<OpenAI.Responses.ResponseContentPart>(item.Content[0]);
         Assert.That(content.Text, Is.EqualTo("Hello, world!"));
     }
 
@@ -216,6 +216,6 @@ public class OutputItemMessageBuilderTests
 
         var item = XAssert.IsType<OutputItemMessage>(evt.Item);
         XAssert.Single(item.Content);
-        Assert.That(item.Status, Is.EqualTo(MessageStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(OpenAI.Responses.MessageStatus.Completed));
     }
 }

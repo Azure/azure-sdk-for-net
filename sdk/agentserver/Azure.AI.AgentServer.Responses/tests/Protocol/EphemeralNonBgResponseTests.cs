@@ -69,7 +69,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         var postTask = Client.PostAsync("/responses", postContent, cts.Token);
 
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         // Disconnect mid-stream
         cts.Cancel();
@@ -105,7 +105,7 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         var postTask = Client.PostAsync("/responses", postContent, cts.Token);
 
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         // Disconnect
         cts.Cancel();

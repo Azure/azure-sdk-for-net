@@ -53,6 +53,8 @@ internal sealed class TypeSpecModelConverterFactory : JsonConverterFactory
 /// </summary>
 internal sealed class TypeSpecModelConverter<T> : JsonConverter<T>
 {
+    private static readonly Lazy<JsonSerializerOptions> FallbackOptions = new(CreateFallbackOptions);
+
     /// <inheritdoc/>
     public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
@@ -85,7 +87,7 @@ internal sealed class TypeSpecModelConverter<T> : JsonConverter<T>
             // Fall through to standard deserialization
         }
 
-        return JsonSerializer.Deserialize<T>(jsonDoc.RootElement, options);
+        return JsonSerializer.Deserialize<T>(jsonDoc.RootElement, FallbackOptions.Value);
     }
 
     /// <inheritdoc/>
@@ -101,9 +103,45 @@ internal sealed class TypeSpecModelConverter<T> : JsonConverter<T>
         {
             model.Write(writer, ModelReaderWriterOptions.Json);
         }
+        else if (TryWriteCompatibleJsonModel(writer, value))
+        {
+            return;
+        }
         else
         {
-            JsonSerializer.Serialize(writer, value, options);
+            JsonSerializer.Serialize(writer, value, FallbackOptions.Value);
         }
+    }
+
+    private static bool TryWriteCompatibleJsonModel(Utf8JsonWriter writer, object value)
+    {
+        Type valueType = value.GetType();
+        Type? jsonModelInterface = valueType.GetInterfaces()
+            .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IJsonModel<>))
+            .OrderByDescending(i => i.GenericTypeArguments[0] == typeof(T))
+            .FirstOrDefault();
+
+        if (jsonModelInterface is null)
+        {
+            return false;
+        }
+
+        jsonModelInterface.GetMethod(nameof(IJsonModel<object>.Write))!
+            .Invoke(value, [writer, ModelReaderWriterOptions.Json]);
+        return true;
+    }
+
+    private static JsonSerializerOptions CreateFallbackOptions()
+    {
+        var options = new JsonSerializerOptions(SharedJsonOptions.Instance);
+        for (int i = options.Converters.Count - 1; i >= 0; i--)
+        {
+            if (options.Converters[i] is TypeSpecModelConverterFactory)
+            {
+                options.Converters.RemoveAt(i);
+            }
+        }
+
+        return options;
     }
 }

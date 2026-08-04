@@ -28,7 +28,7 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseCreatedEvent()
     {
         var response = new Models.ResponseObject("resp_123", "gpt-4o");
-        var evt = new ResponseCreatedEvent(sequenceNumber: 0, response: response);
+        var evt = new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Response, Is.EqualTo(response));
     }
@@ -37,20 +37,21 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseInProgressEvent()
     {
         var response = new Models.ResponseObject("resp_123", "gpt-4o");
-        var evt = new ResponseInProgressEvent(sequenceNumber: 1, response: response);
+        var evt = new ResponseInProgressEvent { SequenceNumber = 1, Response = response };
         Assert.That(evt, Is.Not.Null);
     }
 
     [Test]
     public void Consumer_CanConstruct_ResponseTextDeltaEvent()
     {
-        var evt = new ResponseTextDeltaEvent(
-            sequenceNumber: 2,
-            itemId: "item_1",
-            outputIndex: 0,
-            contentIndex: 0,
-            delta: "Hello ",
-            logprobs: Array.Empty<ResponseLogProb>());
+        var evt = new ResponseTextDeltaEvent
+        {
+            SequenceNumber = 2,
+            ItemId = "item_1",
+            OutputIndex = 0,
+            ContentIndex = 0,
+            Delta = "Hello ",
+        };
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Delta, Is.EqualTo("Hello "));
     }
@@ -58,13 +59,14 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseTextDoneEvent()
     {
-        var evt = new ResponseTextDoneEvent(
-            sequenceNumber: 3,
-            itemId: "item_1",
-            outputIndex: 0,
-            contentIndex: 0,
-            text: "Hello world",
-            logprobs: Array.Empty<ResponseLogProb>());
+        var evt = new ResponseTextDoneEvent
+        {
+            SequenceNumber = 3,
+            ItemId = "item_1",
+            OutputIndex = 0,
+            ContentIndex = 0,
+            Text = "Hello world",
+        };
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Text, Is.EqualTo("Hello world"));
     }
@@ -73,17 +75,17 @@ public class ExternalConsumerValidationTests
     public void Consumer_CanConstruct_ResponseCompletedEvent()
     {
         var response = new Models.ResponseObject("resp_123", "gpt-4o");
-        var evt = new ResponseCompletedEvent(sequenceNumber: 4, response: response);
+        var evt = new ResponseCompletedEvent { SequenceNumber = 4, Response = response };
         Assert.That(evt, Is.Not.Null);
     }
 
     [Test]
     public void Consumer_CanConstruct_ErrorPath()
     {
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "failed");
+        var error = ResponsesModelFactory.ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode.ServerError, "failed");
         var response = new Models.ResponseObject("resp_err", "gpt-4o");
         response.Error = error;
-        var evt = new ResponseFailedEvent(sequenceNumber: 5, response: response);
+        var evt = new ResponseFailedEvent { SequenceNumber = 5, Response = response };
 
         Assert.That(evt, Is.Not.Null);
         Assert.That(evt.Response.Error.Message, Is.EqualTo("failed"));
@@ -92,34 +94,34 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_OutputItemMessage()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
+        var content = ResponseContentPart.CreateOutputTextPart(
+            "Hello world",
+            Array.Empty<Annotation>());
         Assert.That(content, Is.Not.Null);
 
-        var outputMsg = new OutputItemMessage(
+        var outputMsg = TestModels.OutputItemMessage(
             id: "msg_test",
-            content: new List<MessageContent> { content },
-            status: MessageStatus.Completed);
+            status: MessageStatus.Completed,
+            content: new List<MessageContent> { content });
         Assert.That(outputMsg, Is.Not.Null);
     }
 
     [Test]
     public void Consumer_CanConstruct_ResponseOutputItemDoneEvent()
     {
-        var content = new MessageContentOutputTextContent(
-            text: "Hello world",
-            annotations: Array.Empty<Annotation>(),
-            logprobs: Array.Empty<LogProb>());
-        var outputMsg = new OutputItemMessage(
+        var content = ResponseContentPart.CreateOutputTextPart(
+            "Hello world",
+            Array.Empty<Annotation>());
+        var outputMsg = TestModels.OutputItemMessage(
             id: "msg_test",
-            content: new List<MessageContent> { content },
-            status: MessageStatus.Completed);
-        var evt = new ResponseOutputItemDoneEvent(
-            sequenceNumber: 6,
-            outputIndex: 0,
-            item: outputMsg);
+            status: MessageStatus.Completed,
+            content: new List<MessageContent> { content });
+        var evt = new ResponseOutputItemDoneEvent
+        {
+            SequenceNumber = 6,
+            OutputIndex = 0,
+            Item = outputMsg,
+        };
 
         Assert.That(evt, Is.Not.Null);
         XAssert.IsType<OutputItemMessage>(evt.Item);
@@ -128,8 +130,8 @@ public class ExternalConsumerValidationTests
     [Test]
     public void Consumer_CanConstruct_ResponseError()
     {
-        var error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test");
-        Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        var error = ResponsesModelFactory.ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode.ServerError, "test");
+        Assert.That(error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("test"));
     }
 
@@ -140,7 +142,7 @@ public class ExternalConsumerValidationTests
         Assert.That(response, Is.Not.Null);
 
         var error = ResponsesModelFactory.ResponseErrorInfo(
-            code: ResponseErrorCode.InvalidPrompt,
+            code: OpenAI.Responses.ResponseErrorCode.InvalidPrompt,
             message: "bad input");
         Assert.That(error, Is.Not.Null);
     }
@@ -175,7 +177,7 @@ public class ExternalConsumerValidationTests
 
         Assert.That(request.Model, Is.EqualTo("gpt-4o"));
         Assert.That(request.Instructions, Is.EqualTo("You are a helpful assistant."));
-        Assert.That(request.Stream, Is.True);
-        Assert.That(request.Background, Is.False);
+        Assert.That(request.StreamingEnabled, Is.True);
+        Assert.That(request.BackgroundModeEnabled, Is.False);
     }
 }

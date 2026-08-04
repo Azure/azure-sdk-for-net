@@ -41,7 +41,7 @@ public class ResponseContextImplTests
 
         XAssert.Single(items);
         var msg = XAssert.IsType<ItemMessage>(items[0]);
-        Assert.That(msg.Role, Is.EqualTo(MessageRole.User));
+        Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -52,13 +52,13 @@ public class ResponseContextImplTests
     [Test]
     public async Task GetInputItemsAsync_Resolves_ItemReferenceParam_Via_Provider()
     {
-        var referencedItem = new OutputItemMessage(
+        var referencedItem = TestModels.OutputItemMessage(
             "msg_existing",
             MessageStatus.Completed,
             MessageRole.Assistant,
             new List<MessageContent>
             {
-                new MessageContentInputTextContent("I'm a resolved item")
+                OpenAI.Responses.ResponseContentPart.CreateInputTextPart("I'm a resolved item")
             });
 
         var provider = new StubProvider();
@@ -73,7 +73,7 @@ public class ResponseContextImplTests
         XAssert.Single(items);
         // Resolved reference is converted from OutputItemMessage to ItemMessage
         var msg = XAssert.IsType<ItemMessage>(items[0]);
-        Assert.That(msg.Role, Is.EqualTo(MessageRole.Assistant));
+        Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.Assistant));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -102,9 +102,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_With_References_Calls_Provider_Only_Once()
     {
         var provider = new RecordingProvider();
-        provider.AddItem("ref_1", new OutputItemMessage(
+        provider.AddItem("ref_1", TestModels.OutputItemMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -126,9 +126,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_Preserves_Input_Item_Order()
     {
         var provider = new StubProvider();
-        provider.AddItem("ref_middle", new OutputItemMessage(
+        provider.AddItem("ref_middle", TestModels.OutputItemMessage(
             "ref_middle", MessageStatus.Completed, MessageRole.Assistant,
-            new List<MessageContent> { new MessageContentInputTextContent("middle ref") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("middle ref") }));
 
         var request = CreateRequestWithJsonInput("""
             [
@@ -206,9 +206,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_ResolveReferencesFalse_DoesNotCallProvider()
     {
         var provider = new RecordingProvider();
-        provider.AddItem("ref_1", new OutputItemMessage(
+        provider.AddItem("ref_1", TestModels.OutputItemMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("ref") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("ref") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -223,9 +223,9 @@ public class ResponseContextImplTests
     public async Task GetInputItemsAsync_BothModes_CacheIndependently()
     {
         var provider = new RecordingProvider();
-        provider.AddItem("ref_1", new OutputItemMessage(
+        provider.AddItem("ref_1", TestModels.OutputItemMessage(
             "ref_1", MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent("resolved") }));
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart("resolved") }));
 
         var request = CreateRequestWithJsonInput(
             """[{"type":"item_reference","id":"ref_1"}]""");
@@ -293,7 +293,7 @@ public class ResponseContextImplTests
         XAssert.Single(items);
         var msg = XAssert.IsType<OutputItemMessage>(items[0]);
         XAssert.StartsWith("msg_", msg.Id);
-        Assert.That(msg.Role, Is.EqualTo(MessageRole.User));
+        Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -395,9 +395,9 @@ public class ResponseContextImplTests
 
     private static OutputItemMessage MakeMessage(string id, string text)
     {
-        return new OutputItemMessage(
+        return TestModels.OutputItemMessage(
             id, MessageStatus.Completed, MessageRole.User,
-            new List<MessageContent> { new MessageContentInputTextContent(text) });
+            new List<MessageContent> { OpenAI.Responses.ResponseContentPart.CreateInputTextPart(text) });
     }
 
     // ═══════════════════════════════════════════════════════════════════════

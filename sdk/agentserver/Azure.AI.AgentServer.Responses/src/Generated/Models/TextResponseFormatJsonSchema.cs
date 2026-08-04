@@ -60,10 +60,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The name of the response format. Must be a-z, A-Z, 0-9, or contain
         ///   underscores and dashes, with a maximum length of 64.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
-        /// <summary> Gets or sets the Schema. </summary>
-        public ResponseFormatJsonSchemaSchema Schema { get; set; }
+        /// <summary> Gets the Schema. </summary>
+        public ResponseFormatJsonSchemaSchema Schema { get; }
 
         /// <summary> Gets or sets the Strict. </summary>
         public bool? Strict { get; set; }

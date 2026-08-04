@@ -40,7 +40,11 @@ public class TextContentAnnotationTests
         text.EmitTextDone("test");
         var annotation = CreateTestAnnotation();
         var evt = text.EmitAnnotationAdded(annotation);
-        Assert.That(evt.Annotation, Is.SameAs(annotation));
+        var openAIAnnotation = XAssert.IsType<OpenAI.Responses.UriCitationMessageAnnotation>(evt.Annotation);
+        Assert.That(openAIAnnotation.Uri, Is.EqualTo(new Uri("https://example.com/")));
+        Assert.That(openAIAnnotation.StartIndex, Is.EqualTo(0));
+        Assert.That(openAIAnnotation.EndIndex, Is.EqualTo(10));
+        Assert.That(openAIAnnotation.Title, Is.EqualTo("Example"));
     }
 
     [Test]

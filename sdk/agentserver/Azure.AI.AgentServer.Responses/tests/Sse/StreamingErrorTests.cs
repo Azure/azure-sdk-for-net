@@ -111,7 +111,7 @@ public class StreamingErrorTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await Task.Yield();
         throw new InvalidOperationException("Simulated handler failure");
     }
@@ -121,12 +121,12 @@ public class StreamingErrorTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await Task.Yield();
 
         // Handler explicitly yields a ResponseFailedEvent
-        response.SetFailed(ResponseErrorCode.ServerError, "Handler-reported failure");
-        yield return new ResponseFailedEvent(0, response);
+        response.SetFailed(OpenAI.Responses.ResponseErrorCode.ServerError, "Handler-reported failure");
+        yield return new ResponseFailedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await Task.Yield();
 
         throw new InvalidOperationException("Post-failure throw");

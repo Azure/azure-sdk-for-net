@@ -79,7 +79,7 @@ public class ResponseExtensionsTests
     {
         var response = new Models.ResponseObject("resp_1", "gpt-4o");
 
-        response.SetToolChoice(ToolChoiceOptions.Auto);
+        response.SetToolChoice(ToolChoiceOptions.CreateAutoChoice());
         var result = response.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
@@ -91,7 +91,7 @@ public class ResponseExtensionsTests
     {
         var response = new Models.ResponseObject("resp_1", "gpt-4o");
 
-        response.SetToolChoice(ToolChoiceOptions.Required);
+        response.SetToolChoice(ToolChoiceOptions.CreateRequiredChoice());
         var result = response.GetToolChoiceExpanded();
 
         var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
@@ -103,7 +103,7 @@ public class ResponseExtensionsTests
     {
         var response = new Models.ResponseObject("resp_1", "gpt-4o");
 
-        response.SetToolChoice(ToolChoiceOptions.None);
+        response.SetToolChoice(ToolChoiceOptions.CreateNoneChoice());
 
         Assert.That(response.GetToolChoiceExpanded(), Is.Null);
     }
@@ -136,10 +136,10 @@ public class ResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.Developer));
+        Assert.That(itemMsg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.Developer));
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("You are helpful."));
     }
 
@@ -156,7 +156,7 @@ public class ResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.Developer));
+        Assert.That(itemMsg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.Developer));
     }
 
     // ── SetInstructions(string) ───────────────────────────────────────
@@ -173,7 +173,7 @@ public class ResponseExtensionsTests
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("You are a helpful assistant."));
     }
 
@@ -192,9 +192,9 @@ public class ResponseExtensionsTests
         var response = new Models.ResponseObject("resp_1", "gpt-4o");
         var items = new List<Item>
         {
-            new ItemMessage(MessageRole.Developer, new List<MessageContent>
+            TestModels.ItemMessage(MessageRole.Developer, new List<MessageContent>
             {
-                new MessageContentInputTextContent("Be helpful."),
+                ResponseContentPart.CreateInputTextPart("Be helpful."),
             }),
         };
 
@@ -205,7 +205,7 @@ public class ResponseExtensionsTests
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
         var content = itemMsg.GetContentExpanded();
         var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.IsContentPart(textContent, ResponseContentPartKind.InputText);
         Assert.That(inputText.Text, Is.EqualTo("Be helpful."));
     }
 

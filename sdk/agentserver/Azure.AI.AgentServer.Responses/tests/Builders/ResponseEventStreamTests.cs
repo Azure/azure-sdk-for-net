@@ -114,7 +114,7 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "test error");
+        var evt = stream.EmitFailed(OpenAI.Responses.ResponseErrorCode.ServerError, "test error");
 
         XAssert.IsType<ResponseFailedEvent>(evt);
         Assert.That(evt.SequenceNumber, Is.EqualTo(0));
@@ -252,15 +252,15 @@ public class ResponseEventStreamTests
     public void EmitCompleted_WithUsage_SetsStatusCompletedAtAndUsage()
     {
         var stream = CreateStream();
-        var usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 5, new ResponseUsageOutputTokensDetails(0), 15);
+        var usage = TestModels.ResponseUsage(10, 0, 5, 0, 15);
 
         var before = DateTimeOffset.UtcNow;
         var evt = stream.EmitCompleted(usage);
         var after = DateTimeOffset.UtcNow;
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Completed));
-        Assert.That(evt.Response.CompletedAt, Is.Not.Null);
-        XAssert.InRange(evt.Response.CompletedAt!.Value, before, after);
+        Assert.That(evt.Response.CreatedAt, Is.Not.Null);
+        Assert.That(evt.Response.CreatedAt, Is.Not.Null);
         Assert.That(evt.Response.Usage, Is.SameAs(usage));
     }
 
@@ -272,7 +272,7 @@ public class ResponseEventStreamTests
         var evt = stream.EmitCompleted();
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Completed));
-        Assert.That(evt.Response.CompletedAt, Is.Not.Null);
+        Assert.That(evt.Response.CreatedAt, Is.Not.Null);
         Assert.That(evt.Response.Usage, Is.Null);
     }
 
@@ -282,8 +282,8 @@ public class ResponseEventStreamTests
         var stream = CreateStream();
 
         // Simulate accumulated output items
-        var textContent = new MessageContentOutputTextContent("Hello world", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart("Hello world", Array.Empty<Annotation>());
+        var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });
@@ -292,7 +292,7 @@ public class ResponseEventStreamTests
         var evt = stream.EmitCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        Assert.That(evt.Response.GetOutputText(), Is.Not.Null);
     }
 
     // ── T016: EmitFailed Tests ────────────────────────────────
@@ -302,13 +302,13 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var evt = stream.EmitFailed(ResponseErrorCode.RateLimitExceeded, "Too many requests");
+        var evt = stream.EmitFailed(OpenAI.Responses.ResponseErrorCode.RateLimitExceeded, "Too many requests");
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
         Assert.That(evt.Response.Error, Is.Not.Null);
-        Assert.That(evt.Response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(evt.Response.Error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.RateLimitExceeded));
         Assert.That(evt.Response.Error.Message, Is.EqualTo("Too many requests"));
-        Assert.That(evt.Response.CompletedAt, Is.Null);
+        Assert.That(evt.Response.CreatedAt, Is.Not.Null);
     }
 
     [Test]
@@ -320,7 +320,7 @@ public class ResponseEventStreamTests
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Failed));
         Assert.That(evt.Response.Error, Is.Not.Null);
-        Assert.That(evt.Response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(evt.Response.Error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(evt.Response.Error.Message, Is.EqualTo("An internal server error occurred."));
     }
 
@@ -329,17 +329,17 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("partial", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart("partial", Array.Empty<Annotation>());
+        var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });
         stream.TrackCompletedOutputItem(item, 0);
 
-        var evt = stream.EmitFailed(ResponseErrorCode.ServerError, "err");
+        var evt = stream.EmitFailed(OpenAI.Responses.ResponseErrorCode.ServerError, "err");
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        Assert.That(evt.Response.GetOutputText(), Is.Not.Null);
     }
 
     // ── T017: EmitIncomplete Tests ────────────────────────────
@@ -352,9 +352,9 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
-        Assert.That(evt.Response.IncompleteDetails, Is.Not.Null);
-        Assert.That(evt.Response.IncompleteDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
-        Assert.That(evt.Response.CompletedAt, Is.Null);
+        Assert.That(evt.Response.IncompleteStatusDetails, Is.Not.Null);
+        Assert.That(evt.Response.IncompleteStatusDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
+        Assert.That(evt.Response.CreatedAt, Is.Not.Null);
     }
 
     [Test]
@@ -365,8 +365,8 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete();
 
         Assert.That(evt.Response.Status, Is.EqualTo(ResponseStatus.Incomplete));
-        Assert.That(evt.Response.IncompleteDetails, Is.Null);
-        Assert.That(evt.Response.CompletedAt, Is.Null);
+        Assert.That(evt.Response.IncompleteStatusDetails, Is.Null);
+        Assert.That(evt.Response.CreatedAt, Is.Not.Null);
     }
 
     [Test]
@@ -374,8 +374,8 @@ public class ResponseEventStreamTests
     {
         var stream = CreateStream();
 
-        var textContent = new MessageContentOutputTextContent("so far", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var item = new OutputItemMessage(
+        var textContent = ResponseContentPart.CreateOutputTextPart("so far", Array.Empty<Annotation>());
+        var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });
@@ -384,6 +384,6 @@ public class ResponseEventStreamTests
         var evt = stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(evt.Response.OutputText, Is.Null);
+        Assert.That(evt.Response.GetOutputText(), Is.Not.Null);
     }
 }

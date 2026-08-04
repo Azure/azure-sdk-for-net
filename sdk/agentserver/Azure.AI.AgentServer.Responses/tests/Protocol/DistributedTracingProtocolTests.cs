@@ -64,7 +64,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         public TestableActivitySource(string? name) : base(name) { }
     }
 
-    private async IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> CaptureAndYieldDefault(
+    private async IAsyncEnumerable<ResponseStreamEvent> CaptureAndYieldDefault(
         Azure.AI.AgentServer.Responses.Models.CreateResponse request,
         ResponseContext context,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct)
@@ -81,9 +81,9 @@ public sealed class DistributedTracingProtocolTests : IDisposable
 
         // Yield default lifecycle
         var response = new Azure.AI.AgentServer.Responses.Models.ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
         response.SetCompleted();
-        yield return new Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = 0, Response = response };
     }
 
     // --- US3: Baggage (T018-T020) ---

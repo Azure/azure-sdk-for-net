@@ -97,10 +97,10 @@ public class SimpleTextResponseTests
         // Assert: final done message has completed status and accumulated content
         var doneItem = XAssert.IsType<OutputItemMessage>(itemDoneEvt.Item);
         Assert.That(doneItem.Id, Is.EqualTo(itemId));
-        Assert.That(doneItem.Status, Is.EqualTo(MessageStatus.Completed));
+        Assert.That(doneItem.Status, Is.EqualTo(OpenAI.Responses.MessageStatus.Completed));
         XAssert.Single(doneItem.Content);
 
-        var finalContent = XAssert.IsType<MessageContentOutputTextContent>(doneItem.Content[0]);
+        var finalContent = XAssert.IsContentPart(doneItem.Content[0], OpenAI.Responses.ResponseContentPartKind.OutputText);
         Assert.That(finalContent.Text, Is.EqualTo("Hello, world!"));
     }
 

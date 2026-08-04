@@ -130,9 +130,9 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            CreateResponseReasoningEffort? effort = default;
-            CreateResponseReasoningSummary? summary = default;
-            CreateResponseReasoningGenerateSummary? generateSummary = default;
+            PromptAgentDefinitionReasoningEffort? effort = default;
+            PromptAgentDefinitionReasoningSummary? summary = default;
+            PromptAgentDefinitionReasoningGenerateSummary? generateSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         effort = null;
                         continue;
                     }
-                    effort = prop.Value.GetString().ToCreateResponseReasoningEffort();
+                    effort = prop.Value.GetString().ToPromptAgentDefinitionReasoningEffort();
                     continue;
                 }
                 if (prop.NameEquals("summary"u8))
@@ -153,7 +153,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         summary = null;
                         continue;
                     }
-                    summary = prop.Value.GetString().ToCreateResponseReasoningSummary();
+                    summary = prop.Value.GetString().ToPromptAgentDefinitionReasoningSummary();
                     continue;
                 }
                 if (prop.NameEquals("generate_summary"u8))
@@ -163,7 +163,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                         generateSummary = null;
                         continue;
                     }
-                    generateSummary = prop.Value.GetString().ToCreateResponseReasoningGenerateSummary();
+                    generateSummary = prop.Value.GetString().ToPromptAgentDefinitionReasoningGenerateSummary();
                     continue;
                 }
                 if (options.Format != "W")

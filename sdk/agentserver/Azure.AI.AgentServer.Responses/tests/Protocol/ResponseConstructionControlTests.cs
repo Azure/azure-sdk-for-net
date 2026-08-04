@@ -143,7 +143,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         var stream = new ResponseEventStream(ctx, request);
         // Handler initializes Metadata and sets custom value via Models.ResponseObject property (B37)
         stream.Response.Metadata = new Metadata();
-        stream.Response.Metadata.AdditionalProperties["handler_key"] = "from_handler";
+        stream.Response.Metadata["handler_key"] = "from_handler";
         yield return stream.EmitCreated();
         yield return stream.EmitCompleted();
     }
@@ -172,10 +172,10 @@ public class ResponseConstructionControlTests : ProtocolTestBase
             Metadata = new Metadata(),
             Status = ResponseStatus.InProgress,
         };
-        response.Metadata.AdditionalProperties["raw_key"] = "raw_value";
-        yield return new ResponseCreatedEvent(0, response);
+        response.Metadata["raw_key"] = "raw_value";
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(1, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = response };
     }
 }

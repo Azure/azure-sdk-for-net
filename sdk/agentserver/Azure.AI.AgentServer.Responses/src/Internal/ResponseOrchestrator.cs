@@ -330,7 +330,7 @@ internal sealed class ResponseOrchestrator
                 {
                     // S-031: Wrong first event — bad handler
                     ThrowBadHandler(execution,
-                        $"Handler did not yield response.created as its first event. Received: {evt.EventType}. Handler type: {_handler.GetType().Name}.");
+                        $"Handler did not yield response.created as its first event. Received: {evt.Kind}. Handler type: {_handler.GetType().Name}.");
                     yield break; // unreachable — satisfies compiler definite-assignment
                 }
 
@@ -349,10 +349,10 @@ internal sealed class ResponseOrchestrator
                 }
 
                 // B30/S-033: Output manipulation detection on response.created
-                if (createdEvt.Response.Output.Count != 0)
+                if (createdEvt.Response.OutputItems.Count != 0)
                 {
                     ThrowBadHandler(execution,
-                        $"Handler directly modified Response.Output (found {createdEvt.Response.Output.Count} items, expected 0). Use output builder events instead. Handler type: {_handler.GetType().Name}.");
+                        $"Handler directly modified Response.Output (found {createdEvt.Response.OutputItems.Count} items, expected 0). Use output builder events instead. Handler type: {_handler.GetType().Name}.");
                 }
 
                 // B31: Status is a required field. Auto-stamp InProgress if the
@@ -362,7 +362,7 @@ internal sealed class ResponseOrchestrator
                 // For bg=true: persist immediately when response.created is yielded (S-035)
                 if (execution.IsBackground && execution.Store)
                 {
-                    ResponseMutations.ApplyOutputItemAutoStamps(evt, execution.ResponseId, request.AgentReference);
+                    ResponseMutations.ApplyOutputItemAutoStamps(evt, execution.ResponseId, request.GetAgentReference());
                     ResponseMutations.ReplaceResponse(execution, evt);
                     ResponseMutations.StampAgentReference(execution, request);
                     ResponseMutations.StampAgentSessionId(execution, request);
@@ -417,7 +417,7 @@ internal sealed class ResponseOrchestrator
 
             // B30/S-033: Detect direct Output manipulation on response.* events (after response.created)
             {
-                Models.ResponseObject? eventResponse = evt switch
+                OpenAI.Responses.ResponseResult? eventResponse = evt switch
                 {
                     ResponseInProgressEvent e => e.Response,
                     ResponseCompletedEvent e => e.Response,
@@ -427,21 +427,21 @@ internal sealed class ResponseOrchestrator
                     _ => null,
                 };
 
-                if (eventResponse is not null && eventResponse.Output.Count > outputItemCount)
+                if (eventResponse is not null && eventResponse.OutputItems.Count > outputItemCount)
                 {
                     _logger.LogError(
                         "Bad handler: Response.Output has {ActualCount} items but {ExpectedCount} output_item.added events were emitted. Handler: {HandlerType}",
-                        eventResponse.Output.Count, outputItemCount, _handler.GetType().FullName);
+                        eventResponse.OutputItems.Count, outputItemCount, _handler.GetType().FullName);
 
                     // Post-created error — set failed status and emit response.failed
-                    RecordBadHandlerError($"Bad handler: Output item count mismatch ({eventResponse.Output.Count} vs {outputItemCount} output_item.added events)");
+                    RecordBadHandlerError($"Bad handler: Output item count mismatch ({eventResponse.OutputItems.Count} vs {outputItemCount} output_item.added events)");
                     await EmitTerminalFailureAsync(execution, publisher);
                     yield break;
                 }
             }
 
             // Auto-stamp ResponseId and AgentReference on output items
-            ResponseMutations.ApplyOutputItemAutoStamps(evt, execution.ResponseId, request.AgentReference);
+            ResponseMutations.ApplyOutputItemAutoStamps(evt, execution.ResponseId, request.GetAgentReference());
 
             // Full replacement for response.* events — handler is source of truth
             ResponseMutations.ReplaceResponse(execution, evt);
@@ -595,8 +595,11 @@ internal sealed class ResponseOrchestrator
                                 "An internal error occurred while storing the response. Subsequent retrieval is not guaranteed. Please retry the request.");
                             execution.PersistenceFailed = true;
                             execution.PersistenceException = persistException;
-                            evt = new ResponseFailedEvent(
-                                evt.SequenceNumber, execution.Response.Snapshot());
+                            evt = new ResponseFailedEvent
+                            {
+                                SequenceNumber = evt.SequenceNumber,
+                                Response = execution.Response.Snapshot(),
+                            };
                         }
                     }
                 }
@@ -613,8 +616,11 @@ internal sealed class ResponseOrchestrator
             if (!terminalEventYielded && execution.Response is not null
                 && IsTerminalStatus(execution.Response.Status))
             {
-                yield return new ResponseFailedEvent(
-                    execution.LastEmittedSequenceNumber + 1, execution.Response.Snapshot());
+                yield return new ResponseFailedEvent
+                {
+                    SequenceNumber = checked((int)(execution.LastEmittedSequenceNumber + 1)),
+                    Response = execution.Response.Snapshot(),
+                };
             }
         }
         finally
@@ -693,8 +699,11 @@ internal sealed class ResponseOrchestrator
             execution.Response!.SetFailed();
         }
 
-        var failedEvent = new ResponseFailedEvent(
-            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
+        var failedEvent = new ResponseFailedEvent
+        {
+            SequenceNumber = checked((int)(execution.LastEmittedSequenceNumber + 1)),
+            Response = execution.Response!.Snapshot(),
+        };
         await publisher.OnNextAsync(failedEvent);
     }
 
@@ -708,8 +717,11 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         execution.Response!.SetCancelled();
-        var cancelledEvent = new ResponseFailedEvent(
-            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
+        var cancelledEvent = new ResponseFailedEvent
+        {
+            SequenceNumber = checked((int)(execution.LastEmittedSequenceNumber + 1)),
+            Response = execution.Response!.Snapshot(),
+        };
         await publisher.OnNextAsync(cancelledEvent);
     }
 

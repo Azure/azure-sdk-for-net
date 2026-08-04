@@ -16,7 +16,7 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 
-using AzureMessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
+using AzureMessageRole = OpenAI.Responses.MessageRole;
 using SdkResponseStatus = OpenAI.Responses.ResponseStatus;
 
 namespace Azure.AI.AgentServer.Responses.Tests;
@@ -535,17 +535,17 @@ public class OpenAIProxyEndToEndTests
 
         // Verify the message came through
         var msg = XAssert.IsType<ItemMessage>(items[0]);
-        Assert.That(msg.Role, Is.EqualTo(AzureMessageRole.User));
+        Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
 
         // Verify function call came through
         var fc = XAssert.IsType<ItemFunctionToolCall>(items[1]);
-        Assert.That(fc.Name, Is.EqualTo("get_data"));
+        Assert.That(fc.FunctionName, Is.EqualTo("get_data"));
         Assert.That(fc.CallId, Is.EqualTo("call_input_001"));
 
         // Verify function call output came through
-        var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[2]);
+        var fco = XAssert.IsType<FunctionCallOutputResponseItem>(items[2]);
         Assert.That(fco.CallId, Is.EqualTo("call_input_001"));
-        Assert.That(fco.Output.ToString(), Is.EqualTo("\"result: 42\""));
+        Assert.That(fco.FunctionOutput, Is.EqualTo("result: 42"));
     }
 
     /// <summary>
@@ -723,21 +723,21 @@ public class OpenAIProxyEndToEndTests
             // Own the lifecycle — construct events directly.
             int seq = 0;
             var conversationId = request.GetConversationId();
-            var response = new Models.ResponseObject(context.ResponseId, request.Model ?? "")
+            var response = new Models.ResponseObject(context.Id, request.Model ?? "")
             {
-                Status = Models.ResponseStatus.InProgress,
+                Status = ResponseStatus.InProgress,
                 Metadata = request.Metadata!,
                 AgentReference = request.AgentReference,
-                Background = request.Background,
+                Background = request.BackgroundModeEnabled,
                 Conversation = conversationId != null
-                    ? new Models.ConversationReference(conversationId) : null,
+                    ? new ConversationParam(conversationId) : null,
                 PreviousResponseId = request.PreviousResponseId,
             };
-            yield return new ResponseCreatedEvent(seq++, response);
-            yield return new ResponseInProgressEvent(seq++, response);
+            yield return new ResponseCreatedEvent { SequenceNumber = seq++, Response = response };
+            yield return new ResponseInProgressEvent { SequenceNumber = seq++, Response = response };
 
             // Translate content events from upstream, skip lifecycle events.
-            var outputItems = new List<Models.OutputItem>();
+            var outputItems = new List<OutputItem>();
             bool upstreamFailed = false;
 
             await foreach (StreamingResponseUpdate update in
@@ -760,10 +760,14 @@ public class OpenAIProxyEndToEndTests
 
                 // Clear upstream response_id so auto-stamp fills ours.
                 if (evt is ResponseOutputItemAddedEvent added)
-                    added.Item.ResponseId = null;
+                {
+                    added.Item.Id = null;
+                    ClearResponseId(added.Item);
+                }
                 else if (evt is ResponseOutputItemDoneEvent done)
                 {
-                    done.Item.ResponseId = null;
+                    done.Item.Id = null;
+                    ClearResponseId(done.Item);
                     outputItems.Add(done.Item);
                 }
 
@@ -772,18 +776,25 @@ public class OpenAIProxyEndToEndTests
 
             if (upstreamFailed)
             {
-                response.Status = Models.ResponseStatus.Failed;
-                response.Error = new Models.ResponseErrorInfo(
-                    Models.ResponseErrorCode.ServerError, "Upstream request failed");
-                yield return new ResponseFailedEvent(seq++, response);
+                response.Status = ResponseStatus.Failed;
+                response.Error = ResponsesModelFactory.ResponseErrorInfo(
+                    OpenAI.Responses.ResponseErrorCode.ServerError, "Upstream request failed");
+                yield return new ResponseFailedEvent { SequenceNumber = seq++, Response = response };
             }
             else
             {
-                response.Status = Models.ResponseStatus.Completed;
+                response.Status = ResponseStatus.Completed;
                 foreach (var item in outputItems)
                     response.Output.Add(item);
-                yield return new ResponseCompletedEvent(seq++, response);
+                yield return new ResponseCompletedEvent { SequenceNumber = seq++, Response = response };
             }
+        }
+
+        private static void ClearResponseId(OutputItem item)
+        {
+#pragma warning disable SCME0001 // Test proxy clears extension data before AgentServer restamps it.
+            item.Patch.Remove("$.response_id"u8);
+#pragma warning restore SCME0001
         }
     }
 
@@ -837,7 +848,7 @@ public class OpenAIProxyEndToEndTests
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
         yield return stream.EmitFailed(
-            Models.ResponseErrorCode.ServerError,
+            OpenAI.Responses.ResponseErrorCode.ServerError,
             "Backend processing error");
         await Task.CompletedTask;
     }
