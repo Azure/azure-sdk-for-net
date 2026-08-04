@@ -120,12 +120,35 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 FilterType = ServiceBusFilterType.CorrelationFilter,
                 CorrelationFilter = new ServiceBusCorrelationFilter()
             };
+            // correlationFilter.properties is a string-valued map on the wire
+            // (additionalProperties: string in every api-version, Record<string> in
+            // TypeSpec), but the generated model types it as IDictionary<string, object>
+            // and serializes each value with its natural JSON type. A non-string value
+            // here therefore produces a payload that does not match the declared
+            // contract, so the caller has to supply strings.
+            string dateTimeValue = Recording.Now.UtcDateTime.ToString("O");
             input.CorrelationFilter.ApplicationProperties.Add("stringKey", "stringVal");
-            input.CorrelationFilter.ApplicationProperties.Add("intKey", 5);
-            input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
+            input.CorrelationFilter.ApplicationProperties.Add("intKey", "5");
+            input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", dateTimeValue);
             ServiceBusRuleResource rule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input)).Value;
             Assert.NotNull(rule);
             Assert.AreEqual(rule.Id.Name, ruleName);
+
+            // Assert the values survive the create round-trip. Without this the test
+            // passes even if the service drops the properties or changes their type.
+            // dateTimeKey is compared as a parsed instant on purpose, because the
+            // recorded response can carry fewer fractional digits than were sent.
+            IDictionary<string, object> properties = rule.Data.CorrelationFilter.ApplicationProperties;
+            foreach (string key in new[] { "stringKey", "intKey", "dateTimeKey" })
+            {
+                Assert.IsTrue(properties.ContainsKey(key), $"correlation filter property '{key}' is missing");
+                Assert.IsNotNull(properties[key], $"correlation filter property '{key}' is null");
+            }
+            Assert.AreEqual("stringVal", properties["stringKey"]);
+            Assert.AreEqual("5", properties["intKey"]);
+            Assert.AreEqual(
+                DateTimeOffset.Parse(dateTimeValue),
+                DateTimeOffset.Parse(properties["dateTimeKey"].ToString()));
         }
     }
 }
