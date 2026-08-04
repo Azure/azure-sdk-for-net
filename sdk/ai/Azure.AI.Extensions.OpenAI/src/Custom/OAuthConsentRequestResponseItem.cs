@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using Microsoft.TypeSpec.Generator.Customizations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
+[CodeGenSuppress(nameof(OAuthConsentRequestResponseItem), typeof(ResponseItemKind), typeof(string), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>))]
 public partial class OAuthConsentRequestResponseItem
 {
     [CodeGenMember("ConsentLink")]
@@ -43,9 +45,11 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal OAuthConsentRequestResponseItem(string id, AgentReference agentReference, string responseId, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OAuthConsentRequest)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         InternalConsentLink = internalConsentLink;
         ServerLabel = serverLabel;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        Id = id;
     }
 
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
@@ -53,24 +57,21 @@ public partial class OAuthConsentRequestResponseItem
     {
     }
 
-    // Custom: the generated constructor passed (id, agentReference, responseId) to the
-    // OpenAI ResponseItem base type, which only exposes a constructor taking the kind, causing
-    // CS1729. Relocated here from the generated model and changed to call base(@type) only.
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
     /// <param name="type"></param>
     /// <param name="id"></param>
-    /// <param name="id0"></param>
     /// <param name="agentReference"> The agent that created the item. </param>
     /// <param name="responseId"> The response on which the item is created. </param>
+    /// <param name="itemId"></param>
     /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
     /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal OAuthConsentRequestResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string id0, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+    internal OAuthConsentRequestResponseItem(ResponseItemKind type, string id, AgentReference agentReference, string responseId, string itemId, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
         this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
+        Id = itemId;
         InternalConsentLink = internalConsentLink;
         ServerLabel = serverLabel;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        Id = id0;
     }
 }

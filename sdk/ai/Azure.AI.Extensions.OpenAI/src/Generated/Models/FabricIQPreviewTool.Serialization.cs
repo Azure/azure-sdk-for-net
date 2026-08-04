@@ -81,7 +81,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             if (Optional.IsDefined(ServerUri))
             {
-                writer.WritePropertyName("server_url"u8);
+                writer.WritePropertyName("ServerUri"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RequireApproval))
@@ -154,7 +154,7 @@ namespace Azure.AI.Extensions.OpenAI
                     serverLabel = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("server_url"u8))
+                if (prop.NameEquals("ServerUri"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -101,7 +101,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
-        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         CreateResponseOptions responseOptions = new()
         {
             Agent = new(name: agentVersion.Name, version: agentVersion.Version),
@@ -176,7 +176,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+        ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
         CreateResponseOptions responseOptions = new()
         {
             Agent = new(name: agentVersion.Name, version: agentVersion.Version),

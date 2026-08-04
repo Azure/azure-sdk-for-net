@@ -101,12 +101,12 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteEndObject();
             if (Optional.IsDefined(IsStrict))
             {
-                writer.WritePropertyName("strict"u8);
+                writer.WritePropertyName("IsStrict"u8);
                 writer.WriteBooleanValue(IsStrict.Value);
             }
             else
             {
-                writer.WriteNull("strict"u8);
+                writer.WriteNull("IsStrict"u8);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -184,7 +184,7 @@ namespace Azure.AI.Extensions.OpenAI
                     schema = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("strict"u8))
+                if (prop.NameEquals("IsStrict"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

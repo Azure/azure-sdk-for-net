@@ -82,7 +82,7 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("spec"u8);
+            writer.WritePropertyName("Specification"u8);
             writer.WriteStartObject();
             foreach (var item in Specification)
             {
@@ -190,7 +190,7 @@ namespace Azure.AI.Extensions.OpenAI
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("spec"u8))
+                if (prop.NameEquals("Specification"u8))
                 {
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())

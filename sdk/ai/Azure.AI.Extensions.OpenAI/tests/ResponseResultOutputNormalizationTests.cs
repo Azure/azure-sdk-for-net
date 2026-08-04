@@ -8,7 +8,6 @@ using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
-#pragma warning disable AAIP001
 
 [Category("Smoke")]
 [Parallelizable(ParallelScope.All)]
@@ -72,4 +71,3 @@ public class ResponseResultOutputNormalizationTests
         Assert.DoesNotThrow(() => AzureAIExtensions.NormalizeAgentOutputItems(null));
     }
 }
-#pragma warning restore AAIP001

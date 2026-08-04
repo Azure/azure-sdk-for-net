@@ -5,10 +5,9 @@
 This release migrates the library from emitting its own copies of the OpenAI Responses object model to consuming the types provided by the [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0). This is a large, breaking change. See the [Migration Guide](https://aka.ms/Azure.AI.Extensions.OpenAI-V2V3Migration) for step-by-step upgrade guidance.
 
 ### Features Added
-- Changed `ProjectResponsesClientOptions` to derive from `OpenAI.Responses.ResponsesClientOptions` (instead of `ProjectOpenAIClientOptions`). This aligns with the upstream OpenAI client option hierarchy after `ResponsesClientOptions` was split out as a sibling of `OpenAIClientOptions`. Because it no longer derives from `ProjectOpenAIClientOptions`, it can no longer be passed to the `ProjectOpenAIClient` constructor; use `ProjectOpenAIClientOptions` there.
-- Added an implicit conversion from `ProjectOpenAIClientOptions` to `ProjectResponsesClientOptions` that copies all public configuration (endpoint, organization/project IDs, user-agent application ID, pipeline/retry/logging/transport settings, network timeout, distributed tracing flag, `ApiVersion`, and `AgentName`).
-- The `ProjectResponsesClient` constructors accept `ProjectResponsesClientOptions`, including parameterless-options overloads so `new ProjectResponsesClient(projectEndpoint, tokenProvider)` resolves to a visible constructor without requiring an options argument.
-
+- Added `ProjectOAIResponsesClientOptions`, a new options type for `ProjectResponsesClient` that derives from `OpenAI.Responses.ResponsesClientOptions`. This aligns with the upstream OpenAI client option hierarchy after `ResponsesClientOptions` was split out as a sibling of `OpenAIClientOptions`.
+- Added an implicit conversion from `ProjectOpenAIClientOptions` to `ProjectOAIResponsesClientOptions` that copies all public configuration (endpoint, organization/project IDs, user-agent application ID, pipeline/retry/logging/transport settings, network timeout, distributed tracing flag, `ApiVersion`, and `AgentName`).
+- Added new `ProjectResponsesClient` constructors that accept `ProjectOAIResponsesClientOptions`, including parameterless-options overloads so `new ProjectResponsesClient(projectEndpoint, tokenProvider)` resolves to a visible constructor without requiring an options argument.
 - Added distributed tracing support.
 - Added new object `ProjectCreateResponseOptions` with the `SessionId` property to allow getting response in specific session.
 
@@ -74,15 +73,13 @@ This release migrates the library from emitting its own copies of the OpenAI Res
   These tool kinds remain reachable on the wire because `ResponseToolKind` is an extensible enum and the corresponding tool slots accept a raw object payload, but strongly-typed construction is not available. Native support for each will return once the upstream OpenAI .NET SDK models the tool kind. The Azure Foundry toolbox search capability remains available, now surfaced as the `OpenAI.Responses.ResponseToolKind.ToolboxSearchPreview` tool kind (the previously generated `ResponsesToolboxSearchPreviewTool` type is no longer emitted).
 
 ### Bugs Fixed
-<<<<<<< HEAD
 - Restored the per-output-item Azure attribution fields that were dropped when response items were remapped onto the upstream `OpenAI.Responses.ResponseItem` types. Every response output item again surfaces `AgentReference` (the agent that produced the item) and `ResponseId` (the response it was created on) via extension members on `ResponseItem`, and both now survive a serialization round trip.
-=======
-- Removed session ID header from samples as it does not affects the session being used.
->>>>>>> origin/main
+- Removed session ID header from samples as it does not affect the session being used.
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.12.0`, which adds strongly-typed conversation support (`OpenAI.Conversations.ConversationResource`, `ConversationCreationOptions`, `ConversationUpdateOptions`). The conversation data models previously emitted by this package are no longer generated, and the temporary local convenience layer now delegates to the upstream types.
-- Updated the `OpenAI` package dependency to `2.11.0`. This release reshapes `OpenAI.Responses.ResponsesClientOptions` to derive directly from `System.ClientModel.Primitives.ClientPipelineOptions` (a sibling of `OpenAI.OpenAIClientOptions` rather than a subclass), which is why `ProjectResponsesClientOptions` now derives from `ResponsesClientOptions`.
+- Updated the `OpenAI` package dependency to `2.11.0`. This release reshapes `OpenAI.Responses.ResponsesClientOptions` to derive directly from `System.ClientModel.Primitives.ClientPipelineOptions` (a sibling of `OpenAI.OpenAIClientOptions` rather than a subclass), which is why `ProjectOAIResponsesClientOptions` derives from `ResponsesClientOptions` and the legacy `ProjectResponsesClientOptions` type derives from `ProjectOAIResponsesClientOptions` for compatibility.
+- The legacy `ProjectResponsesClientOptions` type and the `ProjectResponsesClient` constructors that take it are retained for binary compatibility but are hidden from IntelliSense via `[EditorBrowsable(EditorBrowsableState.Never)]`. New code should prefer `ProjectOAIResponsesClientOptions`.
 
 ### Sample Updates
 - Added sample for running responses in specific sessions.

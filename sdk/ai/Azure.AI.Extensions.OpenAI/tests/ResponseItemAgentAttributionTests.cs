@@ -65,12 +65,13 @@ public class ResponseItemAgentAttributionTests
             BinaryData.FromString(ItemJsonWithAttribution(discriminator)),
             ModelReaderWriterOptions.Json,
             AzureAIExtensionsOpenAIContext.Default);
+        (AgentReference agentReference, string responseId) = GetAttribution(item);
 
         Assert.That(item, Is.InstanceOf(expectedType));
-        Assert.That(item.AgentReference, Is.Not.Null, "agent_reference should materialize to a typed AgentReference.");
-        Assert.That(item.AgentReference.Name, Is.EqualTo(ExpectedAgentName));
-        Assert.That(item.AgentReference.Version, Is.EqualTo(ExpectedAgentVersion));
-        Assert.That(item.ResponseId, Is.EqualTo(ExpectedResponseId));
+        Assert.That(agentReference, Is.Not.Null, "agent_reference should materialize to a typed AgentReference.");
+        Assert.That(agentReference.Name, Is.EqualTo(ExpectedAgentName));
+        Assert.That(agentReference.Version, Is.EqualTo(ExpectedAgentVersion));
+        Assert.That(responseId, Is.EqualTo(ExpectedResponseId));
     }
 
     [TestCaseSource(nameof(AttributionItemKinds))]
@@ -87,12 +88,24 @@ public class ResponseItemAgentAttributionTests
             rewritten,
             ModelReaderWriterOptions.Json,
             AzureAIExtensionsOpenAIContext.Default);
+        (AgentReference agentReference, string responseId) = GetAttribution(roundTripped);
 
         Assert.That(roundTripped, Is.InstanceOf(expectedType));
-        Assert.That(roundTripped.AgentReference?.Name, Is.EqualTo(ExpectedAgentName),
+        Assert.That(agentReference?.Name, Is.EqualTo(ExpectedAgentName),
             "agent_reference must survive a write/read round trip, not be dropped on re-serialization.");
-        Assert.That(roundTripped.AgentReference?.Version, Is.EqualTo(ExpectedAgentVersion));
-        Assert.That(roundTripped.ResponseId, Is.EqualTo(ExpectedResponseId));
+        Assert.That(agentReference?.Version, Is.EqualTo(ExpectedAgentVersion));
+        Assert.That(responseId, Is.EqualTo(ExpectedResponseId));
     }
+
+    private static (AgentReference AgentReference, string ResponseId) GetAttribution(ResponseItem item)
+        => item switch
+        {
+            A2AToolCall typed => (typed.AgentReference, typed.ResponseId),
+            AgentStructuredOutputsResponseItem typed => (typed.AgentReference, typed.ResponseId),
+            AzureAISearchToolCall typed => (typed.AgentReference, typed.ResponseId),
+            BingGroundingToolCall typed => (typed.AgentReference, typed.ResponseId),
+            BingGroundingToolCallOutput typed => (typed.AgentReference, typed.ResponseId),
+            _ => throw new AssertionException($"Unsupported attribution test item type: {item?.GetType().FullName}")
+        };
 }
 #pragma warning restore AAIP001

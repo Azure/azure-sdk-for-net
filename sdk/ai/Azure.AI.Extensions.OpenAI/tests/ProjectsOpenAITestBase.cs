@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -23,8 +23,6 @@ namespace Azure.AI.Extensions.OpenAI.Tests;
 [LiveParallelizable(ParallelScope.All)]
 public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
 {
-    private static AzureCliCredential _credential = null;
-
     public enum OpenAIClientMode
     {
         UseExternalOpenAI,
@@ -64,9 +62,9 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return GetConfiguredOptions(options, instrument);
     }
 
-    protected ProjectResponsesClientOptions CreateTestProjectResponsesClientOptions(Uri endpoint = null, bool instrument = true)
+    protected ProjectOAIResponsesClientOptions CreateTestProjectOAIResponsesClientOptions(Uri endpoint = null, bool instrument = true)
     {
-        ProjectResponsesClientOptions options = new()
+        ProjectOAIResponsesClientOptions options = new()
         {
             Endpoint = endpoint,
             RetryPolicy = new ClientRetryPolicy(maxRetries: 0),
@@ -115,7 +113,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
-        ProjectResponsesClientOptions clientOptions = CreateTestProjectResponsesClientOptions(
+        ProjectOAIResponsesClientOptions clientOptions = CreateTestProjectOAIResponsesClientOptions(
             endpoint: endpointInOptions ? new Uri($"{TestEnvironment.FOUNDRY_PROJECT_ENDPOINT}/openai/v1") : null);
 
         AgentReference defaultAgent = null;
@@ -182,8 +180,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         // This path should allow launching az command.
         if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
         {
-            System.Threading.Interlocked.CompareExchange(ref _credential, new AzureCliCredential(), null);
-            return _credential;
+            return new AzureCliCredential();
         }
         return TestEnvironment.Credential;
     }

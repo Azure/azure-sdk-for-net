@@ -32,10 +32,12 @@ public partial class BingGroundingToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BingGroundingToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.BingGroundingCall)
     {
+        AgentReference = agentReference;
+        ResponseId = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
     }
 
     /// <summary> Initializes a new instance of <see cref="BingGroundingToolCall"/> for deserialization. </summary>
@@ -57,10 +59,11 @@ public partial class BingGroundingToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BingGroundingToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
+        AgentReference = agentReference;
+        ResponseId = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
     }
 }

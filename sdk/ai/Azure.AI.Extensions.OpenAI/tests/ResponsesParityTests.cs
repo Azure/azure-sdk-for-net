@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -20,7 +20,6 @@ using OpenAI.VectorStores;
 using RealOpenAI = OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
-#pragma warning disable AAIP001
 
 /// <summary>
 /// Many of these tests are adapted from https://github.com/openai/openai-dotnet/tree/main/tests/Responses.
@@ -116,7 +115,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         bool isDefaultModel = defaults?.Any(defaultItem => defaultItem == ResponsesClientDefault.DefaultModel) == true;
         bool isDefaultConversation = defaults?.Any(defaultItem => defaultItem == ResponsesClientDefault.DefaultConversation) == true;
 
-        ConversationResource existingConversation = null;
+        ProjectConversation existingConversation = null;
         if (isDefaultConversation)
         {
             ProjectOpenAIClient openAIClientForConversations = GetTestProjectOpenAIClient();
@@ -385,7 +384,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             }
         }
 
-        ConversationResource newConversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation newConversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
         ProjectResponsesClient responsesForNewConversation = client.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME, newConversation.Id);
         ResponseResult newResponse = await responsesForNewConversation.CreateResponseAsync("Hello, new conversation!");
 
@@ -433,7 +432,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectConversation conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
         Assert.That(conversation.Id, Does.StartWith("conv_"));
 
         FunctionTool functionTool = ResponseTool.CreateFunctionTool(
@@ -445,7 +444,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         CreateResponseOptions responseOptions = new()
         {
             Model = TestEnvironment.FOUNDRY_MODEL_NAME,
-            AgentConversationId = conversation.Id,
+            AgentConversationId = conversation,
             Tools = { functionTool },
             InputItems = { ResponseItem.CreateUserMessageItem("What's my favorite food?") },
         };
@@ -462,7 +461,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         CreateResponseOptions followupOptions = new()
         {
             Model = TestEnvironment.FOUNDRY_MODEL_NAME,
-            AgentConversationId = conversation.Id,
+            AgentConversationId = conversation,
             InputItems = { ResponseItem.CreateFunctionCallOutputItem(functionCallResponseItem.CallId, "pizza") },
         };
 
@@ -567,4 +566,3 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         Assert.That(string.IsNullOrEmpty(response.GetOutputText()), Is.False, "The Agent did not returned a response.");
     }
 }
-#pragma warning restore AAIP001

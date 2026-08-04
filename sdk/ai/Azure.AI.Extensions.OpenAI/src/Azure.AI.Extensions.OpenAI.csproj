@@ -14,12 +14,13 @@
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);CS0114;OPENAI001;OPENAICUA001;AAIP001;AAIP002</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
     <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="OpenAI" />
     <PackageReference Include="Azure.Core" />

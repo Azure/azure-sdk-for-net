@@ -74,7 +74,7 @@ namespace Azure.AI.Extensions.OpenAI
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(BaseUri))
             {
-                writer.WritePropertyName("base_url"u8);
+                writer.WritePropertyName("BaseUri"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
             if (Optional.IsDefined(AgentCardPath))
@@ -147,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
                     @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("base_url"u8))
+                if (prop.NameEquals("BaseUri"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

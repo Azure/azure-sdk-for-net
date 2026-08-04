@@ -32,10 +32,12 @@ public partial class AzureAISearchToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AzureAISearchToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.AzureAISearchCall)
     {
+        AgentReference = agentReference;
+        ResponseId = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
     }
 
     /// <summary> Initializes a new instance of <see cref="AzureAISearchToolCall"/> for deserialization. </summary>
@@ -57,10 +59,11 @@ public partial class AzureAISearchToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AzureAISearchToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
+        AgentReference = agentReference;
+        ResponseId = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
     }
 }

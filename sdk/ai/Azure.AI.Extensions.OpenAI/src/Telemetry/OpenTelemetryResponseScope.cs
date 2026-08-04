@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Text;
@@ -186,14 +185,15 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             out List<string> inputTexts,
             out List<ToolCallOutputInfo> toolOutputs)
         {
-            agentName = options.Agent?.Name;
-            agentId = options.Agent is not null
-                ? (!string.IsNullOrEmpty(options.Agent.Version)
-                    ? $"{options.Agent.Name}:{options.Agent.Version}"
-                    : options.Agent.Name)
+            AgentReference agent = AzureAIExtensions.GetCreateResponseAgent(options);
+            agentName = agent?.Name;
+            agentId = agent is not null
+                ? (!string.IsNullOrEmpty(agent.Version)
+                    ? $"{agent.Name}:{agent.Version}"
+                    : agent.Name)
                 : null;
             model = options.Model ?? defaultModelName;
-            conversationId = options.AgentConversationId;
+            conversationId = AzureAIExtensions.GetCreateResponseAgentConversationId(options);
 
             inputTexts = new List<string>();
             toolOutputs = new List<ToolCallOutputInfo>();

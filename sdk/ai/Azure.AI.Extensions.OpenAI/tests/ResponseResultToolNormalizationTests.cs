@@ -99,4 +99,3 @@ public class ResponseResultToolNormalizationTests
         Assert.DoesNotThrow(() => AzureAIExtensions.NormalizeAgentTools(null));
     }
 }
-#pragma warning restore AAIP001

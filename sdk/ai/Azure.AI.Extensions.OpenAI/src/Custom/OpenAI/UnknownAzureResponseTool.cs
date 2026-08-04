@@ -11,6 +11,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+#pragma warning disable AAIP001 // Internal discriminator dispatch must reference experimental Azure tool types.
     /// <summary>
     /// A <see cref="ResponseTool"/> dispatcher registered with <see cref="AzureAIExtensionsOpenAIContext"/>.
     /// OpenAI's built-in <c>DeserializeResponseTool</c> is a closed discriminator switch that buckets
@@ -27,25 +28,23 @@ namespace Azure.AI.Extensions.OpenAI
         // the concrete subtype and its deserializer. It is used both to dispatch a polymorphic read
         // (DeserializeFromDiscriminator) and to decide whether an already materialized tool still needs
         // normalization (TryGetAzureToolType), so the two never drift apart.
-#pragma warning disable AAIP001
         private static readonly IReadOnlyDictionary<ResponseToolKind, (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseTool> Deserialize)> AzureToolDispatch =
-        new Dictionary<ResponseToolKind, (Type, Func<JsonElement, ModelReaderWriterOptions, ResponseTool>)>
-        {
-            [ResponseToolKind.A2APreview] = (typeof(A2APreviewTool), A2APreviewTool.DeserializeA2APreviewTool),
-            [ResponseToolKind.AzureAISearch] = (typeof(AzureAISearchTool), AzureAISearchTool.DeserializeAzureAISearchTool),
-            [ResponseToolKind.AzureFunction] = (typeof(AzureFunctionTool), AzureFunctionTool.DeserializeAzureFunctionTool),
-            [ResponseToolKind.BingCustomSearchPreview] = (typeof(BingCustomSearchPreviewTool), BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool),
-            [ResponseToolKind.BingGrounding] = (typeof(BingGroundingTool), BingGroundingTool.DeserializeBingGroundingTool),
-            [ResponseToolKind.BrowserAutomationPreview] = (typeof(BrowserAutomationPreviewTool), BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool),
-            [ResponseToolKind.CaptureStructuredOutputs] = (typeof(CaptureStructuredOutputsTool), CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool),
-            [ResponseToolKind.FabricIQPreview] = (typeof(FabricIQPreviewTool), FabricIQPreviewTool.DeserializeFabricIQPreviewTool),
-            [ResponseToolKind.MemorySearchPreview] = (typeof(MemorySearchPreviewTool), MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool),
-            [ResponseToolKind.FabricDataAgentPreview] = (typeof(MicrosoftFabricPreviewTool), MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool),
-            [ResponseToolKind.OpenAPI] = (typeof(OpenAPITool), OpenAPITool.DeserializeOpenAPITool),
-            [ResponseToolKind.SharePointGroundingPreview] = (typeof(SharepointPreviewTool), SharepointPreviewTool.DeserializeSharepointPreviewTool),
-            [ResponseToolKind.WorkIQPreview] = (typeof(WorkIQPreviewTool), WorkIQPreviewTool.DeserializeWorkIQPreviewTool),
-        };
-#pragma warning restore AAIP001
+            new Dictionary<ResponseToolKind, (Type, Func<JsonElement, ModelReaderWriterOptions, ResponseTool>)>
+            {
+                [ResponseToolKind.A2APreview] = (typeof(A2APreviewTool), A2APreviewTool.DeserializeA2APreviewTool),
+                [ResponseToolKind.AzureAISearch] = (typeof(AzureAISearchTool), AzureAISearchTool.DeserializeAzureAISearchTool),
+                [ResponseToolKind.AzureFunction] = (typeof(AzureFunctionTool), AzureFunctionTool.DeserializeAzureFunctionTool),
+                [ResponseToolKind.BingCustomSearchPreview] = (typeof(BingCustomSearchPreviewTool), BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool),
+                [ResponseToolKind.BingGrounding] = (typeof(BingGroundingTool), BingGroundingTool.DeserializeBingGroundingTool),
+                [ResponseToolKind.BrowserAutomationPreview] = (typeof(BrowserAutomationPreviewTool), BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool),
+                [ResponseToolKind.CaptureStructuredOutputs] = (typeof(CaptureStructuredOutputsTool), CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool),
+                [ResponseToolKind.FabricIQPreview] = (typeof(FabricIQPreviewTool), FabricIQPreviewTool.DeserializeFabricIQPreviewTool),
+                [ResponseToolKind.MemorySearchPreview] = (typeof(MemorySearchPreviewTool), MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool),
+                [ResponseToolKind.FabricDataAgentPreview] = (typeof(MicrosoftFabricPreviewTool), MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool),
+                [ResponseToolKind.OpenAPI] = (typeof(OpenAPITool), OpenAPITool.DeserializeOpenAPITool),
+                [ResponseToolKind.SharePointGroundingPreview] = (typeof(SharepointPreviewTool), SharepointPreviewTool.DeserializeSharepointPreviewTool),
+                [ResponseToolKind.WorkIQPreview] = (typeof(WorkIQPreviewTool), WorkIQPreviewTool.DeserializeWorkIQPreviewTool),
+            };
 
         internal UnknownAzureResponseTool()
             : base(new ResponseToolKind("azure.unknown"))
@@ -96,5 +95,6 @@ namespace Azure.AI.Extensions.OpenAI
                 options,
                 OpenAIContext.Default);
         }
+#pragma warning restore AAIP001
     }
 }

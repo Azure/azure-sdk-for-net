@@ -93,7 +93,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("azure_ai_search"u8);
+            writer.WritePropertyName("AzureAISearch"u8);
             writer.WriteObjectValue(AzureAISearch, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Extensions.OpenAI
                     toolConfigs = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("azure_ai_search"u8))
+                if (prop.NameEquals("AzureAISearch"u8))
                 {
                     azureAISearch = AzureAISearchToolOptions.DeserializeAzureAISearchToolOptions(prop.Value, options);
                     continue;
