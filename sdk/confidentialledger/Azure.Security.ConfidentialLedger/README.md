@@ -362,6 +362,51 @@ Console.WriteLine(enclavesJson);
 
 [Microsoft Azure Attestation Service](https://azure.microsoft.com/services/azure-attestation/) is one provider of SGX enclave quotes.
 
+### Web Frontend Gateway (opt-in)
+
+The confidential ledger can be fronted by the **Web Frontend (WebFE) Gateway**, which terminates TLS with publicly-rooted certificates and can queue write submissions so callers can submit-and-disconnect instead of holding a connection open against a CCF primary node. Opt in by setting `ConfidentialLedgerClientOptions.UseWebFrontend = true`. When enabled, the SDK skips the CCF identity-service TLS bootstrap (the OS trust store is sufficient), and only `TokenCredential` authentication is supported (client-certificate / mTLS is rejected).
+
+```C# Snippet:CreateClientWebFrontend
+var ledgerClient = new ConfidentialLedgerClient(
+    ledgerEndpoint: new Uri("https://my-ledger-url.confidential-ledger.azure.com"),
+    credential: new DefaultAzureCredential(),
+    options: new ConfidentialLedgerClientOptions { UseWebFrontend = true });
+```
+
+When the underlying CCF cluster is temporarily unreachable, `PostLedgerEntry` may return `202 Accepted`: the write is queued and the returned `Operation.Id` is the gateway-assigned `operationId`. Submit with `WaitUntil.Started` and persist the `operationId` so you can resume later:
+
+```C# Snippet:PostLedgerEntryWaitUntilStarted
+// When UseWebFrontend = true and waitUntil is Started, the SDK accepts a 202 Accepted
+// response and returns an operation whose Id is the gateway-assigned operationId.
+Operation operation = ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Started,
+    RequestContent.Create(new { contents = "Hello from the Web Frontend!" }));
+
+string operationId = operation.Id;
+Console.WriteLine($"Submitted ledger entry. Operation Id: {operationId}");
+
+// The application can persist operationId and exit. The submission is durable on the
+// server for the gateway's operation-record retention period.
+```
+
+Later — in a different process or after a restart — resume polling with the saved `operationId`. Rehydration performs no I/O until you start polling, and once the write commits `Operation.Id` flips to the CCF transaction id. Always bound the wait with a `CancellationToken`:
+
+```C# Snippet:RehydratePostLedgerEntryOperation
+// Later, in a different process or after a restart, resume polling with the saved
+// operation Id. Rehydration performs no I/O until you start polling.
+Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
+
+// The Web Frontend write queue can stay pending for an extended period during an outage.
+// Always bound the wait with a CancellationToken so the call cannot hang indefinitely.
+using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+Response completed = resumed.WaitForCompletionResponse(cts.Token);
+
+// Once committed, Operation.Id flips to the CCF transaction Id.
+string transactionId = resumed.Id;
+Console.WriteLine($"Operation {operationId} committed as transaction {transactionId}");
+Console.WriteLine($"Final status: {completed.Status}");
+```
+
 ### Thread safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
