@@ -677,6 +677,9 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
 
+# PRLabel: %Device Update
+/sdk/deviceupdate/                                                 @wuqiten @josephmsft
+
 # PRLabel: %App Services %Mgmt
 /sdk/domainregistration/Azure.ResourceManager.*/                   @antcp @AzureAppServiceCLI
 
