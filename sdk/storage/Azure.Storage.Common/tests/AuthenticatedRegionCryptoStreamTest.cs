@@ -464,8 +464,7 @@ namespace Azure.Storage.Test
                 destStream,
                 new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Encrypt),
                 regionDataLen,
-                CryptoStreamMode.Write,
-                detectReorder);
+                CryptoStreamMode.Write);
             new MemoryStream(plaintext).CopyTo(writeStream);
             writeStream.FlushFinalInternal(false, CancellationToken.None).EnsureCompleted();
             var ciphertext = destStream.ToArray();
@@ -474,13 +473,17 @@ namespace Azure.Storage.Test
             SwapRegions(ciphertext, 2, 3, regionDataLen + _nonceLength + _tagLength);
 
             // detect on decrypt
+            IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt);
+            if (detectReorder)
+            {
+                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 1);
+            }
             destStream = new MemoryStream();
             writeStream = new AuthenticatedRegionCryptoStream(
                 destStream,
-                new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt),
+                transform,
                 regionDataLen,
-                CryptoStreamMode.Write,
-                detectReorder);
+                CryptoStreamMode.Write);
 
             TestDelegate action = () => new MemoryStream(ciphertext).CopyTo(writeStream);
             if (detectReorder)
@@ -507,8 +510,7 @@ namespace Azure.Storage.Test
                 new MemoryStream(plaintext),
                 new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Encrypt),
                 regionDataLen,
-                CryptoStreamMode.Read,
-                detectReorder);
+                CryptoStreamMode.Read);
             readStream.CopyTo(destStream);
             var ciphertext = destStream.ToArray();
 
@@ -516,13 +518,17 @@ namespace Azure.Storage.Test
             SwapRegions(ciphertext, 2, 3, regionDataLen + _nonceLength + _tagLength);
 
             // detect on decrypt
+            IAuthenticatedCryptographicTransform transform = new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt);
+            if (detectReorder)
+            {
+                transform = new ForceSequentialNonceAuthenticatedCryptographicTransform(transform, 1);
+            }
             destStream = new MemoryStream();
             readStream = new AuthenticatedRegionCryptoStream(
                 new MemoryStream(ciphertext),
-                new GcmAuthenticatedCryptographicTransform(cek, TransformMode.Decrypt),
+                transform,
                 regionDataLen,
-                CryptoStreamMode.Read,
-                detectReorder);
+                CryptoStreamMode.Read);
 
             TestDelegate action = () => readStream.CopyTo(destStream);
             if (detectReorder)

@@ -14,10 +14,6 @@ namespace Azure.Storage.Cryptography
 {
     internal class AuthenticatedRegionCryptoStream : Stream
     {
-        // Provides detection against reordering authenticated regions whose nonces are expected to be sequential
-        private readonly bool _forceSequentialNonce;
-        private long _expectedNonce = 1;
-
         private readonly Stream _innerStream;
         private readonly CryptoStreamMode _mode;
         private readonly IAuthenticatedCryptographicTransform _transform;
@@ -48,13 +44,11 @@ namespace Azure.Storage.Cryptography
             Stream innerStream,
             IAuthenticatedCryptographicTransform transform,
             int regionDataSize,
-            CryptoStreamMode streamMode,
-            bool forceSequentialNonce = true)
+            CryptoStreamMode streamMode)
         {
             _innerStream = innerStream;
             _transform = transform;
             _mode = streamMode;
-            _forceSequentialNonce = forceSequentialNonce;
 
             // determine size of buffers. ciphertextLength = nonceLength + plaintextLength + tagLength.
             // determine if the stream's main buffer will hold ciphertext or plaintext and size accordingly.
@@ -143,7 +137,6 @@ namespace Azure.Storage.Cryptography
                         return 0;
                     }
 
-                    ValidateNextRegion(transformInputBuffer);
                     _bufferPopulatedLength = _transform.TransformAuthenticationBlock(
                         input: new ReadOnlySpan<byte>(transformInputBuffer, 0, totalRead),
                         output: new Span<byte>(_buffer, 0, _bufferLength));
@@ -224,7 +217,6 @@ namespace Azure.Storage.Cryptography
             try
             {
                 transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
-                ValidateNextRegion(_buffer);
                 int outputBytes = _transform.TransformAuthenticationBlock(
                     input: new ReadOnlySpan<byte>(_buffer, 0, _bufferLength),
                     output: transformedContentsBuffer);
@@ -275,7 +267,6 @@ namespace Azure.Storage.Cryptography
                 try
                 {
                     transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
-                    ValidateNextRegion(_buffer);
                     int outputBytes = _transform.TransformAuthenticationBlock(
                         input: new ReadOnlySpan<byte>(_buffer, 0, _bufferPos),
                         output: transformedContentsBuffer);
@@ -305,46 +296,6 @@ namespace Azure.Storage.Cryptography
             }
 
             _flushedFinal = true;
-        }
-
-        private void ValidateNextRegion(Span<byte> authenticatedRegionCiphertext)
-        {
-            // While it is persisted, nonce was originally calculated sequentially on upload.
-            // This is vulnerable to regions being reordered without detection.
-            // To detect, maintain a running count and check the persisted value against it.
-            // Fail everything if it's wrong.
-            // This behavior can be toggled to allow for data recovery in scenarios where the
-            // reorder has already occurred.
-            if (_transform.TransformMode == TransformMode.Decrypt && _forceSequentialNonce)
-            {
-                ReadOnlySpan<byte> expectedNonceBytes = NextExpectedNonce();
-                if (!expectedNonceBytes.SequenceEqual(authenticatedRegionCiphertext.Slice(0, expectedNonceBytes.Length)))
-                {
-                    throw new CryptographicException("Encountered out-of-order authenticated region.");
-                }
-                else
-                {
-                    // this overwrite is a sanity check recommended by the experts.
-                    // if we don't throw, we absolutely guarantee the value in the buffer is correct.
-                    // do not remove this.
-                    expectedNonceBytes.CopyTo(authenticatedRegionCiphertext);
-                }
-            }
-        }
-
-        private ReadOnlySpan<byte> NextExpectedNonce()
-        {
-            var result = new Span<byte>(new byte[_transform.NonceLength]);
-
-            // long is 8 bytes, nonce is 12. pad the nonce with remaining 4 zeroes.
-            const int bytesInLong = 8;
-            int remainingNonceBytes = _transform.NonceLength - bytesInLong;
-            new byte[] { 0, 0, 0, 0 }.CopyTo(result.Slice(0, remainingNonceBytes));
-
-            // write nonce to span and increment counter
-            BitConverter.GetBytes(_expectedNonce++).CopyTo(result.Slice(remainingNonceBytes, bytesInLong));
-
-            return result;
         }
 
         public override long Seek(long offset, SeekOrigin origin)

@@ -177,9 +177,10 @@ namespace Azure.Storage.Cryptography
         {
             // gcm disposed by stream
             var gcm = new GcmAuthenticatedCryptographicTransform(contentEncryptionKey, TransformMode.Decrypt);
+            var nonceCountingGcm = new ForceSequentialNonceAuthenticatedCryptographicTransform(gcm, 1);
             return new AuthenticatedRegionCryptoStream(
                 contentStream,
-                gcm,
+                nonceCountingGcm,
                 authRegionPlaintextSize,
                 mode);
         }
