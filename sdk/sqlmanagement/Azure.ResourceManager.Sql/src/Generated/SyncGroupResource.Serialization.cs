@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SyncGroupResource : IJsonModel<SyncGroupData>
     {
-        private static SyncGroupData s_dataDeserializationInstance;
-        private static SyncGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SyncGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SyncGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SyncGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SyncGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SyncGroupData>)Data).Write(writer, options);
 
-        SyncGroupData IJsonModel<SyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SyncGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SyncGroupData IJsonModel<SyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SyncGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SyncGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SyncGroupData IPersistableModel<SyncGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SyncGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SyncGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

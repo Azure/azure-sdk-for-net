@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string frontDoorEndpointApiVersion);
             _frontDoorEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _frontDoorEndpointsRestClient = new FrontDoorEndpoints(_frontDoorEndpointsClientDiagnostics, Pipeline, Endpoint, frontDoorEndpointApiVersion ?? "2025-09-01-preview");
+            _frontDoorEndpointsRestClient = new FrontDoorEndpoints(_frontDoorEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorEndpointApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
-                    new FrontDoorEndpointOperationSource(Client),
+                    new FrontDoorEndpointResourceOperationSource(Client),
                     _frontDoorEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
-                    new FrontDoorEndpointOperationSource(Client),
+                    new FrontDoorEndpointResourceOperationSource(Client),
                     _frontDoorEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

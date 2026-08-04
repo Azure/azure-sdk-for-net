@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -12,7 +11,6 @@ using System.Linq;
 using System.Threading;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_SessionsCRUD : SamplesBase
 {
@@ -30,9 +28,7 @@ public class Sample_SessionsCRUD : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Async
         ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
@@ -69,6 +65,11 @@ public class Sample_SessionsCRUD : SamplesBase
         ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
         #endregion
+        #region Snippet:Sample_Stop_SessionsCRUD_Async
+        await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
+        #endregion
         #region Snippet:Sample_List_SessionsCRUD_Async
         List<ProjectAgentSession> sessions = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).ToListAsync();
         Console.WriteLine($"Found {sessions.Count} sessions.");
@@ -96,9 +97,7 @@ public class Sample_SessionsCRUD : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Sync
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
             agentName: hostedAgentName,
@@ -134,6 +133,11 @@ public class Sample_SessionsCRUD : SamplesBase
         #region Snippet:Sample_Get_SessionsCRUD_Sync
         ProjectAgentSession session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
+        #endregion
+        #region Snippet:Sample_Stop_SessionsCRUD_Sync
+        agentsClient.StopSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
         #endregion
         #region Snippet:Sample_List_SessionsCRUD_Sync
         List<ProjectAgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];

@@ -30,9 +30,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Path of the file to create relative to the workspace root. </summary>
-        public string Path { get; }
+        public string Path { get; set; }
 
         /// <summary> Unified diff content to apply when creating the file. </summary>
-        public string Diff { get; }
+        public string Diff { get; set; }
     }
 }

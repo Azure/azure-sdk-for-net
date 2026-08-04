@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the KeySource. </summary>
+        /// <summary> Gets the KeySource. </summary>
         public BicepValue<BatchAccountKeySource> KeySource
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _keySource;
             }
-            set
-            {
-                Initialize();
-                _keySource.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the KeyVaultProperties. </summary>
+        /// <summary> Gets the KeyVaultProperties. </summary>
         internal KeyVaultProperties KeyVaultProperties
         {
             get
@@ -45,27 +40,14 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _keyVaultProperties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _keyVaultProperties, value);
-            }
         }
 
-        /// <summary> Gets or sets the KeyIdentifier. </summary>
+        /// <summary> Gets the KeyIdentifier. </summary>
         public BicepValue<Uri> KeyIdentifier
         {
             get
             {
-                return KeyVaultProperties is null ? default : KeyVaultProperties.KeyIdentifier;
-            }
-            set
-            {
-                if (KeyVaultProperties is null)
-                {
-                    KeyVaultProperties = new KeyVaultProperties();
-                }
-                KeyVaultProperties.KeyIdentifier = value;
+                return KeyVaultProperties.KeyIdentifier;
             }
         }
 
@@ -75,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _keySource = DefineProperty<BatchAccountKeySource>(nameof(KeySource), new string[] { "keySource" });
             _keyVaultProperties = DefineModelProperty<KeyVaultProperties>(nameof(KeyVaultProperties), new string[] { "keyVaultProperties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountEncryptionConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

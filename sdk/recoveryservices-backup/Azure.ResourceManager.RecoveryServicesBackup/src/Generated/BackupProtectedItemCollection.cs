@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(BackupProtectedItemResource.ResourceType, out string backupProtectedItemApiVersion);
             _protectedItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectedItemResource.ResourceType.Namespace, Diagnostics);
-            _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Endpoint, backupProtectedItemApiVersion ?? "2026-01-31-preview");
+            _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectedItemApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<BackupProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(
-                    new BackupProtectedItemOperationSource(Client),
+                    new BackupProtectedItemResourceOperationSource(Client),
                     _protectedItemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<BackupProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectedItemResource>(
-                    new BackupProtectedItemOperationSource(Client),
+                    new BackupProtectedItemResourceOperationSource(Client),
                     _protectedItemsClientDiagnostics,
                     Pipeline,
                     message.Request,

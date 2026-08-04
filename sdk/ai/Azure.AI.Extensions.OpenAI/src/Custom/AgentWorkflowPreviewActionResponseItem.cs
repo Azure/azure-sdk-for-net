@@ -8,6 +8,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("WorkflowActionOutputItem")]
 public partial class AgentWorkflowPreviewActionResponseItem
 {
+    /// <summary> Gets the status of the workflow preview action. </summary>
     [CodeGenMember("Status")]
     public AgentWorkflowPreviewActionStatus? Status { get; }
 }

@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Confluent
                     yield break;
                 }
                 ListSchemaRegistryClustersResponse result = ListSchemaRegistryClustersResponse.FromResponse(response);
-                yield return Page<SchemaRegistryClusterRecord>.FromValues((IReadOnlyList<SchemaRegistryClusterRecord>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SchemaRegistryClusterRecord>.FromValues((IReadOnlyList<SchemaRegistryClusterRecord>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

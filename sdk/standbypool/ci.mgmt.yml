@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.StandbyPool
       safeName: AzureResourceManagerStandbyPool
+    - name: Azure.Provisioning.StandbyPool
+      safeName: AzureProvisioningStandbyPool

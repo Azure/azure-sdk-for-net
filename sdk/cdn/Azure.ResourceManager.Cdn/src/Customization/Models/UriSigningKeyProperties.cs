@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriSigningKeyProperties
     {
         // Backward compatibility: old API used WritableSubResource secretSource parameter
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriSigningKeyProperties(string keyId, WritableSubResource secretSource) : base(SecretType.UriSigningKey)
         {

@@ -37,6 +37,8 @@ namespace Azure.AI.Translation.Document
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
+        public int? ImageCharacterDetected { get { throw null; } }
+        public int? ImageCharged { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public System.Uri SourceDocumentUri { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
@@ -58,7 +60,7 @@ namespace Azure.AI.Translation.Document
     }
     public partial class DocumentTranslateContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslateContent>
     {
-        public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData document) { }
+        public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData multipartDocument) { }
         public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData document, System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> glossaries) { }
         public Azure.AI.Translation.Document.MultipartFormFileData MultipartDocument { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> MultipartGlossary { get { throw null; } }
@@ -149,12 +151,13 @@ namespace Azure.AI.Translation.Document
     }
     public partial class DocumentTranslationClientOptions : Azure.Core.ClientOptions
     {
-        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V2024_11_01_Preview) { }
+        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V2025_12_01_Preview) { }
         public Azure.AI.Translation.Document.DocumentTranslationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_05_01 = 1,
             V2024_11_01_Preview = 2,
+            V2025_12_01_Preview = 3,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]

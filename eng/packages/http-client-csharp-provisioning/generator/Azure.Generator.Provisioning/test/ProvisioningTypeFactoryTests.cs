@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Azure.Generator.Management.Models;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -16,11 +17,25 @@ namespace Azure.Generator.Provisioning.Tests
     public class ProvisioningTypeFactoryTests
     {
         private ProvisioningTypeFactory _factory = null!;
+        private InputModelType _regularModel = null!;
 
         [SetUp]
         public void SetUp()
         {
-            _factory = ProvisioningMockHelpers.LoadMockGenerator().TypeFactory;
+            _regularModel = CreateRegularModel();
+            var resourceModel = CreateWritableResourceModel(_regularModel);
+            var metadata = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                [CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)]);
+            _factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, _regularModel],
+                clients: () => metadata.Methods.Select(m => m.InputClient).Distinct().ToArray(),
+                armProviderSchema: () => new ArmProviderSchema([metadata], []))
+                .Object.TypeFactory;
         }
 
         [TestCaseSource(nameof(PrimitiveTypeCases))]
@@ -177,7 +192,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void RegularModelTypeIsNotWrappedInBicepValue()
         {
-            var input = CreateRegularModel();
+            var input = _regularModel;
 
             var type = _factory.CreateCSharpType(input);
 
@@ -187,6 +202,58 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(type.Name, Is.EqualTo("TestModel"));
             Assert.That(type.Namespace, Is.EqualTo("Azure.Provisioning.Tests"));
             Assert.That(type.BaseType, Is.EqualTo(new CSharpType(typeof(ProvisionableConstruct))));
+        }
+
+        [TestCase(null)]
+        [TestCase("derived")]
+        public void UnreachableModelIsNotCreated(string? discriminatorValue)
+        {
+            var input = CreateDerivedModel("UnreachableModel", discriminatorValue, _regularModel);
+
+            var provider = _factory.CreateModel(input);
+
+            Assert.That(provider, Is.Null);
+        }
+
+        [Test]
+        public void DiscriminatedBaseModelDescriptionListsDerivedModels()
+        {
+            var discriminator = CreateProperty("kind", InputPrimitiveType.String, isDiscriminator: true);
+            var baseModel = new InputModelType(
+                "BaseModel",
+                "Sample.Models",
+                "Sample.Models.BaseModel",
+                "public",
+                null,
+                string.Empty,
+                "Base model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [discriminator],
+                null,
+                [],
+                null,
+                discriminator,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+            var firstDerivedModel = CreateDerivedModel("FirstDerivedModel", "first", baseModel);
+            var secondDerivedModel = CreateDerivedModel("SecondDerivedModel", "second", baseModel);
+            var discriminatedSubtypes = (IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes;
+            discriminatedSubtypes.Add("first", firstDerivedModel);
+            discriminatedSubtypes.Add("second", secondDerivedModel);
+            var factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [baseModel, firstDerivedModel, secondDerivedModel],
+                armProviderSchema: () => new ArmProviderSchema([], []))
+                .Object.TypeFactory;
+
+            var provider = factory.CreateModel(baseModel);
+
+            Assert.That(provider, Is.Not.Null);
+            Assert.That(provider!.Description.ToString(), Does.StartWith("Base model.\nPlease note this is the abstract base class."));
+            Assert.That(provider.Description.ToString(), Does.Contain("FirstDerivedModel"));
+            Assert.That(provider.Description.ToString(), Does.Contain("SecondDerivedModel"));
         }
 
         [Test]
@@ -216,7 +283,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void ArrayOfRegularModelTypeIsConvertedToBicepListOfModel()
         {
-            var input = new InputArrayType("list", "list", CreateRegularModel());
+            var input = new InputArrayType("list", "list", _regularModel);
 
             var type = _factory.CreateCSharpType(input);
 
@@ -231,7 +298,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void DictionaryOfRegularModelTypeIsConvertedToBicepDictionaryOfModel()
         {
-            var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel());
+            var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, _regularModel);
 
             var type = _factory.CreateCSharpType(input);
 
@@ -249,7 +316,7 @@ namespace Azure.Generator.Provisioning.Tests
             var input = new InputArrayType(
                 "list",
                 "list",
-                new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel()));
+                new InputDictionaryType("dictionary", InputPrimitiveType.String, _regularModel));
 
             var type = _factory.CreateCSharpType(input);
 
@@ -322,6 +389,140 @@ namespace Azure.Generator.Provisioning.Tests
                 false,
                 new InputSerializationOptions(),
                 false);
+
+        private static InputModelType CreateWritableResourceModel(InputModelType model)
+            => new(
+                "TestResource",
+                "Sample.Models",
+                "Sample.Models.TestResource",
+                "public",
+                null,
+                string.Empty,
+                "Test resource.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [CreateProperty("Details", model)],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+        private static InputModelType CreateDerivedModel(string name, string? discriminatorValue, InputModelType baseModel)
+            => new(
+                name,
+                "Sample.Models",
+                $"Sample.Models.{name}",
+                "public",
+                null,
+                string.Empty,
+                $"{name} model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [],
+                baseModel,
+                [],
+                discriminatorValue,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+        private static InputModelProperty CreateProperty(string name, InputType type, bool isDiscriminator = false)
+            => new(
+                name: name,
+                summary: null,
+                doc: $"Description for {name}",
+                type: type,
+                isRequired: false,
+                isReadOnly: false,
+                isApiVersion: false,
+                defaultValue: null,
+                isHttpMetadata: false,
+                access: null,
+                isDiscriminator: isDiscriminator,
+                serializedName: name,
+                serializationOptions: new(json: new(name)));
+
+        private static ArmResourceMetadata CreateMetadata(
+            InputModelType model,
+            string resourceIdPattern,
+            string resourceType,
+            ResourceScope scope,
+            IReadOnlyList<string> apiVersions,
+            IReadOnlyList<ResourceMethod> methods)
+        {
+            var path = new RequestPathPattern(resourceIdPattern);
+            return new ArmResourceMetadata(
+                path,
+                model.Name,
+                new ResourceTypePattern(resourceType),
+                model,
+                new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
+                methods,
+                null,
+                null,
+                [],
+                new ArmResourceNameConstraints(null, null, null),
+                apiVersions,
+                []);
+        }
+
+        private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
+        {
+            var path = RequestPathPattern.GetFromScope(scope, new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"));
+            var methodName = $"{kind}Widget";
+            var operation = new InputOperation(
+                methodName,
+                null,
+                string.Empty,
+                $"{methodName} description",
+                null,
+                "public",
+                [],
+                [new InputOperationResponse([200], null, [], false, ["application/json"])],
+                kind == ResourceOperationKind.Read ? "GET" : "PUT",
+                string.Empty,
+                path.SerializedPath,
+                null,
+                null,
+                false,
+                true,
+                true,
+                $"Sample.{methodName}",
+                "Sample");
+            var method = new InputBasicServiceMethod(
+                methodName,
+                "public",
+                [],
+                null,
+                null,
+                operation,
+                [],
+                new InputServiceMethodResponse(null, null),
+                null,
+                false,
+                true,
+                true,
+                operation.CrossLanguageDefinitionId);
+            var client = new InputClient(
+                "Widgets",
+                "Sample",
+                "Sample.Widgets",
+                string.Empty,
+                "Widgets description",
+                isMultiServiceClient: false,
+                [method],
+                [],
+                null,
+                [],
+                ["2024-01-01"]);
+            return new ResourceMethod(kind, method, path, new ArmScopeInfo(scope, path, null), client);
+        }
 
         private static IEnumerable<TestCaseData> PrimitiveTypeCases()
         {

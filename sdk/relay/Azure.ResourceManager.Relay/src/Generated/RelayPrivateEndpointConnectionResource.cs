@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(ResourceType, out string relayPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, relayPrivateEndpointConnectionApiVersion ?? "2024-01-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayPrivateEndpointConnectionApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 

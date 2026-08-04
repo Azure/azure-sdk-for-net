@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ConditionalCreditResource.ResourceType, out string conditionalCreditApiVersion);
             _conditionalCreditsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ConditionalCreditResource.ResourceType.Namespace, Diagnostics);
-            _conditionalCreditsRestClient = new ConditionalCredits(_conditionalCreditsClientDiagnostics, Pipeline, Endpoint, conditionalCreditApiVersion ?? "2025-12-01-preview");
+            _conditionalCreditsRestClient = new ConditionalCredits(_conditionalCreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, conditionalCreditApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _conditionalCreditsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, ConditionalCreditData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
-                    new ConditionalCreditOperationSource(Client),
+                    new ConditionalCreditResourceOperationSource(Client),
                     _conditionalCreditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _conditionalCreditsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, ConditionalCreditData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
-                    new ConditionalCreditOperationSource(Client),
+                    new ConditionalCreditResourceOperationSource(Client),
                     _conditionalCreditsClientDiagnostics,
                     Pipeline,
                     message.Request,

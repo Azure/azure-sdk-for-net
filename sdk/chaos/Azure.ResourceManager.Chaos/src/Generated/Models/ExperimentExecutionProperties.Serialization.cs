@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string status = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? stoppedOn = default;
+            ChaosProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,12 +166,21 @@ namespace Azure.ResourceManager.Chaos.Models
                     stoppedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ChaosProvisioningState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExperimentExecutionProperties(status, startedOn, stoppedOn, additionalBinaryDataProperties);
+            return new ExperimentExecutionProperties(status, startedOn, stoppedOn, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(KeyVaultResource.ResourceType, out string keyVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", KeyVaultResource.ResourceType.Namespace, Diagnostics);
-            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, keyVaultApiVersion ?? "2026-02-01");
+            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, KeyVaultCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation<KeyVaultResource> operation = new KeyVaultArmOperation<KeyVaultResource>(
-                    new KeyVaultOperationSource(Client),
+                    new KeyVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, KeyVaultCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation<KeyVaultResource> operation = new KeyVaultArmOperation<KeyVaultResource>(
-                    new KeyVaultOperationSource(Client),
+                    new KeyVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,

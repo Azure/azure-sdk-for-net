@@ -46,7 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique identifier of the reasoning content. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> Gets or sets the EncryptedContent. </summary>
         public string EncryptedContent { get; set; }

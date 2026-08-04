@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisCacheAccessPolicyApiVersion);
             _redisCacheAccessPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _redisCacheAccessPoliciesRestClient = new RedisCacheAccessPolicies(_redisCacheAccessPoliciesClientDiagnostics, Pipeline, Endpoint, redisCacheAccessPolicyApiVersion ?? "2025-08-01-preview");
+            _redisCacheAccessPoliciesRestClient = new RedisCacheAccessPolicies(_redisCacheAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisCacheAccessPolicyApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisCacheAccessPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisCacheAccessPolicyResource> operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(
-                    new RedisCacheAccessPolicyOperationSource(Client),
+                    new RedisCacheAccessPolicyResourceOperationSource(Client),
                     _redisCacheAccessPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisCacheAccessPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisCacheAccessPolicyResource> operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(
-                    new RedisCacheAccessPolicyOperationSource(Client),
+                    new RedisCacheAccessPolicyResourceOperationSource(Client),
                     _redisCacheAccessPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

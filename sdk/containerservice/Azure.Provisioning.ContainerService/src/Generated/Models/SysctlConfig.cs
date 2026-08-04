@@ -499,6 +499,10 @@ namespace Azure.Provisioning.ContainerService
             _vmMaxMapCount = DefineProperty<int>(nameof(VmMaxMapCount), new string[] { "vmMaxMapCount" });
             _vmSwappiness = DefineProperty<int>(nameof(VmSwappiness), new string[] { "vmSwappiness" });
             _vmVfsCachePressure = DefineProperty<int>(nameof(VmVfsCachePressure), new string[] { "vmVfsCachePressure" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SysctlConfig that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

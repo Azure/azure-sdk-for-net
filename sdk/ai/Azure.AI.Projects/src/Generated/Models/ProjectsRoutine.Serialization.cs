@@ -84,25 +84,34 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(ProjectsRoutine)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
-            writer.WritePropertyName("triggers"u8);
-            writer.WriteStartObject();
-            foreach (var item in Triggers)
+            writer.WriteBooleanValue(IsEnabled);
+            if (Optional.IsCollectionDefined(Triggers))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WritePropertyName("triggers"u8);
+                writer.WriteStartObject();
+                foreach (var item in Triggers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteObjectValue(Action, options);
+            }
             if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("created_at"u8);
@@ -157,7 +166,7 @@ namespace Azure.AI.Projects
             }
             string name = default;
             string description = default;
-            bool enabled = default;
+            bool isEnabled = default;
             IDictionary<string, RoutineTrigger> triggers = default;
             RoutineAction action = default;
             DateTimeOffset? createdAt = default;
@@ -177,11 +186,15 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("triggers"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, RoutineTrigger> dictionary = new Dictionary<string, RoutineTrigger>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
@@ -192,6 +205,10 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("action"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     action = RoutineAction.DeserializeRoutineAction(prop.Value, options);
                     continue;
                 }
@@ -221,8 +238,8 @@ namespace Azure.AI.Projects
             return new ProjectsRoutine(
                 name,
                 description,
-                enabled,
-                triggers,
+                isEnabled,
+                triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(),
                 action,
                 createdAt,
                 updatedAt,

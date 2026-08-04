@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     public readonly partial struct ResultKind : IEquatable<ResultKind>
     {
         private readonly string _value;
+        /// <summary> basic. </summary>
+        private const string BasicValue = "basic";
 
         /// <summary> Initializes a new instance of <see cref="ResultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResultKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "basic";
+            _value = value;
+        }
 
         /// <summary> basic. </summary>
         public static ResultKind Basic { get; } = new ResultKind(BasicValue);
+
         /// <summary> Determines if two <see cref="ResultKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResultKind left, ResultKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResultKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResultKind left, ResultKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResultKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResultKind(string value) => new ResultKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResultKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResultKind?(string value) => value == null ? null : new ResultKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResultKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResultKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

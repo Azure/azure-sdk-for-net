@@ -90,6 +90,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("outputTokens"u8);
                 writer.WriteNumberValue(OutputTokensCount.Value);
             }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -121,9 +126,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeBaseActivityRecordType @type = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
+            string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? inputTokensCount = default;
             int? outputTokensCount = default;
+            string modelName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -154,6 +161,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("warning"u8))
+                {
+                    warning = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("inputTokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,6 +184,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     outputTokensCount = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("modelName"u8))
+                {
+                    modelName = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -182,9 +199,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 @type,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties,
                 inputTokensCount,
-                outputTokensCount);
+                outputTokensCount,
+                modelName);
         }
     }
 }

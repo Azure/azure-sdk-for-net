@@ -54,7 +54,7 @@ namespace OpenAI
         /// The role of the message input. One of `user`, `assistant`, `system`, or
         ///   `developer`.
         /// </summary>
-        public EasyInputMessageRole Role { get; }
+        public EasyInputMessageRole Role { get; set; }
 
         /// <summary>
         /// Text, image, or audio input to the model, used to generate a response.
@@ -96,7 +96,7 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Content { get; }
+        public BinaryData Content { get; set; }
 
         /// <summary> Gets or sets the Phase. </summary>
         public MessagePhase? Phase { get; set; }

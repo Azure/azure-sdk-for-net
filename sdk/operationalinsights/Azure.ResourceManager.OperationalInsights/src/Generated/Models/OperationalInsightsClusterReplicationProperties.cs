@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Cluster replication properties. </summary>
     public partial class OperationalInsightsClusterReplicationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterReplicationProperties"/>. </summary>
         public OperationalInsightsClusterReplicationProperties()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="provisioningState"> The provisioning state of the cluster replication. </param>
         /// <param name="createdOn"> The cluster's replication creation time. </param>
         /// <param name="lastModifiedOn"> The last time the cluster's replication was updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsClusterReplicationProperties(AzureLocation? location, bool? isReplicationEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsClusterReplicationState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsClusterReplicationProperties(AzureLocation? location, bool? isReplicationEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsClusterReplicationState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             IsReplicationEnabled = isReplicationEnabled;
@@ -67,24 +39,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The secondary location of the replication. If replication is being enabled, enabled must be provided. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
+
         /// <summary> Specifies whether the replication is enabled or not. When true the cluster is replicate to the specified location. </summary>
         [WirePath("enabled")]
         public bool? IsReplicationEnabled { get; set; }
+
         /// <summary> Should enable AvailabilityZones for the given replicated cluster. </summary>
         [WirePath("isAvailabilityZonesEnabled")]
         public bool? IsAvailabilityZonesEnabled { get; set; }
+
         /// <summary> The provisioning state of the cluster replication. </summary>
         [WirePath("provisioningState")]
         public OperationalInsightsClusterReplicationState? ProvisioningState { get; }
+
         /// <summary> The cluster's replication creation time. </summary>
         [WirePath("createdDate")]
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> The last time the cluster's replication was updated. </summary>
         [WirePath("lastModifiedDate")]
         public DateTimeOffset? LastModifiedOn { get; }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2026-06-24)
+
+### Features Added
+
+- Upgraded API version to `2026-06-01`.
+- Added model `MongoClusterNetworkBypassMode`.
+- Added property `NetworkBypassMode` to `MongoClusterProperties`.
+- Added property `NetworkBypassMode` to `MongoClusterUpdateProperties`.
+
+## 1.1.0-beta.1 (2026-05-28)
+
+### Features Added
+
+- Upgraded API version to `2026-02-01-preview`.
+- Added model `MongoClusterNetworkBypassMode`.
+- Added property `NetworkBypassMode` to `MongoClusterProperties`.
+- Added property `NetworkBypassMode` to `MongoClusterUpdateProperties`.
 
 ## 1.0.0 (2025-10-30)
 

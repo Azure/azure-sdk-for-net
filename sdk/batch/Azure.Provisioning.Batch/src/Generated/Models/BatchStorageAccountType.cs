@@ -14,12 +14,12 @@ namespace Azure.Provisioning.Batch
     {
         /// <summary> The data disk / OS disk should use standard locally redundant storage. </summary>
         [DataMember(Name = "Standard_LRS")]
-        StandardLrs,
+        StandardLrs = 0,
         /// <summary> The data disk / OS disk should use premium locally redundant storage. </summary>
         [DataMember(Name = "Premium_LRS")]
-        PremiumLrs,
+        PremiumLrs = 1,
         /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
         [DataMember(Name = "StandardSSD_LRS")]
-        StandardSsdLrs
+        StandardSsdLrs = 2
     }
 }

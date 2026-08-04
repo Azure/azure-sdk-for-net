@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The base source model for data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptDataGenerationJobSource"/>, <see cref="AgentDataGenerationJobSource"/>, <see cref="TracesDataGenerationJobSource"/>, <see cref="DatasetDataGenerationJobSource"/>, and <see cref="FileDataGenerationJobSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptDataGenerationJobSource"/>, <see cref="AgentDataGenerationJobSource"/>, <see cref="TracesDataGenerationJobSource"/>, and <see cref="FileDataGenerationJobSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataGenerationJobSource))]
     public abstract partial class DataGenerationJobSource : IJsonModel<DataGenerationJobSource>
@@ -137,8 +137,6 @@ namespace Azure.AI.Projects
                         return AgentDataGenerationJobSource.DeserializeAgentDataGenerationJobSource(element, options);
                     case "traces":
                         return TracesDataGenerationJobSource.DeserializeTracesDataGenerationJobSource(element, options);
-                    case "dataset":
-                        return DatasetDataGenerationJobSource.DeserializeDatasetDataGenerationJobSource(element, options);
                     case "file":
                         return FileDataGenerationJobSource.DeserializeFileDataGenerationJobSource(element, options);
                 }

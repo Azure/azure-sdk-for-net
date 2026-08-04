@@ -13,5 +13,33 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> An interval in time specifying the date and time for the inclusive start and exclusive end, i.e. `[start, end)`. </summary>
     public partial class DateTimeInterval
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="DateTimeInterval"/>. </summary>
+        /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
+        /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
+        public DateTimeInterval(DateTimeOffset startOn, DateTimeOffset endOn)
+        {
+            StartOn = startOn;
+            EndOn = endOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DateTimeInterval"/>. </summary>
+        /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
+        /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DateTimeInterval(DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            StartOn = startOn;
+            EndOn = endOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </summary>
+        public DateTimeOffset StartOn { get; }
+
+        /// <summary> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </summary>
+        public DateTimeOffset EndOn { get; }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(FrontDoorNetworkExperimentProfileResource.ResourceType, out string frontDoorNetworkExperimentProfileApiVersion);
             _networkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorNetworkExperimentProfileResource.ResourceType.Namespace, Diagnostics);
-            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _networkExperimentProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, FrontDoorNetworkExperimentProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
-                    new FrontDoorNetworkExperimentProfileOperationSource(Client),
+                    new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
                     _networkExperimentProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _networkExperimentProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, profileName, FrontDoorNetworkExperimentProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
-                    new FrontDoorNetworkExperimentProfileOperationSource(Client),
+                    new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
                     _networkExperimentProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

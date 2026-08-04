@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct ServiceNowV2AuthenticationType : IEquatable<ServiceNowV2AuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> OAuth2. </summary>
+        private const string OAuth2Value = "OAuth2";
 
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceNowV2AuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string OAuth2Value = "OAuth2";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static ServiceNowV2AuthenticationType Basic { get; } = new ServiceNowV2AuthenticationType(BasicValue);
+
         /// <summary> OAuth2. </summary>
         public static ServiceNowV2AuthenticationType OAuth2 { get; } = new ServiceNowV2AuthenticationType(OAuth2Value);
+
         /// <summary> Determines if two <see cref="ServiceNowV2AuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceNowV2AuthenticationType left, ServiceNowV2AuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceNowV2AuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceNowV2AuthenticationType left, ServiceNowV2AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceNowV2AuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceNowV2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceNowV2AuthenticationType(string value) => new ServiceNowV2AuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceNowV2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceNowV2AuthenticationType?(string value) => value == null ? null : new ServiceNowV2AuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceNowV2AuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceNowV2AuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

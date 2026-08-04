@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task Get()
         {
-            var allowedConnections = await _resourceGroup.GetAllowedConnectionAsync(AzureLocation.CentralUS, SecurityCenterConnectionType.Internal);
-            ValidateAllowedConnections(allowedConnections);
+            var allowedConnection = await _resourceGroup.GetAllowedConnectionAsync(AzureLocation.CentralUS, SecurityCenterConnectionType.Internal);
+            ValidateAllowedConnections(allowedConnection);
         }
 
         [RecordedTest]

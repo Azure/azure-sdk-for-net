@@ -4,6 +4,8 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,14 @@ namespace Azure.Generator.Provisioning.Utilities
                 return true;
             return typeof(ProvisionableConstruct).IsAssignableFrom(type.FrameworkType);
         }
+
+        /// <summary>
+        /// Returns true if the type derives from <see cref="ProvisionableResource"/>.
+        /// </summary>
+        public static bool IsResourceType(CSharpType type)
+            => type.IsFrameworkType
+                ? typeof(ProvisionableResource).IsAssignableFrom(type.FrameworkType)
+                : type.BaseType is not null && IsResourceType(type.BaseType);
 
         /// <summary>
         /// Returns true if the type is already represented as a provisioning type.
@@ -74,15 +84,30 @@ namespace Azure.Generator.Provisioning.Utilities
         /// isOutput and isRequired are independent flags and only emitted when true, using named arguments.
         /// </summary>
         public static ValueExpression[] BuildDefinePropertyArgs(
-            string propertyName, string[] bicepPath, bool isOutput, bool isRequired, string? defaultValue = null)
+            CSharpType propertyType,
+            string propertyName,
+            string[] bicepPath,
+            bool isOutput,
+            bool isRequired,
+            string? defaultValue = null,
+            string? format = null)
         {
             var args = new List<ValueExpression>
             {
                 Nameof(Identifier(propertyName)),
                 New.Array(typeof(string), [.. bicepPath.Select(Literal)])
             };
+            if (IsResourceType(propertyType))
+            {
+                // The identifier is derived from the property so that multiple properties of the same
+                // resource type on one construct do not share the same bicep identifier.
+                args.Add(New.Instance(propertyType, [Literal(propertyName.ToVariableName())]));
+            }
             if (isOutput)
             {
+                // Output applies to this property occurrence, not recursively to the shared model/resource type.
+                // Setter availability is determined once per generated type from all of its usages. Deep per-usage
+                // read-only APIs would require separate input/output types or wrappers for both models and resources.
                 args.Add(new PositionalParameterReferenceExpression("isOutput", Literal(true)));
             }
             if (isRequired)
@@ -93,7 +118,50 @@ namespace Azure.Generator.Provisioning.Utilities
             {
                 args.Add(new PositionalParameterReferenceExpression("defaultValue", Literal(defaultValue)));
             }
+            // TODO: Emit collection element formats after Azure.Provisioning supports them.
+            // https://github.com/Azure/azure-sdk-for-net/issues/61525
+            if (format is not null &&
+                !IsBicepListType(propertyType) &&
+                !IsBicepDictionaryType(propertyType))
+            {
+                args.Add(new PositionalParameterReferenceExpression("format", Literal(format)));
+            }
             return [.. args];
+        }
+
+        /// <summary>
+        /// Gets the format metadata used to serialize a provisioning literal value.
+        /// </summary>
+        public static string? GetLiteralFormat(SerializationFormat? serializationFormat)
+        {
+            return serializationFormat switch
+            {
+                // Match the management generator's TypeFormatters contract. Some tokens, including D, U, and T,
+                // have generator-defined semantics and must not be passed directly to standard .NET formatters.
+                SerializationFormat.DateTime_RFC1123 or
+                SerializationFormat.DateTime_RFC7231 => "R",
+                SerializationFormat.DateTime_RFC3339 or
+                SerializationFormat.DateTime_ISO8601 => "O",
+                SerializationFormat.DateTime_Unix => "U",
+                SerializationFormat.Date_ISO8601 => "D",
+                SerializationFormat.Duration_ISO8601 => "P",
+                SerializationFormat.Duration_Constant => "c",
+                // Numeric durations have no .NET format specifier, so retain both the unit and wire precision.
+                SerializationFormat.Duration_Seconds => "seconds",
+                SerializationFormat.Duration_Seconds_Int64 => "seconds-int64",
+                SerializationFormat.Duration_Seconds_Float => "seconds-float",
+                SerializationFormat.Duration_Seconds_Double => "seconds-double",
+                SerializationFormat.Duration_Milliseconds => "milliseconds",
+                SerializationFormat.Duration_Milliseconds_Int64 => "milliseconds-int64",
+                SerializationFormat.Duration_Milliseconds_Float => "milliseconds-float",
+                SerializationFormat.Duration_Milliseconds_Double => "milliseconds-double",
+                SerializationFormat.Time_ISO8601 => "T",
+                SerializationFormat.Bytes_Base64 => "base64",
+                SerializationFormat.Bytes_Base64Url => "base64url",
+                SerializationFormat.Int_String => "string",
+                // Array delimiters describe HTTP parameter transport rather than ARM resource-body literals.
+                _ => null
+            };
         }
     }
 }

@@ -33,7 +33,6 @@
         $(MSBuildProjectName) == 'Azure.AI.Language.Text.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.OpenAI.Assistants.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.OpenAI.Tests' or
-        $(MSBuildProjectName) == 'Azure.AI.Personalizer.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Speech.Transcription.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.TextAnalytics.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.Translation.Document.Tests' or

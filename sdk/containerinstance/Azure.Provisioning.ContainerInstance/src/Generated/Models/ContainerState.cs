@@ -80,10 +80,14 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _state = DefineProperty<string>(nameof(State), new string[] { "state" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true);
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
             _exitCode = DefineProperty<int>(nameof(ExitCode), new string[] { "exitCode" }, isOutput: true);
-            _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" }, isOutput: true);
+            _finishOn = DefineProperty<DateTimeOffset>(nameof(FinishOn), new string[] { "finishTime" }, isOutput: true, format: "O");
             _detailStatus = DefineProperty<string>(nameof(DetailStatus), new string[] { "detailStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerState that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

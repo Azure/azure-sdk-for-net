@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             TryGetApiVersion(ResourceType, out string sqlVmApiVersion);
             _sqlVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Endpoint, sqlVmApiVersion ?? "2023-10-01");
+            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmApiVersion ?? "2023-10-01");
             _sqlVirtualMachineTroubleshootClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachineTroubleshootRestClient = new SqlVirtualMachineTroubleshoot(_sqlVirtualMachineTroubleshootClientDiagnostics, Pipeline, Endpoint, sqlVmApiVersion ?? "2023-10-01");
+            _sqlVirtualMachineTroubleshootRestClient = new SqlVirtualMachineTroubleshoot(_sqlVirtualMachineTroubleshootClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlVmApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlVmPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
-                    new SqlVmOperationSource(Client),
+                    new SqlVmResourceOperationSource(Client),
                     _sqlVirtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SqlVmPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
-                    new SqlVmOperationSource(Client),
+                    new SqlVmResourceOperationSource(Client),
                     _sqlVirtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

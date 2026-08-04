@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 QuotaItemList result = QuotaItemList.FromResponse(response);
-                yield return Page<NetAppSubscriptionQuotaItemData>.FromValues((IReadOnlyList<NetAppSubscriptionQuotaItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetAppSubscriptionQuotaItemData>.FromValues((IReadOnlyList<NetAppSubscriptionQuotaItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

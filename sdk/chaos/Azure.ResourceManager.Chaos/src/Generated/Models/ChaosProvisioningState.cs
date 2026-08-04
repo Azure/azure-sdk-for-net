@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string UpdatingValue = "Updating";
         /// <summary> Deletion in progress. </summary>
         private const string DeletingValue = "Deleting";
+        /// <summary> Action is running. </summary>
+        private const string RunningValue = "Running";
 
         /// <summary> Initializes a new instance of <see cref="ChaosProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -55,6 +57,9 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Deletion in progress. </summary>
         public static ChaosProvisioningState Deleting { get; } = new ChaosProvisioningState(DeletingValue);
+
+        /// <summary> Action is running. </summary>
+        public static ChaosProvisioningState Running { get; } = new ChaosProvisioningState(RunningValue);
 
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

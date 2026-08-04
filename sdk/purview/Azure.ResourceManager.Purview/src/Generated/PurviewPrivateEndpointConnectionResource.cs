@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(ResourceType, out string purviewPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, purviewPrivateEndpointConnectionApiVersion ?? "2024-04-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewPrivateEndpointConnectionApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Purview
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PurviewPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PurviewArmOperation<PurviewPrivateEndpointConnectionResource> operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(
-                    new PurviewPrivateEndpointConnectionOperationSource(Client),
+                    new PurviewPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Purview
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PurviewPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PurviewArmOperation<PurviewPrivateEndpointConnectionResource> operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(
-                    new PurviewPrivateEndpointConnectionOperationSource(Client),
+                    new PurviewPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

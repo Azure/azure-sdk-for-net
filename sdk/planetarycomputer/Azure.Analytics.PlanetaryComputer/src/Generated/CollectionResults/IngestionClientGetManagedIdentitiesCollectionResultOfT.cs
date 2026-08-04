@@ -45,8 +45,8 @@ namespace Azure.Analytics.PlanetaryComputer
                     yield break;
                 }
                 ManagedIdentityMetadataPagedResponse result = (ManagedIdentityMetadataPagedResponse)response;
-                yield return Page<ManagedIdentityMetadata>.FromValues((IReadOnlyList<ManagedIdentityMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedIdentityMetadata>.FromValues((IReadOnlyList<ManagedIdentityMetadata>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

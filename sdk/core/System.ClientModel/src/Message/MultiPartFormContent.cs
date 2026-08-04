@@ -21,15 +21,8 @@ public sealed class MultiPartFormContent : BinaryContent
     private const string MediaTypeApplicationJson = "application/json";
     private const string MediaTypeTextPlain = "text/plain";
     private const string MediaTypeApplicationOctetStream = "application/octet-stream";
-    private const int BoundaryLength = 70;
-    private const int BoundaryAlphabetMask = 0x3F; // 64-char alphabet → 6-bit mask, unbiased.
 
     private static readonly ModelReaderWriterOptions _modelWriteWireOptions = new ModelReaderWriterOptions("W");
-    private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
-#if !NET6_0_OR_GREATER
-    private static readonly Random _random = new Random();
-    private static readonly object _randomLock = new object();
-#endif
 
     private readonly MultipartFormDataContent _multipartContent;
     private bool _disposed;
@@ -38,19 +31,9 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Initializes a new instance of <see cref="MultiPartFormContent"/> with a
     /// randomly generated boundary.
     /// </summary>
-    public MultiPartFormContent() : this(CreateBoundary()) { }
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="MultiPartFormContent"/> with the
-    /// specified boundary.
-    /// </summary>
-    /// <param name="boundary">The boundary string used to separate parts in the
-    /// <c>multipart/form-data</c> payload.</param>
-    public MultiPartFormContent(string boundary)
+    public MultiPartFormContent()
     {
-        Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
-
-        _multipartContent = new MultipartFormDataContent(boundary);
+        _multipartContent = new MultipartFormDataContent(Guid.NewGuid().ToString());
         MediaType = _multipartContent.Headers.ContentType?.ToString();
     }
 
@@ -79,24 +62,24 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <typeparam name="T">The model type.</typeparam>
     /// <param name="name">The form field name for the part.</param>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to add as a part.</param>
-    /// <param name="context">The <see cref="ModelReaderWriterContext"/> used to write the model, or <see langword="null"/> to use reflection-based serialization.</param>
-    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> that indicates what format the <paramref name="model"/> will be written in, or <see langword="null"/> to use the default wire-format options.</param>
-    /// <param name="mediaType">The media type for the part, or <see langword="null"/> to omit the <c>Content-Type</c> header.</param>
+    /// <param name="context">The <see cref="ModelReaderWriterContext"/> used to write the model.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> that indicates what format the <paramref name="model"/> will be written in.</param>
+    /// <param name="mediaType">The media type for the part.</param>
     public void Add<T>(
         string name,
         IPersistableModel<T> model,
-        ModelReaderWriterContext? context,
-        ModelReaderWriterOptions? options,
-        string? mediaType)
+        ModelReaderWriterContext context,
+        ModelReaderWriterOptions options,
+        string mediaType)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(model, nameof(model));
+        Argument.AssertNotNull(context, nameof(context));
+        Argument.AssertNotNull(options, nameof(options));
+        Argument.AssertNotNullOrEmpty(mediaType, nameof(mediaType));
         CheckDisposed();
 
-        options ??= _modelWriteWireOptions;
-        BinaryData data = context != null
-            ? ModelReaderWriter.Write(model, options, context)
-            : model.Write(options);
+        BinaryData data = ModelReaderWriter.Write(model, options, context);
         Add(name, data.WithMediaType(mediaType));
     }
 
@@ -109,7 +92,14 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <param name="name">The form field name for the part.</param>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to add as a part.</param>
     public void Add<T>(string name, IPersistableModel<T> model)
-        => Add(name, model, context: null, options: null, mediaType: MediaTypeApplicationJson);
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(model, nameof(model));
+        CheckDisposed();
+
+        BinaryData data = model.Write(_modelWriteWireOptions);
+        Add(name, data.WithMediaType(MediaTypeApplicationJson));
+    }
 
     /// <summary>
     /// Adds the bytes held in the provided <see cref="BinaryData"/> as a part
@@ -536,27 +526,6 @@ public sealed class MultiPartFormContent : BinaryContent
         {
             _multipartContent.Add(content, name);
         }
-    }
-
-    private static string CreateBoundary()
-    {
-#if NET6_0_OR_GREATER
-        Span<char> chars = stackalloc char[BoundaryLength];
-        Span<byte> random = stackalloc byte[BoundaryLength];
-        Random.Shared.NextBytes(random);
-#else
-        char[] chars = new char[BoundaryLength];
-        byte[] random = new byte[BoundaryLength];
-        lock (_randomLock)
-        {
-            _random.NextBytes(random);
-        }
-#endif
-        for (int i = 0; i < BoundaryLength; i++)
-        {
-            chars[i] = _boundaryValues[random[i] & BoundaryAlphabetMask];
-        }
-        return new string(chars);
     }
 
     private static MemoryStream CreateJsonStream(object value)

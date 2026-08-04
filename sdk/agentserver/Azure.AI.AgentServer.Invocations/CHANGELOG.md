@@ -1,14 +1,31 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
+
+- AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
+  virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
+  at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`
+  respectively. Both default to `404`; override either or both to publish the
+  AsyncAPI companion to the existing `openapi.json` endpoint for
+  streaming/bidirectional surfaces (e.g. the `invocations_ws` WebSocket protocol)
+  that OpenAPI cannot express. The path extension is authoritative for the
+  returned content type — no `Accept` negotiation and no format conversion.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: reads `x-agent-user-id` and `x-agent-foundry-call-id` from inbound requests and exposes them via `InvocationContext.PlatformContext`.
+
+### Breaking Changes
+- `InvocationContext.Isolation` is now `InvocationContext.PlatformContext` (type `PlatformContext` with `UserIdKey` / `CallId`), replacing the `IsolationContext` user/chat isolation keys.
 
 ## 1.0.0-beta.4 (2026-05-21)
 

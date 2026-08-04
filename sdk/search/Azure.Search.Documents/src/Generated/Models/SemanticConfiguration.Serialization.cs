@@ -88,6 +88,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("rankingOrder"u8);
                 writer.WriteStringValue(RankingOrder.Value.ToString());
             }
+            if (Optional.IsDefined(FlightingOptIn))
+            {
+                writer.WritePropertyName("flightingOptIn"u8);
+                writer.WriteBooleanValue(FlightingOptIn.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             SemanticPrioritizedFields prioritizedFields = default;
             RankingOrder? rankingOrder = default;
+            bool? flightingOptIn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +162,21 @@ namespace Azure.Search.Documents.Indexes.Models
                     rankingOrder = new RankingOrder(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("flightingOptIn"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    flightingOptIn = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SemanticConfiguration(name, prioritizedFields, rankingOrder, additionalBinaryDataProperties);
+            return new SemanticConfiguration(name, prioritizedFields, rankingOrder, flightingOptIn, additionalBinaryDataProperties);
         }
     }
 }

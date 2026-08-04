@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quantum
         {
             TryGetApiVersion(QuantumWorkspaceResource.ResourceType, out string quantumWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", QuantumWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, quantumWorkspaceApiVersion ?? "2025-12-15-preview");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, quantumWorkspaceApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Quantum
                 HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, QuantumWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuantumArmOperation<QuantumWorkspaceResource> operation = new QuantumArmOperation<QuantumWorkspaceResource>(
-                    new QuantumWorkspaceOperationSource(Client),
+                    new QuantumWorkspaceResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Quantum
                 HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, QuantumWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuantumArmOperation<QuantumWorkspaceResource> operation = new QuantumArmOperation<QuantumWorkspaceResource>(
-                    new QuantumWorkspaceOperationSource(Client),
+                    new QuantumWorkspaceResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
+    /// <summary> SaaS resource details for Activate and Validate SaaS Resource. </summary>
     public partial class DatadogActivateSaaSContent : IJsonModel<DatadogActivateSaaSContent>
     {
         /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSContent"/> for deserialization. </summary>
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 throw new FormatException($"The model {nameof(DatadogActivateSaaSContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("saaSGuid"u8);
-            writer.WriteStringValue(SaaSGuid);
+            writer.WritePropertyName("saaSResourceId"u8);
+            writer.WriteStringValue(SaaSResourceId);
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Guid saaSGuid = default;
+            ResourceIdentifier saaSResourceId = default;
             DatadogUserInfo userInfo = default;
             DatadogOrganizationProperties datadogOrganizationProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("saaSGuid"u8))
+                if (prop.NameEquals("saaSResourceId"u8))
                 {
-                    saaSGuid = new Guid(prop.Value.GetString());
+                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userInfo"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatadogActivateSaaSContent(saaSGuid, userInfo, datadogOrganizationProperties, additionalBinaryDataProperties);
+            return new DatadogActivateSaaSContent(saaSResourceId, userInfo, datadogOrganizationProperties, additionalBinaryDataProperties);
         }
     }
 }

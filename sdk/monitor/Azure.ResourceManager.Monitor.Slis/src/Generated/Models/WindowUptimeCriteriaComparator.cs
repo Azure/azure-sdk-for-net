@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     {
         private readonly string _value;
         /// <summary> Less than the target value. </summary>
-        private const string LessThanValue = "<";
+        private const string LessThanValue = "lt";
         /// <summary> Greater than the target value. </summary>
-        private const string GreaterThanValue = ">";
+        private const string GreaterThanValue = "gt";
         /// <summary> Less than or equal to the target value. </summary>
-        private const string LessThanOrEqualValue = "<=";
+        private const string LessThanOrEqualValue = "lte";
         /// <summary> Greater than or equal to the target value. </summary>
-        private const string GreaterThanOrEqualValue = ">=";
+        private const string GreaterThanOrEqualValue = "gte";
 
         /// <summary> Initializes a new instance of <see cref="WindowUptimeCriteriaComparator"/>. </summary>
         /// <param name="value"> The value. </param>

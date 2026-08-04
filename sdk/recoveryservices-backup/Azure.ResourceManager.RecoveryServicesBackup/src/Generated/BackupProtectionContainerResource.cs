@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupProtectionContainerApiVersion);
             _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
+            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
             _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
+            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
-                    new BackupProtectionContainerOperationSource(Client),
+                    new BackupProtectionContainerResourceOperationSource(Client),
                     _protectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
-                    new BackupProtectionContainerOperationSource(Client),
+                    new BackupProtectionContainerResourceOperationSource(Client),
                     _protectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -13,128 +13,171 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary>
-    /// A class representing the RecipientTransferDetail data model.
-    /// Details of the transfer.
-    /// </summary>
+    /// <summary> Details of the transfer. </summary>
     public partial class RecipientTransferDetailData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecipientTransferDetailData"/>. </summary>
         public RecipientTransferDetailData()
         {
-            AllowedProductType = new ChangeTrackingList<EligibleProductType>();
-            DetailedTransferStatus = new ChangeTrackingList<DetailedTransferStatus>();
-            SupportedAccounts = new ChangeTrackingList<BillingSupportedAccountType>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecipientTransferDetailData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="expireOn"> The time at which the transfer request expires. </param>
-        /// <param name="allowedProductType"> Type of subscriptions that can be transferred. </param>
-        /// <param name="transferStatus"> Overall transfer status. </param>
-        /// <param name="recipientEmailId"> The email ID of the user to whom the transfer request was sent. </param>
-        /// <param name="initiatorEmailId"> The email ID of the user who sent the transfer request. </param>
-        /// <param name="resellerId"> Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account. </param>
-        /// <param name="resellerName"> Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account. </param>
-        /// <param name="initiatorCustomerType"> The type of customer who sent the transfer request. </param>
-        /// <param name="canceledBy"> The email ID of the user who canceled the transfer request. </param>
-        /// <param name="detailedTransferStatus"> Detailed transfer status. </param>
-        /// <param name="customerTenantId"> The customer tenant id. </param>
-        /// <param name="supportedAccounts"> List of supported account types. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Details of the transfer. </param>
         /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecipientTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expireOn, IReadOnlyList<EligibleProductType> allowedProductType, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string resellerId, string resellerName, InitiatorCustomerType? initiatorCustomerType, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, Guid? customerTenantId, IReadOnlyList<BillingSupportedAccountType> supportedAccounts, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecipientTransferDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecipientTransferProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ExpireOn = expireOn;
-            AllowedProductType = allowedProductType;
-            TransferStatus = transferStatus;
-            RecipientEmailId = recipientEmailId;
-            InitiatorEmailId = initiatorEmailId;
-            ResellerId = resellerId;
-            ResellerName = resellerName;
-            InitiatorCustomerType = initiatorCustomerType;
-            CanceledBy = canceledBy;
-            DetailedTransferStatus = detailedTransferStatus;
-            CustomerTenantId = customerTenantId;
-            SupportedAccounts = supportedAccounts;
+            Properties = properties;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The time at which the transfer request expires. </summary>
-        [WirePath("properties.expirationTime")]
-        public DateTimeOffset? ExpireOn { get; }
-        /// <summary> Type of subscriptions that can be transferred. </summary>
-        [WirePath("properties.allowedProductType")]
-        public IReadOnlyList<EligibleProductType> AllowedProductType { get; }
-        /// <summary> Overall transfer status. </summary>
-        [WirePath("properties.transferStatus")]
-        public PartnerTransferStatus? TransferStatus { get; }
-        /// <summary> The email ID of the user to whom the transfer request was sent. </summary>
-        [WirePath("properties.recipientEmailId")]
-        public string RecipientEmailId { get; }
-        /// <summary> The email ID of the user who sent the transfer request. </summary>
-        [WirePath("properties.initiatorEmailId")]
-        public string InitiatorEmailId { get; }
-        /// <summary> Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account. </summary>
-        [WirePath("properties.resellerId")]
-        public string ResellerId { get; }
-        /// <summary> Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account. </summary>
-        [WirePath("properties.resellerName")]
-        public string ResellerName { get; }
-        /// <summary> The type of customer who sent the transfer request. </summary>
-        [WirePath("properties.initiatorCustomerType")]
-        public InitiatorCustomerType? InitiatorCustomerType { get; }
-        /// <summary> The email ID of the user who canceled the transfer request. </summary>
-        [WirePath("properties.canceledBy")]
-        public string CanceledBy { get; }
-        /// <summary> Detailed transfer status. </summary>
-        [WirePath("properties.detailedTransferStatus")]
-        public IReadOnlyList<DetailedTransferStatus> DetailedTransferStatus { get; }
-        /// <summary> The customer tenant id. </summary>
-        [WirePath("properties.customerTenantId")]
-        public Guid? CustomerTenantId { get; }
-        /// <summary> List of supported account types. </summary>
-        [WirePath("properties.supportedAccounts")]
-        public IReadOnlyList<BillingSupportedAccountType> SupportedAccounts { get; }
+        /// <summary> Details of the transfer. </summary>
+        [WirePath("properties")]
+        internal RecipientTransferProperties Properties { get; set; }
+
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The time at which the transfer request expires. </summary>
+        [WirePath("properties.expirationTime")]
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+        }
+
+        /// <summary> Type of subscriptions that can be transferred. </summary>
+        [WirePath("properties.allowedProductType")]
+        public IReadOnlyList<EligibleProductType> AllowedProductType
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecipientTransferProperties();
+                }
+                return Properties.AllowedProductType;
+            }
+        }
+
+        /// <summary> Overall transfer status. </summary>
+        [WirePath("properties.transferStatus")]
+        public PartnerTransferStatus? TransferStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TransferStatus;
+            }
+        }
+
+        /// <summary> The email ID of the user to whom the transfer request was sent. </summary>
+        [WirePath("properties.recipientEmailId")]
+        public string RecipientEmailId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecipientEmailId;
+            }
+        }
+
+        /// <summary> The email ID of the user who sent the transfer request. </summary>
+        [WirePath("properties.initiatorEmailId")]
+        public string InitiatorEmailId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitiatorEmailId;
+            }
+        }
+
+        /// <summary> Optional MPN ID of the reseller for transfer requests that are sent from a Microsoft Partner Agreement billing account. </summary>
+        [WirePath("properties.resellerId")]
+        public string ResellerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResellerId;
+            }
+        }
+
+        /// <summary> Optional name of the reseller for transfer requests that are sent from Microsoft Partner Agreement billing account. </summary>
+        [WirePath("properties.resellerName")]
+        public string ResellerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResellerName;
+            }
+        }
+
+        /// <summary> The type of customer who sent the transfer request. </summary>
+        [WirePath("properties.initiatorCustomerType")]
+        public InitiatorCustomerType? InitiatorCustomerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitiatorCustomerType;
+            }
+        }
+
+        /// <summary> The email ID of the user who canceled the transfer request. </summary>
+        [WirePath("properties.canceledBy")]
+        public string CanceledBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CanceledBy;
+            }
+        }
+
+        /// <summary> Detailed transfer status. </summary>
+        [WirePath("properties.detailedTransferStatus")]
+        public IReadOnlyList<DetailedTransferStatus> DetailedTransferStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecipientTransferProperties();
+                }
+                return Properties.DetailedTransferStatus;
+            }
+        }
+
+        /// <summary> The customer tenant id. </summary>
+        [WirePath("properties.customerTenantId")]
+        public Guid? CustomerTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerTenantId;
+            }
+        }
+
+        /// <summary> List of supported account types. </summary>
+        [WirePath("properties.supportedAccounts")]
+        public IReadOnlyList<BillingSupportedAccountType> SupportedAccounts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecipientTransferProperties();
+                }
+                return Properties.SupportedAccounts;
+            }
+        }
     }
 }

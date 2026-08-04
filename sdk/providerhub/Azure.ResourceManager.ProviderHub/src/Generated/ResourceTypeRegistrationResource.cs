@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ResourceType, out string resourceTypeRegistrationApiVersion);
             _resourceTypeRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _resourceTypeRegistrationsRestClient = new ResourceTypeRegistrations(_resourceTypeRegistrationsClientDiagnostics, Pipeline, Endpoint, resourceTypeRegistrationApiVersion ?? "2024-09-01");
+            _resourceTypeRegistrationsRestClient = new ResourceTypeRegistrations(_resourceTypeRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceTypeRegistrationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceTypeRegistrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ResourceTypeRegistrationResource> operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(
-                    new ResourceTypeRegistrationOperationSource(Client),
+                    new ResourceTypeRegistrationResourceOperationSource(Client),
                     _resourceTypeRegistrationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceTypeRegistrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ResourceTypeRegistrationResource> operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(
-                    new ResourceTypeRegistrationOperationSource(Client),
+                    new ResourceTypeRegistrationResourceOperationSource(Client),
                     _resourceTypeRegistrationsClientDiagnostics,
                     Pipeline,
                     message.Request,

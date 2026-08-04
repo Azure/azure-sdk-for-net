@@ -1,22 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
     /// ShareMetrics.
     /// </summary>
-    [CodeGenModel("Metrics")]
+    [CodeGenType("Metrics")]
     public partial class ShareMetrics
     {
-        /// <summary>
-        /// Indicates whether metrics should generate summary statistics for called API operations.
-        /// </summary>
-        [CodeGenMember("IncludeAPIs")]
-        public bool? IncludeApis { get; set; }
-
         /// <summary>
         /// Constructor.
         /// </summary>

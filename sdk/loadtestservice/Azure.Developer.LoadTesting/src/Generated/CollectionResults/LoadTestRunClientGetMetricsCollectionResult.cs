@@ -70,13 +70,13 @@ namespace Azure.Developer.LoadTesting
                     yield break;
                 }
                 Metrics result = (Metrics)response;
+                nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureDeveloperLoadTestingContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;

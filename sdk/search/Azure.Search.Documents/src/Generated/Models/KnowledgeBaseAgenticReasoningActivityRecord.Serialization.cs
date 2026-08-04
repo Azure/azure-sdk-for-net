@@ -121,6 +121,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeBaseActivityRecordType @type = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
+            string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? reasoningTokens = default;
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
@@ -154,6 +155,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     error = KnowledgeBaseErrorDetail.DeserializeKnowledgeBaseErrorDetail(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("warning"u8))
+                {
+                    warning = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("reasoningTokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -182,6 +188,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 @type,
                 elapsedMs,
                 error,
+                warning,
                 additionalBinaryDataProperties,
                 reasoningTokens,
                 retrievalReasoningEffort);

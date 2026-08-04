@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NniDerivedUniqueRouteDistinguisherConfigurationState : IEquatable<NniDerivedUniqueRouteDistinguisherConfigurationState>
     {
         private readonly string _value;
+        /// <summary> NNI derived unique route distinguisher configuration state Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> NNI derived unique route distinguisher configuration state Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NniDerivedUniqueRouteDistinguisherConfigurationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> NNI derived unique route distinguisher configuration state Enabled. </summary>
         public static NniDerivedUniqueRouteDistinguisherConfigurationState Enabled { get; } = new NniDerivedUniqueRouteDistinguisherConfigurationState(EnabledValue);
+
         /// <summary> NNI derived unique route distinguisher configuration state Disabled. </summary>
         public static NniDerivedUniqueRouteDistinguisherConfigurationState Disabled { get; } = new NniDerivedUniqueRouteDistinguisherConfigurationState(DisabledValue);
+
         /// <summary> Determines if two <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NniDerivedUniqueRouteDistinguisherConfigurationState left, NniDerivedUniqueRouteDistinguisherConfigurationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NniDerivedUniqueRouteDistinguisherConfigurationState left, NniDerivedUniqueRouteDistinguisherConfigurationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NniDerivedUniqueRouteDistinguisherConfigurationState(string value) => new NniDerivedUniqueRouteDistinguisherConfigurationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NniDerivedUniqueRouteDistinguisherConfigurationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NniDerivedUniqueRouteDistinguisherConfigurationState?(string value) => value == null ? null : new NniDerivedUniqueRouteDistinguisherConfigurationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NniDerivedUniqueRouteDistinguisherConfigurationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NniDerivedUniqueRouteDistinguisherConfigurationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

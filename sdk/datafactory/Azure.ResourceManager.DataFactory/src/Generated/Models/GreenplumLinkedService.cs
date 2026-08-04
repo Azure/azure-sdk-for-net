@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GreenplumLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="GreenplumLinkedService"/>. </summary>
-        public GreenplumLinkedService()
+        public GreenplumLinkedService() : base("Greenplum")
         {
-            LinkedServiceType = "Greenplum";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="GreenplumLinkedService"/>. </summary>
@@ -27,55 +27,184 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="authenticationType"> The authentication type to use. Type: string. Only used for V2. </param>
-        /// <param name="host"> Host name for connection. Type: string. Only used for V2. </param>
-        /// <param name="port"> The port for the connection. Type: integer. Only used for V2. </param>
-        /// <param name="username"> Username for authentication. Type: string. Only used for V2. </param>
-        /// <param name="database"> Database name for connection. Type: string. Only used for V2. </param>
-        /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. Only used for V2. </param>
-        /// <param name="connectionTimeout"> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. Only used for V2. </param>
-        /// <param name="commandTimeout"> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </param>
-        internal GreenplumLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret password, string encryptedCredential, GreenplumAuthenticationType? authenticationType, DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> connectionTimeout, DataFactoryElement<int> commandTimeout) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Greenplum Database linked service properties. </param>
+        internal GreenplumLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, GreenplumLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionString = connectionString;
-            Password = password;
-            EncryptedCredential = encryptedCredential;
-            AuthenticationType = authenticationType;
-            Host = host;
-            Port = port;
-            Username = username;
-            Database = database;
-            SslMode = sslMode;
-            ConnectionTimeout = connectionTimeout;
-            CommandTimeout = commandTimeout;
-            LinkedServiceType = linkedServiceType ?? "Greenplum";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Greenplum Database linked service properties. </summary>
+        internal GreenplumLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactoryKeyVaultSecret Password { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The authentication type to use. Type: string. Only used for V2. </summary>
-        public GreenplumAuthenticationType? AuthenticationType { get; set; }
+        public GreenplumAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> Host name for connection. Type: string. Only used for V2. </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> The port for the connection. Type: integer. Only used for V2. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> Username for authentication. Type: string. Only used for V2. </summary>
-        public DataFactoryElement<string> Username { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> Database name for connection. Type: string. Only used for V2. </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
+
         /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. Only used for V2. </summary>
-        public DataFactoryElement<int> SslMode { get; set; }
+        public DataFactoryElement<int> SslMode
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SslMode;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.SslMode = value;
+            }
+        }
+
         /// <summary> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. Only used for V2. </summary>
-        public DataFactoryElement<int> ConnectionTimeout { get; set; }
+        public DataFactoryElement<int> ConnectionTimeout
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionTimeout;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionTimeout = value;
+            }
+        }
+
         /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </summary>
-        public DataFactoryElement<int> CommandTimeout { get; set; }
+        public DataFactoryElement<int> CommandTimeout
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CommandTimeout;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new GreenplumLinkedServiceTypeProperties();
+                }
+                TypeProperties.CommandTimeout = value;
+            }
+        }
     }
 }

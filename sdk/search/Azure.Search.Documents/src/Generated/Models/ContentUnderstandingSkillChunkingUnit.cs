@@ -17,6 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly string _value;
         /// <summary> Specifies chunk by characters. </summary>
         private const string CharactersValue = "characters";
+        /// <summary> Specifies chunk by tokens. </summary>
+        private const string TokensValue = "tokens";
 
         /// <summary> Initializes a new instance of <see cref="ContentUnderstandingSkillChunkingUnit"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Specifies chunk by characters. </summary>
         public static ContentUnderstandingSkillChunkingUnit Characters { get; } = new ContentUnderstandingSkillChunkingUnit(CharactersValue);
+
+        /// <summary> Specifies chunk by tokens. </summary>
+        public static ContentUnderstandingSkillChunkingUnit Tokens { get; } = new ContentUnderstandingSkillChunkingUnit(TokensValue);
 
         /// <summary> Determines if two <see cref="ContentUnderstandingSkillChunkingUnit"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

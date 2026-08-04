@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> One-time trigger. </summary>
+    [Experimental("AAIP001")]
     public partial class OneTimeTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="OneTimeTrigger"/>. </summary>
@@ -21,7 +23,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Type of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
-        /// <param name="timeZone"> Time zone for the one-time trigger. </param>
+        /// <param name="timeZone"> Time zone for the one-time trigger. Defaults to `UTC`. </param>
         internal OneTimeTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset triggerAt, string timeZone) : base(@type, additionalBinaryDataProperties)
         {
             TriggerAt = triggerAt;
@@ -31,7 +33,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Date and time for the one-time trigger in ISO 8601 format. </summary>
         public DateTimeOffset TriggerAt { get; set; }
 
-        /// <summary> Time zone for the one-time trigger. </summary>
+        /// <summary> Time zone for the one-time trigger. Defaults to `UTC`. </summary>
         public string TimeZone { get; set; }
     }
 }

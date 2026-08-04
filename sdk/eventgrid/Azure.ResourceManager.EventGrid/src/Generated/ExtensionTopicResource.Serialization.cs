@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class ExtensionTopicResource : IJsonModel<ExtensionTopicData>
     {
-        private static ExtensionTopicData s_dataDeserializationInstance;
-        private static ExtensionTopicData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExtensionTopicData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExtensionTopicData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExtensionTopicData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExtensionTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtensionTopicData>)Data).Write(writer, options);
 
-        ExtensionTopicData IJsonModel<ExtensionTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtensionTopicData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtensionTopicData IJsonModel<ExtensionTopicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExtensionTopicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtensionTopicData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExtensionTopicData IPersistableModel<ExtensionTopicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtensionTopicData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<ExtensionTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtensionTopicData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExtensionTopicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

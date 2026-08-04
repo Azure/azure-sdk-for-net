@@ -125,12 +125,37 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(SupportedEvaluationLevels))
+            {
+                writer.WritePropertyName("supported_evaluation_levels"u8);
+                writer.WriteStartArray();
+                foreach (ProjectsEvaluationLevel item in SupportedEvaluationLevels)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
             if (options.Format != "W" && Optional.IsDefined(GenerationArtifacts))
             {
                 writer.WritePropertyName("generation_artifacts"u8);
                 writer.WriteObjectValue(GenerationArtifacts, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GenerationJobId))
+            {
+                writer.WritePropertyName("generation_job_id"u8);
+                writer.WriteStringValue(GenerationJobId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (GenerationWarningType item in Warnings)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W")
             {
@@ -229,8 +254,11 @@ namespace Azure.AI.Projects.Evaluation
             IDictionary<string, string> metadata = default;
             EvaluatorType evaluatorType = default;
             IList<EvaluatorCategory> categories = default;
+            IList<ProjectsEvaluationLevel> supportedEvaluationLevels = default;
             EvaluatorDefinition definition = default;
             EvaluatorGenerationArtifacts generationArtifacts = default;
+            string generationJobId = default;
+            IReadOnlyList<GenerationWarningType> warnings = default;
             string createdBy = default;
             string createdAt = default;
             string modifiedAt = default;
@@ -283,6 +311,20 @@ namespace Azure.AI.Projects.Evaluation
                     categories = array;
                     continue;
                 }
+                if (prop.NameEquals("supported_evaluation_levels"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProjectsEvaluationLevel> array = new List<ProjectsEvaluationLevel>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new ProjectsEvaluationLevel(item.GetString()));
+                    }
+                    supportedEvaluationLevels = array;
+                    continue;
+                }
                 if (prop.NameEquals("definition"u8))
                 {
                     definition = EvaluatorDefinition.DeserializeEvaluatorDefinition(prop.Value, options);
@@ -295,6 +337,25 @@ namespace Azure.AI.Projects.Evaluation
                         continue;
                     }
                     generationArtifacts = EvaluatorGenerationArtifacts.DeserializeEvaluatorGenerationArtifacts(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("generation_job_id"u8))
+                {
+                    generationJobId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("warnings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<GenerationWarningType> array = new List<GenerationWarningType>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new GenerationWarningType(item.GetString()));
+                    }
+                    warnings = array;
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))
@@ -363,8 +424,11 @@ namespace Azure.AI.Projects.Evaluation
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 evaluatorType,
                 categories,
+                supportedEvaluationLevels ?? new ChangeTrackingList<ProjectsEvaluationLevel>(),
                 definition,
                 generationArtifacts,
+                generationJobId,
+                warnings ?? new ChangeTrackingList<GenerationWarningType>(),
                 createdBy,
                 createdAt,
                 modifiedAt,

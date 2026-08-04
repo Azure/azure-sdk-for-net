@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkDeviceRunRwCommandResultOperationSource : IOperationSource<NetworkDeviceRunRwCommandResult>
+    /// <summary></summary>
+    internal partial class NetworkDeviceRunRwCommandResultOperationSource : IOperationSource<NetworkDeviceRunRwCommandResult>
     {
-        NetworkDeviceRunRwCommandResult IOperationSource<NetworkDeviceRunRwCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal NetworkDeviceRunRwCommandResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NetworkDeviceRunRwCommandResult.DeserializeNetworkDeviceRunRwCommandResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetworkDeviceRunRwCommandResult IOperationSource<NetworkDeviceRunRwCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return NetworkDeviceRunRwCommandResult.DeserializeNetworkDeviceRunRwCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkDeviceRunRwCommandResult> IOperationSource<NetworkDeviceRunRwCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NetworkDeviceRunRwCommandResult.DeserializeNetworkDeviceRunRwCommandResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return NetworkDeviceRunRwCommandResult.DeserializeNetworkDeviceRunRwCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

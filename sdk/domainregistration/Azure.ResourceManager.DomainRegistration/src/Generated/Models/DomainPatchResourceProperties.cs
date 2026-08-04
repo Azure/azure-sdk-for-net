@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DomainRegistration;
 
 namespace Azure.ResourceManager.DomainRegistration.Models
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"> Authorization code for the domain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainPatchResourceProperties(RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, AppServiceDomainProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainPatchResourceProperties(RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, AppServiceDomainProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, ResourceIdentifier dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         public AppServiceDnsType? DnsType { get; set; }
 
         /// <summary> Azure DNS Zone to use. </summary>
-        public string DnsZoneId { get; set; }
+        public ResourceIdentifier DnsZoneId { get; set; }
 
         /// <summary> Target DNS type (would be used for migration). </summary>
         public AppServiceDnsType? TargetDnsType { get; set; }
