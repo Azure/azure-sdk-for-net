@@ -284,26 +284,8 @@ function Get-TopLevelDefaultSeparator([string]$parameterText) {
     return -1
 }
 
-function Find-MatchingParenthesis([string]$text, [int]$openIndex) {
-    $depth = 0
-    for ($index = $openIndex; $index -lt $text.Length; $index++) {
-        if ($text[$index] -eq '(') {
-            $depth++
-        } elseif ($text[$index] -eq ')') {
-            $depth--
-            if ($depth -eq 0) {
-                return $index
-            }
-        }
-    }
-
-    return -1
-}
-
 function Get-ApiMethodInfos([string[]]$apiLines) {
-    $methods = [System.Collections.Generic.Dictionary[string, object]]::new(
-        [System.StringComparer]::Ordinal
-    )
+    $methods = @{}
     $namespace = ''
     $typeName = ''
 
@@ -322,12 +304,12 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
 
         if (-not $typeName -or
             $line -notmatch '^\s*public\s+' -or
-            $line -notmatch '\)\s*(?:where\b.*?)?\{') {
+            $line -notmatch '\)\s*\{') {
             continue
         }
 
         $openParenthesis = $line.IndexOf('(')
-        $closeParenthesis = Find-MatchingParenthesis $line $openParenthesis
+        $closeParenthesis = $line.LastIndexOf(')')
         if ($openParenthesis -lt 0 -or $closeParenthesis -le $openParenthesis) {
             continue
         }
@@ -355,214 +337,24 @@ function Get-ApiMethodInfos([string[]]$apiLines) {
             }
 
             $parameterType = ($Matches['type'] -replace '\s+', ' ').Trim()
-            $isParams = $parameterType -cmatch '^params\s+'
-            $underlyingType = if ($isParams) {
-                ($parameterType -creplace '^params\s+', '').Trim()
-            } else {
-                $parameterType
-            }
             $parameterTypes.Add($parameterType)
             $parameters.Add([pscustomobject]@{
-                Name           = ($Matches['name'] -creplace '^@', '')
-                Type           = $parameterType
-                UnderlyingType = $underlyingType
-                IsOptional     = $defaultSeparator -ge 0
-                IsParams       = $isParams
+                Name       = $Matches['name']
+                Type       = $parameterType
+                IsOptional = $defaultSeparator -ge 0
             })
         }
 
-        $receiverType = if ($parameters.Count -gt 0 -and $parameters[0].Type -cmatch '^this\s') {
-            $parameters[0].Type
-        } else {
-            ''
-        }
-        $invocationKind = if ($receiverType) {
-            'extension'
-        } elseif ($prefix -cmatch '(^|\s)static(\s|$)') {
-            'static'
-        } else {
-            'instance'
-        }
-        $openBrace = $line.IndexOf('{', $closeParenthesis)
-        $trailingDeclaration = if ($openBrace -gt $closeParenthesis) {
-            $line.Substring($closeParenthesis + 1, $openBrace - $closeParenthesis - 1).Trim()
-        } else {
-            ''
-        }
-        $constraintText = if ($trailingDeclaration -match '^(where\b.*)$') {
-            ($Matches[1] -replace '\s+', ' ').Trim()
-        } else {
-            ''
-        }
-        $overloadOwner = if ($invocationKind -eq 'extension') { $namespace } else { "$namespace|$typeName" }
         $key = "$namespace|$typeName|$memberName|$($parameterTypes -join ',')"
         $methods[$key] = [pscustomobject]@{
-            TypeName          = $typeName
-            MemberName        = $memberName
-            OverloadKey       = "$overloadOwner|$memberName|$invocationKind|$receiverType|$constraintText"
-            IsExtensionMethod = $invocationKind -eq 'extension'
-            Parameters        = $parameters.ToArray()
-            Line              = $lineIndex + 1
+            TypeName   = $typeName
+            MemberName = $memberName
+            Parameters = $parameters.ToArray()
+            Line       = $lineIndex + 1
         }
     }
 
     return $methods
-}
-
-# Extension-method receivers ('this Foo foo') are always required and always bound by the
-# receiver expression, so they never participate in the ambiguity analysed below.
-function Get-BindableParameters($method) {
-    $parameters = @($method.Parameters)
-    if ($parameters.Count -gt 0 -and $method.IsExtensionMethod) {
-        return @($parameters | Select-Object -Skip 1)
-    }
-
-    return $parameters
-}
-
-# Returns true when restoring the baseline defaults on $method would make it ambiguous with a
-# sibling overload, so OPTPARAM001 cannot be satisfied without breaking compilation.
-#
-# Binary compatibility forces a shipped overload to stay in metadata even after the generator
-# adds new optional parameters to its replacement. That leaves two overloads of the same member:
-#
-#   GetAll(int? top = default, string skipToken = null, CancellationToken cancellationToken = default)
-#   GetAll(CancellationToken cancellationToken)   <- shim preserving the 1.3.1 signature
-#
-# If the shim's parameter is also optional, a zero-argument 'GetAll()' is applicable to both.
-# The same applies after a shared required prefix, such as Delete(waitUntil). Neither overload is
-# better under C# 12.6.4.3 when both require default substitution, so the call fails with CS0121.
-# An applicable overload with exactly the supplied argument count wins instead and disqualifies
-# the suppression.
-#
-# Making the shim's parameters required is the only variant that compiles, so flagging it as
-# OPTPARAM001 asks for a change that cannot be made. Detect that shape and stay silent.
-#
-# Note that [Obsolete] and [EditorBrowsable] do not help: neither participates in overload
-# resolution. [OverloadResolutionPriority] does, but only for consumers compiling with C# 13+,
-# so it converts the finding into a hard break for older consumers.
-function Test-AmbiguityForcedRequired($method, $optionalToRequired, $overloads) {
-    if (-not $overloads) {
-        return $false
-    }
-
-    $bindable = @(Get-BindableParameters $method)
-    if ($bindable.Count -eq 0) {
-        return $false
-    }
-
-    # Determine how many leading arguments remain required after restoring the baseline defaults.
-    # Optional parameters must remain a trailing suffix for a positional call to reach the
-    # ambiguity point.
-    $requiredArgumentCount = 0
-    $seenOptional = $false
-    foreach ($parameter in $bindable) {
-        $isOptionalAfterRestore = $parameter.IsOptional -or
-            $parameter.IsParams -or
-            $optionalToRequired.Contains($parameter.Name)
-        if ($isOptionalAfterRestore) {
-            $seenOptional = $true
-        } else {
-            if ($seenOptional) {
-                return $false
-            }
-            $requiredArgumentCount++
-        }
-    }
-
-    $methodRequiresExpandedParams = $false
-    for ($index = $requiredArgumentCount; $index -lt $bindable.Count; $index++) {
-        if ($bindable[$index].IsParams) {
-            $methodRequiresExpandedParams = $true
-            break
-        }
-    }
-
-    $exactArityBlockers = [System.Collections.Generic.List[object]]::new()
-    $ambiguousCandidates = [System.Collections.Generic.List[object]]::new()
-    foreach ($overload in $overloads) {
-        if ($overload.Line -eq $method.Line) {
-            continue
-        }
-
-        $siblingBindable = @(Get-BindableParameters $overload)
-        if ($siblingBindable.Count -lt $requiredArgumentCount) {
-            continue
-        }
-
-        $prefixMatches = $true
-        for ($index = 0; $index -lt $requiredArgumentCount; $index++) {
-            if ($bindable[$index].UnderlyingType -cne $siblingBindable[$index].UnderlyingType) {
-                $prefixMatches = $false
-                break
-            }
-        }
-        if (-not $prefixMatches) {
-            continue
-        }
-
-        $remainingOptional = $true
-        $requiresExpandedParams = $false
-        for ($index = $requiredArgumentCount; $index -lt $siblingBindable.Count; $index++) {
-            if ($siblingBindable[$index].IsParams) {
-                $requiresExpandedParams = $true
-            } elseif (-not $siblingBindable[$index].IsOptional) {
-                $remainingOptional = $false
-                break
-            }
-        }
-        if (-not $remainingOptional) {
-            continue
-        }
-
-        # With all supplied arguments matched, this overload wins the tie-breaker over candidates
-        # that need default substitution, so no unavoidable ambiguity remains.
-        if ($siblingBindable.Count -eq $requiredArgumentCount) {
-            $exactArityBlockers.Add($siblingBindable)
-            continue
-        }
-
-        # Normal-form candidates win over expanded-form candidates. Only siblings using the same
-        # applicability form as the restored member can therefore create ambiguity.
-        if ($requiresExpandedParams -ne $methodRequiresExpandedParams) {
-            continue
-        }
-        if ($requiresExpandedParams -and $siblingBindable.Count -ne $bindable.Count) {
-            continue
-        }
-
-        $ambiguousCandidates.Add($siblingBindable)
-    }
-
-    foreach ($candidate in $ambiguousCandidates) {
-        if ($exactArityBlockers.Count -eq 0) {
-            return $true
-        }
-
-        # An exact-arity overload blocks positional calls. A named call can still be ambiguous
-        # when every blocker uses a different name for at least one prefix parameter that the
-        # restored member and the longer candidate share.
-        $namedCallEscapesAllBlockers = $requiredArgumentCount -gt 0
-        foreach ($blocker in $exactArityBlockers) {
-            $blockerExcluded = $false
-            for ($index = 0; $index -lt $requiredArgumentCount; $index++) {
-                if ($bindable[$index].Name -ceq $candidate[$index].Name -and
-                    $blocker.Name -cnotcontains $bindable[$index].Name) {
-                    $blockerExcluded = $true
-                    break
-                }
-            }
-            if (-not $blockerExcluded) {
-                $namedCallEscapesAllBlockers = $false
-                break
-            }
-        }
-        if ($namedCallEscapesAllBlockers) {
-            return $true
-        }
-    }
-
-    return $false
 }
 
 #endregion
@@ -626,17 +418,6 @@ if ($BaselineApiFilePath -and
     $currentMethods = Get-ApiMethodInfos $lines
     $baselineMethods = Get-ApiMethodInfos (Get-Content $BaselineApiFilePath)
 
-    # Group the current surface by member so a flagged method can see its sibling overloads.
-    $currentOverloads = [System.Collections.Generic.Dictionary[string, object]]::new(
-        [System.StringComparer]::Ordinal
-    )
-    foreach ($method in $currentMethods.Values) {
-        if (-not $currentOverloads.ContainsKey($method.OverloadKey)) {
-            $currentOverloads[$method.OverloadKey] = [System.Collections.Generic.List[object]]::new()
-        }
-        $currentOverloads[$method.OverloadKey].Add($method)
-    }
-
     foreach ($key in $currentMethods.Keys) {
         if (-not $baselineMethods.ContainsKey($key)) {
             continue
@@ -664,8 +445,7 @@ if ($BaselineApiFilePath -and
             }
         }
 
-        if ($optionalToRequired.Count -gt 0 -and
-            -not (Test-AmbiguityForcedRequired $currentMethod $optionalToRequired $currentOverloads[$currentMethod.OverloadKey])) {
+        if ($optionalToRequired.Count -gt 0) {
             $parameterNames = ($optionalToRequired | ForEach-Object { "'$_'" }) -join ', '
             $violations.Add([NamingViolation]::new(
                 'OPTPARAM001', 'Error', 'Source Compatibility',
