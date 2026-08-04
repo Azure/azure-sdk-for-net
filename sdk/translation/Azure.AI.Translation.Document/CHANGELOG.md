@@ -7,7 +7,7 @@
 - Added support for the `2026-03-01` service API version, which is now the default.
 - Added image translation support: the `TranslateTextWithinImage` property on `BatchOptions` for batch requests, and a `translateTextWithinImage` parameter on `SingleDocumentTranslationClient.Translate` and `TranslateAsync` for single document requests.
 - Added `StartTranslation` and `StartTranslationAsync` convenience overloads on `DocumentTranslationClient` that take an `IEnumerable<DocumentTranslationInput>` plus a `translateTextWithinImage` flag, so batch image translation can be enabled without constructing a `TranslationBatch`/`BatchOptions`.
-- Added image scan reporting to `DocumentStatusResult`: `ImageCharacterDetected`, `ImageCharged`, `TotalImageScansSucceeded`, and `TotalImageScansFailed`.
+- Added image scan reporting to `DocumentStatusResult`: `ImageCharactersDetected`, `ImagesCharged`, `TotalImageScansSucceeded`, and `TotalImageScansFailed`.
 - Added the `DeploymentName` property to `TranslationTarget` to specify the deployment name of the custom translation model for a batch translation request.
 - Added the `DeploymentName` property to `DocumentStatusResult`, exposing the deployment name of the custom translation model used for the translation.
 - Added the `deploymentName` parameter to `SingleDocumentTranslationClient.Translate` and `TranslateAsync` for single document translation requests.
@@ -17,7 +17,6 @@
 
 - Changed the default `DocumentTranslationClientOptions.ServiceVersion` from `V2024_05_01` to `V2026_03_01`, and removed the interim `V2024_11_01_Preview` and `V2025_12_01_Preview` preview service versions. Use the stable `V2026_03_01` version instead.
 - Added `deploymentName` and `translateTextWithinImage` parameters (positioned after `category`) to the `SingleDocumentTranslationClient.Translate` and `TranslateAsync` overloads. This is a binary-breaking change for existing callers.
-- Renamed the `DocumentTranslateContent` single-argument constructor parameter from `document` to `multipartDocument`. This is a source-breaking change for callers using named arguments.
 - Made the `type` parameter required (`FileFormatType` instead of `FileFormatType?`) on `DocumentTranslationClient.GetSupportedFormats` and `GetSupportedFormatsAsync`, since the `2026-03-01` service version requires it. Specify `FileFormatType.Document` or `FileFormatType.Glossary`. The previous nullable overload is retained for binary compatibility but now throws `NotSupportedException` when called without a `type`.
 
 ### Other Changes

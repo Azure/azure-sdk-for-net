@@ -513,7 +513,7 @@ namespace Azure.AI.Translation.Document.Tests
             await foreach (DocumentStatusResult document in operation.GetValuesAsync())
             {
                 // The request enables image translation (verified on the wire) and the document translates
-                // successfully. Image scan usage (TotalImageScansSucceeded/ImageCharged/...) is only reported
+                // successfully. Image scan usage (TotalImageScansSucceeded/ImagesCharged/...) is only reported
                 // by the service when images are actually scanned, so it is not asserted here.
                 Assert.AreEqual(DocumentTranslationStatus.Succeeded, document.Status);
             }

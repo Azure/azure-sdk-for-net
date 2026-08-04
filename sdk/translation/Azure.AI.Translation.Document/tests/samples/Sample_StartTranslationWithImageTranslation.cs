@@ -65,8 +65,8 @@ namespace Azure.AI.Translation.Document.Samples
                     // Image scan usage is reported when image translation is enabled.
                     Console.WriteLine($"  Total image scans succeeded: {document.TotalImageScansSucceeded}");
                     Console.WriteLine($"  Total image scans failed: {document.TotalImageScansFailed}");
-                    Console.WriteLine($"  Images charged: {document.ImageCharged}");
-                    Console.WriteLine($"  Characters detected within images: {document.ImageCharacterDetected}");
+                    Console.WriteLine($"  Images charged: {document.ImagesCharged}");
+                    Console.WriteLine($"  Characters detected within images: {document.ImageCharactersDetected}");
                 }
                 else
                 {
