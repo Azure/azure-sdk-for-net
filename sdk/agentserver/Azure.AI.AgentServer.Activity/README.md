@@ -32,15 +32,47 @@ The fastest path registers handlers inline on the `AgentApplication` the host bu
 agent class required:
 
 ```C# Snippet:Activity_Sample1_EchoAgent
+// Build the host (initializes the Microsoft 365 Agents SDK stack from the environment)
+// and register handlers inline on the AgentApplication — no agent class required.
+ActivityServer.Run(
+    (AgentApplication app) =>
+    {
+        // Echo the user's message back.
+        app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+        {
+            var userText = turnContext.Activity.Text ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(userText))
+            {
+                await turnContext.SendActivityAsync($"Echo: {userText}", cancellationToken: cancellationToken);
+            }
+        });
+    },
+    args);
 ```
 
 Or host an agent class by type — the standard Microsoft 365 Agents SDK style, where handlers are
 registered in the constructor:
 
 ```C# Snippet:Activity_Sample8_Agent
+// A standard Microsoft 365 Agents SDK agent. Its handlers are registered in the constructor,
+// so the Tier 1 one-liner can host it by type.
+public sealed class EchoAgent : AgentApplication
+{
+    public EchoAgent(AgentApplicationOptions options) : base(options)
+    {
+        OnActivity(ActivityTypes.Message, OnMessageAsync, rank: RouteRank.Last);
+    }
+
+    private async Task OnMessageAsync(ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken)
+    {
+        await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+    }
+}
 ```
 
 ```C# Snippet:Activity_Sample8_OneLiner
+// The fastest path to a running Activity agent — one line.
+ActivityServer.Run<EchoAgent>(args);
 ```
 
 ## Key concepts
@@ -99,12 +131,24 @@ Three levels of control, from most opinionated to least:
 
 ```C# Snippet:Activity_Sample10_SelfHost
 var builder = WebApplication.CreateBuilder(args);
-builder.AddAgent<EchoAgent>();                            // unchanged Microsoft 365 Agents SDK
-builder.Services.AddSingleton<IStorage, MemoryStorage>(); // unchanged
-builder.AddFoundryActivity();                             // Foundry conversion (1/2)
+
+// Your existing agent + storage registration (unchanged Microsoft 365 Agents SDK setup).
+builder.AddAgent<EchoAgent>();
+builder.Services.AddSingleton<IStorage, MemoryStorage>();
+
+// Add the Activity protocol to your own host. AddActivityServer() is the alias for
+// AddFoundryActivity().
+builder.AddActivityServer();
 
 var app = builder.Build();
-app.MapFoundryActivity();                                 // Foundry conversion (2/2)
+
+// Your existing endpoints coexist with the Activity endpoints.
+app.MapGet("/", () => "My existing app");
+
+// Map the Activity endpoint (/activity/messages) and /readiness.
+// MapActivityServer() is the alias for MapFoundryActivity().
+app.MapActivityServer();
+
 app.Run();
 ```
 
