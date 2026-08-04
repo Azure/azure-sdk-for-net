@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             // and serializes each value with its natural JSON type. A non-string value
             // here therefore produces a payload that does not match the declared
             // contract, so the caller has to supply strings.
-            string dateTimeValue = Recording.Now.UtcDateTime.ToString("O");
+            string dateTimeValue = Recording.Now.UtcDateTime.ToString("O", CultureInfo.InvariantCulture);
             input.CorrelationFilter.ApplicationProperties.Add("stringKey", "stringVal");
             input.CorrelationFilter.ApplicationProperties.Add("intKey", "5");
             input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", dateTimeValue);
@@ -147,8 +148,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual("stringVal", properties["stringKey"]);
             Assert.AreEqual("5", properties["intKey"]);
             Assert.AreEqual(
-                DateTimeOffset.Parse(dateTimeValue),
-                DateTimeOffset.Parse(properties["dateTimeKey"].ToString()));
+                DateTimeOffset.Parse(dateTimeValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                DateTimeOffset.Parse(properties["dateTimeKey"].ToString(), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
         }
     }
 }
