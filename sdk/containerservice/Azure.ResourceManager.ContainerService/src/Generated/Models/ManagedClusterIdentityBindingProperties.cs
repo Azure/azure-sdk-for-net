@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Argument.AssertNotNull(managedIdentity, nameof(managedIdentity));
 
             ManagedIdentity = managedIdentity;
-            AllowedSubjects = new ChangeTrackingList<ManagedClusterLoadBalancerAllowedSubject>();
+            AllowedSubjects = new ChangeTrackingList<ManagedClusterIdentityBindingAllowedSubject>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingProperties"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// evaluation. Maximum 100 entries.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IdentityBindingOidcIssuerProfile oidcIssuer, ManagedClusterIdentityBindingProvisioningState? provisioningState, IList<ManagedClusterLoadBalancerAllowedSubject> allowedSubjects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity, IdentityBindingOidcIssuerProfile oidcIssuer, ManagedClusterIdentityBindingProvisioningState? provisioningState, IList<ManagedClusterIdentityBindingAllowedSubject> allowedSubjects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedIdentity = managedIdentity;
             OidcIssuer = oidcIssuer;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// evaluation. Maximum 100 entries.
         /// </summary>
         [WirePath("allowedSubjects")]
-        public IList<ManagedClusterLoadBalancerAllowedSubject> AllowedSubjects { get; }
+        public IList<ManagedClusterIdentityBindingAllowedSubject> AllowedSubjects { get; }
 
         /// <summary> The OIDC issuer URL of the IdentityBinding. </summary>
         [WirePath("oidcIssuer.oidcIssuerUrl")]

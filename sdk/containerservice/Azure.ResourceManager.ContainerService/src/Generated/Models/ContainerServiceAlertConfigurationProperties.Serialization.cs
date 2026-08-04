@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ContainerServiceAlertConfigurationMode mode = default;
-            AlertNotification notification = default;
+            ContainerServiceAlertNotification notification = default;
             ContainerServiceAlertConfigurationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("notification"u8))
                 {
-                    notification = AlertNotification.DeserializeAlertNotification(prop.Value, options);
+                    notification = ContainerServiceAlertNotification.DeserializeContainerServiceAlertNotification(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

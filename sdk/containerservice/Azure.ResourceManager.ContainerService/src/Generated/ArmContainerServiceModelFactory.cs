@@ -624,10 +624,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new AgentPoolDeleteMachinesContent((machineNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <returns> A new <see cref="Models.ListBootstrapDataContent"/> instance for mocking. </returns>
-        public static ListBootstrapDataContent ListBootstrapDataContent()
+        /// <returns> A new <see cref="Models.AgentPoolBootstrapDataContent"/> instance for mocking. </returns>
+        public static AgentPoolBootstrapDataContent AgentPoolBootstrapDataContent()
         {
-            return new ListBootstrapDataContent(default);
+            return new AgentPoolBootstrapDataContent(default);
         }
 
         /// <param name="azure"> Azure environment and cluster identity information. </param>
@@ -2819,11 +2819,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// evaluation. Maximum 100 entries.
         /// </param>
         /// <returns> A new <see cref="Models.ManagedClusterIdentityBindingProperties"/> instance for mocking. </returns>
-        public static ManagedClusterIdentityBindingProperties ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, Uri oidcIssuerUri = default, ManagedClusterIdentityBindingProvisioningState? provisioningState = default, IEnumerable<ManagedClusterLoadBalancerAllowedSubject> allowedSubjects = default)
+        public static ManagedClusterIdentityBindingProperties ManagedClusterIdentityBindingProperties(IdentityBindingManagedIdentityProfile managedIdentity = default, Uri oidcIssuerUri = default, ManagedClusterIdentityBindingProvisioningState? provisioningState = default, IEnumerable<ManagedClusterIdentityBindingAllowedSubject> allowedSubjects = default)
         {
-            allowedSubjects ??= new ChangeTrackingList<ManagedClusterLoadBalancerAllowedSubject>();
+            allowedSubjects ??= new ChangeTrackingList<ManagedClusterIdentityBindingAllowedSubject>();
 
-            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, default), provisioningState, (allowedSubjects ?? new ChangeTrackingList<ManagedClusterLoadBalancerAllowedSubject>()).ToList(), default);
+            return new ManagedClusterIdentityBindingProperties(managedIdentity, oidcIssuerUri is null ? default : new IdentityBindingOidcIssuerProfile(oidcIssuerUri, default), provisioningState, (allowedSubjects ?? new ChangeTrackingList<ManagedClusterIdentityBindingAllowedSubject>()).ToList(), default);
         }
 
         /// <param name="resourceId"> The resource ID of the managed identity. </param>
@@ -2849,10 +2849,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// When omitted, all service accounts in matching namespaces are
         /// authorized. When provided, it must be non-empty.
         /// </param>
-        /// <returns> A new <see cref="Models.ManagedClusterLoadBalancerAllowedSubject"/> instance for mocking. </returns>
-        public static ManagedClusterLoadBalancerAllowedSubject ManagedClusterLoadBalancerAllowedSubject(ManagedClusterLoadBalancerLabelSelector namespaceSelector = default, ManagedClusterLoadBalancerLabelSelector serviceAccountSelector = default)
+        /// <returns> A new <see cref="Models.ManagedClusterIdentityBindingAllowedSubject"/> instance for mocking. </returns>
+        public static ManagedClusterIdentityBindingAllowedSubject ManagedClusterIdentityBindingAllowedSubject(ManagedClusterLoadBalancerLabelSelector namespaceSelector = default, ManagedClusterLoadBalancerLabelSelector serviceAccountSelector = default)
         {
-            return new ManagedClusterLoadBalancerAllowedSubject(namespaceSelector, serviceAccountSelector, default);
+            return new ManagedClusterIdentityBindingAllowedSubject(namespaceSelector, serviceAccountSelector, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3196,7 +3196,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.ContainerServiceAlertConfigurationProperties"/> instance for mocking. </returns>
         public static ContainerServiceAlertConfigurationProperties ContainerServiceAlertConfigurationProperties(ContainerServiceAlertConfigurationMode mode = default, ResourceIdentifier notificationActionGroupId = default, ContainerServiceAlertConfigurationProvisioningState? provisioningState = default)
         {
-            return new ContainerServiceAlertConfigurationProperties(mode, notificationActionGroupId is null ? default : new AlertNotification(notificationActionGroupId, default), provisioningState, default);
+            return new ContainerServiceAlertConfigurationProperties(mode, notificationActionGroupId is null ? default : new ContainerServiceAlertNotification(notificationActionGroupId, default), provisioningState, default);
         }
 
         /// <param name="cpuManagerPolicy"> The CPU Manager policy to use. The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </param>

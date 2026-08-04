@@ -13,25 +13,25 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Notification settings for the alert configuration. </summary>
-    internal partial class AlertNotification
+    internal partial class ContainerServiceAlertNotification
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertNotification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertNotification"/>. </summary>
         /// <param name="actionGroupId"> The resource ID of the Azure Monitor action group to send notifications to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupId"/> is null. </exception>
-        public AlertNotification(ResourceIdentifier actionGroupId)
+        public ContainerServiceAlertNotification(ResourceIdentifier actionGroupId)
         {
             Argument.AssertNotNull(actionGroupId, nameof(actionGroupId));
 
             ActionGroupId = actionGroupId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertNotification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertNotification"/>. </summary>
         /// <param name="actionGroupId"> The resource ID of the Azure Monitor action group to send notifications to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertNotification(ResourceIdentifier actionGroupId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceAlertNotification(ResourceIdentifier actionGroupId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionGroupId = actionGroupId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// AllowedSubject are AND'd; multiple AllowedSubjects on an
     /// IdentityBinding are OR'd.
     /// </summary>
-    public partial class ManagedClusterLoadBalancerAllowedSubject
+    public partial class ManagedClusterIdentityBindingAllowedSubject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerAllowedSubject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingAllowedSubject"/>. </summary>
         /// <param name="namespaceSelector">
         /// Label selector matching the namespaces in which this identity may be
         /// used. Must be non-empty: an empty selector would match every namespace
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// name.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceSelector"/> is null. </exception>
-        public ManagedClusterLoadBalancerAllowedSubject(ManagedClusterLoadBalancerLabelSelector namespaceSelector)
+        public ManagedClusterIdentityBindingAllowedSubject(ManagedClusterLoadBalancerLabelSelector namespaceSelector)
         {
             Argument.AssertNotNull(namespaceSelector, nameof(namespaceSelector));
 
             NamespaceSelector = namespaceSelector;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerAllowedSubject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIdentityBindingAllowedSubject"/>. </summary>
         /// <param name="namespaceSelector">
         /// Label selector matching the namespaces in which this identity may be
         /// used. Must be non-empty: an empty selector would match every namespace
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// authorized. When provided, it must be non-empty.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerAllowedSubject(ManagedClusterLoadBalancerLabelSelector namespaceSelector, ManagedClusterLoadBalancerLabelSelector serviceAccountSelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIdentityBindingAllowedSubject(ManagedClusterLoadBalancerLabelSelector namespaceSelector, ManagedClusterLoadBalancerLabelSelector serviceAccountSelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamespaceSelector = namespaceSelector;
             ServiceAccountSelector = serviceAccountSelector;

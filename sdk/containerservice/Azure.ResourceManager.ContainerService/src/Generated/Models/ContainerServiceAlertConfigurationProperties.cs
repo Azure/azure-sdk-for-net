@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Argument.AssertNotNull(notificationActionGroupId, nameof(notificationActionGroupId));
 
             Mode = mode;
-            Notification = new AlertNotification(notificationActionGroupId);
+            Notification = new ContainerServiceAlertNotification(notificationActionGroupId);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceAlertConfigurationProperties"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="notification"> Notification settings for the alert configuration. </param>
         /// <param name="provisioningState"> The current provisioning state of the alert configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceAlertConfigurationProperties(ContainerServiceAlertConfigurationMode mode, AlertNotification notification, ContainerServiceAlertConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceAlertConfigurationProperties(ContainerServiceAlertConfigurationMode mode, ContainerServiceAlertNotification notification, ContainerServiceAlertConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             Notification = notification;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Notification settings for the alert configuration. </summary>
         [WirePath("notification")]
-        internal AlertNotification Notification { get; set; }
+        internal ContainerServiceAlertNotification Notification { get; set; }
 
         /// <summary> The current provisioning state of the alert configuration. </summary>
         [WirePath("provisioningState")]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             set
             {
-                Notification = new AlertNotification(value);
+                Notification = new ContainerServiceAlertNotification(value);
             }
         }
     }
