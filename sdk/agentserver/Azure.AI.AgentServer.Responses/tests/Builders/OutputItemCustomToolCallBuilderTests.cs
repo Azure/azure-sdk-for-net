@@ -3,6 +3,8 @@
 
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
+using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
@@ -100,6 +102,40 @@ public class OutputItemCustomToolCallBuilderTests
         Assert.That(item.CallId, Is.EqualTo("call_001"));
         Assert.That(item.FunctionName, Is.EqualTo("my_tool"));
         Assert.That(item.FunctionArguments.ToString(), Is.EqualTo("{\"key\":\"value\"}"));
+    }
+
+    [Test]
+    public void EmitDone_SerializesCustomToolCallDiscriminator()
+    {
+        var stream = CreateStream();
+        var builder = stream.AddOutputItemCustomToolCall("call_001", "my_tool");
+        builder.EmitAdded();
+        builder.EmitInputDone("{\"key\":\"value\"}");
+
+        var item = XAssert.IsType<OutputItemCustomToolCall>(builder.EmitDone().Item);
+        using var document = JsonDocument.Parse(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default));
+
+        Assert.That(document.RootElement.GetProperty("type").GetString(), Is.EqualTo("custom_tool_call"));
+        Assert.That(document.RootElement.GetProperty("call_id").GetString(), Is.EqualTo("call_001"));
+        Assert.That(document.RootElement.GetProperty("name").GetString(), Is.EqualTo("my_tool"));
+        Assert.That(document.RootElement.GetProperty("input").GetString(), Is.EqualTo("{\"key\":\"value\"}"));
+    }
+
+    [Test]
+    public void CustomToolCallOutput_SerializesCustomToolOutputDiscriminator()
+    {
+        var item = new OutputItemCustomToolCallOutput("call_001", "{\"ok\":true}")
+        {
+            Id = "ctco_001",
+            Status = OpenAI.Responses.FunctionCallOutputStatus.Completed,
+        };
+
+        using var document = JsonDocument.Parse(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default));
+
+        Assert.That(document.RootElement.GetProperty("type").GetString(), Is.EqualTo("custom_tool_call_output"));
+        Assert.That(document.RootElement.GetProperty("id").GetString(), Is.EqualTo("ctco_001"));
+        Assert.That(document.RootElement.GetProperty("call_id").GetString(), Is.EqualTo("call_001"));
+        Assert.That(document.RootElement.GetProperty("output").GetString(), Is.EqualTo("{\"ok\":true}"));
     }
 
     [Test]

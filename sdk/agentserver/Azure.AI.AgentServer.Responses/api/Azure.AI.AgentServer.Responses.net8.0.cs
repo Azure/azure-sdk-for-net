@@ -65,7 +65,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseCodeInterpreterCallInProgressUpdate EmitInProgress() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseCodeInterpreterCallInterpretingUpdate EmitInterpreting() { throw null; }
     }
-    public partial class OutputItemCustomToolCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.FunctionCallResponseItem>
+    public partial class OutputItemCustomToolCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
     {
         protected OutputItemCustomToolCallBuilder() { }
         public string CallId { get { throw null; } }
@@ -260,7 +260,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ComputerCallResponseItem> AddOutputItemComputerCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ComputerCallOutputResponseItem> AddOutputItemComputerCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemCustomToolCallBuilder AddOutputItemCustomToolCall(string callId, string name) { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.FunctionCallOutputResponseItem> AddOutputItemCustomToolCallOutput() { throw null; }
+        public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput> AddOutputItemCustomToolCallOutput() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemFileSearchCallBuilder AddOutputItemFileSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemFunctionCallBuilder AddOutputItemFunctionCall(string name, string callId) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall> AddOutputItemFunctionShellCall() { throw null; }
@@ -963,6 +963,34 @@ namespace Azure.AI.AgentServer.Responses.Models
         Azure.AI.AgentServer.Responses.Models.OtlpTelemetryEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OtlpTelemetryEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OtlpTelemetryEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OtlpTelemetryEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutputItemCustomToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
+    {
+        public OutputItemCustomToolCall(string callId, string name, System.BinaryData input) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public string CallId { get { throw null; } }
+        public System.BinaryData FunctionArguments { get { throw null; } }
+        public string FunctionName { get { throw null; } }
+        public new string? Id { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public OpenAI.Responses.FunctionCallStatus? Status { get { throw null; } set { } }
+        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutputItemCustomToolCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>
+    {
+        public OutputItemCustomToolCallOutput(string callId, string output) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public string CallId { get { throw null; } }
+        public new string? Id { get { throw null; } set { } }
+        public string Output { get { throw null; } }
+        public OpenAI.Responses.FunctionCallOutputStatus? Status { get { throw null; } set { } }
+        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class OutputItemExtensions
     {
