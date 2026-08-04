@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Security.Cryptography;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography;
@@ -23,10 +24,12 @@ internal class ForceSequentialNonceAuthenticatedCryptographicTransform : IAuthen
         IAuthenticatedCryptographicTransform inner,
         long countStart)
     {
+        Argument.AssertNotNull(inner, nameof(inner));
         if (inner.TransformMode != TransformMode.Decrypt)
         {
-            throw new ArgumentException("This transform only valid for decryption.");
+            throw new ArgumentException("This transform only valid for decryption.", nameof(inner));
         }
+        Argument.AssertInRange(inner.NonceLength, sizeof(long), int.MaxValue, nameof(inner.NonceLength));
         _inner = inner;
         _next = countStart;
     }
