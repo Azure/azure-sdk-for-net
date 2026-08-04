@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Models;
 
@@ -29,7 +28,6 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(PrometheusEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(PrometheusInstantQuery))]
     [ModelReaderWriterBuildable(typeof(PrometheusRangeQuery))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionStatus))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionSuppressedDetails))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionTriggeredDetails))]

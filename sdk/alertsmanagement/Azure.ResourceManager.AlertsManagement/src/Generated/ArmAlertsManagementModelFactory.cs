@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.Models;
@@ -20,7 +19,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public static partial class ArmAlertsManagementModelFactory
     {
 
-        /// <summary> An alert created in alert management service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,11 +32,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Alert property bag. </summary>
         /// <param name="essentials"> This object contains consistent fields across different monitor services. </param>
         /// <param name="context"> Information specific to the monitor service that gives more contextual details about the alert. </param>
         /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             customProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ServiceAlertProperties(essentials, context, egressConfig, customProperties, additionalBinaryDataProperties: null);
+            return new ServiceAlertProperties(essentials, context, egressConfig, customProperties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="severity"> Severity of alert Sev0 being highest and Sev4 being lowest. </param>
@@ -91,12 +88,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 lastModifiedOn,
                 monitorConditionResolvedOn,
                 lastModifiedBy,
-                isSuppressed is null ? default : new ServiceAlertActionStatus(isSuppressed, null),
+                isSuppressed is null ? default : new ServiceAlertActionStatus(isSuppressed, default),
                 description,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Alert Modification details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -110,11 +106,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Alert modification history properties. </summary>
         /// <param name="alertId"> Unique identifier of the alert. </param>
         /// <param name="modifications"> Array of alert modification events. </param>
         /// <returns> A new <see cref="Models.ServiceAlertModificationProperties"/> instance for mocking. </returns>
@@ -122,10 +117,48 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             modifications ??= new ChangeTrackingList<ServiceAlertModificationItemInfo>();
 
-            return new ServiceAlertModificationProperties(alertId, modifications.ToList(), additionalBinaryDataProperties: null);
+            return new ServiceAlertModificationProperties(alertId, (modifications ?? new ChangeTrackingList<ServiceAlertModificationItemInfo>()).ToList(), default);
         }
 
-        /// <summary> The ServiceAlertActionSuppressedDetails. </summary>
+        /// <param name="modificationEvent"> Reason for the modification. </param>
+        /// <param name="oldValue"> Old value. </param>
+        /// <param name="newValue"> New value. </param>
+        /// <param name="modifiedAt"> Modified date and time. </param>
+        /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
+        /// <param name="comments"> Modification comments. </param>
+        /// <param name="description"> Description of the modification. </param>
+        /// <param name="details"> Base details class. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertModificationItemInfo"/> instance for mocking. </returns>
+        public static ServiceAlertModificationItemInfo ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent = default, string oldValue = default, string newValue = default, string modifiedAt = default, string modifiedBy = default, string comments = default, string description = default, AlertsManagementBaseDetails details = default)
+        {
+            return new ServiceAlertModificationItemInfo(
+                modificationEvent,
+                oldValue,
+                newValue,
+                modifiedAt,
+                modifiedBy,
+                comments,
+                description,
+                details,
+                default);
+        }
+
+        /// <param name="type"> Type of modification details. </param>
+        /// <returns> A new <see cref="Models.AlertsManagementBaseDetails"/> instance for mocking. </returns>
+        public static AlertsManagementBaseDetails AlertsManagementBaseDetails(string @type = default)
+        {
+            return new UnknownAlertsManagementBaseDetails(default, default);
+        }
+
+        /// <param name="oldValue"> The value before the change. </param>
+        /// <param name="newValue"> The value after the change. </param>
+        /// <param name="comment"> The comment. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertPropertyChangeDetails"/> instance for mocking. </returns>
+        public static ServiceAlertPropertyChangeDetails ServiceAlertPropertyChangeDetails(string oldValue = default, string newValue = default, string comment = default)
+        {
+            return new ServiceAlertPropertyChangeDetails(default, default, oldValue, newValue, comment);
+        }
+
         /// <param name="suppressionActionRules"> List of suppression action rules. </param>
         /// <param name="suppressedActionGroups"> List of suppressed action groups. </param>
         /// <returns> A new <see cref="Models.ServiceAlertActionSuppressedDetails"/> instance for mocking. </returns>
@@ -134,10 +167,41 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             suppressionActionRules ??= new ChangeTrackingList<string>();
             suppressedActionGroups ??= new ChangeTrackingList<AlertsManagementTriggeredRule>();
 
-            return new ServiceAlertActionSuppressedDetails(AlertModificationType.ActionsSuppressed, additionalBinaryDataProperties: null, suppressionActionRules.ToList(), suppressedActionGroups.ToList());
+            return new ServiceAlertActionSuppressedDetails(default, default, (suppressionActionRules ?? new ChangeTrackingList<string>()).ToList(), (suppressedActionGroups ?? new ChangeTrackingList<AlertsManagementTriggeredRule>()).ToList());
         }
 
-        /// <summary> The alert's enrichments. </summary>
+        /// <param name="actionGroupId"> The action group ID. </param>
+        /// <param name="ruleId"> The rule ID. </param>
+        /// <param name="ruleType"> The rule type. </param>
+        /// <returns> A new <see cref="Models.AlertsManagementTriggeredRule"/> instance for mocking. </returns>
+        public static AlertsManagementTriggeredRule AlertsManagementTriggeredRule(string actionGroupId = default, string ruleId = default, AlertsManagementRuleType? ruleType = default)
+        {
+            return new AlertsManagementTriggeredRule(actionGroupId, ruleId, ruleType, default);
+        }
+
+        /// <param name="actionGroup"> The action group that was triggered. </param>
+        /// <param name="notificationResult"> The result of the notification delivery. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertActionTriggeredDetails"/> instance for mocking. </returns>
+        public static ServiceAlertActionTriggeredDetails ServiceAlertActionTriggeredDetails(AlertsManagementTriggeredRule actionGroup = default, AlertsManagementNotificationResult notificationResult = default)
+        {
+            return new ServiceAlertActionTriggeredDetails(default, default, actionGroup, notificationResult);
+        }
+
+        /// <param name="statusUri"> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </param>
+        /// <param name="status"> The status of the notification. </param>
+        /// <returns> A new <see cref="Models.AlertsManagementNotificationResult"/> instance for mocking. </returns>
+        public static AlertsManagementNotificationResult AlertsManagementNotificationResult(string statusUri = default, AlertsManagementResultStatus? status = default)
+        {
+            return new AlertsManagementNotificationResult(statusUri, status, default);
+        }
+
+        /// <param name="comments"></param>
+        /// <returns> A new <see cref="Models.ServiceAlertChangeStateContent"/> instance for mocking. </returns>
+        public static ServiceAlertChangeStateContent ServiceAlertChangeStateContent(string comments = default)
+        {
+            return new ServiceAlertChangeStateContent(comments, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -151,11 +215,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of the alert enrichment item. </summary>
         /// <param name="alertId"> Unique Id (GUID) of the alert for which the enrichments are being retrieved. </param>
         /// <param name="enrichments"> Enrichment details. </param>
         /// <returns> A new <see cref="Models.AlertEnrichmentProperties"/> instance for mocking. </returns>
@@ -163,13 +226,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             enrichments ??= new ChangeTrackingList<AlertEnrichmentItem>();
 
-            return new AlertEnrichmentProperties(alertId, enrichments.ToList(), additionalBinaryDataProperties: null);
+            return new AlertEnrichmentProperties(alertId, (enrichments ?? new ChangeTrackingList<AlertEnrichmentItem>()).ToList(), default);
         }
 
-        /// <summary>
-        /// Alert enrichment item.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.PrometheusEnrichmentItem"/>, <see cref="Models.PrometheusInstantQuery"/>, and <see cref="Models.PrometheusRangeQuery"/>.
-        /// </summary>
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
@@ -183,11 +242,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                new AlertsManagementType(alertEnrichmentType),
-                additionalBinaryDataProperties: null);
+                default,
+                default);
         }
 
-        /// <summary> Prometheus enrichment object. </summary>
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
@@ -206,15 +264,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                AlertsManagementType.PrometheusEnrichmentItem,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 linkToApi,
-                datasources.ToList(),
+                (datasources ?? new ChangeTrackingList<string>()).ToList(),
                 grafanaExplorePath,
                 query);
         }
 
-        /// <summary> Prometheus instant query enrichment object. </summary>
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
@@ -234,16 +291,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                AlertsManagementType.PrometheusEnrichmentItem,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 linkToApi,
-                datasources.ToList(),
+                (datasources ?? new ChangeTrackingList<string>()).ToList(),
                 grafanaExplorePath,
                 query,
                 time);
         }
 
-        /// <summary> Prometheus instant query enrichment object. </summary>
         /// <param name="title"> The enrichment title. </param>
         /// <param name="description"> The enrichment description. </param>
         /// <param name="status"> The status of the evaluation of the enrichment. </param>
@@ -265,10 +321,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 description,
                 status,
                 errorMessage,
-                AlertsManagementType.PrometheusEnrichmentItem,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 linkToApi,
-                datasources.ToList(),
+                (datasources ?? new ChangeTrackingList<string>()).ToList(),
                 grafanaExplorePath,
                 query,
                 startOn,
@@ -276,34 +332,37 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 step);
         }
 
-        /// <summary> alert meta data information. </summary>
         /// <param name="properties"> alert meta data property bag. </param>
         /// <returns> A new <see cref="Models.ServiceAlertMetadata"/> instance for mocking. </returns>
         public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = default)
         {
-            return new ServiceAlertMetadata(properties, additionalBinaryDataProperties: null);
+            return new ServiceAlertMetadata(properties, default);
         }
 
-        /// <summary> Monitor service details. </summary>
+        /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertMetadataProperties"/> instance for mocking. </returns>
+        public static ServiceAlertMetadataProperties ServiceAlertMetadataProperties(string metadataIdentifier = default)
+        {
+            return new UnknownAlertsMetaDataProperties(default, default);
+        }
+
         /// <param name="data"> Array of operations. </param>
         /// <returns> A new <see cref="Models.MonitorServiceList"/> instance for mocking. </returns>
         public static MonitorServiceList MonitorServiceList(IEnumerable<MonitorServiceDetails> data = default)
         {
             data ??= new ChangeTrackingList<MonitorServiceDetails>();
 
-            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, additionalBinaryDataProperties: null, data.ToList());
+            return new MonitorServiceList(default, default, (data ?? new ChangeTrackingList<MonitorServiceDetails>()).ToList());
         }
 
-        /// <summary> Details of a monitor service. </summary>
         /// <param name="name"> Monitor service name. </param>
         /// <param name="displayName"> Monitor service display name. </param>
         /// <returns> A new <see cref="Models.MonitorServiceDetails"/> instance for mocking. </returns>
         public static MonitorServiceDetails MonitorServiceDetails(string name = default, string displayName = default)
         {
-            return new MonitorServiceDetails(name, displayName, additionalBinaryDataProperties: null);
+            return new MonitorServiceDetails(name, displayName, default);
         }
 
-        /// <summary> Summary of alerts based on the input filters and 'groupby' parameters. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -317,11 +376,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Group the result set. </summary>
         /// <param name="total"> Total count of the result set. </param>
         /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
         /// <param name="groupedBy"> Name of the field aggregated. </param>
@@ -331,10 +389,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             values ??= new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
 
-            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedBy, values.ToList(), additionalBinaryDataProperties: null);
+            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedBy, (values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>()).ToList(), default);
         }
 
-        /// <summary> Alerts summary group item. </summary>
         /// <param name="name"> Value of the aggregated field. </param>
         /// <param name="count"> Count of the aggregated field. </param>
         /// <param name="groupedBy"> Name of the field aggregated. </param>
@@ -344,7 +401,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             values ??= new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
 
-            return new ServiceAlertSummaryGroupItemInfo(name, count, groupedBy, values.ToList(), additionalBinaryDataProperties: null);
+            return new ServiceAlertSummaryGroupItemInfo(name, count, groupedBy, (values ?? new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>()).ToList(), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertProperties"/>. </summary>
@@ -353,9 +410,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
         /// <returns> A new <see cref="Models.ServiceAlertProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials, BinaryData context, BinaryData egressConfig)
+        public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials = default, BinaryData context = default, BinaryData egressConfig = default)
         {
-            return ServiceAlertProperties(essentials: essentials, context: context, egressConfig: egressConfig, customProperties: default);
+            return new ServiceAlertProperties(essentials, context, egressConfig, default, default);
         }
     }
 }

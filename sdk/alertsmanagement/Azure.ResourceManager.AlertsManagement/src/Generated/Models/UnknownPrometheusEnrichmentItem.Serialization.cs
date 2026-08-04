@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrometheusEnrichmentItem IPersistableModel<PrometheusEnrichmentItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownPrometheusEnrichmentItem)PersistableModelCreateCore(data, options);
+        PrometheusEnrichmentItem IPersistableModel<PrometheusEnrichmentItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (PrometheusEnrichmentItem)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrometheusEnrichmentItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrometheusEnrichmentItem IJsonModel<PrometheusEnrichmentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownPrometheusEnrichmentItem)JsonModelCreateCore(ref reader, options);
+        PrometheusEnrichmentItem IJsonModel<PrometheusEnrichmentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (PrometheusEnrichmentItem)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.AlertsManagement
                     yield break;
                 }
                 AlertEnrichmentsList result = AlertEnrichmentsList.FromResponse(response);
-                yield return Page<AlertEnrichmentResult>.FromValues((IReadOnlyList<AlertEnrichmentResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AlertEnrichmentResult>.FromValues((IReadOnlyList<AlertEnrichmentResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

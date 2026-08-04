@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             TryGetApiVersion(ResourceType, out string serviceAlertTenantApiVersion);
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, serviceAlertTenantApiVersion ?? "2025-05-25-preview");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceAlertTenantApiVersion ?? "2025-05-25-preview");
             ValidateResourceId(id);
         }
 

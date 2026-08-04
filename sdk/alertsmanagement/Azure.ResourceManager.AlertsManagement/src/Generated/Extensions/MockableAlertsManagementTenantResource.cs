@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2025-05-25-preview");
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-25-preview");
 
         /// <summary> Gets a collection of ServiceAlertTenants in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of ServiceAlertTenants and their operations over a ServiceAlertTenantResource. </returns>

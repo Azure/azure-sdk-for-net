@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.AlertsManagement
                     yield break;
                 }
                 AlertsList result = AlertsList.FromResponse(response);
-                yield return Page<ServiceAlertData>.FromValues((IReadOnlyList<ServiceAlertData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceAlertData>.FromValues((IReadOnlyList<ServiceAlertData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

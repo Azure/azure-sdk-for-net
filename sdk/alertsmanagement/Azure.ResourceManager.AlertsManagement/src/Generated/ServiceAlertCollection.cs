@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             TryGetApiVersion(ServiceAlertResource.ResourceType, out string serviceAlertApiVersion);
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ServiceAlertResource.ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, serviceAlertApiVersion ?? "2025-05-25-preview");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceAlertApiVersion ?? "2025-05-25-preview");
         }
 
         /// <summary>
