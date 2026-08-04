@@ -15,11 +15,6 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Bounding polygon on a specific page of the input. </summary>
     public readonly partial struct BoundingRegion : IJsonModel<BoundingRegion>, IJsonModel<object>
     {
-        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/> for deserialization. </summary>
-        public BoundingRegion()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         private BoundingRegion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

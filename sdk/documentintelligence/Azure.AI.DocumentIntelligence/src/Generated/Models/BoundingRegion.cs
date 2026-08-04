@@ -47,6 +47,11 @@ namespace Azure.AI.DocumentIntelligence
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
+        public BoundingRegion()
+        {
+        }
+
         /// <summary> 1-based page number of page containing the bounding region. </summary>
         public int PageNumber { get; }
 

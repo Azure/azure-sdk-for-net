@@ -18,11 +18,6 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public readonly partial struct DocumentSpan : IJsonModel<DocumentSpan>, IJsonModel<object>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentSpan"/> for deserialization. </summary>
-        public DocumentSpan()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         private DocumentSpan PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -39,6 +39,11 @@ namespace Azure.AI.DocumentIntelligence
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DocumentSpan"/>. </summary>
+        public DocumentSpan()
+        {
+        }
+
         /// <summary> Zero-based index of the content represented by the span. </summary>
         public int Offset { get; }
 
