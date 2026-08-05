@@ -8,8 +8,6 @@
 
 ### Breaking Changes
 
-- Removed the preview Cluster Mesh Profile APIs.
-
 ### Bugs Fixed
 
 ### Other Changes
