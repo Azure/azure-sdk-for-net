@@ -135,12 +135,22 @@ public sealed class TaskWriteSerializerTests
     }
 
     [Test]
-    public void RemoveTearsDownGateWithoutLeak()
+    public void RemoveDropsEntryWithoutDisposingInUseGate()
     {
         ActiveTaskEntry entry = _serializer.GetOrAddEntry("t");
         _serializer.Remove("t");
-        // The gate is disposed; acquiring it now throws ObjectDisposedException.
-        Assert.Throws<ObjectDisposedException>(() => entry.WriteGate.Wait(0));
+
+        // Remove must NOT dispose the gate underneath a caller that already obtained the entry:
+        // disposing it would surface ObjectDisposedException on their Release/WaitAsync. The gate
+        // stays usable and is reclaimed by the GC once no caller references it.
+        Assert.DoesNotThrow(() =>
+        {
+            entry.WriteGate.Wait(0);
+            entry.WriteGate.Release();
+        });
+
+        // Remove still drops the entry from the dictionary: a later lookup allocates a fresh one.
+        Assert.That(_serializer.GetOrAddEntry("t"), Is.Not.SameAs(entry));
     }
 
     [Test]

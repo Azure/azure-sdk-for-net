@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -28,6 +29,17 @@ public static class EventStreamServiceCollectionExtensions
         Action<EventStreamOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+
+        // A single backing is selected once for the process. TryAddSingleton would silently
+        // discard a second call's configuration, so detect a repeated configuring call and fail
+        // loudly rather than letting the developer's intended backing be dropped without warning.
+        bool alreadyRegistered = services.Any(d => d.ServiceType == typeof(EventStreamRegistry));
+        if (alreadyRegistered && configure is not null)
+        {
+            throw new InvalidOperationException(
+                "AddEventStreams has already been called; the event-stream backing is selected once " +
+                "per process. Remove the duplicate registration or its configuration.");
+        }
 
         var options = new EventStreamOptions();
         configure?.Invoke(options);

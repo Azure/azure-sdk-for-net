@@ -73,14 +73,21 @@ internal sealed class TaskWriteSerializer : IDisposable
         }
     }
 
-    /// <summary>Tears down the per-task gate on active-task teardown (no leaked semaphores).</summary>
+    /// <summary>Drops the per-task entry on active-task teardown.</summary>
     /// <param name="taskId">The task id.</param>
+    /// <remarks>
+    /// The entry is removed from the dictionary but its <see cref="ActiveTaskEntry.WriteGate"/> is
+    /// intentionally NOT disposed here: a caller may already have obtained the entry (via
+    /// <see cref="GetOrAddEntry"/>) and be holding or awaiting the gate. Disposing it underneath
+    /// them would surface an <see cref="ObjectDisposedException"/> on their <c>Release</c>/<c>WaitAsync</c>.
+    /// The gate is only ever used through <c>WaitAsync</c>/<c>Release</c> (its wait handle is never
+    /// materialized), so it needs no deterministic disposal — once the removed entry and any
+    /// in-flight caller reference are gone, the GC reclaims it. Full disposal still happens at
+    /// serializer teardown (<see cref="Dispose"/>), when no callers remain.
+    /// </remarks>
     public void Remove(string taskId)
     {
-        if (_entries.TryRemove(taskId, out ActiveTaskEntry? entry))
-        {
-            entry.Dispose();
-        }
+        _entries.TryRemove(taskId, out _);
     }
 
     /// <summary>

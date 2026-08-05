@@ -2086,7 +2086,16 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             PublishPendingInputCount?.Invoke(Steering.Count);
             if (HandlerCts is { } cts)
             {
-                await cts.CancelAsync().ConfigureAwait(false);
+                try
+                {
+                    await cts.CancelAsync().ConfigureAwait(false);
+                }
+                catch (ObjectDisposedException)
+                {
+                    // A concurrent turn transition replaced and disposed this source after we read
+                    // it; the turn it belonged to is already winding down, so the steering nudge is
+                    // moot. Mirror CancelForShutdown: this race must not surface.
+                }
             }
         }
 
@@ -2180,7 +2189,16 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 PublishCancelCause?.Invoke();
                 if (HandlerCts is { } cts)
                 {
-                    await cts.CancelAsync().ConfigureAwait(false);
+                    try
+                    {
+                        await cts.CancelAsync().ConfigureAwait(false);
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        // A concurrent turn transition replaced and disposed the source we read;
+                        // the turn this cancel targeted has already ended, so cancelling it is a
+                        // no-op. Mirror CancelForShutdown: this race must not surface.
+                    }
                 }
             };
         }

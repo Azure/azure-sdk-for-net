@@ -21,6 +21,10 @@
 - A one-shot task whose durable completion write fails, and a multi-turn task whose durable suspend write fails, now surface the failure to the caller instead of reporting success while the record remains `in_progress` (which a later recovery scan could re-run).
 - The local file-backed task store now serializes its existence check and record write under the same lock as patch/delete, so two concurrent creates for the same id can no longer both succeed with the later write silently overwriting the earlier record.
 - The file-backed event-stream custom serializer/deserializer are now `Func<object, string>` / `Func<string, object>` (previously `byte[]`), matching the UTF-8 JSON-string on-disk format so a custom codec cannot silently corrupt non-UTF-8 payloads.
+- The local file-backed task store now writes each record through a temporary file and an atomic replace, so a crash mid-write can no longer leave a truncated record that reads back as a parse error and renders the task id permanently unusable.
+- The per-task write gate is no longer disposed when its bookkeeping entry is removed, closing a race where a concurrent write could observe `ObjectDisposedException` on a gate that was torn down while still in use.
+- A turn transition that replaces and disposes a handler's cancellation source concurrently with a cancel/steering signal no longer surfaces `ObjectDisposedException` from the cancel path.
+- `AddResilientTasks` and `AddEventStreams` are now safe against repeated registration: `AddResilientTasks` no longer registers the durability hosted service more than once (and rejects a conflicting second credential), and `AddEventStreams` rejects a second configuring call instead of silently discarding its configuration.
 
 ### Other Changes
 

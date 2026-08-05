@@ -35,6 +35,29 @@ public static class ResilientTaskServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        // Resilient-tasks services are registered once per process. Everything below uses
+        // TryAddSingleton (first-wins), but AddHostedService is NOT idempotent — a second call
+        // would register a duplicate TaskDurabilityService, running the recovery scan twice. Guard
+        // the whole method: on a repeat call, register nothing further and hand back a builder over
+        // the already-registered registry. A repeat call that supplies a credential cannot be
+        // honored (the first registration wins), so surface that as an error rather than discarding
+        // it silently.
+        if (IsAlreadyRegistered(services))
+        {
+            if (credential is not null)
+            {
+                throw new InvalidOperationException(
+                    "AddResilientTasks has already been called; resilient-tasks services are " +
+                    "registered once per process. Remove the duplicate call, or pass the credential " +
+                    "only on the first call.");
+            }
+
+            TaskRegistry existingRegistry = ResolveRegistered(services) ?? new TaskRegistry();
+            TaskServiceProviderAccessor existingAccessor =
+                ResolveRegisteredAccessor(services) ?? new TaskServiceProviderAccessor();
+            return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
+        }
+
         var registry = new TaskRegistry();
         services.TryAddSingleton(registry);
 
@@ -154,6 +177,19 @@ public static class ResilientTaskServiceCollectionExtensions
             ? TaskEngineConstants.DefaultSessionId
             : FoundryEnvironment.SessionId!;
         return (agentName, sessionId);
+    }
+
+    private static bool IsAlreadyRegistered(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            if (services[i].ServiceType == typeof(TaskEngine))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static TaskRegistry? ResolveRegistered(IServiceCollection services)

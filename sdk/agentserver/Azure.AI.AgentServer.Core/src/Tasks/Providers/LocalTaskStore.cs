@@ -123,9 +123,38 @@ internal sealed class LocalTaskStore : ITaskStore
 
     private static void WriteAllTextShared(string path, string contents)
     {
-        using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, ShareWithDelete);
-        using var writer = new StreamWriter(stream, new UTF8Encoding(false));
-        writer.Write(contents);
+        // Write to a sibling temp file then atomically replace the target, so a crash mid-write
+        // can never leave a truncated/half-written record that GetAsync would parse as a
+        // JsonException and treat as "not found" (leaving the task id permanently unusable).
+        // The temp file is created in the same directory to keep File.Move atomic (same volume),
+        // and ShareWithDelete lets a concurrent reader/delete race the replace (POSIX-like).
+        string tempPath = path + ".tmp-" + Guid.NewGuid().ToString("N");
+        try
+        {
+            using (var stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, ShareWithDelete))
+            using (var writer = new StreamWriter(stream, new UTF8Encoding(false)))
+            {
+                writer.Write(contents);
+            }
+
+            File.Move(tempPath, path, overwrite: true);
+        }
+        catch
+        {
+            try
+            {
+                if (File.Exists(tempPath))
+                {
+                    File.Delete(tempPath);
+                }
+            }
+            catch (IOException)
+            {
+                // Best-effort cleanup of the temp file; the original target is untouched.
+            }
+
+            throw;
+        }
     }
 
     private static string GenerateEtag(TaskRecord task)
