@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> network properties of the machine. </summary>
-    internal partial class ContainerServiceMachineNetworkProperties : IJsonModel<ContainerServiceMachineNetworkProperties>
+    public partial class ContainerServiceMachineNetworkProperties : IJsonModel<ContainerServiceMachineNetworkProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -84,6 +85,36 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(VnetSubnetId))
+            {
+                writer.WritePropertyName("vnetSubnetID"u8);
+                writer.WriteStringValue(VnetSubnetId);
+            }
+            if (Optional.IsDefined(PodSubnetId))
+            {
+                writer.WritePropertyName("podSubnetID"u8);
+                writer.WriteStringValue(PodSubnetId);
+            }
+            if (Optional.IsDefined(IsNodePublicIpEnabled))
+            {
+                writer.WritePropertyName("enableNodePublicIP"u8);
+                writer.WriteBooleanValue(IsNodePublicIpEnabled.Value);
+            }
+            if (Optional.IsDefined(NodePublicIpPrefixId))
+            {
+                writer.WritePropertyName("nodePublicIPPrefixID"u8);
+                writer.WriteStringValue(NodePublicIpPrefixId);
+            }
+            if (Optional.IsCollectionDefined(NodePublicIPTags))
+            {
+                writer.WritePropertyName("nodePublicIPTags"u8);
+                writer.WriteStartArray();
+                foreach (ContainerServiceIPTag item in NodePublicIPTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +158,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses = default;
+            ResourceIdentifier vnetSubnetId = default;
+            ResourceIdentifier podSubnetId = default;
+            bool? isNodePublicIpEnabled = default;
+            ResourceIdentifier nodePublicIpPrefixId = default;
+            IList<ContainerServiceIPTag> nodePublicIPTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +180,69 @@ namespace Azure.ResourceManager.ContainerService.Models
                     ipAddresses = array;
                     continue;
                 }
+                if (prop.NameEquals("vnetSubnetID"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vnetSubnetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("podSubnetID"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    podSubnetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("enableNodePublicIP"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isNodePublicIpEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("nodePublicIPPrefixID"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodePublicIpPrefixId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("nodePublicIPTags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerServiceIPTag> array = new List<ContainerServiceIPTag>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item, options));
+                    }
+                    nodePublicIPTags = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServiceMachineNetworkProperties(ipAddresses ?? new ChangeTrackingList<ContainerServiceMachineIPAddress>(), additionalBinaryDataProperties);
+            return new ContainerServiceMachineNetworkProperties(
+                ipAddresses ?? new ChangeTrackingList<ContainerServiceMachineIPAddress>(),
+                vnetSubnetId,
+                podSubnetId,
+                isNodePublicIpEnabled,
+                nodePublicIpPrefixId,
+                nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(),
+                additionalBinaryDataProperties);
         }
     }
 }
