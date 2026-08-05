@@ -423,8 +423,8 @@ namespace Azure.AI.AgentServer.Core.Tasks
     }
     public sealed partial class TaskConflictException : Azure.AI.AgentServer.Core.Tasks.TaskException
     {
-        public TaskConflictException(Azure.AI.AgentServer.Core.Tasks.TaskStatus currentStatus, string? message = null, System.Exception? innerException = null) { }
-        public Azure.AI.AgentServer.Core.Tasks.TaskStatus CurrentStatus { get { throw null; } }
+        public TaskConflictException(Azure.AI.AgentServer.Core.Tasks.TaskRunStatus currentStatus, string? message = null, System.Exception? innerException = null) { }
+        public Azure.AI.AgentServer.Core.Tasks.TaskRunStatus CurrentStatus { get { throw null; } }
     }
     public partial class TaskContext<TInput>
     {
@@ -511,6 +511,13 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public static Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy LinearBackoff(int maxAttempts = 5, System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? increment = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?), bool jitter = false) { throw null; }
         public static Azure.AI.AgentServer.Core.Tasks.TaskRetryPolicy NoRetry() { throw null; }
     }
+    public enum TaskRunStatus
+    {
+        Pending = 0,
+        InProgress = 1,
+        Suspended = 2,
+        Completed = 3,
+    }
     public partial class TaskRun<TOutput>
     {
         protected TaskRun() { }
@@ -518,15 +525,8 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual bool IsQueued { get { throw null; } }
         public virtual Azure.AI.AgentServer.Core.Tasks.TaskMetadata Metadata { get { throw null; } }
         public virtual string TaskId { get { throw null; } }
-        public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Runtime.CompilerServices.TaskAwaiter<TOutput> GetAwaiter() { throw null; }
         public virtual System.Threading.Tasks.Task<TOutput> GetResultAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public enum TaskStatus
-    {
-        Pending = 0,
-        InProgress = 1,
-        Suspended = 2,
-        Completed = 3,
+        public virtual System.Threading.Tasks.Task RequestCancellationAsync() { throw null; }
     }
 }

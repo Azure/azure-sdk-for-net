@@ -31,7 +31,7 @@ public sealed class MultiTurnCancellationTests
             "mt-cancel", "v", new RunOptions { TaskId = "mtc-1" });
 
         await started.Task;
-        await handle.CancelAsync();
+        await handle.RequestCancellationAsync();
 
         Assert.ThrowsAsync<TaskCancelledException>(async () => await handle);
 

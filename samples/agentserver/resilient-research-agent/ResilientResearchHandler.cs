@@ -182,7 +182,7 @@ public class ResilientResearchHandler : InvocationHandler
             return;
         }
 
-        await run.CancelAsync(cancellationToken);
+        await run.RequestCancellationAsync();
         response.StatusCode = StatusCodes.Status202Accepted;
         await response.WriteAsJsonAsync(new
         {

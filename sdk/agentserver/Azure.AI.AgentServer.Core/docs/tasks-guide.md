@@ -291,7 +291,7 @@ run.InputId;          // the input id assigned to this run
 run.IsQueued;         // true if this input was queued as steering, not a fresh run
 await run;            // await the handle directly to get the result
 string r = await run.GetResultAsync();   // equivalent
-await run.CancelAsync();                  // request cancellation
+await run.RequestCancellationAsync();     // request cancellation
 ```
 
 `RunAsync` is the convenience that starts a run and awaits it to completion in one
@@ -405,7 +405,7 @@ bounded.
 
 ### 4.9 Cancellation
 
-`await run.CancelAsync()` requests cancellation. Inside the handler this surfaces as
+`await run.RequestCancellationAsync()` requests cancellation. Inside the handler this surfaces as
 `ctx.Cancellation` being signaled and `ctx.CancelRequested == true`. A cancelled run
 completes by throwing `TaskCancelledException` to the awaiting caller. Honor
 cancellation by passing the token into your async work.
@@ -517,7 +517,7 @@ turn's `inputId` and want that turn's handle; it is required for multi-turn task
 
 ### 5.3 `TaskRun<TOutput>`
 
-`TaskId`, `InputId`, `Metadata`, `IsQueued`, `GetResultAsync(ct)`, `CancelAsync(ct)`,
+`TaskId`, `InputId`, `Metadata`, `IsQueued`, `GetResultAsync(ct)`, `RequestCancellationAsync()`,
 and `GetAwaiter()` (so you can `await` the handle directly).
 
 ### 5.4 `TaskContext<TInput>`

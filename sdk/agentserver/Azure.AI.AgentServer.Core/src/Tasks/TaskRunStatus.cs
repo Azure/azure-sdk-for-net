@@ -12,7 +12,7 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// serialization layer normalizes the legacy alias <c>done</c> to
 /// <see cref="Completed"/>.
 /// </remarks>
-public enum TaskStatus
+public enum TaskRunStatus
 {
     /// <summary>The task record exists but execution has not started.</summary>
     Pending,

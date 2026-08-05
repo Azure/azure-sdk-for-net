@@ -40,7 +40,7 @@ internal sealed class TaskRunState<TOutput>
     /// </summary>
     public int RecoveryCount { get; set; }
 
-    public Func<CancellationToken, Task> Cancel { get; set; } = _ => Task.CompletedTask;
+    public Func<Task> Cancel { get; set; } = () => Task.CompletedTask;
 
     public Task<TOutput> ResultTask => _completion.Task;
 
@@ -68,7 +68,7 @@ internal sealed class TaskRunState<TOutput>
         return await _completion.Task.ConfigureAwait(false);
     }
 
-    public Task CancelAsync(CancellationToken cancellationToken) => Cancel(cancellationToken);
+    public Task RequestCancellationAsync() => Cancel();
 
     public TaskRun<TOutput> ToHandle() => new(this);
 }

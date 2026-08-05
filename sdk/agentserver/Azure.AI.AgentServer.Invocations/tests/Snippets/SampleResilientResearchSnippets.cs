@@ -543,7 +543,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     return;
                 }
 
-                await run.CancelAsync(cancellationToken);
+                await run.RequestCancellationAsync();
                 response.StatusCode = StatusCodes.Status202Accepted;
                 await response.WriteAsJsonAsync(new { invocation_id = invocationId, status = "cancelling" },
                     cancellationToken);

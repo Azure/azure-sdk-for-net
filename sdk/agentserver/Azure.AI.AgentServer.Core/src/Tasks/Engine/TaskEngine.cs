@@ -134,13 +134,13 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     .ConfigureAwait(false);
             }
 
-            throw new TaskConflictException(TaskStatus.InProgress,
+            throw new TaskConflictException(TaskRunStatus.InProgress,
                 $"Task '{taskId}' already has a turn in progress.");
         }
 
         if (!multiTurn && _terminatedOneShot.ContainsKey(taskId))
         {
-            throw new TaskConflictException(TaskStatus.Completed,
+            throw new TaskConflictException(TaskRunStatus.Completed,
                 $"Task '{taskId}' has already completed.");
         }
 
@@ -221,10 +221,10 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         {
             // The record already exists: converge or conflict.
             TaskRecord? current = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false)
-                ?? throw new TaskConflictException(TaskStatus.Completed, $"Task '{taskId}' is gone.");
+                ?? throw new TaskConflictException(TaskRunStatus.Completed, $"Task '{taskId}' is gone.");
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
-                throw new TaskConflictException(TaskStatus.Completed,
+                throw new TaskConflictException(TaskRunStatus.Completed,
                     $"Task '{taskId}' has already completed.");
             }
 
@@ -351,7 +351,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
-                throw new TaskConflictException(TaskStatus.Completed,
+                throw new TaskConflictException(TaskRunStatus.Completed,
                     $"Task '{taskId}' has already completed.");
             }
 
@@ -368,7 +368,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     || string.Equals(leaseOwner, _owner, StringComparison.Ordinal);
                 if (!reclaimableByUs)
                 {
-                    throw new TaskConflictException(TaskStatus.InProgress,
+                    throw new TaskConflictException(TaskRunStatus.InProgress,
                         $"Task '{taskId}' already has a turn in progress.");
                 }
 
@@ -533,7 +533,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // Remove returns false and we route to the active-turn cancel path — either immediately
         // (if the promoted turn is already current) or deferred until SetCurrent rewires it, so a
         // cancel arriving inside the promotion window is never silently dropped.
-        runState.Cancel = async ct =>
+        runState.Cancel = async () =>
         {
             if (!run.Steering.Remove(queued))
             {
@@ -553,7 +553,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     Attachments = DeletionPatch(queued.Attachments),
                 },
                 WriteIntent.SteeringAppend,
-                ct).ConfigureAwait(false);
+                CancellationToken.None).ConfigureAwait(false);
 
             runState.SetException(new TaskCancelledException(
                 $"Task '{taskId}' input '{inputId}' was cancelled before the queued input was promoted."));
@@ -2110,7 +2110,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             // popped but before this rewire) is honored now via the active-turn cancel path.
             if (honorPending)
             {
-                _ = state.CancelAsync(CancellationToken.None);
+                _ = state.RequestCancellationAsync();
             }
         }
 
@@ -2130,7 +2130,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 }
             }
 
-            return state.CancelAsync(CancellationToken.None);
+            return state.RequestCancellationAsync();
         }
 
         /// <summary>
@@ -2160,7 +2160,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         {
             // Resolve every still-queued caller as cancelled, then cancel the active turn.
             DrainQueuedAsCancelled();
-            return _state.CancelAsync(CancellationToken.None);
+            return _state.RequestCancellationAsync();
         }
 
         /// <summary>
@@ -2238,7 +2238,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         private void WireCancel(TaskRunState<TOutput> state)
         {
-            state.Cancel = async ct =>
+            state.Cancel = async () =>
             {
                 // Publish the cause before signalling the token so a handler that wakes on
                 // cancellation always observes CancelRequested (C-CAN-2 ordering).

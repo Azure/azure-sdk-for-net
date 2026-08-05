@@ -92,7 +92,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             _ = run.IsQueued;
             string r = await run;
             string r2 = await run.GetResultAsync();
-            await run.CancelAsync();
+            await run.RequestCancellationAsync();
             _ = (r, r2);
         }
 

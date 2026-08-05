@@ -41,7 +41,7 @@ public sealed class SteeringCancelAndFullTests
         Assert.That(run2.IsQueued, Is.True);
 
         // The queued caller cancels its slot before promotion.
-        await run2.CancelAsync();
+        await run2.RequestCancellationAsync();
         Assert.ThrowsAsync<TaskCancelledException>(async () => await run2.GetResultAsync());
 
         // The active turn is undisturbed and there is nothing left to promote.

@@ -18,12 +18,12 @@ public sealed class TaskConflictException : TaskException
     /// <param name="currentStatus">The task status reported by the store at the time of the conflict.</param>
     /// <param name="message">An optional description of the conflict.</param>
     /// <param name="innerException">An optional underlying cause.</param>
-    public TaskConflictException(TaskStatus currentStatus, string? message = null, Exception? innerException = null)
+    public TaskConflictException(TaskRunStatus currentStatus, string? message = null, Exception? innerException = null)
         : base(message ?? $"The task operation conflicts with the current task status '{currentStatus}'.", innerException)
     {
         CurrentStatus = currentStatus;
     }
 
     /// <summary>The status the task store reported when the conflict was detected.</summary>
-    public TaskStatus CurrentStatus { get; }
+    public TaskRunStatus CurrentStatus { get; }
 }

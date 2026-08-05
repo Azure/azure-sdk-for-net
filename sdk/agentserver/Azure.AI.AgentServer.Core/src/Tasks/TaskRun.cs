@@ -45,11 +45,10 @@ public class TaskRun<TOutput>
     public virtual Task<TOutput> GetResultAsync(CancellationToken cancellationToken = default)
         => State.GetResultAsync(cancellationToken);
 
-    /// <summary>Requests cancellation of the run.</summary>
-    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <summary>Requests cooperative cancellation of the run.</summary>
     /// <returns>A task that completes when cancellation has been requested.</returns>
-    public virtual Task CancelAsync(CancellationToken cancellationToken = default)
-        => State.CancelAsync(cancellationToken);
+    public virtual Task RequestCancellationAsync()
+        => State.RequestCancellationAsync();
 
     /// <summary>Gets an awaiter so the handle can be <c>await</c>-ed directly.</summary>
     /// <returns>An awaiter for the run result.</returns>
