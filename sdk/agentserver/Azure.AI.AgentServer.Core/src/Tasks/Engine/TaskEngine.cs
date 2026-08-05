@@ -2172,7 +2172,20 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         public async Task SignalSteeringAsync()
         {
             PublishPendingInputCount?.Invoke(Steering.Count);
-            if (HandlerCts is { } cts)
+            await CancelCurrentHandlerAsync().ConfigureAwait(false);
+        }
+
+        // Cancels the current turn's cooperative token, re-signalling across any concurrent turn
+        // transition that swaps HandlerCts. Reading the source once and cancelling it lets a
+        // transition install a NEW source in between, leaving the turn that is now current
+        // unsignalled — so a steering nudge or cancel could complete against a superseded (and maybe
+        // disposed) source while the running handler never wakes. Re-read after each cancel and
+        // signal the replacement too, until the source is unchanged; bounded by the finite number of
+        // turn transitions.
+        private async Task CancelCurrentHandlerAsync()
+        {
+            CancellationTokenSource? signalled = null;
+            while (HandlerCts is { } cts && !ReferenceEquals(cts, signalled))
             {
                 try
                 {
@@ -2180,10 +2193,11 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 }
                 catch (ObjectDisposedException)
                 {
-                    // A concurrent turn transition replaced and disposed this source after we read
-                    // it; the turn it belonged to is already winding down, so the steering nudge is
-                    // moot. Mirror CancelForShutdown: this race must not surface.
+                    // This source was replaced and disposed by a concurrent transition after we read
+                    // it; loop to signal the source that replaced it (the now-current turn).
                 }
+
+                signalled = cts;
             }
         }
 
@@ -2275,19 +2289,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 // cancellation always observes CancelRequested (C-CAN-2 ordering).
                 CancelRequested = true;
                 PublishCancelCause?.Invoke();
-                if (HandlerCts is { } cts)
-                {
-                    try
-                    {
-                        await cts.CancelAsync().ConfigureAwait(false);
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        // A concurrent turn transition replaced and disposed the source we read;
-                        // the turn this cancel targeted has already ended, so cancelling it is a
-                        // no-op. Mirror CancelForShutdown: this race must not surface.
-                    }
-                }
+                await CancelCurrentHandlerAsync().ConfigureAwait(false);
             };
         }
     }
