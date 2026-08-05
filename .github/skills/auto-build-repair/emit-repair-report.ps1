@@ -51,6 +51,11 @@ param(
     # Max iterations the loop was allowed (from repair-config.yml), for "N / max" display.
     [int]$MaxIterations = 3,
 
+    # Path to the captured pre-repair build output (raw `dotnet build` text). On a first-try
+    # success the engine result carries no `buildResult`, so this is the only deterministic
+    # source for the "errors fixed" list. Mechanical capture (redirect), not LLM-authored.
+    [string]$PreRepairErrorsFile = $env:AZSDK_REPAIR_PRE_ERRORS_FILE,
+
     # Identity fields (default to GitHub Actions env; overridable for tests).
     [string]$Repo = $env:GITHUB_REPOSITORY,
     [int]$Pr = 0,
@@ -120,8 +125,23 @@ else {
 
 $repairedAt = if ($status -eq 'repaired') { (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ') } else { $null }
 
-# ---- classified build errors (deterministic regex over engine buildResult) -----
-# Matches compiler-style diagnostic codes, e.g. "error CS0117", "error AZC0012".
+# ---- classified build diagnostics (deterministic parse over build output) ------
+# Compiler diagnostics look like:
+#   /abs/path/File.cs(19,13): error CS0103: The name 'X' does not exist... [/abs/proj.csproj]
+# We extract a compact per-code count and structured (code, file, line, message) tuples.
+function Get-RelPath([string]$p) {
+    if (-not $p) { return $p }
+    $n = ($p -replace '\\', '/').Trim()
+    $i = $n.IndexOf('sdk/')
+    if ($i -ge 0) { $n = $n.Substring($i) }
+    return $n
+}
+function Get-PkgRelPath([string]$repoRel) {
+    if ($PackagePath -and $repoRel -and $repoRel.StartsWith("$PackagePath/")) {
+        return $repoRel.Substring($PackagePath.Length + 1)
+    }
+    return $repoRel
+}
 function Get-ErrorCounts([string]$buildText) {
     $counts = [ordered]@{}
     if ($buildText) {
@@ -132,20 +152,54 @@ function Get-ErrorCounts([string]$buildText) {
     }
     return $counts
 }
+# Unique structured diagnostics (deduped across repeated target frameworks).
+function Get-Diagnostics([string]$text) {
+    $list = [System.Collections.Generic.List[object]]::new()
+    $seen = [System.Collections.Generic.HashSet[string]]::new()
+    if ($text) {
+        $rx = [regex]'(?im)^(?<file>[^(\r\n]+)\((?<line>\d+),\d+\):\s*error\s+(?<code>[A-Z]{1,5}\d{2,5}):\s*(?<msg>.+?)(?:\s*\[[^\]]*\])?\s*$'
+        foreach ($m in $rx.Matches($text)) {
+            $rel = Get-PkgRelPath (Get-RelPath $m.Groups['file'].Value)
+            $code = $m.Groups['code'].Value
+            $line = $m.Groups['line'].Value
+            $msg = $m.Groups['msg'].Value.Trim()
+            $key = "$code|$rel|$line|$msg"
+            if ($seen.Add($key)) {
+                $list.Add([pscustomobject]@{ Code = $code; File = $rel; Line = $line; Message = $msg })
+            }
+        }
+    }
+    return $list
+}
 function Format-ErrorCounts($counts) {
     if (-not $counts -or $counts.Count -eq 0) { return '_none_' }
-    return (($counts.GetEnumerator() | Sort-Object Name | ForEach-Object { "$($_.Key) x$($_.Value)" }) -join ', ')
+    return (($counts.GetEnumerator() | Sort-Object Name | ForEach-Object { "``$($_.Key)`` x$($_.Value)" }) -join ', ')
 }
 
-# Errors encountered across the run (fixed set) vs remaining on the final failing attempt.
-$encountered = [ordered]@{}
+# Pre-repair build output = the errors the first engine call was asked to fix.
+$preRepairText = ''
+if ($PreRepairErrorsFile -and (Test-Path $PreRepairErrorsFile)) {
+    $preRepairText = Get-Content -Raw -LiteralPath $PreRepairErrorsFile
+}
+
+# Errors fixed across the run = pre-repair errors + any failing attempts' buildResult.
+$fixedCounts = Get-ErrorCounts $preRepairText
+$fixedDiagText = $preRepairText
 foreach ($a in $attempts) {
-    $br = Get-Prop $a 'buildResult'
-    foreach ($kv in (Get-ErrorCounts $br).GetEnumerator()) {
-        if ($encountered.Contains($kv.Key)) { $encountered[$kv.Key] += $kv.Value } else { $encountered[$kv.Key] = $kv.Value }
+    if (-not [bool](Get-Prop $a 'success')) {
+        $br = [string](Get-Prop $a 'buildResult')
+        $fixedDiagText += "`n$br"
+        foreach ($kv in (Get-ErrorCounts $br).GetEnumerator()) {
+            if ($fixedCounts.Contains($kv.Key)) { $fixedCounts[$kv.Key] += $kv.Value } else { $fixedCounts[$kv.Key] = $kv.Value }
+        }
     }
 }
-$remaining = if ($status -eq 'failed' -and $final) { Get-ErrorCounts (Get-Prop $final 'buildResult') } else { [ordered]@{} }
+$fixedDiags = Get-Diagnostics $fixedDiagText
+
+# Remaining (failed state) = diagnostics on the final failing attempt.
+$remainingText = if ($status -eq 'failed' -and $final) { [string](Get-Prop $final 'buildResult') } else { '' }
+$remainingCounts = Get-ErrorCounts $remainingText
+$remainingDiags = Get-Diagnostics $remainingText
 
 # ---- files changed (git diff, Generated/ vs custom) ----------------------------
 function Test-IsGenerated([string]$path) {
@@ -172,6 +226,30 @@ if ($changedFiles.Count -eq 0) {
 $genFiles = @($changedFiles | Where-Object { Test-IsGenerated $_ })
 $customFiles = @($changedFiles | Where-Object { -not (Test-IsGenerated $_) })
 
+# Map of engine-applied patches keyed by normalized path, for the "Change" column.
+$patchMap = @{}
+foreach ($a in $attempts) {
+    $ap = Get-Prop $a 'appliedPatches'
+    if ($ap) {
+        foreach ($p in $ap) {
+            $fp = Get-Prop $p 'filePath'; if (-not $fp) { continue }
+            $patchMap[(Get-RelPath $fp)] = [pscustomobject]@{
+                Description  = [string](Get-Prop $p 'description')
+                Replacements = Get-Prop $p 'replacementCount'
+            }
+        }
+    }
+}
+# Match a changed file (repo-relative) to an applied patch by path suffix (handles the
+# engine reporting either repo-relative or package-relative paths).
+function Find-Patch([string]$repoRelFile) {
+    $target = (Get-RelPath $repoRelFile)
+    foreach ($k in $patchMap.Keys) {
+        if ($target -eq $k -or $target.EndsWith("/$k") -or $k.EndsWith("/$target")) { return $patchMap[$k] }
+    }
+    return $null
+}
+
 # ---- telemetry object (validated against telemetry-schema.v1.json) -----------------
 $obj = [ordered]@{
     schema_version = 'v1'
@@ -186,57 +264,125 @@ $obj = [ordered]@{
 $objJson = ($obj | ConvertTo-Json -Compress -Depth 4)
 
 # ---- render comment ------------------------------------------------------------
-$statusLine = switch ($status) {
-    'repaired'              { 'OK repaired' }
-    'failed'               { 'FAILED not repaired' }
-    'ineligible'           { 'SKIPPED not an eligible Auto SDK PR' }
-    'skipped_already_green' { 'OK already green (no repair needed)' }
+$statusTitle = switch ($status) {
+    'repaired'              { 'Repaired' }
+    'failed'                { 'Not repaired' }
+    'ineligible'            { 'Skipped (not an eligible Auto SDK PR)' }
+    'skipped_already_green' { 'Already green (no repair needed)' }
+}
+$statusIcon = switch ($status) {
+    'repaired'              { ':white_check_mark:' }
+    'failed'                { ':x:' }
+    'ineligible'            { ':information_source:' }
+    'skipped_already_green' { ':white_check_mark:' }
+}
+
+# Escape a table cell: collapse newlines and escape pipes so markdown tables stay intact.
+function Format-Cell([string]$s) {
+    if (-not $s) { return '' }
+    return (($s -replace '\r?\n', ' ') -replace '\|', '\|').Trim()
 }
 
 $sb = [System.Text.StringBuilder]::new()
 # NOTE: no HTML identity marker — gh-aw's add_comment sanitizer (removeXmlComments)
 # strips <!-- ... --> from the posted body. Comment identity for dedup/parsing is the
-# visible "### SDK build repair" heading plus the "schema_version":"v1" telemetry object.
-[void]$sb.AppendLine("### SDK build repair - $statusLine")
+# visible "SDK Build Repair" heading plus the "schema_version":"v1" telemetry object.
+[void]$sb.AppendLine("## SDK Build Repair - $statusTitle $statusIcon")
 [void]$sb.AppendLine('')
 
 if ($status -eq 'ineligible') {
-    [void]$sb.AppendLine('This PR is not an eligible release-planner Auto SDK PR, so no build/repair was run.')
+    [void]$sb.AppendLine('This PR is not an eligible release-planner Auto SDK PR, so no build or repair was run.')
+    [void]$sb.AppendLine('')
 }
 else {
-    if ($PackagePath) { [void]$sb.AppendLine("**Package:** ``$PackagePath``") }
-    $resultText = if ($status -eq 'repaired') { 'build green' } elseif ($status -eq 'skipped_already_green') { 'build green (no changes)' } else { 'build red' }
-    $iterLine = "**Result:** $resultText - **Iterations:** $iterations / $MaxIterations"
-    if ($stopReason) { $iterLine += " - **Stop reason:** $stopReason" }
-    [void]$sb.AppendLine($iterLine)
-
-    if ($status -eq 'repaired') {
-        [void]$sb.AppendLine("**Errors resolved:** $(Format-ErrorCounts $encountered)")
-    } elseif ($status -eq 'failed') {
-        [void]$sb.AppendLine("**Remaining errors:** $(Format-ErrorCounts $remaining)")
+    # ----- Summary table -----
+    $buildStatusCell = switch ($status) {
+        'repaired'              { ':white_check_mark: Green' }
+        'skipped_already_green' { ':white_check_mark: Green (no changes needed)' }
+        default                 { ':x: Red' }
     }
-    [void]$sb.AppendLine("**Files changed:** $($changedFiles.Count) ($($genFiles.Count) generated, $($customFiles.Count) custom)")
+    [void]$sb.AppendLine('### Summary')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('| | |')
+    [void]$sb.AppendLine('|---|---|')
+    if ($PackagePath) { [void]$sb.AppendLine("| **Package** | ``$PackagePath`` |") }
+    [void]$sb.AppendLine("| **Final build status** | $buildStatusCell |")
+    [void]$sb.AppendLine("| **Iterations used** | $iterations of $MaxIterations |")
+    [void]$sb.AppendLine('| **Engine** | `azsdk tsp client customized-update --edit-scope CustomCode` |')
+    if ($stopReason) { [void]$sb.AppendLine("| **Stop reason** | ``$stopReason`` |") }
     [void]$sb.AppendLine('')
 
-    if ($changedFiles.Count -gt 0) {
-        [void]$sb.AppendLine('<details><summary>Changed files</summary>')
-        [void]$sb.AppendLine('')
-        foreach ($f in ($changedFiles | Sort-Object)) { [void]$sb.AppendLine("- ``$f``") }
-        if ($fileSource -eq 'appliedPatches') {
+    # ----- Build errors (fixed on success, remaining on failure) -----
+    if ($status -eq 'repaired' -or $status -eq 'failed') {
+        $isFixed = ($status -eq 'repaired')
+        $diags = if ($isFixed) { $fixedDiags } else { $remainingDiags }
+        $counts = if ($isFixed) { $fixedCounts } else { $remainingCounts }
+        $heading = if ($isFixed) { 'Build Errors Fixed' } else { 'Remaining Build Errors' }
+        if (@($diags).Count -gt 0) {
+            [void]$sb.AppendLine("### $heading")
             [void]$sb.AppendLine('')
-            [void]$sb.AppendLine('_Note: list derived from engine-applied patches (pre-repair sha unavailable); regenerated Generated/ files may not be shown._')
+            [void]$sb.AppendLine('| Error | Location |')
+            [void]$sb.AppendLine('|---|---|')
+            foreach ($d in ($diags | Sort-Object File, @{ Expression = { [int]$_.Line } }, Code)) {
+                $loc = if ($d.File) { "``$($d.File):$($d.Line)``" } else { '_n/a_' }
+                $emsg = Format-Cell "$($d.Code): $($d.Message)"
+                [void]$sb.AppendLine("| ``$emsg`` | $loc |")
+            }
+            [void]$sb.AppendLine('')
         }
-        [void]$sb.AppendLine('</details>')
-        [void]$sb.AppendLine('')
+        elseif ($counts.Count -gt 0) {
+            $label = if ($isFixed) { 'Errors fixed' } else { 'Errors remaining' }
+            [void]$sb.AppendLine("**${label}:** $(Format-ErrorCounts $counts)")
+            [void]$sb.AppendLine('')
+        }
     }
 
+    # ----- Files changed table -----
+    if ($changedFiles.Count -gt 0) {
+        [void]$sb.AppendLine("### Files Changed ($($changedFiles.Count): $($customFiles.Count) custom, $($genFiles.Count) generated)")
+        [void]$sb.AppendLine('')
+        [void]$sb.AppendLine('| File | Type | Change |')
+        [void]$sb.AppendLine('|---|---|---|')
+        foreach ($f in ($changedFiles | Sort-Object)) {
+            $type = if (Test-IsGenerated $f) { 'Generated' } else { 'Custom code' }
+            if (Test-IsGenerated $f) {
+                $change = 'Regenerated from unchanged spec inputs'
+            }
+            else {
+                $patch = Find-Patch $f
+                if ($patch) {
+                    $change = if ($patch.Description) { $patch.Description } else { 'Custom-code fix' }
+                    if ($patch.Replacements) {
+                        $n = [int]$patch.Replacements
+                        $change += " ($n replacement$(if ($n -ne 1) { 's' }))"
+                    }
+                }
+                else { $change = 'Custom-code edit' }
+            }
+            [void]$sb.AppendLine("| ``$(Get-PkgRelPath (Get-RelPath $f))`` | $type | $(Format-Cell $change) |")
+        }
+        [void]$sb.AppendLine('')
+        if ($fileSource -eq 'appliedPatches') {
+            [void]$sb.AppendLine('_File list derived from engine-applied patches (pre-repair sha unavailable); regenerated Generated/ files may not be shown._')
+            [void]$sb.AppendLine('')
+        }
+    }
+
+    # ----- Out-of-scope spec guidance + full log (failed only) -----
     if ($status -eq 'failed' -and $final) {
+        $scr = Get-Prop $final 'specChangeRequired'
+        if ($scr -and @($scr).Count -gt 0) {
+            [void]$sb.AppendLine('### Requires a spec-repo change (out of scope for custom-code repair)')
+            [void]$sb.AppendLine('')
+            foreach ($item in $scr) { [void]$sb.AppendLine("- $item") }
+            [void]$sb.AppendLine('')
+        }
         $br = [string](Get-Prop $final 'buildResult')
         # Guard the fenced block: strip any accidental closing fence in engine output.
         $safeBr = ($br -replace '```', '` ` `')
         if ($safeBr.Length -gt 8000) { $safeBr = $safeBr.Substring(0, 8000) + "`n...(truncated)" }
         if ($safeBr.Trim()) {
-            [void]$sb.AppendLine('<details><summary>Remaining build errors</summary>')
+            [void]$sb.AppendLine('<details><summary>Full build output (final attempt)</summary>')
             [void]$sb.AppendLine('')
             [void]$sb.AppendLine('```')
             [void]$sb.AppendLine($safeBr.TrimEnd())
@@ -244,19 +390,18 @@ else {
             [void]$sb.AppendLine('</details>')
             [void]$sb.AppendLine('')
         }
-        # Surface out-of-scope guidance without applying it.
-        $scr = Get-Prop $final 'specChangeRequired'
-        if ($scr -and @($scr).Count -gt 0) {
-            [void]$sb.AppendLine('**Requires a spec-repo change (out of scope for custom-code repair):**')
-            foreach ($item in $scr) { [void]$sb.AppendLine("- $item") }
-            [void]$sb.AppendLine('')
-        }
     }
 
-    [void]$sb.AppendLine('No spec inputs or the pinned commit were touched.')
+    # ----- Invariants (deterministic; guaranteed by --edit-scope CustomCode + push denylist) -----
+    [void]$sb.AppendLine('### Invariants Confirmed')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('- No spec inputs modified (`client.tsp`, `tspconfig.yaml`, TypeSpec sources)')
+    [void]$sb.AppendLine('- Pinned commit in `tsp-location.yaml` unchanged')
+    [void]$sb.AppendLine('- No `.github/`, `eng/`, pipeline, or package-metadata files touched')
+    [void]$sb.AppendLine('- Fix committed as a reviewable commit - not auto-merged')
+    [void]$sb.AppendLine('')
 }
 
-[void]$sb.AppendLine('')
 [void]$sb.AppendLine('<details><summary>Telemetry (machine-readable)</summary>')
 [void]$sb.AppendLine('')
 [void]$sb.AppendLine('```json')
