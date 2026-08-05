@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, string comment, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
             var comments = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default(ServiceAlertChangeStateContent);
             return await ChangeStateAsync(newState, comments, cancellationToken).ConfigureAwait(false);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="comment"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, string comment, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
             var comments = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default(ServiceAlertChangeStateContent);
             return ChangeState(newState, comments, cancellationToken);
