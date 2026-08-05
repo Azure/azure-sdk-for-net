@@ -355,6 +355,43 @@ public sealed class FileBackedReplayEventStreamTests
         Assert.DoesNotThrowAsync(async () => await registry2.GetOrCreateAsync("compact-live"));
     }
 
+    [Test]
+    public async Task WriterSelfHealsWhenCompactionLeftTheHandleClosed()
+    {
+        // Models the compaction move-failure: AtomicOverwrite disposes the long-lived append handle
+        // before the atomic replace, so if the move throws the handle is left closed. A subsequent
+        // emit must reopen it (the single-writer lock is still held) rather than permanently failing
+        // the stream. A real move failure can't be induced deterministically on Windows (the open
+        // write handle blocks any external move-blocking handle), so the post-failure state is
+        // reproduced directly by disposing and nulling the private handle.
+        var options = new EventStreamOptions();
+        options.UseFileBackedReplay(
+            _dir,
+            cursor: p => (int)p,
+            serializer: p => p.ToString()!,
+            deserializer: s => int.Parse(s));
+        var registry = new InMemoryEventStreamRegistry(options);
+
+        EventStream stream = await registry.GetOrCreateAsync("selfheal");
+        await stream.EmitAsync(1);
+
+        System.Reflection.FieldInfo field = stream.GetType().GetField(
+            "_data",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!;
+        Assert.That(field, Is.Not.Null, "expected private _data append handle field");
+        ((IDisposable)field.GetValue(stream)!).Dispose();
+        field.SetValue(stream, null);
+
+        // Without the self-heal this throws "The write handle for stream 'selfheal' is not open."
+        Assert.DoesNotThrowAsync(async () => await stream.EmitAsync(2, close: true));
+        ((IDisposable)stream).Dispose();
+
+        // Both events survived to disk and rehydrate.
+        var registry2 = new InMemoryEventStreamRegistry(options);
+        EventStream rehydrated = await registry2.GetOrCreateAsync("selfheal");
+        Assert.That(await rehydrated.GetLastCursorAsync(), Is.EqualTo(2));
+    }
+
     private sealed record TypedEvent(int Cursor, string Text);
 
     [Test]

@@ -348,11 +348,23 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             _data = null;
         }
 
-        File.Move(tempPath, _filePath, overwrite: true);
-
-        if (reopen)
+        try
         {
-            _data = OpenAppendHandle();
+            File.Move(tempPath, _filePath, overwrite: true);
+        }
+        finally
+        {
+            // Always restore a usable writer, even if the move threw (e.g. a transient sharing
+            // failure): on success the reopened handle points at the compacted file; on a failed
+            // move the original log is left intact, so it points at that. Without this a transient
+            // compaction failure would permanently disable the stream. Also delete any leftover
+            // temp file so a failed move can't orphan it (a successful move already consumed it).
+            if (reopen)
+            {
+                _data = OpenAppendHandle();
+            }
+
+            TryDeleteFile(tempPath);
         }
     }
 
@@ -438,6 +450,16 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
                 }
 
                 var bytes = Encoding.UTF8.GetBytes(sb.ToString());
+
+                // Self-heal: if a prior compaction's atomic replace failed to restore the writer,
+                // reopen it here (the single-writer lock is still held) rather than failing every
+                // subsequent emit. A null handle with no lock means the stream was deleted, so it
+                // stays null and the write below fails loud instead of resurrecting the file.
+                if (_data is null && _lock is not null)
+                {
+                    _data = OpenAppendHandle();
+                }
+
                 FileStream fs = _data
                     ?? throw new EventStreamException($"The write handle for stream '{Id}' is not open.");
                 fs.Write(bytes, 0, bytes.Length);
