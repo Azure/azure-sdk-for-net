@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             // Unable to determine the correct vote with no metrics.
             if (metrics == null || metrics.Length == 0)
             {
-                _logger.LogWarning($"No metrics available for Service Bus entity '{_entityPath}'. Voting to not scale.");
+                _logger.LogWarning("No metrics available for Service Bus entity '{EntityPath}'. Voting to not scale.", _entityPath);
                 return status;
             }
 
