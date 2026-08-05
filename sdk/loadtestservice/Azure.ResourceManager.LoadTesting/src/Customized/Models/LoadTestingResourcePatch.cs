@@ -13,3 +13,5 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public IDictionary<string, string> Tags { get; set; }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
