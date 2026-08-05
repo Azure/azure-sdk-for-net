@@ -149,14 +149,18 @@ Follow the checked-in skill **exactly** — it is the source of truth for the pr
 
 ## The engine in this environment
 
-The skill drives the shared **`azsdk_customized_code_update`** engine. In this workflow the engine is the **`azsdk` CLI** (installed onto PATH by the setup step), not the MCP server. Invoke it from bash for each repair attempt:
+The skill drives the shared **`azsdk_customized_code_update`** engine. In this workflow the engine is the **`azsdk` CLI** (installed onto PATH by the setup step), not the MCP server. Invoke it from bash for each repair attempt, and **capture each attempt's structured result as JSON** (the global `-o json` flag serializes the engine's `CustomizedCodeUpdateResponse` to stdout) into an attempt-numbered file under a results directory:
 
 ```bash
-azsdk tsp client customized-update \
+mkdir -p "$RUNNER_TEMP/repair-results"
+azsdk -o json tsp client customized-update \
   --edit-scope CustomCode \
   --package-path "<failing SDK package dir>" \
-  --customization-request "<the build errors / failure context>"
+  --customization-request "<the build errors / failure context>" \
+  > "$RUNNER_TEMP/repair-results/result-<n>.json"
 ```
+
+Use `result-1.json`, `result-2.json`, … one per attempt. These files are the **only** source the summary comment is rendered from (see Step 5) — do not hand-transcribe fields from them.
 
 `--edit-scope CustomCode` is custom-code-only: the engine regenerates from the pinned `tsp-location.yaml` commit, patches only custom (non-generated) code, and surfaces anything that needs a spec change as out of scope (`SpecChangeRequired`) instead of applying it. **Omit `--tsp-project-path`** (only needed for `SpecInputs`/`All` scope). Read the returned structured result (build success/failure + error code) to decide the next step exactly as the skill describes.
 
@@ -169,7 +173,15 @@ This workflow only repairs genuine **release-planner Auto SDK PRs**. Before buil
 - its **base branch is `main`**, and
 - its **head branch starts with `sdkauto/`**.
 
-The automatic (label) path is already gated on these by the workflow `if:`, but the manual `/repair-build` path is not — so **you must re-check them here**. If any condition fails, **stop immediately**: do not check out, build, or run the PR's code; post one `add-comment` explaining the PR is not an eligible Auto SDK PR, and end. This prevents running the repair agent against untrusted code.
+The automatic (label) path is already gated on these by the workflow `if:`, but the manual `/repair-build` path is not — so **you must re-check them here**. If any condition fails, **stop immediately**: do not check out, build, or run the PR's code. Render the ineligible summary comment deterministically —
+
+```bash
+pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
+  -Eligible:$false -Pr <pr-number> -HeadSha "<pr-head-sha>" \
+  -Repo "$GITHUB_REPOSITORY" -OutFile "$RUNNER_TEMP/repair-comment.md"
+```
+
+— then post the contents of `$RUNNER_TEMP/repair-comment.md` verbatim via `add-comment`, and end. This prevents running the repair agent against untrusted code.
 
 ## Operating constraints (non-negotiable)
 
@@ -183,8 +195,20 @@ The automatic (label) path is already gated on these by the workflow `if:`, but 
 
 ## Steps
 
-1. Identify the single failing SDK package path from the PR diff. Collect its build errors (build the changed package to capture them).
-2. Apply the `auto-build-repair` skill workflow: call the engine with `--edit-scope CustomCode`, the `--package-path`, and the build errors as `--customization-request`; re-invoke (idempotent) only while the error set keeps shrinking, up to `maxIterations`.
+1. Identify the single failing SDK package path from the PR diff. **Record the current PR head sha** (`git rev-parse HEAD`) as the pre-repair sha — the summary in Step 5 uses it to diff changed files. Collect the package's build errors (build the changed package to capture them).
+2. Apply the `auto-build-repair` skill workflow: call the engine with `--edit-scope CustomCode`, the `--package-path`, and the build errors as `--customization-request`, **redirecting each attempt's `-o json` output to `$RUNNER_TEMP/repair-results/result-<n>.json`**; re-invoke (idempotent) only while the error set keeps shrinking, up to `maxIterations`.
 3. Inspect each structured result. Stop on the skill's stop conditions (`SpecChangeRequired`, `RegenerateFailed` at the pinned commit, suspected generator bug, or `maxIterations` reached) — do not retry past them or escalate to a human prompt.
 4. **Commit the result to the PR branch** using the `push-to-pull-request-branch` safe output (custom-code edits + regenerated `Generated/`). If the only viable fix is a spec/decorator change, push nothing and report it as out of scope (requires a separate spec-repo PR).
-5. **Post one summary comment** with the `add-comment` safe output: classified build errors, files changed (generated-vs-custom split), iterations used, final build status (green, or the specific stop reason), and confirmation that no spec inputs or the pinned commit were touched. End the comment with `--generated by Copilot`.
+5. **Render the summary comment deterministically and post it verbatim.** Do **not** author the comment yourself — run the checked-in emitter, which builds the entire comment (classified build errors, files changed with a generated-vs-custom split, iterations, final result, and the machine-readable telemetry object) from the result files, `git`, and env only:
+
+   ```bash
+   pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
+     -ResultsDir "$RUNNER_TEMP/repair-results" \
+     -PackagePath "<failing SDK package dir>" \
+     -PreRepairSha "<pre-repair sha from Step 1>" \
+     -Pr <pr-number> -HeadSha "<pr-head-sha>" -Repo "$GITHUB_REPOSITORY" \
+     -MaxIterations <maxIterations> \
+     -OutFile "$RUNNER_TEMP/repair-comment.md"
+   ```
+
+   Then pass the **exact contents** of `$RUNNER_TEMP/repair-comment.md` as the `add-comment` body — unedited, unsummarized, unreordered. The emitter already appends `--generated by Copilot`. Emit this comment on **every** terminal outcome (repaired, still-failing/stop-condition, already-green) so no run silently degrades.

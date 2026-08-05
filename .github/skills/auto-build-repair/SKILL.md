@@ -85,8 +85,30 @@ Each call performs **one repair attempt**; the skill owns the iterate-until-gree
       - Still failing but the error set shrank and attempts remain (< `maxIterations`) → re-invoke (step 2) with the updated build errors; it is idempotent.
       - SpecChangeRequired / RegenerateFailed at the pinned commit / no further progress → STOP (see Stop Conditions).
 4. Never hand-edit to finish the job; if the tool cannot, it is a stop condition.
-5. Summarize the result (see below). Fixes land as reviewable commits — no auto-merge.
+5. Emit the deterministic PR summary comment (see the "Reporting" section below): capture each attempt's `result-<n>.json`, run `emit-repair-report.ps1`, and post its output verbatim via `add_comment`. Fixes land as reviewable commits — no auto-merge.
 ```
+
+## Reporting (deterministic — do NOT author the comment yourself)
+
+Every terminal state must leave **one structured PR summary comment**, and its structure must be **deterministic**. You do **not** write the comment prose or the metrics — a checked-in renderer does, from code-accessible sources only (the engine's structured results, `git`, and `$GITHUB_*` env). Your only reporting job is to **capture each attempt's structured result** and **run the renderer**, then post its output verbatim.
+
+1. **Capture structured results.** Invoke the engine so each attempt's `CustomizedCodeUpdateResponse` is written to `result-<n>.json` (attempt-numbered) in a results directory. From the CLI this is `azsdk -o json … > result-<n>.json` (see the workflow file); from the MCP tool, persist the returned JSON the same way. Never hand-transcribe fields.
+2. **Render.** Run [`emit-repair-report.ps1`](emit-repair-report.ps1) (co-located) pointing at the results directory. It derives status, classified build errors, files changed (generated-vs-custom via `git diff`), iterations, and the telemetry object, and writes the full comment markdown to a file.
+3. **Post verbatim.** Pass the rendered file's contents **unchanged** as the `add_comment` body. Do not edit, summarize, or re-order it.
+
+**The telemetry object** is a small, versioned JSON embedded in a collapsed `<details>` block, defined by [`telemetry-schema.v1.json`](telemetry-schema.v1.json) — the canonical contract, mirrored by CloudMine from the GitHub issues/comments stream. It carries only the fields needed to compute (or key the joins for) the success metrics:
+
+| Field | Source (never the model) |
+|-------|--------------------------|
+| `status`, `repaired_at` | engine `success` of the final `result-<n>.json` + wall clock on green |
+| classified errors (human section) | regex over engine `buildResult` |
+| files changed (human section) | `git diff --name-status` + `Generated/` path split |
+| iterations (human section) | count of `result-<n>.json` files |
+| `pr`, `head_sha`, `repo`, `run_id`, `eligible` | `$GITHUB_*` env + the eligibility gate |
+
+The object itself carries only the 8 primitives in [`telemetry-schema.v1.json`](telemetry-schema.v1.json) (`additionalProperties: false`); classified errors, files changed, and iteration count are rendered into the **human** section only.
+
+**Emit on every terminal state** — `repaired`, `failed`, `ineligible`, `skipped_already_green` — using the same renderer (only the data differs). Never skip the comment; a missing record corrupts the metrics denominator.
 
 ## Stop Conditions
 
