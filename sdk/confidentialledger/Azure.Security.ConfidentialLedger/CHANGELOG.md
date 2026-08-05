@@ -1,14 +1,18 @@
 # Release History
 
-## 1.4.1-beta.6 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added support for stable API version 2026-02-23.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Renamed several generated model and enum types in the .NET client to follow Azure SDK for .NET naming guidelines (C# only; the REST contract and other language SDKs are unchanged): `Bundle` → `LedgerBundle`, `Constitution` → `LedgerConstitution`, `Metadata` → `LedgerEndpointMetadata`, `Mode` → `LedgerEndpointMode`, `Role` → `LedgerRole`, `Collection` → `LedgerCollectionInfo`, and `UserDefinedFunctionExecutionResponse` → `UserDefinedFunctionExecution`.
 
 ## 1.4.1-beta.5 (2026-05-26)
 
