@@ -41,7 +41,6 @@ public partial class AzureFunctionDefinitionFunction
 [CodeGenType("WebSearchConfiguration")] public partial class WebSearchConfiguration { }
 [CodeGenType("WorkIQPreviewTool")] public partial class WorkIQPreviewTool { }
 
-/// <summary>
-///
-/// </summary>
+// Foward declaration of the base class to prevent the code generator from
+// "losing" the base class when generating the derived classes. The base class is defined in MemoryOutputItem.cs.
 public abstract partial class MemoryOutputItem { }

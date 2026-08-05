@@ -10,7 +10,7 @@ This release migrates the library from emitting its own copies of the OpenAI Res
 - The `ProjectResponsesClient` constructors accept `ProjectResponsesClientOptions`, including parameterless-options overloads so `new ProjectResponsesClient(projectEndpoint, tokenProvider)` resolves to a visible constructor without requiring an options argument.
 
 - Added distributed tracing support.
-- Added new object `ProjectCreateResponseOptions` with the `SessionId` property to allow getting response in specific session.
+- Added `SessionId` property to `CreateResponseOptions` allowing to get response in specific session.
 
 ### Breaking Changes
 - **Response items and tools are now the `OpenAI` SDK types.** This library no longer emits its own copies of the Responses object model; it consumes the types from the `OpenAI` library (2.12.0) directly. As a result:
