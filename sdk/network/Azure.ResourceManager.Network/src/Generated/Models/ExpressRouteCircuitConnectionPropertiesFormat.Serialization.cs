@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (Optional.IsDefined(Ipv6CircuitConnectionConfig))
+            if (Optional.IsDefined(IPv6CircuitConnectionConfig))
             {
                 writer.WritePropertyName("ipv6CircuitConnectionConfig"u8);
-                writer.WriteObjectValue(Ipv6CircuitConnectionConfig, options);
+                writer.WriteObjectValue(IPv6CircuitConnectionConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource peerExpressRouteCircuitPeering = default;
             string addressPrefix = default;
             string authorizationKey = default;
-            IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig = default;
+            IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig = default;
             CircuitConnectionStatus? circuitConnectionStatus = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(prop.Value, options);
+                    iPv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("circuitConnectionStatus"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network.Models
                 peerExpressRouteCircuitPeering,
                 addressPrefix,
                 authorizationKey,
-                ipv6CircuitConnectionConfig,
+                iPv6CircuitConnectionConfig,
                 circuitConnectionStatus,
                 provisioningState,
                 additionalBinaryDataProperties);

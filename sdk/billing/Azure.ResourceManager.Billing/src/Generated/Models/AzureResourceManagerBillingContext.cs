@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Models;
 
@@ -276,7 +275,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(ReservationSummary))]
     [ModelReaderWriterBuildable(typeof(ReservationSwapProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationUtilizationAggregates))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelList))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelProperties))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanOrderModelData))]
@@ -296,6 +294,7 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(SubscriptionPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionPolicyResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionRenewalTermDetails))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransactionListResult))]
     [ModelReaderWriterBuildable(typeof(TransactionPropertiesAzureCreditApplied))]
     [ModelReaderWriterBuildable(typeof(TransactionPropertiesConsumptionCommitmentDecremented))]
@@ -309,7 +308,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(TransferProperties))]
     [ModelReaderWriterBuildable(typeof(ValidateTransferListResponse))]
     [ModelReaderWriterBuildable(typeof(ValidateTransferResponseProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerBillingContext : ModelReaderWriterContext
     {
     }

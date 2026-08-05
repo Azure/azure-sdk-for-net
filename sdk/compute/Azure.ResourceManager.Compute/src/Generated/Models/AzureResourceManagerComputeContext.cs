@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -69,6 +68,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(ComputeApiEntityReference))]
     [ModelReaderWriterBuildable(typeof(ComputeApiError))]
     [ModelReaderWriterBuildable(typeof(ComputeApiErrorBase))]
+    [ModelReaderWriterBuildable(typeof(ComputeExternalHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ComputeGalleryPlatformAttribute))]
     [ModelReaderWriterBuildable(typeof(ComputePlan))]
     [ModelReaderWriterBuildable(typeof(ComputePrivateEndpointConnectionData))]
@@ -164,7 +164,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(EncryptionSettingsGroup))]
     [ModelReaderWriterBuildable(typeof(EventGridAndResourceGraph))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
-    [ModelReaderWriterBuildable(typeof(ExternalHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationCustomAction))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationCustomActionParameter))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationData))]
@@ -262,6 +261,9 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(ImageReference))]
     [ModelReaderWriterBuildable(typeof(ImageStorageProfile))]
     [ModelReaderWriterBuildable(typeof(ImageVersionSecurityProfile))]
+    [ModelReaderWriterBuildable(typeof(ImmutabilityPolicy))]
+    [ModelReaderWriterBuildable(typeof(ImmutabilityPolicyContent))]
+    [ModelReaderWriterBuildable(typeof(ImmutabilityPolicyLockContent))]
     [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(InstanceViewStatus))]
     [ModelReaderWriterBuildable(typeof(InterconnectBlockData))]
@@ -279,7 +281,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(KeyVaultKeyReference))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretReference))]
     [ModelReaderWriterBuildable(typeof(LastPatchInstallationSummary))]
-    [ModelReaderWriterBuildable(typeof(LifecycleHook))]
     [ModelReaderWriterBuildable(typeof(LifecycleHooksProfile))]
     [ModelReaderWriterBuildable(typeof(LinuxConfiguration))]
     [ModelReaderWriterBuildable(typeof(LinuxParameters))]
@@ -338,7 +339,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(ResourceSkuCosts))]
     [ModelReaderWriterBuildable(typeof(ResourceSkusResult))]
     [ModelReaderWriterBuildable(typeof(ResourceUriList))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestartRecoveryPolicy))]
     [ModelReaderWriterBuildable(typeof(RestorePointCollectionListResult))]
     [ModelReaderWriterBuildable(typeof(RestorePointCollectionProperties))]
@@ -507,8 +507,10 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIPConfiguration))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIPConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIPTag))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHook))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventData))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventPatch))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventResource))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventTarget))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetListOSUpgradeHistory))]
@@ -577,7 +579,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(VmImagesInEdgeZoneListResult))]
     [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventAdditionalContext))]
     [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventListResult))]
-    [ModelReaderWriterBuildable(typeof(VmScaleSetLifecycleHookEventProperties))]
     [ModelReaderWriterBuildable(typeof(VMScaleSetScaleOutInputProperties))]
     [ModelReaderWriterBuildable(typeof(WindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(WindowsParameters))]

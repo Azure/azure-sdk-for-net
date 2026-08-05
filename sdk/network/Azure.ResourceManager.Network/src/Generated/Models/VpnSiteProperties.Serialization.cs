@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("deviceProperties"u8);
                 writer.WriteObjectValue(DeviceProperties, options);
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(SiteKey))
             {

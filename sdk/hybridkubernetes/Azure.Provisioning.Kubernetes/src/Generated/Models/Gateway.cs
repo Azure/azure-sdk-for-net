@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Kubernetes
         {
             base.DefineProvisionableProperties();
             _isGatewayEnabled = DefineProperty<bool>(nameof(IsGatewayEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for Gateway that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

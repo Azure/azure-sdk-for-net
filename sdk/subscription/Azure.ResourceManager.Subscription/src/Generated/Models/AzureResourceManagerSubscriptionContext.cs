@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Subscription.Models;
 
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(EnabledSubscriptionId))]
     [ModelReaderWriterBuildable(typeof(PutAliasRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RenamedSubscriptionId))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceTenant))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasAdditionalProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasCreateOrUpdateContent))]
@@ -35,6 +33,7 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionName))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDirectoryContent))]
     [ModelReaderWriterBuildable(typeof(TargetDirectoryProperties))]
     [ModelReaderWriterBuildable(typeof(TargetDirectoryResultData))]
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(TenantPolicyData))]
     [ModelReaderWriterBuildable(typeof(TenantPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(TenantPolicyResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSubscriptionContext : ModelReaderWriterContext
     {
     }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
 
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.Support
     [ModelReaderWriterBuildable(typeof(ProblemClassificationsClassificationResult))]
     [ModelReaderWriterBuildable(typeof(ProblemClassificationsListResult))]
     [ModelReaderWriterBuildable(typeof(QuotaTicketDetails))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsent))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsentEnabled))]
     [ModelReaderWriterBuildable(typeof(ServiceProperties))]
@@ -68,12 +66,12 @@ namespace Azure.ResourceManager.Support
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubCommunicationResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubFileResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketsListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TechnicalTicketDetails))]
     [ModelReaderWriterBuildable(typeof(TenantFileWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(TenantSupportTicketResource))]
     [ModelReaderWriterBuildable(typeof(UpdateSupportTicket))]
     [ModelReaderWriterBuildable(typeof(UploadFileContent))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSupportContext : ModelReaderWriterContext
     {
     }

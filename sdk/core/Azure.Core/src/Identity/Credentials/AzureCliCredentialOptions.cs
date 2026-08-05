@@ -38,6 +38,12 @@ namespace Azure.Identity
         /// <summary>
         /// The subscription name or Id to use for authentication. This equates to the --subscription parameter in the Azure CLI.
         /// </summary>
+        /// <remarks>
+        /// The Azure CLI does not allow the <c>--subscription</c> and <c>--tenant</c> arguments to be specified together.
+        /// When a tenant is requested for a token — for example, one surfaced by challenge-based authentication — that tenant
+        /// is authoritative for the issued token and takes precedence, so this <see cref="Subscription"/> value is not passed
+        /// to the CLI for that request. It is used only when no tenant is requested.
+        /// </remarks>
         public string Subscription
         {
             get => _subscription;

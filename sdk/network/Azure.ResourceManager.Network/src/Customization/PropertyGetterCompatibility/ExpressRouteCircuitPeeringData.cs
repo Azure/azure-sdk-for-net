@@ -9,11 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCircuitPeeringData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String GatewayManagerETag { get; set; }
-        /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.Models.IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get; set; }
-
-        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource RouteFilter
         {
             get => RouteFilterId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = RouteFilterId };

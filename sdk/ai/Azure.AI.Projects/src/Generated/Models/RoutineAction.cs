@@ -4,13 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a routine action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InvokeAgentResponsesApiRoutineAction"/> and <see cref="InvokeAgentInvocationsApiRoutineAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentResponsesApiRoutineAction"/> and <see cref="AgentInvocationsApiRoutineAction"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class RoutineAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,7 +20,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="RoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
-        private protected RoutineAction(RoutineActionType @type)
+        private protected RoutineAction(RoutineActionKind @type)
         {
             Type = @type;
         }
@@ -26,13 +28,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="RoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineAction(RoutineActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineAction(RoutineActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The action type. </summary>
-        internal RoutineActionType Type { get; set; }
+        internal RoutineActionKind Type { get; set; }
     }
 }

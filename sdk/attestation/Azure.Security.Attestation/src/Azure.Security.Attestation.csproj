@@ -9,8 +9,6 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <!-- CS0618: generated AttestationResult serialization references its own [Obsolete] legacy claim members. -->
-    <NoWarn>$(NoWarn);AZC0035;CS0618</NoWarn>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>

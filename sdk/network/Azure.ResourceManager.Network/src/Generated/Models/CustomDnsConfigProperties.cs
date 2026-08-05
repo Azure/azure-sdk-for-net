@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="CustomDnsConfigProperties"/>. </summary>
         public CustomDnsConfigProperties()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomDnsConfigProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         internal CustomDnsConfigProperties(string fqdn, IList<string> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fqdn = fqdn;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of private ip addresses of the private endpoint. </summary>
         [WirePath("ipAddresses")]
-        public IList<string> IpAddresses { get; }
+        public IList<string> IPAddresses { get; }
     }
 }

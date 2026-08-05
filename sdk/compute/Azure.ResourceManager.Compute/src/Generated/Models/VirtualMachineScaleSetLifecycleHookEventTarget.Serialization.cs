@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ComputeApiEntityReference resource = default;
-            LifecycleHookActionState? actionState = default;
+            VirtualMachineScaleSetLifecycleHookActionState? actionState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    actionState = new LifecycleHookActionState(prop.Value.GetString());
+                    actionState = new VirtualMachineScaleSetLifecycleHookActionState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Kusto
 {
+    /// <summary></summary>
     public partial class SandboxCustomImageResource : IJsonModel<SandboxCustomImageData>
     {
-        private static SandboxCustomImageData s_dataDeserializationInstance;
-        private static SandboxCustomImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SandboxCustomImageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SandboxCustomImageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SandboxCustomImageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SandboxCustomImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SandboxCustomImageData>)Data).Write(writer, options);
 
-        SandboxCustomImageData IJsonModel<SandboxCustomImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SandboxCustomImageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SandboxCustomImageData IJsonModel<SandboxCustomImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SandboxCustomImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SandboxCustomImageData>(Data, options, AzureResourceManagerKustoContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SandboxCustomImageData IPersistableModel<SandboxCustomImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SandboxCustomImageData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<SandboxCustomImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SandboxCustomImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SandboxCustomImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

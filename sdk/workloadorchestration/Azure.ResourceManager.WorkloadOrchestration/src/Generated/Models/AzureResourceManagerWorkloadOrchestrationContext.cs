@@ -147,6 +147,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     [ModelReaderWriterBuildable(typeof(SolutionTemplateVersionListResult))]
     [ModelReaderWriterBuildable(typeof(SolutionVersionListResult))]
     [ModelReaderWriterBuildable(typeof(SolutionVersionSnapshot))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetComponentStatus))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TaskErrorAction))]
@@ -156,7 +157,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     [ModelReaderWriterBuildable(typeof(UpdateExternalValidationStatusContent))]
     [ModelReaderWriterBuildable(typeof(WorkflowListResult))]
     [ModelReaderWriterBuildable(typeof(WorkflowVersionListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerWorkloadOrchestrationContext : ModelReaderWriterContext
     {
     }

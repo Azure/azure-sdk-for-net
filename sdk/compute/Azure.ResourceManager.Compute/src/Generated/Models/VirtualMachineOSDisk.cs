@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the OS disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the os disk is retained after VM is deleted. The default value is set to <b>Detach</b>. For an ephemeral OS Disk, the default value is set to <b>Delete</b>. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, StorageFaultDomainAlignmentType? storageFaultDomainAlignment, VirtualMachineManagedDisk managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment, VirtualMachineManagedDisk managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary> Specifies the storage fault domain alignment type for the disk. </summary>
-        public StorageFaultDomainAlignmentType? StorageFaultDomainAlignment { get; set; }
+        public ComputeStorageFaultDomainAlignmentType? StorageFaultDomainAlignment { get; set; }
 
         /// <summary> The managed disk parameters. </summary>
         public VirtualMachineManagedDisk ManagedDisk { get; set; }

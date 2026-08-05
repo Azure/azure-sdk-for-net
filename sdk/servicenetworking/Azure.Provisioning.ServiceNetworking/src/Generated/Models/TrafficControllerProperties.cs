@@ -119,6 +119,10 @@ namespace Azure.Provisioning.ServiceNetworking
             _securityPolicies = DefineListProperty<SubResource>(nameof(SecurityPolicies), new string[] { "securityPolicies" }, isOutput: true);
             _securityPolicyConfigurations = DefineModelProperty<SecurityPolicyConfigurations>(nameof(SecurityPolicyConfigurations), new string[] { "securityPolicyConfigurations" });
             _trafficControllerProvisioningState = DefineProperty<ServiceNetworkingProvisioningState>(nameof(TrafficControllerProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficControllerProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

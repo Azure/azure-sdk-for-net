@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("publicIPAddressVersion"u8);
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IpConfiguration))
+            if (options.Format != "W" && Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue(IpConfiguration, options);
+                writer.WriteObjectValue(IPConfiguration, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
@@ -99,20 +99,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ddosSettings"u8);
                 writer.WriteObjectValue(DdosSettings, options);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (IPTag item in IpTags)
+                foreach (IPTag item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(PublicIPPrefix))
             {

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Options for managing data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobOptions"/>, <see cref="TracesDataGenerationJobOptions"/>, and <see cref="ToolUseFineTuningDataGenerationJobOptions"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobOptions"/>, <see cref="TracesDataGenerationJobOptions"/>, <see cref="TaskGenerationDataGenerationJobOptions"/>, and <see cref="ToolUseFineTuningDataGenerationJobOptions"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataGenerationJobOptions))]
     public abstract partial class DataGenerationJobOptions : IJsonModel<DataGenerationJobOptions>
@@ -142,6 +142,8 @@ namespace Azure.AI.Projects
                         return SimpleQnADataGenerationJobOptions.DeserializeSimpleQnADataGenerationJobOptions(element, options);
                     case "traces":
                         return TracesDataGenerationJobOptions.DeserializeTracesDataGenerationJobOptions(element, options);
+                    case "task_generation":
+                        return TaskGenerationDataGenerationJobOptions.DeserializeTaskGenerationDataGenerationJobOptions(element, options);
                     case "tool_use":
                         return ToolUseFineTuningDataGenerationJobOptions.DeserializeToolUseFineTuningDataGenerationJobOptions(element, options);
                 }

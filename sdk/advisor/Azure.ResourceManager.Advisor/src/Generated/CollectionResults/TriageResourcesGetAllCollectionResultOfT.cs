@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Advisor
                     yield break;
                 }
                 AdvisorTriageListResult result = AdvisorTriageListResult.FromResponse(response);
-                yield return Page<AdvisorTriageData>.FromValues((IReadOnlyList<AdvisorTriageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AdvisorTriageData>.FromValues((IReadOnlyList<AdvisorTriageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

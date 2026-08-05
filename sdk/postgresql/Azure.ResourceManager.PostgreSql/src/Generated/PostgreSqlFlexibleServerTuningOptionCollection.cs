@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(PostgreSqlFlexibleServerTuningOptionResource.ResourceType, out string postgreSqlFlexibleServerTuningOptionApiVersion);
             _tuningOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerTuningOptionResource.ResourceType.Namespace, Diagnostics);
-            _tuningOptionsRestClient = new TuningOptions(_tuningOptionsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerTuningOptionApiVersion ?? "2026-04-01-preview");
+            _tuningOptionsRestClient = new TuningOptions(_tuningOptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerTuningOptionApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

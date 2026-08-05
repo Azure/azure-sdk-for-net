@@ -17,7 +17,7 @@ namespace Azure.AI.Projects
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateCreateOrUpdateRoutineRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateOrUpdateRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -61,7 +61,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateEnableRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateEnableRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDisableRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDisableRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDeleteRoutineRequest(string routineName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDeleteRequest(string routineName, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -203,7 +203,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDispatchAsyncRoutineRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDispatchRequest(string routineName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

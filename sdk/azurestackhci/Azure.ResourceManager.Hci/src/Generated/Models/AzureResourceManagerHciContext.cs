@@ -340,6 +340,7 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(SwitchModeGpuJobProperties))]
     [ModelReaderWriterBuildable(typeof(SyncConfigurationJobProperties))]
     [ModelReaderWriterBuildable(typeof(SyncConfigurationNetworkAdapterJobProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDeviceConfiguration))]
     [ModelReaderWriterBuildable(typeof(UnknownClusterJobProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownEdgeDeviceJob))]
@@ -383,7 +384,6 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(WifiConfigurationReportedProperties))]
     [ModelReaderWriterBuildable(typeof(WifiSecret))]
     [ModelReaderWriterBuildable(typeof(WorkloadDetails))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHciContext : ModelReaderWriterContext
     {
     }

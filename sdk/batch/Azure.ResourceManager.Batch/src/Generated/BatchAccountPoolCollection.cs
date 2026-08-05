@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(BatchAccountPoolResource.ResourceType, out string batchAccountPoolApiVersion);
             _poolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchAccountPoolResource.ResourceType.Namespace, Diagnostics);
-            _poolRestClient = new Pool(_poolClientDiagnostics, Pipeline, Endpoint, batchAccountPoolApiVersion ?? "2025-06-01");
+            _poolRestClient = new Pool(_poolClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, batchAccountPoolApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

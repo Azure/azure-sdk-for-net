@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal ProcessThreadInfo(WebAppProcessThreadInfo webAppProcessThreadInfo)
         {
             Identifier = webAppProcessThreadInfo.Properties.Id;
-            Href = webAppProcessThreadInfo.Properties.Href.AbsolutePath;
+            Href = webAppProcessThreadInfo.Properties.Href?.AbsolutePath;
             Process = default;
             StartAddress = default;
             CurrentPriority = default;

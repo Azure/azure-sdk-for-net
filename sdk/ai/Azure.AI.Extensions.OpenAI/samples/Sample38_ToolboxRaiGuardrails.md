@@ -16,16 +16,16 @@ AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentT
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolBoxWithRAI_Sync
-ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
+MCPToolboxTool mcp = new(serverLabel: "api-specs")
+{
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
 ToolboxPolicies raiPolicies = new()
 {
     RaiConfig = new(raiPolicyName)
 };
-ToolboxVersion toolBox = toolboxClient.CreateToolboxVersion(
+ToolboxVersion toolBox = toolboxClient.CreateVersion(
     name: "myToolbox",
     tools: [mcp],
     policies: raiPolicies,
@@ -35,16 +35,16 @@ ToolboxVersion toolBox = toolboxClient.CreateToolboxVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolBoxWithRAI_Async
-ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
+MCPToolboxTool mcp = new(serverLabel: "api-specs")
+{
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
 ToolboxPolicies raiPolicies = new()
 {
     RaiConfig = new(raiPolicyName)
 };
-ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
     name: "myToolbox",
     tools: [mcp],
     policies: raiPolicies,
@@ -200,12 +200,12 @@ Console.WriteLine(latestResponse.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ToolBoxWithRAI_Sync
-toolboxClient.DeleteToolbox(name: toolBox.Name);
+toolboxClient.Delete(name: toolBox.Name);
 projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ToolBoxWithRAI_Async
-await toolboxClient.DeleteToolboxAsync(name: toolBox.Name);
+await toolboxClient.DeleteAsync(name: toolBox.Name);
 await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

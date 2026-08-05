@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Policy.Models;
 
@@ -80,14 +79,13 @@ namespace Azure.ResourceManager.Resources.Policy
     [ModelReaderWriterBuildable(typeof(PolicyVariableProperties))]
     [ModelReaderWriterBuildable(typeof(PolicyVariableValueColumnValue))]
     [ModelReaderWriterBuildable(typeof(PolicyVariableValueProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VariableData))]
     [ModelReaderWriterBuildable(typeof(VariableListResult))]
     [ModelReaderWriterBuildable(typeof(VariableResource))]
     [ModelReaderWriterBuildable(typeof(VariableValueData))]
     [ModelReaderWriterBuildable(typeof(VariableValueListResult))]
     [ModelReaderWriterBuildable(typeof(VariableValueResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourcesPolicyContext : ModelReaderWriterContext
     {
     }

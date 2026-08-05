@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedDatabaseRestoreDetailResource.ResourceType, out string managedDatabaseRestoreDetailApiVersion);
             _managedDatabaseRestoreDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseRestoreDetailResource.ResourceType.Namespace, Diagnostics);
-            _managedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetails(_managedDatabaseRestoreDetailsClientDiagnostics, Pipeline, Endpoint, managedDatabaseRestoreDetailApiVersion ?? "2025-02-01-preview");
+            _managedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetails(_managedDatabaseRestoreDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseRestoreDetailApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

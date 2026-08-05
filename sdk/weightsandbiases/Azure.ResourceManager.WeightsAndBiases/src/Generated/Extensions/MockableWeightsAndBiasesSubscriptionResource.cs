@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
 
         private ClientDiagnostics InstancesClientDiagnostics => _instancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Instances InstancesRestClient => _instancesRestClient ??= new Instances(InstancesClientDiagnostics, Pipeline, Endpoint, "2024-09-18");
+        private Instances InstancesRestClient => _instancesRestClient ??= new Instances(InstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-18");
 
         /// <summary>
         /// List InstanceResource resources by subscription ID

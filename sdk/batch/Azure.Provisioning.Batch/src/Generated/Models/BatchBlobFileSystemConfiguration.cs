@@ -160,6 +160,10 @@ namespace Azure.Provisioning.Batch
             _blobfuseOptions = DefineProperty<string>(nameof(BlobfuseOptions), new string[] { "blobfuseOptions" });
             _relativeMountPath = DefineProperty<string>(nameof(RelativeMountPath), new string[] { "relativeMountPath" }, isRequired: true);
             _identity = DefineModelProperty<ComputeNodeIdentityReference>(nameof(Identity), new string[] { "identityReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchBlobFileSystemConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

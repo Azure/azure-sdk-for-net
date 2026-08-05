@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationRuleCollections = new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>();
             NatRuleCollections = new ChangeTrackingList<AzureFirewallNatRuleCollectionData>();
             NetworkRuleCollections = new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>();
-            IpConfigurations = new ChangeTrackingList<AzureFirewallIPConfiguration>();
-            IpGroups = new ChangeTrackingList<AzureFirewallIPGroups>();
+            IPConfigurations = new ChangeTrackingList<AzureFirewallIPConfiguration>();
+            IPGroups = new ChangeTrackingList<AzureFirewallIPGroups>();
             AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="natRuleCollections"> Collection of NAT rule collections used by Azure Firewall. </param>
         /// <param name="networkRuleCollections"> Collection of network rule collections used by Azure Firewall. </param>
         /// <param name="ipConfigurations"> IP configuration of the Azure Firewall resource. </param>
-        /// <param name="managementIpConfiguration"> IP configuration of the Azure Firewall used for management traffic. </param>
+        /// <param name="managementIPConfiguration"> IP configuration of the Azure Firewall used for management traffic. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall resource. </param>
         /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
         /// <param name="virtualHub"> The virtualHub to which the firewall belongs. </param>
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
         /// <param name="afcConfiguration"> AFC configuration for the Azure Firewall. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallPropertiesFormat(IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIpConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, NetworkSubResource virtualHub, NetworkSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, AfcConfiguration afcConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFirewallPropertiesFormat(IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, NetworkSubResource virtualHub, NetworkSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, AfcConfiguration afcConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationRuleCollections = applicationRuleCollections;
             NatRuleCollections = natRuleCollections;
             NetworkRuleCollections = networkRuleCollections;
-            IpConfigurations = ipConfigurations;
-            ManagementIpConfiguration = managementIpConfiguration;
+            IPConfigurations = ipConfigurations;
+            ManagementIPConfiguration = managementIPConfiguration;
             ProvisioningState = provisioningState;
             ThreatIntelMode = threatIntelMode;
             VirtualHub = virtualHub;
             FirewallPolicy = firewallPolicy;
             HubIPAddresses = hubIPAddresses;
-            IpGroups = ipGroups;
+            IPGroups = ipGroups;
             Sku = sku;
             AdditionalProperties = additionalProperties;
             AutoscaleConfiguration = autoscaleConfiguration;
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP configuration of the Azure Firewall resource. </summary>
         [WirePath("ipConfigurations")]
-        public IList<AzureFirewallIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<AzureFirewallIPConfiguration>();
+        public IList<AzureFirewallIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<AzureFirewallIPConfiguration>();
 
         /// <summary> IP configuration of the Azure Firewall used for management traffic. </summary>
         [WirePath("managementIpConfiguration")]
-        public AzureFirewallIPConfiguration ManagementIpConfiguration { get; set; }
+        public AzureFirewallIPConfiguration ManagementIPConfiguration { get; set; }
 
         /// <summary> The provisioning state of the Azure firewall resource. </summary>
         [WirePath("provisioningState")]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IpGroups associated with AzureFirewall. </summary>
         [WirePath("ipGroups")]
-        public IReadOnlyList<AzureFirewallIPGroups> IpGroups { get; } = new ChangeTrackingList<AzureFirewallIPGroups>();
+        public IReadOnlyList<AzureFirewallIPGroups> IPGroups { get; } = new ChangeTrackingList<AzureFirewallIPGroups>();
 
         /// <summary> The Azure Firewall Resource SKU. </summary>
         [WirePath("sku")]

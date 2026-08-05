@@ -129,12 +129,14 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(ExperimentProperties))]
     [ModelReaderWriterBuildable(typeof(ExternalResource))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(PrivateAccessListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScenarioConfigurationListResult))]
     [ModelReaderWriterBuildable(typeof(ScenarioListResult))]
     [ModelReaderWriterBuildable(typeof(ScenarioRunListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TargetTypeListResult))]
     [ModelReaderWriterBuildable(typeof(TargetTypeProperties))]
@@ -143,7 +145,6 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(UnknownChaosTargetSelector))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerChaosContext : ModelReaderWriterContext
     {
     }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Models;
 
@@ -68,11 +67,10 @@ namespace Azure.ResourceManager.Advisor
     [ModelReaderWriterBuildable(typeof(RecommendationReview))]
     [ModelReaderWriterBuildable(typeof(RecommendationShortDescription))]
     [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SuppressionContractListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrackedRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(WorkloadListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAdvisorContext : ModelReaderWriterContext
     {
     }

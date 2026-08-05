@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -19,18 +20,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
-        /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
+        /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="compute"> Compute target for batch inference operation. </param>
-        /// <param name="deploymentConfiguration">
-        /// Properties relevant to different deployment types.
-        /// Please note <see cref="BatchDeploymentConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
-        /// </param>
+        /// <param name="deploymentConfiguration"> Properties relevant to different deployment types. </param>
         /// <param name="errorThreshold">
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
@@ -38,55 +35,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For TabularDataset, this value is the count of record failures.
         /// If set to -1 (the lower bound), all failures during batch inference will be ignored.
         /// </param>
-        /// <param name="retrySettings">
-        /// Retry Settings for the batch inference operation.
-        /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// <param name="loggingLevel">
+        /// Log verbosity for batch inferencing.
+        /// Increasing verbosity order for logging is : Warning, Info and Debug.
+        /// The default value is Info.
         /// </param>
+        /// <param name="maxConcurrencyPerInstance"> Indicates maximum number of parallelism per instance. </param>
         /// <param name="miniBatchSize">
         /// Size of the mini-batch passed to each batch invocation.
         /// For FileDataset, this is the number of files per mini-batch.
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
         /// </param>
-        /// <param name="loggingLevel"> Logging level for batch inference operation. </param>
-        /// <param name="model">
-        /// Reference to the model asset for the endpoint deployment.
-        /// Please note <see cref="MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
-        /// </param>
-        /// <param name="maxConcurrencyPerInstance"> Indicates maximum number of parallelism per instance. </param>
-        /// <param name="outputAction"> Indicates how the output will be organized. </param>
+        /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
+        /// <param name="outputAction"> Enum to determine how batch inferencing will handle output. </param>
         /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
+        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
         /// <param name="resources">
         /// Indicates compute configuration for the job.
         /// If not provided, will default to the defaults defined in ResourceConfiguration.
         /// </param>
-        /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
-        internal MachineLearningBatchDeploymentProperties(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData, string compute, BatchDeploymentConfiguration deploymentConfiguration, int? errorThreshold, MachineLearningBatchRetrySettings retrySettings, long? miniBatchSize, MachineLearningBatchLoggingLevel? loggingLevel, MachineLearningAssetReferenceBase model, int? maxConcurrencyPerInstance, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentResourceConfiguration resources, MachineLearningDeploymentProvisioningState? provisioningState) : base(description, properties, codeConfiguration, environmentId, environmentVariables, serializedAdditionalRawData)
+        /// <param name="retrySettings">
+        /// Retry Settings for the batch inference operation.
+        /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// </param>
+        internal MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties, string compute, BatchDeploymentConfiguration deploymentConfiguration, int? errorThreshold, MachineLearningBatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningDeploymentResourceConfiguration resources, MachineLearningBatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties, additionalBinaryDataProperties)
         {
             Compute = compute;
             DeploymentConfiguration = deploymentConfiguration;
             ErrorThreshold = errorThreshold;
-            RetrySettings = retrySettings;
-            MiniBatchSize = miniBatchSize;
             LoggingLevel = loggingLevel;
-            Model = model;
             MaxConcurrencyPerInstance = maxConcurrencyPerInstance;
+            MiniBatchSize = miniBatchSize;
+            Model = model;
             OutputAction = outputAction;
             OutputFileName = outputFileName;
-            Resources = resources;
             ProvisioningState = provisioningState;
+            Resources = resources;
+            RetrySettings = retrySettings;
         }
 
         /// <summary> Compute target for batch inference operation. </summary>
         [WirePath("compute")]
         public string Compute { get; set; }
-        /// <summary>
-        /// Properties relevant to different deployment types.
-        /// Please note <see cref="BatchDeploymentConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
-        /// </summary>
+
+        /// <summary> Properties relevant to different deployment types. </summary>
         [WirePath("deploymentConfiguration")]
         public BatchDeploymentConfiguration DeploymentConfiguration { get; set; }
+
         /// <summary>
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
@@ -96,12 +91,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         [WirePath("errorThreshold")]
         public int? ErrorThreshold { get; set; }
+
         /// <summary>
-        /// Retry Settings for the batch inference operation.
-        /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// Log verbosity for batch inferencing.
+        /// Increasing verbosity order for logging is : Warning, Info and Debug.
+        /// The default value is Info.
         /// </summary>
-        [WirePath("retrySettings")]
-        public MachineLearningBatchRetrySettings RetrySettings { get; set; }
+        [WirePath("loggingLevel")]
+        public MachineLearningBatchLoggingLevel? LoggingLevel { get; set; }
+
+        /// <summary> Indicates maximum number of parallelism per instance. </summary>
+        [WirePath("maxConcurrencyPerInstance")]
+        public int? MaxConcurrencyPerInstance { get; set; }
+
         /// <summary>
         /// Size of the mini-batch passed to each batch invocation.
         /// For FileDataset, this is the number of files per mini-batch.
@@ -109,33 +111,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         [WirePath("miniBatchSize")]
         public long? MiniBatchSize { get; set; }
-        /// <summary> Logging level for batch inference operation. </summary>
-        [WirePath("loggingLevel")]
-        public MachineLearningBatchLoggingLevel? LoggingLevel { get; set; }
-        /// <summary>
-        /// Reference to the model asset for the endpoint deployment.
-        /// Please note <see cref="MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
-        /// </summary>
+
+        /// <summary> Reference to the model asset for the endpoint deployment. </summary>
         [WirePath("model")]
         public MachineLearningAssetReferenceBase Model { get; set; }
-        /// <summary> Indicates maximum number of parallelism per instance. </summary>
-        [WirePath("maxConcurrencyPerInstance")]
-        public int? MaxConcurrencyPerInstance { get; set; }
-        /// <summary> Indicates how the output will be organized. </summary>
+
+        /// <summary> Enum to determine how batch inferencing will handle output. </summary>
         [WirePath("outputAction")]
         public MachineLearningBatchOutputAction? OutputAction { get; set; }
+
         /// <summary> Customized output file name for append_row output action. </summary>
         [WirePath("outputFileName")]
         public string OutputFileName { get; set; }
+
+        /// <summary> Provisioning state for the endpoint deployment. </summary>
+        [WirePath("provisioningState")]
+        public MachineLearningDeploymentProvisioningState? ProvisioningState { get; }
+
         /// <summary>
         /// Indicates compute configuration for the job.
         /// If not provided, will default to the defaults defined in ResourceConfiguration.
         /// </summary>
         [WirePath("resources")]
         public MachineLearningDeploymentResourceConfiguration Resources { get; set; }
-        /// <summary> Provisioning state for the endpoint deployment. </summary>
-        [WirePath("provisioningState")]
-        public MachineLearningDeploymentProvisioningState? ProvisioningState { get; }
+
+        /// <summary>
+        /// Retry Settings for the batch inference operation.
+        /// If not provided, will default to the defaults defined in BatchRetrySettings.
+        /// </summary>
+        [WirePath("retrySettings")]
+        public MachineLearningBatchRetrySettings RetrySettings { get; set; }
     }
 }

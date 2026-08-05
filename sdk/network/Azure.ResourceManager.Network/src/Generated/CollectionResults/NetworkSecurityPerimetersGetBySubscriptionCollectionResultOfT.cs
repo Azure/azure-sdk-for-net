@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NetworkSecurityPerimeterListResult result = NetworkSecurityPerimeterListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkSecurityPerimeterData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

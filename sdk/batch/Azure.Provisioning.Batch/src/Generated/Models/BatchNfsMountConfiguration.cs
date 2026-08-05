@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Batch
             _source = DefineProperty<string>(nameof(Source), new string[] { "source" }, isRequired: true);
             _relativeMountPath = DefineProperty<string>(nameof(RelativeMountPath), new string[] { "relativeMountPath" }, isRequired: true);
             _mountOptions = DefineProperty<string>(nameof(MountOptions), new string[] { "mountOptions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchNfsMountConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

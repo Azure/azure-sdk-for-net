@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscription update details. </summary>
     public partial class ApiManagementSubscriptionPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
         public ApiManagementSubscriptionPatch()
@@ -51,56 +23,178 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
-        /// <param name="ownerId"> User identifier path: /users/{userId}. </param>
-        /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
-        /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="displayName"> Subscription name. </param>
-        /// <param name="primaryKey"> Primary subscription key. </param>
-        /// <param name="secondaryKey"> Secondary subscription key. </param>
-        /// <param name="state"> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
-        /// <param name="stateComment"> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </param>
-        /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementSubscriptionPatch(string ownerId, string scope, DateTimeOffset? expireOn, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Subscription Update contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSubscriptionPatch(SubscriptionUpdateParameterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OwnerId = ownerId;
-            Scope = scope;
-            ExpireOn = expireOn;
-            DisplayName = displayName;
-            PrimaryKey = primaryKey;
-            SecondaryKey = secondaryKey;
-            State = state;
-            StateComment = stateComment;
-            AllowTracing = allowTracing;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Subscription Update contract properties. </summary>
+        [WirePath("properties")]
+        internal SubscriptionUpdateParameterProperties Properties { get; set; }
 
         /// <summary> User identifier path: /users/{userId}. </summary>
         [WirePath("properties.ownerId")]
-        public string OwnerId { get; set; }
+        public string OwnerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OwnerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.OwnerId = value;
+            }
+        }
+
         /// <summary> Scope like /products/{productId} or /apis or /apis/{apiId}. </summary>
         [WirePath("properties.scope")]
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.Scope = value;
+            }
+        }
+
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.expirationDate")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.ExpireOn = value;
+            }
+        }
+
         /// <summary> Subscription name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Primary subscription key. </summary>
         [WirePath("properties.primaryKey")]
-        public string PrimaryKey { get; set; }
+        public string PrimaryKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.PrimaryKey = value;
+            }
+        }
+
         /// <summary> Secondary subscription key. </summary>
         [WirePath("properties.secondaryKey")]
-        public string SecondaryKey { get; set; }
-        /// <summary> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
+        public string SecondaryKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.SecondaryKey = value;
+            }
+        }
+
+        /// <summary> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
         [WirePath("properties.state")]
-        public SubscriptionState? State { get; set; }
+        public SubscriptionState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </summary>
         [WirePath("properties.stateComment")]
-        public string StateComment { get; set; }
+        public string StateComment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StateComment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.StateComment = value;
+            }
+        }
+
         /// <summary> Determines whether tracing can be enabled. </summary>
         [WirePath("properties.allowTracing")]
-        public bool? AllowTracing { get; set; }
+        public bool? AllowTracing
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowTracing;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubscriptionUpdateParameterProperties();
+                }
+                Properties.AllowTracing = value;
+            }
+        }
     }
 }

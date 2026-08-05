@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             VirtualNetwork = virtualNetwork;
             Subnet = subnet;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
             InboundNatRulesPortMapping = inboundNatRulesPortMapping;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
 
         /// <summary> Reference to IP address defined in network interfaces. </summary>
         [WirePath("networkInterfaceIPConfiguration")]

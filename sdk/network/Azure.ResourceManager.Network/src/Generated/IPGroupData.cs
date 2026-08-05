@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>
         [WirePath("properties.ipAddresses")]
-        public IList<string> IpAddresses
+        public IList<string> IPAddresses
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new IpGroupPropertiesFormat();
                 }
-                return Properties.IpAddresses;
+                return Properties.IPAddresses;
             }
         }
     }

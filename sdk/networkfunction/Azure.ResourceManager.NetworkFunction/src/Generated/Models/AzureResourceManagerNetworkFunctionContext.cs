@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -30,7 +29,6 @@ namespace Azure.ResourceManager.NetworkFunction
     [ModelReaderWriterBuildable(typeof(IngestionPolicyPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(IngestionSourcesPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(ResourceReference))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagsObject))]

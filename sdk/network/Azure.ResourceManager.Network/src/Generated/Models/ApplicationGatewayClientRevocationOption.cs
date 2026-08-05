@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> None. </summary>
         private const string NoneValue = "None";
         /// <summary> OCSP. </summary>
-        private const string OCSPValue = "OCSP";
+        private const string OcspValue = "OCSP";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientRevocationOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayClientRevocationOption None { get; } = new ApplicationGatewayClientRevocationOption(NoneValue);
 
         /// <summary> OCSP. </summary>
-        public static ApplicationGatewayClientRevocationOption OCSP { get; } = new ApplicationGatewayClientRevocationOption(OCSPValue);
+        public static ApplicationGatewayClientRevocationOption Ocsp { get; } = new ApplicationGatewayClientRevocationOption(OcspValue);
 
         /// <summary> Determines if two <see cref="ApplicationGatewayClientRevocationOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

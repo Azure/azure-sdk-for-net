@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(ResourceType, out string relayHybridConnectionApiVersion);
             _hybridConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
-            _hybridConnectionsRestClient = new HybridConnections(_hybridConnectionsClientDiagnostics, Pipeline, Endpoint, relayHybridConnectionApiVersion ?? "2024-01-01");
+            _hybridConnectionsRestClient = new HybridConnections(_hybridConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayHybridConnectionApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 

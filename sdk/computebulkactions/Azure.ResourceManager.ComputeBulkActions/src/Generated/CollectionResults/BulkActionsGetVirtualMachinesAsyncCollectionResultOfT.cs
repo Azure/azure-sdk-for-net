@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ComputeBulkActions
                     yield break;
                 }
                 VirtualMachineListResult result = VirtualMachineListResult.FromResponse(response);
-                yield return Page<BulkActionVirtualMachineResult>.FromValues((IReadOnlyList<BulkActionVirtualMachineResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BulkActionVirtualMachineResult>.FromValues((IReadOnlyList<BulkActionVirtualMachineResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

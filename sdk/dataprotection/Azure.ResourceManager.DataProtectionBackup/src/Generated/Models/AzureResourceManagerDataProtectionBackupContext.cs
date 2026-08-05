@@ -177,6 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(SourceLifeCycle))]
     [ModelReaderWriterBuildable(typeof(StopProtectionContent))]
     [ModelReaderWriterBuildable(typeof(SuspendBackupContent))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetCopySetting))]
     [ModelReaderWriterBuildable(typeof(UnknownAuthCredentials))]
     [ModelReaderWriterBuildable(typeof(UnknownAzureBackupRecoveryPoint))]
@@ -203,7 +204,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(UserFacingWarningDetail))]
     [ModelReaderWriterBuildable(typeof(ValidateCrossRegionRestoreRequestObject))]
     [ModelReaderWriterBuildable(typeof(ValidateForModifyBackupContent))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDataProtectionBackupContext : ModelReaderWriterContext
     {
     }

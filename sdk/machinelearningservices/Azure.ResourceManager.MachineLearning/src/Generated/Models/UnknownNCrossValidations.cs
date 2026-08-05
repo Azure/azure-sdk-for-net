@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of NCrossValidations. </summary>
     internal partial class UnknownNCrossValidations : NCrossValidations
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNCrossValidations"/>. </summary>
         /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownNCrossValidations(NCrossValidationsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
-        {
-            Mode = mode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownNCrossValidations"/> for deserialization. </summary>
-        internal UnknownNCrossValidations()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNCrossValidations(NCrossValidationsMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode != default ? mode : "unknown", additionalBinaryDataProperties)
         {
         }
     }

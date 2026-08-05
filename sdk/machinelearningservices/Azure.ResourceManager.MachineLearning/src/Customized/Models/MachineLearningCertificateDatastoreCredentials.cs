@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -8,25 +8,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Certificate datastore credentials configuration. </summary>
-    public partial class MachineLearningCertificateDatastoreCredentials : MachineLearningDatastoreCredentials
+    public partial class MachineLearningCertificateDatastoreCredentials
     {
+        // The generated constructor follows the current TypeSpec property order, but GA shipped constructor overloads with Swagger-era
+        // parameter ordering. Constructor parameter order cannot be restored with TypeSpec decorators, so these overloads delegate to the
+        // generated constructor.
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>
-        /// <param name="clientId"> [Required] Service principal client ID. </param>
-        /// <param name="secrets"> [Required] Service principal secrets. </param>
-        /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
-        /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> or <paramref name="thumbprint"/> is null. </exception>
-        public MachineLearningCertificateDatastoreCredentials(Guid clientId, MachineLearningCertificateDatastoreSecrets secrets, Guid tenantId, string thumbprint)
+        public MachineLearningCertificateDatastoreCredentials(Guid tenantId, MachineLearningCertificateDatastoreSecrets secrets, Guid clientId, string thumbprint)
+            : this(CredentialsType.Certificate, additionalBinaryDataProperties: null, authorityUri: null, clientId, resourceUri: null, secrets, tenantId, thumbprint)
         {
-            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
-            Argument.AssertNotNull(secrets, nameof(secrets));
+        }
 
-            TenantId = tenantId;
-            ClientId = clientId;
-            Thumbprint = thumbprint;
-            Secrets = secrets;
-            CredentialsType = CredentialsType.Certificate;
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreCredentials"/>. </summary>
+        public MachineLearningCertificateDatastoreCredentials(Guid tenantId, Guid clientId, string thumbprint, MachineLearningCertificateDatastoreSecrets secrets)
+            : this(tenantId, secrets, clientId, thumbprint)
+        {
         }
     }
 }

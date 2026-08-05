@@ -1,17 +1,42 @@
 # Release History
 
-## 1.60.0-beta.1 (Unreleased)
+## 1.62.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added experimental (`AZID0004`) `DisableMtlsProofOfPossession` property to `ManagedIdentityCredentialOptions` to allow explicit opt-out of mTLS proof-of-possession token acquisition when the underlying requirements are met.
-- Simplified mTLS token binding integration for Managed Identity by moving to an optional, runtime-resolved attestation model using lazy reflection-based resolution of the `Microsoft.Identity.Client.KeyAttestation` extension package.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.61.0 (2026-07-30)
+
+### Features Added
+
+- Added `AzureAuthorityHosts.AzureBleuCloud` (`https://login.sovcloud-identity.fr/`), the Microsoft Entra authority host for Bleu Cloud, the national partner cloud for France. Interactive credentials' `Authenticate` methods now also resolve the default Azure Resource Manager scope for Bleu Cloud.
+
+### Bugs Fixed
+
+- Fixed an issue where response content logging could emit more bytes than were actually read when a non-buffered (streaming) response was read into a buffer larger than the response body. Previously, when the read began at offset 0, the entire caller-supplied buffer was logged — including the bytes past the response payload, which for a pooled buffer contain unrelated in-process content — and the configured `LoggedContentSizeLimit` was not applied. The logging policy now logs only the bytes that were read. ([#61399](https://github.com/Azure/azure-sdk-for-net/issues/61399))
+- Fixed an issue where `RequestFailedException` could throw a secondary `ArgumentNullException` while formatting a failed response that had a text content-type header but an empty body, masking the actual service failure. The exception now preserves the original HTTP status, reason phrase, and headers, and no longer formats empty response content.
+- Fixed `AzureCliCredential` to not pass both `--tenant` and `--subscription` flags to the Azure CLI, as the CLI rejects this combination. When a tenant is requested (for example, via challenge-based authentication) it now takes precedence and `--subscription` is omitted; `--subscription` is used only when no tenant is requested. ([#58949](https://github.com/Azure/azure-sdk-for-net/issues/58949))
+
+### Other Changes
+
+- Added `azure-deprecating` to the default list of allowed (non-redacted) headers in `DiagnosticsOptions` to support [deprecating behavior notification](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#deprecating-behavior-notification).
+
+## 1.60.0 (2026-06-30)
+
+### Features Added
+
+- Added experimental (`AZID0004`) `DisableMtlsProofOfPossession` property to `ManagedIdentityCredentialOptions` to allow explicit opt-out of mTLS proof-of-possession token acquisition when the underlying requirements are met.
+- Simplified mTLS token binding integration for Managed Identity by moving to an optional, runtime-resolved attestation model using lazy reflection-based resolution of the `Microsoft.Identity.Client.KeyAttestation` extension package.
+
+### Bugs Fixed
+
+- Fixed a regression (introduced with managed identity host capability detection) where `DefaultAzureCredential` could throw an `AuthenticationFailedException` and stop evaluating the credential chain on hosts without a managed identity — for example, a developer machine running in Visual Studio where the IMDS endpoint (169.254.169.254) is unreachable. When `ManagedIdentityCredential` is part of a chain, a failure to detect the managed identity source/capabilities is now surfaced as a `CredentialUnavailableException`, allowing the chain to continue to the next credential.
+- Fixed a related case where `DefaultAzureCredential` could still abort the credential chain with an `AuthenticationFailedException` when managed identity source detection succeeded but the subsequent token acquisition reported that all managed identity sources were unavailable (MSAL `managed_identity_all_sources_unavailable`). When `ManagedIdentityCredential` is part of a chain, this is now surfaced as a `CredentialUnavailableException` so the chain continues to the next credential.
 
 ## 1.59.0 (2026-06-09)
 

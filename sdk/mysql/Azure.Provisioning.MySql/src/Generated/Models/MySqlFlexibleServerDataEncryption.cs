@@ -110,6 +110,10 @@ namespace Azure.Provisioning.MySql
             _geoBackupUserAssignedIdentityId = DefineProperty<ResourceIdentifier>(nameof(GeoBackupUserAssignedIdentityId), new string[] { "geoBackupUserAssignedIdentityId" });
             _geoBackupKeyUri = DefineProperty<Uri>(nameof(GeoBackupKeyUri), new string[] { "geoBackupKeyURI" });
             _encryptionType = DefineProperty<MySqlFlexibleServerDataEncryptionType>(nameof(EncryptionType), new string[] { "type" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerDataEncryption that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

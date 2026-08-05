@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningScheduleProvisioningState : IEquatable<MachineLearningScheduleProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningScheduleProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CompletedValue = "Completed";
         private const string ProvisioningValue = "Provisioning";
         private const string FailedValue = "Failed";
 
-        /// <summary> Completed. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningScheduleProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Completed. </summary>
         public static MachineLearningScheduleProvisioningState Completed { get; } = new MachineLearningScheduleProvisioningState(CompletedValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> Gets the Provisioning. </summary>
         public static MachineLearningScheduleProvisioningState Provisioning { get; } = new MachineLearningScheduleProvisioningState(ProvisioningValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static MachineLearningScheduleProvisioningState Failed { get; } = new MachineLearningScheduleProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="MachineLearningScheduleProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningScheduleProvisioningState left, MachineLearningScheduleProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningScheduleProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningScheduleProvisioningState left, MachineLearningScheduleProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningScheduleProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningScheduleProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningScheduleProvisioningState(string value) => new MachineLearningScheduleProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningScheduleProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningScheduleProvisioningState?(string value) => value == null ? null : new MachineLearningScheduleProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningScheduleProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningScheduleProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

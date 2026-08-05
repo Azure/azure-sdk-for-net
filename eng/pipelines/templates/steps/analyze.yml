@@ -87,6 +87,7 @@ steps:
             -ServiceDirectory $ServiceDirectory `
             -SDKType ${{ parameters.SDKType }} `
             -SpellCheckPublicApiSurface `
+            -ProjectListOverrideFile "$(ProjectListOverrideFile)"
 
           if ($LASTEXITCODE -ne 0) {
             $failed = $true
@@ -104,6 +105,7 @@ steps:
     env:
       EnableSourceLink: false
       NPM_CONFIG_USERCONFIG: $(Agent.TempDirectory)/analyze-job/.npmrc
+      autorest_registry: 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
 
   - pwsh: |
       $failed = $false
@@ -126,6 +128,10 @@ steps:
         Write-Host "No services were directly changed. Skipping CPM compliance checks."
       }
     displayName: Validate CPM Compliance
+
+  - pwsh: |
+      ./eng/scripts/Validate-SampleSelfContainment.ps1
+    displayName: Validate Sample Self-Containment
 
   - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
     parameters:

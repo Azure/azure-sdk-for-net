@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                     yield break;
                 }
                 IssueResourceListResult result = IssueResourceListResult.FromResponse(response);
-                yield return Page<MonitorIssueData>.FromValues((IReadOnlyList<MonitorIssueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MonitorIssueData>.FromValues((IReadOnlyList<MonitorIssueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

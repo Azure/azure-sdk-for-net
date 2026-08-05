@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated the library generation from AutoRest to TypeSpec.
+
 ## 1.2.3 (2026-06-09)
 
 ### Features Added

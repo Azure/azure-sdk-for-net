@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
             ServiceEndpoints = new ChangeTrackingList<ServiceEndpointProperties>();
             ServiceEndpointPolicies = new ChangeTrackingList<ServiceEndpointPolicyData>();
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointData>();
-            IpConfigurations = new ChangeTrackingList<NetworkIPConfiguration>();
-            IpConfigurationProfiles = new ChangeTrackingList<NetworkIPConfigurationProfile>();
-            IpAllocations = new ChangeTrackingList<NetworkSubResource>();
+            IPConfigurations = new ChangeTrackingList<NetworkIPConfiguration>();
+            IPConfigurationProfiles = new ChangeTrackingList<NetworkIPConfigurationProfile>();
+            IPAllocations = new ChangeTrackingList<NetworkSubResource>();
             ResourceNavigationLinks = new ChangeTrackingList<ResourceNavigationLink>();
             ServiceAssociationLinks = new ChangeTrackingList<ServiceAssociationLink>();
             Delegations = new ChangeTrackingList<ServiceDelegation>();
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Network.Models
             ServiceEndpoints = serviceEndpoints;
             ServiceEndpointPolicies = serviceEndpointPolicies;
             PrivateEndpoints = privateEndpoints;
-            IpConfigurations = ipConfigurations;
-            IpConfigurationProfiles = ipConfigurationProfiles;
-            IpAllocations = ipAllocations;
+            IPConfigurations = ipConfigurations;
+            IPConfigurationProfiles = ipConfigurationProfiles;
+            IPAllocations = ipAllocations;
             ResourceNavigationLinks = resourceNavigationLinks;
             ServiceAssociationLinks = serviceAssociationLinks;
             Delegations = delegations;
@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
         [WirePath("ipConfigurations")]
-        public IReadOnlyList<NetworkIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<NetworkIPConfiguration>();
+        public IReadOnlyList<NetworkIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<NetworkIPConfiguration>();
 
         /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
         [WirePath("ipConfigurationProfiles")]
-        public IReadOnlyList<NetworkIPConfigurationProfile> IpConfigurationProfiles { get; } = new ChangeTrackingList<NetworkIPConfigurationProfile>();
+        public IReadOnlyList<NetworkIPConfigurationProfile> IPConfigurationProfiles { get; } = new ChangeTrackingList<NetworkIPConfigurationProfile>();
 
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
         [WirePath("ipAllocations")]
-        public IList<NetworkSubResource> IpAllocations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<NetworkSubResource> IPAllocations { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> An array of references to the external resources using subnet. </summary>
         [WirePath("resourceNavigationLinks")]

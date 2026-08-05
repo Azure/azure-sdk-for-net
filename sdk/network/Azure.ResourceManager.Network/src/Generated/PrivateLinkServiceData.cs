@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> An array of references to the load balancer IP configurations. </summary>
         [WirePath("properties.loadBalancerFrontendIpConfigurations")]
-        public IList<FrontendIPConfigurationData> LoadBalancerFrontendIpConfigurations
+        public IList<FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations
         {
             get
             {
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new PrivateLinkServiceProperties();
                 }
-                return Properties.LoadBalancerFrontendIpConfigurations;
+                return Properties.LoadBalancerFrontendIPConfigurations;
             }
         }
 
         /// <summary> An array of private link service IP configurations. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<PrivateLinkServiceIPConfiguration> IpConfigurations
+        public IList<PrivateLinkServiceIPConfiguration> IPConfigurations
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new PrivateLinkServiceProperties();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

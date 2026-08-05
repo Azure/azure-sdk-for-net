@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Dns
                     yield break;
                 }
                 ZoneListResult result = ZoneListResult.FromResponse(response);
-                yield return Page<DnsZoneData>.FromValues((IReadOnlyList<DnsZoneData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DnsZoneData>.FromValues((IReadOnlyList<DnsZoneData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

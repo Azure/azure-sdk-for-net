@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public VpnGatewayProperties()
         {
             Connections = new ChangeTrackingList<VpnConnectionData>();
-            IpConfigurations = new ChangeTrackingList<VpnGatewayIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VpnGatewayIPConfiguration>();
             NatRules = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             BgpSettings = bgpSettings;
             ProvisioningState = provisioningState;
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             EnableBgpRouteTranslationForNat = enableBgpRouteTranslationForNat;
             IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
             NatRules = natRules;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of all IPs configured on the gateway. </summary>
         [WirePath("ipConfigurations")]
-        public IReadOnlyList<VpnGatewayIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<VpnGatewayIPConfiguration>();
+        public IReadOnlyList<VpnGatewayIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<VpnGatewayIPConfiguration>();
 
         /// <summary> Enable BGP routes translation for NAT on this VpnGateway. </summary>
         [WirePath("enableBgpRouteTranslationForNat")]

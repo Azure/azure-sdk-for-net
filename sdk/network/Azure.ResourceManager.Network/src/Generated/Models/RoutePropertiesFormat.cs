@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="RoutePropertiesFormat"/>. </summary>
         /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
         /// <param name="nextHopType"> The type of Azure hop the packet should be sent to. </param>
-        /// <param name="nextHopIpAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
+        /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
         /// <param name="nextHop"> The next hop definition containing ECMP next hop IP addresses. Only allowed when nextHopType is VirtualApplianceEcmp. </param>
         /// <param name="provisioningState"> The provisioning state of the route resource. </param>
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutePropertiesFormat(string addressPrefix, RouteNextHopType nextHopType, string nextHopIpAddress, RouteNextHopEcmp nextHop, NetworkProvisioningState? provisioningState, bool? hasBgpOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutePropertiesFormat(string addressPrefix, RouteNextHopType nextHopType, string nextHopIPAddress, RouteNextHopEcmp nextHop, NetworkProvisioningState? provisioningState, bool? hasBgpOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefix = addressPrefix;
             NextHopType = nextHopType;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             NextHop = nextHop;
             ProvisioningState = provisioningState;
             HasBgpOverride = hasBgpOverride;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
         [WirePath("nextHopIpAddress")]
-        public string NextHopIpAddress { get; set; }
+        public string NextHopIPAddress { get; set; }
 
         /// <summary> The next hop definition containing ECMP next hop IP addresses. Only allowed when nextHopType is VirtualApplianceEcmp. </summary>
         [WirePath("nextHop")]

@@ -132,6 +132,14 @@ namespace Azure.Generator.Provisioning
                 return canonical!;
             }
 
+            // The base generator can rediscover models through references such as derived-model
+            // hierarchies after the emitter has pruned them from the reachable model set. Do not
+            // create providers for those models because provisioning settable metadata is emitted
+            // only for reachable models. Keep this after resource lookup because resource providers
+            // are pre-created from projection metadata and must be returned through that canonical path.
+            if (!ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(model))
+                return null;
+
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
             if (model.DiscriminatorValue != null && IsBaseChainResource(model))
             {
@@ -171,6 +179,12 @@ namespace Azure.Generator.Provisioning
 
         /// <inheritdoc/>
         protected override PropertyProvider? CreatePropertyCore(InputProperty inputProperty, TypeProvider enclosingType)
+            => CreateProvisioningProperty(inputProperty, enclosingType);
+
+        // Provisioning property metadata can depend on the enclosing provider (for example,
+        // singleton resource names). Call this directly from provisioning providers instead of
+        // the cached CreateProperty wrapper so each provider can supply its own metadata.
+        internal PropertyProvider? CreateProvisioningProperty(InputProperty inputProperty, TypeProvider enclosingType)
         {
             // Run base chain which creates property and applies visitor renames (e.g., etag → ETag).
             var baseProperty = base.CreatePropertyCore(inputProperty, enclosingType);
@@ -188,7 +202,8 @@ namespace Azure.Generator.Provisioning
 
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
-                    info.IsOutput, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    BicepTypeHelpers.GetLiteralFormat(baseProperty?.SerializationFormat),
                     enclosingType);
             }
 

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
             TryGetApiVersion(SqlServerTrustGroupResource.ResourceType, out string sqlServerTrustGroupApiVersion);
             _locationName = locationName;
             _serverTrustGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerTrustGroupResource.ResourceType.Namespace, Diagnostics);
-            _serverTrustGroupsRestClient = new ServerTrustGroups(_serverTrustGroupsClientDiagnostics, Pipeline, Endpoint, sqlServerTrustGroupApiVersion ?? "2025-02-01-preview");
+            _serverTrustGroupsRestClient = new ServerTrustGroups(_serverTrustGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerTrustGroupApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             TargetFqdns = new ChangeTrackingList<string>();
             TargetUrls = new ChangeTrackingList<string>();
             FqdnTags = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
             WebCategories = new ChangeTrackingList<string>();
             HttpHeadersToInsert = new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>();
         }
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
         /// <param name="targetUrls"> List of Urls for this rule condition. </param>
         /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="terminateTLS"> Terminate TLS connections for this rule. </param>
         /// <param name="webCategories"> List of destination azure web categories. </param>
         /// <param name="httpHeadersToInsert"> List of HTTP/S headers to insert. </param>
-        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIpGroups, bool? terminateTLS, IList<string> webCategories, IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert) : base(name, description, ruleType, additionalBinaryDataProperties)
+        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIPGroups, bool? terminateTLS, IList<string> webCategories, IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert) : base(name, description, ruleType, additionalBinaryDataProperties)
         {
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             TargetFqdns = targetFqdns;
             TargetUrls = targetUrls;
             FqdnTags = fqdnTags;
-            SourceIpGroups = sourceIpGroups;
+            SourceIPGroups = sourceIPGroups;
             TerminateTLS = terminateTLS;
             WebCategories = webCategories;
             HttpHeadersToInsert = httpHeadersToInsert;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of source IpGroups for this rule. </summary>
         [WirePath("sourceIpGroups")]
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
 
         /// <summary> Terminate TLS connections for this rule. </summary>
         [WirePath("terminateTLS")]

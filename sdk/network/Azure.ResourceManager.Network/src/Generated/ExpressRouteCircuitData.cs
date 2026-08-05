@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </summary>
         [WirePath("properties.stag")]
-        public int? Stag
+        public int? STag
         {
             get
             {
-                return Properties is null ? default : Properties.Stag;
+                return Properties is null ? default : Properties.STag;
             }
         }
 
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The GatewayManager Etag. </summary>
         [WirePath("properties.gatewayManagerEtag")]
-        public string GatewayManagerEtag
+        public string GatewayManagerETag
         {
             get
             {
-                return Properties is null ? default : Properties.GatewayManagerEtag;
+                return Properties is null ? default : Properties.GatewayManagerETag;
             }
             set
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteCircuitPropertiesFormat();
                 }
-                Properties.GatewayManagerEtag = value;
+                Properties.GatewayManagerETag = value;
             }
         }
 

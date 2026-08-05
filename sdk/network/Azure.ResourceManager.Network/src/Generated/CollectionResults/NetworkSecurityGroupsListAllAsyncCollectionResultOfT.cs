@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NetworkSecurityGroupListResult result = NetworkSecurityGroupListResult.FromResponse(response);
-                yield return Page<NetworkSecurityGroupData>.FromValues((IReadOnlyList<NetworkSecurityGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkSecurityGroupData>.FromValues((IReadOnlyList<NetworkSecurityGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

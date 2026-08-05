@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 ReservationList result = ReservationList.FromResponse(response);
-                yield return Page<BillingReservationData>.FromValues((IReadOnlyList<BillingReservationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingReservationData>.FromValues((IReadOnlyList<BillingReservationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

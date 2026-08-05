@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 NetworkPacketBrokersListResult result = NetworkPacketBrokersListResult.FromResponse(response);
-                yield return Page<NetworkPacketBrokerData>.FromValues((IReadOnlyList<NetworkPacketBrokerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkPacketBrokerData>.FromValues((IReadOnlyList<NetworkPacketBrokerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

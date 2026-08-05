@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 GeoBackupPolicyListResult result = GeoBackupPolicyListResult.FromResponse(response);
-                yield return Page<GeoBackupPolicyData>.FromValues((IReadOnlyList<GeoBackupPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GeoBackupPolicyData>.FromValues((IReadOnlyList<GeoBackupPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

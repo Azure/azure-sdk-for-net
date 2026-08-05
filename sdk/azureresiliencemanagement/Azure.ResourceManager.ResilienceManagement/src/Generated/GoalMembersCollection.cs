@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(GoalMembersResource.ResourceType, out string goalMembersApiVersion);
             _goalResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", GoalMembersResource.ResourceType.Namespace, Diagnostics);
-            _goalResourcesRestClient = new GoalResources(_goalResourcesClientDiagnostics, Pipeline, Endpoint, goalMembersApiVersion ?? "2026-04-01-preview");
+            _goalResourcesRestClient = new GoalResources(_goalResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goalMembersApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ResilienceManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.Management/serviceGroups")
+            if (id.ResourceType != GoalAssignmentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Management/serviceGroups"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GoalAssignmentResource.ResourceType), nameof(id));
             }
         }
 

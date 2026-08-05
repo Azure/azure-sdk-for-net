@@ -116,6 +116,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduledEventsAdditionalPublishingTargets))]
     [ModelReaderWriterBuildable(typeof(SshConfiguration))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserInitiatedReboot))]
     [ModelReaderWriterBuildable(typeof(UserInitiatedRedeploy))]
@@ -123,7 +124,6 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(VirtualMachineListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceDnsSettingsConfiguration))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerComputeBulkActionsContext : ModelReaderWriterContext
     {
     }

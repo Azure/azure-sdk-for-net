@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MaterializationStoreType. </summary>
+    /// <summary></summary>
     public readonly partial struct MaterializationStoreType : IEquatable<MaterializationStoreType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MaterializationStoreType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MaterializationStoreType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string OnlineValue = "Online";
         private const string OfflineValue = "Offline";
         private const string OnlineAndOfflineValue = "OnlineAndOffline";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializationStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MaterializationStoreType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static MaterializationStoreType None { get; } = new MaterializationStoreType(NoneValue);
-        /// <summary> Online. </summary>
+
+        /// <summary> Gets the Online. </summary>
         public static MaterializationStoreType Online { get; } = new MaterializationStoreType(OnlineValue);
-        /// <summary> Offline. </summary>
+
+        /// <summary> Gets the Offline. </summary>
         public static MaterializationStoreType Offline { get; } = new MaterializationStoreType(OfflineValue);
-        /// <summary> OnlineAndOffline. </summary>
+
+        /// <summary> Gets the OnlineAndOffline. </summary>
         public static MaterializationStoreType OnlineAndOffline { get; } = new MaterializationStoreType(OnlineAndOfflineValue);
+
         /// <summary> Determines if two <see cref="MaterializationStoreType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaterializationStoreType left, MaterializationStoreType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaterializationStoreType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaterializationStoreType left, MaterializationStoreType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaterializationStoreType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaterializationStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaterializationStoreType(string value) => new MaterializationStoreType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MaterializationStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MaterializationStoreType?(string value) => value == null ? null : new MaterializationStoreType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaterializationStoreType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaterializationStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
