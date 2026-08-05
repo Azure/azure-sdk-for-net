@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// </list>
         /// </summary>
         /// <returns> Returns a <see cref="ComputeSkuMixPlacementResource"/> object. </returns>
-        public virtual ComputeSkuMixPlacementResource GetComputeSkuMixPlacementResource()
+        public virtual ComputeSkuMixPlacementResource GetComputeSkuMixPlacement()
         {
             return new ComputeSkuMixPlacementResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "recommendations"));
         }

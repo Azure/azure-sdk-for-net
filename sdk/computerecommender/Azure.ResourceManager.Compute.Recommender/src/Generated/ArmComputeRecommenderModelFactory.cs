@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="skuMixPlacementSupportedResourceTypes"> Describes what resource types are supported by the mix placement scoring service. </param>
-        /// <returns> A new <see cref="Recommender.ComputeSkuMixPlacementResourceData"/> instance for mocking. </returns>
-        public static ComputeSkuMixPlacementResourceData ComputeSkuMixPlacementResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> skuMixPlacementSupportedResourceTypes = default)
+        /// <returns> A new <see cref="Recommender.ComputeSkuMixPlacementData"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementData ComputeSkuMixPlacementData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> skuMixPlacementSupportedResourceTypes = default)
         {
-            return new ComputeSkuMixPlacementResourceData(
+            return new ComputeSkuMixPlacementData(
                 id,
                 name,
                 resourceType,
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         }
 
         /// <param name="placementChoices"> List of placement choice recommendations. </param>
-        /// <param name="validUntil"> Date/time until which the recommendations are valid. Callers should request fresh recommendations after this time. </param>
+        /// <param name="validUntilOn"> Date/time until which the recommendations are valid. Callers should request fresh recommendations after this time. </param>
         /// <param name="partialFulfillmentReason"> Indicates whether the response is a complete or partial fulfillment. </param>
         /// <returns> A new <see cref="Models.ComputeSkuMixPlacementGenerateResult"/> instance for mocking. </returns>
-        public static ComputeSkuMixPlacementGenerateResult ComputeSkuMixPlacementGenerateResult(IEnumerable<ComputeSkuMixPlacementDeploymentChoice> placementChoices = default, DateTimeOffset? validUntil = default, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default)
+        public static ComputeSkuMixPlacementGenerateResult ComputeSkuMixPlacementGenerateResult(IEnumerable<ComputeSkuMixPlacementDeploymentChoice> placementChoices = default, DateTimeOffset? validUntilOn = default, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default)
         {
             placementChoices ??= new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>();
 
-            return new ComputeSkuMixPlacementGenerateResult((placementChoices ?? new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>()).ToList(), validUntil, partialFulfillmentReason, default);
+            return new ComputeSkuMixPlacementGenerateResult((placementChoices ?? new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>()).ToList(), validUntilOn, partialFulfillmentReason, default);
         }
 
         /// <param name="id"> Unique identifier for this deployment choice. </param>

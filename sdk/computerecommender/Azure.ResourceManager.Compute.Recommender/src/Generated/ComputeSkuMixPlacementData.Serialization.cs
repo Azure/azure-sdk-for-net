@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary> Contains metadata of the SkuMixPlacement scoring resource. </summary>
-    public partial class ComputeSkuMixPlacementResourceData : ResourceData, IJsonModel<ComputeSkuMixPlacementResourceData>
+    public partial class ComputeSkuMixPlacementData : ResourceData, IJsonModel<ComputeSkuMixPlacementData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeSkuMixPlacementResourceData(document.RootElement, options);
+                        return DeserializeComputeSkuMixPlacementData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuMixPlacementData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeSkuMixPlacementResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeSkuMixPlacementData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeSkuMixPlacementResourceData IPersistableModel<ComputeSkuMixPlacementResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeSkuMixPlacementResourceData)PersistableModelCreateCore(data, options);
+        ComputeSkuMixPlacementData IPersistableModel<ComputeSkuMixPlacementData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeSkuMixPlacementData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeSkuMixPlacementResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSkuMixPlacementData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeSkuMixPlacementResourceData"/> from. </param>
-        internal static ComputeSkuMixPlacementResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeSkuMixPlacementData"/> from. </param>
+        internal static ComputeSkuMixPlacementData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeComputeSkuMixPlacementResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeComputeSkuMixPlacementData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeSkuMixPlacementResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeSkuMixPlacementData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Compute.Recommender
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeSkuMixPlacementResourceData IJsonModel<ComputeSkuMixPlacementResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComputeSkuMixPlacementResourceData)JsonModelCreateCore(ref reader, options);
+        ComputeSkuMixPlacementData IJsonModel<ComputeSkuMixPlacementData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComputeSkuMixPlacementData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeSkuMixPlacementData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuMixPlacementData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeSkuMixPlacementResourceData(document.RootElement, options);
+            return DeserializeComputeSkuMixPlacementData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeSkuMixPlacementResourceData DeserializeComputeSkuMixPlacementResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeSkuMixPlacementData DeserializeComputeSkuMixPlacementData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuMixPlacementResourceData(
+            return new ComputeSkuMixPlacementData(
                 id,
                 name,
                 resourceType,

@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary></summary>
-    public partial class ComputeSkuMixPlacementResource : IJsonModel<ComputeSkuMixPlacementResourceData>
+    public partial class ComputeSkuMixPlacementResource : IJsonModel<ComputeSkuMixPlacementData>
     {
-        private static IJsonModel<ComputeSkuMixPlacementResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<ComputeSkuMixPlacementData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ComputeSkuMixPlacementResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ComputeSkuMixPlacementResourceData();
+        private static IJsonModel<ComputeSkuMixPlacementData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ComputeSkuMixPlacementData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeSkuMixPlacementResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeSkuMixPlacementResourceData>)Data).Write(writer, options);
+        void IJsonModel<ComputeSkuMixPlacementData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeSkuMixPlacementData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeSkuMixPlacementResourceData IJsonModel<ComputeSkuMixPlacementResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ComputeSkuMixPlacementData IJsonModel<ComputeSkuMixPlacementData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeSkuMixPlacementResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeSkuMixPlacementResourceData>(Data, options, AzureResourceManagerComputeRecommenderContext.Default);
+        BinaryData IPersistableModel<ComputeSkuMixPlacementData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeSkuMixPlacementData>(Data, options, AzureResourceManagerComputeRecommenderContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeSkuMixPlacementResourceData IPersistableModel<ComputeSkuMixPlacementResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeSkuMixPlacementResourceData>(data, options, AzureResourceManagerComputeRecommenderContext.Default);
+        ComputeSkuMixPlacementData IPersistableModel<ComputeSkuMixPlacementData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeSkuMixPlacementData>(data, options, AzureResourceManagerComputeRecommenderContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeSkuMixPlacementResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ComputeSkuMixPlacementData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// Gets an object representing a <see cref="ComputeSkuMixPlacementResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputeSkuMixPlacementResource()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputeSkuMixPlacement()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> Returns a <see cref="ComputeSkuMixPlacementResource"/> object. </returns>
-        public static ComputeSkuMixPlacementResource GetComputeSkuMixPlacementResource(this SubscriptionResource subscriptionResource)
+        public static ComputeSkuMixPlacementResource GetComputeSkuMixPlacement(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeSkuMixPlacementResource();
+            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeSkuMixPlacement();
         }
 
         /// <summary>

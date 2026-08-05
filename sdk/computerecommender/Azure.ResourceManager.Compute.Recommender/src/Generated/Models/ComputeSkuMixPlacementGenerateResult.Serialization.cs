@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ValidUntil))
+            if (Optional.IsDefined(ValidUntilOn))
             {
                 writer.WritePropertyName("validUntil"u8);
-                writer.WriteStringValue(ValidUntil.Value, "O");
+                writer.WriteStringValue(ValidUntilOn.Value, "O");
             }
             writer.WritePropertyName("partialFulfillmentReason"u8);
             writer.WriteStringValue(PartialFulfillmentReason.ToString());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 return null;
             }
             IList<ComputeSkuMixPlacementDeploymentChoice> placementChoices = default;
-            DateTimeOffset? validUntil = default;
+            DateTimeOffset? validUntilOn = default;
             SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     {
                         continue;
                     }
-                    validUntil = prop.Value.GetDateTimeOffset("O");
+                    validUntilOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("partialFulfillmentReason"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuMixPlacementGenerateResult(placementChoices, validUntil, partialFulfillmentReason, additionalBinaryDataProperties);
+            return new ComputeSkuMixPlacementGenerateResult(placementChoices, validUntilOn, partialFulfillmentReason, additionalBinaryDataProperties);
         }
     }
 }

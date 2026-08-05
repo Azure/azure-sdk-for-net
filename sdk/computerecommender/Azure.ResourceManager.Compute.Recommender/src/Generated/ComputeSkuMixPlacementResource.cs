@@ -19,15 +19,15 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary>
-    /// A class representing a ComputeSkuMixPlacementResource along with the instance operations that can be performed on it.
+    /// A class representing a ComputeSkuMixPlacement along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeSkuMixPlacementResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeSkuMixPlacementResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeSkuMixPlacement method.
     /// </summary>
     public partial class ComputeSkuMixPlacementResource : ArmResource
     {
         private readonly ClientDiagnostics _skuMixPlacementScoresClientDiagnostics;
         private readonly SkuMixPlacementScores _skuMixPlacementScoresRestClient;
-        private readonly ComputeSkuMixPlacementResourceData _data;
+        private readonly ComputeSkuMixPlacementData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/skuMixPlacementScores";
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// <summary> Initializes a new instance of <see cref="ComputeSkuMixPlacementResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ComputeSkuMixPlacementResource(ArmClient client, ComputeSkuMixPlacementResourceData data) : this(client, data.Id)
+        internal ComputeSkuMixPlacementResource(ArmClient client, ComputeSkuMixPlacementData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ComputeSkuMixPlacementResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string computeSkuMixPlacementResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string computeSkuMixPlacementApiVersion);
             _skuMixPlacementScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Recommender", ResourceType.Namespace, Diagnostics);
-            _skuMixPlacementScoresRestClient = new SkuMixPlacementScores(_skuMixPlacementScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeSkuMixPlacementResourceApiVersion ?? "2026-05-05-preview");
+            _skuMixPlacementScoresRestClient = new SkuMixPlacementScores(_skuMixPlacementScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeSkuMixPlacementApiVersion ?? "2026-05-05-preview");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ComputeSkuMixPlacementResourceData Data
+        public virtual ComputeSkuMixPlacementData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 };
                 HttpMessage message = _skuMixPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeSkuMixPlacementResourceData> response = Response.FromValue(ComputeSkuMixPlacementResourceData.FromResponse(result), result);
+                Response<ComputeSkuMixPlacementData> response = Response.FromValue(ComputeSkuMixPlacementData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 };
                 HttpMessage message = _skuMixPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeSkuMixPlacementResourceData> response = Response.FromValue(ComputeSkuMixPlacementResourceData.FromResponse(result), result);
+                Response<ComputeSkuMixPlacementData> response = Response.FromValue(ComputeSkuMixPlacementData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
