@@ -164,6 +164,32 @@ internal sealed class SteeringQueue<TOutput>
     }
 
     /// <summary>
+    /// Rehydrates the FIFO from a persisted <c>pending_inputs</c> array on recovery, appending the
+    /// supplied inputs in order. Unlike <see cref="Enqueue"/> this bypasses the
+    /// <see cref="MaxDepth"/> guard: a durably-persisted queue was already capacity-checked at
+    /// append time, so recovery MUST restore every entry (up to and including a full queue) rather
+    /// than reject a valid record. Without this, inputs that were queued-but-not-drained when the
+    /// process crashed would strand in the record forever, because the C# drain pops from this
+    /// in-memory FIFO (Python is record-driven and reads <c>pending_inputs</c> fresh every drain,
+    /// so it needs no equivalent recovery step).
+    /// </summary>
+    public void SeedPendingInputs(IReadOnlyList<QueuedInput<TOutput>> inputs)
+    {
+        lock (_gate)
+        {
+            foreach (QueuedInput<TOutput> input in inputs)
+            {
+                _pending.AddLast(input);
+            }
+
+            if (_pending.Count > 0)
+            {
+                _everSteered = true;
+            }
+        }
+    }
+
+    /// <summary>
     /// Restores the monotonic <c>next_input_seq</c> from a persisted record so attachment keys
     /// (<c>_steering_input_&lt;seq&gt;</c>) stay unique across suspend/resume and recovery.
     /// </summary>

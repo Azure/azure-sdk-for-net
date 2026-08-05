@@ -25,6 +25,7 @@
 - The per-task write gate is no longer disposed when its bookkeeping entry is removed, closing a race where a concurrent write could observe `ObjectDisposedException` on a gate that was torn down while still in use.
 - A turn transition that replaces and disposes a handler's cancellation source concurrently with a cancel/steering signal no longer surfaces `ObjectDisposedException` from the cancel path.
 - `AddResilientTasks` and `AddEventStreams` are now safe against repeated registration: `AddResilientTasks` no longer registers the durability hosted service more than once (and rejects a conflicting second credential), and `AddEventStreams` rejects a second configuring call instead of silently discarding its configuration.
+- Steering inputs that were queued but not yet drained when a process crashed are no longer stranded: on recovery the persisted `pending_inputs` queue is rehydrated into the in-process steering FIFO, so a recovered chain drains them (as caller-less turns) instead of silently dropping them.
 
 ### Other Changes
 

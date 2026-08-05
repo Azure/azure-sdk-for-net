@@ -412,6 +412,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         if (registration.Steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
+            RehydratePendingInputs(activeRun.Steering, record, taskId);
         }
 
         if (entryMode == EntryMode.Fresh)
@@ -1485,6 +1486,61 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
     }
 
+    // Rehydrates the in-process steering FIFO from the persisted `pending_inputs` on recovery so
+    // inputs that were queued-but-not-drained when the process crashed survive and still drain,
+    // instead of stranding in the record forever. Python is record-driven (the queue lives in the
+    // record and every drain reads `pending_inputs` fresh), so it needs no equivalent step; the C#
+    // drain pops from this in-memory queue, which is empty after a restart unless we repopulate it.
+    //
+    // Recovered inputs are caller-less: the process that awaited each handle is gone, so the steered
+    // turn advances the conversation and resolves a detached handle that nobody observes (Python
+    // parity: `_pending_steering_futures` is likewise lost on crash and the input drains on its data
+    // alone). Only the slot is persisted per entry — the per-input id is not — so the chain head
+    // (`last_input_id`) is preserved rather than fabricated (PersistInputId=false); the recovered
+    // turn inherits the record's current `last_input_id` as its input id, matching Python's drain
+    // which never rewrites `last_input_id`.
+    private void RehydratePendingInputs<TOutput>(SteeringQueue<TOutput> queue, TaskRecord record, string taskId)
+    {
+        if (record.Payload[TaskWireKeys.PayloadSteering] is not JsonObject steering
+            || steering[TaskWireKeys.SteeringPendingInputs] is not JsonArray pending
+            || pending.Count == 0)
+        {
+            return;
+        }
+
+        string inheritedInputId = string.Empty;
+        if (record.Payload[TaskWireKeys.PayloadLastInputId] is JsonValue idValue
+            && idValue.TryGetValue(out string? persistedId)
+            && persistedId is not null)
+        {
+            inheritedInputId = persistedId;
+        }
+
+        var restored = new List<QueuedInput<TOutput>>(pending.Count);
+        foreach (JsonNode? slot in pending)
+        {
+            JsonNode? slotClone = slot?.DeepClone();
+
+            // For an oversized queued input the slot is a `_steering_input_<seq>` ref whose content
+            // lives in the record's attachments. Carry that content on the QueuedInput exactly as
+            // the append path did, so the existing drain (DriveSteeredTurnAsync) resolves the ref and
+            // deletes the consumed attachment unchanged. A dangling ref (missing attachment) is left
+            // as-is and fails loud at drain, matching how any corrupt record is treated.
+            JsonObject? attachments = null;
+            if (AttachmentRef.TryParse(slotClone, out AttachmentRef? attachmentRef)
+                && record.Attachments is { } recordAttachments
+                && recordAttachments.TryGetPropertyValue(attachmentRef!.Key, out JsonNode? content))
+            {
+                attachments = new JsonObject { [attachmentRef.Key] = content?.DeepClone() };
+            }
+
+            var runState = new TaskRunState<TOutput>(taskId, inheritedInputId, CreateMetadata(taskId), isQueued: true);
+            restored.Add(new QueuedInput<TOutput>(slotClone, attachments, inheritedInputId, persistInputId: false, runState));
+        }
+
+        queue.SeedPendingInputs(restored);
+    }
+
     /// <summary>Whether the persisted record already carries steering state worth restoring.
     /// Lets the engine defer allocating a steering queue until a task is genuinely steered.</summary>
     private static bool HasPersistedSteering(TaskRecord record)
@@ -1712,6 +1768,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         if (registration.Steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
+            RehydratePendingInputs(activeRun.Steering, record, taskId);
         }
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
