@@ -1,5 +1,5 @@
 {
   "apiVersions": {
-    "Microsoft.Compute": "2026-06-06"
+    "Microsoft.Compute": "2026-07-06-preview"
   }
 }
