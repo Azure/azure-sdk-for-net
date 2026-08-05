@@ -1941,16 +1941,25 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="version"> The version of the deleted server. </param>
         /// <param name="deletedOn"> The deletion time of the deleted server. </param>
         /// <param name="originalId"> The original ID of the server before deletion. </param>
+        /// <param name="originalResourceGroup"> The resource group of the original server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <param name="scheduledPurgeOn"> The date and time when the deleted server will be permanently deleted (purged). </param>
         /// <returns> A new <see cref="Sql.DeletedServerData"/> instance for mocking. </returns>
-        public static DeletedServerData DeletedServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, DateTimeOffset? deletedOn = default, ResourceIdentifier originalId = default, string fullyQualifiedDomainName = default)
+        public static DeletedServerData DeletedServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, DateTimeOffset? deletedOn = default, ResourceIdentifier originalId = default, string originalResourceGroup = default, string fullyQualifiedDomainName = default, DateTimeOffset? scheduledPurgeOn = default)
         {
             return new DeletedServerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                version is null && deletedOn is null && originalId is null && fullyQualifiedDomainName is null ? default : new DeletedServerProperties(version, deletedOn, originalId, fullyQualifiedDomainName, default),
+                version is null && deletedOn is null && originalId is null && originalResourceGroup is null && fullyQualifiedDomainName is null && scheduledPurgeOn is null ? default : new DeletedServerProperties(
+                    version,
+                    deletedOn,
+                    originalId,
+                    originalResourceGroup,
+                    fullyQualifiedDomainName,
+                    scheduledPurgeOn,
+                    default),
                 default);
         }
 
@@ -1968,16 +1977,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="instanceAvailabilityGroupName"> Managed instance side availability group name. </param>
         /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
+        /// <param name="linkMode"> Specifies whether the link operates in single-database or multi-database mode. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
-        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string distributedAvailabilityGroupName = default, Guid? distributedAvailabilityGroupId = default, SqlReplicationModeType? replicationMode = default, SqlServerSideLinkRole? partnerLinkRole = default, string partnerAvailabilityGroupName = default, string partnerEndpoint = default, SqlServerSideLinkRole? instanceLinkRole = default, string instanceAvailabilityGroupName = default, SqlServerFailoverModeType? failoverMode = default, SeedingModeType? seedingMode = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string distributedAvailabilityGroupName = default, Guid? distributedAvailabilityGroupId = default, SqlReplicationModeType? replicationMode = default, SqlServerSideLinkRole? partnerLinkRole = default, string partnerAvailabilityGroupName = default, string partnerEndpoint = default, SqlServerSideLinkRole? instanceLinkRole = default, string instanceAvailabilityGroupName = default, SqlServerFailoverModeType? failoverMode = default, SeedingModeType? seedingMode = default, LinkModeType? linkMode = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
         {
             return new SqlDistributedAvailabilityGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
+                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && linkMode is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
                     distributedAvailabilityGroupName,
                     distributedAvailabilityGroupId,
                     replicationMode,
@@ -1988,6 +1998,7 @@ namespace Azure.ResourceManager.Sql.Models
                     instanceAvailabilityGroupName,
                     failoverMode,
                     seedingMode,
+                    linkMode,
                     (databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>()).ToList(),
                     default),
                 default);
@@ -2814,16 +2825,25 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="publicBlob"> The certificate public blob. </param>
+        /// <param name="trustedRootCertificates"> Trusted root certificates required to validate the instance certificate. </param>
         /// <returns> A new <see cref="Sql.EndpointCertificateData"/> instance for mocking. </returns>
-        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publicBlob = default)
+        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publicBlob = default, IEnumerable<EndpointTrustedRootCertificateInfo> trustedRootCertificates = default)
         {
             return new EndpointCertificateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                publicBlob is null ? default : new EndpointCertificateProperties(publicBlob, default),
+                publicBlob is null && trustedRootCertificates is null ? default : new EndpointCertificateProperties(publicBlob, (trustedRootCertificates ?? new ChangeTrackingList<EndpointTrustedRootCertificateInfo>()).ToList(), default),
                 default);
+        }
+
+        /// <param name="subject"> Root certificate subject name. </param>
+        /// <param name="publicBlob"> Root certificate public blob as DER encoded hex string. </param>
+        /// <returns> A new <see cref="Models.EndpointTrustedRootCertificateInfo"/> instance for mocking. </returns>
+        public static EndpointTrustedRootCertificateInfo EndpointTrustedRootCertificateInfo(string subject = default, string publicBlob = default)
+        {
+            return new EndpointTrustedRootCertificateInfo(subject, publicBlob, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3605,15 +3625,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="login"> Login name of the managed instance administrator. </param>
         /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
         /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
+        /// <param name="principalType"> Principal type of the managed instance administrator. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceAdministratorData"/> instance for mocking. </returns>
-        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstanceAdministratorType? administratorType = default, string login = default, Guid? sid = default, Guid? tenantId = default)
+        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstanceAdministratorType? administratorType = default, string login = default, Guid? sid = default, Guid? tenantId = default, ManagedInstanceAdministratorPrincipalType? principalType = default)
         {
             return new ManagedInstanceAdministratorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                administratorType is null && login is null && sid is null && tenantId is null ? default : new ManagedInstanceAdministratorProperties(administratorType.GetValueOrDefault(), login, sid.GetValueOrDefault(), tenantId, default),
+                administratorType is null && login is null && sid is null && tenantId is null && principalType is null ? default : new ManagedInstanceAdministratorProperties(
+                    administratorType.GetValueOrDefault(),
+                    login,
+                    sid.GetValueOrDefault(),
+                    tenantId,
+                    principalType,
+                    default),
                 default);
         }
 
@@ -7232,6 +7259,77 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Sql.DeletedServerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="version"> The version of the deleted server. </param>
+        /// <param name="deletedOn"> The deletion time of the deleted server. </param>
+        /// <param name="originalId"> The original ID of the server before deletion. </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <returns> A new <see cref="Sql.DeletedServerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeletedServerData DeletedServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, DateTimeOffset? deletedOn = default, ResourceIdentifier originalId = default, string fullyQualifiedDomainName = default)
+        {
+            return new DeletedServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                version is null && deletedOn is null && originalId is null && fullyQualifiedDomainName is null ? default : new DeletedServerProperties(
+                    version,
+                    deletedOn,
+                    originalId,
+                    default,
+                    fullyQualifiedDomainName,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlDistributedAvailabilityGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="distributedAvailabilityGroupName"> Name of the distributed availability group. </param>
+        /// <param name="distributedAvailabilityGroupId"> ID of the distributed availability group. </param>
+        /// <param name="replicationMode"> Replication mode of the link. </param>
+        /// <param name="partnerLinkRole"> SQL server side link role. </param>
+        /// <param name="partnerAvailabilityGroupName"> SQL server side availability group name. </param>
+        /// <param name="partnerEndpoint"> SQL server side endpoint - IP or DNS resolvable name. </param>
+        /// <param name="instanceLinkRole"> Managed instance side link role. </param>
+        /// <param name="instanceAvailabilityGroupName"> Managed instance side availability group name. </param>
+        /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
+        /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
+        /// <param name="databases"> Databases in the distributed availability group. </param>
+        /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string distributedAvailabilityGroupName = default, Guid? distributedAvailabilityGroupId = default, SqlReplicationModeType? replicationMode = default, SqlServerSideLinkRole? partnerLinkRole = default, string partnerAvailabilityGroupName = default, string partnerEndpoint = default, SqlServerSideLinkRole? instanceLinkRole = default, string instanceAvailabilityGroupName = default, SqlServerFailoverModeType? failoverMode = default, SeedingModeType? seedingMode = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
+        {
+            return new SqlDistributedAvailabilityGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
+                    distributedAvailabilityGroupName,
+                    distributedAvailabilityGroupId,
+                    replicationMode,
+                    partnerLinkRole,
+                    partnerAvailabilityGroupName,
+                    partnerEndpoint,
+                    instanceLinkRole,
+                    instanceAvailabilityGroupName,
+                    failoverMode,
+                    seedingMode,
+                    default,
+                    (databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>()).ToList(),
+                    default),
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Sql.ElasticPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -7326,6 +7424,25 @@ namespace Azure.ResourceManager.Sql.Models
                     default),
                 kind,
                 location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.EndpointCertificateData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publicBlob"> The certificate public blob. </param>
+        /// <returns> A new <see cref="Sql.EndpointCertificateData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publicBlob = default)
+        {
+            return new EndpointCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publicBlob is null ? default : new EndpointCertificateProperties(publicBlob, default, default),
                 default);
         }
 
@@ -7652,6 +7769,34 @@ namespace Azure.ResourceManager.Sql.Models
                 resourceType,
                 systemData,
                 op is null && schema is null && table is null && column is null ? default : new RecommendedSensitivityLabelUpdateProperties(op.GetValueOrDefault(), schema, table, column, default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceAdministratorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="administratorType"> Type of the managed instance administrator. </param>
+        /// <param name="login"> Login name of the managed instance administrator. </param>
+        /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
+        /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
+        /// <returns> A new <see cref="Sql.ManagedInstanceAdministratorData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstanceAdministratorType? administratorType = default, string login = default, Guid? sid = default, Guid? tenantId = default)
+        {
+            return new ManagedInstanceAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                administratorType is null && login is null && sid is null && tenantId is null ? default : new ManagedInstanceAdministratorProperties(
+                    administratorType.GetValueOrDefault(),
+                    login,
+                    sid.GetValueOrDefault(),
+                    tenantId,
+                    default,
+                    default),
                 default);
         }
 
