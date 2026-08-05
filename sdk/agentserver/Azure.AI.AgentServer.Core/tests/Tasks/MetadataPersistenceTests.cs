@@ -78,7 +78,7 @@ public sealed class MetadataPersistenceTests
         using var host = TaskTestHost.Create();
         host.Builder.AddMultiTurnTask<string, string>("counter", (ctx, ct) =>
         {
-            ctx.Metadata.Increment("turns");
+            ctx.Metadata["turns"] = BinaryData.FromObjectAsJson(1);
             return Task.FromResult(ctx.Input);
         });
 
@@ -106,18 +106,18 @@ public sealed class MetadataPersistenceTests
             {
                 // Same key name in two different namespaces must not collide.
                 ctx.Metadata["shared"] = BinaryData.FromString("\"from-default\"");
-                ctx.Metadata.Namespace("billing")["shared"] = BinaryData.FromString("\"from-billing\"");
+                ctx.Metadata.GetNamespace("billing")["shared"] = BinaryData.FromString("\"from-billing\"");
             }
             else
             {
                 defaultReadBack = ctx.Metadata["shared"]?.ToString();
-                billingReadBack = ctx.Metadata.Namespace("billing")["shared"]?.ToString();
+                billingReadBack = ctx.Metadata.GetNamespace("billing")["shared"]?.ToString();
 
                 // Cross-namespace leakage checks: neither namespace should see the other's private key.
-                ctx.Metadata.Namespace("billing")["only-billing"] = BinaryData.FromString("\"x\"");
+                ctx.Metadata.GetNamespace("billing")["only-billing"] = BinaryData.FromString("\"x\"");
                 defaultSawBillingKey = ctx.Metadata["only-billing"] is not null;
                 ctx.Metadata["only-default"] = BinaryData.FromString("\"y\"");
-                billingSawDefaultKey = ctx.Metadata.Namespace("billing")["only-default"] is not null;
+                billingSawDefaultKey = ctx.Metadata.GetNamespace("billing")["only-default"] is not null;
             }
 
             return Task.FromResult(ctx.Input);

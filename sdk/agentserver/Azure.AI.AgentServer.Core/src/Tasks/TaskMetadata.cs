@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -17,13 +18,13 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// byte-for-byte to Python's JSON-serializable metadata values. Keys beginning with
 /// <c>_</c> are reserved for the framework by CONVENTION but not enforced by the primitive
 /// (SOT §17; layers built on top may reject them more strictly). The default namespace is
-/// exposed directly; call <see cref="Namespace(string)"/> for a sibling namespace with the same surface.
+/// exposed directly; call <see cref="GetNamespace(string)"/> for a sibling namespace with the same surface.
+/// The values are enumerable as a standard key/value collection.
 /// </summary>
-public class TaskMetadata
+public class TaskMetadata : IEnumerable<KeyValuePair<string, BinaryData>>
 {
     private readonly ConcurrentDictionary<string, BinaryData> _values;
     private readonly ConcurrentDictionary<string, TaskMetadata> _siblings;
-    private readonly object _mutateLock;
     private readonly Func<TaskMetadata, CancellationToken, Task>? _flush;
 
     /// <summary>Initializes a new instance of the <see cref="TaskMetadata"/> class for mocking.</summary>
@@ -38,7 +39,6 @@ public class TaskMetadata
         _flush = flush;
         _values = new ConcurrentDictionary<string, BinaryData>(StringComparer.Ordinal);
         _siblings = new ConcurrentDictionary<string, TaskMetadata>(StringComparer.Ordinal);
-        _mutateLock = new object();
     }
 
     /// <summary>The namespace name; the default namespace is the empty string.</summary>
@@ -100,69 +100,19 @@ public class TaskMetadata
     /// <summary>The keys present in this namespace.</summary>
     public virtual IEnumerable<string> Keys => _values.Keys;
 
-    /// <summary>
-    /// Atomically adds <paramref name="delta"/> to the numeric value at <paramref name="key"/>
-    /// (treating an absent value as 0), storing the result as a JSON number.
-    /// </summary>
-    /// <param name="key">The key to increment.</param>
-    /// <param name="delta">The amount to add; defaults to 1.</param>
-    public virtual void Increment(string key, long delta = 1)
-    {
-        ValidateKey(key);
-        lock (_mutateLock)
-        {
-            long current = 0;
-            if (_values.TryGetValue(key, out BinaryData? existing))
-            {
-                current = JsonSerializer.Deserialize<long>(existing.ToMemory().Span);
-            }
+    /// <summary>The number of key/value pairs in this namespace.</summary>
+    public virtual int Count => _values.Count;
 
-            long updated = current + delta;
-            _values[key] = BinaryData.FromObjectAsJson(updated);
-        }
-    }
+    /// <summary>Returns an enumerator over this namespace's key/value pairs.</summary>
+    /// <returns>An enumerator over the pairs.</returns>
+    public virtual IEnumerator<KeyValuePair<string, BinaryData>> GetEnumerator() => _values.GetEnumerator();
 
-    /// <summary>
-    /// Atomically appends <paramref name="value"/> to the JSON array at <paramref name="key"/>
-    /// (treating an absent value as an empty array).
-    /// </summary>
-    /// <param name="key">The key whose array to append to.</param>
-    /// <param name="value">The JSON-content element to append.</param>
-    public virtual void Append(string key, BinaryData value)
-    {
-        ValidateKey(key);
-        if (value is null)
-        {
-            throw new ArgumentNullException(nameof(value));
-        }
-
-        lock (_mutateLock)
-        {
-            JsonArray array;
-            if (_values.TryGetValue(key, out BinaryData? existing))
-            {
-                array = JsonNode.Parse(existing.ToMemory().Span) as JsonArray
-                    ?? throw new InvalidOperationException($"Metadata key '{key}' is not a JSON array.");
-            }
-            else
-            {
-                array = new JsonArray();
-            }
-
-            array.Add(JsonNode.Parse(value.ToMemory().Span));
-            _values[key] = new BinaryData(array.ToJsonString());
-        }
-    }
-
-    /// <summary>Returns a plain snapshot of this namespace's key/value pairs.</summary>
-    /// <returns>An immutable snapshot.</returns>
-    public virtual IReadOnlyDictionary<string, BinaryData> ToDictionary()
-        => new Dictionary<string, BinaryData>(_values, StringComparer.Ordinal);
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     /// <summary>Returns a sibling namespace with the same surface, creating it on first use.</summary>
     /// <param name="name">The sibling namespace name.</param>
     /// <returns>The sibling <see cref="TaskMetadata"/>.</returns>
-    public virtual TaskMetadata Namespace(string name)
+    public virtual TaskMetadata GetNamespace(string name)
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -237,7 +187,7 @@ public class TaskMetadata
     /// </summary>
     internal void LoadNamespace(string namespaceName, JsonObject values)
     {
-        TaskMetadata target = string.IsNullOrEmpty(namespaceName) ? this : Namespace(namespaceName);
+        TaskMetadata target = string.IsNullOrEmpty(namespaceName) ? this : GetNamespace(namespaceName);
         foreach (KeyValuePair<string, JsonNode?> pair in values)
         {
             if (pair.Value is null)

@@ -78,7 +78,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 // already done — skip the side effect.
             }
 
-            TaskMetadata billing = ctx.Metadata.Namespace("billing");
+            TaskMetadata billing = ctx.Metadata.GetNamespace("billing");
             _ = billing;
         }
 

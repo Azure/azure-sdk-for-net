@@ -277,7 +277,7 @@ if (ctx.Metadata.TryGetValue("charged", out var raw) && raw.ToObjectFromJson<boo
 Keys beginning with `_` are reserved for the framework **by convention** (SOT §17) but
 are not rejected by the primitive — metadata is namespaced under `payload["metadata"]`, so
 it cannot collide with the framework's top-level `_`-prefixed payload keys. Use
-`Metadata.Namespace("billing")` for an isolated sibling namespace with the same surface.
+`Metadata.GetNamespace("billing")` for an isolated sibling namespace with the same surface.
 
 ### 4.6 The result handle (`TaskRun<TOutput>`)
 

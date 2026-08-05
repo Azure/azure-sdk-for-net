@@ -478,18 +478,18 @@ namespace Azure.AI.AgentServer.Core.Tasks
         HandlerError = 0,
         ExhaustedRetries = 1,
     }
-    public partial class TaskMetadata
+    public partial class TaskMetadata : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.IEnumerable
     {
         protected TaskMetadata() { }
+        public virtual int Count { get { throw null; } }
         public virtual System.BinaryData? this[string key] { get { throw null; } set { } }
         public virtual System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
-        public virtual void Append(string key, System.BinaryData value) { }
         public virtual bool ContainsKey(string key) { throw null; }
         public virtual System.Threading.Tasks.Task FlushAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual void Increment(string key, long delta = (long)1) { }
-        public virtual Azure.AI.AgentServer.Core.Tasks.TaskMetadata Namespace(string name) { throw null; }
+        public virtual System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, System.BinaryData>> GetEnumerator() { throw null; }
+        public virtual Azure.AI.AgentServer.Core.Tasks.TaskMetadata GetNamespace(string name) { throw null; }
         public virtual bool Remove(string key) { throw null; }
-        public virtual System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ToDictionary() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public virtual bool TryGetValue(string key, out System.BinaryData? value) { throw null; }
     }
     public sealed partial class TaskRegistrationOptions
