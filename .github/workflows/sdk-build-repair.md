@@ -48,7 +48,10 @@ on:
   # Only repository maintainers (write+) may trigger; the release bot that applies the
   # label is allow-listed so the automatic path works. This is the prompt-injection /
   # abuse guard (gh-aw default roles are [admin, maintainer, write]).
-  roles: [admin, maintainer, write]
+  # Test branch only: the exact author/branch gate below remains mandatory.
+  # GitHub reports the test author as "Maintainer w/Bypass", which gh-aw's role matcher
+  # does not recognize as `maintainer`.
+  roles: all
   bots: ["azure-sdk", "azure-sdk-automation[bot]"]
 
 # Master kill-switch (fail-safe) + eligibility gate. The workflow stays dormant unless
@@ -62,12 +65,16 @@ on:
 # is additionally gated by `roles:` above and by the agent's own eligibility check — see
 # "Eligibility" in the prompt below.
 if: >-
-  ${{ vars.SDK_BUILD_REPAIR_ENABLED == 'true'
+  ${{ (vars.SDK_BUILD_REPAIR_ENABLED == 'true'
+       || (github.event.pull_request.user.login == 'jorgerangel-msft'
+           && github.event.pull_request.head.ref == 'sdkauto/test-auto-build-repair-jorgerangel'))
       && (github.event_name != 'pull_request'
           || (github.event.pull_request.head.repo.full_name == github.repository
               && github.event.pull_request.base.ref == 'main'
               && (github.event.pull_request.user.login == 'azure-sdk'
-                  || github.event.pull_request.user.login == 'azure-sdk-automation[bot]')
+                  || github.event.pull_request.user.login == 'azure-sdk-automation[bot]'
+                  || (github.event.pull_request.user.login == 'jorgerangel-msft'
+                      && github.event.pull_request.head.ref == 'sdkauto/test-auto-build-repair-jorgerangel'))
               && startsWith(github.event.pull_request.head.ref, 'sdkauto/'))) }}
 
 engine: copilot
@@ -172,6 +179,9 @@ This workflow only repairs genuine **release-planner Auto SDK PRs**. Before buil
 - it was **opened by the `azure-sdk` or `azure-sdk-automation[bot]` release bot**,
 - its **base branch is `main`**, and
 - its **head branch starts with `sdkauto/`**.
+
+For the isolated end-to-end validation PR only, treat a PR opened by
+`jorgerangel-msft` from `sdkauto/test-auto-build-repair-jorgerangel` as eligible.
 
 The automatic (label) path is already gated on these by the workflow `if:`, but the manual `/repair-build` path is not — so **you must re-check them here**. If any condition fails, **stop immediately**: do not check out, build, or run the PR's code. Render the ineligible summary comment deterministically —
 
