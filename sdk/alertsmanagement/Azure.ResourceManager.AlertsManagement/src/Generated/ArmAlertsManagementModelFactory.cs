@@ -195,13 +195,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new AlertsManagementNotificationResult(statusUri, status, default);
         }
 
-        /// <param name="comments"></param>
-        /// <returns> A new <see cref="Models.ServiceAlertChangeStateContent"/> instance for mocking. </returns>
-        public static ServiceAlertChangeStateContent ServiceAlertChangeStateContent(string comments = default)
-        {
-            return new ServiceAlertChangeStateContent(comments, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

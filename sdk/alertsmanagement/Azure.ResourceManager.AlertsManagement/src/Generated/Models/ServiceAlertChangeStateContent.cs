@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Change alert state reason. </summary>
-    public partial class ServiceAlertChangeStateContent
+    internal partial class ServiceAlertChangeStateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

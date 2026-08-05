@@ -6,7 +6,9 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.AlertsManagement.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
@@ -19,7 +21,9 @@ namespace Azure.ResourceManager.AlertsManagement
     //     emitted Request Path matches the AutoRest GA contract byte-for-byte.
     //  2. ChangeState(ServiceAlertState, string, ...) - v1.1.x accepted a plain string for the
     //     comment; the new spec wraps it in ServiceAlertChangeStateContent. These overloads
-    //     convert the string into ServiceAlertChangeStateContent and delegate.
+    //     convert the string into ServiceAlertChangeStateContent and call the generated REST client.
+    [CodeGenSuppress("ChangeStateAsync", typeof(ServiceAlertState), typeof(ServiceAlertChangeStateContent), typeof(CancellationToken))]
+    [CodeGenSuppress("ChangeState", typeof(ServiceAlertState), typeof(ServiceAlertChangeStateContent), typeof(CancellationToken))]
     public partial class ServiceAlertResource
     {
         /// <summary>
@@ -42,8 +46,29 @@ namespace Azure.ResourceManager.AlertsManagement
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
-            var comments = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default(ServiceAlertChangeStateContent);
-            return await ChangeStateAsync(newState, comments, cancellationToken).ConfigureAwait(false);
+            ServiceAlertChangeStateContent content = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default;
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Change the state of an alert. </summary>
@@ -53,8 +78,29 @@ namespace Azure.ResourceManager.AlertsManagement
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
         {
-            var comments = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default(ServiceAlertChangeStateContent);
-            return ChangeState(newState, comments, cancellationToken);
+            ServiceAlertChangeStateContent content = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default;
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

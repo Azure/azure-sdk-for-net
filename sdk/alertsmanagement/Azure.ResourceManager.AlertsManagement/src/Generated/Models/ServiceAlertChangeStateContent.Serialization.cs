@@ -15,7 +15,7 @@ using Azure.ResourceManager.AlertsManagement;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Change alert state reason. </summary>
-    public partial class ServiceAlertChangeStateContent : IJsonModel<ServiceAlertChangeStateContent>
+    internal partial class ServiceAlertChangeStateContent : IJsonModel<ServiceAlertChangeStateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
