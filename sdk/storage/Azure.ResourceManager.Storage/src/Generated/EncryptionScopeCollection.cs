@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -593,6 +594,30 @@ namespace Azure.ResourceManager.Storage
         IAsyncEnumerator<EncryptionScopeResource> IAsyncEnumerable<EncryptionScopeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the encryption scopes available under the specified storage account.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopesOperation IdEncryptionScopes_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<EncryptionScopeResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(maxpagesize: default, filter: default, include: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the encryption scopes available under the specified storage account.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopesOperation IdEncryptionScopes_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<EncryptionScopeResource> GetAll(CancellationToken cancellationToken)
+        {
+            return GetAll(maxpagesize: default, filter: default, include: default, cancellationToken: cancellationToken);
         }
     }
 }
