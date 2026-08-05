@@ -1507,10 +1507,11 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     // Recovered inputs are caller-less: the process that awaited each handle is gone, so the steered
     // turn advances the conversation and resolves a detached handle that nobody observes (Python
     // parity: `_pending_steering_futures` is likewise lost on crash and the input drains on its data
-    // alone). Only the slot is persisted per entry — the per-input id is not — so the chain head
-    // (`last_input_id`) is preserved rather than fabricated (PersistInputId=false); the recovered
-    // turn inherits the record's current `last_input_id` as its input id, matching Python's drain
-    // which never rewrites `last_input_id`.
+    // alone). Each entry's per-turn id is restored from the parallel `pending_input_ids` array so the
+    // recovered turn keeps its `ctx.InputId` and advances `last_input_id` exactly as it would have
+    // without a crash (recovery is transparent). When that array is absent or length-mismatched (an
+    // older or cross-language record that only persisted slots) the recovered turn falls back to
+    // inheriting the current `last_input_id` without advancing it.
     private void RehydratePendingInputs<TOutput>(SteeringQueue<TOutput> queue, TaskRecord record, string taskId)
     {
         if (record.Payload[TaskWireKeys.PayloadSteering] is not JsonObject steering
@@ -1528,10 +1529,15 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             inheritedInputId = persistedId;
         }
 
+        // Only trust the parallel id array when it lines up 1:1 with the slots; otherwise fall back
+        // to the inherited chain head so a skewed/older record degrades to the prior behavior.
+        JsonArray? pendingIds = steering[TaskWireKeys.SteeringPendingInputIds] as JsonArray;
+        bool idsUsable = pendingIds is not null && pendingIds.Count == pending.Count;
+
         var restored = new List<QueuedInput<TOutput>>(pending.Count);
-        foreach (JsonNode? slot in pending)
+        for (int i = 0; i < pending.Count; i++)
         {
-            JsonNode? slotClone = slot?.DeepClone();
+            JsonNode? slotClone = pending[i]?.DeepClone();
 
             // For an oversized queued input the slot is a `_steering_input_<seq>` ref whose content
             // lives in the record's attachments. Carry that content on the QueuedInput exactly as
@@ -1546,8 +1552,21 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 attachments = new JsonObject { [attachmentRef.Key] = content?.DeepClone() };
             }
 
-            var runState = new TaskRunState<TOutput>(taskId, inheritedInputId, CreateMetadata(taskId), isQueued: true);
-            restored.Add(new QueuedInput<TOutput>(slotClone, attachments, inheritedInputId, persistInputId: false, runState));
+            string inputId = inheritedInputId;
+            bool persistInputId = false;
+            if (idsUsable
+                && pendingIds![i] is JsonValue entryIdValue
+                && entryIdValue.TryGetValue(out string? entryId)
+                && !string.IsNullOrEmpty(entryId))
+            {
+                // The durably-persisted per-turn id: restore it and re-enable the chain-head advance
+                // so the recovered turn is indistinguishable from the non-crash drain.
+                inputId = entryId;
+                persistInputId = true;
+            }
+
+            var runState = new TaskRunState<TOutput>(taskId, inputId, CreateMetadata(taskId), isQueued: true);
+            restored.Add(new QueuedInput<TOutput>(slotClone, attachments, inputId, persistInputId, runState));
         }
 
         queue.SeedPendingInputs(restored);

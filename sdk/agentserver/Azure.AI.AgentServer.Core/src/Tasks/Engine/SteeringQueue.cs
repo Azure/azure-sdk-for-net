@@ -224,14 +224,22 @@ internal sealed class SteeringQueue<TOutput>
         lock (_gate)
         {
             var pending = new JsonArray();
+            var pendingIds = new JsonArray();
             foreach (QueuedInput<TOutput> input in _pending)
             {
                 pending.Add(input.Slot is null ? null : input.Slot.DeepClone());
+
+                // Persist each queued input's id in a parallel array so recovery restores its real
+                // per-turn identity (ctx.InputId + last_input_id advance) rather than inheriting the
+                // chain head. Kept as a sibling array so `pending_inputs` stays raw slots and the
+                // wire shape is unchanged for readers that ignore this key.
+                pendingIds.Add(input.InputId);
             }
 
             return new JsonObject
             {
                 [TaskWireKeys.SteeringPendingInputs] = pending,
+                [TaskWireKeys.SteeringPendingInputIds] = pendingIds,
                 [TaskWireKeys.SteeringNextInputSeq] = _nextSeq,
                 [TaskWireKeys.SteeringCancelRequested] = false,
                 [TaskWireKeys.SteeringDrainInProgress] = DrainInProgress,
