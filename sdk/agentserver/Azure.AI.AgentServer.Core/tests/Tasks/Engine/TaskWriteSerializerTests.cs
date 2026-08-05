@@ -154,6 +154,45 @@ public sealed class TaskWriteSerializerTests
     }
 
     [Test]
+    public async Task RemoveWhileGateHeldDoesNotAdmitASecondWriterUnderAFreshGate()
+    {
+        // Regression: Remove used to drop the entry from the map unconditionally, so a subsequent
+        // UpdateAsync minted a FRESH gate and a second writer entered while the original gate was
+        // still held — two concurrent writers on the same task. A synchronous store makes it
+        // deterministic: under the bug the second write runs to completion inline (before the
+        // original gate is released); with the fix it blocks on the same gate.
+        var record = TaskRecord.FromJson(new JsonObject
+        {
+            ["id"] = "g",
+            ["status"] = "in_progress",
+            ["etag"] = "e0",
+            ["payload"] = new JsonObject(),
+        });
+        using var serializer = new TaskWriteSerializer(new SyncStore(record));
+
+        ActiveTaskEntry first = serializer.GetOrAddEntry("g");
+        await first.WriteGate.WaitAsync();
+
+        serializer.Remove("g");
+
+        bool secondEntered = false;
+        Task second = serializer.UpdateAsync("g", _ =>
+        {
+            secondEntered = true;
+            return null;
+        }, WriteIntent.Generic);
+
+        bool enteredBeforeRelease = secondEntered;
+
+        first.WriteGate.Release();
+        await second;
+
+        Assert.That(enteredBeforeRelease, Is.False,
+            "a second writer must not enter under a fresh gate while the original gate is held");
+        Assert.That(secondEntered, Is.True, "the second writer proceeds once the original gate is released");
+    }
+
+    [Test]
     public void BindingMismatchOnPatchAbandonsImmediately()
     {
         // Python parity (SOT §39.1): a hosted 409 binding_mismatch means the task was rebound to
@@ -207,6 +246,30 @@ public sealed class TaskWriteSerializerTests
             Source = new JsonObject { ["type"] = "agentserver.task", ["name"] = "demo", ["server_version"] = "x/1" },
         });
         _serializer.SeedLease(created);
+    }
+
+    /// <summary>A fake store that returns a fixed record synchronously (no I/O yield), so gate
+    /// ordering is deterministic in tests.</summary>
+    private sealed class SyncStore : ITaskStore
+    {
+        private readonly TaskRecord _record;
+
+        public SyncStore(TaskRecord record) => _record = record;
+
+        public Task<TaskRecord> CreateAsync(TaskCreateRequest request, CancellationToken cancellationToken = default)
+            => Task.FromResult(_record);
+
+        public Task<TaskRecord?> GetAsync(string taskId, CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRecord?>(_record);
+
+        public Task<TaskRecord> PatchAsync(string taskId, TaskPatchRequest patch, string? ifMatch, CancellationToken cancellationToken = default)
+            => Task.FromResult(_record);
+
+        public Task DeleteAsync(string taskId, string? ifMatch = null, bool force = false, bool cascade = false, CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
+
+        public Task<TaskListResult> ListAsync(TaskListQuery query, CancellationToken cancellationToken = default)
+            => Task.FromResult(new TaskListResult());
     }
 
     /// <summary>A fake store whose <see cref="PatchAsync"/> always fails with a 409 eviction code.</summary>
