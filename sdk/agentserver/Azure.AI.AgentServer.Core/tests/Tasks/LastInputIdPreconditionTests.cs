@@ -17,10 +17,13 @@ public sealed class LastInputIdPreconditionTests
         using var host = TaskTestHost.Create();
         host.Builder.AddMultiTurnTask<string, string>("seq", (ctx, ct) => Task.FromResult(ctx.Input));
 
-        // Turn 1 establishes _last_input_id = "in-1".
-        await host.Invoker.StartAsync<string, string>(
+        // Turn 1 establishes _last_input_id = "in-1". Await the turn handle (not just the
+        // persisted "suspended" status): the durable suspend write lands before the in-memory
+        // active-run entry is cleared, so gating on status alone can race turn 2 into the
+        // "turn already in progress" conflict path instead of the store-level precondition check.
+        TaskRun<string> turn1 = await host.Invoker.StartAsync<string, string>(
             "seq", "a", new RunOptions { TaskId = "s-1", InputId = "in-1" });
-        await host.WaitForStatusAsync("s-1", "suspended", TimeSpan.FromSeconds(5));
+        await turn1;
 
         // Turn 2 with a stale precondition is rejected.
         var ex = Assert.ThrowsAsync<LastInputIdPreconditionFailedException>(async () =>
@@ -35,9 +38,9 @@ public sealed class LastInputIdPreconditionTests
         using var host = TaskTestHost.Create();
         host.Builder.AddMultiTurnTask<string, string>("seq2", (ctx, ct) => Task.FromResult(ctx.Input));
 
-        await host.Invoker.StartAsync<string, string>(
+        TaskRun<string> turn1 = await host.Invoker.StartAsync<string, string>(
             "seq2", "a", new RunOptions { TaskId = "s-2", InputId = "in-1" });
-        await host.WaitForStatusAsync("s-2", "suspended", TimeSpan.FromSeconds(5));
+        await turn1;
 
         TaskRun<string> t2 = await host.Invoker.StartAsync<string, string>(
             "seq2", "b", new RunOptions { TaskId = "s-2", InputId = "in-2", IfLastInputId = "in-1" });
