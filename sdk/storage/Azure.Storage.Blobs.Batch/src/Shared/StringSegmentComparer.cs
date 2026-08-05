@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal class StringSegmentComparer : IComparer<StringSegment>, IEqualityComparer<StringSegment>
     {
         public static StringSegmentComparer Ordinal { get; }
