@@ -1,14 +1,21 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (2026-08-05)
 
 ### Features Added
 
 - Added support for stable API version 2026-02-23.
-
-### Breaking Changes
+- Added opt-in support for the Azure Confidential Ledger Gateway via `ConfidentialLedgerClientOptions.UseLedgerGateway`. When enabled:
+  - The SDK skips the per-ledger CCF identity-service TLS bootstrap. The gateway uses publicly-rooted certificates, so the OS trust store is sufficient.
+  - `ConfidentialLedgerClient.PostLedgerEntry` accepts an HTTP 202 response and returns an operation whose `Id` is the gateway-assigned `operationId` (read from the `x-ms-webfe-operation-id` response header, with a fallback to the response body). The operation transparently polls `GET /app/operations/{operationId}` and surfaces the underlying CCF transaction once committed.
+  - Client-certificate (mTLS) authentication is rejected at construction time — only `TokenCredential` is supported by the gateway.
+  - Primary-node redirect caching (added in 1.4.1-beta.5) is automatically disabled, since the gateway brokers node routing on the server side.
+- Added `ConfidentialLedgerClient.GetOperationStatus` / `GetOperationStatusAsync` for direct polling of the gateway operation queue.
+- Added `ConfidentialLedgerClient.RehydratePostLedgerEntryOperation(string operationId)` for resuming a previously-started write submission across process restarts (no I/O is performed until polling begins). Operation IDs remain valid on the server for the gateway's operation-record retention period.
 
 ### Bugs Fixed
+
+- `PostLedgerEntryOperation.GetRawResponse()` now returns the initial submit response before the first poll. Previously, callers using `WaitUntil.Started` who inspected response headers (for example `x-ms-ccf-transaction-id` or `x-ms-webfe-operation-id`) on the returned operation observed a `NullReferenceException`.
 
 ### Other Changes
 

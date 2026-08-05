@@ -86,6 +86,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Azure.Pageable<Azure.Security.ConfidentialLedger.Models.LedgerUserMultipleRoles> GetLedgerUsers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetLedgerUsersAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.ConfidentialLedger.Models.LedgerUserMultipleRoles> GetLedgerUsersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetOperationStatus(string operationId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string operationId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetReceipt(string transactionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.TransactionReceipt> GetReceipt(string transactionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetReceiptAsync(string transactionId, Azure.RequestContext context) { throw null; }
@@ -134,6 +136,7 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Azure.Operation PostLedgerEntry(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation RehydratePostLedgerEntryOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateRuntimeOptionsStable(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateRuntimeOptionsStableAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateUserDefinedRoleStable(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -143,6 +146,7 @@ namespace Azure.Security.ConfidentialLedger
     {
         public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_12_09_Preview) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
+        public bool UseLedgerGateway { get { throw null; } set { } }
         public bool VerifyConnection { get { throw null; } set { } }
         public enum ServiceVersion
         {
