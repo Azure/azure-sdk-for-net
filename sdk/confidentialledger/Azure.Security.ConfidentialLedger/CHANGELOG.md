@@ -12,13 +12,9 @@
 - Added `ConfidentialLedgerClient.GetOperationStatus` / `GetOperationStatusAsync` for direct polling of the gateway operation queue.
 - Added `ConfidentialLedgerClient.RehydratePostLedgerEntryOperation(string operationId)` for resuming a previously-started write submission across process restarts (no I/O is performed until polling begins). Operation IDs remain valid on the server for the gateway's operation-record retention period.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - `PostLedgerEntryOperation.GetRawResponse()` now returns the initial submit response before the first poll. Previously, callers using `WaitUntil.Started` who inspected response headers (for example `x-ms-ccf-transaction-id` or `x-ms-webfe-operation-id`) on the returned operation observed a `NullReferenceException`.
-
-### Other Changes
 
 ## 1.4.1-beta.5 (2026-05-26)
 
