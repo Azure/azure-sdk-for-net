@@ -20,13 +20,13 @@ namespace Azure.SdkAnalyzers
     /// <c>$(NoWarn)</c> injection.
     /// </summary>
     /// <remarks>
-    /// <see cref="SupportedDiagnosticIds"/> is fixed at build time; add new IDs to
+    /// <see cref="ScopedSuppressionSupportedDiagnosticIds"/> is fixed at build time; add new IDs to
     /// opt them into scoped suppression.
     /// </remarks>
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class AllowListDiagnosticSuppressor : DiagnosticSuppressor
     {
-        internal static readonly ImmutableHashSet<string> SupportedDiagnosticIds =
+        internal static readonly ImmutableHashSet<string> ScopedSuppressionSupportedDiagnosticIds =
             ImmutableHashSet.Create(
                 StringComparer.Ordinal,
                 "AZC0007",
@@ -34,6 +34,7 @@ namespace Azure.SdkAnalyzers
                 "AZC0014",
                 "AZC0015",
                 "AZC0030",
+                "AZC0031",
                 "AZC0034",
                 "AZC0035",
                 "CS0618",
@@ -309,8 +310,8 @@ namespace Azure.SdkAnalyzers
 
         private static ImmutableArray<SuppressionDescriptor> BuildSuppressionDescriptors()
         {
-            var builder = ImmutableArray.CreateBuilder<SuppressionDescriptor>(SupportedDiagnosticIds.Count);
-            foreach (string id in SupportedDiagnosticIds)
+            var builder = ImmutableArray.CreateBuilder<SuppressionDescriptor>(ScopedSuppressionSupportedDiagnosticIds.Count);
+            foreach (string id in ScopedSuppressionSupportedDiagnosticIds)
             {
                 builder.Add(new SuppressionDescriptor(
                     id: SuppressionIdPrefix + id,

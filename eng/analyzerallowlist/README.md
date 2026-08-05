@@ -4,15 +4,10 @@ This directory contains per-package analyzer allow-list files that record SDK-te
 diagnostic suppressions for shipping client libraries. Every file in this directory represents an
 explicit, reviewed approval with a justification.
 
-> **Not "approved" yet?** If a project has existing `<NoWarn>` entries that have **not** been
-> reviewed by the SDK team, the project should be listed in
-> [`eng/NoWarnSkipValidation.txt`](../NoWarnSkipValidation.txt) — the temporary backlog — rather
-> than getting a file here. See [Workflow](#workflow) below.
-
 > **Inline suppression migration pending?** Projects whose existing pragmas and suppression
 > attributes have not yet been migrated are temporarily listed in
-> [`eng/CodeAnalysisSuppressionSkipValidation.txt`](../CodeAnalysisSuppressionSkipValidation.txt).
-> That backlog skips only `AZC0041` enforcement and does not approve the local suppressions.
+> [`eng/CodeAnalysisSuppressionSkipValidation.txt`](../CodeAnalysisSuppressionSkipValidation.txt)
+> — the temporary backlog that skips `AZC0041` enforcement. See [Workflow](#workflow) below.
 
 ## File Naming
 
@@ -76,6 +71,12 @@ the entire assembly forever — including types that don't exist yet. A scoped
 entry keeps the analyzer live for every site except the specific symbol the
 SDK team has reviewed and approved.
 
+Scoped entries require a Roslyn `SuppressionDescriptor` for the diagnostic ID. The descriptors
+exposed by `AllowListDiagnosticSuppressor.SupportedSuppressions` are built from
+`ScopedSuppressionSupportedDiagnosticIds` in `AllowListDiagnosticSuppressor.cs`. If the diagnostic
+you need is not yet in that set, add it there in the same PR and use a scoped entry. Missing
+suppressor support is not a reason to use a project-wide `nowarn:CODE` entry.
+
 ### `nowarn:CODE SourceGenerated` — source-generator-output suppression
 
 A scoped entry whose target is the keyword `SourceGenerated` (case-insensitive)
@@ -121,49 +122,36 @@ elevating it back to Error globally.
 3. `eng/NoWarnValidation.targets` uses `_ProjectAllowedNoWarn` to validate that any
    codes the project itself declares in `<NoWarn>` are all approved. Any unapproved
    csproj-declared code fails the build with `AZSDK0002`.
-4. Projects listed in `eng/NoWarnSkipValidation.txt` short-circuit the validator entirely
-   (temporary backlog escape hatch).
 
 ## Workflow
 
 ### Adding an approved suppression
 
-Use this only when the suppression is genuinely project-wide and the underlying warning
-cannot be fixed or narrowed:
+If a suppression is genuine and cannot be fixed, prefer the narrowest suppression
+that covers the approved exception:
 
 1. Create or edit `eng/analyzerallowlist/<YourProjectName>.txt`.
-2. Add a `nowarn:CODE` line for the diagnostic you need to suppress. **Do not also add
-   the code to `<NoWarn>` in the csproj** — the build injects it automatically.
+2. Add a symbol-scoped `nowarn:CODE Target` entry for the diagnostic. If `CODE` is not yet in
+   `AllowListDiagnosticSuppressor.ScopedSuppressionSupportedDiagnosticIds`, add it so
+   `SupportedSuppressions` exposes the required descriptor.
 3. **Include a comment immediately above each entry** explaining *why* the suppression is
-   needed and why it can't be narrowed.
+   needed and why that target is the narrowest appropriate scope.
 4. The PR adding the entry will be reviewed by the SDK team.
 
-**Preferred alternatives:**
+Use a bare `nowarn:CODE` entry only when the warning genuinely applies to the entire project or
+cannot technically be scoped. **Do not also add the code to `<NoWarn>` in the csproj** — the build
+injects approved project-wide entries automatically. Its justification must explain why a scoped
+target is not appropriate.
+
+**Order of preference:**
 
 - Fix the underlying warning so the suppression can be removed.
-- For diagnostics not governed by `AllowListDiagnosticSuppressor`, use a scoped
-  `#pragma warning disable CODE // justification` at the file or member level, then remove the
-  `<NoWarn>` entry from the csproj.
-- For diagnostics not governed by `AllowListDiagnosticSuppressor`, use `[SuppressMessage]` with
-  a `Justification` parameter for non-pragma-compatible scopes.
-- Governed diagnostics must be fixed or declared in this directory. `AZC0041` rejects local
-  pragmas and suppression attributes for those diagnostics.
+- Add a symbol-scoped `nowarn:CODE Target` entry so analysis remains enabled everywhere else,
+  extending `ScopedSuppressionSupportedDiagnosticIds` when necessary.
+- Use a justified project-wide `nowarn:CODE` entry only as a last resort when the diagnostic is
+  inherently project-wide or cannot be handled by Roslyn's suppression pipeline.
 
-### Removing a project from the skip list
-
-When picking a project out of `eng/NoWarnSkipValidation.txt`:
-
-1. Delete the project's line from `eng/NoWarnSkipValidation.txt`.
-2. Build the project. The validator will report each unapproved `<NoWarn>` code as an
-   `AZSDK0002` error.
-3. For each error, decide one of:
-   - **Fix:** make the underlying warning go away and delete the code from `<NoWarn>`.
-   - **Migrate:** convert to a scoped `#pragma warning disable` with a justification and
-     remove from `<NoWarn>`.
-   - **Approve:** add a `nowarn:CODE` entry to this directory's file for the project, with
-     a justification comment, **and remove the code from the csproj `<NoWarn>`** — the
-     allow-list entry both records the approval and applies the suppression.
-4. Land in a per-project PR.
+`AZC0041` rejects all warning-disable pragmas and suppression attributes in handwritten source.
 
 ### Removing a project from the code-analysis suppression skip list
 
@@ -177,12 +165,13 @@ When picking a project from the backlog:
 1. Delete the project's line from `eng/CodeAnalysisSuppressionSkipValidation.txt` locally to
    activate `AZC0041`.
 2. Build every target framework for the project and inventory each reported pragma or suppression
-   attribute. Bare `#pragma warning disable` directives require particular care: remove the
-   directive and build to discover every warning it hid.
+   attribute, regardless of diagnostic ID. Bare `#pragma warning disable` directives require
+   particular care: remove the directive and build to discover every warning it hid.
 3. For each reported suppression, choose one of:
    - **Fix:** resolve the underlying warning and remove the local suppression.
    - **Approve narrowly:** add a justified symbol-scoped `nowarn:CODE Target` entry to the
-     project's allow-list file and remove the local suppression.
+     project's allow-list file and remove the local suppression. If the diagnostic is not yet in
+     `ScopedSuppressionSupportedDiagnosticIds`, add it in the same PR.
    - **Approve project-wide:** only when a symbol scope is impractical, add a justified bare
      `nowarn:CODE` entry and remove the local suppression.
 4. Do not edit generated code. `AZC0041` excludes generated source from analysis.
@@ -199,7 +188,6 @@ skip list alphabetical and never add a new project merely to bypass a new `AZC00
 
 - `eng/NoWarnValidation.targets` — The validation target that enforces NoWarn policy
 - `eng/AnalyzerAllowList.targets` — MSBuild logic that reads these files
-- `eng/NoWarnSkipValidation.txt` — Temporary backlog of unverified projects
 - `eng/CodeAnalysisSuppressionSkipValidation.txt` — Temporary backlog of projects with local
   suppression migration pending
 - [Issue #55312](https://github.com/Azure/azure-sdk-for-net/issues/55312) — NoWarn visibility

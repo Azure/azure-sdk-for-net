@@ -20,7 +20,6 @@
   <PropertyGroup>
     <_AnalyzerAllowListDir Condition="'$(_AnalyzerAllowListDir)' == ''">$(RepoEngPath)\analyzerallowlist\</_AnalyzerAllowListDir>
     <_AnalyzerAllowListFile>$(_AnalyzerAllowListDir)$(MSBuildProjectName).txt</_AnalyzerAllowListFile>
-    <_CodeAnalysisSuppressionSkipValidationFile Condition="'$(_CodeAnalysisSuppressionSkipValidationFile)' == ''">$(RepoEngPath)\CodeAnalysisSuppressionSkipValidation.txt</_CodeAnalysisSuppressionSkipValidationFile>
   </PropertyGroup>
 
   <!-- Expose the allow-list file to AllowListDiagnosticSuppressor via the AzureSdkAllowList metadata. -->
@@ -32,9 +31,9 @@
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkAllowList" />
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkCodeAnalysisSuppressionSkipValidation" />
     <CompilerVisibleProperty Include="MSBuildProjectName" />
-    <AdditionalFiles Include="$(_CodeAnalysisSuppressionSkipValidationFile)"
+    <AdditionalFiles Include="$(RepoEngPath)\CodeAnalysisSuppressionSkipValidation.txt"
                      AzureSdkCodeAnalysisSuppressionSkipValidation="true"
-                     Condition="Exists('$(_CodeAnalysisSuppressionSkipValidationFile)')"
+                     Condition="Exists('$(RepoEngPath)\CodeAnalysisSuppressionSkipValidation.txt')"
                      Visible="false" />
   </ItemGroup>
 

@@ -26,6 +26,8 @@ namespace Azure.SdkAnalyzers
 
         // CompilerVisibleProperty exposes MSBuildProjectName under the `build_property` prefix.
         private const string ProjectNameProperty = "build_property.MSBuildProjectName";
+        internal const string BarePragmaMessage =
+            "A bare #pragma warning disable is not allowed. Remove it, rebuild to identify the hidden warnings, and fix or centrally approve each specific diagnostic.";
 
         private static readonly ImmutableHashSet<string> s_suppressionAttributeNames =
             ImmutableHashSet.Create(
@@ -61,15 +63,6 @@ namespace Azure.SdkAnalyzers
         // configuration.
         internal static bool ShouldSkipProject(AnalyzerOptions options, CancellationToken cancellationToken)
         {
-            // Get the MSBuild project currently being analyzed.
-            if (!options.AnalyzerConfigOptionsProvider.GlobalOptions.TryGetValue(
-                ProjectNameProperty,
-                out string projectName))
-            {
-                // Missing build configuration. Fail closed, i.e. enable enforcement.
-                return false;
-            }
-
             // Find the one AdditionalFile whose analyzer configuration contains marker=true.
             AdditionalText skipList = null;
             foreach (AdditionalText file in options.AdditionalFiles)
@@ -91,8 +84,23 @@ namespace Azure.SdkAnalyzers
                 skipList = file;
             }
 
-            // Read the authoritative skip list. If it is absent, enable enforcement by default.
-            SourceText text = skipList?.GetText(cancellationToken);
+            // Only shipping libraries receive the centrally marked backlog file. Projects that
+            // merely load the broader analyzer assembly remain outside AZC0041 policy scope.
+            if (skipList == null)
+            {
+                return true;
+            }
+
+            // Once central configuration is present, fail closed if required project identity or
+            // file contents are unavailable so a wiring failure cannot silently disable policy.
+            if (!options.AnalyzerConfigOptionsProvider.GlobalOptions.TryGetValue(
+                ProjectNameProperty,
+                out string projectName))
+            {
+                return false;
+            }
+
+            SourceText text = skipList.GetText(cancellationToken);
             if (text == null)
             {
                 return false;
@@ -130,18 +138,16 @@ namespace Azure.SdkAnalyzers
             if (pragma.ErrorCodes.Count == 0)
             {
                 // A bare warning-disable pragma suppresses all warnings and is always disallowed.
-                context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0041, pragma.GetLocation(), "all warnings"));
+                context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0041, pragma.GetLocation(), BarePragmaMessage));
                 return;
             }
 
-            // Report each governed ID independently, while allowing ungoverned IDs to remain.
+            // Every local warning suppression is centrally governed. Report each ID independently
+            // without coupling policy to the suppressor's narrower scoped-suppression capability.
             foreach (ExpressionSyntax errorCode in pragma.ErrorCodes)
             {
                 string diagnosticId = NormalizePragmaDiagnosticId(errorCode);
-                if (IsGovernedDiagnosticId(diagnosticId))
-                {
-                    context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0041, errorCode.GetLocation(), diagnosticId));
-                }
+                ReportSuppression(context, errorCode.GetLocation(), diagnosticId);
             }
         }
 
@@ -177,16 +183,18 @@ namespace Azure.SdkAnalyzers
 
             // Suppression attributes permit values such as "AZC0015:Unexpected return type".
             string diagnosticId = checkId.Split(':')[0].Trim();
-            if (IsGovernedDiagnosticId(diagnosticId))
+            if (diagnosticId.Length != 0)
             {
-                context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0041, checkIdArgument.Expression.GetLocation(), diagnosticId));
+                ReportSuppression(context, checkIdArgument.Expression.GetLocation(), diagnosticId);
             }
         }
 
-        private static bool IsGovernedDiagnosticId(string diagnosticId)
+        private static void ReportSuppression(SyntaxNodeAnalysisContext context, Location location, string diagnosticId)
         {
-            return string.Equals(diagnosticId, nameof(Descriptors.AZC0041), StringComparison.Ordinal) ||
-                AllowListDiagnosticSuppressor.SupportedDiagnosticIds.Contains(diagnosticId);
+            context.ReportDiagnostic(Diagnostic.Create(
+                Descriptors.AZC0041,
+                location,
+                $"Suppression for diagnostic '{diagnosticId}' must be declared in eng/analyzerallowlist"));
         }
 
         // Locate checkId when supplied positionally or with the constructor's `name:` syntax.

@@ -114,11 +114,13 @@ namespace Azure.SdkAnalyzers
         public static readonly DiagnosticDescriptor AZC0041 = new(
             nameof(AZC0041),
             "Declare code analysis suppressions centrally",
-            "Suppression for diagnostic '{0}' must be declared in eng/analyzerallowlist",
+            "{0}",
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,
             "Code analysis suppressions must be centrally governed through eng/analyzerallowlist instead of pragmas or suppression attributes in library source.",
-            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable });
+            // NotConfigurable blocks pragma/configuration suppression. Compiler is also required
+            // because Roslyn otherwise allows SuppressMessage attributes to suppress AZC0041.
+            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable, WellKnownDiagnosticTags.Compiler });
     }
 }
