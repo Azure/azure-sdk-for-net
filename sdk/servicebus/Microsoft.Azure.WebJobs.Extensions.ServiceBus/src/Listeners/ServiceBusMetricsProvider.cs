@@ -185,7 +185,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
 
             // Path for connection strings with no manage claim
             var fallbackMetrics = CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
-            _logger.LogInformation($"Fallback metrics for '{_entityPath}': MessageCount={fallbackMetrics.MessageCount}, QueueTime={fallbackMetrics.QueueTime.TotalSeconds:F1}s, PartitionCount={fallbackMetrics.PartitionCount}");
+            _logger.LogDebug($"Fallback metrics for '{_entityPath}': MessageCount={fallbackMetrics.MessageCount}, QueueTime={fallbackMetrics.QueueTime.TotalSeconds:F1}s, PartitionCount={fallbackMetrics.PartitionCount}");
             return fallbackMetrics;
         }
 
