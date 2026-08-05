@@ -116,8 +116,8 @@ builder.Services.AddEventStreams(o => o.UseFileBackedReplay(
     storageDirectory: "/var/streams",                                 // one file per stream id
     cursor: payload => ((MyEvent)payload).Sequence,
     ttl: TimeSpan.FromHours(1),
-    serializer: payload => JsonSerializer.SerializeToUtf8Bytes((MyEvent)payload),
-    deserializer: bytes => JsonSerializer.Deserialize<MyEvent>(bytes)!));
+    serializer: payload => JsonSerializer.Serialize((MyEvent)payload),
+    deserializer: json => JsonSerializer.Deserialize<MyEvent>(json)!));
 ```
 
 - **`cursor`** — pass this when you want cursored re-subscription
