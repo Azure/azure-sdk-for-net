@@ -547,11 +547,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateCheckpointAsync(WaitUntil waitUntil, VirtualMachineCreateCheckpointContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateCheckpointAsync(WaitUntil waitUntil, VirtualMachineCreateCheckpointContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("ScVmmVirtualMachineInstanceResource.CreateCheckpoint");
             scope.Start();
             try
@@ -600,11 +597,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation CreateCheckpoint(WaitUntil waitUntil, VirtualMachineCreateCheckpointContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateCheckpoint(WaitUntil waitUntil, VirtualMachineCreateCheckpointContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("ScVmmVirtualMachineInstanceResource.CreateCheckpoint");
             scope.Start();
             try
@@ -653,11 +647,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteCheckpointAsync(WaitUntil waitUntil, VirtualMachineDeleteCheckpointContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteCheckpointAsync(WaitUntil waitUntil, VirtualMachineDeleteCheckpointContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("ScVmmVirtualMachineInstanceResource.DeleteCheckpoint");
             scope.Start();
             try
@@ -706,11 +697,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation DeleteCheckpoint(WaitUntil waitUntil, VirtualMachineDeleteCheckpointContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteCheckpoint(WaitUntil waitUntil, VirtualMachineDeleteCheckpointContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("ScVmmVirtualMachineInstanceResource.DeleteCheckpoint");
             scope.Start();
             try
@@ -857,11 +845,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestoreCheckpointAsync(WaitUntil waitUntil, VirtualMachineRestoreCheckpointContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreCheckpointAsync(WaitUntil waitUntil, VirtualMachineRestoreCheckpointContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("ScVmmVirtualMachineInstanceResource.RestoreCheckpoint");
             scope.Start();
             try
@@ -910,11 +895,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RestoreCheckpoint(WaitUntil waitUntil, VirtualMachineRestoreCheckpointContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RestoreCheckpoint(WaitUntil waitUntil, VirtualMachineRestoreCheckpointContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _virtualMachineInstancesClientDiagnostics.CreateScope("ScVmmVirtualMachineInstanceResource.RestoreCheckpoint");
             scope.Start();
             try
