@@ -74,7 +74,7 @@ namespace Azure.Provisioning.DomainRegistration
             base.DefineProvisionableProperties();
             _agreementKeys = DefineListProperty<string>(nameof(AgreementKeys), new string[] { "agreementKeys" });
             _agreedBy = DefineProperty<string>(nameof(AgreedBy), new string[] { "agreedBy" });
-            _agreedOn = DefineProperty<DateTimeOffset>(nameof(AgreedOn), new string[] { "agreedAt" });
+            _agreedOn = DefineProperty<DateTimeOffset>(nameof(AgreedOn), new string[] { "agreedAt" }, format: "O");
             DefineAdditionalProperties();
         }
 
