@@ -3,7 +3,6 @@
 
 using System.Threading;
 using Azure.ResourceManager.AlertsManagement.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
@@ -11,7 +10,6 @@ namespace Azure.ResourceManager.AlertsManagement
     // ServiceAlertCollection.GetAll(ServiceAlertCollectionGetAllOptions) wrapping the 17 query
     // parameters of Alerts_GetAllTenant in a single options object. The new TypeSpec generator
     // emits only the individual-parameter overload, so this partial reintroduces the wrapper.
-    [CodeGenType("AlertCollection")]
     public partial class ServiceAlertCollection
     {
         /// <summary>
