@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ContainerServiceFleetUpdateRunResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerServiceFleetUpdateRunResource> GetAllAsync(CancellationToken cancellationToken)
         {
             return GetAllAsync(null, null, cancellationToken);
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ContainerServiceFleetUpdateRunResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetUpdateRunResource> GetAll(CancellationToken cancellationToken)
         {
             return GetAll(null, null, cancellationToken);
         }
