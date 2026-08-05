@@ -1,4 +1,4 @@
 directory: specification/scvmm/ScVmm.Management
-commit: 6f8335627956c1ed846aacbfae0400354527b267
-repo: Azure/azure-rest-api-specs
+commit: 7690ca29834fc700dc924fb75c63747b0ea7c7d5
+repo: cxznmhdcxz/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

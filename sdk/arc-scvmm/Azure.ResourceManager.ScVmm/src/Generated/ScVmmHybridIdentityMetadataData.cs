@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.ScVmm
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmHybridIdentityMetadataData"/>. </summary>
+        public ScVmmHybridIdentityMetadataData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmHybridIdentityMetadataData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -30,6 +35,43 @@ namespace Azure.ResourceManager.ScVmm
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal VmInstanceHybridIdentityMetadataProperties Properties { get; set; }
+
+        /// <summary> The unique identifier for the resource. </summary>
+        public string ResourceUid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceUid;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmInstanceHybridIdentityMetadataProperties();
+                }
+                Properties.ResourceUid = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Public Key. </summary>
+        public string PublicKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmInstanceHybridIdentityMetadataProperties();
+                }
+                Properties.PublicKey = value;
+            }
         }
 
         /// <summary> Provisioning state of the resource. </summary>
