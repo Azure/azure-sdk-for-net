@@ -1,10 +1,14 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded api-version to `2026-06-01`.
+
 ### Breaking Changes
+
+- Removed the preview Cluster Mesh Profile APIs.
 
 ### Bugs Fixed
 
