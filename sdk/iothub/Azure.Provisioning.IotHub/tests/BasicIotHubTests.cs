@@ -38,6 +38,9 @@ public class BasicIotHubTests
     }
 
     [Test]
+    [Description(
+        "Azure Quickstart Template: https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.devices/iothub-device-provisioning/main.bicep; " +
+        "Microsoft Learn: https://learn.microsoft.com/azure/iot-hub/create-hub")]
     public async Task CreateIotHub()
     {
         await using Trycep test = CreateIotHubTest();
