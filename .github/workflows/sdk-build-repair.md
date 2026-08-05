@@ -195,7 +195,7 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 
 ## Steps
 
-1. Identify the single failing SDK package path from the PR diff. **Record the current PR head sha** (`git rev-parse HEAD`) as the pre-repair sha — the summary in Step 5 uses it to diff changed files. Collect the package's build errors (build the changed package to capture them).
+1. Identify the single failing SDK package path from the PR diff. **Record the current PR head sha** (`git rev-parse HEAD`) as the pre-repair sha — the summary in Step 5 uses it to diff changed files. Create `$RUNNER_TEMP/repair-results` and collect the package's build errors by building the changed package, **redirecting the raw build output to `$RUNNER_TEMP/repair-results/pre-repair-errors.txt`** — the Step 5 emitter parses this to list the errors it fixed (a first-try success leaves no `buildResult` in the engine result, so this capture is the only source for the "Build Errors Fixed" list). This is a mechanical redirect, not authored content.
 2. Apply the `auto-build-repair` skill workflow: call the engine with `--edit-scope CustomCode`, the `--package-path`, and the build errors as `--customization-request`, **redirecting each attempt's `-o json` output to `$RUNNER_TEMP/repair-results/result-<n>.json`**; re-invoke (idempotent) only while the error set keeps shrinking, up to `maxIterations`.
 3. Inspect each structured result. Stop on the skill's stop conditions (`SpecChangeRequired`, `RegenerateFailed` at the pinned commit, suspected generator bug, or `maxIterations` reached) — do not retry past them or escalate to a human prompt.
 4. **Commit the result to the PR branch** using the `push-to-pull-request-branch` safe output (custom-code edits + regenerated `Generated/`). If the only viable fix is a spec/decorator change, push nothing and report it as out of scope (requires a separate spec-repo PR).
@@ -204,6 +204,7 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
    ```bash
    pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
      -ResultsDir "$RUNNER_TEMP/repair-results" \
+     -PreRepairErrorsFile "$RUNNER_TEMP/repair-results/pre-repair-errors.txt" \
      -PackagePath "<failing SDK package dir>" \
      -PreRepairSha "<pre-repair sha from Step 1>" \
      -Pr <pr-number> -HeadSha "<pr-head-sha>" -Repo "$GITHUB_REPOSITORY" \

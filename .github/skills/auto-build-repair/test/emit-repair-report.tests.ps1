@@ -66,6 +66,11 @@ try {
     $repairedDir = Join-Path $tmp 'repaired'; New-Item -ItemType Directory -Path $repairedDir | Out-Null
     [ordered]@{ success = $true; appliedPatches = @(@{ filePath = 'sdk/foo/Azure.Foo/src/Custom.cs'; description = 'fix'; replacementCount = 1 }) } |
         ConvertTo-Json -Depth 6 | Set-Content (Join-Path $repairedDir 'result-1.json')
+    # Pre-repair build errors: the deterministic source for the "Build Errors Fixed" list on
+    # a first-try success (the successful result carries no buildResult).
+    $repairedPre = Join-Path $repairedDir 'pre-repair-errors.txt'
+    "sdk/foo/Azure.Foo/src/Custom.cs(1,1): error CS0117: 'X' has no member 'Y'" |
+        Set-Content -LiteralPath $repairedPre
 
     $failedDir = Join-Path $tmp 'failed'; New-Item -ItemType Directory -Path $failedDir | Out-Null
     $nl = [char]10
@@ -73,7 +78,7 @@ try {
         ConvertTo-Json -Depth 6 | Set-Content (Join-Path $failedDir 'result-1.json')
 
     $cases = @(
-        @{ name = 'repaired';              args = @('-ResultsDir', $repairedDir, '-PackagePath', 'sdk/foo/Azure.Foo', '-PreRepairSha', '') ; expect = 'repaired' }
+        @{ name = 'repaired';              args = @('-ResultsDir', $repairedDir, '-PackagePath', 'sdk/foo/Azure.Foo', '-PreRepairSha', '', '-PreRepairErrorsFile', $repairedPre) ; expect = 'repaired' }
         @{ name = 'failed';                args = @('-ResultsDir', $failedDir,   '-PackagePath', 'sdk/foo/Azure.Foo') ; expect = 'failed' }
         @{ name = 'ineligible';            args = @('-Eligible:$false') ; expect = 'ineligible' }
         @{ name = 'skipped_already_green'; args = @('-ForcedStatus', 'skipped_already_green', '-PackagePath', 'sdk/foo/Azure.Foo') ; expect = 'skipped_already_green' }
@@ -109,8 +114,20 @@ try {
         Assert ($body -notmatch '<!--') "no <!-- --> HTML comment (sanitizer strips it)"
         if ($c.expect -ne 'ineligible') {
             Assert ($body -match '<details><summary>Telemetry \(machine-readable\)</summary>') "telemetry <details> present"
+            Assert ($body -match '(?m)^### Summary$') "Summary section present"
+            Assert ($body -match '(?m)^### Invariants Confirmed$') "Invariants section present"
         }
-        Assert ($body -match '### SDK build repair') "visible heading present (identity)"
+        Assert ($body -match '## SDK Build Repair') "visible heading present (identity)"
+
+        if ($c.expect -eq 'repaired') {
+            # Regression guard: a first-try success must still list the errors it fixed,
+            # sourced from the pre-repair build log (the success result has no buildResult).
+            Assert ($body -match '(?m)^### Build Errors Fixed$') "repaired: 'Build Errors Fixed' section present"
+            Assert ($body -match 'CS0117') "repaired: fixed error code shown (not 'none')"
+        }
+        if ($c.expect -eq 'failed') {
+            Assert ($body -match '(?m)^### Remaining Build Errors$') "failed: 'Remaining Build Errors' section present"
+        }
     }
 }
 finally {

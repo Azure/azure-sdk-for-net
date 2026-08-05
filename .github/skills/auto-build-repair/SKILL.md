@@ -76,7 +76,7 @@ Each call performs **one repair attempt**; the skill owns the iterate-until-gree
 
 ```
 0. Read `maxIterations` from repair-config.yml (next to this SKILL.md); default to 3 if absent.
-1. Identify the failing `packagePath` and collect the build-error output from the PR.
+1. Identify the failing `packagePath` and collect the build-error output from the PR, capturing the raw build output to a file (e.g. `pre-repair-errors.txt` in the results directory) so the renderer can list the errors it fixed.
 2. Call azure-sdk-mcp:azsdk_customized_code_update with:
       editScope = "CustomCode", packagePath, customizationRequest = <build errors>  (omit tspProjectPath).
    The tool regenerates from the pinned commit, patches ONLY custom code, rebuilds, and returns a build result.
@@ -92,8 +92,8 @@ Each call performs **one repair attempt**; the skill owns the iterate-until-gree
 
 Every terminal state must leave **one structured PR summary comment**, and its structure must be **deterministic**. You do **not** write the comment prose or the metrics — a checked-in renderer does, from code-accessible sources only (the engine's structured results, `git`, and `$GITHUB_*` env). Your only reporting job is to **capture each attempt's structured result** and **run the renderer**, then post its output verbatim.
 
-1. **Capture structured results.** Invoke the engine so each attempt's `CustomizedCodeUpdateResponse` is written to `result-<n>.json` (attempt-numbered) in a results directory. From the CLI this is `azsdk -o json … > result-<n>.json` (see the workflow file); from the MCP tool, persist the returned JSON the same way. Never hand-transcribe fields.
-2. **Render.** Run [`emit-repair-report.ps1`](emit-repair-report.ps1) (co-located) pointing at the results directory. It derives status, classified build errors, files changed (generated-vs-custom via `git diff`), iterations, and the telemetry object, and writes the full comment markdown to a file.
+1. **Capture structured results.** Invoke the engine so each attempt's `CustomizedCodeUpdateResponse` is written to `result-<n>.json` (attempt-numbered) in a results directory. From the CLI this is `azsdk -o json … > result-<n>.json` (see the workflow file); from the MCP tool, persist the returned JSON the same way. Also redirect the initial (pre-repair) build output to `pre-repair-errors.txt` in that directory — a first-try success leaves no `buildResult`, so this is the only source for the "Build Errors Fixed" list. Never hand-transcribe fields.
+2. **Render.** Run [`emit-repair-report.ps1`](emit-repair-report.ps1) (co-located) pointing at the results directory (`-ResultsDir`) and the captured pre-repair output (`-PreRepairErrorsFile`). It renders a Summary table, a Build Errors Fixed/Remaining table (code + file:line parsed from the build output), a Files Changed table (generated-vs-custom via `git diff`, with per-file change descriptions from the engine's `appliedPatches`), an Invariants section, and the telemetry object — writing the full comment markdown to a file.
 3. **Post verbatim.** Pass the rendered file's contents **unchanged** as the `add_comment` body. Do not edit, summarize, or re-order it.
 
 **The telemetry object** is a small, versioned JSON embedded in a collapsed `<details>` block, defined by [`telemetry-schema.v1.json`](telemetry-schema.v1.json) — the canonical contract, mirrored by CloudMine from the GitHub issues/comments stream. It carries only the fields needed to compute (or key the joins for) the success metrics:
@@ -101,7 +101,7 @@ Every terminal state must leave **one structured PR summary comment**, and its s
 | Field | Source (never the model) |
 |-------|--------------------------|
 | `status`, `repaired_at` | engine `success` of the final `result-<n>.json` + wall clock on green |
-| classified errors (human section) | regex over engine `buildResult` |
+| classified errors (human section) | regex over the captured pre-repair build output + engine `buildResult` |
 | files changed (human section) | `git diff --name-status` + `Generated/` path split |
 | iterations (human section) | count of `result-<n>.json` files |
 | `pr`, `head_sha`, `repo`, `run_id`, `eligible` | `$GITHUB_*` env + the eligibility gate |
