@@ -128,7 +128,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 32
 | tables | Azure.Data.Tables |
 | textanalytics | Azure.AI.TextAnalytics |
 | textanalytics | Azure.AI.TextAnalytics.Legacy.Shared |
-| timeseriesinsights | Azure.IoT.TimeSeriesInsights |
 | webpubsub | Azure.Messaging.WebPubSub |
 
 
