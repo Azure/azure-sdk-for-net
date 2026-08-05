@@ -213,8 +213,11 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<ArmOperation<ScVmmVirtualNetworkResource>> UpdateAsync(WaitUntil waitUntil, ScVmmVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ScVmmVirtualNetworkResource>> UpdateAsync(WaitUntil waitUntil, ScVmmResourcePatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkResource.Update");
             scope.Start();
             try
@@ -223,7 +226,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmVirtualNetworkPatch.ToRequestContent(patch), context);
+                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmVirtualNetworkResource> operation = new ScVmmArmOperation<ScVmmVirtualNetworkResource>(
                     new ScVmmVirtualNetworkResourceOperationSource(Client),
@@ -269,8 +272,11 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual ArmOperation<ScVmmVirtualNetworkResource> Update(WaitUntil waitUntil, ScVmmVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ScVmmVirtualNetworkResource> Update(WaitUntil waitUntil, ScVmmResourcePatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkResource.Update");
             scope.Start();
             try
@@ -279,7 +285,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmVirtualNetworkPatch.ToRequestContent(patch), context);
+                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmVirtualNetworkResource> operation = new ScVmmArmOperation<ScVmmVirtualNetworkResource>(
                     new ScVmmVirtualNetworkResourceOperationSource(Client),
@@ -432,7 +438,7 @@ namespace Azure.ResourceManager.ScVmm
                 else
                 {
                     ScVmmVirtualNetworkData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScVmmVirtualNetworkPatch patch = new ScVmmVirtualNetworkPatch();
+                    ScVmmResourcePatch patch = new ScVmmResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -480,7 +486,7 @@ namespace Azure.ResourceManager.ScVmm
                 else
                 {
                     ScVmmVirtualNetworkData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScVmmVirtualNetworkPatch patch = new ScVmmVirtualNetworkPatch();
+                    ScVmmResourcePatch patch = new ScVmmResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -527,7 +533,7 @@ namespace Azure.ResourceManager.ScVmm
                 else
                 {
                     ScVmmVirtualNetworkData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScVmmVirtualNetworkPatch patch = new ScVmmVirtualNetworkPatch();
+                    ScVmmResourcePatch patch = new ScVmmResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ScVmmVirtualNetworkResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -570,7 +576,7 @@ namespace Azure.ResourceManager.ScVmm
                 else
                 {
                     ScVmmVirtualNetworkData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScVmmVirtualNetworkPatch patch = new ScVmmVirtualNetworkPatch();
+                    ScVmmResourcePatch patch = new ScVmmResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ScVmmVirtualNetworkResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -612,7 +618,7 @@ namespace Azure.ResourceManager.ScVmm
                 else
                 {
                     ScVmmVirtualNetworkData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScVmmVirtualNetworkPatch patch = new ScVmmVirtualNetworkPatch();
+                    ScVmmResourcePatch patch = new ScVmmResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -658,7 +664,7 @@ namespace Azure.ResourceManager.ScVmm
                 else
                 {
                     ScVmmVirtualNetworkData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScVmmVirtualNetworkPatch patch = new ScVmmVirtualNetworkPatch();
+                    ScVmmResourcePatch patch = new ScVmmResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

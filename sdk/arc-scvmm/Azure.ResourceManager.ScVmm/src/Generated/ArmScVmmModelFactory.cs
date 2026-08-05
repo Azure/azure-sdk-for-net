@@ -69,6 +69,15 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new VmmCredential(username, password, default);
         }
 
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ScVmmResourcePatch"/> instance for mocking. </returns>
+        public static ScVmmResourcePatch ScVmmResourcePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScVmmResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -333,15 +342,6 @@ namespace Azure.ResourceManager.ScVmm.Models
                 availabilitySetName is null && vmmServerId is null && provisioningState is null ? default : new AvailabilitySetProperties(availabilitySetName, vmmServerId, provisioningState, default),
                 extendedLocation,
                 default);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ScVmmResourcePatch"/> instance for mocking. </returns>
-        public static ScVmmResourcePatch ScVmmResourcePatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ScVmmResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
