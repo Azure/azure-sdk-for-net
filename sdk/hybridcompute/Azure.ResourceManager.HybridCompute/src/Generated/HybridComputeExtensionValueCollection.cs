@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute
             _publisher = publisher;
             _extensionType = extensionType;
             _extensionMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeExtensionValueResource.ResourceType.Namespace, Diagnostics);
-            _extensionMetadataRestClient = new ExtensionMetadata(_extensionMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeExtensionValueApiVersion ?? "2025-09-16-preview");
+            _extensionMetadataRestClient = new ExtensionMetadata(_extensionMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeExtensionValueApiVersion ?? "2026-07-15");
             ValidateResourceId(id);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisher, _extensionType, version, context);
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisher, _extensionType, version, context);
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HybridCompute
             };
             return new AsyncPageableWrapper<HybridComputeExtensionValueData, HybridComputeExtensionValueResource>(new ExtensionMetadataGetAllAsyncCollectionResultOfT(
                 _extensionMetadataRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 _location,
                 _publisher,
                 _extensionType,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HybridCompute
             };
             return new PageableWrapper<HybridComputeExtensionValueData, HybridComputeExtensionValueResource>(new ExtensionMetadataGetAllCollectionResultOfT(
                 _extensionMetadataRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 _location,
                 _publisher,
                 _extensionType,
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisher, _extensionType, version, context);
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisher, _extensionType, version, context);
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisher, _extensionType, version, context);
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisher, _extensionType, version, context);
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;
