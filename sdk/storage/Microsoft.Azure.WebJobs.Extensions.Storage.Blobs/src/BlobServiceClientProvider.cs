@@ -26,3 +26,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

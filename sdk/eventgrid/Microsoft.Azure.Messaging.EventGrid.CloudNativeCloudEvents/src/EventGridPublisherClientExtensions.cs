@@ -118,3 +118,5 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

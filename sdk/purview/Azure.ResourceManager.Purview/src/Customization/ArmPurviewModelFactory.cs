@@ -64,3 +64,5 @@ namespace Azure.ResourceManager.Purview.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE

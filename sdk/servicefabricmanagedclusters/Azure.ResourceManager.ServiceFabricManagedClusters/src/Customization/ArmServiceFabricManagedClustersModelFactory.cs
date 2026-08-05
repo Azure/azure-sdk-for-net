@@ -407,3 +407,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
