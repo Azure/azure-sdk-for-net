@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ public sealed class MultiTurnHandlerRaiseTests
         using var host = TaskTestHost.Create();
         host.Builder.AddMultiTurnTask<string, string>("boom", (ctx, ct) =>
             throw new InvalidOperationException("turn failed"),
-            configure: o => o.Retry = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 1));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 1 });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "boom", "a", new RunOptions { TaskId = "b-1" });
@@ -35,7 +36,7 @@ public sealed class MultiTurnHandlerRaiseTests
         using var host = TaskTestHost.Create();
         host.Builder.AddMultiTurnTask<string, string>("he", (ctx, ct) =>
             throw new InvalidOperationException("nope"),
-            configure: o => o.Retry = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 1));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 1 });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "he", "a", new RunOptions { TaskId = "he-1" });
@@ -52,7 +53,7 @@ public sealed class MultiTurnHandlerRaiseTests
         using var host = TaskTestHost.Create();
         host.Builder.AddMultiTurnTask<string, string>("tb", (ctx, ct) =>
             throw new InvalidOperationException("kaboom"),
-            configure: o => o.Retry = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 1));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 1 });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "tb", "a", new RunOptions { TaskId = "tb-1" });
@@ -69,10 +70,7 @@ public sealed class MultiTurnHandlerRaiseTests
             throw new InvalidOperationException("again"),
             configure: o => o.Retry = new TaskRetryPolicy
             {
-                MaxAttempts = 3,
-                InitialDelay = TimeSpan.Zero,
-                MaxDelay = TimeSpan.Zero,
-                Jitter = false,
+                MaxAttempts = 3, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.Zero),
             });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(

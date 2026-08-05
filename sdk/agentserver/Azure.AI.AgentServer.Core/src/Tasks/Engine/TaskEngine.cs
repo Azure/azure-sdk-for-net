@@ -677,7 +677,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         var handler = (Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler;
         // Retry is opt-in (spec §15): a handler with no configured TaskRetryPolicy fails on the first
         // raise, matching the Python reference (retry only applies when a policy is supplied).
-        TaskRetryPolicy retry = registration.Options?.Retry ?? TaskRetryPolicy.NoRetry();
+        TaskRetryPolicy retry = registration.Options?.Retry ?? new TaskRetryPolicy { MaxAttempts = 1 };
 
         TaskRunState<TOutput> currentRun = runState;
         TInput currentInput = input;
@@ -1619,27 +1619,10 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         => $"{prefix}-{Guid.NewGuid():N}";
 
     private static TimeSpan ComputeDelay(TaskRetryPolicy retry, int attempt)
-    {
-        double baseMs;
-        if (retry.LinearIncrement is { } increment)
-        {
-            baseMs = retry.InitialDelay.TotalMilliseconds + (increment.TotalMilliseconds * attempt);
-        }
-        else
-        {
-            baseMs = retry.InitialDelay.TotalMilliseconds * Math.Pow(retry.BackoffCoefficient, attempt);
-        }
-
-        // MaxDelay is validated in [0, MaxRetryDelay] at TaskRetryPolicy construction.
-        baseMs = Math.Min(baseMs, retry.MaxDelay.TotalMilliseconds);
-        if (retry.Jitter)
-        {
-            double factor = 0.75 + (Random.Shared.NextDouble() * 0.5);
-            baseMs *= factor;
-        }
-
-        return TimeSpan.FromMilliseconds(baseMs);
-    }
+        // Delegate to the policy's DelayStrategy (retry number is 1-based). The strategy owns jitter
+        // and max-delay clamping; the backoff itself is awaited under the handler's cooperative token
+        // so shutdown/cancel/timeout still interrupt a long delay.
+        => retry.Delay.GetNextDelay(null, attempt + 1);
 
     /// <inheritdoc/>
     public async Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using NUnit.Framework;
@@ -50,7 +51,7 @@ public sealed class RetryTests
                 attempts.Add(ctx.RetryAttempt);
                 throw new InvalidOperationException("always fails");
             },
-            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromMilliseconds(1)) });
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "flaky", "in", new RunOptions { TaskId = "t1" });
@@ -83,7 +84,7 @@ public sealed class RetryTests
                 await ctx.ExitForRecoveryAsync(ct);
                 return "unreached";
             },
-            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 5, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromMilliseconds(1)) });
 
         // ExitForRecovery is gated on graceful shutdown — signal it before dispatch so the crash
         // simulation (Fresh turn bailing for recovery) is the documented production path.
@@ -106,7 +107,7 @@ public sealed class RetryTests
                 recovered.TrySetResult(ctx.RetryAttempt);
                 return Task.FromResult("ok");
             },
-            configure: o => o.Retry = TaskRetryPolicy.FixedDelay(maxAttempts: 5, delay: TimeSpan.FromMilliseconds(1)));
+            configure: o => o.Retry = new TaskRetryPolicy { MaxAttempts = 5, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromMilliseconds(1)) });
 
         int dispatched = await host2.Engine.ScanAndRecoverAsync();
         Assert.That(dispatched, Is.EqualTo(1));

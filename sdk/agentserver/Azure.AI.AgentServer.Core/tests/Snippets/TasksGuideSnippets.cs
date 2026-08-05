@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -117,13 +118,14 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             IServiceCollection services,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            TaskRetryPolicy policy = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 5);
+            // Retries compose an Azure.Core DelayStrategy — exponential is the default.
+            TaskRetryPolicy policy = new() { MaxAttempts = 5 };
             services.AddResilientTasks()
                 .AddTask<string, string>("charge", handler, o => o.Retry = policy);
 
-            _ = TaskRetryPolicy.FixedDelay(maxAttempts: 3, delay: TimeSpan.FromSeconds(1));
-            _ = TaskRetryPolicy.LinearBackoff(maxAttempts: 3, initialDelay: TimeSpan.FromSeconds(1));
-            _ = TaskRetryPolicy.NoRetry();
+            _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(1)) };
+            _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateExponentialDelayStrategy(TimeSpan.FromSeconds(1)) };
+            _ = new TaskRetryPolicy { MaxAttempts = 1 }; // no retries
         }
 
         // §4.10 Timeout.

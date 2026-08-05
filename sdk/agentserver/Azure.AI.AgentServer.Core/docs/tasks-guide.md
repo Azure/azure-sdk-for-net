@@ -387,17 +387,17 @@ When retries are exhausted the invoker throws `TaskFailedException`, whose `Erro
 the `ErrorType`, `Message`, `Attempts`, and the last error.
 
 ```csharp
-var policy = TaskRetryPolicy.ExponentialBackoff(maxAttempts: 5);
+var policy = new TaskRetryPolicy { MaxAttempts = 5 };
 builder.AddTask<Order, Receipt>("charge", handler, o => o.Retry = policy);
 ```
 
-`TaskRetryPolicy` ships with `ExponentialBackoff`, `FixedDelay`, `LinearBackoff`, and
-`NoRetry` factories. You can scope which exceptions are retryable with `RetryOn`.
+`TaskRetryPolicy` expresses the delay between attempts as an `Azure.Core.DelayStrategy` (the `Delay`
+property, defaulting to exponential); use `DelayStrategy.CreateExponentialDelayStrategy`,
+`DelayStrategy.CreateFixedDelayStrategy`, or a custom derived strategy for linear/service-specific
+backoff. You can scope which exceptions are retryable with `RetryOn`.
 
-**Hard limits — invalid values throw.** Two values are hard-capped so a misconfiguration cannot
-cause a task turn to retry unboundedly: `MaxAttempts` must be **1–10** (inclusive) and `MaxDelay`
-must be **0–1 hour**. A value outside those ranges — like a negative `InitialDelay`/`MaxDelay`, a
-`MaxAttempts` below 1 or above 10, a `MaxDelay` above 1 hour, or a `BackoffCoefficient` below 1.0 —
+**Hard limit — invalid values throw.** `MaxAttempts` is hard-capped so a misconfiguration cannot
+cause a task turn to retry unboundedly: it must be **1–10** (inclusive); a value below 1 or above 10
 throws `ArgumentOutOfRangeException` when the `TaskRetryPolicy` is constructed. These are configuration
 bugs, so they fail fast rather than being silently clamped. Combined with the per-turn timeout
 (§4.10), the bounded attempt count and delay keep the total time spent retrying a single turn
@@ -547,11 +547,10 @@ string? IfLastInputId;   // precondition: require the task's last input id to eq
 
 ### 5.7 `TaskRetryPolicy`
 
-Fields: `InitialDelay`, `BackoffCoefficient`, `MaxDelay`, `MaxAttempts`, `Jitter`,
-`RetryOn`. Factories: `ExponentialBackoff`, `FixedDelay`, `LinearBackoff`, `NoRetry`.
-`MaxAttempts` must be 1–10 and `MaxDelay` 0–1 hour; a value outside those hard caps — like
-negative delays, `MaxAttempts` < 1 or > 10, `MaxDelay` > 1 hour, or `BackoffCoefficient` < 1.0 —
-throws `ArgumentOutOfRangeException` at construction. Retries are off unless a policy
+Members: `MaxAttempts`, `Delay` (an `Azure.Core.DelayStrategy`), and `RetryOn`.
+`MaxAttempts` must be 1–10; a value outside that cap throws `ArgumentOutOfRangeException` at
+construction. The delay bounds (max delay, jitter) are owned by the composed `DelayStrategy`.
+Retries are off unless a policy
 is set (§4.8).
 
 ### 5.8 `TaskMetadata`
@@ -735,7 +734,7 @@ gets queued (multi-turn, when steering is enabled), or sees `TaskConflictExcepti
 
 **Does the framework retry by default?** No. Configure retry at registration via
 `TaskRegistrationOptions.Retry` (e.g. `builder.AddTask<TIn, TOut>(name, handler,
-o => o.Retry = TaskRetryPolicy.ExponentialBackoff());`) to opt in. Without a policy a handler
+o => o.Retry = new TaskRetryPolicy());`) to opt in. Without a policy a handler
 runs once and surfaces the exception.
 
 **Can I store conversation history in `ctx.Metadata`?** Small histories fit, but
