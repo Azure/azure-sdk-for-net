@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -39,10 +40,12 @@ public partial class DeclarativeAgentDefinition
         {
             foreach (JsonElement element in property.Value.EnumerateArray())
             {
+                // Read through the Azure context so Azure-specific tool discriminators materialize as their
+                // concrete Azure.AI.Extensions.OpenAI subtypes instead of OpenAI's opaque unknown-tool fallback.
                 ResponseTool tool = ModelReaderWriter.Read<ResponseTool>(
                     BinaryData.FromString(element.GetRawText()),
                     ModelReaderWriterOptions.Json,
-                    OpenAIContext.Default);
+                    AzureAIExtensionsOpenAIContext.Default);
                 replacementTools.Add(tool);
             }
         }
