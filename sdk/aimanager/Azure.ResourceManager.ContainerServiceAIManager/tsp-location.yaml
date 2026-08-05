@@ -1,5 +1,5 @@
 directory: specification/containerservice/resource-manager/Microsoft.ContainerService/aimanager
-commit: 2033d41c6a7c6de6702be5387024bf1ff417e2de
+commit: f6b53f105b95da05276530a0754a1c71b4f16397
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
