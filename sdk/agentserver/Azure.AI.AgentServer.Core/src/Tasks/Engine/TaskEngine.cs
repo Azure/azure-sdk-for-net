@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
@@ -130,7 +131,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             // A steerable chain queues a concurrent start as the next turn instead of rejecting it.
             if (existing.Steerable)
             {
-                return await EnqueueSteeringAsync<TInput, TOutput>(existing, input, inputId, persistInputId, cancellationToken)
+                return await EnqueueSteeringAsync<TInput, TOutput>(existing, input, inputId, persistInputId, registration, cancellationToken)
                     .ConfigureAwait(false);
             }
 
@@ -164,7 +165,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011); promotion keeps payload small.
-        JsonNode? inputNode = SerializeInput(input);
+        JsonNode? inputNode = SerializeInput(input, registration);
         var payload = new JsonObject();
         (JsonNode? inputSlot, JsonObject? attachments) = AttachmentPromoter.Promote(
             attachments: null,
@@ -233,7 +234,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             entryMode = EntryMode.Recovered;
             inputId = (string?)current.Payload[TaskWireKeys.PayloadLastInputId] ?? inputId;
             runState.InputId = inputId;
-            input = ResolveInput<TInput>(current);
+            input = ResolveInput<TInput>(current, registration);
         }
 
         HydrateMetadata(metadata, record);
@@ -289,7 +290,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         RunOptions? options, CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011).
-        JsonNode? inputNode = SerializeInput(input);
+        JsonNode? inputNode = SerializeInput(input, registration);
         (JsonNode? inputSlot, JsonObject? attachments) = AttachmentPromoter.Promote(
             attachments: null,
             value: inputNode,
@@ -378,7 +379,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 record = current;
                 entryMode = EntryMode.Recovered;
                 inputId = (string?)current.Payload[TaskWireKeys.PayloadLastInputId] ?? inputId;
-                input = ResolveInput<TInput>(current);
+                input = ResolveInput<TInput>(current, registration);
 
                 // Mid-drain steering recovery (FR-023a): re-enter as a steered turn using the
                 // persisted active_input when the crash happened mid-drain.
@@ -391,7 +392,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                         steering[TaskWireKeys.SteeringActiveInput], current.Attachments);
                     if (resolvedActive is not null)
                     {
-                        input = resolvedActive.Deserialize<TInput>()!;
+                        input = DeserializeInput<TInput>(resolvedActive, registration);
                         recoveredSteeredTurn = true;
                     }
                 }
@@ -506,7 +507,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     // Serializes a steering input, queues it in-process, durably appends it to the
     // record's _steering.pending_inputs, then nudges the running turn to wind down.
     private async Task<TaskRun<TOutput>> EnqueueSteeringAsync<TInput, TOutput>(
-        IActiveRun existing, TInput input, string inputId, bool persistInputId, CancellationToken cancellationToken)
+        IActiveRun existing, TInput input, string inputId, bool persistInputId, TaskRegistration registration, CancellationToken cancellationToken)
     {
         var run = (ActiveRun<TOutput>)existing;
         string taskId = run.TaskId;
@@ -516,7 +517,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // _append_steering_input routes through _resolve_input_storage). This keeps the persisted
         // `payload._steering` bounded no matter how many large inputs are queued, so the queue can
         // never blow the 1 MiB payload cap, and keeps the wire schema cross-language compatible.
-        JsonNode? inputNode = SerializeInput(input);
+        JsonNode? inputNode = SerializeInput(input, registration);
         (JsonNode? inputSlot, JsonObject? inputAttachments) = run.Steering.PromoteInput(seq =>
             AttachmentPromoter.Promote(
                 attachments: null,
@@ -729,7 +730,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                         currentRun = cancelPromotion.Input.RunState;
                         currentInput = cancelPromotion.Input.Slot is null
                             ? default!
-                            : cancelPromotion.Input.Slot.Deserialize<TInput>()!;
+                            : DeserializeInput<TInput>(cancelPromotion.Input.Slot, registration);
                         currentInputId = cancelPromotion.Input.InputId;
                         currentMode = EntryMode.Resumed;
                         steered = true;
@@ -812,7 +813,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     currentRun = promotion.Input.RunState;
                     currentInput = promotion.Input.Slot is null
                         ? default!
-                        : promotion.Input.Slot.Deserialize<TInput>()!;
+                        : DeserializeInput<TInput>(promotion.Input.Slot, registration);
                     currentInputId = promotion.Input.InputId;
                     currentMode = EntryMode.Resumed;
                     steered = true;
@@ -1429,16 +1430,27 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         [TaskWireKeys.TagTaskName] = name,
     };
 
-    private static JsonNode? SerializeInput<TInput>(TInput input)
+    private static JsonNode? SerializeInput<TInput>(TInput input, TaskRegistration registration)
     {
         if (input is null)
         {
             return null;
         }
 
-        byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(input);
+        // Use the caller-supplied source-generated metadata when present (Native-AOT / trimming
+        // path), otherwise fall back to the reflection-based serializer.
+        byte[] bytes = registration.InputTypeInfo is JsonTypeInfo<TInput> typeInfo
+            ? JsonSerializer.SerializeToUtf8Bytes(input, typeInfo)
+            : JsonSerializer.SerializeToUtf8Bytes(input);
         return JsonNode.Parse(bytes);
     }
+
+    // Deserializes a task input node through the registration's source-generated metadata when
+    // present (Native-AOT / trimming path), otherwise via the reflection-based serializer.
+    private static TInput DeserializeInput<TInput>(JsonNode node, TaskRegistration registration)
+        => registration.InputTypeInfo is JsonTypeInfo<TInput> typeInfo
+            ? node.Deserialize(typeInfo)!
+            : node.Deserialize<TInput>()!;
 
     // Builds an attachments patch that DELETES every key present in <paramref name="attachments"/>
     // (a null value per key is the store's delete sentinel). Returns null when there is nothing to
@@ -1459,7 +1471,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         return patch;
     }
 
-    private static TInput ResolveInput<TInput>(TaskRecord record)
+    private static TInput ResolveInput<TInput>(TaskRecord record, TaskRegistration registration)
     {
         JsonNode? slot = record.Payload[TaskWireKeys.PayloadInput];
         JsonNode? resolved = AttachmentPromoter.Resolve(slot, record.Attachments);
@@ -1468,7 +1480,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             return default!;
         }
 
-        return resolved.Deserialize<TInput>()!;
+        return DeserializeInput<TInput>(resolved, registration);
     }
 
     // Restores the monotonic steering seq from a persisted record so attachment keys stay
@@ -1740,7 +1752,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // the task_id when absent (Python parity: `input_id=(payload or {}).get("last_input_id")`
         // with TaskContext defaulting a missing id to task_id). Never fabricate an input-<guid>.
         string inputId = (string?)record.Payload[TaskWireKeys.PayloadLastInputId] ?? taskId;
-        TInput input = ResolveInput<TInput>(record);
+        TInput input = ResolveInput<TInput>(record, registration);
 
         // FR-023a recovery mid-drain: if the crash happened after popping a steering input
         // but before the steered turn finished, re-enter the handler as a steered turn using
@@ -1755,7 +1767,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             JsonNode? resolved = AttachmentPromoter.Resolve(activeSlot, record.Attachments);
             if (resolved is not null)
             {
-                input = resolved.Deserialize<TInput>()!;
+                input = DeserializeInput<TInput>(resolved, registration);
                 isSteeredTurn = true;
             }
         }

@@ -20,7 +20,8 @@ internal sealed class TaskRegistration
         Delegate handler,
         bool multiTurn,
         bool steerable,
-        TaskRegistrationOptions? options)
+        TaskRegistrationOptions? options,
+        System.Text.Json.Serialization.Metadata.JsonTypeInfo? inputTypeInfo = null)
     {
         Name = name;
         InputType = inputType;
@@ -29,6 +30,7 @@ internal sealed class TaskRegistration
         MultiTurn = multiTurn;
         Steerable = steerable;
         Options = options;
+        InputTypeInfo = inputTypeInfo;
     }
 
     /// <summary>The unique task name (routes from wire <c>source.name</c>).</summary>
@@ -51,6 +53,16 @@ internal sealed class TaskRegistration
 
     /// <summary>The per-task registration options, if any.</summary>
     public TaskRegistrationOptions? Options { get; }
+
+    /// <summary>
+    /// Optional source-generated <see cref="System.Text.Json.Serialization.Metadata.JsonTypeInfo"/>
+    /// for the input type, supplied by a Native-AOT / trimming-safe registration overload. When set,
+    /// the engine serializes and deserializes the task input through this metadata instead of the
+    /// reflection-based serializer. Stored type-erased; the engine casts it back to
+    /// <c>JsonTypeInfo&lt;TInput&gt;</c> at each payload boundary. Only the input crosses the
+    /// serialization boundary — the framework never serializes the output.
+    /// </summary>
+    public System.Text.Json.Serialization.Metadata.JsonTypeInfo? InputTypeInfo { get; }
 
     /// <summary>
     /// A type-erased recovery dispatcher that resumes a persisted record on the engine

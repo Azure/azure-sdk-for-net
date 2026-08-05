@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added resilient **task** and **streaming** primitives for building durable, long-running agents (`Azure.AI.AgentServer.Core.Tasks` and `Azure.AI.AgentServer.Core.Streaming`):
-  - Register one-shot and multi-turn tasks with `IServiceCollection.AddResilientTasks()` and the `ResilientTaskBuilder` (`AddTask` / `AddMultiTurnTask`).
+  - Register one-shot and multi-turn tasks with `IServiceCollection.AddResilientTasks()` and the `ResilientTaskBuilder` (`AddTask` / `AddMultiTurnTask`), including overloads that accept a source-generated `JsonTypeInfo<TInput>` for Native-AOT / trimming-safe input serialization.
   - Run and resume tasks through `ITaskInvoker` (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the awaitable `TaskRun<TOutput>` handle and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, durable `TaskMetadata`, cooperative cancellation, shutdown, and steering signals).
   - Configure per-task durability with `TaskRegistrationOptions` (title, timeout, retry) and `TaskRetryPolicy` factories (`ExponentialBackoff`, `LinearBackoff`, `FixedDelay`, `NoRetry`).
   - Idempotent, serializable task state via `TaskMetadata` (values are `BinaryData`) with namespacing and atomic `Increment`/`Append` helpers.

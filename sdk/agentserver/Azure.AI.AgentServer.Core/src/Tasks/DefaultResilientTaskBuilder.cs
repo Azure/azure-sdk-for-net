@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
@@ -41,6 +42,33 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
     /// <inheritdoc/>
     public override ResilientTaskBuilder AddTask<TInput, TOutput>(
         string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
+        return Add(name, handler, multiTurn: false, steerable: false, configure, inputTypeInfo);
+    }
+
+    /// <inheritdoc/>
+    public override ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        bool steerable = false,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
+        return Add(name, handler, multiTurn: true, steerable, configure, inputTypeInfo);
+    }
+
+    /// <inheritdoc/>
+    public override ResilientTaskBuilder AddTask<TInput, TOutput>(
+        string name,
         Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         Action<TaskRegistrationOptions>? configure = null)
     {
@@ -71,7 +99,8 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool multiTurn,
         bool steerable,
-        Action<TaskRegistrationOptions>? configure)
+        Action<TaskRegistrationOptions>? configure,
+        JsonTypeInfo<TInput>? inputTypeInfo = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -112,7 +141,8 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
             handler,
             multiTurn,
             steerable,
-            options);
+            options,
+            inputTypeInfo);
 
         registration.RecoverDispatch = (engineObj, record) =>
             ((TaskEngine)engineObj).RecoverAsync<TInput, TOutput>(registration, record);
