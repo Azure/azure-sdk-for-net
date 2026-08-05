@@ -29,6 +29,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     private readonly Func<object, string>? _serializer;
     private readonly Func<string, object>? _deserializer;
     private FileStream? _lock;
+    private FileStream? _data;
     private int _evictionsSinceCompaction;
     private bool _disposed;
 
@@ -53,13 +54,27 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         try
         {
             Rehydrate();
+
+            // Open ONE long-lived append handle after any rehydrate-time truncation rewrite, and
+            // reuse it for every emit (write + fsync) instead of opening/closing a fresh handle per
+            // event. The per-event fsync durability contract (C-STR-FBR-5, persist-before-fan-out)
+            // is preserved; only the redundant open/close syscalls per event are removed. Mirrors
+            // Python's single long-lived `self._file` handle. The separate `_lock` file keeps the
+            // single-writer guarantee independent of this data handle, so compaction can freely
+            // close and reopen it across the atomic replace without releasing exclusivity.
+            _data = OpenAppendHandle();
         }
         catch
         {
+            _data?.Dispose();
+            _data = null;
             ReleaseWriterLock();
             throw;
         }
     }
+
+    private FileStream OpenAppendHandle()
+        => new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
 
     // Maps a stream id to a single, safe on-disk filename stem. Well-formed ids (GUIDs and other
     // tokens using [A-Za-z0-9._-], with no "."/".." path segment, that are not already shaped like
@@ -153,6 +168,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     {
         lock (_fileGate)
         {
+            _data?.Dispose();
+            _data = null;
             TryDeleteFile(_filePath);
             ReleaseWriterLock();
         }
@@ -178,6 +195,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         _disposed = true;
         lock (_fileGate)
         {
+            _data?.Dispose();
+            _data = null;
             ReleaseWriterLock();
         }
     }
@@ -316,7 +335,25 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             fs.Flush(flushToDisk: true);
         }
 
+        // The atomic replace swaps _filePath to a brand-new file. The long-lived append handle
+        // (if open) still points at the old, now-replaced file, so every subsequent emit would land
+        // in the orphaned file and be lost on the next process lifetime. Close it before the replace
+        // (Windows also forbids File.Move over an open handle) and reopen against the live path after
+        // — the single-writer `_lock` file stays held throughout, so exclusivity is never released
+        // across the swap. Mirrors Python's os.replace + reopen of `self._file`.
+        bool reopen = _data is not null;
+        if (reopen)
+        {
+            _data!.Dispose();
+            _data = null;
+        }
+
         File.Move(tempPath, _filePath, overwrite: true);
+
+        if (reopen)
+        {
+            _data = OpenAppendHandle();
+        }
     }
 
     // Custom-serializer payloads are stored as a UTF-8 JSON string (NOT base64) so the on-disk
@@ -391,9 +428,9 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             {
                 // Persist-before-fan-out durability (C-STR-FBR-5): flush the OS buffer to disk so a
                 // crash after emit() returns cannot silently lose an event that a subscriber already
-                // observed. File.AppendAllText only reaches the OS cache. Mirrors Python's fsync.
-                // Multiple lines are written under a single open+flush so an emit-and-close pair is
-                // an atomic durable unit.
+                // observed. Write through the single long-lived append handle and fsync per event.
+                // Multiple lines are written under a single flush so an emit-and-close pair is an
+                // atomic durable unit.
                 var sb = new StringBuilder();
                 foreach (string line in lines)
                 {
@@ -401,7 +438,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
                 }
 
                 var bytes = Encoding.UTF8.GetBytes(sb.ToString());
-                using var fs = new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
+                FileStream fs = _data
+                    ?? throw new EventStreamException($"The write handle for stream '{Id}' is not open.");
                 fs.Write(bytes, 0, bytes.Length);
                 fs.Flush(flushToDisk: true);
             }

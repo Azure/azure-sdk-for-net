@@ -127,11 +127,15 @@ public sealed class FileBackedReplayEventStreamTests
         EventStream stream = await registry.GetOrCreateAsync("atomic-1");
         await stream.EmitAsync(7, close: true);
 
+        // Release the exclusive writer handle before inspecting the file: the stream holds a single
+        // long-lived append handle while active (production never reads a live stream's file — replay
+        // is served from the in-memory buffer), so on-disk assertions read after the handle closes.
+        ((IDisposable)stream).Dispose();
+
         string[] lines = File.ReadAllLines(Path.Combine(_dir, "atomic-1.jsonl"));
         Assert.That(lines.Length, Is.EqualTo(2));
         Assert.That(lines[0], Does.Contain("emit_time").And.Contain("payload"));
         Assert.That(lines[1], Does.Contain("__terminal__"));
-        ((IDisposable)stream).Dispose();
     }
 
     [Test]
@@ -141,6 +145,9 @@ public sealed class FileBackedReplayEventStreamTests
         EventStream stream = await registry.GetOrCreateAsync("turn-1");
         await stream.EmitAsync(0);
         await stream.EmitAsync(1, close: true);
+
+        // Release the exclusive writer handle before inspecting the file (see note above).
+        ((IDisposable)stream).Dispose();
 
         string[] lines = File.ReadAllLines(Path.Combine(_dir, "turn-1.jsonl"));
         Assert.That(lines.Length, Is.EqualTo(3));
@@ -305,6 +312,47 @@ public sealed class FileBackedReplayEventStreamTests
         ((IDisposable)stream).Dispose();
         var registry2 = new InMemoryEventStreamRegistry(options);
         Assert.DoesNotThrowAsync(async () => await registry2.GetOrCreateAsync("compact-1"));
+    }
+
+    [Test]
+    public async Task PostCompactionWritesLandInLiveFileAndRehydrate()
+    {
+        // Regression guard for the long-lived append handle: after an on-disk compaction performs
+        // an atomic replace, the reused write handle must be reopened against the LIVE file. If it
+        // kept pointing at the pre-replace (orphaned) file, post-compaction emits would be written
+        // to a file nobody rehydrates from and would be silently lost on the next process lifetime.
+        var options = new EventStreamOptions();
+        options.UseFileBackedReplay(
+            _dir,
+            cursor: p => (int)p,
+            ttl: TimeSpan.FromMilliseconds(1),
+            serializer: p => p.ToString()!,
+            deserializer: s => int.Parse(s));
+        var registry = new InMemoryEventStreamRegistry(options);
+
+        EventStream stream = await registry.GetOrCreateAsync("compact-live");
+
+        // Drive past the compaction threshold, then emit a few more AFTER the compaction.
+        for (int i = 0; i < 1100; i++)
+        {
+            await stream.EmitAsync(i);
+        }
+
+        await stream.EmitAsync(9001);
+        await stream.EmitAsync(9002, close: true);
+        ((IDisposable)stream).Dispose();
+
+        // The post-compaction emits must be present in the LIVE on-disk file. If the reused write
+        // handle had stayed bound to the pre-replace (orphaned) file, these values would be missing
+        // from the live file and lost on the next process lifetime. Reading the file directly keeps
+        // the assertion deterministic (a 1 ms TTL would evict them from any rehydrated buffer).
+        string liveFile = File.ReadAllText(Path.Combine(_dir, "compact-live.jsonl"));
+        Assert.That(liveFile, Does.Contain("9001"));
+        Assert.That(liveFile, Does.Contain("9002"));
+
+        // And the log still rehydrates cleanly from the live file.
+        var registry2 = new InMemoryEventStreamRegistry(options);
+        Assert.DoesNotThrowAsync(async () => await registry2.GetOrCreateAsync("compact-live"));
     }
 
     private sealed record TypedEvent(int Cursor, string Text);
