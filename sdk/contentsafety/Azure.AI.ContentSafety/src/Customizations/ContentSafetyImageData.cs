@@ -16,7 +16,7 @@ namespace Azure.AI.ContentSafety
         /// <param name="blobUri">The blob uri of the image.</param>
         public ContentSafetyImageData(Uri blobUri)
         {
-            BlobUri = blobUri;
+            BlobUriForRepairTest = blobUri;
         }
 
         /// <summary>
