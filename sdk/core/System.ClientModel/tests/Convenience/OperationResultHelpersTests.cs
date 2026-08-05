@@ -13,6 +13,62 @@ namespace System.ClientModel.Tests;
 public class OperationResultHelpersTests
 {
     [Test]
+    public void ReturnsImmediatelyWithoutPolling()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", _ =>
+        {
+            requestCount++;
+            MockPipelineResponse response = new(202);
+            response.SetHeader("Operation-Location", "/operations/1");
+            return response.SetContent("""{"status":"running"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.OperationLocation,
+            waitUntilCompleted: false);
+
+        Assert.IsFalse(operation.HasCompleted);
+        Assert.AreEqual(1, requestCount);
+    }
+
+    [Test]
+    public async Task ProcessMessageAsyncWaitsUntilCompleted()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", _ =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Operation-Location", "/operations/1");
+                response.SetHeader("Retry-After", "0");
+                return response.SetContent("""{"status":"running"}""");
+            }
+
+            return new MockPipelineResponse(200).SetContent("""{"status":"succeeded"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+
+        OperationResult operation = await OperationResultHelpers.ProcessMessageAsync(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.OperationLocation,
+            waitUntilCompleted: true);
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual(2, requestCount);
+    }
+
+    [Test]
     public async Task PollsOperationLocationUntilTerminalStatus()
     {
         int requestCount = 0;
@@ -46,6 +102,105 @@ public class OperationResultHelpersTests
 
         Assert.IsTrue(operation.HasCompleted);
         Assert.AreEqual(new Uri("https://example.com/operations/1"), pollingUri);
+    }
+
+    [Test]
+    public async Task PollsAzureAsyncOperationWhenOperationLocationIsMissing()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", message =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Azure-AsyncOperation", "/status/1");
+                return response;
+            }
+
+            Assert.AreEqual(new Uri("https://example.com/status/1"), message.Request.Uri);
+            return new MockPipelineResponse(200).SetContent("""{"status":"succeeded"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.AzureAsyncOperation,
+            waitUntilCompleted: false);
+
+        await operation.UpdateStatusAsync();
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual(2, requestCount);
+    }
+
+    [Test]
+    public async Task PollsLocationWhenOtherPollingHeadersAreMissing()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", message =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Location", "/operations/1");
+                return response;
+            }
+
+            Assert.AreEqual(new Uri("https://example.com/operations/1"), message.Request.Uri);
+            return new MockPipelineResponse(200).SetContent("""{"id":"job-1"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.Location,
+            waitUntilCompleted: false);
+
+        await operation.UpdateStatusAsync();
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual("""{"id":"job-1"}""", operation.GetRawResponse().Content.ToString());
+        Assert.AreEqual(2, requestCount);
+    }
+
+    [Test]
+    public async Task OperationLocationTakesPrecedenceOverOtherPollingHeaders()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", message =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Operation-Location", "/operation-location/1");
+                response.SetHeader("Azure-AsyncOperation", "/azure-async-operation/1");
+                response.SetHeader("Location", "/location/1");
+                return response;
+            }
+
+            Assert.AreEqual(new Uri("https://example.com/operation-location/1"), message.Request.Uri);
+            return new MockPipelineResponse(200).SetContent("""{"status":"succeeded"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.OperationLocation,
+            waitUntilCompleted: false);
+
+        await operation.UpdateStatusAsync();
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual(2, requestCount);
     }
 
     [Test]
@@ -175,6 +330,183 @@ public class OperationResultHelpersTests
         Assert.IsTrue(operation.HasCompleted);
         Assert.AreEqual("""{"id":"job-1"}""", operation.GetRawResponse().Content.ToString());
         Assert.AreEqual(3, requestCount);
+    }
+
+    [Test]
+    public async Task GetsFinalResponseFromResourceLocation()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", message =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Operation-Location", "/operations/1");
+                return response;
+            }
+
+            if (requestCount == 2)
+            {
+                return new MockPipelineResponse(200).SetContent(
+                    """{"status":"succeeded","resourceLocation":"/jobs/1"}""");
+            }
+
+            Assert.AreEqual(new Uri("https://example.com/jobs/1"), message.Request.Uri);
+            return new MockPipelineResponse(200).SetContent("""{"id":"job-1"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.Location,
+            waitUntilCompleted: false);
+
+        await operation.UpdateStatusAsync();
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual("""{"id":"job-1"}""", operation.GetRawResponse().Content.ToString());
+        Assert.AreEqual(3, requestCount);
+    }
+
+    [Test]
+    public async Task LocationOverrideUsesLatestLocationHeader()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", message =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Operation-Location", "/operations/1");
+                response.SetHeader("Location", "/jobs/initial");
+                return response;
+            }
+
+            if (requestCount == 2)
+            {
+                MockPipelineResponse response = new(200);
+                response.SetHeader("Location", "/jobs/final");
+                return response.SetContent("""{"status":"succeeded"}""");
+            }
+
+            Assert.AreEqual(new Uri("https://example.com/jobs/final"), message.Request.Uri);
+            return new MockPipelineResponse(200).SetContent("""{"id":"job-final"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.LocationOverride,
+            waitUntilCompleted: false);
+
+        await operation.UpdateStatusAsync();
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual("""{"id":"job-final"}""", operation.GetRawResponse().Content.ToString());
+        Assert.AreEqual(3, requestCount);
+    }
+
+    [Test]
+    public void PutGetsFinalResponseFromOriginalUri()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", message =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Operation-Location", "/operations/1");
+                response.SetHeader("Retry-After", "0");
+                return response;
+            }
+
+            if (requestCount == 2)
+            {
+                return new MockPipelineResponse(200).SetContent("""{"status":"succeeded"}""");
+            }
+
+            Assert.AreEqual(new Uri("https://example.com/jobs/1"), message.Request.Uri);
+            return new MockPipelineResponse(200).SetContent("""{"id":"job-1"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs/1"), "PUT");
+
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.Location,
+            waitUntilCompleted: true);
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual("""{"id":"job-1"}""", operation.GetRawResponse().Content.ToString());
+        Assert.AreEqual(3, requestCount);
+    }
+
+    [TestCase("failed")]
+    [TestCase("canceled")]
+    [TestCase("cancelled")]
+    public async Task TerminalFailureStatusCompletesOperation(string status)
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", _ =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                MockPipelineResponse response = new(202);
+                response.SetHeader("Operation-Location", "/operations/1");
+                return response;
+            }
+
+            return new MockPipelineResponse(200).SetContent($$"""{"status":"{{status}}"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.OperationLocation,
+            waitUntilCompleted: false);
+
+        await operation.UpdateStatusAsync();
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreEqual($$"""{"status":"{{status}}"}""", operation.GetRawResponse().Content.ToString());
+        Assert.AreEqual(2, requestCount);
+    }
+
+    [Test]
+    public async Task UpdatingCompletedOperationDoesNotSendAnotherRequest()
+    {
+        int requestCount = 0;
+        MockPipelineTransport transport = new("Transport", _ =>
+        {
+            requestCount++;
+            return new MockPipelineResponse(200).SetContent("""{"id":"job-1"}""");
+        });
+        ClientPipeline pipeline = ClientPipeline.Create(new ClientPipelineOptions { Transport = transport });
+        using PipelineMessage message = pipeline.CreateMessage(new Uri("https://example.com/jobs/1"), "POST");
+        OperationResult operation = OperationResultHelpers.ProcessMessage(
+            pipeline,
+            message,
+            options: null,
+            OperationFinalStateVia.OperationLocation,
+            waitUntilCompleted: false);
+
+        ClientResult result = await operation.UpdateStatusAsync();
+
+        Assert.IsTrue(operation.HasCompleted);
+        Assert.AreSame(operation.GetRawResponse(), result.GetRawResponse());
+        Assert.AreEqual(1, requestCount);
     }
 
     [Test]
