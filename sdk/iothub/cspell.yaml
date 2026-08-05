@@ -3,6 +3,4 @@ import:
 overrides:
   - filename: '**/sdk/iothub/Azure.Provisioning.IotHub/**/*.cs'
     words:
-      - avrodeflate
       - AZPROVISION
-      - Trycep
