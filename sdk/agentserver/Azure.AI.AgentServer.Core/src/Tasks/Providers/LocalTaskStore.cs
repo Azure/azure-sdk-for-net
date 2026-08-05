@@ -137,7 +137,7 @@ internal sealed class LocalTaskStore : ITaskStore
                 writer.Write(contents);
             }
 
-            File.Move(tempPath, path, overwrite: true);
+            MoveWithRetry(tempPath, path);
         }
         catch
         {
@@ -154,6 +154,29 @@ internal sealed class LocalTaskStore : ITaskStore
             }
 
             throw;
+        }
+    }
+
+    // Atomically replaces the target with a bounded retry. On Windows File.Move(overwrite) can fail
+    // transiently with UnauthorizedAccessException or a sharing IOException when an external handle
+    // (antivirus / search indexer) or a concurrent reader momentarily holds the target — even though
+    // our own handles use FileShare.Delete. These conditions clear within milliseconds, so a short
+    // bounded backoff lets the replace succeed instead of surfacing a spurious write failure. On
+    // POSIX the rename is atomic and never hits this, so the first attempt succeeds.
+    private static void MoveWithRetry(string tempPath, string path)
+    {
+        const int maxAttempts = 10;
+        for (int attempt = 1; ; attempt++)
+        {
+            try
+            {
+                File.Move(tempPath, path, overwrite: true);
+                return;
+            }
+            catch (Exception ex) when ((ex is UnauthorizedAccessException || ex is IOException) && attempt < maxAttempts)
+            {
+                Thread.Sleep(attempt * 5);
+            }
         }
     }
 
