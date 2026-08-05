@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 BookmarkList result = BookmarkList.FromResponse(response);
-                yield return Page<SecurityInsightsBookmarkData>.FromValues((IReadOnlyList<SecurityInsightsBookmarkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsBookmarkData>.FromValues((IReadOnlyList<SecurityInsightsBookmarkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

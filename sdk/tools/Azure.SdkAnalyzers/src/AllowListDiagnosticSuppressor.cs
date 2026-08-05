@@ -29,11 +29,18 @@ namespace Azure.SdkAnalyzers
         private static readonly string[] SupportedDiagnosticIds = new[]
         {
             "AZC0007",
+            "AZC0012",
             "AZC0014",
+            "AZC0015",
             "AZC0030",
+            "AZC0031",
             "AZC0034",
             "AZC0035",
             "CS0618",
+            "AAIP001",
+            "AAIP002",
+            "OPENAI001",
+            "OPENAICUA001"
         };
 
         private const string SuppressionIdPrefix = "AZSDKSP";
@@ -156,6 +163,16 @@ namespace Azure.SdkAnalyzers
 
             foreach (AllowListEntry entry in candidates)
             {
+                if (entry.Scope == AllowListScopeKind.SourceGenerated)
+                {
+                    if (LocationIsGenerated(location))
+                    {
+                        return entry;
+                    }
+
+                    continue;
+                }
+
                 if (TargetMatchesLocation(entry.Target, location, compilation))
                 {
                     return entry;
@@ -163,6 +180,27 @@ namespace Azure.SdkAnalyzers
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Returns true when the diagnostic location originates in source-generator output
+        /// (a <c>*.g.cs</c> file, e.g. the compile-time <c>ModelReaderWriterContext</c> partial)
+        /// that exists only at build time and cannot be edited or <c>#pragma</c>-annotated at the
+        /// source. Checked-in generated code under a <c>Generated/</c> folder is deliberately NOT
+        /// covered — that code is regenerable and should carry correct per-symbol attribution or
+        /// pragmas emitted by the code generator instead of a blanket suppression.
+        /// </summary>
+        private static bool LocationIsGenerated(Location location)
+        {
+            SyntaxTree tree = location.SourceTree;
+            string filePath = tree?.FilePath;
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return false;
+            }
+
+            // Source-generator output convention (e.g. Foo.g.cs, including compile-time context partials).
+            return filePath.EndsWith(".g.cs", StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool TargetMatchesLocation(string docId, Location location, Compilation compilation)

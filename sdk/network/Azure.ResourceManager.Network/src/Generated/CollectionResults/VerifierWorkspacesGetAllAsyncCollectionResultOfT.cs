@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 VerifierWorkspaceListResult result = VerifierWorkspaceListResult.FromResponse(response);
-                yield return Page<NetworkVerifierWorkspaceData>.FromValues((IReadOnlyList<NetworkVerifierWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkVerifierWorkspaceData>.FromValues((IReadOnlyList<NetworkVerifierWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

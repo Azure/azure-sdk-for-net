@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(AppCertificateResource.ResourceType, out string appCertificateApiVersion);
             _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppCertificateResource.ResourceType.Namespace, Diagnostics);
-            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, appCertificateApiVersion ?? "2026-03-15");
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appCertificateApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

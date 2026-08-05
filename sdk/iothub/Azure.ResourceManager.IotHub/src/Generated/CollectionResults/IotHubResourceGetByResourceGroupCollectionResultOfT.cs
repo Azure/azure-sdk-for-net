@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.IotHub
                     yield break;
                 }
                 IotHubDescriptionListResult result = IotHubDescriptionListResult.FromResponse(response);
-                yield return Page<IotHubDescriptionData>.FromValues((IReadOnlyList<IotHubDescriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IotHubDescriptionData>.FromValues((IReadOnlyList<IotHubDescriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

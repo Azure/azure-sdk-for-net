@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string elasticPoolApiVersion);
             _elasticPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _elasticPoolsRestClient = new ElasticPools(_elasticPoolsClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
+            _elasticPoolsRestClient = new ElasticPools(_elasticPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
             _elasticPoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _elasticPoolOperationsRestClient = new ElasticPoolOperations(_elasticPoolOperationsClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
+            _elasticPoolOperationsRestClient = new ElasticPoolOperations(_elasticPoolOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

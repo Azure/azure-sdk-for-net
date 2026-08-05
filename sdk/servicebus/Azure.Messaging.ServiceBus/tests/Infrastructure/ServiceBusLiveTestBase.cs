@@ -30,6 +30,19 @@ namespace Azure.Messaging.ServiceBus.Tests
                         MaxRetries = maxRetries
                     }
                 };
+            return CreateClientWithOptions(options);
+        }
+
+        protected ServiceBusClient CreateClientWithOptions(ServiceBusClientOptions options = null)
+        {
+            options ??= new ServiceBusClientOptions
+            {
+                RetryOptions = new ServiceBusRetryOptions
+                {
+                    TryTimeout = TimeSpan.FromSeconds(DefaultTryTimeout),
+                    MaxRetries = 3
+                }
+            };
             return new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential, options);
         }
 

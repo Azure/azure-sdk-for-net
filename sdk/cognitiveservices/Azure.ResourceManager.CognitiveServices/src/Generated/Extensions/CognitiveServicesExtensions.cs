@@ -1219,8 +1219,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedComputeUsage> GetAllAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesManagedComputeUsage> GetAllAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1238,8 +1238,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedComputeUsage> GetAll(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeUsage"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesManagedComputeUsage> GetAll(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1263,8 +1263,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedComputeCapacity> GetAllAsync(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesManagedComputeCapacity> GetAllAsync(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1288,8 +1288,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedComputeCapacity> GetAll(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesManagedComputeCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesManagedComputeCapacity> GetAll(this SubscriptionResource subscriptionResource, string offer, string acceleratorType = default, string deploymentId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

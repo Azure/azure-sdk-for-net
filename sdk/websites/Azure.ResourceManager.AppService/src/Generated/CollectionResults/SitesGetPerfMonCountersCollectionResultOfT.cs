@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 PerfMonCounterListResult result = PerfMonCounterListResult.FromResponse(response);
-                yield return Page<PerfMonResponseInfo>.FromValues((IReadOnlyList<PerfMonResponseInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PerfMonResponseInfo>.FromValues((IReadOnlyList<PerfMonResponseInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsWatchlistResource.ResourceType, out string securityInsightsWatchlistApiVersion);
             _watchlistsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsWatchlistResource.ResourceType.Namespace, Diagnostics);
-            _watchlistsRestClient = new Watchlists(_watchlistsClientDiagnostics, Pipeline, Endpoint, securityInsightsWatchlistApiVersion ?? "2025-07-01-preview");
+            _watchlistsRestClient = new Watchlists(_watchlistsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsWatchlistApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

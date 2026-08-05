@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 TriggeredWebJobListResult result = TriggeredWebJobListResult.FromResponse(response);
-                yield return Page<TriggeredWebJobData>.FromValues((IReadOnlyList<TriggeredWebJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TriggeredWebJobData>.FromValues((IReadOnlyList<TriggeredWebJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

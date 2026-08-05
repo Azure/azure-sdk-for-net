@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(ResourceType, out string dataReplicationEmailConfigurationApiVersion);
             _emailConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _emailConfigurationRestClient = new EmailConfiguration(_emailConfigurationClientDiagnostics, Pipeline, Endpoint, dataReplicationEmailConfigurationApiVersion ?? "2024-09-01");
+            _emailConfigurationRestClient = new EmailConfiguration(_emailConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationEmailConfigurationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

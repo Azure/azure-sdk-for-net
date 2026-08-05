@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DataFactory
                     yield break;
                 }
                 DataFactoryDatasetListResult result = DataFactoryDatasetListResult.FromResponse(response);
-                yield return Page<DataFactoryDatasetData>.FromValues((IReadOnlyList<DataFactoryDatasetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataFactoryDatasetData>.FromValues((IReadOnlyList<DataFactoryDatasetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

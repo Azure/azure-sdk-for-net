@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsSourceControlApiVersion);
             _sourceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _sourceControlsRestClient = new SourceControls(_sourceControlsClientDiagnostics, Pipeline, Endpoint, securityInsightsSourceControlApiVersion ?? "2025-07-01-preview");
+            _sourceControlsRestClient = new SourceControls(_sourceControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsSourceControlApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

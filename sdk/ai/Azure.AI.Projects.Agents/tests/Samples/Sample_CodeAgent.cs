@@ -19,7 +19,7 @@ public class Sample_CodeAgent : SamplesBase
         return Path.Combine([dirName, path]);
     }
 
-    #region Snippet:Sample_CodeAgentMetadata_CodeAgent
+    #region Snippet:Sample_CodeAgentMetadata_CodeAgentProj
     private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         HostedAgentDefinition agentDefinition = new(
@@ -29,9 +29,9 @@ public class Sample_CodeAgent : SamplesBase
         {
             Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
             CodeConfiguration = new(
-                runtime: "python_3_14",
-                entryPoint: ["python", "main.py"],
-                dependencyResolution: CodeDependencyResolution.RemoteBuild
+                runtime: "dotnet_10",
+                entryPoint: ["dotnet", "EchoAgent.dll"],
+                dependencyResolution: CodeDependencyResolution.Bundled
             ),
         };
         AgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -54,7 +54,7 @@ public class Sample_CodeAgent : SamplesBase
             Directory.Delete(Path.GetFullPath("./AgentCode"), recursive: true);
         }
         catch { }
-        #region Snippet:Sample_CodeAgentDeployment_CodeAgent_Async
+        #region Snippet:Sample_CodeAgentDeployment_CodeAgentProj_Async
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgent",

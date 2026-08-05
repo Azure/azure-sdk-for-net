@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 CustomHostnameSitesCollection result = CustomHostnameSitesCollection.FromResponse(response);
-                yield return Page<CustomHostnameSites>.FromValues((IReadOnlyList<CustomHostnameSites>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CustomHostnameSites>.FromValues((IReadOnlyList<CustomHostnameSites>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

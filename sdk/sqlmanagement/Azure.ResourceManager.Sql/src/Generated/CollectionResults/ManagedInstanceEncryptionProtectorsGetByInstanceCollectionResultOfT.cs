@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedInstanceEncryptionProtectorListResult result = ManagedInstanceEncryptionProtectorListResult.FromResponse(response);
-                yield return Page<ManagedInstanceEncryptionProtectorData>.FromValues((IReadOnlyList<ManagedInstanceEncryptionProtectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedInstanceEncryptionProtectorData>.FromValues((IReadOnlyList<ManagedInstanceEncryptionProtectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

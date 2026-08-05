@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> For payload logging, we only collect payload by default. If customers also want to collect the specified headers, they can set them in captureHeaders so that backend will collect those headers along with payload. </summary>
         [WirePath("captureHeaders")]
-        public IList<string> CaptureHeaders { get; set; }
+        public IList<string> CaptureHeaders { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -23,41 +23,41 @@ namespace Azure.Provisioning.CostManagement
         /// The budget will track costs in the current calendar month against the amount.
         /// Supported for CategoryType: Cost only.
         /// </summary>
-        Monthly,
+        Monthly = 0,
         /// <summary>
         /// The budget will track costs in the current calendar quarter against the amount.
         /// Supported for CategoryType: Cost only.
         /// </summary>
-        Quarterly,
+        Quarterly = 1,
         /// <summary>
         /// The budget will track costs in the current calendar year against the amount.
         /// Supported for CategoryType: Cost only.
         /// </summary>
-        Annually,
+        Annually = 2,
         /// <summary>
         /// The budget will track costs in the current billing month against the amount.
         /// Supported for CategoryType: Cost and Web Direct customers only.
         /// </summary>
-        BillingMonth,
+        BillingMonth = 3,
         /// <summary>
         /// The budget will track costs in the current billing quarter against the amount.
         /// Supported for CategoryType: Cost and Web Direct customers only.
         /// </summary>
-        BillingQuarter,
+        BillingQuarter = 4,
         /// <summary>
         /// The budget will track costs in the current billing year against the amount.
         /// Supported for CategoryType: Cost and Web Direct customers only.
         /// </summary>
-        BillingAnnual,
+        BillingAnnual = 5,
         /// <summary>
         /// The Reservation Utilization Alert Rule will evaluate reservations based on their 7-Day utilization percentage.
         /// Supported for CategoryType: ReservationUtilization only.
         /// </summary>
-        Last7Days,
+        Last7Days = 6,
         /// <summary>
         /// The Reservation Utilization Alert Rule will evaluate reservations based on their 30-Day utilization percentage.
         /// Supported for CategoryType: ReservationUtilization only.
         /// </summary>
-        Last30Days
+        Last30Days = 7
     }
 }

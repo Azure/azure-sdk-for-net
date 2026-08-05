@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 EntityList result = EntityList.FromResponse(response);
-                yield return Page<SecurityInsightsEntity>.FromValues((IReadOnlyList<SecurityInsightsEntity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsEntity>.FromValues((IReadOnlyList<SecurityInsightsEntity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

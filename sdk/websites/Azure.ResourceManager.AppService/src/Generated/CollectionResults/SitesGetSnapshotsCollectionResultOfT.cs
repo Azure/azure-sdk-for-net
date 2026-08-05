@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AppSnapshotListResult result = AppSnapshotListResult.FromResponse(response);
-                yield return Page<AppSnapshot>.FromValues((IReadOnlyList<AppSnapshot>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppSnapshot>.FromValues((IReadOnlyList<AppSnapshot>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

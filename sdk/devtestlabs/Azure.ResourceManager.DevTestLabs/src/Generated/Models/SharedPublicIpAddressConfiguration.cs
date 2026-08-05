@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The incoming NAT rules. </summary>
-        public IList<DevTestLabInboundNatRule> InboundNatRules { get; }
+        public IList<DevTestLabInboundNatRule> InboundNatRules { get; } = new ChangeTrackingList<DevTestLabInboundNatRule>();
     }
 }

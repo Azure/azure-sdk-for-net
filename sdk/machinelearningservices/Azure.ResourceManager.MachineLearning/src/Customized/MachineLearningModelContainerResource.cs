@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearningModelContainerResource
     {
         // Customized: keep the historical MachineLearning* method names for source compatibility.
+        /// <summary> Gets a collection of MachineLearningModelVersionResources in the <see cref="MachineLearningModelContainerResource"/>. </summary>
         public virtual MachineLearningModelVersionCollection GetMachineLearningModelVersions() => new MachineLearningModelVersionCollection(Client, Id);
         /// <summary> Gets a model version. </summary>
         [ForwardsClientCalls]

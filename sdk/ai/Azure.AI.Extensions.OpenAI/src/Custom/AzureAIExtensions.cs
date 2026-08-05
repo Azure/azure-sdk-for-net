@@ -129,5 +129,11 @@ public static partial class AzureAIExtensions
             get => options.Patch.GetStringEx("$.conversation.id"u8);
             set => options.Patch.SetOrClearEx("$.conversation.id"u8, "$.conversation"u8, value);
         }
+        /// <summary> Session used to get the response. </summary>
+        public string SessionId
+        {
+            get => options.Patch.GetStringEx("$.agent_session_id"u8);
+            set => options.Patch.SetOrClearEx("$.agent_session_id"u8, "$.agent_session_id"u8, value);
+        }
     }
 }

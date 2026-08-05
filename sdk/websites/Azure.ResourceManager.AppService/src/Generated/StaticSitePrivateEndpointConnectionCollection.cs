@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(StaticSitePrivateEndpointConnectionResource.ResourceType, out string staticSitePrivateEndpointConnectionApiVersion);
             _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSitePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSitePrivateEndpointConnectionApiVersion ?? "2026-03-15");
+            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSitePrivateEndpointConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

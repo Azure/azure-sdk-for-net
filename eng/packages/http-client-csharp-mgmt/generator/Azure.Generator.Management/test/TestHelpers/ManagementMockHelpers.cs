@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Tests.Common;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -35,7 +35,9 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
             string? primaryNamespace = null,
-            IEnumerable<string>? customizationSources = null)
+            IEnumerable<string>? customizationSources = null,
+            Func<Compilation?>? customizationCompilation = null,
+            Func<Compilation?>? lastContractCompilation = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? ["2023-01-01"];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -77,7 +79,12 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             mockPluginInstance.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
             mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(BuildCustomizationCompilation(customizationSources), null)) { CallBase = true };
+            var customizationCompilationResult = customizationCompilation?.Invoke()
+                ?? (customizationSources is null
+                    ? null
+                    : Helpers.BuildCompilation(customizationSources.Select((source, index) => ($"Customization{index}.cs", source))));
+            var lastContract = lastContractCompilation?.Invoke();
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(customizationCompilationResult, lastContract)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
             var configureMethod = typeof(CodeModelGenerator).GetMethod(
                 "Configure",
@@ -85,32 +92,6 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             );
             configureMethod!.Invoke(mockPluginInstance.Object, null);
             return mockPluginInstance;
-        }
-
-        private static Compilation? BuildCustomizationCompilation(IEnumerable<string>? sources)
-        {
-            if (sources is null)
-            {
-                return null;
-            }
-
-            var syntaxTrees = new List<SyntaxTree>();
-            foreach (var source in sources)
-            {
-                syntaxTrees.Add(CSharpSyntaxTree.ParseText(source));
-            }
-
-            var references = new[]
-            {
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Type).Assembly.Location)
-            };
-
-            return CSharpCompilation.Create(
-                "Customization",
-                syntaxTrees,
-                references,
-                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         }
 
         public static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
@@ -129,6 +110,18 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             }
 
             throw new InvalidOperationException($"Unable to find _customCodeView field on {typeProvider.GetType().FullName}.");
+        }
+
+        /// <summary>
+        /// Invokes the internal <c>TypeProvider.ProcessTypeForBackCompatibility</c> via reflection so the upstream
+        /// generator synthesizes any missing back-compat overloads against the provider's <c>LastContractView</c>.
+        /// </summary>
+        public static void ProcessTypeForBackCompatibility(TypeProvider typeProvider)
+        {
+            typeof(TypeProvider).GetMethod(
+                    "ProcessTypeForBackCompatibility",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .Invoke(typeProvider, null);
         }
     }
 }

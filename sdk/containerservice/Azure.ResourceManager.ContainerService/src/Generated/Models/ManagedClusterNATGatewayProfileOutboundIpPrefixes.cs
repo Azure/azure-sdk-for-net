@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> A list of public IP prefix resources. </summary>
         [WirePath("publicIPPrefixes")]
-        public IList<ResourceIdentifier> PublicIPPrefixes { get; }
+        public IList<ResourceIdentifier> PublicIPPrefixes { get; } = new ChangeTrackingList<ResourceIdentifier>();
     }
 }

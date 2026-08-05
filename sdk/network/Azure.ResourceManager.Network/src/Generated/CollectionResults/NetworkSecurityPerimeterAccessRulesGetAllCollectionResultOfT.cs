@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NspAccessRuleListResult result = NspAccessRuleListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterAccessRuleData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterAccessRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkSecurityPerimeterAccessRuleData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterAccessRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

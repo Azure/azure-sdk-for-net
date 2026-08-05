@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string firewallPolicyRuleCollectionGroupApiVersion);
             _firewallPolicyRuleCollectionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _firewallPolicyRuleCollectionGroupsRestClient = new FirewallPolicyRuleCollectionGroups(_firewallPolicyRuleCollectionGroupsClientDiagnostics, Pipeline, Endpoint, firewallPolicyRuleCollectionGroupApiVersion ?? "2025-07-01");
+            _firewallPolicyRuleCollectionGroupsRestClient = new FirewallPolicyRuleCollectionGroups(_firewallPolicyRuleCollectionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyRuleCollectionGroupApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

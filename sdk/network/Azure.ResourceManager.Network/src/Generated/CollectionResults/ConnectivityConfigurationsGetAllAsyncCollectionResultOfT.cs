@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ConnectivityConfigurationListResult result = ConnectivityConfigurationListResult.FromResponse(response);
-                yield return Page<ConnectivityConfigurationData>.FromValues((IReadOnlyList<ConnectivityConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConnectivityConfigurationData>.FromValues((IReadOnlyList<ConnectivityConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

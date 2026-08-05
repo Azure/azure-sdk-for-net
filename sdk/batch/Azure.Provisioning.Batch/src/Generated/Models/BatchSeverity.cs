@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchSeverity
     {
         /// <summary> Warning. </summary>
-        Warning,
+        Warning = 0,
         /// <summary> Error. </summary>
-        Error
+        Error = 1
     }
 }

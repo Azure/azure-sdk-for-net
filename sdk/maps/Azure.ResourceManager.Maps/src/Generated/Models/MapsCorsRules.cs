@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<MapsCorsRule> CorsRules { get; }
+        public IList<MapsCorsRule> CorsRules { get; } = new ChangeTrackingList<MapsCorsRule>();
     }
 }

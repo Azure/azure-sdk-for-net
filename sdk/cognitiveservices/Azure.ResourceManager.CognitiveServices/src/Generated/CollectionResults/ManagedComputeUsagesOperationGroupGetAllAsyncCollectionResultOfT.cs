@@ -15,7 +15,7 @@ using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class ManagedComputeUsagesOperationGroupGetAllAsyncCollectionResultOfT : AsyncPageable<ManagedComputeUsage>
+    internal partial class ManagedComputeUsagesOperationGroupGetAllAsyncCollectionResultOfT : AsyncPageable<CognitiveServicesManagedComputeUsage>
     {
         private readonly ManagedComputeUsagesOperationGroup _client;
         private readonly string _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ManagedComputeUsagesOperationGroupGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ManagedComputeUsage>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CognitiveServicesManagedComputeUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.CognitiveServices
                     yield break;
                 }
                 ManagedComputeUsageListResult result = ManagedComputeUsageListResult.FromResponse(response);
-                yield return Page<ManagedComputeUsage>.FromValues((IReadOnlyList<ManagedComputeUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<CognitiveServicesManagedComputeUsage>.FromValues((IReadOnlyList<CognitiveServicesManagedComputeUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

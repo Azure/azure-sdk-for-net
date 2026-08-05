@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult result = RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<RaiBlocklistItemData>.FromValues((IReadOnlyList<RaiBlocklistItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RaiBlocklistItemData>.FromValues((IReadOnlyList<RaiBlocklistItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

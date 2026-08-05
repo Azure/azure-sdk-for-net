@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the KubernetesVersion. </summary>
+        /// <summary> Gets the KubernetesVersion. </summary>
         public BicepValue<string> KubernetesVersion
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _kubernetesVersion;
             }
-            set
-            {
-                Initialize();
-                _kubernetesVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsPreview. </summary>
+        /// <summary> Gets the IsPreview. </summary>
         public BicepValue<bool> IsPreview
         {
             get
             {
                 Initialize();
                 return _isPreview;
-            }
-            set
-            {
-                Initialize();
-                _isPreview.Assign(value);
             }
         }
 

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 AzureMonitorPrivateLinkScopeListResult result = AzureMonitorPrivateLinkScopeListResult.FromResponse(response);
-                yield return Page<MonitorPrivateLinkScopeData>.FromValues((IReadOnlyList<MonitorPrivateLinkScopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MonitorPrivateLinkScopeData>.FromValues((IReadOnlyList<MonitorPrivateLinkScopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

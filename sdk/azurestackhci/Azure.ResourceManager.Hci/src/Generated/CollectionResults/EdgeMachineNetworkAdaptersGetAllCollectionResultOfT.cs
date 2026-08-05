@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 EdgeMachineNetworkAdapterListResult result = EdgeMachineNetworkAdapterListResult.FromResponse(response);
-                yield return Page<EdgeMachineNetworkAdapterData>.FromValues((IReadOnlyList<EdgeMachineNetworkAdapterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeMachineNetworkAdapterData>.FromValues((IReadOnlyList<EdgeMachineNetworkAdapterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

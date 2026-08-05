@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 CapturedLogList result = CapturedLogList.FromResponse(response);
-                yield return Page<PostgreSqlFlexibleServerLogFile>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerLogFile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PostgreSqlFlexibleServerLogFile>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerLogFile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

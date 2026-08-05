@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PerformanceCountersOTel))
+            if (Optional.IsCollectionDefined(PerformanceCountersOtel))
             {
                 writer.WritePropertyName("performanceCountersOTel"u8);
                 writer.WriteStartArray();
-                foreach (PerformanceCountersOtelDataSource item in PerformanceCountersOTel)
+                foreach (PerformanceCountersOtelDataSource item in PerformanceCountersOtel)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<PerfCounterDataSource> performanceCounters = default;
-            IList<PerformanceCountersOtelDataSource> performanceCountersOTel = default;
+            IList<PerformanceCountersOtelDataSource> performanceCountersOtel = default;
             IList<WindowsEventLogDataSource> windowsEventLogs = default;
             IList<SyslogDataSource> syslog = default;
             IList<ExtensionDataSource> extensions = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         array.Add(PerformanceCountersOtelDataSource.DeserializePerformanceCountersOtelDataSource(item, options));
                     }
-                    performanceCountersOTel = array;
+                    performanceCountersOtel = array;
                     continue;
                 }
                 if (prop.NameEquals("windowsEventLogs"u8))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return new DataSourcesSpec(
                 performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(),
-                performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>(),
+                performanceCountersOtel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>(),
                 windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(),
                 syslog ?? new ChangeTrackingList<SyslogDataSource>(),
                 extensions ?? new ChangeTrackingList<ExtensionDataSource>(),

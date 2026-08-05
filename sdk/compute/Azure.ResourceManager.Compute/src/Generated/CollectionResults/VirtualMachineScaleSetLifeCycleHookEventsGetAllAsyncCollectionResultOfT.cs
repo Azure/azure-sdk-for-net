@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 VmScaleSetLifecycleHookEventListResult result = VmScaleSetLifecycleHookEventListResult.FromResponse(response);
-                yield return Page<VirtualMachineScaleSetLifecycleHookEventData>.FromValues((IReadOnlyList<VirtualMachineScaleSetLifecycleHookEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualMachineScaleSetLifecycleHookEventData>.FromValues((IReadOnlyList<VirtualMachineScaleSetLifecycleHookEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

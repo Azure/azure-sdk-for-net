@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.StorageCache
                     yield break;
                 }
                 StorageCacheImportJobsResult result = StorageCacheImportJobsResult.FromResponse(response);
-                yield return Page<StorageCacheImportJobData>.FromValues((IReadOnlyList<StorageCacheImportJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageCacheImportJobData>.FromValues((IReadOnlyList<StorageCacheImportJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
+    [Experimental("AAIP001")]
     internal partial class MemorySearchPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/>. </summary>

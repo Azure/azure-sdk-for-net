@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
+    [Experimental("AAIP001")]
     public partial class TracesDataGenerationJobSource : DataGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobSource"/>. </summary>

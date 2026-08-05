@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AppCertificateListResult result = AppCertificateListResult.FromResponse(response);
-                yield return Page<AppCertificateData>.FromValues((IReadOnlyList<AppCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppCertificateData>.FromValues((IReadOnlyList<AppCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

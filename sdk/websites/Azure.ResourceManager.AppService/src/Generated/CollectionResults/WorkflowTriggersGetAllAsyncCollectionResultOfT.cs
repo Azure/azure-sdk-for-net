@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WorkflowTriggerListResult result = WorkflowTriggerListResult.FromResponse(response);
-                yield return Page<WorkflowTriggerData>.FromValues((IReadOnlyList<WorkflowTriggerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkflowTriggerData>.FromValues((IReadOnlyList<WorkflowTriggerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

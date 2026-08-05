@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WebSiteAnalysisDefinitionListResult result = WebSiteAnalysisDefinitionListResult.FromResponse(response);
-                yield return Page<WebSiteAnalysisDefinitionData>.FromValues((IReadOnlyList<WebSiteAnalysisDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebSiteAnalysisDefinitionData>.FromValues((IReadOnlyList<WebSiteAnalysisDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

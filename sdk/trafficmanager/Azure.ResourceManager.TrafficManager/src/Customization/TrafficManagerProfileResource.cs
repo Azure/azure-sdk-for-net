@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.TrafficManager
     {
         /// <summary> Gets a collection of TrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
         /// <returns> An object representing collection of TrafficManagerEndpoints and their operations over a TrafficManagerEndpointResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use GetAzureEndpointTrafficManagerEndpoints, GetExternalEndpointTrafficManagerEndpoints, or GetNestedEndpointTrafficManagerEndpoints instead.", false)]
         public virtual TrafficManagerEndpointCollection GetTrafficManagerEndpoints()
         {
             return GetCachedClient(client => new TrafficManagerEndpointCollection(client, Id, HasData ? Data : null));
@@ -25,6 +27,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use GetAzureEndpointTrafficManagerEndpointAsync, GetExternalEndpointTrafficManagerEndpointAsync, or GetNestedEndpointTrafficManagerEndpointAsync instead.", false)]
         [ForwardsClientCalls]
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use GetAzureEndpointTrafficManagerEndpointAsync, GetExternalEndpointTrafficManagerEndpointAsync, or GetNestedEndpointTrafficManagerEndpointAsync instead.", false)]
         [ForwardsClientCalls]
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
@@ -46,6 +51,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use GetAzureEndpointTrafficManagerEndpoint, GetExternalEndpointTrafficManagerEndpoint, or GetNestedEndpointTrafficManagerEndpoint instead.", false)]
         [ForwardsClientCalls]
         public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
@@ -57,6 +64,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use GetAzureEndpointTrafficManagerEndpoint, GetExternalEndpointTrafficManagerEndpoint, or GetNestedEndpointTrafficManagerEndpoint instead.", false)]
         [ForwardsClientCalls]
         public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {

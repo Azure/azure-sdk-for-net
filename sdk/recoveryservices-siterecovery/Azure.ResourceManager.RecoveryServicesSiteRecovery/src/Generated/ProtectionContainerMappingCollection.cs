@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(ProtectionContainerMappingResource.ResourceType, out string protectionContainerMappingApiVersion);
             _replicationProtectionContainerMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ProtectionContainerMappingResource.ResourceType.Namespace, Diagnostics);
-            _replicationProtectionContainerMappingsRestClient = new ReplicationProtectionContainerMappings(_replicationProtectionContainerMappingsClientDiagnostics, Pipeline, Endpoint, protectionContainerMappingApiVersion ?? "2026-02-01");
+            _replicationProtectionContainerMappingsRestClient = new ReplicationProtectionContainerMappings(_replicationProtectionContainerMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectionContainerMappingApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

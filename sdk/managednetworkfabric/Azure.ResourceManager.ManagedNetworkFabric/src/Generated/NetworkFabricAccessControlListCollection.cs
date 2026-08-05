@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkFabricAccessControlListResource.ResourceType, out string networkFabricAccessControlListApiVersion);
             _accessControlListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricAccessControlListResource.ResourceType.Namespace, Diagnostics);
-            _accessControlListsRestClient = new AccessControlLists(_accessControlListsClientDiagnostics, Pipeline, Endpoint, networkFabricAccessControlListApiVersion ?? "2025-07-15");
+            _accessControlListsRestClient = new AccessControlLists(_accessControlListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricAccessControlListApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DataMigration
                     yield break;
                 }
                 ServiceSkuList result = ServiceSkuList.FromResponse(response);
-                yield return Page<DataMigrationAvailableServiceSku>.FromValues((IReadOnlyList<DataMigrationAvailableServiceSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataMigrationAvailableServiceSku>.FromValues((IReadOnlyList<DataMigrationAvailableServiceSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

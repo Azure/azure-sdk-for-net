@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DnsResolver
                     yield break;
                 }
                 DnsForwardingRulesetListResult result = DnsForwardingRulesetListResult.FromResponse(response);
-                yield return Page<DnsForwardingRulesetData>.FromValues((IReadOnlyList<DnsForwardingRulesetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DnsForwardingRulesetData>.FromValues((IReadOnlyList<DnsForwardingRulesetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

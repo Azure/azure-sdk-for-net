@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Physiscal Source locations from where resources to be failed-over or faulted. </summary>
-        public IList<string> SourceLocations { get; }
+        public IList<string> SourceLocations { get; } = new ChangeTrackingList<string>();
     }
 }

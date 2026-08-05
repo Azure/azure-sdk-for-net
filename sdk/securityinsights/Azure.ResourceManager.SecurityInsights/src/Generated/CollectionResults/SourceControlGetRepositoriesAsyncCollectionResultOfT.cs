@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 RepoList result = RepoList.FromResponse(response);
-                yield return Page<SourceControlRepo>.FromValues((IReadOnlyList<SourceControlRepo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SourceControlRepo>.FromValues((IReadOnlyList<SourceControlRepo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

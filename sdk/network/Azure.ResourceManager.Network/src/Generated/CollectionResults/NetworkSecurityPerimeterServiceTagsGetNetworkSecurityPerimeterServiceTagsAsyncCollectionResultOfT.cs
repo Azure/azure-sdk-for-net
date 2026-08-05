@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NspServiceTagsListResult result = NspServiceTagsListResult.FromResponse(response);
-                yield return Page<Models.NetworkSecurityPerimeterServiceTags>.FromValues((IReadOnlyList<Models.NetworkSecurityPerimeterServiceTags>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<Models.NetworkSecurityPerimeterServiceTags>.FromValues((IReadOnlyList<Models.NetworkSecurityPerimeterServiceTags>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 LoadBalancerFrontendIPConfigurationListResult result = LoadBalancerFrontendIPConfigurationListResult.FromResponse(response);
-                yield return Page<FrontendIPConfigurationData>.FromValues((IReadOnlyList<FrontendIPConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontendIPConfigurationData>.FromValues((IReadOnlyList<FrontendIPConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

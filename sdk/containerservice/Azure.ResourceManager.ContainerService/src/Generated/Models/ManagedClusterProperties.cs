@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeProvisioningProfile"> Node provisioning settings that apply to the whole cluster. </param>
         /// <param name="bootstrapProfile"> Profile of the cluster bootstrap configuration. </param>
         /// <param name="aiToolchainOperatorProfile"> AI toolchain operator settings that apply to the whole cluster. </param>
-        /// <param name="schedulerProfile"> Profile of the pod scheduler configuration. </param>
+        /// <param name="schedulerProfile"> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </param>
         /// <param name="hostedSystemProfile"> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </param>
         /// <param name="healthMonitorProfile"> Health monitor profile for the managed cluster. </param>
         /// <param name="controlPlaneScalingProfile"> Profile for providing scaled and performance guaranteed control plane capacity to deliver consistent performance under high workload. Requires Kubernetes version 1.33.0 or later. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("aiToolchainOperatorProfile")]
         internal ManagedClusterAIToolchainOperatorProfile AiToolchainOperatorProfile { get; set; }
 
-        /// <summary> Profile of the pod scheduler configuration. </summary>
+        /// <summary> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </summary>
         [WirePath("schedulerProfile")]
         internal SchedulerProfile SchedulerProfile { get; set; }
 
@@ -453,8 +453,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
+        [WirePath("schedulerProfile.upstream.schedulerConfigMode")]
         public SchedulerConfigMode? UpstreamSchedulerConfigMode
         {
             get

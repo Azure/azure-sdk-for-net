@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 HostNameBindingListResult result = HostNameBindingListResult.FromResponse(response);
-                yield return Page<HostNameBindingData>.FromValues((IReadOnlyList<HostNameBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HostNameBindingData>.FromValues((IReadOnlyList<HostNameBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

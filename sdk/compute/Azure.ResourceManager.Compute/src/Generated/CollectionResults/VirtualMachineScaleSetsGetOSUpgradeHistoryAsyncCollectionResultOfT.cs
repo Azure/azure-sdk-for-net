@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 VirtualMachineScaleSetListOSUpgradeHistory result = VirtualMachineScaleSetListOSUpgradeHistory.FromResponse(response);
-                yield return Page<UpgradeOperationHistoricalStatusInfo>.FromValues((IReadOnlyList<UpgradeOperationHistoricalStatusInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<UpgradeOperationHistoricalStatusInfo>.FromValues((IReadOnlyList<UpgradeOperationHistoricalStatusInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

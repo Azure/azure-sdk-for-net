@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class BatchPipelineComponentDeploymentConfiguration
     {
         // Customized: restore legacy property name; TypeSpec rename is not applied to this generated property declaration.
+        /// <summary> [Required] Reference to the component asset used to calculate the custom metrics. </summary>
         [WirePath("componentId")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MachineLearningIdAssetReference ComponentId { get; set; }

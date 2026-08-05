@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 RegulatoryComplianceControlList result = RegulatoryComplianceControlList.FromResponse(response);
-                yield return Page<RegulatoryComplianceControlData>.FromValues((IReadOnlyList<RegulatoryComplianceControlData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RegulatoryComplianceControlData>.FromValues((IReadOnlyList<RegulatoryComplianceControlData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

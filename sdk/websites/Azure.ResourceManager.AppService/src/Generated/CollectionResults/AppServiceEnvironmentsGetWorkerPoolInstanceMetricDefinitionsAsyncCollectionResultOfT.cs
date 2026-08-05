@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 ResourceMetricDefinitionListResult result = ResourceMetricDefinitionListResult.FromResponse(response);
-                yield return Page<ResourceMetricDefinition>.FromValues((IReadOnlyList<ResourceMetricDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ResourceMetricDefinition>.FromValues((IReadOnlyList<ResourceMetricDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedBackupShortTermRetentionPolicyListResult result = ManagedBackupShortTermRetentionPolicyListResult.FromResponse(response);
-                yield return Page<ManagedBackupShortTermRetentionPolicyData>.FromValues((IReadOnlyList<ManagedBackupShortTermRetentionPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedBackupShortTermRetentionPolicyData>.FromValues((IReadOnlyList<ManagedBackupShortTermRetentionPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

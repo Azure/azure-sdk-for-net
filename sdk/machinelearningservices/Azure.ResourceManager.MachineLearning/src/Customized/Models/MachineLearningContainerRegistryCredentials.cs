@@ -11,6 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    /// <summary> The credentials for accessing a container registry. </summary>
     public partial class MachineLearningContainerRegistryCredentials : IJsonModel<MachineLearningContainerRegistryCredentials>
     {
         // Container registry credentials are returned by an action response and are no longer generated as a public model from TypeSpec.
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return DeserializeMachineLearningContainerRegistryCredentials(document.RootElement, options);
         }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();

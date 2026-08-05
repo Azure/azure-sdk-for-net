@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 DiskEncryptionSetList result = DiskEncryptionSetList.FromResponse(response);
-                yield return Page<DiskEncryptionSetData>.FromValues((IReadOnlyList<DiskEncryptionSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DiskEncryptionSetData>.FromValues((IReadOnlyList<DiskEncryptionSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

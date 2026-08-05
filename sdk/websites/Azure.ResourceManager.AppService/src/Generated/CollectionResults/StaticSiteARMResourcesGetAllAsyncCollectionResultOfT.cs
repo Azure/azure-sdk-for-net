@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 StaticSiteListResult result = StaticSiteListResult.FromResponse(response);
-                yield return Page<StaticSiteData>.FromValues((IReadOnlyList<StaticSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StaticSiteData>.FromValues((IReadOnlyList<StaticSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

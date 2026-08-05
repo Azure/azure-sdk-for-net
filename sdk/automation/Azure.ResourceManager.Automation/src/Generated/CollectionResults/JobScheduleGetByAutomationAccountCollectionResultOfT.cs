@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 JobScheduleListResult result = JobScheduleListResult.FromResponse(response);
-                yield return Page<AutomationJobScheduleData>.FromValues((IReadOnlyList<AutomationJobScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutomationJobScheduleData>.FromValues((IReadOnlyList<AutomationJobScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
