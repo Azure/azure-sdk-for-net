@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added support for the `2026-07-01-preview` API version, which is now the default `ServiceVersion`.
+- Added `ContentProvenanceClient` for Content Provenance detection, which determines whether media was generated or modified by an AI system. `Detect` starts a long-running operation and returns an `Operation<DetectProvenanceResult>`; `GetOperationStatus` returns a `ProvenanceDetectOperation`.
+- Added `ContentProvenanceClientSettings` and the `AddContentProvenanceClient`/`AddKeyedContentProvenanceClient` host extensions, to support creating a `ContentProvenanceClient` from `IConfiguration` and registering it for dependency injection.
+- Added models `DetectProvenanceOptions`, `DetectProvenanceResult`, `DetectedProvenance`, `ProvenanceContent` and `ProvenanceDetectOperation`.
+- Added enums `DetectOutcome`, `DetectedProvenanceType`, `ProvenanceOperationKind` and `OperationState`.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 - Added `ContentSafetyClientSettings` to support creating a `ContentSafetyClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 - Added `BlocklistClientSettings` to support creating a `BlocklistClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
