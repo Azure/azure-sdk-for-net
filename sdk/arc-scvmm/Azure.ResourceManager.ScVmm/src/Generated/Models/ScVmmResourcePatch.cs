@@ -11,22 +11,22 @@ using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> The type used for updating tags in AvailabilitySet resources. </summary>
-    internal partial class ScVmmAvailabilitySetPatch
+    /// <summary> Object containing tags updates for patch operations. </summary>
+    public partial class ScVmmResourcePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScVmmAvailabilitySetPatch"/>. </summary>
-        public ScVmmAvailabilitySetPatch()
+        /// <summary> Initializes a new instance of <see cref="ScVmmResourcePatch"/>. </summary>
+        public ScVmmResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmmAvailabilitySetPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmResourcePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmAvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScVmmResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

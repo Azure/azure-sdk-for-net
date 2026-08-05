@@ -14,62 +14,62 @@ using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> The type used for updating tags in AvailabilitySet resources. </summary>
-    internal partial class ScVmmAvailabilitySetPatch : IJsonModel<ScVmmAvailabilitySetPatch>
+    /// <summary> Object containing tags updates for patch operations. </summary>
+    public partial class ScVmmResourcePatch : IJsonModel<ScVmmResourcePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScVmmAvailabilitySetPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScVmmResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScVmmAvailabilitySetPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScVmmAvailabilitySetPatch(document.RootElement, options);
+                        return DeserializeScVmmResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmAvailabilitySetPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScVmmAvailabilitySetPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmAvailabilitySetPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScVmmAvailabilitySetPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScVmmResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScVmmAvailabilitySetPatch IPersistableModel<ScVmmAvailabilitySetPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScVmmResourcePatch IPersistableModel<ScVmmResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScVmmAvailabilitySetPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScVmmResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="scVmmAvailabilitySetPatch"> The <see cref="ScVmmAvailabilitySetPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ScVmmAvailabilitySetPatch scVmmAvailabilitySetPatch)
+        /// <param name="scVmmResourcePatch"> The <see cref="ScVmmResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ScVmmResourcePatch scVmmResourcePatch)
         {
-            if (scVmmAvailabilitySetPatch == null)
+            if (scVmmResourcePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(scVmmAvailabilitySetPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(scVmmResourcePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScVmmAvailabilitySetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScVmmResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScVmmAvailabilitySetPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmAvailabilitySetPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmResourcePatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScVmmAvailabilitySetPatch IJsonModel<ScVmmAvailabilitySetPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScVmmResourcePatch IJsonModel<ScVmmResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScVmmAvailabilitySetPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScVmmResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScVmmAvailabilitySetPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmAvailabilitySetPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmResourcePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScVmmAvailabilitySetPatch(document.RootElement, options);
+            return DeserializeScVmmResourcePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScVmmAvailabilitySetPatch DeserializeScVmmAvailabilitySetPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScVmmResourcePatch DeserializeScVmmResourcePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScVmmAvailabilitySetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new ScVmmResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }
