@@ -139,6 +139,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? completedAt = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             string warning = default;
@@ -159,6 +161,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("startedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedAt = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("completedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completedAt = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("elapsedMs"u8))
@@ -242,6 +262,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             return new KnowledgeBaseIndexedSqlActivityRecord(
                 id,
                 @type,
+                startedAt,
+                completedAt,
                 elapsedMs,
                 error,
                 warning,

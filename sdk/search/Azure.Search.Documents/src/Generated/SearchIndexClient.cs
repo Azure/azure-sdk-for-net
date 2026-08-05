@@ -1130,14 +1130,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeText(string indexName, RequestContent content, RequestContext context = null)
+        public virtual Response AnalyzeText(string indexName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.AnalyzeText");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateAnalyzeTextRequest(indexName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1159,14 +1164,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeTextAsync(string indexName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> AnalyzeTextAsync(string indexName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.AnalyzeText");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateAnalyzeTextRequest(indexName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }

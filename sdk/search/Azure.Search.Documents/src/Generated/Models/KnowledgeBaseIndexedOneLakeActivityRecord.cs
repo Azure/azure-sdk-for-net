@@ -22,6 +22,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
+        /// <param name="startedAt"> The time at which the activity started. </param>
+        /// <param name="completedAt"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
@@ -32,7 +34,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedOneLakeArguments"> The indexed OneLake arguments for the retrieval activity. </param>
         /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
-        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments, KnowledgeBaseQueryHintProcessing queryHintProcessing) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedAt, DateTimeOffset? completedAt, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments, KnowledgeBaseQueryHintProcessing queryHintProcessing) : base(id, @type, startedAt, completedAt, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             QueryTime = queryTime;

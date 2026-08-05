@@ -86,6 +86,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             writer.WriteNumberValue(Id);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
+            if (Optional.IsDefined(StartedAt))
+            {
+                writer.WritePropertyName("startedAt"u8);
+                writer.WriteStringValue(StartedAt.Value, "O");
+            }
+            if (Optional.IsDefined(CompletedAt))
+            {
+                writer.WritePropertyName("completedAt"u8);
+                writer.WriteStringValue(CompletedAt.Value, "O");
+            }
             if (Optional.IsDefined(ElapsedMs))
             {
                 writer.WritePropertyName("elapsedMs"u8);
