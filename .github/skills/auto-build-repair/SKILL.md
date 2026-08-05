@@ -129,3 +129,4 @@ On success, summarize: errors fixed, files changed (generated-vs-custom split), 
 4. Never touch `.github/`, `eng/`, shared props/targets, pipelines, metadata, or secrets.
 5. Never prompt the user; run fully headless, honoring `maxIterations`.
 6. Never auto-merge — fixes land as reviewable commits for human review.
+7. Work only in the existing checkout at `$GITHUB_WORKSPACE` (the PR is already checked out there); `cd "$GITHUB_WORKSPACE"` before running `git`/build/renderer commands and keep scratch under `$RUNNER_TEMP`. Never `git clone` the repo or make a second working copy — a duplicate clone bloats the run artifacts and can stall comment delivery.

@@ -192,8 +192,11 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 4. **Stay out of infra.** Never touch `.github/`, `eng/`, shared props/targets, pipelines, package metadata, or secrets. (The push safe-output additionally enforces a protected-files denylist.)
 5. **Fully headless.** Never prompt for input. Honor `maxIterations` from `repair-config.yml`; if it is reached without a green build, commit progress and report.
 6. **No auto-merge.** Fixes land as reviewable commits only.
+7. **Work only in the existing checkout.** The PR is already checked out at `$GITHUB_WORKSPACE`. **Never `git clone` the repository or create a second working copy** (e.g. under `/tmp` or the agent working dir) — a duplicate clone bloats the run artifacts by hundreds of MB and can stall or cancel the downstream comment-delivery job.
 
 ## Steps
+
+> **Before any step, `cd "$GITHUB_WORKSPACE"`.** Your current working directory is *not* the checkout. Run every `git`, build, and script command from `$GITHUB_WORKSPACE` (or address files by absolute `$GITHUB_WORKSPACE/...` paths). Relative paths like `.github/skills/...` or `repair-results/...` will otherwise resolve outside the repo and fail. Keep all scratch output under `$RUNNER_TEMP` (never the agent working dir), so it is not swept into the run artifacts.
 
 1. Identify the single failing SDK package path from the PR diff. **Record the current PR head sha** (`git rev-parse HEAD`) as the pre-repair sha — the summary in Step 5 uses it to diff changed files. Create `$RUNNER_TEMP/repair-results` and collect the package's build errors by building the changed package, **redirecting the raw build output to `$RUNNER_TEMP/repair-results/pre-repair-errors.txt`** — the Step 5 emitter parses this to list the errors it fixed (a first-try success leaves no `buildResult` in the engine result, so this capture is the only source for the "Build Errors Fixed" list). This is a mechanical redirect, not authored content.
 2. Apply the `auto-build-repair` skill workflow: call the engine with `--edit-scope CustomCode`, the `--package-path`, and the build errors as `--customization-request`, **redirecting each attempt's `-o json` output to `$RUNNER_TEMP/repair-results/result-<n>.json`**; re-invoke (idempotent) only while the error set keeps shrinking, up to `maxIterations`.
@@ -202,7 +205,7 @@ pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
 5. **Render the summary comment deterministically and post it verbatim.** Do **not** author the comment yourself — run the checked-in emitter, which builds the entire comment (classified build errors, files changed with a generated-vs-custom split, iterations, final result, and the machine-readable telemetry object) from the result files, `git`, and env only:
 
    ```bash
-   pwsh .github/skills/auto-build-repair/emit-repair-report.ps1 \
+   pwsh "$GITHUB_WORKSPACE/.github/skills/auto-build-repair/emit-repair-report.ps1" \
      -ResultsDir "$RUNNER_TEMP/repair-results" \
      -PreRepairErrorsFile "$RUNNER_TEMP/repair-results/pre-repair-errors.txt" \
      -PackagePath "<failing SDK package dir>" \
