@@ -183,3 +183,4 @@ namespace Azure.ResourceManager.StorageMover.Models
             => StorageMoverEndpointData(id, name, resourceType, systemData, properties, null);
     }
 }
+// Test comment for batching validation - DO NOT MERGE

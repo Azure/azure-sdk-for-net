@@ -22,3 +22,5 @@ public partial class CosmosDBService
         get => throw new NotSupportedException("TODO: Needs to be implemented using extensibility API.");
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
