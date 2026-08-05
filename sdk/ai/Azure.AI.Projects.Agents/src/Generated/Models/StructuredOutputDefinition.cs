@@ -19,8 +19,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
-        internal StructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="schema"/> is null. </exception>
+        public StructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(schema, nameof(schema));
+
             Name = name;
             Description = description;
             Schema = schema;
@@ -43,10 +48,10 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The name of the structured output. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> A description of the output to emit. Used by the model to determine when to emit the output. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The JSON schema for the structured output.
@@ -77,6 +82,6 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, BinaryData> Schema { get; }
 
         /// <summary> Whether to enforce strict validation. Default `true`. </summary>
-        public bool? Strict { get; }
+        public bool? Strict { get; set; }
     }
 }

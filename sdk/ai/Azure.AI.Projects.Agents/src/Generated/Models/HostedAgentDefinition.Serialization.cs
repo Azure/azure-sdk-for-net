@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -149,7 +150,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             ProjectsAgentKind kind = default;
-            ContentFilterConfiguration contentFilterConfiguration = default;
+            Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string cpu = default;
             string memory = default;
@@ -171,7 +172,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    contentFilterConfiguration = Extensions.OpenAI.ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cpu"u8))

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -31,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="rankingOptions"> Ranking options for search. </param>
         /// <param name="filters"></param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxNumResults, object rankingOptions, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxNumResults, RankingOptions rankingOptions, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             MaxNumResults = maxNumResults;
             RankingOptions = rankingOptions;
@@ -43,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         public long? MaxNumResults { get; set; }
 
         /// <summary> Ranking options for search. </summary>
-        public object RankingOptions { get; set; }
+        public RankingOptions RankingOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the Filters.
@@ -54,10 +55,10 @@ namespace Azure.AI.Projects.Agents
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="object"/>. </description>
+        /// <description> <see cref="OpenAI.InternalComparisonFilter"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="object"/>. </description>
+        /// <description> <see cref="OpenAI.InternalCompoundFilter"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

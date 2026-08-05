@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalImageGenToolInputImageMask"/>. </summary>
-        internal InternalImageGenToolInputImageMask()
+        public InternalImageGenToolInputImageMask()
         {
         }
 
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ImageUrl. </summary>
-        public Uri ImageUrl { get; }
+        /// <summary> Gets or sets the ImageUrl. </summary>
+        public Uri ImageUrl { get; set; }
 
-        /// <summary> Gets the FileId. </summary>
-        public string FileId { get; }
+        /// <summary> Gets or sets the FileId. </summary>
+        public string FileId { get; set; }
     }
 }

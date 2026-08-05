@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -32,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         /// where the running external agent already emits a stable id that differs from the Foundry agent name.
         /// The resolved value is always echoed on read.
         /// </param>
-        internal ExternalAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string otelAgentId) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal ExternalAgentDefinition(ProjectsAgentKind kind, Extensions.OpenAI.ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string otelAgentId) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             OtelAgentId = otelAgentId;
         }

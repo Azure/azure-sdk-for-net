@@ -15,8 +15,11 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/>. </summary>
         /// <param name="storageQueue"> Storage queue. </param>
-        internal AzureFunctionBinding(AzureFunctionStorageQueue storageQueue)
+        /// <exception cref="ArgumentNullException"> <paramref name="storageQueue"/> is null. </exception>
+        public AzureFunctionBinding(AzureFunctionStorageQueue storageQueue)
         {
+            Argument.AssertNotNull(storageQueue, nameof(storageQueue));
+
             StorageQueue = storageQueue;
         }
 
@@ -32,9 +35,9 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The type of binding, which is always 'storage_queue'. </summary>
-        internal string Type { get; } = "storage_queue";
+        public string Type { get; } = "storage_queue";
 
         /// <summary> Storage queue. </summary>
-        public AzureFunctionStorageQueue StorageQueue { get; }
+        public AzureFunctionStorageQueue StorageQueue { get; set; }
     }
 }

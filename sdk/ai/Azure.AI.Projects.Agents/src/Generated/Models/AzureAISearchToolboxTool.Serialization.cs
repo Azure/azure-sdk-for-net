@@ -110,7 +110,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureAISearchToolOptions azureAiSearch = default;
+            AzureAISearchToolResource azureAiSearch = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
-                    azureAiSearch = AzureAISearchToolOptions.DeserializeAzureAISearchToolOptions(prop.Value, options);
+                    azureAiSearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

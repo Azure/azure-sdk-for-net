@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="InternalFunctionToolParam"/>. </summary>
         /// <param name="name"></param>
-        internal InternalFunctionToolParam(string name)
+        public InternalFunctionToolParam(string name)
         {
             Name = name;
         }
@@ -39,22 +39,22 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Name. </summary>
-        public string Name { get; }
+        /// <summary> Gets or sets the Name. </summary>
+        public string Name { get; set; }
 
-        /// <summary> Gets the Description. </summary>
-        public string Description { get; }
+        /// <summary> Gets or sets the Description. </summary>
+        public string Description { get; set; }
 
-        /// <summary> Gets the Parameters. </summary>
-        public EmptyModelParam Parameters { get; }
+        /// <summary> Gets or sets the Parameters. </summary>
+        public EmptyModelParam Parameters { get; set; }
 
-        /// <summary> Gets the Strict. </summary>
-        public bool? Strict { get; }
+        /// <summary> Gets or sets the Strict. </summary>
+        public bool? Strict { get; set; }
 
         /// <summary> Gets the Type. </summary>
-        internal string Type { get; } = "function";
+        public string Type { get; } = "function";
 
         /// <summary> Whether this function should be deferred and discovered via tool search. </summary>
-        public bool? DeferLoading { get; }
+        public bool? DeferLoading { get; set; }
     }
 }
