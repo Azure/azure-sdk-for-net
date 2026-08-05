@@ -1,9 +1,10 @@
 # Release History
 
-## 1.4.1-beta.6 (2026-08-05)
+## 2.0.0-beta.1 (2026-08-05)
 
 ### Features Added
 
+- Added support for stable API version 2026-02-23.
 - Added opt-in support for the Azure Confidential Ledger Gateway via `ConfidentialLedgerClientOptions.UseLedgerGateway`. When enabled:
   - The SDK skips the per-ledger CCF identity-service TLS bootstrap. The gateway uses publicly-rooted certificates, so the OS trust store is sufficient.
   - `ConfidentialLedgerClient.PostLedgerEntry` accepts an HTTP 202 response and returns an operation whose `Id` is the gateway-assigned `operationId` (read from the `x-ms-webfe-operation-id` response header, with a fallback to the response body). The operation transparently polls `GET /app/operations/{operationId}` and surfaces the underlying CCF transaction once committed.
@@ -15,6 +16,10 @@
 ### Bugs Fixed
 
 - `PostLedgerEntryOperation.GetRawResponse()` now returns the initial submit response before the first poll. Previously, callers using `WaitUntil.Started` who inspected response headers (for example `x-ms-ccf-transaction-id` or `x-ms-webfe-operation-id`) on the returned operation observed a `NullReferenceException`.
+
+### Other Changes
+
+- Renamed several generated model and enum types in the .NET client to follow Azure SDK for .NET naming guidelines (C# only; the REST contract and other language SDKs are unchanged): `Bundle` → `LedgerBundle`, `Constitution` → `LedgerConstitution`, `Metadata` → `LedgerEndpointMetadata`, `Mode` → `LedgerEndpointMode`, `Role` → `LedgerRole`, `Collection` → `LedgerCollectionInfo`, and `UserDefinedFunctionExecutionResponse` → `UserDefinedFunctionExecution`.
 
 ## 1.4.1-beta.5 (2026-05-26)
 

@@ -228,6 +228,7 @@ namespace Azure.AI.Projects.Agents
         WorkflowAgentsV1Preview = 0,
         ExternalAgentsV1Preview = 1,
         DraftAgentsV1Preview = 2,
+        VoiceAgentsV1Preview = 3,
     }
     public abstract partial class AgentEndpointAuthorizationScheme : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme>
     {

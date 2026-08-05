@@ -21,7 +21,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
         [Test]
         public void HelloWorld()
         {
-            #region Snippet:CreateClient
+            #region Snippet:ConfidentialLedger_CreateClient
 
 #if SNIPPET
             var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
@@ -29,7 +29,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential);
 #endif
             #endregion
-            #region Snippet:AppendToLedger
+            #region Snippet:ConfidentialLedger_AppendToLedger
 
             Operation postOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
@@ -41,9 +41,9 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:GetStatus
+            #region Snippet:ConfidentialLedger_GetStatus
 
-            Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+            Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
 
             string status = JsonDocument.Parse(statusResponse.Content)
                 .RootElement
@@ -55,7 +55,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             // Wait for the entry to be committed
             while (status == "Pending")
             {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
                 status = JsonDocument.Parse(statusResponse.Content)
                     .RootElement
                     .GetProperty("state")
@@ -66,16 +66,16 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:GetReceipt
+            #region Snippet:ConfidentialLedger_GetReceipt
 
-            Response receiptResponse = ledgerClient.GetReceipt(transactionId);
+            Response receiptResponse = ledgerClient.GetReceipt(transactionId, new RequestContext());
             string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd();
 
             Console.WriteLine(receiptJson);
 
             #endregion
 
-            #region Snippet:Collection
+            #region Snippet:ConfidentialLedger_Collection
 
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
@@ -89,7 +89,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:NoCollectionId
+            #region Snippet:ConfidentialLedger_NoCollectionId
             postOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
                 RequestContent.Create(
@@ -107,7 +107,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             while (!loaded)
             {
                 // Provide both the transactionId and collectionId.
-                getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+                getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
                 rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
                 loaded = rootElement.GetProperty("state").GetString() != "Loading";
             }
@@ -120,7 +120,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine(contents); // "Hello world!"
 
             // Now just provide the transactionId.
-            getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
+            getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
 
             string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
                 .RootElement
@@ -132,7 +132,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:GetEnteryWithNoTransactionId
+            #region Snippet:ConfidentialLedger_GetEnteryWithNoTransactionId
 
             Operation firstPostOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
@@ -155,7 +155,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             status = "Pending";
             while (status == "Pending")
             {
-                statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+                statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
                 status = JsonDocument.Parse(statusResponse.Content)
                     .RootElement
                     .GetProperty("state")
@@ -163,7 +163,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             }
 
             // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
-            Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+            Response getResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
 
             // Try until the entry is available.
             loaded = false;
@@ -180,7 +180,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+                    getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
                 }
             }
 
@@ -193,7 +193,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             Console.WriteLine(firstEntryContents); // "Hello world 0"
 
             // This will return the latest entry available in the default collection.
-            getResponse = ledgerClient.GetCurrentLedgerEntry();
+            getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
 
             // Try until the entry is available.
             loaded = false;
@@ -210,7 +210,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetCurrentLedgerEntry();
+                    getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
                 }
             }
 
@@ -219,7 +219,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             // The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
             string collectionTransactionId = collectionPostOperation.Id;
 
-            getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+            getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
             // Try until the entry is available.
             loaded = false;
             element = default;
@@ -235,14 +235,14 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 }
                 else
                 {
-                    getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+                    getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
                 }
             }
 
             Console.WriteLine(collectionEntry); // "Hello world collection 0"
 
             // This will return the latest entry available in the collection.
-            getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
+            getResponse = ledgerClient.GetCurrentLedgerEntry("my collection", new RequestContext());
             string latestCollection = JsonDocument.Parse(getResponse.Content)
                 .RootElement
                 .GetProperty("contents")
@@ -252,13 +252,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:RangedQuery
+            #region Snippet:ConfidentialLedger_RangedQuery
 
             ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 
             #endregion
 
-            #region Snippet:NewUser
+            #region Snippet:ConfidentialLedger_NewUser
 
 #if SNIPPET
             string newUserAadObjectId = "<some AAD user or service principal object Id>";
@@ -271,9 +271,9 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:Consortium
+            #region Snippet:ConfidentialLedger_Consortium
 
-            Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers();
+            Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers(new RequestContext());
             foreach (var page in consortiumResponse)
             {
                 string membersJson = page.ToString();
@@ -283,13 +283,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // The constitution is a collection of JavaScript code that defines actions available to members,
             // and vets proposals by members to execute those actions.
-            Response constitutionResponse = ledgerClient.GetConstitution();
+            Response constitutionResponse = ledgerClient.GetConstitution(new RequestContext());
             string constitutionJson = new StreamReader(constitutionResponse.ContentStream).ReadToEnd();
 
             Console.WriteLine(constitutionJson);
 
             // Enclave quotes contain material that can be used to cryptographically verify the validity and contents of an enclave.
-            Response enclavesResponse = ledgerClient.GetEnclaveQuotes();
+            Response enclavesResponse = ledgerClient.GetEnclaveQuotes(new RequestContext());
             string enclavesJson = new StreamReader(enclavesResponse.ContentStream).ReadToEnd();
 
             Console.WriteLine(enclavesJson);
