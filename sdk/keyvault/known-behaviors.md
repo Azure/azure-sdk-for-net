@@ -31,7 +31,7 @@ When importing a certificate into Key Vault, the private key must match the cert
 Resolution: verify the PFX or PEM contains the correct matching private key and certificate chain.
 
 Docs:
-- https://learn.microsoft.com/en-us/azure/key-vault/certificates/tutorial-import-certificate
+- https://learn.microsoft.com/azure/key-vault/certificates/tutorial-import-certificate
 - https://learn.microsoft.com/azure/key-vault/certificates/about-certificates
 
 ### Access policies replaced on ARM deployment
