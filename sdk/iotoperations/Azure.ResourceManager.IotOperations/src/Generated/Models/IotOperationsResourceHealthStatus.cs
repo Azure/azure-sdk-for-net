@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Represents the health state of a resource. </summary>
-    public partial class ResourceHealthStatus
+    public partial class IotOperationsResourceHealthStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthStatus"/>. </summary>
-        internal ResourceHealthStatus()
+        /// <summary> Initializes a new instance of <see cref="IotOperationsResourceHealthStatus"/>. </summary>
+        internal IotOperationsResourceHealthStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperationsResourceHealthStatus"/>. </summary>
         /// <param name="status"> The high-level health status of the resource. </param>
         /// <param name="lastTransitionTime"> The timestamp (RFC3339) when the health status last changed. </param>
         /// <param name="lastUpdateTime"> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </param>
         /// <param name="message"> A human-readable message describing the last transition. </param>
         /// <param name="reasonCode"> Unique, CamelCase reason code describing the cause of the last health state transition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthStatus(ResourceHealthState? status, string lastTransitionTime, string lastUpdateTime, string message, string reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsResourceHealthStatus(ResourceHealthState? status, string lastTransitionTime, string lastUpdateTime, string message, string reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             LastTransitionTime = lastTransitionTime;

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotOperations
         AkriServiceResource IOperationSource<AkriServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AkriServiceResourceData data = AkriServiceResourceData.DeserializeAkriServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AkriServiceData data = AkriServiceData.DeserializeAkriServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AkriServiceResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotOperations
         async ValueTask<AkriServiceResource> IOperationSource<AkriServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AkriServiceResourceData data = AkriServiceResourceData.DeserializeAkriServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AkriServiceData data = AkriServiceData.DeserializeAkriServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AkriServiceResource(_client, data);
         }
     }

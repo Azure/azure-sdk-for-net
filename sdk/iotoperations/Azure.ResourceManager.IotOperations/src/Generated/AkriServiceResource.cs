@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
-    /// A class representing a AkriServiceResource along with the instance operations that can be performed on it.
+    /// A class representing a AkriService along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AkriServiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotOperationsInstanceResource"/> using the GetAkriServiceResources method.
+    /// Otherwise you can get one from its parent resource <see cref="IotOperationsInstanceResource"/> using the GetAkriServices method.
     /// </summary>
     public partial class AkriServiceResource : ArmResource
     {
         private readonly ClientDiagnostics _akriServiceClientDiagnostics;
         private readonly AkriService _akriServiceRestClient;
-        private readonly AkriServiceResourceData _data;
+        private readonly AkriServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.IoTOperations/instances/akriServices";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <summary> Initializes a new instance of <see cref="AkriServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AkriServiceResource(ArmClient client, AkriServiceResourceData data) : this(client, data.Id)
+        internal AkriServiceResource(ArmClient client, AkriServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AkriServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string akriServiceResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string akriServiceApiVersion);
             _akriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _akriServiceRestClient = new AkriService(_akriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, akriServiceResourceApiVersion ?? "2026-07-01");
+            _akriServiceRestClient = new AkriService(_akriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, akriServiceApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.IotOperations
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AkriServiceResourceData Data
+        public virtual AkriServiceData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotOperations
                 };
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AkriServiceResourceData> response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                Response<AkriServiceData> response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.IotOperations
                 };
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AkriServiceResourceData> response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                Response<AkriServiceData> response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Update a AkriServiceResource.
+        /// Update a AkriService.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AkriServiceResource>> UpdateAsync(WaitUntil waitUntil, AkriServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AkriServiceResource>> UpdateAsync(WaitUntil waitUntil, AkriServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AkriServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AkriServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<AkriServiceResource> operation = new IotOperationsArmOperation<AkriServiceResource>(
                     new AkriServiceResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Update a AkriServiceResource.
+        /// Update a AkriService.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AkriServiceResource> Update(WaitUntil waitUntil, AkriServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AkriServiceResource> Update(WaitUntil waitUntil, AkriServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AkriServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AkriServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<AkriServiceResource> operation = new IotOperationsArmOperation<AkriServiceResource>(
                     new AkriServiceResourceOperationSource(Client),

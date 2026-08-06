@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.IotOperations
     /// <summary>
     /// A class representing a collection of <see cref="AkriServiceResource"/> and their operations.
     /// Each <see cref="AkriServiceResource"/> in the collection will belong to the same instance of <see cref="IotOperationsInstanceResource"/>.
-    /// To get a <see cref="AkriServiceResourceCollection"/> instance call the GetAkriServiceResources method from an instance of <see cref="IotOperationsInstanceResource"/>.
+    /// To get a <see cref="AkriServiceCollection"/> instance call the GetAkriServices method from an instance of <see cref="IotOperationsInstanceResource"/>.
     /// </summary>
-    public partial class AkriServiceResourceCollection : ArmCollection, IEnumerable<AkriServiceResource>, IAsyncEnumerable<AkriServiceResource>
+    public partial class AkriServiceCollection : ArmCollection, IEnumerable<AkriServiceResource>, IAsyncEnumerable<AkriServiceResource>
     {
         private readonly ClientDiagnostics _akriServiceClientDiagnostics;
         private readonly AkriService _akriServiceRestClient;
 
-        /// <summary> Initializes a new instance of AkriServiceResourceCollection for mocking. </summary>
-        protected AkriServiceResourceCollection()
+        /// <summary> Initializes a new instance of AkriServiceCollection for mocking. </summary>
+        protected AkriServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AkriServiceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkriServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AkriServiceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AkriServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AkriServiceResource.ResourceType, out string akriServiceResourceApiVersion);
+            TryGetApiVersion(AkriServiceResource.ResourceType, out string akriServiceApiVersion);
             _akriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", AkriServiceResource.ResourceType.Namespace, Diagnostics);
-            _akriServiceRestClient = new AkriService(_akriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, akriServiceResourceApiVersion ?? "2026-07-01");
+            _akriServiceRestClient = new AkriService(_akriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, akriServiceApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="akriServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AkriServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string akriServiceName, AkriServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AkriServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string akriServiceName, AkriServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, AkriServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, AkriServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<AkriServiceResource> operation = new IotOperationsArmOperation<AkriServiceResource>(
                     new AkriServiceResourceOperationSource(Client),
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="akriServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AkriServiceResource> CreateOrUpdate(WaitUntil waitUntil, string akriServiceName, AkriServiceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AkriServiceResource> CreateOrUpdate(WaitUntil waitUntil, string akriServiceName, AkriServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, AkriServiceResourceData.ToRequestContent(data), context);
+                HttpMessage message = _akriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, AkriServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<AkriServiceResource> operation = new IotOperationsArmOperation<AkriServiceResource>(
                     new AkriServiceResourceOperationSource(Client),
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.Get");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.Get");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.IotOperations
                 };
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AkriServiceResourceData> response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                Response<AkriServiceData> response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.Get");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.Get");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.IotOperations
                 };
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AkriServiceResourceData> response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                Response<AkriServiceData> response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -293,13 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AkriServiceResourceData, AkriServiceResource>(new AkriServiceGetByInstanceResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AkriServiceData, AkriServiceResource>(new AkriServiceGetByInstanceResourceAsyncCollectionResultOfT(
                 _akriServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AkriServiceResourceCollection.GetAll"), data => new AkriServiceResource(Client, data));
+                "AkriServiceCollection.GetAll"), data => new AkriServiceResource(Client, data));
         }
 
         /// <summary>
@@ -327,13 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AkriServiceResourceData, AkriServiceResource>(new AkriServiceGetByInstanceResourceCollectionResultOfT(
+            return new PageableWrapper<AkriServiceData, AkriServiceResource>(new AkriServiceGetByInstanceResourceCollectionResultOfT(
                 _akriServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "AkriServiceResourceCollection.GetAll"), data => new AkriServiceResource(Client, data));
+                "AkriServiceCollection.GetAll"), data => new AkriServiceResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.Exists");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AkriServiceResourceData> response = default;
+                Response<AkriServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AkriServiceResourceData)null, result);
+                        response = Response.FromValue((AkriServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.Exists");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AkriServiceResourceData> response = default;
+                Response<AkriServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AkriServiceResourceData)null, result);
+                        response = Response.FromValue((AkriServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,14 +486,14 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AkriServiceResourceData> response = default;
+                Response<AkriServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AkriServiceResourceData)null, result);
+                        response = Response.FromValue((AkriServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _akriServiceClientDiagnostics.CreateScope("AkriServiceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,14 +547,14 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AkriServiceResourceData> response = default;
+                Response<AkriServiceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AkriServiceResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AkriServiceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AkriServiceResourceData)null, result);
+                        response = Response.FromValue((AkriServiceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

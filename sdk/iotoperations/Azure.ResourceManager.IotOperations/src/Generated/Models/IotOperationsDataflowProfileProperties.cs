@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public ResourceHealthState? HealthState { get; }
 
         /// <summary> The health state of the DataflowProfile. </summary>
-        public ResourceHealthStatus StatusHealthState
+        public IotOperationsResourceHealthStatus StatusHealthState
         {
             get
             {

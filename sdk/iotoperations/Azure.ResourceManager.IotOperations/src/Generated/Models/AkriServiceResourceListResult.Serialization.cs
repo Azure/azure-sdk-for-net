@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AkriServiceResourceData item in Value)
+            foreach (AkriServiceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            IList<AkriServiceResourceData> value = default;
+            IList<AkriServiceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AkriServiceResourceData> array = new List<AkriServiceResourceData>();
+                    List<AkriServiceData> array = new List<AkriServiceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AkriServiceResourceData.DeserializeAkriServiceResourceData(item, options));
+                        array.Add(AkriServiceData.DeserializeAkriServiceData(item, options));
                     }
                     value = array;
                     continue;

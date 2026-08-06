@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriServiceStatus"/>. </summary>
         /// <param name="healthState"> The health state of the AkriService. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AkriServiceStatus(ResourceHealthStatus healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AkriServiceStatus(IotOperationsResourceHealthStatus healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The health state of the AkriService. </summary>
-        public ResourceHealthStatus HealthState { get; }
+        public IotOperationsResourceHealthStatus HealthState { get; }
     }
 }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            ResourceHealthStatus healthState = default;
+            IotOperationsResourceHealthStatus healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    healthState = ResourceHealthStatus.DeserializeResourceHealthStatus(prop.Value, options);
+                    healthState = IotOperationsResourceHealthStatus.DeserializeIotOperationsResourceHealthStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

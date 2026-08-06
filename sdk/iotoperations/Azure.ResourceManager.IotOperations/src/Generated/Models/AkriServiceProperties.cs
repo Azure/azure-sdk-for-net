@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         internal AkriServiceStatus Status { get; }
 
         /// <summary> The health state of the AkriService. </summary>
-        public ResourceHealthStatus StatusHealthState
+        public IotOperationsResourceHealthStatus StatusHealthState
         {
             get
             {

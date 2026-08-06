@@ -830,11 +830,11 @@ namespace Azure.ResourceManager.IotOperations
             return GetIotOperationsAkriConnectorTemplates().Get(akriConnectorTemplateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AkriServiceResources in the <see cref="IotOperationsInstanceResource"/>. </summary>
-        /// <returns> An object representing collection of AkriServiceResources and their operations over a AkriServiceResource. </returns>
-        public virtual AkriServiceResourceCollection GetAkriServiceResources()
+        /// <summary> Gets a collection of AkriServices in the <see cref="IotOperationsInstanceResource"/>. </summary>
+        /// <returns> An object representing collection of AkriServices and their operations over a AkriServiceResource. </returns>
+        public virtual AkriServiceCollection GetAkriServices()
         {
-            return GetCachedClient(client => new AkriServiceResourceCollection(client, Id));
+            return GetCachedClient(client => new AkriServiceCollection(client, Id));
         }
 
         /// <summary> Get a AkriServiceResource. </summary>
@@ -843,11 +843,11 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="akriServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AkriServiceResource>> GetAkriServiceResourceAsync(string akriServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AkriServiceResource>> GetAkriServiceAsync(string akriServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            return await GetAkriServiceResources().GetAsync(akriServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetAkriServices().GetAsync(akriServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a AkriServiceResource. </summary>
@@ -856,11 +856,11 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="akriServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AkriServiceResource> GetAkriServiceResource(string akriServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<AkriServiceResource> GetAkriService(string akriServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriServiceName, nameof(akriServiceName));
 
-            return GetAkriServiceResources().Get(akriServiceName, cancellationToken);
+            return GetAkriServices().Get(akriServiceName, cancellationToken);
         }
     }
 }

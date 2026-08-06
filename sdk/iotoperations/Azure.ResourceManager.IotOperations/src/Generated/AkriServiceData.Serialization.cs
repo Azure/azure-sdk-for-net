@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotOperations
 {
     /// <summary> AkriService resource. </summary>
-    public partial class AkriServiceResourceData : ResourceData, IJsonModel<AkriServiceResourceData>
+    public partial class AkriServiceData : ResourceData, IJsonModel<AkriServiceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAkriServiceResourceData(document.RootElement, options);
+                        return DeserializeAkriServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AkriServiceResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AkriServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AkriServiceResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AkriServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AkriServiceResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AkriServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AkriServiceResourceData IPersistableModel<AkriServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AkriServiceResourceData)PersistableModelCreateCore(data, options);
+        AkriServiceData IPersistableModel<AkriServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AkriServiceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AkriServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AkriServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="akriServiceResourceData"> The <see cref="AkriServiceResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AkriServiceResourceData akriServiceResourceData)
+        /// <param name="akriServiceData"> The <see cref="AkriServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AkriServiceData akriServiceData)
         {
-            if (akriServiceResourceData == null)
+            if (akriServiceData == null)
             {
                 return null;
             }
-            return RequestContent.Create(akriServiceResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(akriServiceData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AkriServiceResourceData"/> from. </param>
-        internal static AkriServiceResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AkriServiceData"/> from. </param>
+        internal static AkriServiceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAkriServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAkriServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AkriServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AkriServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AkriServiceResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AkriServiceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.IotOperations
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AkriServiceResourceData IJsonModel<AkriServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AkriServiceResourceData)JsonModelCreateCore(ref reader, options);
+        AkriServiceData IJsonModel<AkriServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AkriServiceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AkriServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AkriServiceResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AkriServiceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAkriServiceResourceData(document.RootElement, options);
+            return DeserializeAkriServiceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AkriServiceResourceData DeserializeAkriServiceResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AkriServiceData DeserializeAkriServiceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.IotOperations
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AkriServiceResourceData(
+            return new AkriServiceData(
                 id,
                 name,
                 resourceType,

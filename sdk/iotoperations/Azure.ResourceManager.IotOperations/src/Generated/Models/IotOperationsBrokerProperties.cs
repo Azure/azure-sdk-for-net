@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> The health state of the Broker. </summary>
-        public ResourceHealthStatus StatusHealthState
+        public IotOperationsResourceHealthStatus StatusHealthState
         {
             get
             {

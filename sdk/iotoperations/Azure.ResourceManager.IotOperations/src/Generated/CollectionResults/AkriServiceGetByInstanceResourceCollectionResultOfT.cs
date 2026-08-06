@@ -14,7 +14,7 @@ using Azure.ResourceManager.IotOperations.Models;
 
 namespace Azure.ResourceManager.IotOperations
 {
-    internal partial class AkriServiceGetByInstanceResourceCollectionResultOfT : Pageable<AkriServiceResourceData>
+    internal partial class AkriServiceGetByInstanceResourceCollectionResultOfT : Pageable<AkriServiceData>
     {
         private readonly AkriService _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AkriServiceGetByInstanceResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AkriServiceResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AkriServiceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotOperations
                 }
                 AkriServiceResourceListResult result = AkriServiceResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<AkriServiceResourceData>.FromValues((IReadOnlyList<AkriServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AkriServiceData>.FromValues((IReadOnlyList<AkriServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
