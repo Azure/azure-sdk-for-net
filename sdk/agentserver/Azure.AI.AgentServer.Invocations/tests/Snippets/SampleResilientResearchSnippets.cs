@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Net.ServerSentEvents;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -45,13 +47,12 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             services.AddSingleton(CreateModelClient());
 
             // Event streams with FILE-BACKED replay so a subscriber reconnecting AFTER A CRASH +
-            // restart resumes from its last cursor with no gap — events persist as JSON to
+            // restart resumes from its last event id with no gap — events persist to
             // ~/.agentserver/streams/<invocationId>.jsonl (the same state root tasks use) and
-            // rehydrate on the next GetOrCreate. The typed overload defaults the storage directory,
-            // a 10-minute TTL, and JSON serialization, so only the cursor is required. (In-memory
-            // replay would lose the pre-crash buffer, defeating this sample's crash-resilience.)
-            services.AddEventStreams(o => o.UseFileBackedReplay<ResearchEvent>(
-                cursor: e => e.Cursor));
+            // rehydrate on the next GetOrCreate. The storage directory and a 10-minute TTL default,
+            // and the event text is carried in SseItem<string>.Data, so no payload codec is needed.
+            // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
+            services.AddEventStreams(o => o.UseFileBackedReplay());
 
             // Heavy in-flight artifacts (partial phase output) live in a file-backed store;
             // metadata holds only small integer watermarks. Use a DURABLE state root under the
@@ -214,15 +215,24 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             string invId = ctx.Input.InvocationId;
             EventStream stream = await registry.GetOrCreateAsync(invId, ct);
 
-            // On crash recovery, last_cursor rehydrates the sequence counter.
-            int? lastCursor = await stream.GetLastCursorAsync(ct);
-            int seq = lastCursor ?? 0;
+            // On crash recovery, the last event id rehydrates the sequence counter.
+            string? lastEventId = await stream.GetLastEventIdAsync(ct);
+            int seq = lastEventId is not null && int.TryParse(lastEventId, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsed)
+                ? parsed
+                : 0;
 
             async Task<ResearchEvent> Emit(string type, string content, string? phase = null)
             {
                 seq++;
                 var evt = new ResearchEvent(seq, type, content, phase);
-                await stream.EmitAsync(evt, cancellationToken: ct);
+                // The caller now owns serialization: the event JSON is the SseItem's Data, the
+                // event type is the SSE event name, and the sequence is the opaque resume id.
+                await stream.EmitAsync(
+                    new SseItem<string>(JsonSerializer.Serialize(evt), type)
+                    {
+                        EventId = seq.ToString(CultureInfo.InvariantCulture),
+                    },
+                    cancellationToken: ct);
                 return evt;
             }
 
@@ -393,7 +403,12 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 // sees a clean failure event before the stream drops.
                 seq++;
                 var failEvt = new ResearchEvent(seq, "run_failed", ex.Message);
-                await stream.EmitAsync(failEvt, close: true, cancellationToken: CancellationToken.None);
+                await stream.EmitAsync(
+                    new SseItem<string>(JsonSerializer.Serialize(failEvt), "run_failed")
+                    {
+                        EventId = seq.ToString(CultureInfo.InvariantCulture),
+                    },
+                    close: true, cancellationToken: CancellationToken.None);
                 throw;
             }
         }
@@ -511,17 +526,17 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
                 if (AcceptsEventStream(request))
                 {
-                    int? after = ResumeCursor(request);
+                    string? after = ResumeEventId(request);
                     await WriteSseAsync(response, stream, after, cancellationToken);
                     return;
                 }
 
                 // JSON snapshot of progress for polling clients.
-                int? lastCursor = await stream.GetLastCursorAsync(cancellationToken);
+                string? lastEventId = await stream.GetLastEventIdAsync(cancellationToken);
                 await response.WriteAsJsonAsync(new
                 {
                     invocation_id = invocationId,
-                    last_event_id = lastCursor,
+                    last_event_id = lastEventId,
                 }, cancellationToken);
             }
 
@@ -559,50 +574,47 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 request.Headers.TryGetValue("Accept", out var accept)
                 && accept.ToString().Contains("text/event-stream", StringComparison.OrdinalIgnoreCase);
 
-            private static int? ResumeCursor(HttpRequest request)
+            private static string? ResumeEventId(HttpRequest request)
             {
-                if (request.Query.TryGetValue("last_event_id", out var q)
-                    && int.TryParse(q, out var qn))
-                    return qn;
-                if (request.Headers.TryGetValue("Last-Event-ID", out var h)
-                    && int.TryParse(h, out var hn))
-                    return hn;
+                if (request.Query.TryGetValue("last_event_id", out var q) && !string.IsNullOrEmpty(q))
+                    return q.ToString();
+                if (request.Headers.TryGetValue("Last-Event-ID", out var h) && !string.IsNullOrEmpty(h))
+                    return h.ToString();
                 return null;
             }
 
             private static async Task WriteSseAsync(
-                HttpResponse response, EventStream stream, int? after, CancellationToken ct)
+                HttpResponse response, EventStream stream, string? after, CancellationToken ct)
             {
                 response.ContentType = "text/event-stream";
                 response.Headers.CacheControl = "no-cache";
 
                 try
                 {
-                    await foreach (object evt in stream.Subscribe(after, ct))
-                    {
-                        var researchEvent = (ResearchEvent)evt;
-                        await response.WriteAsync($"id: {researchEvent.Cursor}\n", ct);
-                        await response.WriteAsync(
-                            $"data: {JsonSerializer.Serialize(researchEvent)}\n\n", ct);
-                        await response.Body.FlushAsync(ct);
-                    }
+                    // Delegate SSE framing (id:/event:/data: lines) to the BCL SseFormatter — the
+                    // stream already yields SseItem<string> with the event text in Data, the event
+                    // name in EventType, and the opaque resume id in EventId.
+                    await SseFormatter.WriteAsync(stream.Subscribe(after, ct), response.Body, ct);
 
                     // Clean close: emit a terminal `done` frame so the client can distinguish
-                    // end-of-stream from a dropped connection (Python parity: resilient_research
-                    // app emits an `event: done` terminator after the subscribe loop).
-                    await response.WriteAsync("event: done\n", ct);
-                    await response.WriteAsync("data: {\"type\":\"done\"}\n\n", ct);
-                    await response.Body.FlushAsync(ct);
+                    // end-of-stream from a dropped connection.
+                    await SseFormatter.WriteAsync(
+                        SingleItem(new SseItem<string>("{\"type\":\"done\"}", "done")), response.Body, ct);
                 }
                 catch (EventStreamNotFoundException)
                 {
                     // The stream was destroyed under us (superseded / TTL-evicted). Emit a
                     // `superseded` frame so the consumer can tell stream-end from "you got cut
-                    // off" (Python parity: EventStreamNotFoundError -> `event: superseded`).
-                    await response.WriteAsync("event: superseded\n", ct);
-                    await response.WriteAsync("data: {\"type\":\"superseded\"}\n\n", ct);
-                    await response.Body.FlushAsync(ct);
+                    // off" (EventStreamNotFoundException -> `event: superseded`).
+                    await SseFormatter.WriteAsync(
+                        SingleItem(new SseItem<string>("{\"type\":\"superseded\"}", "superseded")), response.Body, ct);
                 }
+            }
+
+            private static async IAsyncEnumerable<SseItem<string>> SingleItem(SseItem<string> item)
+            {
+                yield return item;
+                await Task.CompletedTask;
             }
         }
 

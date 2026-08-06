@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
@@ -35,29 +36,29 @@ public sealed class BroadcastEventStreamTests
         EventStreamRegistry registry = NewLiveRegistry();
         EventStream stream = await registry.GetOrCreateAsync("s2");
 
-        var received = new List<object>();
+        var received = new List<string>();
         var subscriberReady = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
         var consumer = Task.Run(async () =>
         {
-            IAsyncEnumerator<object> e = stream.Subscribe().GetAsyncEnumerator();
+            IAsyncEnumerator<SseItem<string>> e = stream.Subscribe().GetAsyncEnumerator();
             subscriberReady.TrySetResult(true);
             while (await e.MoveNextAsync())
             {
-                received.Add(e.Current);
+                received.Add(e.Current.Data);
             }
         });
 
         await subscriberReady.Task;
         await Task.Delay(50);
 
-        await stream.EmitAsync(1);
-        await stream.EmitAsync(2);
-        await stream.EmitAsync(3);
+        await stream.EmitAsync(new SseItem<string>("1"));
+        await stream.EmitAsync(new SseItem<string>("2"));
+        await stream.EmitAsync(new SseItem<string>("3"));
         await stream.CloseAsync();
 
         await consumer;
 
-        Assert.That(received, Is.EqualTo(new object[] { 1, 2, 3 }));
+        Assert.That(received, Is.EqualTo(new[] { "1", "2", "3" }));
     }
 
     [Test]
@@ -67,7 +68,7 @@ public sealed class BroadcastEventStreamTests
         EventStream stream = await registry.GetOrCreateAsync("s3");
         await stream.CloseAsync();
 
-        Assert.ThrowsAsync<EventStreamClosedException>(async () => await stream.EmitAsync(1));
+        Assert.ThrowsAsync<EventStreamClosedException>(async () => await stream.EmitAsync(new SseItem<string>("1")));
     }
 
     [Test]
@@ -85,25 +86,25 @@ public sealed class BroadcastEventStreamTests
         EventStreamRegistry registry = NewLiveRegistry();
         EventStream stream = await registry.GetOrCreateAsync("s5");
 
-        var received = new List<object>();
+        var received = new List<string>();
         var subscriberReady = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
         var consumer = Task.Run(async () =>
         {
-            IAsyncEnumerator<object> e = stream.Subscribe().GetAsyncEnumerator();
+            IAsyncEnumerator<SseItem<string>> e = stream.Subscribe().GetAsyncEnumerator();
             subscriberReady.TrySetResult(true);
             while (await e.MoveNextAsync())
             {
-                received.Add(e.Current);
+                received.Add(e.Current.Data);
             }
         });
 
         await subscriberReady.Task;
         await Task.Delay(50);
 
-        await stream.EmitAsync("last", close: true);
+        await stream.EmitAsync(new SseItem<string>("last"), close: true);
         await consumer;
 
-        Assert.That(received, Is.EqualTo(new object[] { "last" }));
-        Assert.ThrowsAsync<EventStreamClosedException>(async () => await stream.EmitAsync("more"));
+        Assert.That(received, Is.EqualTo(new[] { "last" }));
+        Assert.ThrowsAsync<EventStreamClosedException>(async () => await stream.EmitAsync(new SseItem<string>("more")));
     }
 }

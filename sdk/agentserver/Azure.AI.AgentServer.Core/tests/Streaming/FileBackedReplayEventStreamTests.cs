@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.ServerSentEvents;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
@@ -39,12 +40,7 @@ public sealed class FileBackedReplayEventStreamTests
     private EventStreamRegistry NewRegistry()
     {
         var options = new EventStreamOptions();
-        options.UseFileBackedReplay(
-            _dir,
-            cursor: p => (int)p,
-            ttl: TimeSpan.FromHours(1),
-            serializer: p => p.ToString()!,
-            deserializer: s => int.Parse(s));
+        options.UseFileBackedReplay(storageDirectory: _dir, ttl: TimeSpan.FromHours(1));
         return new InMemoryEventStreamRegistry(options);
     }
 
@@ -56,7 +52,7 @@ public sealed class FileBackedReplayEventStreamTests
         // path is created.
         EventStreamRegistry registry = NewRegistry();
         EventStream stream = await registry.GetOrCreateAsync("../evil/id");
-        await stream.EmitAsync(1);
+        await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         Assert.That(File.Exists(Path.Combine(_dir, "../evil/id.jsonl")), Is.False,
             "the raw traversal id must not be used as a path");
@@ -73,7 +69,7 @@ public sealed class FileBackedReplayEventStreamTests
         // file written by one language is found by the other.
         EventStreamRegistry registry = NewRegistry();
         EventStream stream = await registry.GetOrCreateAsync("unsafe/id");
-        await stream.EmitAsync(1);
+        await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         string[] jsonl = Directory.GetFiles(_dir, "*.jsonl");
         Assert.That(jsonl, Has.Length.EqualTo(1));
@@ -93,7 +89,7 @@ public sealed class FileBackedReplayEventStreamTests
         string reserved = "h_" + new string('a', 64);
         EventStreamRegistry registry = NewRegistry();
         EventStream stream = await registry.GetOrCreateAsync(reserved);
-        await stream.EmitAsync(1);
+        await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         Assert.That(File.Exists(Path.Combine(_dir, reserved + ".jsonl")), Is.False,
             "the reserved-shaped id must not be used verbatim");
@@ -125,7 +121,7 @@ public sealed class FileBackedReplayEventStreamTests
         // sentinel as one durable unit (a crash can never leave the event without its terminal).
         EventStreamRegistry registry = NewRegistry();
         EventStream stream = await registry.GetOrCreateAsync("atomic-1");
-        await stream.EmitAsync(7, close: true);
+        await stream.EmitAsync(new SseItem<string>("7") { EventId = "7" }, close: true);
 
         // Release the exclusive writer handle before inspecting the file: the stream holds a single
         // long-lived append handle while active (production never reads a live stream's file — replay
@@ -134,7 +130,7 @@ public sealed class FileBackedReplayEventStreamTests
 
         string[] lines = File.ReadAllLines(Path.Combine(_dir, "atomic-1.jsonl"));
         Assert.That(lines.Length, Is.EqualTo(2));
-        Assert.That(lines[0], Does.Contain("emit_time").And.Contain("payload"));
+        Assert.That(lines[0], Does.Contain("emit_time").And.Contain("data").And.Contain("event").And.Contain("id"));
         Assert.That(lines[1], Does.Contain("__terminal__"));
     }
 
@@ -143,15 +139,15 @@ public sealed class FileBackedReplayEventStreamTests
     {
         EventStreamRegistry registry = NewRegistry();
         EventStream stream = await registry.GetOrCreateAsync("turn-1");
-        await stream.EmitAsync(0);
-        await stream.EmitAsync(1, close: true);
+        await stream.EmitAsync(new SseItem<string>("0") { EventId = "0" });
+        await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" }, close: true);
 
         // Release the exclusive writer handle before inspecting the file (see note above).
         ((IDisposable)stream).Dispose();
 
         string[] lines = File.ReadAllLines(Path.Combine(_dir, "turn-1.jsonl"));
         Assert.That(lines.Length, Is.EqualTo(3));
-        Assert.That(lines[0], Does.Contain("emit_time").And.Contain("payload"));
+        Assert.That(lines[0], Does.Contain("emit_time").And.Contain("data").And.Contain("event").And.Contain("id"));
         Assert.That(lines[2], Does.Contain("__terminal__"));
     }
 
@@ -160,9 +156,9 @@ public sealed class FileBackedReplayEventStreamTests
     {
         EventStreamRegistry registry1 = NewRegistry();
         EventStream stream1 = await registry1.GetOrCreateAsync("turn-2");
-        await stream1.EmitAsync(0);
-        await stream1.EmitAsync(1);
-        await stream1.EmitAsync(2);
+        await stream1.EmitAsync(new SseItem<string>("0") { EventId = "0" });
+        await stream1.EmitAsync(new SseItem<string>("1") { EventId = "1" });
+        await stream1.EmitAsync(new SseItem<string>("2") { EventId = "2" });
 
         // Simulate a crash: release the writer lock without deleting the log.
         ((IDisposable)stream1).Dispose();
@@ -170,11 +166,11 @@ public sealed class FileBackedReplayEventStreamTests
         EventStreamRegistry registry2 = NewRegistry();
         EventStream stream2 = await registry2.GetOrCreateAsync("turn-2");
 
-        Assert.That(await stream2.GetLastCursorAsync(), Is.EqualTo(2));
+        Assert.That(await stream2.GetLastEventIdAsync(), Is.EqualTo("2"));
 
         // The rehydrated (non-terminal) stream is Active, so the producer resumes.
-        Assert.DoesNotThrowAsync(async () => await stream2.EmitAsync(3));
-        Assert.That(await stream2.GetLastCursorAsync(), Is.EqualTo(3));
+        Assert.DoesNotThrowAsync(async () => await stream2.EmitAsync(new SseItem<string>("3") { EventId = "3" }));
+        Assert.That(await stream2.GetLastEventIdAsync(), Is.EqualTo("3"));
     }
 
     [Test]
@@ -185,8 +181,8 @@ public sealed class FileBackedReplayEventStreamTests
         // rehydrate the deleted stream's events from a lingering .jsonl file.
         EventStreamRegistry registry = NewRegistry();
         EventStream stream = await registry.GetOrCreateAsync("turn-del");
-        await stream.EmitAsync(0);
-        await stream.EmitAsync(1);
+        await stream.EmitAsync(new SseItem<string>("0") { EventId = "0" });
+        await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         string path = Path.Combine(_dir, "turn-del.jsonl");
         Assert.That(File.Exists(path), Is.True);
@@ -195,7 +191,7 @@ public sealed class FileBackedReplayEventStreamTests
         Assert.That(File.Exists(path), Is.False, "delete() must remove the backing file (cleanup-before-tombstone).");
 
         EventStream recreated = await registry.GetOrCreateAsync("turn-del");
-        Assert.That(await recreated.GetLastCursorAsync(), Is.Null, "recreated stream must not rehydrate deleted events.");
+        Assert.That(await recreated.GetLastEventIdAsync(), Is.Null, "recreated stream must not rehydrate deleted events.");
     }
 
     [Test]
@@ -203,21 +199,21 @@ public sealed class FileBackedReplayEventStreamTests
     {
         EventStreamRegistry registry1 = NewRegistry();
         EventStream stream1 = await registry1.GetOrCreateAsync("turn-3");
-        await stream1.EmitAsync(10);
-        await stream1.EmitAsync(11);
+        await stream1.EmitAsync(new SseItem<string>("10") { EventId = "10" });
+        await stream1.EmitAsync(new SseItem<string>("11") { EventId = "11" });
         ((IDisposable)stream1).Dispose();
 
         EventStreamRegistry registry2 = NewRegistry();
         EventStream stream2 = await registry2.GetOrCreateAsync("turn-3");
 
-        var items = new List<object>();
-        await stream2.EmitAsync(12, close: true);
-        await foreach (object item in stream2.Subscribe())
+        var items = new List<string>();
+        await stream2.EmitAsync(new SseItem<string>("12") { EventId = "12" }, close: true);
+        await foreach (SseItem<string> item in stream2.Subscribe())
         {
-            items.Add(item);
+            items.Add(item.Data);
         }
 
-        Assert.That(items, Is.EqualTo(new object[] { 10, 11, 12 }));
+        Assert.That(items, Is.EqualTo(new[] { "10", "11", "12" }));
     }
 
     [Test]
@@ -225,7 +221,7 @@ public sealed class FileBackedReplayEventStreamTests
     {
         File.WriteAllText(
             Path.Combine(_dir, "bad.jsonl"),
-            "{\"emit_time\": 1.0, \"payload\": \"0\"}\nnot-json-garbage\n{\"emit_time\": 2.0, \"payload\": \"1\"}\n");
+            "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\nnot-json-garbage\n{\"emit_time\": 2.0, \"data\": \"1\", \"event\": \"message\", \"id\": \"1\"}\n");
 
         EventStreamRegistry registry = NewRegistry();
         Assert.ThrowsAsync<EventStreamException>(async () => await registry.GetOrCreateAsync("bad"));
@@ -240,12 +236,12 @@ public sealed class FileBackedReplayEventStreamTests
         EventStreamRegistry registry1 = NewRegistry();
         Assert.ThrowsAsync<EventStreamException>(async () => await registry1.GetOrCreateAsync("bad-lock"));
 
-        File.WriteAllText(path, "{\"emit_time\": 1.0, \"payload\": \"0\"}\n");
+        File.WriteAllText(path, "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\n");
 
         EventStreamRegistry registry2 = NewRegistry();
         EventStream stream = await registry2.GetOrCreateAsync("bad-lock");
 
-        Assert.That(await stream.GetLastCursorAsync(), Is.EqualTo(0));
+        Assert.That(await stream.GetLastEventIdAsync(), Is.EqualTo("0"));
     }
 
     [Test]
@@ -254,12 +250,12 @@ public sealed class FileBackedReplayEventStreamTests
         // A valid line followed by a crash mid-write (no trailing newline).
         File.WriteAllText(
             Path.Combine(_dir, "partial.jsonl"),
-            "{\"emit_time\": 1.0, \"payload\": \"0\"}\n{\"emit_time\": 2.0, \"payl");
+            "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\n{\"emit_time\": 2.0, \"dat");
 
         EventStreamRegistry registry = NewRegistry();
         EventStream stream = await registry.GetOrCreateAsync("partial");
 
-        Assert.That(await stream.GetLastCursorAsync(), Is.EqualTo(0));
+        Assert.That(await stream.GetLastEventIdAsync(), Is.EqualTo("0"));
     }
 
     [Test]
@@ -273,13 +269,13 @@ public sealed class FileBackedReplayEventStreamTests
     }
 
     [Test]
-    public void PayloadRecordMissingEmitTimeRaises()
+    public void EventRecordMissingEmitTimeRaises()
     {
-        // A payload record without 'emit_time' is structurally malformed. Rehydration must raise
+        // An event record without 'emit_time' is structurally malformed. Rehydration must raise
         // rather than silently default to epoch (which would drop the event on the next TTL sweep).
         File.WriteAllText(
             Path.Combine(_dir, "noemit.jsonl"),
-            "{\"emit_time\": 1.0, \"payload\": \"0\"}\n{\"payload\": \"1\"}\n");
+            "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\n{\"data\": \"1\", \"event\": \"message\", \"id\": \"1\"}\n");
 
         EventStreamRegistry registry = NewRegistry();
         Assert.ThrowsAsync<EventStreamException>(async () => await registry.GetOrCreateAsync("noemit"));
@@ -291,18 +287,14 @@ public sealed class FileBackedReplayEventStreamTests
         // Drive enough evictions to trigger compaction, then confirm the log rehydrates cleanly and
         // no ".compact" temp file is left behind (atomic temp+rename, never a truncated log).
         var options = new EventStreamOptions();
-        options.UseFileBackedReplay(
-            _dir,
-            cursor: p => (int)p,
-            ttl: TimeSpan.FromMilliseconds(1),
-            serializer: p => p.ToString()!,
-            deserializer: s => int.Parse(s));
+        options.UseFileBackedReplay(storageDirectory: _dir, ttl: TimeSpan.FromMilliseconds(1));
         var registry = new InMemoryEventStreamRegistry(options);
 
         EventStream stream = await registry.GetOrCreateAsync("compact-1");
         for (int i = 0; i < 1100; i++)
         {
-            await stream.EmitAsync(i);
+            string value = i.ToString();
+            await stream.EmitAsync(new SseItem<string>(value) { EventId = value });
         }
 
         Assert.That(File.Exists(Path.Combine(_dir, "compact-1.jsonl.compact")), Is.False);
@@ -322,12 +314,7 @@ public sealed class FileBackedReplayEventStreamTests
         // kept pointing at the pre-replace (orphaned) file, post-compaction emits would be written
         // to a file nobody rehydrates from and would be silently lost on the next process lifetime.
         var options = new EventStreamOptions();
-        options.UseFileBackedReplay(
-            _dir,
-            cursor: p => (int)p,
-            ttl: TimeSpan.FromMilliseconds(1),
-            serializer: p => p.ToString()!,
-            deserializer: s => int.Parse(s));
+        options.UseFileBackedReplay(storageDirectory: _dir, ttl: TimeSpan.FromMilliseconds(1));
         var registry = new InMemoryEventStreamRegistry(options);
 
         EventStream stream = await registry.GetOrCreateAsync("compact-live");
@@ -335,11 +322,12 @@ public sealed class FileBackedReplayEventStreamTests
         // Drive past the compaction threshold, then emit a few more AFTER the compaction.
         for (int i = 0; i < 1100; i++)
         {
-            await stream.EmitAsync(i);
+            string value = i.ToString();
+            await stream.EmitAsync(new SseItem<string>(value) { EventId = value });
         }
 
-        await stream.EmitAsync(9001);
-        await stream.EmitAsync(9002, close: true);
+        await stream.EmitAsync(new SseItem<string>("9001") { EventId = "9001" });
+        await stream.EmitAsync(new SseItem<string>("9002") { EventId = "9002" }, close: true);
         ((IDisposable)stream).Dispose();
 
         // The post-compaction emits must be present in the LIVE on-disk file. If the reused write
@@ -365,15 +353,11 @@ public sealed class FileBackedReplayEventStreamTests
         // write handle blocks any external move-blocking handle), so the post-failure state is
         // reproduced directly by disposing and nulling the private handle.
         var options = new EventStreamOptions();
-        options.UseFileBackedReplay(
-            _dir,
-            cursor: p => (int)p,
-            serializer: p => p.ToString()!,
-            deserializer: s => int.Parse(s));
+        options.UseFileBackedReplay(storageDirectory: _dir);
         var registry = new InMemoryEventStreamRegistry(options);
 
         EventStream stream = await registry.GetOrCreateAsync("selfheal");
-        await stream.EmitAsync(1);
+        await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         System.Reflection.FieldInfo field = stream.GetType().GetField(
             "_data",
@@ -383,50 +367,48 @@ public sealed class FileBackedReplayEventStreamTests
         field.SetValue(stream, null);
 
         // Without the self-heal this throws "The write handle for stream 'selfheal' is not open."
-        Assert.DoesNotThrowAsync(async () => await stream.EmitAsync(2, close: true));
+        Assert.DoesNotThrowAsync(async () => await stream.EmitAsync(new SseItem<string>("2") { EventId = "2" }, close: true));
         ((IDisposable)stream).Dispose();
 
         // Both events survived to disk and rehydrate.
         var registry2 = new InMemoryEventStreamRegistry(options);
         EventStream rehydrated = await registry2.GetOrCreateAsync("selfheal");
-        Assert.That(await rehydrated.GetLastCursorAsync(), Is.EqualTo(2));
+        Assert.That(await rehydrated.GetLastEventIdAsync(), Is.EqualTo("2"));
     }
 
-    private sealed record TypedEvent(int Cursor, string Text);
-
     [Test]
-    public async Task GenericOverloadRoundTripsTypedPayloadViaDefaultJson()
+    public async Task FileBackedReplayRoundTripsCallerSerializedPayloadData()
     {
-        // The typed overload must persist and rehydrate the payload as its CLR type (not a raw
-        // JsonNode), so a cursor written against the typed payload keeps working after restart.
+        // Callers now own serialization; the backing persists and rehydrates the serialized data
+        // string while tracking resume by SseItem.EventId.
         var options = new EventStreamOptions();
-        options.UseFileBackedReplay<TypedEvent>(cursor: e => e.Cursor, storageDirectory: _dir);
+        options.UseFileBackedReplay(storageDirectory: _dir);
         var registry = new InMemoryEventStreamRegistry(options);
 
         EventStream stream = await registry.GetOrCreateAsync("typed-1");
-        await stream.EmitAsync(new TypedEvent(0, "hello"));
-        await stream.EmitAsync(new TypedEvent(1, "world"));
+        await stream.EmitAsync(new SseItem<string>("{\"cursor\":0,\"text\":\"hello\"}") { EventId = "0" });
+        await stream.EmitAsync(new SseItem<string>("{\"cursor\":1,\"text\":\"world\"}") { EventId = "1" });
         ((IDisposable)stream).Dispose();
 
-        // Rehydrate in a fresh registry; the cursor runs against the decoded payloads.
+        // Rehydrate in a fresh registry; the last event id is restored from the decoded items.
         var registry2 = new InMemoryEventStreamRegistry(options);
         EventStream rehydrated = await registry2.GetOrCreateAsync("typed-1");
-        Assert.That(await rehydrated.GetLastCursorAsync(), Is.EqualTo(1));
+        Assert.That(await rehydrated.GetLastEventIdAsync(), Is.EqualTo("1"));
 
-        var items = new List<object>();
-        await rehydrated.EmitAsync(new TypedEvent(2, "again"), close: true);
-        await foreach (object item in rehydrated.Subscribe())
+        var items = new List<string>();
+        await rehydrated.EmitAsync(new SseItem<string>("{\"cursor\":2,\"text\":\"again\"}") { EventId = "2" }, close: true);
+        await foreach (SseItem<string> item in rehydrated.Subscribe())
         {
-            items.Add(item);
+            items.Add(item.Data);
         }
 
         Assert.That(items, Has.Count.EqualTo(3));
-        Assert.That(((TypedEvent)items[0]).Text, Is.EqualTo("hello"));
-        Assert.That(((TypedEvent)items[2]).Text, Is.EqualTo("again"));
+        Assert.That(items[0], Is.EqualTo("{\"cursor\":0,\"text\":\"hello\"}"));
+        Assert.That(items[2], Is.EqualTo("{\"cursor\":2,\"text\":\"again\"}"));
     }
 
     [Test]
-    public async Task GenericOverloadDefaultsStorageDirectoryToStreamsStateRoot()
+    public async Task FileBackedReplayDefaultsStorageDirectoryToStreamsStateRoot()
     {
         // With no storageDirectory the backing must default to <state-root>/streams. Point the
         // state root at a temp dir via AGENTSERVER_STATE_ROOT so the test is hermetic.
@@ -437,11 +419,11 @@ public sealed class FileBackedReplayEventStreamTests
             Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", stateRoot);
 
             var options = new EventStreamOptions();
-            options.UseFileBackedReplay<TypedEvent>(cursor: e => e.Cursor);
+            options.UseFileBackedReplay();
             var registry = new InMemoryEventStreamRegistry(options);
 
             EventStream stream = await registry.GetOrCreateAsync("defaulted");
-            await stream.EmitAsync(new TypedEvent(0, "x"));
+            await stream.EmitAsync(new SseItem<string>("{\"cursor\":0,\"text\":\"x\"}") { EventId = "0" });
 
             string expected = Path.Combine(stateRoot, "streams", "defaulted.jsonl");
             Assert.That(File.Exists(expected), Is.True, $"expected the backing file at {expected}");

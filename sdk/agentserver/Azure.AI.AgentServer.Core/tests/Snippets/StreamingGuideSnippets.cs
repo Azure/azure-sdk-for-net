@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.ServerSentEvents;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,13 +28,13 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             services.AddEventStreams();
 
             EventStream stream = await registry.GetOrCreateAsync(streamId);
-            await stream.EmitAsync(new { token = "Hello" });
-            await stream.EmitAsync(new { token = " world" });
+            await stream.EmitAsync(new SseItem<string>(JsonSerializer.Serialize(new { token = "Hello" })) { EventId = "1" });
+            await stream.EmitAsync(new SseItem<string>(JsonSerializer.Serialize(new { token = " world" })) { EventId = "2" });
             await stream.CloseAsync();
 
-            await foreach (object evt in stream.Subscribe())
+            await foreach (SseItem<string> evt in stream.Subscribe())
             {
-                _ = evt;
+                _ = evt.Data;
             }
         }
 
@@ -43,23 +44,16 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             services.AddEventStreams(o => o.UseInMemoryLive());
 
             services.AddEventStreams(o => o.UseInMemoryReplay(
-                cursor: payload => ((MyEvent)payload).Sequence,
                 ttl: TimeSpan.FromMinutes(10)));
 
-            // Typed file-backed replay: storage directory (~/.agentserver/streams), a 10-minute
-            // TTL, and JSON serialization all default, so only the cursor is required.
-            services.AddEventStreams(o => o.UseFileBackedReplay<MyEvent>(
-                cursor: e => e.Sequence));
+            // File-backed replay: the storage directory (~/.agentserver/streams) and a 10-minute
+            // TTL both default. The event text lives in SseItem<string>.Data, so no payload codec
+            // is needed — the caller serializes its own event and supplies an opaque EventId.
+            services.AddEventStreams(o => o.UseFileBackedReplay());
 
-            // The non-generic overload is for custom serialization: supply serializer/deserializer
-            // whenever the cursor casts the payload to a CLR type, because the default JSON path
-            // rehydrates objects as JsonNode and a typed cursor would otherwise throw after restart.
             services.AddEventStreams(o => o.UseFileBackedReplay(
                 storageDirectory: "/var/streams",
-                cursor: payload => ((MyEvent)payload).Sequence,
-                ttl: TimeSpan.FromHours(1),
-                serializer: payload => System.Text.Json.JsonSerializer.Serialize((MyEvent)payload),
-                deserializer: json => System.Text.Json.JsonSerializer.Deserialize<MyEvent>(json)!));
+                ttl: TimeSpan.FromHours(1)));
         }
 
         // Subscribe-before-start — Pattern 1.
@@ -75,15 +69,15 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             await consume;
         }
 
-        // Recovery & resumption — cursored reconnect.
+        // Recovery & resumption — reconnect after an event id.
         public static async Task CursoredReconnect(EventStream stream)
         {
-            await foreach (object evt in stream.Subscribe(after: 42))
+            await foreach (SseItem<string> evt in stream.Subscribe(afterEventId: "42"))
             {
-                _ = evt;
+                _ = evt.Data;
             }
 
-            int? last = await stream.GetLastCursorAsync();
+            string? last = await stream.GetLastEventIdAsync();
             _ = last;
         }
 

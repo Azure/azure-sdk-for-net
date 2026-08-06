@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.ServerSentEvents;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
 using NUnit.Framework;
@@ -35,7 +36,7 @@ public sealed class EventStreamRegistryTests
         var registry = new InMemoryEventStreamRegistry(new EventStreamOptions());
 
         EventStream stream = await registry.GetOrCreateAsync("s1");
-        await stream.EmitAsync(1);
+        await stream.EmitAsync(new SseItem<string>("1"));
 
         await registry.DeleteAsync("s1");
         Assert.DoesNotThrowAsync(async () => await registry.DeleteAsync("s1"));

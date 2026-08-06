@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
@@ -11,7 +12,7 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 
 /// <summary>
 /// The in-memory live backing: constant memory, no replay. Subscribers only see
-/// events emitted after their iteration begins. Mirrors Python's live backing.
+/// events emitted after their iteration begins.
 /// </summary>
 internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
 {
@@ -19,10 +20,11 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
     private readonly SubscriberHub _hub = new();
     private readonly string _id;
     private StreamState _state = StreamState.Active;
+    private string? _lastEventId;
 
     public BroadcastEventStream(string id) => _id = id;
 
-    public override ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default)
+    public override ValueTask EmitAsync(SseItem<string> item, bool close = false, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         lock (_gate)
@@ -37,7 +39,8 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
                 throw new EventStreamClosedException($"Stream '{_id}' is closed; emit is not allowed.");
             }
 
-            _hub.Publish(payload);
+            _hub.Publish(item);
+            _lastEventId = item.EventId ?? _lastEventId;
             if (close)
             {
                 _state = StreamState.Closed;
@@ -62,12 +65,12 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
         return default;
     }
 
-    public override IAsyncEnumerable<object> Subscribe(
-        int? after = null, CancellationToken cancellationToken = default)
+    public override IAsyncEnumerable<SseItem<string>> Subscribe(
+        string? afterEventId = null, CancellationToken cancellationToken = default)
     {
-        // Validate eagerly (mirroring Python's synchronous `subscribe`): a NotFound for a destroyed
+        // Validate eagerly (mirroring a synchronous `subscribe`): a NotFound for a destroyed
         // stream must surface at the call site, not be deferred until the caller begins enumerating.
-        Channel<object> channel;
+        Channel<SseItem<string>> channel;
         lock (_gate)
         {
             if (_state == StreamState.Destroyed)
@@ -86,12 +89,12 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
         return Iterate(channel, cancellationToken);
     }
 
-    private async IAsyncEnumerable<object> Iterate(
-        Channel<object> channel, [EnumeratorCancellation] CancellationToken cancellationToken)
+    private async IAsyncEnumerable<SseItem<string>> Iterate(
+        Channel<SseItem<string>> channel, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         try
         {
-            await foreach (object item in channel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (SseItem<string> item in channel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
             {
                 yield return item;
             }
@@ -105,7 +108,7 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
         }
     }
 
-    public override ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default)
+    public override ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default)
     {
         lock (_gate)
         {
@@ -113,10 +116,10 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
             {
                 throw new EventStreamNotFoundException($"Stream '{_id}' is not a live stream.");
             }
-        }
 
-        // The live backing has no cursor function.
-        return new ValueTask<int?>((int?)null);
+            // The live backing retains no history, but it still tracks the last emitted id.
+            return new ValueTask<string?>(_lastEventId);
+        }
     }
 
     /// <summary>Registry-initiated destruction: completes subscribers and rejects later ops.</summary>

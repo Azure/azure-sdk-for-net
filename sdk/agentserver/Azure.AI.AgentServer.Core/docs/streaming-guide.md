@@ -27,15 +27,25 @@ builder.Services.AddEventStreams();
 EventStream stream = await registry.GetOrCreateAsync(streamId);
 Task consume = Task.Run(async () =>
 {
-    await foreach (object evt in stream.Subscribe())
+    await foreach (SseItem<string> evt in stream.Subscribe())
     {
-        // forward evt to the client (SSE, WebSocket, ...)
+        // forward evt.Data to the client (SSE, WebSocket, ...)
     }
 });
 
 // 3. The producer (e.g. inside your task handler) emits into the same stream id:
-await stream.EmitAsync(new { token = "Hello" });
-await stream.EmitAsync(new { token = " world" });
+await stream.EmitAsync(new SseItem<string>(
+    JsonSerializer.Serialize(new { token = "Hello" }),
+    eventType: "message")
+{
+    EventId = "1"
+});
+await stream.EmitAsync(new SseItem<string>(
+    JsonSerializer.Serialize(new { token = " world" }),
+    eventType: "message")
+{
+    EventId = "2"
+});
 await stream.CloseAsync();                       // mark the stream done
 
 await consume;                                   // subscriber drains and finishes
@@ -43,6 +53,9 @@ await consume;                                   // subscriber drains and finish
 
 `registry.GetOrCreateAsync(id)` is idempotent: the producer and subscriber both call
 it with the same id and get the **same** `EventStream` instance back.
+Each event is a `System.Net.ServerSentEvents.SseItem<string>`: `Data` is the event
+text you serialized, `EventId` is the opaque resume token, and `EventType` is the
+optional SSE event type.
 
 ---
 
@@ -65,10 +78,10 @@ Obtain stream instances from `EventStreamRegistry` and program against
 ```csharp
 public abstract class EventStream
 {
-    public abstract ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default);
+    public abstract ValueTask EmitAsync(SseItem<string> item, bool close = false, CancellationToken cancellationToken = default);
     public abstract ValueTask CloseAsync(CancellationToken cancellationToken = default);
-    public abstract IAsyncEnumerable<object> Subscribe(int? after = null, CancellationToken cancellationToken = default);
-    public abstract ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default);
+    public abstract IAsyncEnumerable<SseItem<string>> Subscribe(string? afterEventId = null, CancellationToken cancellationToken = default);
+    public abstract ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default);
 }
 
 public abstract class EventStreamRegistry
@@ -99,42 +112,31 @@ you select none, the default is in-memory live.
 builder.Services.AddEventStreams(o => o.UseInMemoryLive());            // default
 
 builder.Services.AddEventStreams(o => o.UseInMemoryReplay(
-    cursor: payload => ((MyEvent)payload).Sequence,                   // payload → cursor
     ttl: TimeSpan.FromMinutes(10)));                                  // optional retention
 
-// Typed overload: storage directory (~/.agentserver/streams), a 10-minute TTL,
-// and JSON serialization all default, so only the cursor is required.
-builder.Services.AddEventStreams(o => o.UseFileBackedReplay<MyEvent>(
-    cursor: e => e.Sequence));
+// File-backed replay: the storage directory (~/.agentserver/streams) and a 10-minute
+// TTL both default. The event text lives in SseItem<string>.Data, so no payload codec
+// is needed — the caller serializes its own event and supplies an opaque EventId.
+builder.Services.AddEventStreams(o => o.UseFileBackedReplay());
 
-// The non-generic overload is for CUSTOM serialization (non-JSON, or a payload the default
-// JSON can't round-trip). Supply serializer/deserializer whenever your cursor casts the
-// payload to a CLR type: the default JSON path rehydrates objects as JsonNode, so a typed
-// cursor like ((MyEvent)payload) would throw after a restart unless you round-trip the type
-// yourself (or use the typed UseFileBackedReplay<MyEvent> overload above).
 builder.Services.AddEventStreams(o => o.UseFileBackedReplay(
     storageDirectory: "/var/streams",                                 // one file per stream id
-    cursor: payload => ((MyEvent)payload).Sequence,
-    ttl: TimeSpan.FromHours(1),
-    serializer: payload => JsonSerializer.Serialize((MyEvent)payload),
-    deserializer: json => JsonSerializer.Deserialize<MyEvent>(json)!));
+    ttl: TimeSpan.FromHours(1)));
 ```
 
-- **`cursor`** — pass this when you want cursored re-subscription
-  (`Subscribe(after: N)`) and a usable `GetLastCursorAsync()`. It receives each payload
-  and returns the `int` cursor you choose for that event; a monotonically increasing
-  sequence number is typical. The live backing does not retain history, so it does not
-  take a cursor.
 - **`ttl`** — retention for replay backings. It bounds buffered history and also drives
   close-clock auto-destroy for closed streams (see *Lifecycle*).
 - **`storageDirectory`** (file-backed only) — when omitted, the file-backed backing
   writes under `~/.agentserver/streams` (one file per stream id). Override the root for
   all agent-server state — tasks and streams alike — with the `AGENTSERVER_STATE_ROOT`
   environment variable, or override just the streams location with `storageDirectory`.
-- **`serializer` / `deserializer`** (file-backed only) — bring your own codec when the
-  default JSON path cannot round-trip your payload type, or use the typed
-  `UseFileBackedReplay<MyEvent>` overload for JSON payloads you want rehydrated as that
-  CLR type.
+
+There is no cursor function or payload codec to configure. The caller now owns
+serialization: serialize your event to a string, put that string in
+`SseItem<string>.Data`, and set `SseItem<string>.EventId` to the opaque resume token
+you want subscribers to use. Because replay stores strings, the previous
+`serializer`/`deserializer` options and typed `UseFileBackedReplay<TPayload>` overload
+are no longer needed.
 
 ---
 
@@ -169,15 +171,15 @@ id; choose ids that are stable and boring enough for your storage policy.
 
 Every stream — regardless of backing — exposes the same four operations.
 
-### `EmitAsync(payload, close: false)`
+### `EmitAsync(item, close: false)`
 
 Publishes one event to every currently-attached subscriber.
 
-- `payload` is yours — pass values compatible with the backing's serializer. For the
-  default file-backed JSON path, use JSON-serializable payloads or configure custom
-  serialization.
-- `close: true` is an **atomic emit-and-close**: the payload is delivered and the
-  stream is closed in one call. For replay backings, the payload is still retained in
+- `item` is yours — pass a `SseItem<string>`. Put the event text you serialized in
+  `item.Data`, set `item.EventId` to the opaque resume token, and optionally pass an
+  event type to the constructor for `item.EventType`.
+- `close: true` is an **atomic emit-and-close**: the item is delivered and the
+  stream is closed in one call. For replay backings, the item is still retained in
   history; for the live backing, late subscribers do not see it.
 - Emitting after the stream is closed throws `EventStreamClosedException`. That signals
   a **producer bug** (you should not still be emitting), so an HTTP layer should surface
@@ -193,24 +195,29 @@ is a no-op. After close:
 - new subscribers can still attach to a replay backing while retained history exists,
   but no new events will arrive.
 
-### `Subscribe(after: null)`
+### `Subscribe(afterEventId: null)`
 
-Returns an async iterator over emitted payloads. Iterate it with `await foreach`. The
-loop ends when the stream is closed and all buffered events are drained.
+Returns an async iterator over emitted `SseItem<string>` values. Iterate it with
+`await foreach`. The loop ends when the stream is closed and all buffered events are
+drained.
 
-`after: N` is the **reconnection primitive** — with a replay backing configured with a
-cursor, the iterator first yields retained events whose cursor is greater than `N`, then
-continues live. With the live backing (or a replay backing that does not track cursors),
-`after` is ignored and a subscriber only sees events emitted after it attached, which is
-why the subscribe-before-start rule matters (below).
+`afterEventId` is the **reconnection primitive** — with a replay backing, the iterator
+first yields retained events strictly after the retained item whose `EventId` matches
+that string, then continues live. `null` replays all retained events. If the id is no
+longer in the retained window, replay is best-effort and starts with all retained
+events, matching standard SSE `Last-Event-ID` semantics. If your old cursor was a
+monotonic sequence number, using that sequence as an `EventId` string is equivalent
+within the retention window; only the TTL-eviction boundary differs. With the live
+backing, `afterEventId` is ignored and a subscriber only sees events emitted after it
+attached, which is why the subscribe-before-start rule matters (below).
 
-### `GetLastCursorAsync()`
+### `GetLastEventIdAsync()`
 
-Returns the highest cursor value seen so far, or `null` if nothing has been emitted
-(or the backing does not track cursors). After the stream is closed, this is the last
-cursor the backing saw during the close window.
+Returns the last non-null `EventId` string seen so far, or `null` if no emitted item
+has supplied one. After the stream is closed, this is the last event id the backing saw
+during the close window.
 
-`GetLastCursorAsync()` is the producer's recovery primitive: a recovering producer
+`GetLastEventIdAsync()` is the producer's recovery primitive: a recovering producer
 reads it to learn where to resume emitting.
 
 ---
@@ -244,16 +251,16 @@ A few practical implications:
 - Replay backings with a `ttl` clean up closed streams automatically — expiry is applied
   opportunistically on the next stream operation or registry lookup after the close-clock
   window, not by a background timer.
-- `GetLastCursorAsync` remains safe to call during the close window, so a recovering
-  producer can read the last cursor before cleanup.
+- `GetLastEventIdAsync` remains safe to call during the close window, so a recovering
+  producer can read the last event id before cleanup.
 
 > **TTL is a close-clock, not just per-event.** The `ttl` you pass to
 > `UseInMemoryReplay`/`UseFileBackedReplay` both evicts individual events after their
 > emit time *and* arms the auto-destroy that fires `ttl` after the stream is closed.
 > The **in-memory live** backing has no TTL machinery and never auto-destroys — you
-> must call `registry.DeleteAsync(id)` to release the id. `GetLastCursorAsync` remains
+> must call `registry.DeleteAsync(id)` to release the id. `GetLastEventIdAsync` remains
 > safe to call during the close window, so a recovering producer can always read the
-> last cursor it saw before close.
+> last event id it saw before close.
 
 ---
 
@@ -329,52 +336,53 @@ await StartProducerAsync(id);                // producer emits into the same id
 await consume;
 
 // Pattern 2: use a replay backing so late subscribers still get earlier events
-// via Subscribe(after: ...).
+// via Subscribe(afterEventId: ...).
 ```
 
 If you cannot guarantee subscribe-before-start (for example, the client connects late
 or reconnects), use a **replay** backing and have subscribers resume with
-`Subscribe(after: lastCursor)`.
+`Subscribe(afterEventId: lastEventId)`.
 
 ---
 
 ## Recovery & resumption
 
-### Cursored reconnect (client side)
+### EventId reconnect (client side)
 
-If a subscriber drops (network blip, client refresh) and your backing tracks cursors,
-the client reconnects with the last cursor it saw and the SDK only re-delivers later
-events. Assign each event a cursor and surface it to the client (for SSE, as the event
-id):
+If a subscriber drops (network blip, client refresh), the client reconnects with the
+last event id it saw and the library only re-delivers later retained events. Assign
+each event an opaque `EventId` (a monotonic counter encoded as a string is typical)
+and surface it to the client (for SSE, as the event id):
 
 ```csharp
-// Client reconnects having last seen cursor 42.
-await foreach (object evt in stream.Subscribe(after: 42))
+// Client reconnects having last seen event id "42".
+await foreach (SseItem<string> evt in stream.Subscribe(afterEventId: "42"))
 {
-    // only events with cursor > 42, then live
+    // only retained events after EventId "42", then live
 }
 ```
 
-Events with cursor `<= 42` are skipped from retained history; delivery resumes after
-42 and then continues live.
+Within the retention window, delivery resumes strictly after the retained item whose
+`EventId` is `"42"` and then continues live. If `"42"` has fallen out of the retained
+window, replay starts with all currently retained events as a best-effort recovery.
 
 ### Crash-recoverable producer (file-backed)
 
 With `UseFileBackedReplay`, emitted events persist to disk and rehydrate on the next
 `GetOrCreateAsync(id)` after a restart, so the producer can resume and subscribers can
-replay from any cursor — across a process crash.
+replay from an event id — across a process crash.
 
 The typical recovery path is: the producer uses the same per-turn stream id, calls
-`GetOrCreateAsync(id)`, reads `GetLastCursorAsync()`, and resumes emitting from the
-next cursor.
+`GetOrCreateAsync(id)`, reads `GetLastEventIdAsync()`, and resumes emitting after the
+last event id it saw.
 
 ### Don't double-track in task metadata
 
-If you are bridging a task to a stream, let the stream's cursor be the single source
+If you are bridging a task to a stream, let the stream's event id be the single source
 of truth for "where am I". Do not also record per-event progress in task `Metadata` —
 that duplicates state and the two can drift. Task `Metadata` is for workflow
 watermarks (which side-effecting work you have already completed), not for mirroring
-stream state. Use `GetLastCursorAsync` to read the current position.
+stream state. Use `GetLastEventIdAsync` to read the current position.
 
 ---
 
@@ -389,8 +397,9 @@ app.MapGet("/runs/{id}/events", async (string id, HttpContext http,
 {
     http.Response.Headers.ContentType = "text/event-stream";
 
-    int? after = http.Request.Headers.TryGetValue("Last-Event-ID", out var v)
-        && int.TryParse(v, out var n) ? n : null;
+    string? afterEventId = http.Request.Headers.TryGetValue("Last-Event-ID", out var header)
+        ? header.ToString()
+        : http.Request.Query.TryGetValue("last_event_id", out var query) ? query.ToString() : null;
 
     // A GET is a pure RESUME/read endpoint: the stream must already exist (the
     // producer created it). Use GetAsync — not GetOrCreateAsync — so an unknown or
@@ -407,26 +416,19 @@ app.MapGet("/runs/{id}/events", async (string id, HttpContext http,
         return;
     }
 
-    await foreach (object evt in stream.Subscribe(after, http.RequestAborted))
-    {
-        // Derive the SSE event id from THIS event's own cursor — the same cursor
-        // function you configured on the backing. Do NOT use GetLastCursorAsync()
-        // here: it returns the stream's HIGHEST cursor, which races ahead of the
-        // event you are currently writing (and would emit wrong Last-Event-ID values).
-        int cursor = CursorOf(evt);
-        await http.Response.WriteAsync($"id: {cursor}\n");
-        await http.Response.WriteAsync($"data: {JsonSerializer.Serialize(evt)}\n\n");
-        await http.Response.Body.FlushAsync(http.RequestAborted);
-    }
+    await SseFormatter.WriteAsync(
+        stream.Subscribe(afterEventId, http.RequestAborted),
+        http.Response.Body,
+        http.RequestAborted);
 });
-
-// The SAME function you passed as `cursor:` to AddEventStreams(...).
-static int CursorOf(object evt) => ((MyEvent)evt).Sequence;
 ```
 
 Pair this with a replay backing so reconnecting clients (which send `Last-Event-ID`)
-resume exactly where they left off. If the client sends `Last-Event-ID`, pass it
-through to `Subscribe(after: lastEventId)` to skip already-delivered events.
+resume exactly where they left off. If the client sends `Last-Event-ID` (or a
+`last_event_id` query parameter), pass that string through to
+`Subscribe(afterEventId: lastEventId)` to skip already-delivered events.
+`SseFormatter` writes the `event:`, `id:`, and `data:` lines directly from each
+`SseItem<string>`'s `EventType`, `EventId`, and `Data`.
 
 ---
 

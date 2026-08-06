@@ -309,7 +309,6 @@ public class SampleLiveEndToEndTests
             SampleResilientResearchSnippets.ResilientResearchHandler>();
 
         builder.Services.AddEventStreams(o => o.UseInMemoryReplay(
-            cursor: payload => ((SampleResilientResearchSnippets.ResearchEvent)payload).Cursor,
             ttl: TimeSpan.FromMinutes(5)));
 
         ResilientTaskBuilder tasks = builder.Services.AddResilientTasks();

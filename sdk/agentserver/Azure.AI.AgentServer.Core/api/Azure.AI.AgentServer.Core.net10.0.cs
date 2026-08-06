@@ -321,9 +321,9 @@ namespace Azure.AI.AgentServer.Core.Streaming
     {
         protected EventStream() { }
         public abstract System.Threading.Tasks.ValueTask CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask EmitAsync(object payload, bool close = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<int?> GetLastCursorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Collections.Generic.IAsyncEnumerable<object> Subscribe(int? after = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask EmitAsync(System.Net.ServerSentEvents.SseItem<string> item, bool close = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<string?> GetLastEventIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.Net.ServerSentEvents.SseItem<string>> Subscribe(string? afterEventId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public sealed partial class EventStreamClosedException : Azure.AI.AgentServer.Core.Streaming.EventStreamException
     {
@@ -346,10 +346,9 @@ namespace Azure.AI.AgentServer.Core.Streaming
     public sealed partial class EventStreamOptions
     {
         public EventStreamOptions() { }
-        public void UseFileBackedReplay(string? storageDirectory = null, System.Func<object, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?), System.Func<object, string>? serializer = null, System.Func<string, object>? deserializer = null) { }
-        public void UseFileBackedReplay<TPayload>(System.Func<TPayload, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?), string? storageDirectory = null) { }
+        public void UseFileBackedReplay(string? storageDirectory = null, System.TimeSpan? ttl = default(System.TimeSpan?)) { }
         public void UseInMemoryLive() { }
-        public void UseInMemoryReplay(System.Func<object, int>? cursor = null, System.TimeSpan? ttl = default(System.TimeSpan?)) { }
+        public void UseInMemoryReplay(System.TimeSpan? ttl = default(System.TimeSpan?)) { }
     }
     public abstract partial class EventStreamRegistry
     {

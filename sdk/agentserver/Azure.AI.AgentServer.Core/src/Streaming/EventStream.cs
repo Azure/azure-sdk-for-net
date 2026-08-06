@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,9 +10,12 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 
 /// <summary>
 /// A single producer/consumer event stream: one or more producers
-/// <see cref="EmitAsync"/> events that every attached subscriber receives by
-/// iterating <see cref="Subscribe"/>. Mirrors Python's <c>EventStream</c>
-/// protocol; obtain instances from <see cref="EventStreamRegistry"/>.
+/// <see cref="EmitAsync"/> <see cref="SseItem{T}"/> events that every attached
+/// subscriber receives by iterating <see cref="Subscribe"/>. The event payload is a
+/// Server-Sent-Events item (<see cref="SseItem{T}"/> of <see cref="string"/>): the
+/// caller places the already-serialized event text in <see cref="SseItem{T}.Data"/>
+/// and, for a replay backing, an opaque <see cref="SseItem{T}.EventId"/> used as the
+/// resume/reconnect token. Obtain instances from <see cref="EventStreamRegistry"/>.
 /// </summary>
 public abstract class EventStream
 {
@@ -22,14 +26,17 @@ public abstract class EventStream
 
     /// <summary>
     /// Publishes one event to every currently-attached subscriber. When
-    /// <paramref name="close"/> is <see langword="true"/>, the payload is
-    /// delivered and the stream is closed atomically.
+    /// <paramref name="close"/> is <see langword="true"/>, the item is delivered and
+    /// the stream is closed atomically.
     /// </summary>
-    /// <param name="payload">The event payload (any value compatible with the configured serializer).</param>
-    /// <param name="close">Whether to close the stream atomically after delivering the payload.</param>
+    /// <param name="item">
+    /// The event to publish. <see cref="SseItem{T}.Data"/> is the event text; a replay
+    /// backing uses <see cref="SseItem{T}.EventId"/> as the opaque resume token.
+    /// </param>
+    /// <param name="close">Whether to close the stream atomically after delivering the item.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>A task that completes when the event has been published.</returns>
-    public abstract ValueTask EmitAsync(object payload, bool close = false, CancellationToken cancellationToken = default);
+    public abstract ValueTask EmitAsync(SseItem<string> item, bool close = false, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Marks the stream done. Idempotent — calling it twice (or on a destroyed
@@ -42,22 +49,25 @@ public abstract class EventStream
     public abstract ValueTask CloseAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Returns an async iterator over emitted payloads. With a replay backing,
-    /// <paramref name="after"/> yields only events whose cursor is strictly
-    /// greater than the supplied value (the reconnection primitive); it is
-    /// silently ignored when the backing has no cursor function.
+    /// Returns an async iterator over emitted items. With a replay backing,
+    /// <paramref name="afterEventId"/> resumes strictly after the retained item whose
+    /// <see cref="SseItem{T}.EventId"/> equals it (the reconnection primitive); a
+    /// <see langword="null"/> value yields all retained items, and an id no longer in
+    /// the retained window replays all retained items (best-effort, matching SSE
+    /// <c>Last-Event-ID</c> semantics). It is silently ignored by a live (non-replay)
+    /// backing, which has no history.
     /// </summary>
-    /// <param name="after">The exclusive lower-bound cursor to resume after, or <see langword="null"/> for all events.</param>
+    /// <param name="afterEventId">The event id to resume strictly after, or <see langword="null"/> for all retained items.</param>
     /// <param name="cancellationToken">A token to stop iterating.</param>
-    /// <returns>An asynchronous sequence of event payloads.</returns>
-    public abstract IAsyncEnumerable<object> Subscribe(int? after = null, CancellationToken cancellationToken = default);
+    /// <returns>An asynchronous sequence of event items.</returns>
+    public abstract IAsyncEnumerable<SseItem<string>> Subscribe(string? afterEventId = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Returns the highest cursor value seen so far, or <see langword="null"/>
-    /// when no events were emitted or the backing has no cursor function. Safe
-    /// to call on a closed stream (the producer's recovery primitive).
+    /// Returns the <see cref="SseItem{T}.EventId"/> of the most recently emitted item,
+    /// or <see langword="null"/> when no events were emitted or the last item carried no
+    /// id. Safe to call on a closed stream (the producer's recovery primitive).
     /// </summary>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    /// <returns>The highest cursor seen, or <see langword="null"/>.</returns>
-    public abstract ValueTask<int?> GetLastCursorAsync(CancellationToken cancellationToken = default);
+    /// <returns>The last emitted event id, or <see langword="null"/>.</returns>
+    public abstract ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default);
 }
