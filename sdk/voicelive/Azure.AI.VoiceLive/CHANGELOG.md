@@ -10,7 +10,7 @@
 - Added streaming text input events: `ClientEventInputTextDelta`, `ClientEventInputTextDone`.
 - Added `ServerEventResponseInvocationDelta` for streaming invocation deltas.
 - Added `ExpiresOn` property on `VoiceLiveSessionResponse` (server-set session expiration time).
-- Added the `2026-07-15` GA service versions (`VoiceLiveClientOptions.ServiceVersion.V2026_07_15`), which is now the default.
+- Added the `2026-07-15` GA service version (`VoiceLiveClientOptions.ServiceVersion.V2026_07_15`), which is now the default.
 
 ### Other Changes
 
