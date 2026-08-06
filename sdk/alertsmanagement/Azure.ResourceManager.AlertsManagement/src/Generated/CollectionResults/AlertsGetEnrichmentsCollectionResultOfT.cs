@@ -14,7 +14,7 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    internal partial class AlertsGetEnrichmentsCollectionResultOfT : Pageable<AlertEnrichmentResult>
+    internal partial class AlertsGetEnrichmentsCollectionResultOfT : Pageable<AlertEnrichmentData>
     {
         private readonly Alerts _client;
         private readonly string _scope;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AlertsGetEnrichmentsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AlertEnrichmentResult>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AlertEnrichmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 AlertEnrichmentsList result = AlertEnrichmentsList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<AlertEnrichmentResult>.FromValues((IReadOnlyList<AlertEnrichmentResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AlertEnrichmentData>.FromValues((IReadOnlyList<AlertEnrichmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

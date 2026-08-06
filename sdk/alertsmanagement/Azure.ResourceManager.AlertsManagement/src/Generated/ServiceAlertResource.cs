@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertEnrichmentResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertEnrichmentResult> GetEnrichmentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertEnrichmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AlertEnrichmentData> GetEnrichmentsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -331,8 +331,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertEnrichmentResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertEnrichmentResult> GetEnrichments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertEnrichmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AlertEnrichmentData> GetEnrichments(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

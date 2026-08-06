@@ -17,51 +17,51 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The alert's enrichments. </summary>
-    public partial class AlertEnrichmentResult : ResourceData, IJsonModel<AlertEnrichmentResult>
+    public partial class AlertEnrichmentData : ResourceData, IJsonModel<AlertEnrichmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlertEnrichmentResult(document.RootElement, options);
+                        return DeserializeAlertEnrichmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertEnrichmentResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertEnrichmentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AlertEnrichmentResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertEnrichmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AlertEnrichmentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AlertEnrichmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertEnrichmentResult IPersistableModel<AlertEnrichmentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (AlertEnrichmentResult)PersistableModelCreateCore(data, options);
+        AlertEnrichmentData IPersistableModel<AlertEnrichmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AlertEnrichmentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AlertEnrichmentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AlertEnrichmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AlertEnrichmentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AlertEnrichmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertEnrichmentResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertEnrichmentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertEnrichmentResult IJsonModel<AlertEnrichmentResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AlertEnrichmentResult)JsonModelCreateCore(ref reader, options);
+        AlertEnrichmentData IJsonModel<AlertEnrichmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AlertEnrichmentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AlertEnrichmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertEnrichmentResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertEnrichmentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlertEnrichmentResult(document.RootElement, options);
+            return DeserializeAlertEnrichmentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AlertEnrichmentResult DeserializeAlertEnrichmentResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static AlertEnrichmentData DeserializeAlertEnrichmentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertEnrichmentResult(
+            return new AlertEnrichmentData(
                 id,
                 name,
                 resourceType,

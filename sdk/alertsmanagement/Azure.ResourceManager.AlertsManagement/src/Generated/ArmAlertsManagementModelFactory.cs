@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the alert enrichment item. </param>
-        /// <returns> A new <see cref="Models.AlertEnrichmentResult"/> instance for mocking. </returns>
-        public static AlertEnrichmentResult AlertEnrichmentResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertEnrichmentProperties properties = default)
+        /// <returns> A new <see cref="Models.AlertEnrichmentData"/> instance for mocking. </returns>
+        public static AlertEnrichmentData AlertEnrichmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertEnrichmentProperties properties = default)
         {
-            return new AlertEnrichmentResult(
+            return new AlertEnrichmentData(
                 id,
                 name,
                 resourceType,

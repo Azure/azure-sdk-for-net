@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AlertEnrichmentResult item in Value)
+            foreach (AlertEnrichmentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            IList<AlertEnrichmentResult> value = default;
+            IList<AlertEnrichmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AlertEnrichmentResult> array = new List<AlertEnrichmentResult>();
+                    List<AlertEnrichmentData> array = new List<AlertEnrichmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertEnrichmentResult.DeserializeAlertEnrichmentResult(item, options));
+                        array.Add(AlertEnrichmentData.DeserializeAlertEnrichmentData(item, options));
                     }
                     value = array;
                     continue;

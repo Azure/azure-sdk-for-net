@@ -1,5 +1,5 @@
 directory: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/AlertsManagement
-commit: 5da8f08f744213ccf91f4a4a1c3fcc5b12be25e7
+commit: 651515361b89451c63d7159d68bdeb6e337f86a8
 repo: Azure/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
