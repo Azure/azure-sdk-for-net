@@ -347,7 +347,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            BlobClient blobClient = InstrumentClient(new BlobClient(settings));
+            BlobClient blobClient = new BlobClient(settings);
 
             // Assert
             BlobUriBuilder builder = new BlobUriBuilder(blobClient.Uri);

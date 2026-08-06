@@ -159,9 +159,9 @@ namespace Azure.Storage.Blobs.Test
             var encryptionData = CreateV2EncryptionData();
             string serialized = EncryptionDataSerializer.Serialize(encryptionData);
             // Replace the base64-encoded key with null in JSON
-            serialized = serialized.Replace(
-                "\"EncryptedKey\":\"AQID\"",
-                "\"EncryptedKey\":null");
+            var json = Newtonsoft.Json.Linq.JObject.Parse(serialized);
+            json["WrappedContentKey"]["EncryptedKey"] = null;
+            serialized = json.ToString(Newtonsoft.Json.Formatting.None);
 
             var metadata = new Dictionary<string, string>
             {
