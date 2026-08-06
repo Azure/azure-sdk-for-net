@@ -193,7 +193,20 @@ internal sealed class VoiceConnection : IVoiceConnection
                     {
                         await _callbackWorker.ConfigureAwait(false);
                         _callbackWorker = null;
-                        if (!_termination.IsTerminating)
+                        if (_connectionCancellationToken.IsCancellationRequested &&
+                            !_termination.IsTerminating)
+                        {
+                            // The callback worker and receive pump observe the
+                            // same linked runtime cancellation. If the worker
+                            // wins the completion race, preserve the original
+                            // request token instead of misclassifying its
+                            // expected shutdown as a coordinator failure.
+                            RecordCloseCode(1006);
+                            throw new OperationCanceledException(_connectionCancellationToken);
+                        }
+
+                        if (!_termination.IsTerminating &&
+                            !_runtimeCancellation.IsCancellationRequested)
                         {
                             throw new InvalidOperationException("The voice callback coordinator stopped unexpectedly.");
                         }
@@ -897,47 +910,60 @@ internal sealed class VoiceConnection : IVoiceConnection
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            var shouldCancelAdmission = false;
-            await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
-            try
+            if (_runtimeCancellation.IsCancellationRequested)
             {
-                // Cancellation can race the bridge outcome. Register an
-                // abandoned cancel only while admission is still pending or
-                // after acceptance made the response active. A dropped or
-                // connection-terminal response has no future playback outcome
-                // that could consume this marker.
-                shouldCancelAdmission = _pendingProactive.ContainsKey(response.ResponseId) ||
-                    (response.IsAccepted && !response.IsTerminal);
-                if (shouldCancelAdmission)
-                {
-                    _abandonedProactiveCancels.Add(response.ResponseId);
-                }
+                // Connection teardown completes every pending admission with
+                // its authoritative terminal result. A linked request token can
+                // cancel the runtime before sealing reaches this waiter, while
+                // other terminals publish both outcomes on adjacent asynchronous
+                // continuations. Preserve the terminal result instead of exposing
+                // a scheduling-dependent TaskCanceledException.
+                outcome = await completion.Task.ConfigureAwait(false);
             }
-            finally
+            else
             {
-                _stateGate.Release();
-            }
-
-            if (shouldCancelAdmission)
-            {
+                var shouldCancelAdmission = false;
+                await _stateGate.WaitAsync(CancellationToken.None).ConfigureAwait(false);
                 try
                 {
-                    await SendAsync(
-                        "response.cancel",
-                        new Dictionary<string, object?>
-                        {
-                            ["response_id"] = response.ResponseId,
-                            ["reason"] = "cancelled_by_agent",
-                        },
-                        CancellationToken.None,
-                        response.CancellationToken).ConfigureAwait(false);
+                    // Cancellation can race the bridge outcome. Register an
+                    // abandoned cancel only while admission is still pending or
+                    // after acceptance made the response active. A dropped or
+                    // connection-terminal response has no future playback outcome
+                    // that could consume this marker.
+                    shouldCancelAdmission = _pendingProactive.ContainsKey(response.ResponseId) ||
+                        (response.IsAccepted && !response.IsTerminal);
+                    if (shouldCancelAdmission)
+                    {
+                        _abandonedProactiveCancels.Add(response.ResponseId);
+                    }
                 }
-                catch (VoiceBridgeConnectionClosedException)
+                finally
                 {
+                    _stateGate.Release();
                 }
-            }
 
-            throw;
+                if (shouldCancelAdmission)
+                {
+                    try
+                    {
+                        await SendAsync(
+                            "response.cancel",
+                            new Dictionary<string, object?>
+                            {
+                                ["response_id"] = response.ResponseId,
+                                ["reason"] = "cancelled_by_agent",
+                            },
+                            CancellationToken.None,
+                            response.CancellationToken).ConfigureAwait(false);
+                    }
+                    catch (VoiceBridgeConnectionClosedException)
+                    {
+                    }
+                }
+
+                throw;
+            }
         }
 
         if (!outcome.Accepted)

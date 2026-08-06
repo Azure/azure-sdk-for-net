@@ -1797,7 +1797,7 @@ public class VoiceHandlerEndToEndTests
 
     private sealed class ProactiveOrderingHandler : VoiceHandler
     {
-        private int _proactiveTerminal;
+        private VoiceResponse? _proactiveResponse;
 
         public TaskCompletionSource ProactiveAccepted { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1816,7 +1816,8 @@ public class VoiceHandlerEndToEndTests
             VoiceResponse response,
             CancellationToken cancellationToken)
         {
-            UserTurnStartedBeforeProactiveTerminal = Volatile.Read(ref _proactiveTerminal) == 0;
+            var proactiveResponse = Volatile.Read(ref _proactiveResponse);
+            UserTurnStartedBeforeProactiveTerminal = proactiveResponse is { IsTerminal: false };
             UserTurnStarted.TrySetResult();
             return response.SendTextAsync("later reply", cancellationToken);
         }
@@ -1833,11 +1834,11 @@ public class VoiceHandlerEndToEndTests
         private async Task RunProactiveAsync(VoiceSession session, CancellationToken cancellationToken)
         {
             var response = await session.StartProactiveResponseAsync(cancellationToken: cancellationToken);
+            Volatile.Write(ref _proactiveResponse, response);
             ProactiveAccepted.TrySetResult();
             await AllowProactiveCompletion.Task.WaitAsync(cancellationToken);
             await response.SendTextAsync("proactive", cancellationToken);
             await response.CompleteAsync(cancellationToken);
-            Volatile.Write(ref _proactiveTerminal, 1);
         }
     }
 
