@@ -26,11 +26,11 @@
 |-------|--------|-------|
 | Phase 0 — Sync & Resume | ✅ Done | Created isolated worktrees from upstream main. |
 | Phase 1 — Discovery & Planning | ✅ Done | Existing TypeSpec package uses the legacy emitter; new emitter spec config needs namespace correction. |
-| Phase 2 — Create/Update tsp-location.yaml | 🔄 In Progress | |
-| Phase 3 — Handle Legacy Configuration | ⏭️ Not Started | |
-| Phase 4 — Update Custom Code | ⏭️ Not Started | |
-| Phase 5 — Code Generation | ⏭️ Not Started | |
-| Phase 6 — Build-Fix Cycle | ⏭️ Not Started | |
+| Phase 2 — Create/Update tsp-location.yaml | ✅ Done | Switched to the new emitter; final spec commit remains to be pinned. |
+| Phase 3 — Handle Legacy Configuration | 🔄 In Progress | AutoRest package cleanup remains after the source builds. |
+| Phase 4 — Update Custom Code | 🔄 In Progress | Updated pipeline references and the existing host-extension suppression intent. |
+| Phase 5 — Code Generation | ✅ Done | Generated locally with Node 24 and the Azure npm mirror. |
+| Phase 6 — Build-Fix Cycle | ❌ Blocked | New emitter generates invalid IConfiguration binding for X509Certificate2. |
 | Phase 7 — Changelog | ⏭️ Not Started | |
 | Phase 8 — Test Project Build | ⏭️ Not Started | |
 | Phase 9 — Test Execution | ⏭️ Not Started | |
@@ -47,9 +47,10 @@
 ## Known Issues
 
 - The upstream new-emitter configuration currently uses `Azure.ConfidentialLedger`; the existing package API requires `Azure.Security.ConfidentialLedger`.
+- The new emitter generates `new X509Certificate2(IConfigurationSection)` in `ConfidentialLedgerClientSettings.BindCore`, which fails with CS1503. The legacy emitter workaround suppressed the generated DI extension, but the new emitter does not honor `CodeGenSuppressType`.
 
 ## Next Steps
 
-1. Correct the C# emitter namespace and output directory in the spec.
-2. Update `tsp-location.yaml` to the new emitter and spec commit.
-3. Regenerate and resolve build/API compatibility issues.
+1. Decide whether to fix the generator, explicitly approve a workaround, or pause.
+2. Complete the source build and API compatibility fixes.
+3. Build and run non-live tests.
