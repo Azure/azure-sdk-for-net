@@ -155,9 +155,17 @@ jobs:
               Where-Object { $_.Name -eq '${{ pool.name }}' } |
               Select-Object -First 1
             # An unset runtime macro remains in $(Name) form; retain the default in that case.
-            if ($poolOverride -and [string]$poolOverride.Value -notmatch '^\$\(.+\)$') {
-              $batchSize = [int]$poolOverride.Value
-              Write-Host "Using batch size override for ${{ pool.name }}: $batchSize"
+            if ($poolOverride) {
+              $overrideValue = [string]$poolOverride.Value
+              if (-not [string]::IsNullOrWhiteSpace($overrideValue) -and $overrideValue -notmatch '^\$\(.+\)$') {
+                try {
+                  $batchSize = [int]$overrideValue
+                }
+                catch {
+                  throw "PR job batch size override for ${{ pool.name }} must be an integer, got '$overrideValue'."
+                }
+                Write-Host "Using batch size override for ${{ pool.name }}: $batchSize"
+              }
             }
             if ($batchSize -le 0) {
               throw "PR job batch size for ${{ pool.name }} must be greater than zero."
