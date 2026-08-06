@@ -6,16 +6,16 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal class ConditionalPageable : Pageable<ConfigurationSetting>
+    internal class ConditionalPageable<T> : Pageable<T>
     {
-        private readonly ConditionalPageableImplementation _implementation;
+        private readonly ConditionalPageableImplementation<T> _implementation;
 
-        public ConditionalPageable(ConditionalPageableImplementation implementation)
+        public ConditionalPageable(ConditionalPageableImplementation<T> implementation)
         {
             _implementation = implementation;
         }
 
-        public override IEnumerable<Page<ConfigurationSetting>> AsPages(string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPages(Array.Empty<MatchConditions>(), continuationToken, pageSizeHint);
-        public IEnumerable<Page<ConfigurationSetting>> AsPages(IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPages(conditions, continuationToken, pageSizeHint);
+        public override IEnumerable<Page<T>> AsPages(string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPages(Array.Empty<MatchConditions>(), continuationToken, pageSizeHint);
+        public IEnumerable<Page<T>> AsPages(IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPages(conditions, continuationToken, pageSizeHint);
     }
 }
