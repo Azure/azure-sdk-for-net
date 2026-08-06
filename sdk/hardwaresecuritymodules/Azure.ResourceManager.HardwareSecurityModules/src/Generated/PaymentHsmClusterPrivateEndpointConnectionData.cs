@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="properties"> Resource properties. </param>
         /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PaymentHsmClusterPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudHsmClusterPrivateEndpointConnectionProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal PaymentHsmClusterPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudHsmClusterPrivateEndpointConnectionProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -43,6 +44,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public CloudHsmClusterPrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
     }
 }
