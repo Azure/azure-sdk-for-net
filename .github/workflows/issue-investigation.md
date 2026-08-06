@@ -82,7 +82,7 @@ From the issue and repository context, determine:
 - Service label and category label.
 - Package ID and package version, preferring package metadata already present in the triage analysis comment when available.
 - Affected API or component, if identifiable.
-- Whether the issue is likely a duplicate of an open issue. Use existing triage metadata and `search_issues`; do not perform broad exhaustive search.
+- Whether the issue is likely a duplicate of a specific open or closed issue. Use existing triage metadata and `search_issues`; do not perform broad exhaustive search.
 - Whether the issue has enough context to proceed.
 - Whether the issue is about Azure service behavior outside SDK maintainers' control.
 - Whether the issue describes a safe implementation task for Copilot.
@@ -114,6 +114,10 @@ You may still include likely mitigations or investigation notes, but do not assi
 
 Apply these decision rules in order. Stop at the first matching rule that produces a user-visible action or `noop`.
 
+### Global Abstention Rule
+
+Take an action only when every condition required by that decision rule is positively supported by the issue content or trusted repository/package evidence. If any required fact is unknown, ambiguous, conflicting, or based only on inference, call `noop` with a short reason instead of commenting, closing, or assigning. This workflow should act only on high-confidence decisions.
+
 ### Version Currency / Support Policy
 
 If the customer reports an older package version than the latest stable version:
@@ -133,6 +137,8 @@ Only bypass this rule when the issue is clearly present in current code/current 
 ### Duplicate
 
 If there is a likely duplicate, add one comment explaining the likely duplicate and linking it. Do not close and do not assign Copilot.
+
+A duplicate decision requires a specific matching issue, whether open or closed. The match must be based on materially matching service/package context and reported symptoms or affected API, not just shared keywords, exception names, or a broad topic. If no specific matching issue can be identified, do not comment about duplicates and continue to the next decision rule.
 
 ### Insufficient Context
 
