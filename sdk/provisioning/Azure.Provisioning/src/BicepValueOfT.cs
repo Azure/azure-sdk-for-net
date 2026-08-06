@@ -181,28 +181,29 @@ public class BicepValue<T> : BicepValue
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
 
-    private protected override BicepExpression CompileLiteralValue() => Value switch
+    private protected override BicepExpression CompileLiteralValue(string? format) => Value switch
     {
         null => BicepSyntax.Null(),
+        BicepValue v => v.Compile(format),
         IBicepValue v => v.Compile(),
         bool b => BicepSyntax.Value(b),
-        int i => BicepSyntax.Value(i),
-        long l => BicepSyntax.Value(l),
+        int i => BicepTypeMapping.ToLiteralExpression(i, format),
+        long l => BicepTypeMapping.ToLiteralExpression(l, format),
         float f => BicepSyntax.Value(f),
         double d => BicepSyntax.Value(d),
         string s => BicepSyntax.Value(s),
-        Uri u => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(u, Format)),
-        DateTimeOffset d => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(d, Format)),
-        TimeSpan t => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(t, Format)),
-        Guid g => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(g, Format)),
-        IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, Format)),
-        ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
-        ResourceIdentifier i => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(i, Format)),
-        AzureLocation azureLocation => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(azureLocation, Format)),
-        ResourceType rt => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(rt, Format)),
-        Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
+        Uri u => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(u, format)),
+        DateTimeOffset d => BicepTypeMapping.ToLiteralExpression(d, format),
+        TimeSpan t => BicepTypeMapping.ToLiteralExpression(t, format),
+        Guid g => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(g, format)),
+        IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, format)),
+        ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, format)),
+        ResourceIdentifier i => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(i, format)),
+        AzureLocation azureLocation => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(azureLocation, format)),
+        ResourceType rt => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(rt, format)),
+        Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, format)),
         // Other extensible enums like AzureLocation (AzureLocation has been handled above)
-        ValueType ee => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(ee, Format)),
+        ValueType ee => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(ee, format)),
         _ => throw new InvalidOperationException($"Cannot convert {Value} to a Bicep expression.")
     };
 }

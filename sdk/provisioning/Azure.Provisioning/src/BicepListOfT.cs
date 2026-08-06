@@ -176,11 +176,7 @@ public class BicepList<T> :
         // update the _self for the inserted item and all items after it
         for (int i = index; i < _values.Count; i++)
         {
-            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
-            if (self is not null)
-            {
-                self.Index = i;
-            }
+            SetSelfForItem(_values[i], i);
         }
     }
 
@@ -220,11 +216,7 @@ public class BicepList<T> :
         // update the _self for all items after the removed item
         for (int i = index; i < _values.Count; i++)
         {
-            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
-            if (self is not null)
-            {
-                self.Index = i;
-            }
+            SetSelfForItem(_values[i], i);
         }
     }
 
@@ -296,8 +288,8 @@ public class BicepList<T> :
         new(expression) { _referenceFactory = referenceFactory };
     private Func<BicepExpression, T>? _referenceFactory = null;
 
-    private protected override BicepExpression CompileLiteralValue()
+    private protected override BicepExpression CompileLiteralValue(string? format)
     {
-        return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
+        return BicepSyntax.Array(_values.Select(v => v.Compile(format)).ToArray());
     }
 }

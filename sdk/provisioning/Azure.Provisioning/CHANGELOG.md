@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed Bicep serialization formats for `BicepList<T>` and `BicepDictionary<T>` elements.
+- Fixed Bicep literal serialization for formatted `DateTimeOffset`, `TimeSpan`, and string-encoded integer values.
+
 ### Other Changes
 
 ## 1.6.0-beta.1 (2026-03-11)
