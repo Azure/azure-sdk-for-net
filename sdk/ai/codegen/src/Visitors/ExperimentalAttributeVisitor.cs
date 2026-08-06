@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Extensions.Plugin.Visitors
 {
@@ -33,6 +35,12 @@ namespace Extensions.Plugin.Visitors
         private readonly HashSet<string> _experimentalProperties = new(StringComparer.Ordinal);
 
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
+
+        // Maps a model's fully qualified name to its experimental members. Each entry maps the member
+        // name to the simple name of the experimental type that makes it experimental. Generated
+        // serialization statements that reference these members must have an inline AAIP001
+        // suppression emitted at the tightest possible scope.
+        private readonly Dictionary<string, Dictionary<string, string>> _experimentalMembersByModel = new(StringComparer.Ordinal);
 
         private bool ImplementsExperimrental(TypeProvider theType)
         {
@@ -207,6 +215,11 @@ namespace Extensions.Plugin.Visitors
                 return base.VisitType(type);
             }
             bool isDirty = false;
+            // Collects the experimental properties/fields declared on this type, mapping each member
+            // name to the simple name of the experimental type that makes it experimental. Generated
+            // serialization statements that reference these members later have an inline AAIP001
+            // suppression emitted at the tightest possible scope (see the statement visitors below).
+            Dictionary<string, string> experimentalMembers = new(StringComparer.Ordinal);
             // Constructors
             List<ConstructorProvider> constructors = [];
             // In a first run we will check if all the constructors are experimental and if it is the case, mark class experimental.
@@ -252,6 +265,7 @@ namespace Extensions.Plugin.Visitors
                         attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
                     );
                     isDirty = true;
+                    experimentalMembers[field.Name] = field.Type.Name;
                 }
                 fields.Add(field);
             }
@@ -277,8 +291,19 @@ namespace Extensions.Plugin.Visitors
                         attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
                     );
                     isDirty = true;
+                    experimentalMembers[property.Name] = property.Type.Name;
                 }
                 properties.Add(property);
+            }
+            // Even when the type itself is not experimental, its generated serialization code may
+            // reference experimental members (its own experimental properties/fields, or the
+            // experimental subtypes of a discriminated base). Record the experimental members so that
+            // the statement visitors below can emit inline #pragma warning disable directives around
+            // the individual serialization statements that reference them, keeping the whole type
+            // opt-in-free while external consumers still receive the diagnostic.
+            if (experimentalMembers.Count > 0)
+            {
+                _experimentalMembersByModel[type.Type.FullyQualifiedName] = experimentalMembers;
             }
             if (isDirty)
             {
@@ -292,6 +317,148 @@ namespace Extensions.Plugin.Visitors
             }
             return base.VisitType(type);
         }
+
+        /// <inheritdoc />
+        protected override MethodBodyStatement VisitExpressionStatement(ExpressionStatement statement, MethodProvider method)
+        {
+            if (TryGetExperimentalMembers(method, out Dictionary<string, string> members)
+                && ReferencesExperimental(statement.ToDisplayString(), members, out string experimentalType))
+            {
+                return CreateExperimentalSuppression(statement, experimentalType);
+            }
+            return base.VisitExpressionStatement(statement, method);
+        }
+
+        /// <inheritdoc />
+        protected override MethodBodyStatement VisitIfStatement(IfStatement statement, MethodProvider method)
+        {
+            // When the condition itself references an experimental member, the whole if-statement is
+            // the tightest scope that can be suppressed. Otherwise recurse so that only the individual
+            // statements inside the body that reference experimental members are suppressed.
+            if (TryGetExperimentalMembers(method, out Dictionary<string, string> members)
+                && ReferencesExperimental(new ExpressionStatement(statement.Condition).ToDisplayString(), members, out string experimentalType))
+            {
+                return CreateExperimentalSuppression(statement, experimentalType);
+            }
+            return base.VisitIfStatement(statement, method);
+        }
+
+        /// <inheritdoc />
+        protected override MethodBodyStatement VisitSwitchStatement(SwitchStatement statement, MethodProvider method)
+        {
+            // As with if-statements, only wrap the whole switch when the value being switched on
+            // references an experimental member; otherwise recurse into the individual cases.
+            if (TryGetExperimentalMembers(method, out Dictionary<string, string> members)
+                && ReferencesExperimental(new ExpressionStatement(statement.MatchExpression).ToDisplayString(), members, out string experimentalType))
+            {
+                return CreateExperimentalSuppression(statement, experimentalType);
+            }
+            return base.VisitSwitchStatement(statement, method);
+        }
+
+        /// <summary>
+        /// Determines the experimental members visible from the supplied serialization method, mapping
+        /// each member name to the simple name of the experimental type that makes it experimental.
+        /// Returns <see langword="false"/> when the method is not part of a model's generated
+        /// serialization code, or when the model itself is experimental (in which case its generated
+        /// members already live in an experimental context and require no inline suppression).
+        /// </summary>
+        private bool TryGetExperimentalMembers(MethodProvider method, out Dictionary<string, string> members)
+        {
+            members = null;
+            if (method.EnclosingType is not MrwSerializationTypeDefinition serialization)
+            {
+                return false;
+            }
+            // The serialization type definition is a partial of the model, so its Type is the model
+            // type. When the model itself is experimental its generated members already live in an
+            // experimental context and require no inline suppression.
+            CSharpType modelType = serialization.Type;
+            if (IsExperimental(modelType))
+            {
+                return false;
+            }
+            // members may remain null when the model has no experimental members of its own; callers
+            // still need to check for experimental type references (e.g. discriminated base deserializers).
+            _experimentalMembersByModel.TryGetValue(modelType.FullyQualifiedName, out members);
+            return true;
+        }
+
+        /// <summary>
+        /// Returns true if the supplied rendered statement text references an experimental type (by its
+        /// fully qualified name) or an experimental member of the enclosing model (by name), reporting
+        /// the simple name of the experimental type responsible.
+        /// </summary>
+        private bool ReferencesExperimental(string text, Dictionary<string, string> members, out string experimentalType)
+        {
+            if (ReferencesExperimentalType(text, out experimentalType))
+            {
+                return true;
+            }
+            return ReferencesExperimentalMember(text, members, out experimentalType);
+        }
+
+        private bool ReferencesExperimentalType(string text, out string experimentalType)
+        {
+            foreach (string fullyQualifiedName in _experimentalClasses)
+            {
+                if (text.Contains(fullyQualifiedName, StringComparison.Ordinal))
+                {
+                    experimentalType = SimpleName(fullyQualifiedName);
+                    return true;
+                }
+            }
+            foreach (string fullyQualifiedName in _attributedTypes)
+            {
+                if (text.Contains(fullyQualifiedName, StringComparison.Ordinal))
+                {
+                    experimentalType = SimpleName(fullyQualifiedName);
+                    return true;
+                }
+            }
+            experimentalType = null;
+            return false;
+        }
+
+        private static bool ReferencesExperimentalMember(string text, Dictionary<string, string> members, out string experimentalType)
+        {
+            if (members != null)
+            {
+                foreach (KeyValuePair<string, string> member in members)
+                {
+                    // Match the member name as a whole identifier so that, for example, "Draft" does not
+                    // match "DraftCount" and "Name" does not match "WritePropertyName".
+                    if (GetMemberRegex(member.Key).IsMatch(text))
+                    {
+                        experimentalType = member.Value;
+                        return true;
+                    }
+                }
+            }
+            experimentalType = null;
+            return false;
+        }
+
+        private static readonly Dictionary<string, Regex> _memberRegexCache = new(StringComparer.Ordinal);
+
+        private static Regex GetMemberRegex(string member)
+        {
+            if (!_memberRegexCache.TryGetValue(member, out Regex regex))
+            {
+                regex = new Regex($@"(?<![A-Za-z0-9_]){Regex.Escape(member)}(?![A-Za-z0-9_])", RegexOptions.CultureInvariant);
+                _memberRegexCache[member] = regex;
+            }
+            return regex;
+        }
+
+        private static string SimpleName(string fullyQualifiedName)
+        {
+            int lastDot = fullyQualifiedName.LastIndexOf('.');
+            return lastDot < 0 ? fullyQualifiedName : fullyQualifiedName[(lastDot + 1)..];
+        }
+
+        private static SuppressionStatement CreateExperimentalSuppression(MethodBodyStatement inner, string experimentalType) =>
+            new(inner, Snippet.Literal(DiagnosticId), $"`{experimentalType}` is experimental and may change in future versions");
 
         protected override MethodProvider VisitMethod(MethodProvider method)
         {
