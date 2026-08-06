@@ -35,11 +35,11 @@ public class MockHttpClientHandler : HttpMessageHandler
     }
 
 #if NET5_0_OR_GREATER
-        protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            HttpResponseMessage response = _onSend(request).GetAwaiter().GetResult();
+    protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        HttpResponseMessage response = _onSend(request).GetAwaiter().GetResult();
 
-            return response ?? new HttpResponseMessage((HttpStatusCode)200);
-        }
+        return response ?? new HttpResponseMessage((HttpStatusCode)200);
+    }
 #endif
 }

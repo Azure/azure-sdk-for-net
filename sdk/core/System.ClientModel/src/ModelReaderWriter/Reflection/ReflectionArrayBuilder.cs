@@ -35,7 +35,7 @@ internal class ReflectionArrayBuilder : ModelReaderWriterTypeBuilder
 
     protected override void AddItem(object collection, object? item)
     {
-        BuilderType.GetMethod("Add")!.Invoke(collection, [ item ]);
+        BuilderType.GetMethod("Add")!.Invoke(collection, [item]);
     }
 
     protected override object ConvertCollectionBuilder(object builder)
