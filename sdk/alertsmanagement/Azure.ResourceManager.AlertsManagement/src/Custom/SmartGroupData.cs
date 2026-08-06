@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.AlertsManagement
         public SmartGroupData() { }
 
         /// <summary> Gets or sets the alerts count. </summary>
-        public long? AlertsCount { get { throw new NotSupportedException(); } set { throw new NotSupportedException(); } }
+        public long? AlertsCount { get; set; }
 
         /// <summary> Gets the alert severities. </summary>
-        public IList<SmartGroupAggregatedProperty> AlertSeverities { get { throw new NotSupportedException(); } }
+        public IList<SmartGroupAggregatedProperty> AlertSeverities { get; }
 
         /// <summary> Gets the alert states. </summary>
-        public IList<SmartGroupAggregatedProperty> AlertStates { get { throw new NotSupportedException(); } }
+        public IList<SmartGroupAggregatedProperty> AlertStates { get; }
 
         /// <summary> Gets the last modified by. </summary>
-        public string LastModifiedBy { get { throw new NotSupportedException(); } }
+        public string LastModifiedBy { get; }
 
         /// <summary> Gets the last modified on. </summary>
-        public DateTimeOffset? LastModifiedOn { get { throw new NotSupportedException(); } }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Gets the monitor conditions. </summary>
-        public IList<SmartGroupAggregatedProperty> MonitorConditions { get { throw new NotSupportedException(); } }
+        public IList<SmartGroupAggregatedProperty> MonitorConditions { get; }
 
         /// <summary> Gets the monitor services. </summary>
-        public IList<SmartGroupAggregatedProperty> MonitorServices { get { throw new NotSupportedException(); } }
+        public IList<SmartGroupAggregatedProperty> MonitorServices { get; }
 
         /// <summary> Gets or sets the next link. </summary>
-        public string NextLink { get { throw new NotSupportedException(); } set { throw new NotSupportedException(); } }
+        public string NextLink { get; set; }
 
         /// <summary> Gets the resource groups. </summary>
-        public IList<SmartGroupAggregatedProperty> ResourceGroups { get { throw new NotSupportedException(); } }
+        public IList<SmartGroupAggregatedProperty> ResourceGroups { get; }
 
         /// <summary> Gets the resources. </summary>
-        public IList<SmartGroupAggregatedProperty> Resources { get { throw new NotSupportedException(); } }
+        public IList<SmartGroupAggregatedProperty> Resources { get; }
 
         /// <summary> Gets the resource types. </summary>
-        public IList<SmartGroupAggregatedProperty> ResourceTypes { get { throw new NotSupportedException(); } }
+        public IList<SmartGroupAggregatedProperty> ResourceTypes { get; }
 
         /// <summary> Gets the severity. </summary>
-        public ServiceAlertSeverity? Severity { get { throw new NotSupportedException(); } }
+        public ServiceAlertSeverity? Severity { get; }
 
         /// <summary> Gets the smart group state. </summary>
-        public SmartGroupState? SmartGroupState { get { throw new NotSupportedException(); } }
+        public SmartGroupState? SmartGroupState { get; }
 
         /// <summary> Gets the start on. </summary>
-        public DateTimeOffset? StartOn { get { throw new NotSupportedException(); } }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> Writes the model to JSON. </summary>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { throw new NotSupportedException(); }
