@@ -32,19 +32,6 @@ Indirect packages only run on Linux, so they can use a higher target than direct
 
 .PARAMETER DefaultWeight
 Weight assigned to packages not found in the weights file. Default is 1.
-
-.PARAMETER BaseCost
-Fixed per-package cost added to every package's weight before bin-packing, expressed in the
-same units as the weights file (LOC). Job cost is not purely proportional to LOC:
-
-  job_time = fixed_job_overhead + N_packages * fixed_package_overhead + f(LOC)
-
-Each package in a batch pays its own codegen/restore, snippet update and API export cycle
-regardless of size. With BaseCost 0, a batch of 20 small packages and a batch containing one
-large package look identical to the packer even though the former does 20x the fixed work.
-Setting BaseCost makes package count contribute to the weight, which matters more as
-generation (the LOC-proportional term) gets faster. Default is 0, which preserves the
-previous pure-LOC behavior.
 #>
 
 [CmdletBinding()]
@@ -53,8 +40,7 @@ param (
   [Parameter(Mandatory = $true)][string]$WeightsFile,
   [Parameter()][int]$Target = 1800,
   [Parameter()][int]$IndirectTarget = 0,
-  [Parameter()][int]$DefaultWeight = 1,
-  [Parameter()][ValidateRange(0, [int]::MaxValue)][int]$BaseCost = 0
+  [Parameter()][int]$DefaultWeight = 1
 )
 
 Set-StrictMode -Version 4
@@ -109,7 +95,6 @@ function Apply-LPTBatching {
     [hashtable]$Weights,
     [int]$Target,
     [int]$DefaultWeight,
-    [int]$BaseCost,
     [string]$Label
   )
 
@@ -118,12 +103,11 @@ function Apply-LPTBatching {
     return
   }
 
-  # Build weighted items. BaseCost models the fixed per-package cost that is paid regardless
-  # of package size, so batches full of small packages are not treated as nearly free.
+  # Build weighted items
   $items = @(foreach ($pkg in $Packages) {
     $name = $pkg.Json.ArtifactName
     $weight = if ($Weights.ContainsKey($name)) { [int]$Weights[$name] } else { $DefaultWeight }
-    [PSCustomObject]@{ Package = $pkg; Weight = $weight + $BaseCost; Name = $name }
+    [PSCustomObject]@{ Package = $pkg; Weight = $weight; Name = $name }
   })
 
   # Sort by weight descending (LPT: largest first)
@@ -137,7 +121,7 @@ function Apply-LPTBatching {
   # Don't create more buckets than packages
   $numBuckets = [math]::Min($numBuckets, $Packages.Count)
 
-  Write-Host "  $Label`: $($Packages.Count) packages, total weight ${totalWeight} (base cost ${BaseCost}/pkg), target ${Target} -> $numBuckets buckets"
+  Write-Host "  $Label`: $($Packages.Count) packages, total weight ${totalWeight}, target ${Target} -> $numBuckets buckets"
 
   # Create buckets
   $buckets = @()
@@ -192,12 +176,12 @@ function Apply-LPTBatching {
 # Apply LPT batching to direct and indirect packages separately
 if ($directPackages.Count -gt 0) {
   Apply-LPTBatching -Packages $directPackages -Weights $weights `
-    -Target $Target -DefaultWeight $DefaultWeight -BaseCost $BaseCost -Label "Direct"
+    -Target $Target -DefaultWeight $DefaultWeight -Label "Direct"
 }
 
 if ($indirectPackages.Count -gt 0) {
   Apply-LPTBatching -Packages $indirectPackages -Weights $weights `
-    -Target $IndirectTarget -DefaultWeight $DefaultWeight -BaseCost $BaseCost -Label "Indirect"
+    -Target $IndirectTarget -DefaultWeight $DefaultWeight -Label "Indirect"
 }
 
 # Verify

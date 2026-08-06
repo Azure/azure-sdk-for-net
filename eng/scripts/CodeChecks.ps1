@@ -73,18 +73,9 @@ try {
         $preExistingChanges = $preExistingChanges | Sort-Object -Unique
     }
 
-    # The analyze job invokes this script once per changed service directory, all within a
-    # single pwsh session. Restoring ./node_modules is repo-global, not service-scoped, so
-    # doing it once per service directory is pure duplicated cost that grows with batch size.
-    if (Test-Path variable:global:AzSdkCodeChecksNodeModulesRestored) {
-        Write-Host "./node_modules already restored in this session, skipping npm ci"
-    }
-    else {
-        Write-Host "Restore ./node_modules"
-        Invoke-Block {
-            & npm ci --prefix $RepoRoot
-        }
-        $global:AzSdkCodeChecksNodeModulesRestored = $true
+    Write-Host "Restore ./node_modules"
+    Invoke-Block {
+        & npm ci --prefix $RepoRoot
     }
 
     if ($ProjectDirectory -and -not $ServiceDirectory)
@@ -112,13 +103,9 @@ try {
             }
         }
 
-        # Also repo-global rather than service-scoped: only needed once per session.
-        if (-not (Test-Path variable:global:AzSdkCodeChecksDotnetWarmed)) {
-            Write-Host "Force .NET Welcome experience"
-            Invoke-Block {
-                & dotnet msbuild -version
-            }
-            $global:AzSdkCodeChecksDotnetWarmed = $true
+        Write-Host "Force .NET Welcome experience"
+        Invoke-Block {
+            & dotnet msbuild -version
         }
 
         Write-Host "`nChecking that solutions are up to date"
