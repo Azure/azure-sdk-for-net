@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,14 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// </summary>
 public abstract class ResilientTaskBuilder
 {
+    internal const string ReflectionTrimWarning =
+        "This overload serializes the task input using reflection-based JSON serialization, which is not " +
+        "compatible with trimming. Use the overload that accepts a JsonTypeInfo<TInput> instead.";
+
+    internal const string ReflectionAotWarning =
+        "This overload serializes the task input using reflection-based JSON serialization, which may require " +
+        "runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.";
+
     /// <summary>Initializes a new instance of the <see cref="ResilientTaskBuilder"/> class.</summary>
     protected ResilientTaskBuilder()
     {
@@ -29,6 +38,8 @@ public abstract class ResilientTaskBuilder
     /// <param name="handler">The handler delegate.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
     /// <returns>The same builder for chaining.</returns>
+    [RequiresUnreferencedCode(ReflectionTrimWarning)]
+    [RequiresDynamicCode(ReflectionAotWarning)]
     public abstract ResilientTaskBuilder AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
@@ -44,6 +55,8 @@ public abstract class ResilientTaskBuilder
     /// <param name="steerable">Whether the task accepts steering input.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
     /// <returns>The same builder for chaining.</returns>
+    [RequiresUnreferencedCode(ReflectionTrimWarning)]
+    [RequiresDynamicCode(ReflectionAotWarning)]
     public abstract ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
@@ -91,56 +104,6 @@ public abstract class ResilientTaskBuilder
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
         JsonTypeInfo<TInput> inputTypeInfo,
 #pragma warning restore AZC0014
-        bool steerable = false,
-        Action<TaskRegistrationOptions>? configure = null);
-
-    /// <summary>
-    /// Registers a one-shot task whose handler resolves dependencies from the application
-    /// <see cref="IServiceProvider"/>. The provider is supplied at invocation time, so there is no
-    /// need to call <c>BuildServiceProvider()</c> before registering tasks.
-    /// </summary>
-    /// <remarks>
-    /// The provider passed to the handler is the <b>root</b> application provider. Task handlers run
-    /// on background/recovery paths with no ambient request scope, so resolve <b>singleton</b> (or
-    /// transient) services here; resolving a <b>scoped</b> service directly throws. If a handler
-    /// needs scoped services, create a scope explicitly
-    /// (<c>provider.GetRequiredService&lt;IServiceScopeFactory&gt;().CreateScope()</c>) and resolve
-    /// from <c>scope.ServiceProvider</c>.
-    /// </remarks>
-    /// <typeparam name="TInput">The task input type.</typeparam>
-    /// <typeparam name="TOutput">The task output type.</typeparam>
-    /// <param name="name">The unique task name.</param>
-    /// <param name="handler">The handler delegate; its first argument is the resolved service provider.</param>
-    /// <param name="configure">An optional callback to configure per-task options.</param>
-    /// <returns>The same builder for chaining.</returns>
-    public abstract ResilientTaskBuilder AddTask<TInput, TOutput>(
-        string name,
-        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
-        Action<TaskRegistrationOptions>? configure = null);
-
-    /// <summary>
-    /// Registers a multi-turn task (optionally steerable) whose handler resolves dependencies from
-    /// the application <see cref="IServiceProvider"/>. The provider is supplied at invocation time,
-    /// so there is no need to call <c>BuildServiceProvider()</c> before registering tasks.
-    /// </summary>
-    /// <remarks>
-    /// The provider passed to the handler is the <b>root</b> application provider. Task handlers run
-    /// on background/recovery paths with no ambient request scope, so resolve <b>singleton</b> (or
-    /// transient) services here; resolving a <b>scoped</b> service directly throws. If a handler
-    /// needs scoped services, create a scope explicitly
-    /// (<c>provider.GetRequiredService&lt;IServiceScopeFactory&gt;().CreateScope()</c>) and resolve
-    /// from <c>scope.ServiceProvider</c>.
-    /// </remarks>
-    /// <typeparam name="TInput">The task input type.</typeparam>
-    /// <typeparam name="TOutput">The task output type.</typeparam>
-    /// <param name="name">The unique task name.</param>
-    /// <param name="handler">The handler delegate; its first argument is the resolved service provider.</param>
-    /// <param name="steerable">Whether the task accepts steering input.</param>
-    /// <param name="configure">An optional callback to configure per-task options.</param>
-    /// <returns>The same builder for chaining.</returns>
-    public abstract ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
-        string name,
-        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
         Action<TaskRegistrationOptions>? configure = null);
 }

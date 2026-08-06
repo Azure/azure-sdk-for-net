@@ -64,10 +64,16 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             var checkpointStore = new CheckpointStore(stateRoot);
 
             // AddResilientTasks records registrations into a live registry that the engine reads
-            // when a task is invoked. The provider-aware overload hands the handler the application
-            // IServiceProvider at invocation time, so dependencies are resolved from DI without a
-            // premature BuildServiceProvider() call or a forward-declared, captured provider.
+            // when a task is invoked. The provider-aware overloads were removed (the service-locator
+            // shape is being retired ahead of GA), so resolve the handler's singleton dependencies
+            // from the built container once and capture them in the plain delegate — a DI-resolved
+            // handler wrapped in the delegate. The registry is read lazily at invocation time, so
+            // registering after the provider is built is fine.
             ResilientTaskBuilder tasks = services.AddResilientTasks();
+
+            ServiceProvider provider = services.BuildServiceProvider();
+            EventStreamRegistry streams = provider.GetRequiredService<EventStreamRegistry>();
+            ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
 
             // The resilient "research" task is session-scoped and steerable: one durable
             // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
@@ -75,9 +81,9 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // into the event stream keyed by that turn's invocation id (carried on the input).
             tasks.AddMultiTurnTask<ResearchRequest, ResearchResult>(
                 "research",
-                (provider, ctx, ct) => RunResearchAsync(
-                    provider.GetRequiredService<EventStreamRegistry>(),
-                    provider.GetRequiredService<ResponsesClient>(),
+                (ctx, ct) => RunResearchAsync(
+                    streams,
+                    model,
                     ModelDeployment,
                     ctx,
                     checkpointStore,

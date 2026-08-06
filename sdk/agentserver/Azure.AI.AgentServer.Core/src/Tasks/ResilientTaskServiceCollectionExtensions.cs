@@ -53,16 +53,11 @@ public static class ResilientTaskServiceCollectionExtensions
             }
 
             TaskRegistry existingRegistry = ResolveRegistered(services) ?? new TaskRegistry();
-            TaskServiceProviderAccessor existingAccessor =
-                ResolveRegisteredAccessor(services) ?? new TaskServiceProviderAccessor();
-            return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
+            return new DefaultResilientTaskBuilder(existingRegistry);
         }
 
         var registry = new TaskRegistry();
         services.TryAddSingleton(registry);
-
-        var providerAccessor = new TaskServiceProviderAccessor();
-        services.TryAddSingleton(providerAccessor);
 
         var environment = new TaskHostEnvironment(credential);
         services.TryAddSingleton(environment);
@@ -125,7 +120,6 @@ public static class ResilientTaskServiceCollectionExtensions
         // no-op if one was already registered, so the builder must wrap that instance (not the
         // freshly-constructed local) or registrations would target an orphaned registry.
         TaskRegistry canonical = ResolveRegistered(services) ?? registry;
-        TaskServiceProviderAccessor canonicalAccessor = ResolveRegisteredAccessor(services) ?? providerAccessor;
 
         services.TryAddSingleton<TaskEngine>(sp =>
         {
@@ -135,11 +129,6 @@ public static class ResilientTaskServiceCollectionExtensions
             ILogger logger = loggerFactory?.CreateLogger(TaskTelemetry.Category)
                 ?? NullLogger.Instance;
             (string agentName, string sessionId) = ResolveScope();
-
-            // Late-bind the container so provider-aware handler overloads can resolve services at
-            // invocation time. The engine is always resolved before any handler runs (invocation
-            // flows through it), so populating here guarantees the accessor is ready.
-            sp.GetRequiredService<TaskServiceProviderAccessor>().Provider = sp;
 
             return new TaskEngine(store, reg, agentName, sessionId, logger);
         });
@@ -165,7 +154,7 @@ public static class ResilientTaskServiceCollectionExtensions
         });
         services.AddHostedService(sp => sp.GetRequiredService<TaskDurabilityService>());
 
-        return new DefaultResilientTaskBuilder(canonical, canonicalAccessor);
+        return new DefaultResilientTaskBuilder(canonical);
     }
 
     private static (string AgentName, string SessionId) ResolveScope()
@@ -199,21 +188,6 @@ public static class ResilientTaskServiceCollectionExtensions
             ServiceDescriptor descriptor = services[i];
             if (descriptor.ServiceType == typeof(TaskRegistry) &&
                 descriptor.ImplementationInstance is TaskRegistry existing)
-            {
-                return existing;
-            }
-        }
-
-        return null;
-    }
-
-    private static TaskServiceProviderAccessor? ResolveRegisteredAccessor(IServiceCollection services)
-    {
-        for (int i = 0; i < services.Count; i++)
-        {
-            ServiceDescriptor descriptor = services[i];
-            if (descriptor.ServiceType == typeof(TaskServiceProviderAccessor) &&
-                descriptor.ImplementationInstance is TaskServiceProviderAccessor existing)
             {
                 return existing;
             }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,15 +17,15 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
 {
     private readonly TaskRegistry _registry;
-    private readonly TaskServiceProviderAccessor _providerAccessor;
 
-    public DefaultResilientTaskBuilder(TaskRegistry registry, TaskServiceProviderAccessor providerAccessor)
+    public DefaultResilientTaskBuilder(TaskRegistry registry)
     {
         _registry = registry;
-        _providerAccessor = providerAccessor;
     }
 
     /// <inheritdoc/>
+    [RequiresUnreferencedCode(ReflectionTrimWarning)]
+    [RequiresDynamicCode(ReflectionAotWarning)]
     public override ResilientTaskBuilder AddTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
@@ -32,6 +33,8 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
         => Add(name, handler, multiTurn: false, steerable: false, configure);
 
     /// <inheritdoc/>
+    [RequiresUnreferencedCode(ReflectionTrimWarning)]
+    [RequiresDynamicCode(ReflectionAotWarning)]
     public override ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
@@ -65,34 +68,6 @@ internal sealed class DefaultResilientTaskBuilder : ResilientTaskBuilder
         ArgumentNullException.ThrowIfNull(inputTypeInfo);
         return Add(name, handler, multiTurn: true, steerable, configure, inputTypeInfo);
     }
-
-    /// <inheritdoc/>
-    public override ResilientTaskBuilder AddTask<TInput, TOutput>(
-        string name,
-        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
-        Action<TaskRegistrationOptions>? configure = null)
-    {
-        ArgumentNullException.ThrowIfNull(handler);
-        return Add(name, Wrap(handler), multiTurn: false, steerable: false, configure);
-    }
-
-    /// <inheritdoc/>
-    public override ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
-        string name,
-        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
-        bool steerable = false,
-        Action<TaskRegistrationOptions>? configure = null)
-    {
-        ArgumentNullException.ThrowIfNull(handler);
-        return Add(name, Wrap(handler), multiTurn: true, steerable, configure);
-    }
-
-    // Adapts a provider-aware handler to the plain delegate shape the engine invokes. The provider
-    // is resolved from the shared accessor at invocation time (populated when the engine is built),
-    // so registration does not depend on the container already existing.
-    private Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> Wrap<TInput, TOutput>(
-        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler)
-        => (ctx, ct) => handler(_providerAccessor.Require(), ctx, ct);
 
     private ResilientTaskBuilder Add<TInput, TOutput>(
         string name,

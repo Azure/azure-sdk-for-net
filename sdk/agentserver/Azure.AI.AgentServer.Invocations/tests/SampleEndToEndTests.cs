@@ -881,6 +881,8 @@ public class SampleEndToEndTests
             Path.Combine(Path.GetTempPath(), "research-checkpoints-" + Guid.NewGuid().ToString("N")[..8]));
         var model = CreateMockResponsesClient();
 
+        ResilientTaskBuilder? tasks = null;
+
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
@@ -889,12 +891,19 @@ public class SampleEndToEndTests
                     cursor: payload => ((Snippets.SampleResilientResearchSnippets.ResearchEvent)payload).Cursor,
                     ttl: TimeSpan.FromMinutes(5)));
 
-                services.AddResilientTasks()
-                    .AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                tasks = services.AddResilientTasks();
+            },
+            configurePostBuild: app =>
+            {
+                // Provider-aware overloads were removed: resolve the singleton EventStreamRegistry
+                // from the built container and capture it in the plain delegate (the registry is read
+                // lazily at invocation time, so registering post-build is fine).
+                EventStreamRegistry streams = app.Services.GetRequiredService<EventStreamRegistry>();
+                tasks!.AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
-                        (provider, ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            provider.GetRequiredService<EventStreamRegistry>(), model, "test-model", ctx, checkpointStore,
+                        (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
+                            streams, model, "test-model", ctx, checkpointStore,
                             numPhases: 2, callsPerPhase: 2,
                             interPhaseCooldown: TimeSpan.Zero,
                             intraPhaseCooldown: TimeSpan.Zero,
@@ -1022,7 +1031,8 @@ public class SampleEndToEndTests
     /// </param>
     private static async Task<TestEnv> CreateTestServerAsync<THandler>(
         Action<IServiceCollection>? configureServices = null,
-        bool configureServerSide = false)
+        bool configureServerSide = false,
+        Action<WebApplication>? configurePostBuild = null)
         where THandler : InvocationHandler
     {
         var builder = WebApplication.CreateBuilder();
@@ -1032,6 +1042,7 @@ public class SampleEndToEndTests
         configureServices?.Invoke(builder.Services);
 
         var app = builder.Build();
+        configurePostBuild?.Invoke(app);
         if (configureServerSide)
         {
             app.UseWebSockets();

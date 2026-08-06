@@ -23,7 +23,7 @@ internal sealed class TaskTestHost : IDisposable
         _tempDir = tempDir;
         Store = store;
         Registry = registry;
-        Builder = new DefaultResilientTaskBuilder(registry, new TaskServiceProviderAccessor());
+        Builder = new DefaultResilientTaskBuilder(registry);
         AgentName = agentName;
         SessionId = sessionId;
         Engine = new TaskEngine(store, registry, agentName, sessionId, logger);
