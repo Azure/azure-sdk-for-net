@@ -178,6 +178,106 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
+        /// Change the state of an alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to change state of this particular alert then use parent resource of scope. So in this example change state call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_ChangeState. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="newState"> New state of the alert. </param>
+        /// <param name="content"> reason of change alert state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, ServiceAlertChangeStateContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Change the state of an alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to change state of this particular alert then use parent resource of scope. So in this example change state call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_ChangeState. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="newState"> New state of the alert. </param>
+        /// <param name="content"> reason of change alert state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, ServiceAlertChangeStateContent content = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the enrichments of an alert. It returns a collection of one object named default.
         /// <list type="bullet">
         /// <item>

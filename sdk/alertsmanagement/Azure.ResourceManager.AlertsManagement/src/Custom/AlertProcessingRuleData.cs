@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AlertsManagement
         public AlertProcessingRuleData(AzureLocation location) : base(location) { }
 
         /// <summary> Gets or sets the properties. </summary>
-        public AlertProcessingRuleProperties Properties { get { throw new NotSupportedException(); } set { throw new NotSupportedException(); } }
+        public AlertProcessingRuleProperties Properties { get; set; }
 
         /// <summary> Writes the model to JSON. </summary>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { throw new NotSupportedException(); }
