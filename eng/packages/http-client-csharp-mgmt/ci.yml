@@ -85,15 +85,14 @@ extends:
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
         HasNugetPackages: true
-      # Workaround: keep regen groups small enough to avoid the public release
-      # pipeline's 1-hour timeout. Azure.ResourceManager.Network takes much
-      # longer than most packages and should be optimized eventually; the shared
-      # matrix generator only supports count-based batching, not per-package
-      # isolation.
+      # Keep 18 jobs to match the observed pool concurrency, but balance their
+      # generation cost using existing C# LOC plus a fixed per-package cost.
       RegenerationJobCount: 18
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
       DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'
+      UseLocWeighting: true
+      LocBaseCost: 30000
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
