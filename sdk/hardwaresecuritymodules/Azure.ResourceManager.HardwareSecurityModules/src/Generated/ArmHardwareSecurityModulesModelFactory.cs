@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="properties"> Resource properties. </param>
         /// <param name="eTag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <returns> A new <see cref="HardwareSecurityModules.PaymentHsmClusterPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static PaymentHsmClusterPrivateEndpointConnectionData PaymentHsmClusterPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudHsmClusterPrivateEndpointConnectionProperties properties = default, string eTag = default)
+        public static PaymentHsmClusterPrivateEndpointConnectionData PaymentHsmClusterPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudHsmClusterPrivateEndpointConnectionProperties properties = default, ETag? eTag = default)
         {
             return new PaymentHsmClusterPrivateEndpointConnectionData(
                 id,
