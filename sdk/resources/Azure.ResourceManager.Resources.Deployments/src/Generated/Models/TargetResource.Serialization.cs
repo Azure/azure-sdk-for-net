@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Deployments;
 
 namespace Azure.ResourceManager.Resources.Deployments.Models

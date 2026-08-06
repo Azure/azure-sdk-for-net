@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Deployments;
 
 namespace Azure.ResourceManager.Resources.Deployments.Models

@@ -8,8 +8,8 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Deployments
 {

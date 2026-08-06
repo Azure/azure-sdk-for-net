@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Resources.Deployments.Models;
 
 namespace Azure.ResourceManager.Resources.Deployments
