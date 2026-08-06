@@ -34,6 +34,7 @@ public abstract class PipelineMessageClassifier
     /// <returns>A <see cref="PipelineMessageClassifier"/> instance that
     /// classifies the status codes provided by
     /// <paramref name="successStatusCodes"/> as success codes.</returns>
+    [CLSCompliant(false)]
     public static PipelineMessageClassifier Create(ReadOnlySpan<ushort> successStatusCodes)
         => new ResponseStatusClassifier(successStatusCodes);
 
