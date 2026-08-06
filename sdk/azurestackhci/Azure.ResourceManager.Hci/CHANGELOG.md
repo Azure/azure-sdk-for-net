@@ -8,7 +8,7 @@
 
 ### Other Changes
 
-- Removed preview-only resource types: `ClusterJobResource`, `DevicePoolResource`, `EdgeMachineResource`, `EdgeMachineJobResource`, `OsImageResource`, `PlatformUpdateResource`, `UpdateContentResource`, `HciClusterPublisherResource`.
+- Removed preview-only resource types: `ClusterJobResource`, `DevicePoolResource`, `EdgeMachineResource`, `EdgeMachineJobResource`, `OsImageResource`, `PlatformUpdateResource`, and `UpdateContentResource`.
 - Removed preview-only models and operations related to: ownership voucher validation, Kubernetes versions, SDN integration, confidential VM, and OS provisioning.
 - Removed many model factory overloads that referenced removed resource types.
 

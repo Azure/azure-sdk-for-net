@@ -20,15 +20,13 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A class representing a collection of <see cref="HciClusterOfferResource"/> and their operations.
-    /// Each <see cref="HciClusterOfferResource"/> in the collection will belong to the same instance of <see cref="HciClusterResource"/>.
-    /// To get a <see cref="HciClusterOfferCollection"/> instance call the GetHciClusterOffers method from an instance of <see cref="HciClusterResource"/>.
+    /// Each <see cref="HciClusterOfferResource"/> in the collection will belong to the same instance of <see cref="HciClusterPublisherResource"/>.
+    /// To get a <see cref="HciClusterOfferCollection"/> instance call the GetHciClusterOffers method from an instance of <see cref="HciClusterPublisherResource"/>.
     /// </summary>
     public partial class HciClusterOfferCollection : ArmCollection, IEnumerable<HciClusterOfferResource>, IAsyncEnumerable<HciClusterOfferResource>
     {
         private readonly ClientDiagnostics _offersClientDiagnostics;
         private readonly Offers _offersRestClient;
-        /// <summary> The publisherName. </summary>
-        private readonly string _publisherName;
 
         /// <summary> Initializes a new instance of HciClusterOfferCollection for mocking. </summary>
         protected HciClusterOfferCollection()
@@ -38,11 +36,9 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of <see cref="HciClusterOfferCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="publisherName"> The publisherName for the resource. </param>
-        internal HciClusterOfferCollection(ArmClient client, ResourceIdentifier id, string publisherName) : base(client, id)
+        internal HciClusterOfferCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(HciClusterOfferResource.ResourceType, out string hciClusterOfferApiVersion);
-            _publisherName = publisherName;
             _offersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterOfferResource.ResourceType.Namespace, Diagnostics);
             _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterOfferApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
@@ -52,9 +48,9 @@ namespace Azure.ResourceManager.Hci
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HciClusterResource.ResourceType)
+            if (id.ResourceType != HciClusterPublisherResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterPublisherResource.ResourceType), nameof(id));
             }
         }
 
@@ -92,7 +88,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _publisherName, offerName, expand, context);
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, offerName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciClusterOfferData> response = Response.FromValue(HciClusterOfferData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,7 +138,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _publisherName, offerName, expand, context);
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, offerName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciClusterOfferData> response = Response.FromValue(HciClusterOfferData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,8 +184,8 @@ namespace Azure.ResourceManager.Hci
                 _offersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
+                Id.Parent.Name,
                 Id.Name,
-                _publisherName,
                 expand,
                 context,
                 "HciClusterOfferCollection.GetAll"), data => new HciClusterOfferResource(Client, data));
@@ -225,8 +221,8 @@ namespace Azure.ResourceManager.Hci
                 _offersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
+                Id.Parent.Name,
                 Id.Name,
-                _publisherName,
                 expand,
                 context,
                 "HciClusterOfferCollection.GetAll"), data => new HciClusterOfferResource(Client, data));
@@ -266,7 +262,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _publisherName, offerName, expand, context);
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, offerName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciClusterOfferData> response = default;
@@ -324,7 +320,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _publisherName, offerName, expand, context);
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, offerName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciClusterOfferData> response = default;
@@ -382,7 +378,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _publisherName, offerName, expand, context);
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, offerName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciClusterOfferData> response = default;
@@ -444,7 +440,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _publisherName, offerName, expand, context);
+                HttpMessage message = _offersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, offerName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciClusterOfferData> response = default;
