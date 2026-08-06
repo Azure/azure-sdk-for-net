@@ -19,7 +19,6 @@
 ### Other Changes
 
 - Removed the following preview-only types that were added in `1.2.0-beta.1` and never shipped in a stable release: `SmartEndOfTurnDetection` (end-of-utterance detection with `ThresholdLevel` and `TimeoutMs`); RTC call support (`ClientEventRtcCallSdpCreate`, `ServerEventRtcCallSdpCreated`, `ServerEventRtcCallError`, `RtcCallErrorDetails`); and output audio buffer lifecycle events (`ServerEventOutputAudioBufferStarted`, `ServerEventOutputAudioBufferStopped`).
-- Updated samples to use `McpApprovalKind`.
 
 ## 1.2.0-beta.1 (2026-06-09)
 
