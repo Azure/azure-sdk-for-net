@@ -332,14 +332,13 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             string accountName = "accountname";
-            string containerName = GetNewContainerName();
-            string blobName = GetNewBlobName();
+            string containerName = "container";
+            string blobName = "blob";
             Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/{containerName}/{blobName}");
 
             var settings = new BlobClientSettings
             {
                 Url = uri,
-                Options = GetOptions(),
                 Credential = new CredentialSettings(null)
                 {
                     TokenProvider = new MockCredential()
