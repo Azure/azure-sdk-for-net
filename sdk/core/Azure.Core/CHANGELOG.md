@@ -1,12 +1,20 @@
 # Release History
 
-## 1.61.0-beta.1 (Unreleased)
+## 1.62.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.61.0 (2026-07-30)
 
 ### Features Added
 
 - Added `AzureAuthorityHosts.AzureBleuCloud` (`https://login.sovcloud-identity.fr/`), the Microsoft Entra authority host for Bleu Cloud, the national partner cloud for France. Interactive credentials' `Authenticate` methods now also resolve the default Azure Resource Manager scope for Bleu Cloud.
-
-### Breaking Changes
 
 ### Bugs Fixed
 

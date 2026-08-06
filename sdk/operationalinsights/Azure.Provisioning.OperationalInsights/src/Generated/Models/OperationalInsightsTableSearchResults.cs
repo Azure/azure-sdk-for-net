@@ -129,8 +129,8 @@ namespace Azure.Provisioning.OperationalInsights
             _query = DefineProperty<string>(nameof(Query), new string[] { "query" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _limit = DefineProperty<int>(nameof(Limit), new string[] { "limit" });
-            _startSearchOn = DefineProperty<DateTimeOffset>(nameof(StartSearchOn), new string[] { "startSearchTime" });
-            _endSearchOn = DefineProperty<DateTimeOffset>(nameof(EndSearchOn), new string[] { "endSearchTime" });
+            _startSearchOn = DefineProperty<DateTimeOffset>(nameof(StartSearchOn), new string[] { "startSearchTime" }, format: "O");
+            _endSearchOn = DefineProperty<DateTimeOffset>(nameof(EndSearchOn), new string[] { "endSearchTime" }, format: "O");
             _sourceTable = DefineProperty<string>(nameof(SourceTable), new string[] { "sourceTable" }, isOutput: true);
             _azureAsyncOperationId = DefineProperty<Guid>(nameof(AzureAsyncOperationId), new string[] { "azureAsyncOperationId" }, isOutput: true);
             DefineAdditionalProperties();

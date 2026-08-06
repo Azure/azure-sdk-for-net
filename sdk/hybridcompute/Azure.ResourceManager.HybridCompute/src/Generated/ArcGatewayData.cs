@@ -105,5 +105,19 @@ namespace Azure.ResourceManager.HybridCompute
                 return Properties.AllowedFeatures;
             }
         }
+
+        /// <summary> Specifies the list of domain names that should bypass the gateway. Each entry must be a valid DNS hostname. </summary>
+        [WirePath("properties.gatewayBypass")]
+        public IList<string> GatewayBypass
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GatewayProperties();
+                }
+                return Properties.GatewayBypass;
+            }
+        }
     }
 }

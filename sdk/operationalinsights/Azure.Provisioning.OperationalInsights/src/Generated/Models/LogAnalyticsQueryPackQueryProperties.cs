@@ -166,8 +166,8 @@ namespace Azure.Provisioning.OperationalInsights
             base.DefineProvisionableProperties();
             _applicationId = DefineProperty<Guid>(nameof(ApplicationId), new string[] { "id" }, isOutput: true);
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" }, isRequired: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "timeCreated" }, isOutput: true);
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "timeModified" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "timeCreated" }, isOutput: true, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "timeModified" }, isOutput: true, format: "O");
             _author = DefineProperty<string>(nameof(Author), new string[] { "author" }, isOutput: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _body = DefineProperty<string>(nameof(Body), new string[] { "body" }, isRequired: true);

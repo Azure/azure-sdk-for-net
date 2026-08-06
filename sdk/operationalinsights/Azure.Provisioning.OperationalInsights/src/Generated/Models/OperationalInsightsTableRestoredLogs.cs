@@ -83,8 +83,8 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startRestoreOn = DefineProperty<DateTimeOffset>(nameof(StartRestoreOn), new string[] { "startRestoreTime" });
-            _endRestoreOn = DefineProperty<DateTimeOffset>(nameof(EndRestoreOn), new string[] { "endRestoreTime" });
+            _startRestoreOn = DefineProperty<DateTimeOffset>(nameof(StartRestoreOn), new string[] { "startRestoreTime" }, format: "O");
+            _endRestoreOn = DefineProperty<DateTimeOffset>(nameof(EndRestoreOn), new string[] { "endRestoreTime" }, format: "O");
             _sourceTable = DefineProperty<string>(nameof(SourceTable), new string[] { "sourceTable" });
             _azureAsyncOperationId = DefineProperty<Guid>(nameof(AzureAsyncOperationId), new string[] { "azureAsyncOperationId" }, isOutput: true);
             DefineAdditionalProperties();

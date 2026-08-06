@@ -110,8 +110,8 @@ namespace Azure.Provisioning.OperationalInsights
             _isReplicationEnabled = DefineProperty<bool>(nameof(IsReplicationEnabled), new string[] { "enabled" });
             _isAvailabilityZonesEnabled = DefineProperty<bool>(nameof(IsAvailabilityZonesEnabled), new string[] { "isAvailabilityZonesEnabled" });
             _provisioningState = DefineProperty<OperationalInsightsClusterReplicationState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true);
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true, format: "O");
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

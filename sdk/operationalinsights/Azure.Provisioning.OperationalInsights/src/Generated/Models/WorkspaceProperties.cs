@@ -245,8 +245,8 @@ namespace Azure.Provisioning.OperationalInsights
             _sku = DefineModelProperty<OperationalInsightsWorkspaceSku>(nameof(Sku), new string[] { "sku" });
             _retentionInDays = DefineProperty<int>(nameof(RetentionInDays), new string[] { "retentionInDays" });
             _workspaceCapping = DefineModelProperty<OperationalInsightsWorkspaceCapping>(nameof(WorkspaceCapping), new string[] { "workspaceCapping" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true);
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modifiedDate" }, isOutput: true, format: "O");
             _publicNetworkAccessForIngestion = DefineProperty<OperationalInsightsPublicNetworkAccessType>(nameof(PublicNetworkAccessForIngestion), new string[] { "publicNetworkAccessForIngestion" });
             _publicNetworkAccessForQuery = DefineProperty<OperationalInsightsPublicNetworkAccessType>(nameof(PublicNetworkAccessForQuery), new string[] { "publicNetworkAccessForQuery" });
             _forceCmkForQuery = DefineProperty<bool>(nameof(ForceCmkForQuery), new string[] { "forceCmkForQuery" });
