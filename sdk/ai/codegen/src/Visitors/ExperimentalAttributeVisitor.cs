@@ -29,10 +29,17 @@ namespace Extensions.Plugin.Visitors
     {
         private const string DiagnosticId = "AAIP001";
 
+        private const string SerializationSuppressionJustification =
+            "Generated code references experimental members that are part of this library's own preview surface.";
+
         private readonly HashSet<string> _experimentalClasses = new(StringComparer.Ordinal);
         private readonly HashSet<string> _experimentalProperties = new(StringComparer.Ordinal);
 
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
+
+        // Tracks the fully qualified names of model types whose generated serialization code has
+        // already had experimental suppressions applied, to keep the operation idempotent.
+        private readonly HashSet<string> _serializationSuppressedTypes = new(StringComparer.Ordinal);
 
         private bool ImplementsExperimrental(TypeProvider theType)
         {
@@ -207,6 +214,10 @@ namespace Extensions.Plugin.Visitors
                 return base.VisitType(type);
             }
             bool isDirty = false;
+            // Tracks whether the type declares an experimental property or field. When it does, the
+            // generated serialization code (and the full deserialization constructor) reference those
+            // experimental members and must suppress the diagnostic inline.
+            bool hasExperimentalMember = false;
             // Constructors
             List<ConstructorProvider> constructors = [];
             // In a first run we will check if all the constructors are experimental and if it is the case, mark class experimental.
@@ -252,6 +263,7 @@ namespace Extensions.Plugin.Visitors
                         attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
                     );
                     isDirty = true;
+                    hasExperimentalMember = true;
                 }
                 fields.Add(field);
             }
@@ -277,8 +289,18 @@ namespace Extensions.Plugin.Visitors
                         attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
                     );
                     isDirty = true;
+                    hasExperimentalMember = true;
                 }
                 properties.Add(property);
+            }
+            // Even when the type itself is not experimental, its generated serialization code may
+            // reference experimental members (its own experimental properties/fields, or the
+            // experimental subtypes of a discriminated base). Emit inline #pragma warning disable
+            // directives so the generated code compiles without opting the whole type in, while
+            // external consumers still receive the diagnostic when they use the experimental surface.
+            if (type is ModelProvider modelProvider)
+            {
+                ApplyExperimentalSerializationSuppressions(modelProvider, hasExperimentalMember);
             }
             if (isDirty)
             {
@@ -292,6 +314,101 @@ namespace Extensions.Plugin.Visitors
             }
             return base.VisitType(type);
         }
+
+        /// <summary>
+        /// Adds inline <c>#pragma warning disable AAIP001</c> suppressions to generated serialization
+        /// code that references this library's experimental members. This covers the model's
+        /// serialization providers (write/deserialize methods) as well as the full deserialization
+        /// constructor when the model exposes experimental properties or fields. It also handles
+        /// discriminated base models whose deserializer dispatches to experimental subtypes.
+        /// </summary>
+        /// <param name="model">The model provider whose serialization code should be inspected.</param>
+        /// <param name="hasExperimentalMember">Whether the model declares an experimental property or field.</param>
+        private void ApplyExperimentalSerializationSuppressions(ModelProvider model, bool hasExperimentalMember)
+        {
+            string fullyQualifiedName = model.Type.FullyQualifiedName;
+            // A fully experimental type already provides an experimental context for its generated
+            // members, so no inline suppression is required.
+            if (_attributedTypes.Contains(fullyQualifiedName))
+            {
+                return;
+            }
+            bool referencesExperimentalSubtype = HasExperimentalDerivedModel(model);
+            if (!hasExperimentalMember && !referencesExperimentalSubtype)
+            {
+                return;
+            }
+            // Keep the operation idempotent in case the type is visited more than once.
+            if (!_serializationSuppressedTypes.Add(fullyQualifiedName))
+            {
+                return;
+            }
+            foreach (TypeProvider serializationProvider in model.SerializationProviders)
+            {
+                foreach (MethodProvider method in serializationProvider.Methods)
+                {
+                    AddExperimentalSuppression(method);
+                }
+                foreach (ConstructorProvider constructor in serializationProvider.Constructors)
+                {
+                    AddExperimentalSuppression(constructor);
+                }
+            }
+            // The full deserialization constructor lives on the model itself and assigns the
+            // experimental members, so it needs the same inline suppression.
+            if (hasExperimentalMember)
+            {
+                foreach (ConstructorProvider constructor in model.Constructors)
+                {
+                    AddExperimentalSuppression(constructor);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns true if any (transitive) derived model is experimental. The generated deserializer
+        /// of a discriminated base references the derived types directly, so it must suppress the
+        /// diagnostic when those subtypes are experimental.
+        /// </summary>
+        private bool HasExperimentalDerivedModel(ModelProvider model)
+        {
+            foreach (ModelProvider derived in model.DerivedModels)
+            {
+                if (IsExperimental(derived.Type) || HasExperimentalDerivedModel(derived))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static void AddExperimentalSuppression(MethodProvider method)
+        {
+            if (IsAlreadyExperimental(method.Signature.Attributes) || HasExperimentalSuppression(method.Suppressions))
+            {
+                return;
+            }
+            method.Update(suppressions: [.. method.Suppressions, CreateExperimentalSuppression()]);
+        }
+
+        private static void AddExperimentalSuppression(ConstructorProvider constructor)
+        {
+            if (IsAlreadyExperimental(constructor.Signature.Attributes) || HasExperimentalSuppression(constructor.Suppressions))
+            {
+                return;
+            }
+            constructor.Update(suppressions: [.. constructor.Suppressions, CreateExperimentalSuppression()]);
+        }
+
+        private static SuppressionStatement CreateExperimentalSuppression() =>
+            new(inner: null, code: Snippet.Literal(DiagnosticId), justification: SerializationSuppressionJustification);
+
+        private static bool IsAlreadyExperimental(IEnumerable<AttributeStatement> attributes) =>
+            attributes.Any(attribute => attribute.Type.Equals(typeof(ExperimentalAttribute)));
+
+        private static bool HasExperimentalSuppression(IEnumerable<SuppressionStatement> suppressions) =>
+            suppressions.Any(suppression =>
+                suppression.Code is ScopedApi { Original: LiteralExpression { Literal: string code } } && code == DiagnosticId);
 
         protected override MethodProvider VisitMethod(MethodProvider method)
         {
