@@ -39,6 +39,7 @@ engine:
 network:
   allowed:
     - defaults
+    - dev.azure.com
     - dotnet
     - github
 safe-outputs:
@@ -244,7 +245,7 @@ Then check CI status: list the check runs and commit statuses for the PR head co
 
 - If `github.event.inputs.check_run_conclusion` is `failure`, skip the status check — CI failure is already confirmed. Go directly to **CI failure analysis only**:
   1. Apply only `.github/skills/analyze-ci-failures/SKILL.md` to diagnose failures.
-  2. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions.
+  2. Use its provider-specific log retrieval instructions, check-name mapping, and log-symptom tables to classify each failure. For Azure DevOps checks, query the Azure DevOps timeline/log APIs rather than GitHub Actions job logs. Quote the decisive error and include actionable fix instructions; never infer compilation, ApiCompat, or flakiness from the check name alone.
   3. Post the result with the `add_comment` safe-output tool. The comment must use the skill's `## 🔍 CI Failure Analysis for PR #<number>` header.
   4. Emit `publish_pr_check` so workflow-dispatch runs leave a visible check on PR heads.
   5. Stop. Do not run the management SDK review, do not run the low-risk preflight, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
