@@ -22,7 +22,7 @@ The user must provide a **PR number**, **PR URL**, or **pipeline build ID**. If 
 - Fetch PR details, check statuses, changed files, and workflow runs using GitHub MCP tools.
 - Extract **service directory** and **package name** from changed file paths (`sdk/<service>/<package>/`).
 - Identify the CI provider from each failed check URL before fetching logs:
-  - For an Azure DevOps URL (`dev.azure.com`), extract the `buildId`. Use `azure-sdk-mcp-azsdk_analyze_pipeline` when available.
+  - For an Azure DevOps URL (`dev.azure.com`), extract the `buildId`. Use `azure-sdk-mcp:azsdk_analyze_pipeline` when available.
   - If that tool is unavailable, query the public Azure DevOps timeline API with `curl`:
     `https://dev.azure.com/<organization>/<project>/_apis/build/builds/<buildId>/timeline?api-version=7.1`.
     Inspect `issues` on failed task records first. If the issues are insufficient, fetch the failed record's `log.url`.
