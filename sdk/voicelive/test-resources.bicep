@@ -59,6 +59,5 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 // Outputs become environment variables injected into the test run
 output AI_SERVICES_NAME string = aiServices.name
 output AI_SERVICES_ENDPOINT string = aiServices.properties.endpoints['AI Foundry API']
-output AI_SERVICES_KEY string = aiServices.listKeys().key1
 output DEFAULT_PROJECT_NAME string = defaultProjectName
 output AGENT_PROJECT_ENDPOINT string = aiServices::defaultProject.properties.endpoints['AI Foundry API']

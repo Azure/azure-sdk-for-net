@@ -96,9 +96,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task RequireToolCalls()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
 
             var options = new VoiceLiveSessionOptions()
             {
@@ -136,9 +134,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task RequireToolCallByName()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
 
             var options = new VoiceLiveSessionOptions()
             {
@@ -181,9 +177,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task AnimationOutputs()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
 
             var options = new VoiceLiveSessionOptions()
             {
@@ -237,9 +231,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task AnimationOutputs_blend()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
 
             var options = new VoiceLiveSessionOptions()
             {
@@ -287,9 +279,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task MaxTokens()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
 
             var options = new VoiceLiveSessionOptions()
             {
@@ -326,9 +316,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task SpeechRecoOptions()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
 
             var options = new VoiceLiveSessionOptions()
             {
@@ -356,9 +344,7 @@ namespace Azure.AI.VoiceLive.Tests
         [TestCase]
         public async Task MultipleModalities()
         {
-            var vlc = string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true)) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var vlc = new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
 
             var options = new VoiceLiveSessionOptions()
             {

@@ -24,12 +24,6 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public string Endpoint => GetVariable("AI_SERVICES_ENDPOINT");
 
         /// <summary>
-        /// API key for authentication (alternative to Azure AD).
-        /// Keep secret and never record.
-        /// </summary>
-        public string ApiKey => GetOptionalVariable("AI_SERVICES_KEY");
-
-        /// <summary>
         /// Model deployment name from Bicep template.
         /// Maps to Bicep parameter: modelName (default: "gpt-4o")
         /// Fallback handles both Bicep and legacy configurations.

@@ -60,18 +60,14 @@ namespace Azure.AI.VoiceLive.Tests
             optionsLocal.Diagnostics.IsLoggingContentEnabled = true;
             optionsLocal.Diagnostics.IsLoggingEnabled = true;
 
-            return string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true), optionsLocal) :
-                new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey), optionsLocal);
+            return new VoiceLiveClient(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true), optionsLocal);
         }
 
         internal TestableVoiceLiveSession GetTestableSession(VoiceLiveClient client)
         {
             var testEndpoint = TestEnvironment.Endpoint.Replace("https:", "wss:").Replace("http:", "ws:");
 
-            return string.IsNullOrEmpty(TestEnvironment.ApiKey) ?
-                new TestableVoiceLiveSession(client, new Uri(testEndpoint), new DefaultAzureCredential(true)) :
-                new TestableVoiceLiveSession(client, new Uri(testEndpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            return new TestableVoiceLiveSession(client, new Uri(testEndpoint), new DefaultAzureCredential(true));
         }
 
         /// <summary>
@@ -94,7 +90,7 @@ namespace Azure.AI.VoiceLive.Tests
             return null!;
 #else
             var of = SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm;
-            var sc = SpeechConfig.FromEndpoint(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var sc = SpeechConfig.FromEndpoint(new Uri(TestEnvironment.Endpoint), new DefaultAzureCredential(true));
             sc.SetSpeechSynthesisOutputFormat(of);
 
             using (var outputStream = AudioOutputStream.CreatePullStream())
