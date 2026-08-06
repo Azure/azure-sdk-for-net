@@ -7,12 +7,6 @@
 - Upgraded API version to `2026-05-05-preview`.
 - Added `SkuMixPlacement` scoring support via `GetComputeSkuMixPlacement`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0 (2026-06-02)
 
 This is the first stable release of this library.
