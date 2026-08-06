@@ -12,42 +12,75 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks.Providers;
 [NonParallelizable]
 public sealed class TaskStoreSelectorTests
 {
-    private string? _saved;
+    private string? _savedHosting;
+    private string? _savedTaskApi;
 
     [SetUp]
-    public void SetUp() => _saved = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+    public void SetUp()
+    {
+        _savedHosting = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        _savedTaskApi = Environment.GetEnvironmentVariable("FOUNDRY_TASK_API_ENABLED");
+    }
 
     [TearDown]
     public void TearDown()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", _saved);
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", _savedHosting);
+        Environment.SetEnvironmentVariable("FOUNDRY_TASK_API_ENABLED", _savedTaskApi);
+        FoundryEnvironment.Reload();
+    }
+
+    private static void SetEnv(string? hosting, string? taskApi)
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", hosting);
+        Environment.SetEnvironmentVariable("FOUNDRY_TASK_API_ENABLED", taskApi);
         FoundryEnvironment.Reload();
     }
 
     [Test]
     public void ReturnsLocalStoreWhenNotHosted()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
-        FoundryEnvironment.Reload();
-        ITaskStore store = TaskStoreSelector.Create();
+        SetEnv(hosting: null, taskApi: "1");
+        ITaskStore store = TaskStoreSelector.Create(() => throw new InvalidOperationException("hosted factory must not run when not hosted"));
         Assert.That(store, Is.InstanceOf<LocalTaskStore>());
     }
 
     [Test]
-    public void ThrowsWhenHostedWithoutFactory()
+    public void ReturnsLocalStoreWhenHostedButTaskApiDisabled()
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
-        FoundryEnvironment.Reload();
-        Assert.Throws<InvalidOperationException>(() => TaskStoreSelector.Create());
+        // Hosted but the Task Storage API opt-in flag is unset: the hosted factory must NOT run;
+        // the SDK falls back to the local file store (the hosted API is not yet GA).
+        SetEnv(hosting: "production", taskApi: null);
+        ITaskStore store = TaskStoreSelector.Create(() => throw new InvalidOperationException("hosted factory must not run when the Task API is disabled"));
+        Assert.That(store, Is.InstanceOf<LocalTaskStore>());
     }
 
-    [Test]
-    public void UsesHostedFactoryWhenHosted()
+    [TestCase("1")]
+    [TestCase("true")]
+    [TestCase("TRUE")]
+    [TestCase("yes")]
+    public void UsesHostedFactoryWhenHostedAndTaskApiEnabled(string flag)
     {
-        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
-        FoundryEnvironment.Reload();
+        SetEnv(hosting: "production", taskApi: flag);
         var sentinel = new LocalTaskStore();
         ITaskStore store = TaskStoreSelector.Create(() => sentinel);
         Assert.That(store, Is.SameAs(sentinel));
+    }
+
+    [Test]
+    public void ThrowsWhenTaskApiEnabledWithoutFactory()
+    {
+        SetEnv(hosting: "production", taskApi: "1");
+        Assert.Throws<InvalidOperationException>(() => TaskStoreSelector.Create());
+    }
+
+    [TestCase("0")]
+    [TestCase("false")]
+    [TestCase("")]
+    public void ReturnsLocalStoreForNonTruthyTaskApiFlag(string flag)
+    {
+        SetEnv(hosting: "production", taskApi: flag);
+        ITaskStore store = TaskStoreSelector.Create(() => throw new InvalidOperationException("hosted factory must not run for a non-truthy flag"));
+        Assert.That(store, Is.InstanceOf<LocalTaskStore>());
     }
 }
