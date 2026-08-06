@@ -12,10 +12,6 @@
 - Added `ExpiresOn` property on `VoiceLiveSessionResponse` (server-set session expiration time).
 - Added the `2026-04-10` and `2026-07-15` GA service versions (`VoiceLiveClientOptions.ServiceVersion.V2026_04_10` and `V2026_07_15`); `V2026_07_15` is now the default.
 
-### Bugs Fixed
-
-- Fixed polymorphic deserialization of `AzureAvatarSyncVoice` and `AzureRealtimeNativeVoice` in session options and responses. These voice payloads now deserialize to their concrete provider types instead of `null`.
-
 ### Other Changes
 
 - Removed the following preview-only types that were added in `1.2.0-beta.1` and never shipped in a stable release: `SmartEndOfTurnDetection` (end-of-utterance detection with `ThresholdLevel` and `TimeoutMs`); RTC call support (`ClientEventRtcCallSdpCreate`, `ServerEventRtcCallSdpCreated`, `ServerEventRtcCallError`, `RtcCallErrorDetails`); and output audio buffer lifecycle events (`ServerEventOutputAudioBufferStarted`, `ServerEventOutputAudioBufferStopped`).
