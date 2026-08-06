@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                     // Batch contains messages but none are active in the peeked batch
                     if (peekedMessages.Count > 0 && activeMessage == null)
                     {
-                        _logger.LogDebug($"{_serviceBusEntityType} {_entityPath} contains multiple messages but none are active in the peeked batch.", );
+                        _logger.LogDebug($"{_serviceBusEntityType} {_entityPath} contains multiple messages but none are active in the peeked batch.");
                     }
                 }
 
