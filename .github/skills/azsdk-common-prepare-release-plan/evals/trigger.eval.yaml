@@ -8,7 +8,7 @@ tags:
   area: azsdk-common-prepare-release-plan
   type: ci-gate
 
-config:
+defaults:
   runs: 1
   timeout: "90s"
   model: claude-opus-4.6
@@ -20,30 +20,48 @@ scoring:
 stimuli:
   - name: trigger-prepare-a-release-plan
     prompt: "prepare a release plan"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-prepare-release-plan"]
   - name: trigger-plan-the-next-sdk-release
     prompt: "plan the next SDK release"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-prepare-release-plan"]
   - name: trigger-create-release-plan-for-my-package
     prompt: "create release plan for my package"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-prepare-release-plan"]
-  - name: trigger-what-goes-in-a-release-plan
-    prompt: "create a release plan for my new Azure SDK service"
+  - name: trigger-link-sdk-pr-to-release-plan
+    prompt: "Link my Python SDK PR https://github.com/Azure/azure-sdk-for-python/pull/12345 to release plan 67890."
+    environment:
+      skills:
+        - ..
     graders:
-      - type: skill-invocation
+      # The executor can validly invoke this precise MCP operation without
+      # loading the skill, so verify the observable release-plan route.
+      - type: tool-calls
         config:
-          required: ["azsdk-common-prepare-release-plan"]
+          required:
+            - name: azure-sdk-mcp-azsdk_link_sdk_pull_request_to_release_plan
   - name: trigger-help-me-prepare-for-sdk-release
     prompt: "help me prepare a release plan for my new Azure SDK package"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
@@ -51,31 +69,50 @@ stimuli:
 
   - name: anti-trigger-deploy-my-azure-function
     prompt: "deploy my Azure Function"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-fix-my-pipeline-build-error
     prompt: "fix my pipeline build error"
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-pipeline-fixer
     graders:
       - type: skill-invocation
         config:
+          required: ["azsdk-common-pipeline-fixer"]
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-create-a-new-typespec-definition
-    prompt: "create a new TypeSpec definition"
+    prompt: "Author Azure TypeSpec by adding an optional color property to the WidgetSuite model in main.tsp."
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-configure-azure-logging
     prompt: "configure Azure logging"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-resolve-apiview-feedback
     prompt: "resolve APIView feedback"
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-apiview-feedback-resolution
     graders:
       - type: skill-invocation
         config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
           disallowed: ["azsdk-common-prepare-release-plan"]

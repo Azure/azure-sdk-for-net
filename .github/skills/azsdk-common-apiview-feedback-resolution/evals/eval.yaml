@@ -8,7 +8,7 @@ tags:
   area: azsdk-common-apiview-feedback-resolution
   type: ci-gate
 
-config:
+defaults:
   runs: 1
   timeout: "90s"
   model: claude-opus-4.6
@@ -19,30 +19,52 @@ scoring:
 
 stimuli:
   - name: apiview-basic-001
-    prompt: "My Python SDK PR has APIView comments that I need to address. Can you help me retrieve and resolve them?"
+    prompt: "My Python SDK PR has APIView comments at https://spa.apiview.dev/review/mock-python-sdk?activeApiRevisionId=mock-python-revision that I need to address. Can you retrieve and resolve them?"
+    environment:
+      &apiviewSkill # Load the real skill so the executor can route to it and call its tools.
+      skills:
+        - ..
     graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
       - type: tool-calls
         config:
           required:
             - name: azure-sdk-mcp-azsdk_apiview_get_comments
 
   - name: apiview-edge-001
-    prompt: "An APIView reviewer says I need to rename 'ComputeProvisioningState' to 'ProvisioningState' in my SDK. Use the SDK customization tools to apply this rename."
+    prompt: "An APIView reviewer at https://spa.apiview.dev/review/mock-dotnet-sdk?activeApiRevisionId=mock-dotnet-revision says I need to rename 'ComputeProvisioningState' to 'ProvisioningState' in the .NET SDK package sdk/compute/Azure.ResourceManager.Compute (~/repos/azure-sdk-for-net). Retrieve the feedback and use the SDK customization tools to apply this rename."
+    environment: *apiviewSkill
     graders:
       - type: output-not-contains
         config:
           substring: "cannot help"
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
+            - name: azure-sdk-mcp-azsdk_customized_code_update
 
   - name: apiview-no-feedback-001
-    prompt: "Check if there are any APIView comments on my .NET SDK PR that I need to address before release."
+    prompt: "Resolve APIView feedback for my .NET SDK PR. Start by checking https://spa.apiview.dev/review/mock-dotnet-sdk?activeApiRevisionId=mock-no-feedback; if there are no comments, report that clearly."
+    environment: *apiviewSkill
     graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
       - type: output-contains
         config:
           substring: "APIView"
 
   - name: apiview-negative-001
-    prompt: "I need to create a new TypeSpec project for my Azure Storage service."
+    prompt: "Author Azure TypeSpec by adding an optional color property to the WidgetSuite model in main.tsp."
+    environment: *apiviewSkill
     graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-apiview-feedback-resolution"]
       - type: tool-calls
         config:
           disallowed:
@@ -52,15 +74,27 @@ stimuli:
           substring: "APIView"
 
   - name: basic-trigger
-    prompt: "I have APIView comments on my SDK PR that need to be resolved. Can you help?"
+    prompt: "I have APIView comments at https://spa.apiview.dev/review/mock-sdk?activeApiRevisionId=mock-basic-trigger on my SDK PR that need to be resolved. Can you help?"
+    environment: *apiviewSkill
     graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
       - type: output-contains
         config:
           substring: "APIView"
 
   - name: anti-trigger
     prompt: "How do I set up a new Azure Storage account?"
+    environment: *apiviewSkill
     graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-apiview-feedback-resolution"]
       - type: output-not-contains
         config:
           substring: "APIView"
@@ -76,7 +110,15 @@ stimuli:
 
   - name: url-trigger
     prompt: "I have review comments on my SDK PR from this page: https://spa.apiview.dev/review/abc123?activeApiRevisionId=def456 — can you help me resolve them?"
+    environment: *apiviewSkill
     graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
       - type: output-contains
         config:
           substring: "apiview"
