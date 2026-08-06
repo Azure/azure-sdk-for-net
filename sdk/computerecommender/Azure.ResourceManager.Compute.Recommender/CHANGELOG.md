@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2026-08-07)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to `2026-05-05-preview`.
+- Added `SkuMixPlacement` scoring support via `GetComputeSkuMixPlacement`.
 
 ## 1.0.0 (2026-06-02)
 
