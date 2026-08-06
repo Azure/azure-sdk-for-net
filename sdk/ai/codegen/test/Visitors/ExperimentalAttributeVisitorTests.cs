@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Extensions.Plugin.Visitors;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -29,13 +30,11 @@ namespace Test.Extensions.Plugin.Visitors
 
         /// <summary>
         /// A discriminated base whose deserializer dispatches to an experimental derived subtype must
-        /// suppress AAIP001 inline on its generated serialization code.
+        /// suppress AAIP001 inline, at the tightest possible scope, on its generated serialization code.
         /// </summary>
         [Test]
         public void SuppressesExperimentalOnDiscriminatedBaseSerialization()
         {
-            var visitor = new TestExperimentalAttributeVisitor();
-
             var discriminatorProperty = InputFactory.Property("kind", InputPrimitiveType.String, isRequired: true, isDiscriminator: true);
             var derivedModel = InputFactory.Model(
                 "PreviewTool",
@@ -48,41 +47,23 @@ namespace Test.Extensions.Plugin.Visitors
                 derivedModels: [derivedModel],
                 discriminatedModels: new Dictionary<string, InputModelType> { { "preview", derivedModel } });
 
-            MockHelpers.LoadMockGenerator(inputModels: () => [baseModel, derivedModel]);
+            var serializationProvider = VisitAndGetSerialization("ToolBase", baseModel, derivedModel);
 
-            var baseProvider = ScmCodeModelGenerator.Instance.TypeFactory.CreateModel(baseModel);
-            Assert.That(baseProvider, Is.Not.Null);
-
-            // Populate the visitor's experimental registry for all types before visiting.
-            visitor.InvokePreVisitModel(baseModel, baseProvider!);
-            foreach (var derived in baseProvider!.DerivedModels)
-            {
-                visitor.InvokePreVisitModel(derivedModel, derived);
-            }
-
-            visitor.InvokeVisitType(baseProvider);
-
-            var serializationProvider = baseProvider.SerializationProviders.Single();
-            var deserializeMethod = serializationProvider.Methods
-                .First(m => m.Signature.Name.StartsWith("Deserialize", StringComparison.Ordinal));
-            Assert.That(HasExperimentalSuppression(deserializeMethod.Suppressions), Is.True, "The discriminated base deserializer should suppress AAIP001 because it references experimental subtypes.");
-
-            // Validate the full generated serialization file against the expected TestData baseline,
-            // ensuring the inline #pragma warning disable/restore AAIP001 directives are emitted with
-            // the per-type justification.
+            // Validate the entire generated serialization type against the expected TestData baseline,
+            // ensuring the inline #pragma warning disable/restore AAIP001 directives are emitted around
+            // only the statement that dispatches to the experimental subtype.
             var file = new TypeProviderWriter(serializationProvider).Write();
             Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         /// <summary>
-        /// A non-experimental model that exposes an experimental property must suppress AAIP001 inline
-        /// on its generated serialization code and on its own full deserialization constructor.
+        /// A non-experimental model that exposes an experimental property must suppress AAIP001 inline,
+        /// at the tightest possible scope, around only the individual serialization statements that
+        /// reference the experimental member.
         /// </summary>
         [Test]
         public void SuppressesExperimentalOnModelWithExperimentalProperty()
         {
-            var visitor = new TestExperimentalAttributeVisitor();
-
             var experimentalModel = InputFactory.Model(
                 "PreviewOptions",
                 properties: [InputFactory.Property("previewSetting", InputPrimitiveType.String)],
@@ -95,25 +76,9 @@ namespace Test.Extensions.Plugin.Visitors
                     InputFactory.Property("draft", experimentalModel),
                 ]);
 
-            MockHelpers.LoadMockGenerator(inputModels: () => [containerModel, experimentalModel]);
+            var serializationProvider = VisitAndGetSerialization("CreationOptions", containerModel, experimentalModel);
 
-            var experimentalProvider = ScmCodeModelGenerator.Instance.TypeFactory.CreateModel(experimentalModel);
-            var containerProvider = ScmCodeModelGenerator.Instance.TypeFactory.CreateModel(containerModel);
-            Assert.That(containerProvider, Is.Not.Null);
-
-            visitor.InvokePreVisitModel(experimentalModel, experimentalProvider!);
-            visitor.InvokePreVisitModel(containerModel, containerProvider!);
-
-            visitor.InvokeVisitType(containerProvider!);
-
-            var serializationProvider = containerProvider!.SerializationProviders.Single();
-            Assert.That(serializationProvider.Methods.All(m => HasExperimentalSuppression(m.Suppressions)), Is.True, "All serialization methods should suppress AAIP001 when the model has an experimental property.");
-            Assert.That(serializationProvider.Constructors.All(c => HasExperimentalSuppression(c.Suppressions)), Is.True, "All serialization constructors should suppress AAIP001 when the model has an experimental property.");
-            Assert.That(containerProvider.Constructors.Any(c => HasExperimentalSuppression(c.Suppressions)), Is.True, "The model's own full deserialization constructor should suppress AAIP001.");
-
-            // Validate the full generated serialization file against the expected TestData baseline,
-            // ensuring the inline #pragma warning disable/restore AAIP001 directives are emitted with
-            // the per-type justification.
+            // Validate the entire generated serialization type against the expected TestData baseline.
             var file = new TypeProviderWriter(serializationProvider).Write();
             Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -125,34 +90,22 @@ namespace Test.Extensions.Plugin.Visitors
         [Test]
         public void DoesNotSuppressWhenNoExperimentalMembers()
         {
-            var visitor = new TestExperimentalAttributeVisitor();
-
             var model = InputFactory.Model(
                 "PlainOptions",
                 properties: [InputFactory.Property("name", InputPrimitiveType.String, isRequired: true)]);
 
-            MockHelpers.LoadMockGenerator(inputModels: () => [model]);
+            var serializationProvider = VisitAndGetSerialization("PlainOptions", model);
 
-            var provider = ScmCodeModelGenerator.Instance.TypeFactory.CreateModel(model);
-            Assert.That(provider, Is.Not.Null);
-
-            visitor.InvokePreVisitModel(model, provider!);
-            visitor.InvokeVisitType(provider!);
-
-            var serializationProvider = provider!.SerializationProviders.Single();
-            Assert.That(serializationProvider.Methods.Any(m => HasExperimentalSuppression(m.Suppressions)), Is.False, "Serialization methods should not be suppressed when there are no experimental members.");
-            Assert.That(serializationProvider.Constructors.Any(c => HasExperimentalSuppression(c.Suppressions)), Is.False, "Serialization constructors should not be suppressed when there are no experimental members.");
-            Assert.That(provider.Constructors.Any(c => HasExperimentalSuppression(c.Suppressions)), Is.False, "Model constructors should not be suppressed when there are no experimental members.");
+            var file = new TypeProviderWriter(serializationProvider).Write();
+            Assert.That(file.Content, Does.Not.Contain(DiagnosticId), "No AAIP001 suppression should be emitted when there are no experimental members.");
         }
 
         /// <summary>
-        /// Visiting the same model twice must not add duplicate AAIP001 suppressions.
+        /// Visiting the library twice must not add duplicate inline AAIP001 suppressions.
         /// </summary>
         [Test]
         public void DoesNotAddDuplicateSuppressions()
         {
-            var visitor = new TestExperimentalAttributeVisitor();
-
             var experimentalModel = InputFactory.Model(
                 "PreviewOptions",
                 properties: [InputFactory.Property("previewSetting", InputPrimitiveType.String)],
@@ -166,41 +119,82 @@ namespace Test.Extensions.Plugin.Visitors
                 ]);
 
             MockHelpers.LoadMockGenerator(inputModels: () => [containerModel, experimentalModel]);
+            var visitor = new TestExperimentalAttributeVisitor();
+            ScmCodeModelGenerator.Instance.AddVisitor(visitor);
+            _ = ScmCodeModelGenerator.Instance.OutputLibrary.TypeProviders;
 
-            var experimentalProvider = ScmCodeModelGenerator.Instance.TypeFactory.CreateModel(experimentalModel);
-            var containerProvider = ScmCodeModelGenerator.Instance.TypeFactory.CreateModel(containerModel);
+            // Visit twice; suppressions are wrapped as SuppressionStatement nodes which are not
+            // re-traversed, so re-visiting must not emit nested/duplicate directives.
+            visitor.InvokeVisitLibrary(ScmCodeModelGenerator.Instance.OutputLibrary);
+            visitor.InvokeVisitLibrary(ScmCodeModelGenerator.Instance.OutputLibrary);
 
-            visitor.InvokePreVisitModel(experimentalModel, experimentalProvider!);
-            visitor.InvokePreVisitModel(containerModel, containerProvider!);
-
-            visitor.InvokeVisitType(containerProvider!);
-            visitor.InvokeVisitType(containerProvider!);
-
-            var serializationProvider = containerProvider!.SerializationProviders.Single();
+            var serializationProvider = ScmCodeModelGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ModelProvider>().Single(m => m.Type.Name == "CreationOptions").SerializationProviders.Single();
             foreach (var method in serializationProvider.Methods)
             {
-                Assert.That(CountExperimentalSuppressions(method.Suppressions), Is.LessThanOrEqualTo(1), $"Method {method.Signature.Name} should have at most one AAIP001 suppression.");
+                Assert.That(HasNestedExperimentalSuppression(method.BodyStatements!), Is.False,
+                    $"Method {method.Signature.Name} should not contain nested duplicate AAIP001 suppressions.");
             }
         }
 
-        private static bool HasExperimentalSuppression(IEnumerable<SuppressionStatement> suppressions) =>
-            CountExperimentalSuppressions(suppressions) > 0;
+        private static TypeProvider VisitAndGetSerialization(string modelName, params InputModelType[] inputModels)
+        {
+            MockHelpers.LoadMockGenerator(inputModels: () => inputModels);
+            var visitor = new TestExperimentalAttributeVisitor();
+            ScmCodeModelGenerator.Instance.AddVisitor(visitor);
+            // Accessing the output library builds the providers, which triggers the visitor's
+            // PreVisit* hooks so the experimental type/member registries are populated.
+            _ = ScmCodeModelGenerator.Instance.OutputLibrary.TypeProviders;
+            visitor.InvokeVisitLibrary(ScmCodeModelGenerator.Instance.OutputLibrary);
 
-        private static int CountExperimentalSuppressions(IEnumerable<SuppressionStatement> suppressions) =>
-            suppressions.Count(suppression =>
-                suppression.Code is ScopedApi { Original: LiteralExpression { Literal: string code } } && code == DiagnosticId);
+            return ScmCodeModelGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ModelProvider>().Single(m => m.Type.Name == modelName).SerializationProviders.Single();
+        }
+
+        // Returns true if any AAIP001 SuppressionStatement directly wraps another AAIP001
+        // SuppressionStatement, which would indicate a duplicate suppression was emitted.
+        private static bool HasNestedExperimentalSuppression(MethodBodyStatement statement)
+        {
+            switch (statement)
+            {
+                case SuppressionStatement suppression:
+                    if (IsExperimentalSuppression(suppression) && suppression.Inner is not null
+                        && ContainsExperimentalSuppression(suppression.Inner))
+                    {
+                        return true;
+                    }
+                    return suppression.Inner is not null && HasNestedExperimentalSuppression(suppression.Inner);
+                case MethodBodyStatements statements:
+                    return statements.Statements.Any(HasNestedExperimentalSuppression);
+                case IfStatement ifStatement:
+                    return HasNestedExperimentalSuppression(ifStatement.Body);
+                default:
+                    return false;
+            }
+        }
+
+        private static bool ContainsExperimentalSuppression(MethodBodyStatement statement)
+        {
+            switch (statement)
+            {
+                case SuppressionStatement suppression:
+                    return IsExperimentalSuppression(suppression)
+                        || (suppression.Inner is not null && ContainsExperimentalSuppression(suppression.Inner));
+                case MethodBodyStatements statements:
+                    return statements.Statements.Any(ContainsExperimentalSuppression);
+                case IfStatement ifStatement:
+                    return ContainsExperimentalSuppression(ifStatement.Body);
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsExperimentalSuppression(SuppressionStatement suppression) =>
+            suppression.Code is ScopedApi { Original: LiteralExpression { Literal: string code } } && code == DiagnosticId;
 
         private class TestExperimentalAttributeVisitor : ExperimentalAttributeVisitor
         {
-            public ModelProvider InvokePreVisitModel(InputModelType inputType, ModelProvider type)
-            {
-                return base.PreVisitModel(inputType, type);
-            }
-
-            public TypeProvider InvokeVisitType(TypeProvider type)
-            {
-                return base.VisitType(type);
-            }
+            public void InvokeVisitLibrary(OutputLibrary library) => base.VisitLibrary(library);
         }
     }
 }

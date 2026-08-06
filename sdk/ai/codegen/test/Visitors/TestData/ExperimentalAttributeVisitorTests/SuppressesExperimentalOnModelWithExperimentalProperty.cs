@@ -17,15 +17,12 @@ namespace Samples.Models
     public partial class CreationOptions : global::System.ClientModel.Primitives.IJsonModel<global::Samples.Models.CreationOptions>
     {
         /// <summary> Initializes a new instance of <see cref="global::Samples.Models.CreationOptions"/> for deserialization. </summary>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         internal CreationOptions()
         {
         }
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         protected virtual global::Samples.Models.CreationOptions PersistableModelCreateCore(global::System.BinaryData data, global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
         {
             string format = (options.Format == "W") ? ((global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.CreationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -40,10 +37,8 @@ namespace Samples.Models
                     throw new global::System.FormatException($"The model {nameof(global::Samples.Models.CreationOptions)} does not support reading '{options.Format}' format.");
             }
         }
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         protected virtual global::System.BinaryData PersistableModelWriteCore(global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
         {
             string format = (options.Format == "W") ? ((global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.CreationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -55,38 +50,28 @@ namespace Samples.Models
                     throw new global::System.FormatException($"The model {nameof(global::Samples.Models.CreationOptions)} does not support writing '{options.Format}' format.");
             }
         }
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         global::System.BinaryData global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.CreationOptions>.Write(global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         global::Samples.Models.CreationOptions global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.CreationOptions>.Create(global::System.BinaryData data, global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         string global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.CreationOptions>.GetFormatFromOptions(global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => "J";
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         void global::System.ClientModel.Primitives.IJsonModel<global::Samples.Models.CreationOptions>.Write(global::System.Text.Json.Utf8JsonWriter writer, global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         protected virtual void JsonModelWriteCore(global::System.Text.Json.Utf8JsonWriter writer, global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
         {
             string format = (options.Format == "W") ? ((global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.CreationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -96,11 +81,13 @@ namespace Samples.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+#pragma warning disable AAIP001 // `PreviewOptions` is experimental and may change in future versions
             if (global::Samples.Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
                 writer.WriteObjectValue<global::Samples.Models.PreviewOptions>(Draft, options);
             }
+#pragma warning restore AAIP001 // `PreviewOptions` is experimental and may change in future versions
             if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -117,17 +104,13 @@ namespace Samples.Models
                 }
             }
         }
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         global::Samples.Models.CreationOptions global::System.ClientModel.Primitives.IJsonModel<global::Samples.Models.CreationOptions>.Create(ref global::System.Text.Json.Utf8JsonReader reader, global::System.ClientModel.Primitives.ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         protected virtual global::Samples.Models.CreationOptions JsonModelCreateCore(ref global::System.Text.Json.Utf8JsonReader reader, global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
         {
             string format = (options.Format == "W") ? ((global::System.ClientModel.Primitives.IPersistableModel<global::Samples.Models.CreationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,11 +121,9 @@ namespace Samples.Models
             using global::System.Text.Json.JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
             return global::Samples.Models.CreationOptions.DeserializeCreationOptions(document.RootElement, options);
         }
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // `CreationOptions` is experimental and may change in future versions
         internal static global::Samples.Models.CreationOptions DeserializeCreationOptions(global::System.Text.Json.JsonElement element, global::System.ClientModel.Primitives.ModelReaderWriterOptions options)
         {
             if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
@@ -150,7 +131,9 @@ namespace Samples.Models
                 return null;
             }
             string name = default;
+#pragma warning disable AAIP001 // `PreviewOptions` is experimental and may change in future versions
             global::Samples.Models.PreviewOptions draft = default;
+#pragma warning restore AAIP001 // `PreviewOptions` is experimental and may change in future versions
             global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new global::Samples.ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,7 +148,9 @@ namespace Samples.Models
                     {
                         continue;
                     }
+#pragma warning disable AAIP001 // `PreviewOptions` is experimental and may change in future versions
                     draft = global::Samples.Models.PreviewOptions.DeserializePreviewOptions(prop.Value, options);
+#pragma warning restore AAIP001 // `PreviewOptions` is experimental and may change in future versions
                     continue;
                 }
                 if ((options.Format != "W"))
@@ -175,6 +160,5 @@ namespace Samples.Models
             }
             return new global::Samples.Models.CreationOptions(name, draft, additionalBinaryDataProperties);
         }
-#pragma warning restore AAIP001 // `CreationOptions` is experimental and may change in future versions
     }
 }

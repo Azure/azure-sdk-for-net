@@ -28,10 +28,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <!-- TestData files are expected-output baselines, not code to compile. Exclude them from
+         compilation; the tests read them from the source tree via Helpers.GetExpectedFromFile. -->
     <Compile Remove="**\TestData\**\*.cs" />
-    <None Include="**\TestData\**\*.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
