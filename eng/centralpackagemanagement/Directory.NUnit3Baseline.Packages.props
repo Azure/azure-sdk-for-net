@@ -59,7 +59,6 @@
         $(MSBuildProjectName) == 'Azure.Identity.Broker.Tests' or
         $(MSBuildProjectName) == 'Azure.Identity.Tests' or
         $(MSBuildProjectName) == 'Azure.IoT.ModelsRepository.Tests' or
-        $(MSBuildProjectName) == 'Azure.IoT.TimeSeriesInsights.Tests' or
         $(MSBuildProjectName) == 'Azure.Maps.Common.Tests' or
         $(MSBuildProjectName) == 'Azure.Maps.Geolocation.Tests' or
         $(MSBuildProjectName) == 'Azure.Maps.Rendering.Tests' or

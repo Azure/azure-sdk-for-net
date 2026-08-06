@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(HybridComputePrivateLinkScopeResource.ResourceType, out string hybridComputePrivateLinkScopeApiVersion);
             _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputePrivateLinkScopeApiVersion ?? "2025-09-16-preview");
+            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputePrivateLinkScopeApiVersion ?? "2026-07-15");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_privateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupCollectionResultOfT(_privateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupCollectionResultOfT(_privateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;
