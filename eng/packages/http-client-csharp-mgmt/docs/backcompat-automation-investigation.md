@@ -109,17 +109,30 @@ released library and emits compatibility shims where they differ. It relies on t
 - **Fixed (integer-backed) enum members** — preserves explicit/non-contiguous values, re-adds a
   member dropped from the spec at its original value/position, and honors baseline-accepted
   removals.
+- **Extensible enum members** — re-adds an extensible-enum (`readonly partial struct`) member that
+  the last contract shipped but the current spec dropped, restoring it as a public static property
+  backed by its recovered `const` wire value (skipping members already provided by custom code or
+  whose removal is baseline-accepted). *This is newly documented upstream and closes the gap
+  previously tracked in [microsoft/typespec#11417](https://github.com/microsoft/typespec/issues/11417).*
 - **API-version enum** — preserves previously shipped service-version members.
 - **Non-abstract base models** — keeps a base model non-abstract when the last contract shipped
   it that way.
 - **Model constructors** — restores a `public` constructor on an abstract base type when the last
-  contract had one (vs. a newly generated `private protected` ctor).
+  contract had one (vs. a newly generated `private protected` ctor), and additionally (newly
+  documented upstream) restores a previously shipped **public constructor when a required property
+  became optional** and a previously shipped **parameterless constructor when a property became
+  required** (chaining to the current constructor with the dropped/`default` arguments), unless the
+  removal is baseline-accepted.
 - **Parameter naming** — preserves the last contract's parameter name/casing (page-size casing,
   `top`→`maxCount`, and general per-method parameter-name preservation).
 - **Content-Type parameter ordering** — keeps `contentType` before the body parameter when the
   last contract had that ordering.
 - **Client methods** — emits a hidden `[EditorBrowsable(Never)]` overload matching the previous
-  signature when the spec adds a new **optional non-body** parameter.
+  signature when the spec adds a new **optional non-body** parameter, when a value-type parameter's
+  **nullability was removed** (`T?`→`T`; the overload forwards via `.Value` guarded by
+  `Argument.AssertNotNull`), and when a **nullable optional parameter became required** (a
+  reduced-arity overload dropping it and supplying its previous default). The last two are newly
+  documented upstream.
 
 **Why hand-written shims still exist despite this.** The scenarios below were, in many cases,
 authored before this base-generator support landed, or in libraries whose migration did not wire
@@ -339,9 +352,14 @@ established, but recovering a pure name-only rename is not inferable from the cu
 
 **Base generator today:** ⚠️ partial. The base generator already emits a hidden
 `[EditorBrowsable(Never)]` overload when the spec adds a new **optional non-body** parameter, and
-already preserves a renamed **parameter** name from the last contract. The residual gap is a full
-**method-name** rename (e.g. keeping an old method name as a forwarder) and mgmt-specific
-`WaitUntil` arity shims, which the base generator does not synthesize.
+already preserves a renamed **parameter** name from the last contract. Two further client-method
+overload shapes are now documented upstream: a value-type parameter whose **nullability was removed**
+(`T?`→`T`, including extensible enums) gets a hidden overload reproducing the previous nullable
+signature (forwarding via `.Value` guarded by `Argument.AssertNotNull`), and a **nullable optional
+parameter that became required** gets a hidden reduced-arity overload that drops it and supplies its
+previous default. The residual gap is a full **method-name** rename (e.g. keeping an old method name
+as a forwarder) and mgmt-specific `WaitUntil` arity shims, which the base generator does not
+synthesize.
 
 ### 6. Extensible-enum / enum value re-addition — ✅ Automatable
 
@@ -355,18 +373,22 @@ service dropped but that shipped previously.
 - `sdk/batch/Azure.ResourceManager.Batch/src/Custom/Models/BatchAccountCertificateProvisioningState.cs:12`
 
 **Automation approach:** the old contract lists the removed enum members; re-emitting them
-(with the standard extensible-enum boilerplate) is fully mechanical. Tracked upstream in
+(with the standard extensible-enum boilerplate) is fully mechanical. This was tracked upstream in
 [microsoft/typespec#11417](https://github.com/microsoft/typespec/issues/11417) ("Investigate if
-Extensible Enums Members Can Be Restored via Back Compat"), which notes a likely limitation: the
-base generator does not currently pull symbols when loading a library's last-contract DLL, so the
-removed extensible-enum members are not visible to the back-compat pass today. Cross-references the
-provisioning enum work in [#60442](https://github.com/Azure/azure-sdk-for-net/issues/60442).
+Extensible Enums Members Can Be Restored via Back Compat"). Cross-references the provisioning enum
+work in [#60442](https://github.com/Azure/azure-sdk-for-net/issues/60442).
 
-**Base generator today:** ⚠️ partial. The base generator already re-adds dropped members of
-**integer-backed fixed enums** (preserving explicit values and honoring baseline-accepted
-removals). The citations here are **extensible enums** (`readonly partial struct`), which the
-base generator's fixed-enum path does not cover — so re-adding removed extensible-enum values is
-still the residual gap.
+**Base generator today:** ✅ covered. The base generator re-adds dropped members of **both**
+integer-backed fixed enums (preserving explicit values and honoring baseline-accepted removals)
+**and** extensible enums (`readonly partial struct`) — the latter restored as a public static
+property backed by its recovered `const` wire value, appended after the current spec's members, and
+skipped when the member already exists, is provided by custom code, or its removal is
+baseline-accepted. This is newly documented upstream (see
+[Extensible Enum Members](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/generator/docs/backward-compatibility.md#extensible-enum-members))
+and closes the [#11417](https://github.com/microsoft/typespec/issues/11417) gap this scenario
+previously called out. Given a `LastContractView` assembly, re-adding a removed enum value — fixed
+or extensible — should no longer need hand-written code, except for the legacy hand-written
+`[Obsolete]` `enum` alias variant (a type rename, covered by scenario 3).
 
 ### 7. Collection initialization in the parameterless constructor — ✅ Already handled for required collections
 
@@ -386,6 +408,14 @@ emits and initializes the collection inside it. The residual gap is therefore no
 required collection" — that is already done — but "restore a previously shipped public constructor
 on a now output-only model," which is the same last-contract-driven constructor restoration covered
 by scenario 13. The collection initialization within such a restored constructor is mechanical.
+
+**Base generator today:** ⚠️ partial. The base generator now (newly documented upstream) restores a
+previously shipped **parameterless constructor when a property became required** — chaining it to the
+current parameterized constructor with `default` arguments and preserving the previous accessibility.
+That covers the common "parameterless ctor dropped" shape. The specific citation here is a slightly
+different trigger (an *output-only* model whose public parameterless ctor was replaced by an
+`internal` one rather than by a required-property change), so confirming the upstream heuristic fires
+for that exact case — or feeding the generator the `LastContractView` — is the remaining step.
 
 ### 8. Read-only collection / immutable surface preservation — ✅ Automatable
 
@@ -493,9 +523,15 @@ a conversion rule.
 
 **Base generator today:** ⚠️ partial. The base generator already restores a `public` constructor
 on an **abstract base type** when the last contract shipped one (vs. a generated
-`private protected` ctor) — covering the accessibility subset. Constructors that convert between
-type shapes (`WritableSubResource` → `SubResource`, adding a required `AzureLocation`) remain the
-residual gap.
+`private protected` ctor), and now (newly documented upstream) also restores a previously shipped
+**public constructor when a required property became optional** (chaining to the closest current
+public ctor and assigning the now-optional property) and a previously shipped **parameterless
+constructor when a property became required** — both skipped when the removal is accepted in an
+ApiCompat baseline, and both supporting properties renamed via a code-generation customization.
+That covers the accessibility subset and the required↔optional / parameterless↔parameterized
+constructor-shape changes. Constructors that **convert between type shapes**
+(`WritableSubResource` → `SubResource`, adding a required `AzureLocation`) still need a conversion
+rule and remain the residual gap.
 
 ### 14. Wire-name preservation via `[WirePath]` / `[CodeGenSerialization]` name-only — 🟡 Partially
 
@@ -627,7 +663,11 @@ but the new emitter internalized or dropped.
   — eight re-added `readonly partial struct` extensible enums (`AzureFunctionBindingType`, …).
 
 **Automation:** deterministic given the previous contract (the shipped members are known);
-mirrors management scenario 6.
+mirrors management scenario 6. Note the base generator's newly documented extensible-enum support
+re-adds a **member dropped from an enum that still exists**; the citation here re-adds **whole
+extensible-enum types** the emitter internalized or removed, which is a type-level restoration
+(closer to scenario 1) rather than member re-addition, so it is not covered by that member-level
+path.
 
 ### D4. Property-type shims via `[CodeGenSuppress]` + restore — 🟡 Partially (same as scenario 11)
 
@@ -685,14 +725,14 @@ generator-caused.
 | 3 | Renamed-type deprecated alias | subclass + `[Obsolete]` | 🟡 | ❌ not covered |
 | 4 | Renamed property shim | forwarding `[Obsolete]` property | 🟡 | ❌ not covered |
 | 5 | Method rename / overload forwarder | hidden forwarding overload | 🟡 | ⚠️ optional-param + param-rename covered |
-| 6 | Enum / extensible-enum value re-add | static members | ✅ | ⚠️ fixed enums covered; extensible not |
-| 7 | Collection init in ctor | `ChangeTrackingList` init | ✅ already done for required collections | ✅ required collections initialized in generated ctor |
+| 6 | Enum / extensible-enum value re-add | static members | ✅ | ✅ fixed + extensible enums covered |
+| 7 | Collection init in ctor | `ChangeTrackingList` init | ✅ already done for required collections | ✅ required collections initialized; parameterless-ctor restore covered |
 | 8 | Read-only collection surface | `IReadOnly*` facade | ✅ | ✅ covered (property type preservation) |
 | 9 | Suppress shared/common type | `[assembly: CodeGenSuppressType]` | 🟡 | ❌ not covered |
-| 10 | Suppress overload + replacement | `[CodeGenSuppress]` | 🟡 | ⚠️ optional-param overload covered |
+| 10 | Suppress overload + replacement | `[CodeGenSuppress]` | 🟡 | ⚠️ optional-param + nullability overloads covered |
 | 11 | Flatten/unflatten wrapper | custom get/set | 🟡 | ❌ not covered |
 | 12 | Model-factory overload adaptation | `ArmXxxModelFactory` overload | 🟡 | ⚠️ additive/reorder/rename covered; coercion not |
-| 13 | Back-compat constructor | old-signature ctor | 🟡 | ⚠️ abstract-base ctor accessibility covered |
+| 13 | Back-compat constructor | old-signature ctor | 🟡 | ⚠️ accessibility + required↔optional / parameterless ctor covered; type coercion not |
 | 14 | Wire-name preservation | `[WirePath]` / `[CodeGenSerialization]` name | 🟡 | ❌ not covered |
 | 15 | Custom serialization transform | serialization hooks / overrides | ❌ | ❌ not covered |
 | 16 | Incompatible type converters | hand-written converters | ❌ | ❌ not covered |
@@ -703,12 +743,26 @@ generator-caused.
 > already emits from `LastContractView` for **both planes** (see
 > [Back-compat already provided by the base generator](#back-compat-already-provided-by-the-base-generator-both-planes)).
 > The base generator additionally handles `AdditionalProperties` type preservation, API-version
-> enum preservation, non-abstract base models, and content-type/body parameter ordering — none of
-> which surfaced as hand-written custom code in this survey.
+> enum preservation, non-abstract base models, content-type/body parameter ordering, and — newly
+> documented upstream — extensible-enum member re-add, required↔optional / parameterless↔parameterized
+> constructor restoration, and value-type-nullability / nullable-optional-became-required client-method
+> overloads. Most of these did not surface as hand-written custom code in this survey; the ones that
+> did (scenarios 6, 7, 13) are updated above to reflect the new coverage.
+
+**Rescan against the updated upstream doc.** Re-surveying `sdk/**/src/Custom/` for
+`back compat` / `backward-compatible` markers and re-reading the current
+[upstream backward-compatibility.md](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/generator/docs/backward-compatibility.md)
+surfaced **no new *kind* of hand-written scenario** beyond the 17 already cataloged — every custom
+file still maps onto an existing scenario. What changed is **coverage**: several scenarios the base
+generator previously did not handle are now documented as supported, so the reconciliation above
+moves scenario 6 (extensible-enum re-add) from a residual gap to ✅ covered and expands the
+*Base generator today* verdicts for scenarios 5, 7, 10, and 13.
 
 **Valid cases (candidates for generator automation):** the fully deterministic scenarios are 6
-(enum / extensible-enum value re-add) and 8 (read-only collection surface); scenario 7 (required
-collection init) is **already done today** by the generator for models with a public constructor.
+(enum / extensible-enum value re-add) and 8 (read-only collection surface) — **both now produced by
+the base generator today** when a `LastContractView` is supplied; scenario 7 (required collection
+init) is likewise **already done** for models with a public constructor, and the parameterless-ctor
+restoration it depends on is now covered too.
 The remaining early scenarios are only *partially* automatable, because the reviewer feedback made
 clear that emitting boilerplate is the easy part while three things resist full automation:
 
@@ -731,11 +785,12 @@ clear that emitting boilerplate is the easy part while three things resist full 
 These cases share a single enabler: the generator (or an emitter step) consuming the **previous
 public contract** that CI already tracks for breaking-change detection, plus a small set of
 rename/flatten hints. That same "previous contract" is precisely the base generator's
-`LastContractView` input — so scenario 8 (read-only surface) is **already produced today** when the
-last contract is supplied, and scenarios 5, 6, 10, 12, and 13 are **partly** produced already (see
-the *Base generator today* column). The remaining Azure-specific gaps (anchor-matched type renames,
-base restore, deprecated type aliases, obsolete property forwarders, and extensible-enum re-add) are
-the net-new automation opportunities.
+`LastContractView` input — so scenarios 6 (enum / extensible-enum re-add) and 8 (read-only surface)
+are **already produced today** when the last contract is supplied, and scenarios 5, 7, 10, 12, and
+13 are **partly** produced already (see the *Base generator today* column). The remaining
+Azure-specific gaps (anchor-matched type renames, base restore, deprecated type aliases, obsolete
+property forwarders, and non-trivial type-coercion constructors/model-factory overloads) are the
+net-new automation opportunities.
 
 Scenarios 9–14 are partially automatable: the generator can emit the boilerplate, but a
 per-item hint (ownership allowlist, flatten path, or type-conversion rule) is required.
