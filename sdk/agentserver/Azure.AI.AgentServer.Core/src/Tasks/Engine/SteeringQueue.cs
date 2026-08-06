@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// a FIFO of queued inputs, a monotonic <c>next_input_seq</c> advanced only when an oversized
 /// input is promoted to an attachment at append time (never reused), a drain-in-progress flag, and the currently-draining
 /// <c>active_input</c>. The fixed capacity is 9 queued inputs (FR-012); a queue-exceeding
-/// append fails with <see cref="SteeringQueueFullException"/>.
+/// append fails with a <see cref="ResilientTaskException"/> whose <see cref="ResilientTaskException.ErrorCode"/> is <see cref="ResilientTaskErrorCode.QueueFull"/>.
 /// </summary>
 /// <typeparam name="TOutput">The chain output type (shared by every turn).</typeparam>
 internal sealed class SteeringQueue<TOutput>
@@ -78,8 +78,9 @@ internal sealed class SteeringQueue<TOutput>
     }
 
     /// <summary>
-    /// Appends an input to the FIFO. Throws <see cref="SteeringQueueFullException"/> when the
-    /// queue already holds <see cref="MaxDepth"/> inputs.
+    /// Appends an input to the FIFO. Throws a <see cref="ResilientTaskException"/> with
+    /// <see cref="ResilientTaskErrorCode.QueueFull"/> when the queue already holds
+    /// <see cref="MaxDepth"/> inputs.
     /// </summary>
     public QueuedInput<TOutput> Enqueue(QueuedInput<TOutput> input)
     {
@@ -87,7 +88,7 @@ internal sealed class SteeringQueue<TOutput>
         {
             if (_pending.Count >= MaxDepth)
             {
-                throw new SteeringQueueFullException(
+                throw new ResilientTaskException(ResilientTaskErrorCode.QueueFull,
                     $"The steering queue is full ({MaxDepth} queued inputs); back off and retry.");
             }
 

@@ -46,12 +46,12 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 });
 
             TaskRun<string> turn1 = await invoker.StartAsync<string, string>("chat", "hi");
-            string a1 = await turn1;
+            string a1 = await turn1.Completion;
 
             TaskRun<string> turn2 = await invoker.StartAsync<string, string>(
                 "chat", "and again",
                 new RunOptions { TaskId = turn1.TaskId });
-            string a2 = await turn2;
+            string a2 = await turn2.Completion;
 
             await multiTurn.DeleteAsync(turn1.TaskId);
             _ = (a1, a2);
@@ -91,8 +91,8 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             _ = run.TaskId;
             _ = run.InputId;
             _ = run.IsQueued;
-            string r = await run;
-            string r2 = await run.GetResultAsync();
+            string r = await run.Completion;
+            string r2 = await run.Completion;
             await run.RequestCancellationAsync();
             _ = (r, r2);
         }

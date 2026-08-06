@@ -45,7 +45,10 @@ public sealed class ShutdownSignalTests
 
         host.Engine.SignalShutdown();
 
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
         Assert.That(observedShutdownCause, Is.True);
 
         TaskRecord? record = await host.Store.GetAsync("shut-1");
@@ -75,7 +78,10 @@ public sealed class ShutdownSignalTests
 
         host.Engine.SignalShutdown();
 
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         TaskRecord? record = await host.Store.GetAsync("shut-2");
         Assert.That(record!.Status, Is.EqualTo("in_progress"));
@@ -112,7 +118,10 @@ public sealed class ShutdownSignalTests
         // A short grace: the straggler will not checkpoint, so it is force-expired.
         await host.Engine.ShutdownAsync(TimeSpan.FromMilliseconds(200));
 
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         TaskRecord? record = await host.Store.GetAsync("shut-3");
         Assert.That(record!.Status, Is.EqualTo("in_progress"));
@@ -144,6 +153,6 @@ public sealed class ShutdownSignalTests
         Assert.That((string?)record!.Payload[TaskWireKeys.PayloadTurnStartedAt], Is.Not.Null.And.Not.Empty);
 
         gate.SetResult();
-        Assert.That(await handle.GetResultAsync(), Is.EqualTo("done:payload"));
+        Assert.That(await handle.Completion, Is.EqualTo("done:payload"));
     }
 }

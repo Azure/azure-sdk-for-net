@@ -71,12 +71,14 @@ public class TaskContext<TInput>
     public virtual CancellationToken Shutdown => State.Shutdown;
 
     /// <summary>
-    /// Exits the current turn for later recovery: releases the lease without a terminal
-    /// status, leaving the task <c>in_progress</c> so it can be resumed elsewhere. Throws
-    /// <see cref="TaskDeferredException"/> to unwind the handler.
+    /// Exits the current turn for later recovery: flushes metadata, releases the lease without a
+    /// terminal status, and signals the engine to park the task <c>in_progress</c> so it can be
+    /// resumed elsewhere. This does <b>not</b> throw — after calling it the handler should return
+    /// (any returned value is ignored). Only valid while <see cref="Shutdown"/> is signaled;
+    /// calling it otherwise throws <see cref="System.InvalidOperationException"/>.
     /// </summary>
     /// <param name="cancellationToken">A cancellation token.</param>
-    /// <returns>A task that never completes normally; it throws to unwind the handler.</returns>
+    /// <returns>A task that completes once the deferral has been signaled.</returns>
     public virtual Task ExitForRecoveryAsync(CancellationToken cancellationToken = default)
         => State.ExitForRecoveryAsync(cancellationToken);
 }

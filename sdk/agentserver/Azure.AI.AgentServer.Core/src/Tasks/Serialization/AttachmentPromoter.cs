@@ -54,7 +54,7 @@ internal static class AttachmentPromoter
     /// Promotes <paramref name="value"/> into <paramref name="attachments"/> under
     /// <paramref name="attachmentKey"/> when it exceeds <paramref name="thresholdBytes"/>;
     /// otherwise returns the inline value unchanged. Enforces the per-value and
-    /// per-task caps and raises <see cref="InputTooLargeException"/> on violation.
+    /// per-task caps and raises <see cref="System.ArgumentException"/> on violation.
     /// </summary>
     /// <param name="attachments">The task attachments object (created/mutated as needed).</param>
     /// <param name="value">The inline value to promote or keep.</param>
@@ -75,8 +75,9 @@ internal static class AttachmentPromoter
 
         if (size > MaxAttachmentValueBytes)
         {
-            throw new InputTooLargeException(
-                $"The value is {size} bytes, exceeding the per-attachment maximum of {MaxAttachmentValueBytes} bytes.");
+            throw new ArgumentException(
+                $"The value is {size} bytes, exceeding the per-attachment maximum of {MaxAttachmentValueBytes} bytes.",
+                nameof(value));
         }
 
         attachments ??= new JsonObject();
@@ -94,8 +95,9 @@ internal static class AttachmentPromoter
         bool isNewKey = !attachments.ContainsKey(attachmentKey);
         if (isNewKey && existing + 1 > MaxAttachmentsPerTask)
         {
-            throw new InputTooLargeException(
-                $"Promoting '{attachmentKey}' would exceed the per-task attachment limit of {MaxAttachmentsPerTask}.");
+            throw new ArgumentException(
+                $"Promoting '{attachmentKey}' would exceed the per-task attachment limit of {MaxAttachmentsPerTask}.",
+                nameof(value));
         }
 
         string hash = ComputeHash(value);
@@ -123,13 +125,13 @@ internal static class AttachmentPromoter
         var value = attachments?[attachmentRef!.Key];
         if (value is null && (attachments is null || !attachments.ContainsKey(attachmentRef!.Key)))
         {
-            throw new TaskException($"Attachment '{attachmentRef!.Key}' referenced by a payload slot is missing.");
+            throw new InvalidOperationException($"Attachment '{attachmentRef!.Key}' referenced by a payload slot is missing.");
         }
 
         string actual = ComputeHash(value);
         if (!string.Equals(actual, attachmentRef!.Hash, StringComparison.Ordinal))
         {
-            throw new TaskException(
+            throw new InvalidOperationException(
                 $"Attachment '{attachmentRef.Key}' failed hash validation (store-side corruption).");
         }
 

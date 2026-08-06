@@ -49,8 +49,16 @@ internal sealed class TaskContextState<TInput>
 
     public CancellationToken Shutdown { get; set; }
 
+    /// <summary>
+    /// Set by <see cref="ExitForRecoveryAsync"/> to signal that the handler has voluntarily
+    /// yielded for recovery. The engine reads this after the handler returns and reconciles the
+    /// deferral (parks the task <c>in_progress</c>) instead of treating the return value as a
+    /// result. This is a post-return control signal, not an exception.
+    /// </summary>
+    public bool DeferredForRecovery { get; set; }
+
     public Func<CancellationToken, Task> ExitForRecovery { get; set; } =
-        _ => throw new TaskDeferredException("Task exited for recovery.");
+        _ => throw new InvalidOperationException("ExitForRecovery is not available on this context.");
 
     public Task ExitForRecoveryAsync(CancellationToken cancellationToken) => ExitForRecovery(cancellationToken);
 }

@@ -48,7 +48,7 @@ public sealed class DrainReentryTimeoutTests
         Assert.That(run2.IsQueued, Is.True);
 
         firstGate.SetResult();
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("first:in1"));
+        Assert.That(await run1.Completion, Is.EqualTo("first:in1"));
 
         // Wait until the steered turn has been driven (last_input_id advances to i2).
         DateTimeOffset stamp2 = await WaitForSteeredTurnStampAsync(host, "i2", TimeSpan.FromSeconds(5));
@@ -58,7 +58,7 @@ public sealed class DrainReentryTimeoutTests
         Assert.That(stamp2, Is.GreaterThan(stamp1));
 
         steeredGate.SetResult();
-        Assert.That(await run2.GetResultAsync(), Is.EqualTo("steered:in2"));
+        Assert.That(await run2.Completion, Is.EqualTo("steered:in2"));
     }
 
     private static async Task<DateTimeOffset> WaitForSteeredTurnStampAsync(

@@ -42,8 +42,8 @@ public sealed class SteeringQueueTests
 
         gate.SetResult();
 
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("F:in1"));
-        Assert.That(await run2.GetResultAsync(), Is.EqualTo("S:in2"));
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
+        Assert.That(await run2.Completion, Is.EqualTo("S:in2"));
     }
 
     [Test]
@@ -64,11 +64,11 @@ public sealed class SteeringQueueTests
             "chat", "in1", new RunOptions { TaskId = "t1", InputId = "i1" });
         await host.WaitForStatusAsync("t1", "in_progress", TimeSpan.FromSeconds(5));
 
-        Assert.ThrowsAsync<TaskConflictException>(async () =>
+        Assert.ThrowsAsync<ResilientTaskException>(async () =>
             await host.Invoker.StartAsync<string, string>(
                 "chat", "in2", new RunOptions { TaskId = "t1", InputId = "i2" }));
 
         gate.SetResult();
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("F:in1"));
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
     }
 }

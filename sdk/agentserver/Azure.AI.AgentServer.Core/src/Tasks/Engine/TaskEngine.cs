@@ -62,6 +62,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     internal string Owner => _owner;
 
+    internal bool IsActive(string taskId) => _activeRuns.ContainsKey(taskId);
+
     internal string InstanceId => _lease.InstanceId;
 
     internal LeaseManager Lease => _lease;
@@ -74,7 +76,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     {
         TaskRun<TOutput> handle = await StartAsync<TInput, TOutput>(name, input, options, cancellationToken)
             .ConfigureAwait(false);
-        return await handle.GetResultAsync(cancellationToken).ConfigureAwait(false);
+        return await handle.Completion.WaitAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc/>
@@ -135,14 +137,16 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     .ConfigureAwait(false);
             }
 
-            throw new TaskConflictException(TaskRunStatus.InProgress,
-                $"Task '{taskId}' already has a turn in progress.");
+            throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                $"Task '{taskId}' already has a turn in progress.")
+            { CurrentStatus = TaskRunStatus.InProgress };
         }
 
         if (!multiTurn && _terminatedOneShot.ContainsKey(taskId))
         {
-            throw new TaskConflictException(TaskRunStatus.Completed,
-                $"Task '{taskId}' has already completed.");
+            throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                $"Task '{taskId}' has already completed.")
+            { CurrentStatus = TaskRunStatus.Completed };
         }
 
         return multiTurn
@@ -222,11 +226,12 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         {
             // The record already exists: converge or conflict.
             TaskRecord? current = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false)
-                ?? throw new TaskConflictException(TaskRunStatus.Completed, $"Task '{taskId}' is gone.");
+                ?? throw new ResilientTaskException(ResilientTaskErrorCode.Conflict, $"Task '{taskId}' is gone.") { CurrentStatus = TaskRunStatus.Completed };
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
-                throw new TaskConflictException(TaskRunStatus.Completed,
-                    $"Task '{taskId}' has already completed.");
+                throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                    $"Task '{taskId}' has already completed.")
+                { CurrentStatus = TaskRunStatus.Completed };
             }
 
             // Not terminal: reclaim and re-invoke as a recovered run.
@@ -346,14 +351,15 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 string? actual = (string?)current.Payload[TaskWireKeys.PayloadLastInputId];
                 if (!string.Equals(actual, expected, StringComparison.Ordinal))
                 {
-                    throw new LastInputIdPreconditionFailedException(actual);
+                    throw new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = actual };
                 }
             }
 
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
-                throw new TaskConflictException(TaskRunStatus.Completed,
-                    $"Task '{taskId}' has already completed.");
+                throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                    $"Task '{taskId}' has already completed.")
+                { CurrentStatus = TaskRunStatus.Completed };
             }
 
             if (current.Status == TaskWireKeys.StatusInProgress)
@@ -369,8 +375,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     || string.Equals(leaseOwner, _owner, StringComparison.Ordinal);
                 if (!reclaimableByUs)
                 {
-                    throw new TaskConflictException(TaskRunStatus.InProgress,
-                        $"Task '{taskId}' already has a turn in progress.");
+                    throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
+                        $"Task '{taskId}' already has a turn in progress.")
+                    { CurrentStatus = TaskRunStatus.InProgress };
                 }
 
                 // Dead lease owned by us: recover the in-flight turn rather than starting a new
@@ -556,11 +563,11 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 WriteIntent.SteeringAppend,
                 CancellationToken.None).ConfigureAwait(false);
 
-            runState.SetException(new TaskCancelledException(
+            runState.SetException(new OperationCanceledException(
                 $"Task '{taskId}' input '{inputId}' was cancelled before the queued input was promoted."));
         };
 
-        // Capacity is enforced here (throws SteeringQueueFullException before any persist).
+        // Capacity is enforced here (throws ResilientTaskException/QueueFull before any persist).
         run.Steering.Enqueue(queued);
 
         try
@@ -696,10 +703,12 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
                 if (outcome.Kind == TurnOutcomeKind.Deferred)
                 {
-                    // Exit-for-recovery: lease already released, record stays in_progress.
+                    // Exit-for-recovery: lease already released, record stays in_progress. Deferral is
+                    // an internal lifecycle handoff — the run handle's Completion is intentionally left
+                    // pending (never faulted) so the durable run can resume in a future process. A
+                    // caller that does not want to wait can bail via Completion.WaitAsync(token).
                     _activeRuns.TryRemove(taskId, out _);
                     _serializer.Remove(taskId);
-                    currentRun.SetException(new TaskDeferredException($"Task '{taskId}' deferred for recovery."));
                     return;
                 }
 
@@ -711,7 +720,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                         // does not re-invoke a cancelled handler.
                         await TryDeleteAsync(taskId).ConfigureAwait(false);
                         FinishTurn(taskId, multiTurn);
-                        currentRun.SetException(new TaskCancelledException($"Task '{taskId}' was cancelled."));
+                        currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
                         return;
                     }
 
@@ -724,7 +733,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
                     if (cancelDrained is { } cancelPromotion)
                     {
-                        currentRun.SetException(new TaskCancelledException($"Task '{taskId}' was cancelled."));
+                        currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
 
                         var nextCts = new CancellationTokenSource();
                         currentRun = cancelPromotion.Input.RunState;
@@ -753,7 +762,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     }
 
                     FinishTurn(taskId, multiTurn);
-                    currentRun.SetException(new TaskCancelledException($"Task '{taskId}' was cancelled."));
+                    currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
                     return;
                 }
 
@@ -773,12 +782,16 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                         {
                             _logger.HandlerFailure(taskId, 0, completionEx.GetType().Name);
                             FinishTurn(taskId, multiTurn);
-                            currentRun.SetException(new TaskFailedException(
-                                new TaskFailureDetail(
+                            currentRun.SetException(new ResilientTaskException(
+                                ResilientTaskErrorCode.HandlerError,
+                                $"Task '{taskId}' completed its handler but the durable completion write failed.",
+                                completionEx)
+                            {
+                                Failure = new TaskFailureDetail(
                                     TaskFailureKind.HandlerError,
                                     completionEx.GetType().Name,
                                     $"Task '{taskId}' completed its handler but the durable completion write failed."),
-                                completionEx));
+                            });
                             return;
                         }
                     }
@@ -839,12 +852,16 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                     // durably suspended.
                     _logger.HandlerFailure(taskId, 0, suspendEx.GetType().Name);
                     FinishTurn(taskId, multiTurn);
-                    currentRun.SetException(new TaskFailedException(
-                        new TaskFailureDetail(
+                    currentRun.SetException(new ResilientTaskException(
+                        ResilientTaskErrorCode.HandlerError,
+                        $"Task '{taskId}' finished its turn but the durable suspend write failed.",
+                        suspendEx)
+                    {
+                        Failure = new TaskFailureDetail(
                             TaskFailureKind.HandlerError,
                             suspendEx.GetType().Name,
                             $"Task '{taskId}' finished its turn but the durable suspend write failed."),
-                        suspendEx));
+                    });
                     return;
                 }
 
@@ -887,25 +904,27 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             PendingInputCount = activeRun.SteeringCount,
             Cancellation = handlerCts.Token,
             Shutdown = _shutdownCts.Token,
-            ExitForRecovery = async ct =>
+        };
+        ctxState.ExitForRecovery = async ct =>
+        {
+            if (!_shutdownCts.IsCancellationRequested)
             {
-                if (!_shutdownCts.IsCancellationRequested)
-                {
-                    // Misuse-as-failed: exit-for-recovery is only valid during graceful shutdown.
-                    // Calling it otherwise is a handler bug — surface it loudly as a failure so it
-                    // shows up in operator logs rather than silently deferring (mirrors Python's
-                    // RuntimeError that ends the task in `failed`).
-                    throw new InvalidOperationException(
-                        "ExitForRecovery may only be called when ctx.Shutdown is signaled.");
-                }
+                // Misuse-as-failed: exit-for-recovery is only valid during graceful shutdown.
+                // Calling it otherwise is a handler bug — surface it loudly as a failure so it
+                // shows up in operator logs rather than silently deferring (mirrors Python's
+                // RuntimeError that ends the task in `failed`).
+                throw new InvalidOperationException(
+                    "ExitForRecovery may only be called when ctx.Shutdown is signaled.");
+            }
 
-                // Graceful shutdown: flush metadata, force-expire the lease (duration 0, status
-                // stays in_progress), and defer for recovery. Queued steering inputs remain in the
-                // persisted state; the next process re-enters the handler with EntryMode.Recovered.
-                await runState.Metadata.FlushAllAsync(ct).ConfigureAwait(false);
-                await _lease.ReleaseAsync(taskId, _owner, ct).ConfigureAwait(false);
-                throw new TaskDeferredException($"Task '{taskId}' exited for recovery.");
-            },
+            // Graceful shutdown: flush metadata, force-expire the lease (duration 0, status
+            // stays in_progress), and mark the turn for recovery. Queued steering inputs remain
+            // in the persisted state; the next process re-enters the handler with
+            // EntryMode.Recovered. This sets a post-return signal (no throw) that the engine
+            // reconciles once the handler returns — deferral is a lifecycle handoff, not a fault.
+            await runState.Metadata.FlushAllAsync(ct).ConfigureAwait(false);
+            await _lease.ReleaseAsync(taskId, _owner, ct).ConfigureAwait(false);
+            ctxState.DeferredForRecovery = true;
         };
 
         // Publish causes (C-CAN-2) so a handler waking on the cancelled token always observes
@@ -960,11 +979,14 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 {
                     TOutput result = await handler(
                         new TaskContext<TInput>(ctxState), handlerCts.Token).ConfigureAwait(false);
+                    if (ctxState.DeferredForRecovery)
+                    {
+                        // The handler voluntarily yielded for recovery (ExitForRecovery set a
+                        // post-return signal). Reconcile it as a deferral, ignoring any returned value.
+                        return new TurnOutcome<TOutput> { Kind = TurnOutcomeKind.Deferred };
+                    }
+
                     return new TurnOutcome<TOutput> { Kind = TurnOutcomeKind.Completed, Result = result };
-                }
-                catch (TaskDeferredException)
-                {
-                    return new TurnOutcome<TOutput> { Kind = TurnOutcomeKind.Deferred };
                 }
                 catch (OperationCanceledException) when (handlerCts.IsCancellationRequested && leaseLost.Value)
                 {
@@ -1097,7 +1119,11 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
         else
         {
-            runState.SetException(new TaskFailedException(outcome.Detail!, outcome.Error));
+            TaskFailureDetail detail = outcome.Detail!;
+            ResilientTaskErrorCode code = detail.Kind == TaskFailureKind.ExhaustedRetries
+                ? ResilientTaskErrorCode.ExhaustedRetries
+                : ResilientTaskErrorCode.HandlerError;
+            runState.SetException(new ResilientTaskException(code, detail.Message, outcome.Error) { Failure = detail });
         }
     }
 
@@ -2248,7 +2274,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             while (Steering.Promote() is { } promoted)
             {
                 promoted.RunState.SetException(
-                    new TaskCancelledException($"Task '{TaskId}' was cancelled before the queued input was promoted."));
+                    new OperationCanceledException($"Task '{TaskId}' was cancelled before the queued input was promoted."));
                 Steering.CompleteDrain();
             }
         }

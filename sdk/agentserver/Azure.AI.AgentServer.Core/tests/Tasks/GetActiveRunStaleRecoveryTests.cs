@@ -30,7 +30,10 @@ public sealed class GetActiveRunStaleRecoveryTests
         host1.SignalShutdown();
         TaskRun<string> run1 = await host1.Invoker.StartAsync<string, string>(
             "job", "payload", new RunOptions { TaskId = "j1" });
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await run1);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(run1.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(run1.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
         Assert.That((await host1.Store.GetAsync("j1"))!.Status, Is.EqualTo("in_progress"));
 
         // New lifetime: no in-memory run. GetActiveRun must consult the store, inline-reclaim the
@@ -41,7 +44,7 @@ public sealed class GetActiveRunStaleRecoveryTests
 
         TaskRun<string>? active = await host2.Invoker.GetActiveRunAsync<string>("job", "j1");
         Assert.That(active, Is.Not.Null);
-        Assert.That(await active!.GetResultAsync(), Is.EqualTo("done:payload"));
+        Assert.That(await active!.Completion, Is.EqualTo("done:payload"));
     }
 
     [Test]

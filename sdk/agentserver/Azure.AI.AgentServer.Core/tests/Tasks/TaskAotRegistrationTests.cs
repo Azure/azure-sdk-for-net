@@ -47,7 +47,10 @@ public sealed class TaskAotRegistrationTests
         TaskRun<string> handle = await host1.Invoker.StartAsync<AotInput, string>(
             "aot", new AotInput("hello", 42), new RunOptions { TaskId = "aot-1" });
 
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         // Restart with the same source-gen registration and recover: the recovered handler must see
         // the input deserialized from the store via the JsonTypeInfo.

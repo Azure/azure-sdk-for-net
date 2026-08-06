@@ -23,10 +23,10 @@ public sealed class LastInputIdPreconditionTests
         // "turn already in progress" conflict path instead of the store-level precondition check.
         TaskRun<string> turn1 = await host.Invoker.StartAsync<string, string>(
             "seq", "a", new RunOptions { TaskId = "s-1", InputId = "in-1" });
-        await turn1;
+        await turn1.Completion;
 
         // Turn 2 with a stale precondition is rejected.
-        var ex = Assert.ThrowsAsync<LastInputIdPreconditionFailedException>(async () =>
+        var ex = Assert.ThrowsAsync<ResilientTaskException>(async () =>
             await host.Invoker.StartAsync<string, string>(
                 "seq", "b", new RunOptions { TaskId = "s-1", InputId = "in-2", IfLastInputId = "wrong" }));
         Assert.That(ex!.ActualLastInputId, Is.EqualTo("in-1"));
@@ -40,11 +40,11 @@ public sealed class LastInputIdPreconditionTests
 
         TaskRun<string> turn1 = await host.Invoker.StartAsync<string, string>(
             "seq2", "a", new RunOptions { TaskId = "s-2", InputId = "in-1" });
-        await turn1;
+        await turn1.Completion;
 
         TaskRun<string> t2 = await host.Invoker.StartAsync<string, string>(
             "seq2", "b", new RunOptions { TaskId = "s-2", InputId = "in-2", IfLastInputId = "in-1" });
-        Assert.That(await t2, Is.EqualTo("b"));
+        Assert.That(await t2.Completion, Is.EqualTo("b"));
     }
 
     [Test]

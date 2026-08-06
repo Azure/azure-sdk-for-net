@@ -36,7 +36,10 @@ public sealed class MultiTurnHotReclaimTests
         host1.SignalShutdown();
         TaskRun<string> run1 = await host1.Invoker.StartAsync<string, string>(
             "chat", "hello", new RunOptions { TaskId = "t1", InputId = "i1" });
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await run1);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(run1.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(run1.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
         TaskRecord? mid = await host1.Store.GetAsync("t1");
         Assert.That(mid, Is.Not.Null);
         Assert.That(mid!.Status, Is.EqualTo("in_progress"));
@@ -56,7 +59,7 @@ public sealed class MultiTurnHotReclaimTests
 
         TaskRun<string> run2 = await host2.Invoker.StartAsync<string, string>(
             "chat", "ignored", new RunOptions { TaskId = "t1", InputId = "i2" });
-        string result = await run2.GetResultAsync();
+        string result = await run2.Completion;
 
         Assert.That(observed, Is.EqualTo(EntryMode.Recovered));
         // Recovery re-invokes the persisted in-flight turn (input "hello"/id "i1"), not the
@@ -97,7 +100,7 @@ public sealed class MultiTurnHotReclaimTests
             },
         });
 
-        Assert.ThrowsAsync<TaskConflictException>(async () =>
+        Assert.ThrowsAsync<ResilientTaskException>(async () =>
             await host.Invoker.StartAsync<string, string>(
                 "chat", "x", new RunOptions { TaskId = "t2", InputId = "i9" }));
     }

@@ -38,8 +38,8 @@ public sealed class OneShotRunTests
 
         Assert.That(handle.TaskId, Is.Not.Null.And.Not.Empty);
         Assert.That(handle.InputId, Is.Not.Null.And.Not.Empty);
-        int viaAwait = await handle;
-        int viaGet = await handle.GetResultAsync();
+        int viaAwait = await handle.Completion;
+        int viaGet = await handle.Completion;
         Assert.That(viaAwait, Is.EqualTo(42));
         Assert.That(viaGet, Is.EqualTo(42));
     }
@@ -60,7 +60,7 @@ public sealed class OneShotRunTests
 
         // Spec §33 one-shot 1:1 invariant: input_id defaults to task_id (no random id).
         Assert.That(handle.InputId, Is.EqualTo("one-shot-id"));
-        await handle;
+        await handle.Completion;
         Assert.That(observedInputId, Is.EqualTo("one-shot-id"));
     }
 
@@ -73,6 +73,6 @@ public sealed class OneShotRunTests
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>("id-gen", "x");
 
         Assert.That(handle.InputId, Is.EqualTo(handle.TaskId));
-        await handle;
+        await handle.Completion;
     }
 }

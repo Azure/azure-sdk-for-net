@@ -38,7 +38,10 @@ public sealed class OneShotRecoveryTests
             "resumable", "payload", new RunOptions { TaskId = "rec-1" });
 
         // The Fresh attempt defers; the handle faults with TaskDeferred and the record stays in_progress.
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
         var midRecord = await host1.Store.GetAsync("rec-1");
         Assert.That(midRecord, Is.Not.Null);
         Assert.That(midRecord!.Status, Is.EqualTo("in_progress"));
@@ -120,7 +123,10 @@ public sealed class OneShotRecoveryTests
         host1.SignalShutdown();
         TaskRun<string> handle = await host1.Invoker.StartAsync<string, string>(
             "rc", "x", new RunOptions { TaskId = "rc-1" });
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await handle);
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(handle.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(handle.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         // A fresh run reports recovery count 0.
         var registry2 = new TaskRegistry();

@@ -189,7 +189,7 @@ public class ResilientMultiturnHandler : InvocationHandler
             new RunOptions { TaskId = taskId },
             cancellationToken);
 
-        ConversationOutput result = await run.GetResultAsync(cancellationToken);
+        ConversationOutput result = await run.Completion.WaitAsync(cancellationToken);
 
         await response.WriteAsJsonAsync(new
         {

@@ -43,7 +43,7 @@ public sealed class SchemaVersionAndSourceTests
 
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
             "chat", "hi", new RunOptions { TaskId = "sv-2", InputId = "turn-1" });
-        await handle;
+        await handle.Completion;
 
         // The multi-turn chain parks at suspended, so its record survives for inspection.
         TaskRecord record = await host.WaitForStatusAsync("sv-2", "suspended", TimeSpan.FromSeconds(5));
@@ -167,7 +167,7 @@ public sealed class SchemaVersionAndSourceTests
 
         TaskRun<string> handle = await host.Invoker.StartAsync<string, string>(
             "chat", "hi", new RunOptions { TaskId = "meta-seed-mt", InputId = "turn-1" });
-        await handle;
+        await handle.Completion;
 
         TaskRecord record = await host.WaitForStatusAsync("meta-seed-mt", "suspended", TimeSpan.FromSeconds(5));
         Assert.That(record.Payload[TaskWireKeys.PayloadMetadata], Is.InstanceOf<JsonObject>());

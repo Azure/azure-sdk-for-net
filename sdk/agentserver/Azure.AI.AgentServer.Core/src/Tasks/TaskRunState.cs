@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.AgentServer.Core.Tasks;
@@ -47,26 +46,6 @@ internal sealed class TaskRunState<TOutput>
     public void SetResult(TOutput result) => _completion.TrySetResult(result);
 
     public void SetException(Exception exception) => _completion.TrySetException(exception);
-
-    public async Task<TOutput> GetResultAsync(CancellationToken cancellationToken)
-    {
-        if (!cancellationToken.CanBeCanceled)
-        {
-            return await _completion.Task.ConfigureAwait(false);
-        }
-
-        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-        using (cancellationToken.Register(static s => ((TaskCompletionSource<bool>)s!).TrySetResult(true), tcs))
-        {
-            Task completed = await Task.WhenAny(_completion.Task, tcs.Task).ConfigureAwait(false);
-            if (completed == tcs.Task)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-            }
-        }
-
-        return await _completion.Task.ConfigureAwait(false);
-    }
 
     public Task RequestCancellationAsync() => Cancel();
 

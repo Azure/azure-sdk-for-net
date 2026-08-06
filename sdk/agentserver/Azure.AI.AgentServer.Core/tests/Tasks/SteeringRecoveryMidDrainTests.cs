@@ -52,8 +52,11 @@ public sealed class SteeringRecoveryMidDrainTests
 
         // Releasing the first turn triggers the drain → steered turn → exit-for-recovery.
         firstTurnGate.SetResult();
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("first:in1"));
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await run2.GetResultAsync());
+        Assert.That(await run1.Completion, Is.EqualTo("first:in1"));
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(run2.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(run2.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         // The record is left in_progress with the drain markers persisted.
         TaskRecord? mid = await host1.Store.GetAsync("t1");
@@ -129,8 +132,11 @@ public sealed class SteeringRecoveryMidDrainTests
         // Releasing the first turn promotes in2 as a steered turn, which exits for recovery,
         // leaving in3 stranded in pending_inputs.
         firstTurnGate.SetResult();
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("first:in1"));
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await run2.GetResultAsync());
+        Assert.That(await run1.Completion, Is.EqualTo("first:in1"));
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(run2.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(run2.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         // The record is left in_progress: active_input=in2 (mid-drain), pending_inputs=[in3].
         TaskRecord? mid = await host1.Store.GetAsync("t1");
@@ -213,8 +219,11 @@ public sealed class SteeringRecoveryMidDrainTests
         Assert.That(run3.IsQueued, Is.True);
 
         firstTurnGate.SetResult();
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("first:in1"));
-        Assert.ThrowsAsync<TaskDeferredException>(async () => await run2.GetResultAsync());
+        Assert.That(await run1.Completion, Is.EqualTo("first:in1"));
+        // Recovery deferral is an internal lifecycle handoff: it never surfaces on the run handle.
+        // Wait for the engine to release the run, then confirm Completion stays pending.
+        await host1.WaitUntilInactiveAsync(run2.TaskId, TimeSpan.FromSeconds(5));
+        Assert.That(run2.Completion.IsCompleted, Is.False, "deferral must not complete the run handle");
 
         // Recover in a fresh process. Record (Input, InputId) for each recovered turn.
         var registry2 = new TaskRegistry();

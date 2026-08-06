@@ -42,7 +42,7 @@ public sealed class OneShotCancellationTests
         await started.Task;
         await handle.RequestCancellationAsync();
 
-        Assert.ThrowsAsync<TaskCancelledException>(async () => await handle);
+        Assert.ThrowsAsync<OperationCanceledException>(async () => await handle.Completion);
         Assert.That(sawCause, Is.True, "handler must observe CancelRequested on cancellation");
     }
 }

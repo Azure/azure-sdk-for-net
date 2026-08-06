@@ -200,7 +200,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     new RunOptions { TaskId = taskId },
                     cancellationToken);
 
-                ConversationOutput result = await run.GetResultAsync(cancellationToken);
+                ConversationOutput result = await run.Completion.WaitAsync(cancellationToken);
 
                 await response.WriteAsJsonAsync(new
                 {

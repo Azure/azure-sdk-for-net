@@ -52,8 +52,8 @@ public sealed class SteeringPromotionTests
         Assert.That(pending, Is.GreaterThan(0), "pending-input count must be set before the cancel signal");
         Assert.That(cancelRequested, Is.False, "a steering nudge is not a caller cancel cause");
 
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("F:in1"));
-        Assert.That(await run2.GetResultAsync(), Is.EqualTo("S:in2"));
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
+        Assert.That(await run2.Completion, Is.EqualTo("S:in2"));
     }
 
     [Test]
@@ -71,7 +71,7 @@ public sealed class SteeringPromotionTests
 
         TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
             "chat", "in1", new RunOptions { TaskId = "t-nosteer", InputId = "i1" });
-        Assert.That(await run.GetResultAsync(), Is.EqualTo("F:in1"));
+        Assert.That(await run.Completion, Is.EqualTo("F:in1"));
 
         TaskRecord record = await host.WaitForStatusAsync("t-nosteer", "suspended", TimeSpan.FromSeconds(5));
         Assert.That(record.Payload[TaskWireKeys.PayloadSteering], Is.Null,
@@ -110,9 +110,9 @@ public sealed class SteeringPromotionTests
 
         gate.SetResult();
 
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("F:in1"));
-        Assert.That(await run2.GetResultAsync(), Is.EqualTo("S:in2"));
-        Assert.That(await run3.GetResultAsync(), Is.EqualTo("S:in3"));
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
+        Assert.That(await run2.Completion, Is.EqualTo("S:in2"));
+        Assert.That(await run3.Completion, Is.EqualTo("S:in3"));
 
         // The chain parks at suspended. Small steering inputs stay inline in pending_inputs and do
         // NOT burn an attachment seq, so next_input_seq stays 0 (Python parity: next_input_seq only
@@ -179,9 +179,9 @@ public sealed class SteeringPromotionTests
 
         gate.SetResult();
 
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo("in1".Length));
-        Assert.That(await run2.GetResultAsync(), Is.EqualTo(big2.Length), "drained turn sees full raw value");
-        Assert.That(await run3.GetResultAsync(), Is.EqualTo(big3.Length));
+        Assert.That(await run1.Completion, Is.EqualTo("in1".Length));
+        Assert.That(await run2.Completion, Is.EqualTo(big2.Length), "drained turn sees full raw value");
+        Assert.That(await run3.Completion, Is.EqualTo(big3.Length));
 
         // Two attachment promotions → next_input_seq == 2; consumed attachments deleted at drain.
         TaskRecord record = await host.WaitForStatusAsync("t1", "suspended", TimeSpan.FromSeconds(5));
@@ -231,8 +231,8 @@ public sealed class SteeringPromotionTests
 
         gate.SetResult();
 
-        Assert.That(await run1.GetResultAsync(), Is.EqualTo(1), "first turn sees turn_count = 1");
-        Assert.That(await run2.GetResultAsync(), Is.EqualTo(2),
+        Assert.That(await run1.Completion, Is.EqualTo(1), "first turn sees turn_count = 1");
+        Assert.That(await run2.Completion, Is.EqualTo(2),
             "steered turn must read the persisted turn_count from the drained turn");
     }
 }
