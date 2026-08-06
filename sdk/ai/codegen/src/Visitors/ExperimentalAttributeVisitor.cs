@@ -365,7 +365,7 @@ namespace Extensions.Plugin.Visitors
         /// </summary>
         private bool TryGetExperimentalMembers(MethodProvider method, out Dictionary<string, string> members)
         {
-            members = _emptyMembers;
+            members = null;
             if (method.EnclosingType is not MrwSerializationTypeDefinition serialization)
             {
                 return false;
@@ -378,12 +378,11 @@ namespace Extensions.Plugin.Visitors
             {
                 return false;
             }
-            _experimentalMembersByModel.TryGetValue(modelType.FullyQualifiedName, out Dictionary<string, string> modelMembers);
-            members = modelMembers ?? _emptyMembers;
+            // members may remain null when the model has no experimental members of its own; callers
+            // still need to check for experimental type references (e.g. discriminated base deserializers).
+            _experimentalMembersByModel.TryGetValue(modelType.FullyQualifiedName, out members);
             return true;
         }
-
-        private static readonly Dictionary<string, string> _emptyMembers = new(StringComparer.Ordinal);
 
         /// <summary>
         /// Returns true if the supplied rendered statement text references an experimental type (by its
@@ -423,18 +422,33 @@ namespace Extensions.Plugin.Visitors
 
         private static bool ReferencesExperimentalMember(string text, Dictionary<string, string> members, out string experimentalType)
         {
-            foreach (KeyValuePair<string, string> member in members)
+            if (members != null)
             {
-                // Match the member name as a whole identifier so that, for example, "Draft" does not
-                // match "DraftCount" and "Name" does not match "WritePropertyName".
-                if (Regex.IsMatch(text, $@"(?<![A-Za-z0-9_]){Regex.Escape(member.Key)}(?![A-Za-z0-9_])"))
+                foreach (KeyValuePair<string, string> member in members)
                 {
-                    experimentalType = member.Value;
-                    return true;
+                    // Match the member name as a whole identifier so that, for example, "Draft" does not
+                    // match "DraftCount" and "Name" does not match "WritePropertyName".
+                    if (GetMemberRegex(member.Key).IsMatch(text))
+                    {
+                        experimentalType = member.Value;
+                        return true;
+                    }
                 }
             }
             experimentalType = null;
             return false;
+        }
+
+        private static readonly Dictionary<string, Regex> _memberRegexCache = new(StringComparer.Ordinal);
+
+        private static Regex GetMemberRegex(string member)
+        {
+            if (!_memberRegexCache.TryGetValue(member, out Regex regex))
+            {
+                regex = new Regex($@"(?<![A-Za-z0-9_]){Regex.Escape(member)}(?![A-Za-z0-9_])", RegexOptions.CultureInvariant);
+                _memberRegexCache[member] = regex;
+            }
+            return regex;
         }
 
         private static string SimpleName(string fullyQualifiedName)
