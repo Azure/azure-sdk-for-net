@@ -14,7 +14,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
-    /// Extension methods to add <see cref="BlobServiceClient"/> client to clients builder.
+    /// Extension methods for registering a <see cref="BlobServiceClient"/> with an Azure client builder.
     /// </summary>
     public static partial class BlobClientBuilderExtensions
     {

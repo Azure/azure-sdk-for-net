@@ -339,7 +339,7 @@ namespace Azure.Storage.Blobs
             // until we are done with the initial response.
             using IEnumerator<HttpRange> remainingRanges = ranges.GetEnumerator();
             // -1 makes space for the initial response handles separately
-            while (bufferedTasks.Count < parallel-1 && remainingRanges.MoveNext())
+            while (bufferedTasks.Count < parallel - 1 && remainingRanges.MoveNext())
             {
                 bufferedTasks.Enqueue(DownloadAndBufferAsync(
                     remainingRanges.Current, conditionsWithEtag, cancellationToken));

@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the LoadBalancerResource type. </summary>
+    /// <summary> Provides compatibility members for the <see cref="LoadBalancerResource"/> type. </summary>
     public partial class LoadBalancerResource
     {
         /// <summary> Invokes the Get compatibility operation. </summary>

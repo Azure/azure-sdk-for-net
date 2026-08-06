@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute
 {
     public static partial class ComputeExtensions
     {
-        /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
+        /// <summary> Lists all virtual machines in the specified subscription. Use the nextLink property in the response to get the next page. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
         {

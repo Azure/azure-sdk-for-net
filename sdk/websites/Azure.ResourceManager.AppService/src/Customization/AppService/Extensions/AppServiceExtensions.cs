@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService
     public static partial class AppServiceExtensions
     {
         /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
+        /// Lists all apps that are assigned to a hostname.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
