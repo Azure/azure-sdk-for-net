@@ -21,6 +21,8 @@ network:
     - github
     - dotnet
     - "*.in.applicationinsights.azure.com"
+    - "learn.microsoft.com"
+    - "feedback.azure.com"
 
 safe-outputs:
   add-comment:
