@@ -110,22 +110,6 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
     }
   }
 
-  # The dependency calculation below is a full-repo MSBuild restore+evaluation (~3.5 min in CI)
-  # whose sole purpose is to produce indirect (IncludedForValidation = true) packages.
-  #
-  # Some matrix-generation passes only ever consume direct packages: they delete every indirect
-  # package immediately after discovery (see the ForceDirect step in pr-matrix-presteps.yml), and
-  # downstream set-artifact-packages.ps1 removes any package that is not in the batch's
-  # ProjectNames. For those passes the result is computed and then thrown away, so skip it.
-  #
-  # This is opt-in via environment variable so the default (and every pass that genuinely needs
-  # dependents, such as generate_target_service_test_matrix) keeps the full behavior.
-  if ($env:AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION -eq 'true') {
-    Write-Host "AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION is set; skipping the cross-package dependency calculation."
-    Write-Host "Only directly changed packages will be validated in this pass."
-    return $additionalValidationPackages
-  }
-
   # Use all directly changed packages for dependency calculation. This ensures that
   # when any package changes, all cross-service packages that depend on it are included
   # as indirect packages for validation testing.
