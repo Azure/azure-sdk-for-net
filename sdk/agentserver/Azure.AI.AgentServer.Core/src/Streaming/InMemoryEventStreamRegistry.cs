@@ -10,32 +10,32 @@ using Azure.AI.AgentServer.Core.Streaming.Backings;
 namespace Azure.AI.AgentServer.Core.Streaming;
 
 /// <summary>
-/// The process-level in-memory <see cref="EventStreamRegistry"/>. Maps ids to backing
+/// The process-level in-memory <see cref="AgentEventStreamRegistry"/>. Maps ids to backing
 /// instances and wires each stream's close-clock self-destruct back to the
 /// registry. Mirrors Python's module-global <c>streams</c> registry, but as an
 /// injectable singleton.
 /// </summary>
-internal sealed class InMemoryEventStreamRegistry : EventStreamRegistry
+internal sealed class InMemoryEventStreamRegistry : AgentEventStreamRegistry
 {
     private readonly object _gate = new();
-    private readonly Dictionary<string, EventStream> _streams = new(StringComparer.Ordinal);
-    private readonly EventStreamOptions _options;
+    private readonly Dictionary<string, AgentEventStream> _streams = new(StringComparer.Ordinal);
+    private readonly AgentEventStreamOptions _options;
 
-    public InMemoryEventStreamRegistry(EventStreamOptions options) => _options = options;
+    public InMemoryEventStreamRegistry(AgentEventStreamOptions options) => _options = options;
 
-    public override ValueTask<EventStream> GetAsync(string id, CancellationToken cancellationToken = default)
+    public override ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(id))
         {
             throw new ArgumentException("Stream id must be non-empty.", nameof(id));
         }
 
-        EventStream? stream;
+        AgentEventStream? stream;
         lock (_gate)
         {
             if (!_streams.TryGetValue(id, out stream))
             {
-                throw new EventStreamNotFoundException($"Stream '{id}' is not a live stream.");
+                throw new AgentEventStreamNotFoundException($"Stream '{id}' is not a live stream.");
             }
         }
 
@@ -44,13 +44,13 @@ internal sealed class InMemoryEventStreamRegistry : EventStreamRegistry
         // here so a plain lookup observes it as gone, even without an emit/subscribe.
         if (stream is IDestroyableStream destroyable && destroyable.TryAutoDestroyIfElapsed())
         {
-            throw new EventStreamNotFoundException($"Stream '{id}' is not a live stream.");
+            throw new AgentEventStreamNotFoundException($"Stream '{id}' is not a live stream.");
         }
 
-        return new ValueTask<EventStream>(stream);
+        return new ValueTask<AgentEventStream>(stream);
     }
 
-    public override ValueTask<EventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default)
+    public override ValueTask<AgentEventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(id))
         {
@@ -59,15 +59,15 @@ internal sealed class InMemoryEventStreamRegistry : EventStreamRegistry
 
         lock (_gate)
         {
-            if (_streams.TryGetValue(id, out EventStream? existing))
+            if (_streams.TryGetValue(id, out AgentEventStream? existing))
             {
-                return new ValueTask<EventStream>(existing);
+                return new ValueTask<AgentEventStream>(existing);
             }
 
-            EventStream created = null!;
+            AgentEventStream created = null!;
             created = _options.CreateStream(id, () => SelfDestruct(id, created));
             _streams[id] = created;
-            return new ValueTask<EventStream>(created);
+            return new ValueTask<AgentEventStream>(created);
         }
     }
 
@@ -78,7 +78,7 @@ internal sealed class InMemoryEventStreamRegistry : EventStreamRegistry
             throw new ArgumentException("Stream id must be non-empty.", nameof(id));
         }
 
-        EventStream? stream;
+        AgentEventStream? stream;
         lock (_gate)
         {
             if (_streams.TryGetValue(id, out stream))
@@ -101,18 +101,18 @@ internal sealed class InMemoryEventStreamRegistry : EventStreamRegistry
     // itself to Destroyed and freed its resources. A later GetOrCreateAsync(id)
     // recreates a fresh stream for the same id. The identity guard ensures a stale
     // self-destruct from a previous instance never evicts a newer same-id stream.
-    private void SelfDestruct(string id, EventStream self)
+    private void SelfDestruct(string id, AgentEventStream self)
     {
         lock (_gate)
         {
-            if (_streams.TryGetValue(id, out EventStream? current) && ReferenceEquals(current, self))
+            if (_streams.TryGetValue(id, out AgentEventStream? current) && ReferenceEquals(current, self))
             {
                 _streams.Remove(id);
             }
         }
     }
 
-    private static void DestroyStream(EventStream? stream)
+    private static void DestroyStream(AgentEventStream? stream)
     {
         if (stream is IDestroyableStream destroyable)
         {

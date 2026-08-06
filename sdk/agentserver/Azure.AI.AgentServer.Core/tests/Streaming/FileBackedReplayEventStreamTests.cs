@@ -37,11 +37,37 @@ public sealed class FileBackedReplayEventStreamTests
         }
     }
 
-    private EventStreamRegistry NewRegistry()
+    private AgentEventStreamRegistry NewRegistry()
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseFileBackedReplay(storageDirectory: _dir, ttl: TimeSpan.FromHours(1));
         return new InMemoryEventStreamRegistry(options);
+    }
+
+    [Test]
+    public async Task ReconnectionIntervalSurvivesRestart()
+    {
+        // The SSE `retry` field (SseItem.ReconnectionInterval) must be persisted and rehydrated
+        // alongside data/event/id so a reconnecting client still receives the reconnection hint
+        // after a process restart.
+        AgentEventStreamRegistry registry1 = NewRegistry();
+        AgentEventStream stream1 = await registry1.GetOrCreateAsync("retry");
+        await stream1.EmitAsync(new SseItem<string>("data")
+        {
+            EventId = "1",
+            ReconnectionInterval = TimeSpan.FromSeconds(7),
+        });
+        ((IDisposable)stream1).Dispose();
+
+        AgentEventStreamRegistry registry2 = NewRegistry();
+        AgentEventStream stream2 = await registry2.GetOrCreateAsync("retry");
+        await foreach (SseItem<string> item in stream2.Subscribe())
+        {
+            Assert.That(item.ReconnectionInterval, Is.EqualTo(TimeSpan.FromSeconds(7)));
+            break;
+        }
+
+        ((IDisposable)stream2).Dispose();
     }
 
     [Test]
@@ -50,8 +76,8 @@ public sealed class FileBackedReplayEventStreamTests
         // An id containing path-traversal characters must never write outside _dir. The backing
         // hash-encodes such ids to a safe stem, so the file lands in _dir and no parent-escaping
         // path is created.
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("../evil/id");
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("../evil/id");
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         Assert.That(File.Exists(Path.Combine(_dir, "../evil/id.jsonl")), Is.False,
@@ -67,8 +93,8 @@ public sealed class FileBackedReplayEventStreamTests
     {
         // Python's hexdigest() emits lowercase hex; the .NET stem must match byte-for-byte so a
         // file written by one language is found by the other.
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("unsafe/id");
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("unsafe/id");
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         string[] jsonl = Directory.GetFiles(_dir, "*.jsonl");
@@ -87,8 +113,8 @@ public sealed class FileBackedReplayEventStreamTests
         // An id that already looks exactly like the reserved "h_<64 lowercase hex>" stem must NOT be
         // used verbatim (it could alias the hash-encoding of a different, unsafe id); it is rehashed.
         string reserved = "h_" + new string('a', 64);
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync(reserved);
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync(reserved);
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         Assert.That(File.Exists(Path.Combine(_dir, reserved + ".jsonl")), Is.False,
@@ -107,11 +133,11 @@ public sealed class FileBackedReplayEventStreamTests
     {
         // Mirroring Python's synchronous `subscribe`, a NotFound for a destroyed stream must surface
         // at the call site — not be deferred until the caller starts enumerating the iterator.
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("gone-1");
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("gone-1");
         await registry.DeleteAsync("gone-1");
 
-        Assert.Throws<EventStreamNotFoundException>(() => stream.Subscribe());
+        Assert.Throws<AgentEventStreamNotFoundException>(() => stream.Subscribe());
     }
 
     [Test]
@@ -119,8 +145,8 @@ public sealed class FileBackedReplayEventStreamTests
     {
         // emit(close: true) must persist the event line immediately followed by the terminal
         // sentinel as one durable unit (a crash can never leave the event without its terminal).
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("atomic-1");
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("atomic-1");
         await stream.EmitAsync(new SseItem<string>("7") { EventId = "7" }, close: true);
 
         // Release the exclusive writer handle before inspecting the file: the stream holds a single
@@ -137,8 +163,8 @@ public sealed class FileBackedReplayEventStreamTests
     [Test]
     public async Task PersistsJsonlWithTerminalSentinel()
     {
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("turn-1");
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("turn-1");
         await stream.EmitAsync(new SseItem<string>("0") { EventId = "0" });
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" }, close: true);
 
@@ -154,8 +180,8 @@ public sealed class FileBackedReplayEventStreamTests
     [Test]
     public async Task CrashMidStreamRehydratesAndResumesFromNextCursor()
     {
-        EventStreamRegistry registry1 = NewRegistry();
-        EventStream stream1 = await registry1.GetOrCreateAsync("turn-2");
+        AgentEventStreamRegistry registry1 = NewRegistry();
+        AgentEventStream stream1 = await registry1.GetOrCreateAsync("turn-2");
         await stream1.EmitAsync(new SseItem<string>("0") { EventId = "0" });
         await stream1.EmitAsync(new SseItem<string>("1") { EventId = "1" });
         await stream1.EmitAsync(new SseItem<string>("2") { EventId = "2" });
@@ -163,8 +189,8 @@ public sealed class FileBackedReplayEventStreamTests
         // Simulate a crash: release the writer lock without deleting the log.
         ((IDisposable)stream1).Dispose();
 
-        EventStreamRegistry registry2 = NewRegistry();
-        EventStream stream2 = await registry2.GetOrCreateAsync("turn-2");
+        AgentEventStreamRegistry registry2 = NewRegistry();
+        AgentEventStream stream2 = await registry2.GetOrCreateAsync("turn-2");
 
         Assert.That(await stream2.GetLastEventIdAsync(), Is.EqualTo("2"));
 
@@ -179,8 +205,8 @@ public sealed class FileBackedReplayEventStreamTests
         // C-STR-FBR-4: delete() MUST clean up the file before the registry tombstones the id.
         // A same-id GetOrCreateAsync after delete must therefore start empty rather than
         // rehydrate the deleted stream's events from a lingering .jsonl file.
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("turn-del");
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("turn-del");
         await stream.EmitAsync(new SseItem<string>("0") { EventId = "0" });
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
@@ -190,21 +216,21 @@ public sealed class FileBackedReplayEventStreamTests
         await registry.DeleteAsync("turn-del");
         Assert.That(File.Exists(path), Is.False, "delete() must remove the backing file (cleanup-before-tombstone).");
 
-        EventStream recreated = await registry.GetOrCreateAsync("turn-del");
+        AgentEventStream recreated = await registry.GetOrCreateAsync("turn-del");
         Assert.That(await recreated.GetLastEventIdAsync(), Is.Null, "recreated stream must not rehydrate deleted events.");
     }
 
     [Test]
     public async Task RehydratedHistoryIsReplayedToLateSubscriber()
     {
-        EventStreamRegistry registry1 = NewRegistry();
-        EventStream stream1 = await registry1.GetOrCreateAsync("turn-3");
+        AgentEventStreamRegistry registry1 = NewRegistry();
+        AgentEventStream stream1 = await registry1.GetOrCreateAsync("turn-3");
         await stream1.EmitAsync(new SseItem<string>("10") { EventId = "10" });
         await stream1.EmitAsync(new SseItem<string>("11") { EventId = "11" });
         ((IDisposable)stream1).Dispose();
 
-        EventStreamRegistry registry2 = NewRegistry();
-        EventStream stream2 = await registry2.GetOrCreateAsync("turn-3");
+        AgentEventStreamRegistry registry2 = NewRegistry();
+        AgentEventStream stream2 = await registry2.GetOrCreateAsync("turn-3");
 
         var items = new List<string>();
         await stream2.EmitAsync(new SseItem<string>("12") { EventId = "12" }, close: true);
@@ -223,8 +249,8 @@ public sealed class FileBackedReplayEventStreamTests
             Path.Combine(_dir, "bad.jsonl"),
             "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\nnot-json-garbage\n{\"emit_time\": 2.0, \"data\": \"1\", \"event\": \"message\", \"id\": \"1\"}\n");
 
-        EventStreamRegistry registry = NewRegistry();
-        Assert.ThrowsAsync<EventStreamException>(async () => await registry.GetOrCreateAsync("bad"));
+        AgentEventStreamRegistry registry = NewRegistry();
+        Assert.ThrowsAsync<AgentEventStreamException>(async () => await registry.GetOrCreateAsync("bad"));
     }
 
     [Test]
@@ -233,13 +259,13 @@ public sealed class FileBackedReplayEventStreamTests
         string path = Path.Combine(_dir, "bad-lock.jsonl");
         File.WriteAllText(path, "not-json-garbage\n");
 
-        EventStreamRegistry registry1 = NewRegistry();
-        Assert.ThrowsAsync<EventStreamException>(async () => await registry1.GetOrCreateAsync("bad-lock"));
+        AgentEventStreamRegistry registry1 = NewRegistry();
+        Assert.ThrowsAsync<AgentEventStreamException>(async () => await registry1.GetOrCreateAsync("bad-lock"));
 
         File.WriteAllText(path, "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\n");
 
-        EventStreamRegistry registry2 = NewRegistry();
-        EventStream stream = await registry2.GetOrCreateAsync("bad-lock");
+        AgentEventStreamRegistry registry2 = NewRegistry();
+        AgentEventStream stream = await registry2.GetOrCreateAsync("bad-lock");
 
         Assert.That(await stream.GetLastEventIdAsync(), Is.EqualTo("0"));
     }
@@ -252,8 +278,8 @@ public sealed class FileBackedReplayEventStreamTests
             Path.Combine(_dir, "partial.jsonl"),
             "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\n{\"emit_time\": 2.0, \"dat");
 
-        EventStreamRegistry registry = NewRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("partial");
+        AgentEventStreamRegistry registry = NewRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("partial");
 
         Assert.That(await stream.GetLastEventIdAsync(), Is.EqualTo("0"));
     }
@@ -261,11 +287,11 @@ public sealed class FileBackedReplayEventStreamTests
     [Test]
     public async Task SingleWriterPerIdIsEnforced()
     {
-        EventStreamRegistry registry1 = NewRegistry();
+        AgentEventStreamRegistry registry1 = NewRegistry();
         await registry1.GetOrCreateAsync("turn-4");
 
-        EventStreamRegistry registry2 = NewRegistry();
-        Assert.ThrowsAsync<EventStreamException>(async () => await registry2.GetOrCreateAsync("turn-4"));
+        AgentEventStreamRegistry registry2 = NewRegistry();
+        Assert.ThrowsAsync<AgentEventStreamException>(async () => await registry2.GetOrCreateAsync("turn-4"));
     }
 
     [Test]
@@ -277,8 +303,8 @@ public sealed class FileBackedReplayEventStreamTests
             Path.Combine(_dir, "noemit.jsonl"),
             "{\"emit_time\": 1.0, \"data\": \"0\", \"event\": \"message\", \"id\": \"0\"}\n{\"data\": \"1\", \"event\": \"message\", \"id\": \"1\"}\n");
 
-        EventStreamRegistry registry = NewRegistry();
-        Assert.ThrowsAsync<EventStreamException>(async () => await registry.GetOrCreateAsync("noemit"));
+        AgentEventStreamRegistry registry = NewRegistry();
+        Assert.ThrowsAsync<AgentEventStreamException>(async () => await registry.GetOrCreateAsync("noemit"));
     }
 
     [Test]
@@ -286,11 +312,11 @@ public sealed class FileBackedReplayEventStreamTests
     {
         // Drive enough evictions to trigger compaction, then confirm the log rehydrates cleanly and
         // no ".compact" temp file is left behind (atomic temp+rename, never a truncated log).
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseFileBackedReplay(storageDirectory: _dir, ttl: TimeSpan.FromMilliseconds(1));
         var registry = new InMemoryEventStreamRegistry(options);
 
-        EventStream stream = await registry.GetOrCreateAsync("compact-1");
+        AgentEventStream stream = await registry.GetOrCreateAsync("compact-1");
         for (int i = 0; i < 1100; i++)
         {
             string value = i.ToString();
@@ -313,11 +339,11 @@ public sealed class FileBackedReplayEventStreamTests
         // an atomic replace, the reused write handle must be reopened against the LIVE file. If it
         // kept pointing at the pre-replace (orphaned) file, post-compaction emits would be written
         // to a file nobody rehydrates from and would be silently lost on the next process lifetime.
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseFileBackedReplay(storageDirectory: _dir, ttl: TimeSpan.FromMilliseconds(1));
         var registry = new InMemoryEventStreamRegistry(options);
 
-        EventStream stream = await registry.GetOrCreateAsync("compact-live");
+        AgentEventStream stream = await registry.GetOrCreateAsync("compact-live");
 
         // Drive past the compaction threshold, then emit a few more AFTER the compaction.
         for (int i = 0; i < 1100; i++)
@@ -352,11 +378,11 @@ public sealed class FileBackedReplayEventStreamTests
         // the stream. A real move failure can't be induced deterministically on Windows (the open
         // write handle blocks any external move-blocking handle), so the post-failure state is
         // reproduced directly by disposing and nulling the private handle.
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseFileBackedReplay(storageDirectory: _dir);
         var registry = new InMemoryEventStreamRegistry(options);
 
-        EventStream stream = await registry.GetOrCreateAsync("selfheal");
+        AgentEventStream stream = await registry.GetOrCreateAsync("selfheal");
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
 
         System.Reflection.FieldInfo field = stream.GetType().GetField(
@@ -372,7 +398,7 @@ public sealed class FileBackedReplayEventStreamTests
 
         // Both events survived to disk and rehydrate.
         var registry2 = new InMemoryEventStreamRegistry(options);
-        EventStream rehydrated = await registry2.GetOrCreateAsync("selfheal");
+        AgentEventStream rehydrated = await registry2.GetOrCreateAsync("selfheal");
         Assert.That(await rehydrated.GetLastEventIdAsync(), Is.EqualTo("2"));
     }
 
@@ -381,18 +407,18 @@ public sealed class FileBackedReplayEventStreamTests
     {
         // Callers now own serialization; the backing persists and rehydrates the serialized data
         // string while tracking resume by SseItem.EventId.
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseFileBackedReplay(storageDirectory: _dir);
         var registry = new InMemoryEventStreamRegistry(options);
 
-        EventStream stream = await registry.GetOrCreateAsync("typed-1");
+        AgentEventStream stream = await registry.GetOrCreateAsync("typed-1");
         await stream.EmitAsync(new SseItem<string>("{\"cursor\":0,\"text\":\"hello\"}") { EventId = "0" });
         await stream.EmitAsync(new SseItem<string>("{\"cursor\":1,\"text\":\"world\"}") { EventId = "1" });
         ((IDisposable)stream).Dispose();
 
         // Rehydrate in a fresh registry; the last event id is restored from the decoded items.
         var registry2 = new InMemoryEventStreamRegistry(options);
-        EventStream rehydrated = await registry2.GetOrCreateAsync("typed-1");
+        AgentEventStream rehydrated = await registry2.GetOrCreateAsync("typed-1");
         Assert.That(await rehydrated.GetLastEventIdAsync(), Is.EqualTo("1"));
 
         var items = new List<string>();
@@ -418,11 +444,11 @@ public sealed class FileBackedReplayEventStreamTests
         {
             Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", stateRoot);
 
-            var options = new EventStreamOptions();
+            var options = new AgentEventStreamOptions();
             options.UseFileBackedReplay();
             var registry = new InMemoryEventStreamRegistry(options);
 
-            EventStream stream = await registry.GetOrCreateAsync("defaulted");
+            AgentEventStream stream = await registry.GetOrCreateAsync("defaulted");
             await stream.EmitAsync(new SseItem<string>("{\"cursor\":0,\"text\":\"x\"}") { EventId = "0" });
 
             string expected = Path.Combine(stateRoot, "streams", "defaulted.jsonl");

@@ -14,14 +14,14 @@ namespace Azure.AI.AgentServer.Core.Tests.Streaming;
 [TestFixture]
 public sealed class ReplayEventStreamTests
 {
-    private static EventStreamRegistry NewReplayRegistry(TimeSpan? ttl = null)
+    private static AgentEventStreamRegistry NewReplayRegistry(TimeSpan? ttl = null)
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseInMemoryReplay(ttl: ttl);
         return new InMemoryEventStreamRegistry(options);
     }
 
-    private static async Task<List<SseItem<string>>> DrainAsync(EventStream stream, string? afterEventId = null)
+    private static async Task<List<SseItem<string>>> DrainAsync(AgentEventStream stream, string? afterEventId = null)
     {
         var items = new List<SseItem<string>>();
         await foreach (SseItem<string> item in stream.Subscribe(afterEventId))
@@ -35,8 +35,8 @@ public sealed class ReplayEventStreamTests
     [Test]
     public async Task LateSubscriberCatchesUpFromHistory()
     {
-        EventStreamRegistry registry = NewReplayRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("r1");
+        AgentEventStreamRegistry registry = NewReplayRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("r1");
 
         await stream.EmitAsync(new SseItem<string>("0") { EventId = "0" });
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
@@ -52,8 +52,8 @@ public sealed class ReplayEventStreamTests
     [Test]
     public async Task ReconnectAfterCursorDeliversOnlyLaterEvents()
     {
-        EventStreamRegistry registry = NewReplayRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("r2");
+        AgentEventStreamRegistry registry = NewReplayRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("r2");
 
         for (int n = 0; n < 5; n++)
         {
@@ -72,8 +72,8 @@ public sealed class ReplayEventStreamTests
     [Test]
     public async Task GetLastEventIdReturnsLastSeen()
     {
-        EventStreamRegistry registry = NewReplayRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("r3");
+        AgentEventStreamRegistry registry = NewReplayRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("r3");
 
         Assert.That(await stream.GetLastEventIdAsync(), Is.Null);
 
@@ -86,10 +86,10 @@ public sealed class ReplayEventStreamTests
     [Test]
     public async Task LiveBackingIgnoresAfterAndHasNoEventId()
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseInMemoryLive();
         var registry = new InMemoryEventStreamRegistry(options);
-        EventStream stream = await registry.GetOrCreateAsync("r4");
+        AgentEventStream stream = await registry.GetOrCreateAsync("r4");
 
         Assert.That(await stream.GetLastEventIdAsync(), Is.Null);
     }

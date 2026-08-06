@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 /// <see cref="SseItem{T}.EventId"/>. A close-clock auto-tombstone fires <c>ttl</c>
 /// after close.
 /// </summary>
-internal class ReplayEventStream : EventStream, IDestroyableStream
+internal class ReplayEventStream : AgentEventStream, IDestroyableStream
 {
     private readonly object _gate = new();
     private readonly SubscriberHub _hub = new();
@@ -51,12 +51,12 @@ internal class ReplayEventStream : EventStream, IDestroyableStream
                 selfDestroyed = EvictExpired(now);
                 if (_state == StreamState.Destroyed)
                 {
-                    throw new EventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
+                    throw new AgentEventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
                 }
 
                 if (_state == StreamState.Closed)
                 {
-                    throw new EventStreamClosedException($"Stream '{Id}' is closed; emit is not allowed.");
+                    throw new AgentEventStreamClosedException($"Stream '{Id}' is closed; emit is not allowed.");
                 }
 
                 // Persist before mutating in-memory state so a disk failure does not leave
@@ -160,7 +160,7 @@ internal class ReplayEventStream : EventStream, IDestroyableStream
                 if (_state == StreamState.Destroyed)
                 {
                     backlog = new List<SseItem<string>>();
-                    throw new EventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
+                    throw new AgentEventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
                 }
 
                 Channel<SseItem<string>> channel = _hub.Add();
@@ -191,7 +191,7 @@ internal class ReplayEventStream : EventStream, IDestroyableStream
         {
             if (_state == StreamState.Destroyed)
             {
-                throw new EventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
+                throw new AgentEventStreamNotFoundException($"Stream '{Id}' is not a live stream.");
             }
 
             return new ValueTask<string?>(_lastEventId);

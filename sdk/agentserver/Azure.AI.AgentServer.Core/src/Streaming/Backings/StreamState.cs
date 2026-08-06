@@ -12,6 +12,6 @@ internal enum StreamState
     /// <summary>Closed: emits raise, existing subscribers drain, new subscribers may still attach.</summary>
     Closed,
 
-    /// <summary>Destroyed: every operation raises <see cref="EventStreamNotFoundException"/>.</summary>
+    /// <summary>Destroyed: every operation raises <see cref="AgentEventStreamNotFoundException"/>.</summary>
     Destroyed,
 }

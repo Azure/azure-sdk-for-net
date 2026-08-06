@@ -38,7 +38,7 @@ services.AddSingleton(CreateModelClient());
 // rehydrate on the next GetOrCreate. The storage directory and a 10-minute TTL default,
 // and the event text is carried in SseItem<string>.Data, so no payload codec is needed.
 // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
-services.AddEventStreams(o => o.UseFileBackedReplay());
+services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
 // Heavy in-flight artifacts (partial phase output) live in a file-backed store;
 // metadata holds only small integer watermarks. Use a DURABLE state root under the
@@ -59,7 +59,7 @@ var checkpointStore = new CheckpointStore(stateRoot);
 ResilientTaskBuilder tasks = services.AddResilientTasks();
 
 ServiceProvider provider = services.BuildServiceProvider();
-EventStreamRegistry streams = provider.GetRequiredService<EventStreamRegistry>();
+AgentEventStreamRegistry streams = provider.GetRequiredService<AgentEventStreamRegistry>();
 ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
 
 // The resilient "research" task is session-scoped and steerable: one durable
@@ -170,7 +170,7 @@ public class CheckpointStore
 /// owns its own replayable stream while the durable task spans the whole session.
 /// </summary>
 public static async Task<ResearchResult> RunResearchAsync(
-    EventStreamRegistry registry,
+    AgentEventStreamRegistry registry,
     ResponsesClient model,
     string modelName,
     TaskContext<ResearchRequest> ctx,
@@ -185,7 +185,7 @@ public static async Task<ResearchResult> RunResearchAsync(
     // The stream id is the per-turn invocation id (one stream per turn), while the
     // durable TaskId spans the whole session.
     string invId = ctx.Input.InvocationId;
-    EventStream stream = await registry.GetOrCreateAsync(invId, ct);
+    AgentEventStream stream = await registry.GetOrCreateAsync(invId, ct);
 
     // On crash recovery, the last event id rehydrates the sequence counter.
     string? lastEventId = await stream.GetLastEventIdAsync(ct);
@@ -386,7 +386,7 @@ public static async Task<ResearchResult> RunResearchAsync(
 }
 
 private static async Task FinishTurn(
-    EventStream stream, TaskContext<ResearchRequest> ctx,
+    AgentEventStream stream, TaskContext<ResearchRequest> ctx,
     string invId, CheckpointStore store)
 {
     await stream.CloseAsync();
@@ -438,7 +438,7 @@ public class ResilientResearchHandler : InvocationHandler
             ?? new ResearchStartRequest("general knowledge");
 
         var registry = request.HttpContext.RequestServices
-            .GetRequiredService<EventStreamRegistry>();
+            .GetRequiredService<AgentEventStreamRegistry>();
         var invoker = request.HttpContext.RequestServices
             .GetRequiredService<ITaskInvoker>();
 
@@ -448,7 +448,7 @@ public class ResilientResearchHandler : InvocationHandler
 
         // Reserve the per-turn stream BEFORE starting the task so a live subscriber
         // attaches without missing early events.
-        EventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
+        AgentEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
 
         // Start a new turn or steer the running one. With the same TaskId, the engine
         // transparently enqueues this input as steering while a turn is in flight.
@@ -483,14 +483,14 @@ public class ResilientResearchHandler : InvocationHandler
         CancellationToken cancellationToken)
     {
         var registry = request.HttpContext.RequestServices
-            .GetRequiredService<EventStreamRegistry>();
+            .GetRequiredService<AgentEventStreamRegistry>();
 
-        EventStream stream;
+        AgentEventStream stream;
         try
         {
             stream = await registry.GetAsync(invocationId, cancellationToken);
         }
-        catch (EventStreamNotFoundException)
+        catch (AgentEventStreamNotFoundException)
         {
             response.StatusCode = StatusCodes.Status404NotFound;
             return;
@@ -556,7 +556,7 @@ public class ResilientResearchHandler : InvocationHandler
     }
 
     private static async Task WriteSseAsync(
-        HttpResponse response, EventStream stream, string? after, CancellationToken ct)
+        HttpResponse response, AgentEventStream stream, string? after, CancellationToken ct)
     {
         response.ContentType = "text/event-stream";
         response.Headers.CacheControl = "no-cache";
@@ -573,11 +573,11 @@ public class ResilientResearchHandler : InvocationHandler
             await SseFormatter.WriteAsync(
                 SingleItem(new SseItem<string>("{\"type\":\"done\"}", "done")), response.Body, ct);
         }
-        catch (EventStreamNotFoundException)
+        catch (AgentEventStreamNotFoundException)
         {
             // The stream was destroyed under us (superseded / TTL-evicted). Emit a
             // `superseded` frame so the consumer can tell stream-end from "you got cut
-            // off" (EventStreamNotFoundException -> `event: superseded`).
+            // off" (AgentEventStreamNotFoundException -> `event: superseded`).
             await SseFormatter.WriteAsync(
                 SingleItem(new SseItem<string>("{\"type\":\"superseded\"}", "superseded")), response.Body, ct);
         }
@@ -664,7 +664,7 @@ This is the **Task ⇄ Stream bridge** pattern. The durable producer is the
    calls `CancelAsync`, which the producer observes as a cooperative wind-down.
 
 > **Cleanup:** the file-backed replay backing uses its retention settings to reclaim
-> retained streams; long-lived hosts can also call `EventStreamRegistry.DeleteAsync` once a
+> retained streams; long-lived hosts can also call `AgentEventStreamRegistry.DeleteAsync` once a
 > client has fully drained a stream.
 
 This composes with the [Resilient Tasks guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md) and the [Streaming guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/streaming-guide.md).

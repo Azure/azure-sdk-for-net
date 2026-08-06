@@ -15,12 +15,12 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 /// Server-Sent-Events item (<see cref="SseItem{T}"/> of <see cref="string"/>): the
 /// caller places the already-serialized event text in <see cref="SseItem{T}.Data"/>
 /// and, for a replay backing, an opaque <see cref="SseItem{T}.EventId"/> used as the
-/// resume/reconnect token. Obtain instances from <see cref="EventStreamRegistry"/>.
+/// resume/reconnect token. Obtain instances from <see cref="AgentEventStreamRegistry"/>.
 /// </summary>
-public abstract class EventStream
+public abstract class AgentEventStream
 {
-    /// <summary>Initializes a new instance of the <see cref="EventStream"/> class.</summary>
-    protected EventStream()
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStream"/> class.</summary>
+    protected AgentEventStream()
     {
     }
 
@@ -41,7 +41,7 @@ public abstract class EventStream
     /// <summary>
     /// Marks the stream done. Idempotent — calling it twice (or on a destroyed
     /// stream) is a no-op. After close, <see cref="EmitAsync"/> raises
-    /// <see cref="EventStreamClosedException"/> and subscriber iterators drain
+    /// <see cref="AgentEventStreamClosedException"/> and subscriber iterators drain
     /// then complete.
     /// </summary>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
@@ -63,11 +63,13 @@ public abstract class EventStream
     public abstract IAsyncEnumerable<SseItem<string>> Subscribe(string? afterEventId = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Returns the <see cref="SseItem{T}.EventId"/> of the most recently emitted item,
-    /// or <see langword="null"/> when no events were emitted or the last item carried no
-    /// id. Safe to call on a closed stream (the producer's recovery primitive).
+    /// Returns the most recently assigned event id — the <see cref="SseItem{T}.EventId"/> of the
+    /// latest emitted item that carried one — or <see langword="null"/> when no emitted item has
+    /// carried an id. An item emitted without an <see cref="SseItem{T}.EventId"/> leaves the last
+    /// assigned id unchanged (matching SSE last-event-ID buffer semantics). Safe to call on a closed
+    /// stream (the producer's recovery primitive).
     /// </summary>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    /// <returns>The last emitted event id, or <see langword="null"/>.</returns>
+    /// <returns>The most recently assigned event id, or <see langword="null"/>.</returns>
     public abstract ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default);
 }

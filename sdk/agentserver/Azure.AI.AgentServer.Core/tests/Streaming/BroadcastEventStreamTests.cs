@@ -14,9 +14,9 @@ namespace Azure.AI.AgentServer.Core.Tests.Streaming;
 [TestFixture]
 public sealed class BroadcastEventStreamTests
 {
-    private static EventStreamRegistry NewLiveRegistry()
+    private static AgentEventStreamRegistry NewLiveRegistry()
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseInMemoryLive();
         return new InMemoryEventStreamRegistry(options);
     }
@@ -24,17 +24,17 @@ public sealed class BroadcastEventStreamTests
     [Test]
     public async Task GetOrCreateIsIdempotentSameInstance()
     {
-        EventStreamRegistry registry = NewLiveRegistry();
-        EventStream a = await registry.GetOrCreateAsync("s1");
-        EventStream b = await registry.GetOrCreateAsync("s1");
+        AgentEventStreamRegistry registry = NewLiveRegistry();
+        AgentEventStream a = await registry.GetOrCreateAsync("s1");
+        AgentEventStream b = await registry.GetOrCreateAsync("s1");
         Assert.That(a, Is.SameAs(b));
     }
 
     [Test]
     public async Task OrderedLiveDeliveryThenCleanTerminationOnClose()
     {
-        EventStreamRegistry registry = NewLiveRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("s2");
+        AgentEventStreamRegistry registry = NewLiveRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("s2");
 
         var received = new List<string>();
         var subscriberReady = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -64,18 +64,18 @@ public sealed class BroadcastEventStreamTests
     [Test]
     public async Task EmitAfterCloseRaisesClosed()
     {
-        EventStreamRegistry registry = NewLiveRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("s3");
+        AgentEventStreamRegistry registry = NewLiveRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("s3");
         await stream.CloseAsync();
 
-        Assert.ThrowsAsync<EventStreamClosedException>(async () => await stream.EmitAsync(new SseItem<string>("1")));
+        Assert.ThrowsAsync<AgentEventStreamClosedException>(async () => await stream.EmitAsync(new SseItem<string>("1")));
     }
 
     [Test]
     public async Task CloseIsIdempotent()
     {
-        EventStreamRegistry registry = NewLiveRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("s4");
+        AgentEventStreamRegistry registry = NewLiveRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("s4");
         await stream.CloseAsync();
         Assert.DoesNotThrowAsync(async () => await stream.CloseAsync());
     }
@@ -83,8 +83,8 @@ public sealed class BroadcastEventStreamTests
     [Test]
     public async Task EmitWithCloseDeliversThenCloses()
     {
-        EventStreamRegistry registry = NewLiveRegistry();
-        EventStream stream = await registry.GetOrCreateAsync("s5");
+        AgentEventStreamRegistry registry = NewLiveRegistry();
+        AgentEventStream stream = await registry.GetOrCreateAsync("s5");
 
         var received = new List<string>();
         var subscriberReady = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -105,6 +105,6 @@ public sealed class BroadcastEventStreamTests
         await consumer;
 
         Assert.That(received, Is.EqualTo(new[] { "last" }));
-        Assert.ThrowsAsync<EventStreamClosedException>(async () => await stream.EmitAsync(new SseItem<string>("more")));
+        Assert.ThrowsAsync<AgentEventStreamClosedException>(async () => await stream.EmitAsync(new SseItem<string>("more")));
     }
 }

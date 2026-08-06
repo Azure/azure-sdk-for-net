@@ -26,6 +26,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     private const string DataKey = "data";
     private const string IdKey = "id";
     private const string EventKey = "event";
+    private const string RetryKey = "retry";
     private const int CompactionThreshold = 1000;
 
     private readonly object _fileGate = new();
@@ -224,7 +225,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             JsonNode? node = TryParse(lines[i]);
             if (node is not JsonObject obj)
             {
-                throw new EventStreamException($"Corrupted line {i + 1} in stream log '{_filePath}'.");
+                throw new AgentEventStreamException($"Corrupted line {i + 1} in stream log '{_filePath}'.");
             }
 
             if (obj.TryGetPropertyValue(TerminalKey, out JsonNode? terminal) && terminal is JsonValue tv && tv.GetValue<bool>())
@@ -245,7 +246,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
                 // {"emit_time": <float>, "data": <string>, ...}). Raising is a corruption signal —
                 // silently defaulting to epoch would either drop the event on the next TTL sweep or
                 // resurrect it with a wildly wrong timestamp.
-                throw new EventStreamException(
+                throw new AgentEventStreamException(
                     $"Record at line {i + 1} of stream log '{_filePath}' is missing the 'emit_time' field.");
             }
 
@@ -347,7 +348,8 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     }
 
     // Encodes one emitted item as a JSON-object line: the event text ('data'), the opaque event id
-    // ('id', omitted when null), and the SSE event type ('event'), plus the emit time used for TTL.
+    // ('id', omitted when null), the SSE event type ('event'), and the SSE reconnection interval
+    // ('retry', in whole milliseconds, omitted when unset), plus the emit time used for TTL.
     private static string EncodeItemLine(SseItem<string> item, double emitTime)
     {
         var line = new JsonObject
@@ -361,6 +363,11 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             line[IdKey] = item.EventId;
         }
 
+        if (item.ReconnectionInterval is { } retry)
+        {
+            line[RetryKey] = (long)retry.TotalMilliseconds;
+        }
+
         return line.ToJsonString();
     }
 
@@ -369,7 +376,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         if (!obj.TryGetPropertyValue(DataKey, out JsonNode? dataNode) || dataNode is not JsonValue dataValue
             || !dataValue.TryGetValue(out string? data) || data is null)
         {
-            throw new EventStreamException(
+            throw new AgentEventStreamException(
                 $"Record at line {lineNumber} of stream log '{_filePath}' is missing the 'data' field.");
         }
 
@@ -385,7 +392,14 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             idValue.TryGetValue(out eventId);
         }
 
-        return new SseItem<string>(data, eventType) { EventId = eventId };
+        TimeSpan? reconnectionInterval = null;
+        if (obj.TryGetPropertyValue(RetryKey, out JsonNode? retryNode) && retryNode is JsonValue retryValue
+            && retryValue.TryGetValue(out long retryMs))
+        {
+            reconnectionInterval = TimeSpan.FromMilliseconds(retryMs);
+        }
+
+        return new SseItem<string>(data, eventType) { EventId = eventId, ReconnectionInterval = reconnectionInterval };
     }
 
     private void AppendLine(string line) => AppendLines(line);
@@ -424,13 +438,13 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
                 }
 
                 FileStream fs = _data
-                    ?? throw new EventStreamException($"The write handle for stream '{Id}' is not open.");
+                    ?? throw new AgentEventStreamException($"The write handle for stream '{Id}' is not open.");
                 fs.Write(bytes, 0, bytes.Length);
                 fs.Flush(flushToDisk: true);
             }
             catch (IOException ex)
             {
-                throw new EventStreamException($"Failed to persist event for stream '{Id}'.", ex);
+                throw new AgentEventStreamException($"Failed to persist event for stream '{Id}'.", ex);
             }
         }
     }
@@ -443,7 +457,7 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
         }
         catch (IOException ex)
         {
-            throw new EventStreamException(
+            throw new AgentEventStreamException(
                 $"Stream log '{_filePath}' is already opened by another writer.", ex);
         }
     }

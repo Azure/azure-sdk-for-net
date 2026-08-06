@@ -16,11 +16,11 @@ public sealed class ReplayTtlTests
     [Test]
     public async Task CloseClockTtlElapsesDestroysStreamAndSubsequentOpsRaiseNotFound()
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseInMemoryReplay(ttl: TimeSpan.FromMilliseconds(80));
         var registry = new InMemoryEventStreamRegistry(options);
 
-        EventStream stream = await registry.GetOrCreateAsync("ttl1");
+        AgentEventStream stream = await registry.GetOrCreateAsync("ttl1");
         await stream.EmitAsync(new SseItem<string>("1") { EventId = "1" });
         await stream.CloseAsync();
 
@@ -30,27 +30,27 @@ public sealed class ReplayTtlTests
         await Task.Delay(150);
 
         // The next emit/subscribe runs eviction, fires the close-clock, and self-destructs.
-        Assert.ThrowsAsync<EventStreamNotFoundException>(async () => await stream.EmitAsync(new SseItem<string>("2") { EventId = "2" }));
+        Assert.ThrowsAsync<AgentEventStreamNotFoundException>(async () => await stream.EmitAsync(new SseItem<string>("2") { EventId = "2" }));
 
         // The registry has tombstoned the id; GetAsync now raises NotFound.
-        Assert.ThrowsAsync<EventStreamNotFoundException>(async () => await registry.GetAsync("ttl1"));
+        Assert.ThrowsAsync<AgentEventStreamNotFoundException>(async () => await registry.GetAsync("ttl1"));
     }
 
     [Test]
     public async Task TombstoneIsClearedOnNextGetOrCreate()
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseInMemoryReplay(ttl: TimeSpan.FromMilliseconds(50));
         var registry = new InMemoryEventStreamRegistry(options);
 
-        EventStream first = await registry.GetOrCreateAsync("ttl2");
+        AgentEventStream first = await registry.GetOrCreateAsync("ttl2");
         await first.EmitAsync(new SseItem<string>("1") { EventId = "1" });
         await first.CloseAsync();
         await Task.Delay(120);
-        Assert.ThrowsAsync<EventStreamNotFoundException>(async () => await first.EmitAsync(new SseItem<string>("2") { EventId = "2" }));
+        Assert.ThrowsAsync<AgentEventStreamNotFoundException>(async () => await first.EmitAsync(new SseItem<string>("2") { EventId = "2" }));
 
         // A fresh GetOrCreate after the tombstone yields a brand-new, usable stream.
-        EventStream second = await registry.GetOrCreateAsync("ttl2");
+        AgentEventStream second = await registry.GetOrCreateAsync("ttl2");
         Assert.That(second, Is.Not.SameAs(first));
         Assert.DoesNotThrowAsync(async () => await second.EmitAsync(new SseItem<string>("10") { EventId = "10" }));
     }
@@ -58,11 +58,11 @@ public sealed class ReplayTtlTests
     [Test]
     public async Task GetLastEventIdIsSideEffectFreeAndDoesNotTriggerTombstone()
     {
-        var options = new EventStreamOptions();
+        var options = new AgentEventStreamOptions();
         options.UseInMemoryReplay(ttl: TimeSpan.FromMilliseconds(60));
         var registry = new InMemoryEventStreamRegistry(options);
 
-        EventStream stream = await registry.GetOrCreateAsync("ttl3");
+        AgentEventStream stream = await registry.GetOrCreateAsync("ttl3");
         await stream.EmitAsync(new SseItem<string>("42") { EventId = "42" });
         await stream.CloseAsync();
         await Task.Delay(150);

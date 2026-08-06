@@ -10,24 +10,24 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 /// (never registered, deleted, or close-clock elapsed). HTTP layers should
 /// treat it as a 404. Mirrors Python's <c>EventStreamNotFoundError</c>.
 /// </summary>
-public sealed class EventStreamNotFoundException : EventStreamException
+public sealed class AgentEventStreamNotFoundException : AgentEventStreamException
 {
-    /// <summary>Initializes a new instance of the <see cref="EventStreamNotFoundException"/> class.</summary>
-    public EventStreamNotFoundException()
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStreamNotFoundException"/> class.</summary>
+    public AgentEventStreamNotFoundException()
     {
     }
 
-    /// <summary>Initializes a new instance of the <see cref="EventStreamNotFoundException"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStreamNotFoundException"/> class.</summary>
     /// <param name="message">The error message.</param>
-    public EventStreamNotFoundException(string message)
+    public AgentEventStreamNotFoundException(string message)
         : base(message)
     {
     }
 
-    /// <summary>Initializes a new instance of the <see cref="EventStreamNotFoundException"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStreamNotFoundException"/> class.</summary>
     /// <param name="message">The error message.</param>
     /// <param name="innerException">The underlying cause.</param>
-    public EventStreamNotFoundException(string message, Exception innerException)
+    public AgentEventStreamNotFoundException(string message, Exception innerException)
         : base(message, innerException)
     {
     }

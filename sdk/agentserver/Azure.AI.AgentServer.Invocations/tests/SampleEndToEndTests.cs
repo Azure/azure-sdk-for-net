@@ -896,17 +896,17 @@ public class SampleEndToEndTests
             services =>
             {
                 // In-memory replay with a TTL so retained streams are reclaimed.
-                services.AddEventStreams(o => o.UseInMemoryReplay(
+                services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
                 tasks = services.AddResilientTasks();
             },
             configurePostBuild: app =>
             {
-                // Provider-aware overloads were removed: resolve the singleton EventStreamRegistry
+                // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry
                 // from the built container and capture it in the plain delegate (the registry is read
                 // lazily at invocation time, so registering post-build is fine).
-                EventStreamRegistry streams = app.Services.GetRequiredService<EventStreamRegistry>();
+                AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
                 tasks!.AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",

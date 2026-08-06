@@ -18,13 +18,13 @@ well.
 
 ```csharp
 // 1. At app startup — pick a backing (in-memory live is the default).
-builder.Services.AddEventStreams();
+builder.Services.AddAgentEventStreams();
 
 // 2. Create the stream and ATTACH THE SUBSCRIBER FIRST. With the default live
 //    backing there is no history, so a subscriber only sees events emitted after it
 //    attached — start consuming before the producer emits (see "subscribe-before-start"
 //    below), or use a replay backing if you cannot guarantee that ordering.
-EventStream stream = await registry.GetOrCreateAsync(streamId);
+AgentEventStream stream = await registry.GetOrCreateAsync(streamId);
 Task consume = Task.Run(async () =>
 {
     await foreach (SseItem<string> evt in stream.Subscribe())
@@ -52,7 +52,7 @@ await consume;                                   // subscriber drains and finish
 ```
 
 `registry.GetOrCreateAsync(id)` is idempotent: the producer and subscriber both call
-it with the same id and get the **same** `EventStream` instance back.
+it with the same id and get the **same** `AgentEventStream` instance back.
 Each event is a `System.Net.ServerSentEvents.SseItem<string>`: `Data` is the event
 text you serialized, `EventId` is the opaque resume token, and `EventType` is the
 optional SSE event type.
@@ -67,16 +67,16 @@ the stream contract, and a few stream-specific exceptions (covered in
 
 | Type | Role |
 |---|---|
-| `IServiceCollection.AddEventStreams(configure?)` | registration; selects the backing |
-| `EventStreamOptions` | chooses and configures the single process backing |
-| `EventStreamRegistry` | maps stream ids to live `EventStream` instances |
-| `EventStream` | a single producer/consumer event stream |
+| `IServiceCollection.AddAgentEventStreams(configure?)` | registration; selects the backing |
+| `AgentEventStreamOptions` | chooses and configures the single process backing |
+| `AgentEventStreamRegistry` | maps stream ids to live `AgentEventStream` instances |
+| `AgentEventStream` | a single producer/consumer event stream |
 
-Obtain stream instances from `EventStreamRegistry` and program against
-`EventStream`:
+Obtain stream instances from `AgentEventStreamRegistry` and program against
+`AgentEventStream`:
 
 ```csharp
-public abstract class EventStream
+public abstract class AgentEventStream
 {
     public abstract ValueTask EmitAsync(SseItem<string> item, bool close = false, CancellationToken cancellationToken = default);
     public abstract ValueTask CloseAsync(CancellationToken cancellationToken = default);
@@ -84,10 +84,10 @@ public abstract class EventStream
     public abstract ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default);
 }
 
-public abstract class EventStreamRegistry
+public abstract class AgentEventStreamRegistry
 {
-    public abstract ValueTask<EventStream> GetAsync(string id, CancellationToken cancellationToken = default);          // throws if absent
-    public abstract ValueTask<EventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default);  // creates if absent
+    public abstract ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default);          // throws if absent
+    public abstract ValueTask<AgentEventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default);  // creates if absent
     public abstract ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default);                     // remove + free resources
 }
 ```
@@ -97,7 +97,7 @@ public abstract class EventStreamRegistry
 ## Choosing a backing
 
 Choose the backing before you create streams (typically once at app startup through
-`AddEventStreams`). The .NET registry selects exactly **one** backing per process; if
+`AddAgentEventStreams`). The .NET registry selects exactly **one** backing per process; if
 you select none, the default is in-memory live.
 
 | Backing | Use when | Reconnect / replay? | Survives process restart? | Notes |
@@ -109,17 +109,17 @@ you select none, the default is in-memory live.
 ### Configurator signatures
 
 ```csharp
-builder.Services.AddEventStreams(o => o.UseInMemoryLive());            // default
+builder.Services.AddAgentEventStreams(o => o.UseInMemoryLive());            // default
 
-builder.Services.AddEventStreams(o => o.UseInMemoryReplay(
+builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
     ttl: TimeSpan.FromMinutes(10)));                                  // optional retention
 
 // File-backed replay: the storage directory (~/.agentserver/streams) and a 10-minute
 // TTL both default. The event text lives in SseItem<string>.Data, so no payload codec
 // is needed — the caller serializes its own event and supplies an opaque EventId.
-builder.Services.AddEventStreams(o => o.UseFileBackedReplay());
+builder.Services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
-builder.Services.AddEventStreams(o => o.UseFileBackedReplay(
+builder.Services.AddAgentEventStreams(o => o.UseFileBackedReplay(
     storageDirectory: "/var/streams",                                 // one file per stream id
     ttl: TimeSpan.FromHours(1)));
 ```
@@ -158,7 +158,7 @@ agree without extra plumbing.
 > multiple turns (steering, recovery), but a stream's lifecycle is a single
 > ACTIVE→CLOSED arc. If you key the stream on the `TaskId`, the second turn finds the
 > first turn's already-**closed** stream and `EmitAsync` throws
-> `EventStreamClosedException`. Always scope the stream id to **one logical
+> `AgentEventStreamClosedException`. Always scope the stream id to **one logical
 > request/turn/invocation** — for `azure-ai-agentserver-invocations`, that is the
 > `InvocationId`; for a bare handler, any per-turn string you control end-to-end.
 
@@ -167,7 +167,7 @@ id; choose ids that are stable and boring enough for your storage policy.
 
 ---
 
-## The `EventStream` protocol
+## The `AgentEventStream` protocol
 
 Every stream — regardless of backing — exposes the same four operations.
 
@@ -181,7 +181,7 @@ Publishes one event to every currently-attached subscriber.
 - `close: true` is an **atomic emit-and-close**: the item is delivered and the
   stream is closed in one call. For replay backings, the item is still retained in
   history; for the live backing, late subscribers do not see it.
-- Emitting after the stream is closed throws `EventStreamClosedException`. That signals
+- Emitting after the stream is closed throws `AgentEventStreamClosedException`. That signals
   a **producer bug** (you should not still be emitting), so an HTTP layer should surface
   it as a **5xx**, not a client error.
 
@@ -190,7 +190,7 @@ Publishes one event to every currently-attached subscriber.
 Marks the stream **done**. Idempotent — calling it twice (or after the stream is gone)
 is a no-op. After close:
 
-- new `EmitAsync` calls raise `EventStreamClosedException`;
+- new `EmitAsync` calls raise `AgentEventStreamClosedException`;
 - subscribers already iterating the stream drain remaining events, then finish;
 - new subscribers can still attach to a replay backing while retained history exists,
   but no new events will arrive.
@@ -230,7 +230,7 @@ destroyed, the id's resources are gone and `GetAsync(id)` treats it as not found
 | State | What it means | How you reach it |
 |---|---|---|
 | **ACTIVE** | Accepts `EmitAsync`; subscribable. | Construction (first `GetOrCreateAsync(id)`). |
-| **CLOSED** | No new emits (`EmitAsync` raises `EventStreamClosedException`). Existing subscribers drain. New subscribers can still attach to a replay backing and replay retained history, but no new events arrive. | `CloseAsync()` or `EmitAsync(close: true)` from ACTIVE. |
+| **CLOSED** | No new emits (`EmitAsync` raises `AgentEventStreamClosedException`). Existing subscribers drain. New subscribers can still attach to a replay backing and replay retained history, but no new events arrive. | `CloseAsync()` or `EmitAsync(close: true)` from ACTIVE. |
 
 Three independent paths lead to destroyed:
 
@@ -266,12 +266,12 @@ A few practical implications:
 
 ## The registry
 
-`EventStreamRegistry` is the process-level map from ids to live streams:
+`AgentEventStreamRegistry` is the process-level map from ids to live streams:
 
 - `GetAsync(id)` — returns the registered stream when it **must** already exist; throws
-  `EventStreamNotFoundException` if not.
+  `AgentEventStreamNotFoundException` if not.
 - `GetOrCreateAsync(id)` — idempotent: the producer and subscriber using the same id
-  get the same `EventStream` instance; if the id was previously destroyed, this
+  get the same `AgentEventStream` instance; if the id was previously destroyed, this
   creates a fresh stream.
 - `DeleteAsync(id)` — removes the stream and backing resources. Use it for immediate
   cleanup (end-of-request hook, test teardown) or for backings without TTL cleanup.
@@ -284,19 +284,19 @@ For replay backings configured with `ttl`, you typically do not need to call
 ## Exceptions → wire mapping
 
 ```text
-EventStreamException                 (base — catch-all)
-├── EventStreamClosedException       producer bug — wire-map to HTTP 5xx
-└── EventStreamNotFoundException     id is not currently a live stream — HTTP 404
+AgentEventStreamException                 (base — catch-all)
+├── AgentEventStreamClosedException       producer bug — wire-map to HTTP 5xx
+└── AgentEventStreamNotFoundException     id is not currently a live stream — HTTP 404
 ```
 
 | Exception | Meaning | Typical HTTP mapping |
 |---|---|---|
-| `EventStreamNotFoundException` | `GetAsync` for an id that does not exist | 404 |
-| `EventStreamClosedException` | `EmitAsync` after the stream was closed | **5xx** (producer bug) |
-| `EventStreamException` | base type for stream errors | 500 |
+| `AgentEventStreamNotFoundException` | `GetAsync` for an id that does not exist | 404 |
+| `AgentEventStreamClosedException` | `EmitAsync` after the stream was closed | **5xx** (producer bug) |
+| `AgentEventStreamException` | base type for stream errors | 500 |
 
 Every "this id is not currently a live stream" condition at the registry boundary is
-`EventStreamNotFoundException` and maps naturally to 404. `EventStreamClosedException`
+`AgentEventStreamNotFoundException` and maps naturally to 404. `AgentEventStreamClosedException`
 means the **producer** tried to emit after the stream was already closed — that is a
 server-side bug, not a bad client request, so map it to a **5xx** (e.g. 500), never a
 4xx.
@@ -330,7 +330,7 @@ Once you have picked a strategy, the canonical pattern is:
 ```csharp
 // Pattern 1 (recommended): create the stream and start subscribing in the HTTP
 // layer, THEN kick off the producer.
-EventStream stream = await registry.GetOrCreateAsync(id);
+AgentEventStream stream = await registry.GetOrCreateAsync(id);
 var consume = ConsumeAsync(stream);          // attaches the subscriber
 await StartProducerAsync(id);                // producer emits into the same id
 await consume;
@@ -393,7 +393,7 @@ Typical endpoint helper for serving a stream over Server-Sent Events:
 ```csharp
 // GET /runs/{id}/events  — stream a run's events as SSE, resumable via Last-Event-ID.
 app.MapGet("/runs/{id}/events", async (string id, HttpContext http,
-                                        EventStreamRegistry registry) =>
+                                        AgentEventStreamRegistry registry) =>
 {
     http.Response.Headers.ContentType = "text/event-stream";
 
@@ -403,14 +403,14 @@ app.MapGet("/runs/{id}/events", async (string id, HttpContext http,
 
     // A GET is a pure RESUME/read endpoint: the stream must already exist (the
     // producer created it). Use GetAsync — not GetOrCreateAsync — so an unknown or
-    // TTL-expired id surfaces EventStreamNotFoundException → 404 instead of silently
+    // TTL-expired id surfaces AgentEventStreamNotFoundException → 404 instead of silently
     // creating a new empty stream.
-    EventStream stream;
+    AgentEventStream stream;
     try
     {
         stream = await registry.GetAsync(id, http.RequestAborted);
     }
-    catch (EventStreamNotFoundException)
+    catch (AgentEventStreamNotFoundException)
     {
         http.Response.StatusCode = 404;
         return;
@@ -432,33 +432,33 @@ resume exactly where they left off. If the client sends `Last-Event-ID` (or a
 
 ---
 
-## Bringing your own `EventStream` implementation
+## Bringing your own `AgentEventStream` implementation
 
-You can write your own `EventStream` implementation (for example a Redis-backed
+You can write your own `AgentEventStream` implementation (for example a Redis-backed
 stream). It is accepted anywhere the abstract class is — the registry and the SSE bridge
-only depend on `EventStream`, not on the bundled backings.
+only depend on `AgentEventStream`, not on the bundled backings.
 
-**But** don't register your custom implementation with the built-in `AddEventStreams`
+**But** don't register your custom implementation with the built-in `AddAgentEventStreams`
 registry — that registry's lifecycle (TTL eviction, file cleanup, tombstoning) is
 wired to the bundled backings only. Ship your own peer registry instead, and let
 consumers pick which one to call:
 
 ```csharp
-// A peer namespace to the SDK's EventStreamRegistry — same abstract class, its own
+// A peer namespace to the SDK's AgentEventStreamRegistry — same abstract class, its own
 // lifecycle. Register it under your own DI type so callers choose explicitly.
-public sealed class MyRedisStreams : EventStreamRegistry
+public sealed class MyRedisStreams : AgentEventStreamRegistry
 {
     public MyRedisStreams(string redisConnectionString) { /* ... */ }
 
-    public override ValueTask<EventStream> GetOrCreateAsync(string id, CancellationToken ct = default) { /* ... */ }
-    public override ValueTask<EventStream> GetAsync(string id, CancellationToken ct = default) { /* ... */ }
+    public override ValueTask<AgentEventStream> GetOrCreateAsync(string id, CancellationToken ct = default) { /* ... */ }
+    public override ValueTask<AgentEventStream> GetAsync(string id, CancellationToken ct = default) { /* ... */ }
     public override ValueTask DeleteAsync(string id, CancellationToken ct = default) { /* ... */ }
 }
 ```
 
 Consumers explicitly choose which registry they want — `myRedisStreams.GetOrCreateAsync(id)`
-vs the injected built-in `EventStreamRegistry`. The shared contract is the
-`EventStream` abstract class; lifecycle is each registry's own concern.
+vs the injected built-in `AgentEventStreamRegistry`. The shared contract is the
+`AgentEventStream` abstract class; lifecycle is each registry's own concern.
 
 ---
 

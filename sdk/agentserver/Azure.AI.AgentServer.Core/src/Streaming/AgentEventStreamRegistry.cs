@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 namespace Azure.AI.AgentServer.Core.Streaming;
 
 /// <summary>
-/// The process-level registry that maps stream ids to <see cref="EventStream"/>
+/// The process-level registry that maps stream ids to <see cref="AgentEventStream"/>
 /// instances. Mirrors Python's module-global <c>streams</c> registry.
 /// </summary>
-public abstract class EventStreamRegistry
+public abstract class AgentEventStreamRegistry
 {
-    /// <summary>Initializes a new instance of the <see cref="EventStreamRegistry"/> class.</summary>
-    protected EventStreamRegistry()
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStreamRegistry"/> class.</summary>
+    protected AgentEventStreamRegistry()
     {
     }
 
     /// <summary>
     /// Returns the live stream registered under <paramref name="id"/>, or raises
-    /// <see cref="EventStreamNotFoundException"/> for any id that is not currently
+    /// <see cref="AgentEventStreamNotFoundException"/> for any id that is not currently
     /// a live stream. Never installs a tombstone.
     /// </summary>
     /// <param name="id">The stream id.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The live stream.</returns>
-    public abstract ValueTask<EventStream> GetAsync(string id, CancellationToken cancellationToken = default);
+    public abstract ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the stream registered under <paramref name="id"/>, creating a fresh
@@ -35,7 +35,7 @@ public abstract class EventStreamRegistry
     /// <param name="id">The stream id.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The registered or newly-created stream.</returns>
-    public abstract ValueTask<EventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default);
+    public abstract ValueTask<AgentEventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the stream and any backing resources for <paramref name="id"/> and

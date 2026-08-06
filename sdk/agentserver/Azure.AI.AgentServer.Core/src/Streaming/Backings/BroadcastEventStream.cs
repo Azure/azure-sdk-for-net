@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 /// The in-memory live backing: constant memory, no replay. Subscribers only see
 /// events emitted after their iteration begins.
 /// </summary>
-internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
+internal sealed class BroadcastEventStream : AgentEventStream, IDestroyableStream
 {
     private readonly object _gate = new();
     private readonly SubscriberHub _hub = new();
@@ -31,12 +31,12 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
         {
             if (_state == StreamState.Destroyed)
             {
-                throw new EventStreamNotFoundException($"Stream '{_id}' is not a live stream.");
+                throw new AgentEventStreamNotFoundException($"Stream '{_id}' is not a live stream.");
             }
 
             if (_state == StreamState.Closed)
             {
-                throw new EventStreamClosedException($"Stream '{_id}' is closed; emit is not allowed.");
+                throw new AgentEventStreamClosedException($"Stream '{_id}' is closed; emit is not allowed.");
             }
 
             _hub.Publish(item);
@@ -75,7 +75,7 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
         {
             if (_state == StreamState.Destroyed)
             {
-                throw new EventStreamNotFoundException($"Stream '{_id}' is not a live stream.");
+                throw new AgentEventStreamNotFoundException($"Stream '{_id}' is not a live stream.");
             }
 
             channel = _hub.Add();
@@ -114,7 +114,7 @@ internal sealed class BroadcastEventStream : EventStream, IDestroyableStream
         {
             if (_state == StreamState.Destroyed)
             {
-                throw new EventStreamNotFoundException($"Stream '{_id}' is not a live stream.");
+                throw new AgentEventStreamNotFoundException($"Stream '{_id}' is not a live stream.");
             }
 
             // The live backing retains no history, but it still tracks the last emitted id.

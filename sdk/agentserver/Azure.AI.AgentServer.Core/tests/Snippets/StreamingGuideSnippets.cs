@@ -23,11 +23,11 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         private sealed record MyEvent(int Sequence, string Token);
 
         // 5-minute getting started — produce + consume.
-        public static async Task GettingStarted(IServiceCollection services, EventStreamRegistry registry, string streamId)
+        public static async Task GettingStarted(IServiceCollection services, AgentEventStreamRegistry registry, string streamId)
         {
-            services.AddEventStreams();
+            services.AddAgentEventStreams();
 
-            EventStream stream = await registry.GetOrCreateAsync(streamId);
+            AgentEventStream stream = await registry.GetOrCreateAsync(streamId);
             await stream.EmitAsync(new SseItem<string>(JsonSerializer.Serialize(new { token = "Hello" })) { EventId = "1" });
             await stream.EmitAsync(new SseItem<string>(JsonSerializer.Serialize(new { token = " world" })) { EventId = "2" });
             await stream.CloseAsync();
@@ -41,36 +41,36 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         // Choosing a backing — configurator signatures.
         public static void Backings(IServiceCollection services)
         {
-            services.AddEventStreams(o => o.UseInMemoryLive());
+            services.AddAgentEventStreams(o => o.UseInMemoryLive());
 
-            services.AddEventStreams(o => o.UseInMemoryReplay(
+            services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                 ttl: TimeSpan.FromMinutes(10)));
 
             // File-backed replay: the storage directory (~/.agentserver/streams) and a 10-minute
             // TTL both default. The event text lives in SseItem<string>.Data, so no payload codec
             // is needed — the caller serializes its own event and supplies an opaque EventId.
-            services.AddEventStreams(o => o.UseFileBackedReplay());
+            services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
-            services.AddEventStreams(o => o.UseFileBackedReplay(
+            services.AddAgentEventStreams(o => o.UseFileBackedReplay(
                 storageDirectory: "/var/streams",
                 ttl: TimeSpan.FromHours(1)));
         }
 
         // Subscribe-before-start — Pattern 1.
         public static async Task SubscribeBeforeStart(
-            EventStreamRegistry registry,
+            AgentEventStreamRegistry registry,
             string id,
-            Func<EventStream, Task> consumeAsync,
+            Func<AgentEventStream, Task> consumeAsync,
             Func<string, Task> startProducerAsync)
         {
-            EventStream stream = await registry.GetOrCreateAsync(id);
+            AgentEventStream stream = await registry.GetOrCreateAsync(id);
             Task consume = consumeAsync(stream);
             await startProducerAsync(id);
             await consume;
         }
 
         // Recovery & resumption — reconnect after an event id.
-        public static async Task CursoredReconnect(EventStream stream)
+        public static async Task CursoredReconnect(AgentEventStream stream)
         {
             await foreach (SseItem<string> evt in stream.Subscribe(afterEventId: "42"))
             {
@@ -82,10 +82,10 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         }
 
         // Registry surface.
-        public static async Task RegistryUsage(EventStreamRegistry registry, string id)
+        public static async Task RegistryUsage(AgentEventStreamRegistry registry, string id)
         {
-            EventStream created = await registry.GetOrCreateAsync(id);
-            EventStream existing = await registry.GetAsync(id);
+            AgentEventStream created = await registry.GetOrCreateAsync(id);
+            AgentEventStream existing = await registry.GetAsync(id);
             await registry.DeleteAsync(id);
             _ = (created, existing);
         }

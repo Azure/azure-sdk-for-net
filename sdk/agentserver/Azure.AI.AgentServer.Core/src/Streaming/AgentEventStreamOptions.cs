@@ -12,12 +12,12 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 /// Exactly one backing is chosen at startup; if none is selected the default is
 /// the in-memory live backing.
 /// </summary>
-public sealed class EventStreamOptions
+public sealed class AgentEventStreamOptions
 {
     /// <summary>The default per-event retention for the file-backed replay backing (10 minutes).</summary>
     private static readonly TimeSpan DefaultFileBackedTtl = TimeSpan.FromMinutes(10);
 
-    private Func<string, Action, EventStream> _factory = (id, _) => new BroadcastEventStream(id);
+    private Func<string, Action, AgentEventStream> _factory = (id, _) => new BroadcastEventStream(id);
 
     /// <summary>
     /// Selects the in-memory live backing (the default): constant memory, no
@@ -38,7 +38,7 @@ public sealed class EventStreamOptions
     /// <summary>
     /// Selects the file-backed replay backing: events persist to
     /// <c>&lt;storageDirectory&gt;/&lt;id&gt;.jsonl</c> and rehydrate on the next
-    /// <see cref="EventStreamRegistry.GetOrCreateAsync"/>, surviving a process crash.
+    /// <see cref="AgentEventStreamRegistry.GetOrCreateAsync"/>, surviving a process crash.
     /// The event text (<see cref="SseItem{T}.Data"/>) is already a string, so no payload
     /// codec is required.
     /// </summary>
@@ -65,5 +65,5 @@ public sealed class EventStreamOptions
             : storageDirectory;
 
     /// <summary>Builds a backing instance for the given id, wiring its self-destroy callback.</summary>
-    internal EventStream CreateStream(string id, Action onDestroy) => _factory(id, onDestroy);
+    internal AgentEventStream CreateStream(string id, Action onDestroy) => _factory(id, onDestroy);
 }

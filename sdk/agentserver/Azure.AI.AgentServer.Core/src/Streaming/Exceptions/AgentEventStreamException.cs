@@ -9,24 +9,24 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 /// Base type for all event-stream errors. Catch this to handle any streaming
 /// failure uniformly. Mirrors Python's <c>EventStreamError</c>.
 /// </summary>
-public class EventStreamException : Exception
+public class AgentEventStreamException : Exception
 {
-    /// <summary>Initializes a new instance of the <see cref="EventStreamException"/> class.</summary>
-    public EventStreamException()
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStreamException"/> class.</summary>
+    public AgentEventStreamException()
     {
     }
 
-    /// <summary>Initializes a new instance of the <see cref="EventStreamException"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStreamException"/> class.</summary>
     /// <param name="message">The error message.</param>
-    public EventStreamException(string message)
+    public AgentEventStreamException(string message)
         : base(message)
     {
     }
 
-    /// <summary>Initializes a new instance of the <see cref="EventStreamException"/> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="AgentEventStreamException"/> class.</summary>
     /// <param name="message">The error message.</param>
     /// <param name="innerException">The underlying cause.</param>
-    public EventStreamException(string message, Exception innerException)
+    public AgentEventStreamException(string message, Exception innerException)
         : base(message, innerException)
     {
     }

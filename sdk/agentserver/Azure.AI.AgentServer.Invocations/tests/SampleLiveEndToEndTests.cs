@@ -308,16 +308,16 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientResearchSnippets.ResilientResearchHandler>();
 
-        builder.Services.AddEventStreams(o => o.UseInMemoryReplay(
+        builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
             ttl: TimeSpan.FromMinutes(5)));
 
         ResilientTaskBuilder tasks = builder.Services.AddResilientTasks();
 
         var app = builder.Build();
 
-        // Provider-aware overloads were removed: resolve the singleton EventStreamRegistry from the
+        // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry from the
         // built container and capture it in the plain delegate (registry is read lazily at invoke).
-        EventStreamRegistry streams = app.Services.GetRequiredService<EventStreamRegistry>();
+        AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
         tasks.AddMultiTurnTask<SampleResilientResearchSnippets.ResearchRequest,
                  SampleResilientResearchSnippets.ResearchResult>(
             "research",

@@ -52,13 +52,33 @@ public sealed class ResilientTaskException : Exception
     /// </summary>
     public TaskFailureDetail? Failure { get; init; }
 
-    private static string DefaultMessage(ResilientTaskErrorCode errorCode) => errorCode switch
+    private static string DefaultMessage(ResilientTaskErrorCode errorCode)
     {
-        ResilientTaskErrorCode.HandlerError => "The task handler failed.",
-        ResilientTaskErrorCode.ExhaustedRetries => "The task exhausted its retry budget.",
-        ResilientTaskErrorCode.Conflict => "The task operation conflicts with the task's current state.",
-        ResilientTaskErrorCode.PreconditionFailed => "The task's last input id did not match the supplied precondition.",
-        ResilientTaskErrorCode.QueueFull => "The task steering queue is full.",
-        _ => "The resilient task operation failed.",
-    };
+        if (errorCode == ResilientTaskErrorCode.HandlerError)
+        {
+            return "The task handler failed.";
+        }
+
+        if (errorCode == ResilientTaskErrorCode.ExhaustedRetries)
+        {
+            return "The task exhausted its retry budget.";
+        }
+
+        if (errorCode == ResilientTaskErrorCode.Conflict)
+        {
+            return "The task operation conflicts with the task's current state.";
+        }
+
+        if (errorCode == ResilientTaskErrorCode.PreconditionFailed)
+        {
+            return "The task's last input id did not match the supplied precondition.";
+        }
+
+        if (errorCode == ResilientTaskErrorCode.QueueFull)
+        {
+            return "The task steering queue is full.";
+        }
+
+        return "The resilient task operation failed.";
+    }
 }
