@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 
 namespace Azure.Security.Attestation
 {
@@ -37,7 +36,6 @@ namespace Azure.Security.Attestation
     [ModelReaderWriterBuildable(typeof(PolicyModificationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyResponse))]
     [ModelReaderWriterBuildable(typeof(RemoveRequest))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuntimeData))]
     [ModelReaderWriterBuildable(typeof(SealedAttestationResponse))]
     [ModelReaderWriterBuildable(typeof(StoredAttestationPolicy))]
