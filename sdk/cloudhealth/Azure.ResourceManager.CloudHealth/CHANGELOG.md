@@ -10,7 +10,13 @@
 
 ### Other Changes
 
-## 1.0.0-beta.3 (2026-07-31)
+## 1.0.0-beta.4 (2026-08-06)
+
+### Features Added
+
+Additional Signal refresh interval added
+
+## 1.0.0-beta.3 (2026-06-08)
 
 ### Features Added
 
