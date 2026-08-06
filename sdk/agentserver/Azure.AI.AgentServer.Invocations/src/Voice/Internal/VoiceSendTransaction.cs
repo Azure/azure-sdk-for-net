@@ -24,6 +24,7 @@ internal sealed class VoiceSendTransaction
     private readonly WebSocket _webSocket;
     private readonly SemaphoreSlim _sendGate = new(1, 1);
     private readonly CancellationToken _wireCancellation;
+    private int _abortRequested;
 
     public VoiceSendTransaction(WebSocket webSocket, CancellationToken wireCancellation = default)
     {
@@ -31,7 +32,7 @@ internal sealed class VoiceSendTransaction
         _wireCancellation = wireCancellation;
     }
 
-    public bool Ending => _webSocket.State != WebSocketState.Open;
+    public bool Ending => Volatile.Read(ref _abortRequested) != 0 || _webSocket.State != WebSocketState.Open;
 
     /// <summary>
     /// Sends a stateless frame through the same transaction owner used by
@@ -56,19 +57,42 @@ internal sealed class VoiceSendTransaction
         VoiceFramePayload frame,
         Func<CancellationToken, ValueTask<TReservation>> reserveAsync,
         Func<TReservation, ValueTask<bool>> commitAsync,
-        CancellationToken cancellationToken) =>
-        ExecuteAsync(new[] { frame }, reserveAsync, commitAsync, cancellationToken);
+        CancellationToken cancellationToken,
+        CancellationToken responseCancellation = default,
+        Func<ValueTask>? beforeWireAsync = null,
+        Action? wireWriteCompleted = null) =>
+        ExecuteAsync(
+            new[] { frame },
+            reserveAsync,
+            commitAsync,
+            cancellationToken,
+            responseCancellation,
+            beforeWireAsync,
+            wireWriteCompleted);
 
     /// <summary>
     /// Executes an ordered group of frames as one reservation. This is used
     /// when opening a response and sending its first output must be atomic from
     /// the SDK state machine's perspective.
     /// </summary>
+    /// <remarks>
+    /// <paramref name="responseCancellation"/> interrupts an in-flight wire
+    /// write when the owning response terminates (for example, a caller
+    /// barge-in or a response timeout) so a back-pressured send cannot remain
+    /// blocked on a now-terminal response. An interrupted write leaves the
+    /// message framing ambiguous, so it aborts the carrier like any other wire
+    /// failure. A write that completes fully before the terminal is not
+    /// interrupted: the frame is valid on the wire and the bridge drops later
+    /// output for a terminal response, so the connection is left intact.
+    /// </remarks>
     public async Task<TReservation> ExecuteAsync<TReservation>(
         IReadOnlyList<VoiceFramePayload> frames,
         Func<CancellationToken, ValueTask<TReservation>> reserveAsync,
         Func<TReservation, ValueTask<bool>> commitAsync,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        CancellationToken responseCancellation = default,
+        Func<ValueTask>? beforeWireAsync = null,
+        Action? wireWriteCompleted = null)
     {
         ArgumentNullException.ThrowIfNull(frames);
         ArgumentNullException.ThrowIfNull(reserveAsync);
@@ -90,19 +114,111 @@ internal sealed class VoiceSendTransaction
             cancellationToken.ThrowIfCancellationRequested();
             var reservation = await reserveAsync(CancellationToken.None).ConfigureAwait(false);
 
+            // The wire write observes the connection runtime token and, for
+            // response-scoped sends, the owning response's terminal token, so a
+            // back-pressured write is interrupted when the response terminates.
+            using var wireLink = responseCancellation.CanBeCanceled
+                ? CancellationTokenSource.CreateLinkedTokenSource(_wireCancellation, responseCancellation)
+                : null;
+            var wireToken = wireLink?.Token ?? _wireCancellation;
+
+            // Cancellation that was already visible before the first wire
+            // attempt cannot have produced a partial frame. Fail the logical
+            // transaction without aborting the otherwise healthy carrier. Once
+            // execution crosses this check, any cancellation/error from
+            // SendAsync is conservatively treated as an ambiguous wire attempt.
+            if (wireToken.IsCancellationRequested)
+            {
+                throw new VoiceBridgeConnectionClosedException(
+                    "The outbound transaction was terminal before its wire write.");
+            }
+
+            if (beforeWireAsync is not null)
+            {
+                await beforeWireAsync().ConfigureAwait(false);
+            }
+
+            // The pre-wire callback can race a response or connection
+            // terminal. Recheck before invoking the socket so an already
+            // cancelled token never reaches WebSocket.SendAsync and gets
+            // misclassified as an ambiguous write attempt.
+            if (wireToken.IsCancellationRequested)
+            {
+                throw new VoiceBridgeConnectionClosedException(
+                    "The outbound transaction was terminal before its wire write.");
+            }
+
             try
             {
-                foreach (var preparedFrame in preparedFrames.Frames)
+                for (var index = 0; index < preparedFrames.Frames.Count; index++)
                 {
-                    await _webSocket.SendAsync(
+                    if (wireToken.IsCancellationRequested)
+                    {
+                        // A terminal after an earlier frame in this transaction
+                        // leaves the ordered group incomplete on the wire.
+                        if (index > 0)
+                        {
+                            AbortBestEffort();
+                        }
+
+                        throw new VoiceBridgeConnectionClosedException(
+                            "The outbound transaction was terminal before its wire write.");
+                    }
+
+                    var preparedFrame = preparedFrames.Frames[index];
+                    // Calling WebSocket.SendAsync is the irreversible attempt
+                    // boundary. The socket token is intentionally None: our
+                    // explicit state below distinguishes pre-call cancellation
+                    // from cancellation racing an already-started operation.
+                    var sendTask = _webSocket.SendAsync(
                         preparedFrame.WrittenMemory,
                         WebSocketMessageType.Text,
                         endOfMessage: true,
-                        _wireCancellation).ConfigureAwait(false);
+                        CancellationToken.None).AsTask();
+                    var writeState = new WireWriteState(
+                        this,
+                        sendTask,
+                        index == preparedFrames.Frames.Count - 1 ? wireWriteCompleted : null);
+                    writeState.ObserveCompletion(sendTask);
+                    var cancellationRegistration = wireToken.CanBeCanceled
+                        ? wireToken.UnsafeRegister(
+                            static state => ((WireWriteState)state!).Cancel(),
+                            writeState)
+                        : default;
+                    try
+                    {
+                        await Task.WhenAny(sendTask, writeState.Cancellation).ConfigureAwait(false);
+                        if (!writeState.WasCancelled)
+                        {
+                            await sendTask.ConfigureAwait(false);
+                            writeState.Complete(sendTask);
+                        }
+                    }
+                    finally
+                    {
+                        // Never synchronously wait for an in-progress Abort
+                        // callback while holding the connection send gate.
+                        cancellationRegistration.Unregister();
+                        if (wireToken.IsCancellationRequested)
+                        {
+                            writeState.Cancel();
+                        }
+                    }
+
+                    if (writeState.WasCancelled)
+                    {
+                        // A non-cooperative WebSocket implementation may
+                        // not complete its pending send after Abort. Keep
+                        // the pooled frame alive until that operation really
+                        // completes, but release the transaction gate now.
+                        preparedFrames.TransferOwnershipTo(sendTask);
+                        throw new VoiceBridgeConnectionClosedException(
+                            "The voice connection closed during an outbound transaction.");
+                    }
                 }
             }
 #pragma warning disable CA1031 // Any exception after a wire attempt makes delivery ambiguous.
-            catch (Exception exception)
+            catch (Exception exception) when (exception is not VoiceBridgeConnectionClosedException)
 #pragma warning restore CA1031
             {
                 AbortBestEffort();
@@ -128,6 +244,13 @@ internal sealed class VoiceSendTransaction
 
             if (!committed)
             {
+                // The frame was written to the wire in full, but the response
+                // terminalized (for example, a racing barge-in or timeout) before
+                // the SDK-side commit ran. This is a protocol-legal late frame:
+                // the bridge drops later output for a terminal response, so the
+                // wire and SDK remain consistent and the carrier is intentionally
+                // left open — a barge-in or timeout must not tear down the call.
+                // The customer send observes a terminal exception and stops.
                 throw new VoiceBridgeConnectionClosedException(
                     "The outbound transaction lost terminal arbitration after its wire write.");
             }
@@ -238,9 +361,25 @@ internal sealed class VoiceSendTransaction
 
     private void AbortBestEffort()
     {
+        if (!TryRequestAbort())
+        {
+            return;
+        }
+
+        AbortSocketBestEffort();
+    }
+
+    private bool TryRequestAbort() =>
+        Interlocked.CompareExchange(ref _abortRequested, 1, 0) == 0;
+
+    private void AbortSocketBestEffort()
+    {
         try
         {
-            _webSocket.Abort();
+            if (_webSocket.State is not (WebSocketState.Aborted or WebSocketState.Closed))
+            {
+                _webSocket.Abort();
+            }
         }
 #pragma warning disable CA1031 // Ambiguous writes must not escape without carrier abort.
         catch (Exception)
@@ -251,6 +390,8 @@ internal sealed class VoiceSendTransaction
 
     private sealed class PreparedFrameCollection : IDisposable
     {
+        private int _ownershipTransferred;
+
         public PreparedFrameCollection(IReadOnlyList<FixedSizeBufferStream> frames)
         {
             Frames = frames;
@@ -258,11 +399,122 @@ internal sealed class VoiceSendTransaction
 
         public IReadOnlyList<FixedSizeBufferStream> Frames { get; }
 
+        public void TransferOwnershipTo(Task sendTask)
+        {
+            if (Interlocked.Exchange(ref _ownershipTransferred, 1) != 0)
+            {
+                return;
+            }
+
+            _ = sendTask.ContinueWith(
+                static (completed, state) =>
+                {
+                    if (completed.IsFaulted)
+                    {
+                        _ = completed.Exception;
+                    }
+
+                    ((PreparedFrameCollection)state!).DisposeFrames();
+                },
+                this,
+                CancellationToken.None,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
+        }
+
         public void Dispose()
+        {
+            if (Volatile.Read(ref _ownershipTransferred) != 0)
+            {
+                return;
+            }
+
+            DisposeFrames();
+        }
+
+        private void DisposeFrames()
         {
             foreach (var frame in Frames)
             {
                 frame.Dispose();
+            }
+        }
+    }
+
+    private sealed class WireWriteState
+    {
+        private const int InFlight = 0;
+        private const int Completed = 1;
+        private const int Cancelled = 2;
+
+        private readonly VoiceSendTransaction _transaction;
+        private readonly Task _sendTask;
+        private readonly Action? _writeCompleted;
+        private readonly TaskCompletionSource _cancellation =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private int _state;
+
+        public WireWriteState(
+            VoiceSendTransaction transaction,
+            Task sendTask,
+            Action? writeCompleted)
+        {
+            _transaction = transaction;
+            _sendTask = sendTask;
+            _writeCompleted = writeCompleted;
+        }
+
+        public Task Cancellation => _cancellation.Task;
+
+        public bool WasCancelled => Volatile.Read(ref _state) == Cancelled;
+
+        public void ObserveCompletion(Task sendTask)
+        {
+            _ = sendTask.ContinueWith(
+                static (completed, state) => ((WireWriteState)state!).Complete(completed),
+                this,
+                CancellationToken.None,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
+        }
+
+        public void Cancel()
+        {
+            if (_sendTask.IsCompletedSuccessfully)
+            {
+                Complete(_sendTask);
+                return;
+            }
+
+            if (Interlocked.CompareExchange(ref _state, Cancelled, InFlight) != InFlight)
+            {
+                return;
+            }
+
+            // The send may have completed between the first observation and
+            // cancellation winning the state CAS. A completed frame is valid
+            // on the wire and must win over a later terminal notification.
+            if (_sendTask.IsCompletedSuccessfully &&
+                Interlocked.CompareExchange(ref _state, Completed, Cancelled) == Cancelled)
+            {
+                _writeCompleted?.Invoke();
+                return;
+            }
+
+            var shouldAbort = _transaction.TryRequestAbort();
+            _cancellation.TrySetResult();
+            if (shouldAbort)
+            {
+                _transaction.AbortSocketBestEffort();
+            }
+        }
+
+        public void Complete(Task sendTask)
+        {
+            if (Interlocked.CompareExchange(ref _state, Completed, InFlight) == InFlight &&
+                sendTask.Status == TaskStatus.RanToCompletion)
+            {
+                _writeCompleted?.Invoke();
             }
         }
     }

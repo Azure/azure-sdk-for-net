@@ -230,7 +230,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         ArgumentNullException.ThrowIfNull(webSocket);
         ArgumentNullException.ThrowIfNull(context);
 
-        var connection = new VoiceConnection(webSocket, this, cancellationToken);
+        var connection = new VoiceConnection(webSocket, this, context, cancellationToken);
         await connection.RunAsync().ConfigureAwait(false);
     }
 }

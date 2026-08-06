@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
+using Azure.AI.AgentServer.Invocations.Internal;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -76,6 +78,39 @@ public class VoiceHandlerEndToEndTests
     }
 
     [Test]
+    public async Task SessionExposesInvocationTransportContext()
+    {
+        var handler = new ContextCapturingHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        var server = app.GetTestServer();
+        var client = server.CreateWebSocketClient();
+        client.ConfigureRequest = request =>
+        {
+            request.Headers["x-client-test"] = "forwarded";
+            request.Headers["x-agent-user-id"] = "user-42";
+            request.Headers["x-agent-foundry-call-id"] = "call-42";
+        };
+        using var webSocket = await client.ConnectAsync(
+            new Uri(server.BaseAddress, "invocations_ws?custom=value"),
+            CancellationToken.None);
+
+        await SendAsync(webSocket, SessionStartFrame("m_start"));
+        using var ready = await ReceiveJsonAsync(webSocket);
+        var context = await handler.Context.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(context.InvocationId, Is.Not.Empty);
+            Assert.That(context.SessionId, Is.Not.Empty);
+            Assert.That(context.ClientHeaders["x-client-test"], Is.EqualTo("forwarded"));
+            Assert.That(context.QueryParameters["custom"].ToString(), Is.EqualTo("value"));
+            Assert.That(context.PlatformContext.UserIdKey, Is.EqualTo("user-42"));
+            Assert.That(context.PlatformContext.CallId, Is.EqualTo("call-42"));
+        });
+    }
+
+    [Test]
     public async Task NoInputTurnDispatchesAndRepliesInWireOrder()
     {
         var handler = new NoInputHandler();
@@ -99,6 +134,262 @@ public class VoiceHandlerEndToEndTests
             Assert.That(output.RootElement.GetProperty("text").GetString(), Is.EqualTo("Silence count 2"));
             Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
         });
+    }
+
+    [Test]
+    public async Task UnknownOnlyUserContentDoesNotCreateTurnOrCloseConnection()
+    {
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, """
+            {"type":"user.message","id":"opaque-user","ts":"2026-08-03T00:00:00.000Z","item_id":"in_future","content":[{"type":"future_content","value":1}]}
+            """);
+        await SendAsync(webSocket, """
+            {"type":"user.no_input","id":"opaque-no-input","ts":"2026-08-03T00:00:01.000Z","item_id":"in_after_future","count":1}
+            """);
+
+        using var created = await ReceiveJsonAsync(webSocket);
+        using var output = await ReceiveJsonAsync(webSocket);
+        using var done = await ReceiveJsonAsync(webSocket);
+        Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+    }
+
+    [Test]
+    public async Task BinaryFrameClosesConnectionWithUnsupportedData()
+    {
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await webSocket.SendAsync(
+            new byte[] { 1, 2, 3 },
+            WebSocketMessageType.Binary,
+            endOfMessage: true,
+            CancellationToken.None);
+
+        var result = await webSocket.ReceiveAsync(new byte[64], CancellationToken.None).WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1003));
+        });
+    }
+
+    [Test]
+    public async Task FragmentedTextFrameIsReassembledBeforeDispatch()
+    {
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+        var payload = Encoding.UTF8.GetBytes("""
+            {"type":"user.no_input","id":"m_fragmented","ts":"2026-08-03T00:00:00.000Z","item_id":"in_fragmented","count":3}
+            """);
+        var split = payload.Length / 2;
+
+        await webSocket.SendAsync(
+            payload.AsMemory(0, split),
+            WebSocketMessageType.Text,
+            endOfMessage: false,
+            CancellationToken.None);
+        await webSocket.SendAsync(
+            payload.AsMemory(split),
+            WebSocketMessageType.Text,
+            endOfMessage: true,
+            CancellationToken.None);
+
+        using var created = await ReceiveJsonAsync(webSocket);
+        using var output = await ReceiveJsonAsync(webSocket);
+        using var done = await ReceiveJsonAsync(webSocket);
+        Assert.Multiple(() =>
+        {
+            Assert.That(created.RootElement.GetProperty("in_reply_to")[0].GetString(), Is.EqualTo("in_fragmented"));
+            Assert.That(output.RootElement.GetProperty("text").GetString(), Is.EqualTo("Silence count 3"));
+            Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+        });
+    }
+
+    [Test]
+    public async Task FragmentedFrameOverOneMiBClosesWithMessageTooBig()
+    {
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+        var fragment = new byte[600 * 1024];
+        Array.Fill(fragment, (byte)' ');
+
+        await webSocket.SendAsync(
+            fragment,
+            WebSocketMessageType.Text,
+            endOfMessage: false,
+            CancellationToken.None);
+        await webSocket.SendAsync(
+            fragment,
+            WebSocketMessageType.Text,
+            endOfMessage: true,
+            CancellationToken.None);
+
+        var result = await webSocket.ReceiveAsync(new byte[64], CancellationToken.None).WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1009));
+        });
+    }
+
+    [Test]
+    public async Task AgentTerminalAbsorbsLateFramesWithoutInvokingCustomerCallbacks()
+    {
+        var handler = new AgentTerminalPhaseHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, UserMessageFrame("m_user", "in_terminal", "end"));
+        using var endCall = await ReceiveJsonAsync(webSocket);
+        Assert.That(endCall.RootElement.GetProperty("type").GetString(), Is.EqualTo("end_call"));
+        await handler.TerminalSent.Task.WaitAsync(TestTimeout);
+
+        await SendAsync(webSocket, """
+            {"type":"user.speech_started","id":"m_late_signal","ts":"2026-08-03T00:00:01.000Z"}
+            """);
+        await SendAsync(webSocket, """
+            {"type":"conversation.item.create","id":"m_late_history","ts":"2026-08-03T00:00:02.000Z","item":{"id":"hi_late","role":"user","content":[{"type":"input_text","text":"must not persist"}]}}
+            """);
+        await SendAsync(webSocket, UserMessageFrame("m_late_turn", "in_late", "must not run"));
+        await SendAsync(webSocket, """
+            {"type":"session.end","id":"m_end","ts":"2026-08-03T00:00:03.000Z","reason":"agent_completed"}
+            """);
+
+        await handler.SessionEnded.Task.WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(handler.SignalCallbackCount, Is.Zero);
+            Assert.That(handler.HistoryCallbackCount, Is.Zero);
+            Assert.That(handler.UserMessageCallbackCount, Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public async Task MoreThan4096UniqueMessagesDoNotTerminateValidConnection()
+    {
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        for (var index = 0; index < 4100; index++)
+        {
+            await SendAsync(webSocket, $$"""
+                {"type":"future.message","id":"opaque-{{index}}","ts":"2026-08-03T00:00:00.000Z"}
+                """);
+        }
+
+        await SendAsync(webSocket, """
+            {"type":"user.no_input","id":"opaque-final","ts":"2026-08-03T00:00:01.000Z","item_id":"in_after_limit","count":1}
+            """);
+        using var created = await ReceiveJsonAsync(webSocket);
+        using var output = await ReceiveJsonAsync(webSocket);
+        using var done = await ReceiveJsonAsync(webSocket);
+        Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+    }
+
+    [Test]
+    public async Task ThrowingMeterListenerDoesNotFailConnection()
+    {
+        using var listener = new MeterListener();
+        listener.InstrumentPublished = (instrument, meterListener) =>
+        {
+            if (instrument.Meter.Name == "Azure.AI.AgentServer.Invocations")
+            {
+                meterListener.EnableMeasurementEvents(instrument);
+            }
+        };
+        listener.SetMeasurementEventCallback<long>(static (instrument, measurement, tags, state) =>
+            throw new InvalidOperationException("telemetry failed"));
+        listener.SetMeasurementEventCallback<double>(static (instrument, measurement, tags, state) =>
+            throw new InvalidOperationException("telemetry failed"));
+        listener.Start();
+
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+        await SendAsync(webSocket, """
+            {"type":"user.no_input","id":"m_no_input","ts":"2026-08-03T00:00:00.000Z","item_id":"in_silence","count":1}
+            """);
+
+        using var created = await ReceiveJsonAsync(webSocket);
+        using var output = await ReceiveJsonAsync(webSocket);
+        using var done = await ReceiveJsonAsync(webSocket);
+        Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+    }
+
+    [Test]
+    public async Task ThrowingTurnActivityListenerDoesNotFailConnection()
+    {
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == "Azure.AI.AgentServer.Invocations",
+            Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+                options.Name == "hosted_agent.turn"
+                    ? throw new InvalidOperationException("telemetry failed")
+                    : ActivitySamplingResult.AllData,
+        };
+        ActivitySource.AddActivityListener(listener);
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, """
+            {"type":"user.no_input","id":"m_no_input","ts":"2026-08-03T00:00:00.000Z","item_id":"in_silence","count":1}
+            """);
+
+        using var created = await ReceiveJsonAsync(webSocket);
+        using var output = await ReceiveJsonAsync(webSocket);
+        using var done = await ReceiveJsonAsync(webSocket);
+        Assert.That(done.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+    }
+
+    [Test]
+    public async Task BlockingTurnActivityListenerDoesNotSuppressSessionEnd()
+    {
+        var listenerStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseListener = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == "Azure.AI.AgentServer.Invocations",
+            Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+            {
+                if (options.Name == "hosted_agent.turn")
+                {
+                    listenerStarted.TrySetResult();
+                    releaseListener.Task.GetAwaiter().GetResult();
+                }
+
+                return ActivitySamplingResult.AllData;
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+        var handler = new SessionEndHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        try
+        {
+            await SendAsync(webSocket, UserMessageFrame("m_user", "in_1", "blocked telemetry"));
+            await listenerStarted.Task.WaitAsync(TestTimeout);
+            await SendAsync(webSocket, """
+                {"type":"session.end","id":"m_end","ts":"2026-08-03T00:00:01.000Z","reason":"caller_hangup"}
+                """);
+
+            var sessionEnd = await handler.SessionEnd.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            Assert.That(sessionEnd.Reason, Is.EqualTo("caller_hangup"));
+        }
+        finally
+        {
+            releaseListener.TrySetResult();
+        }
     }
 
     [Test]
@@ -132,6 +423,28 @@ public class VoiceHandlerEndToEndTests
             Assert.That(bargeIn.ItemId, Is.EqualTo(itemId));
             Assert.That(bargeIn.HeardText, Is.EqualTo("Hel"));
             Assert.That(terminalResponse.RetainedOutputChunkCount, Is.Zero);
+        });
+    }
+
+    [Test]
+    public async Task InvalidTimeoutInputPrefixClosesWithPolicyViolation()
+    {
+        var handler = new BlockingTurnHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, UserMessageFrame("m_user", "in_expected", "wait"));
+        await handler.TurnStarted.Task.WaitAsync(TestTimeout);
+        await SendAsync(webSocket, """
+            {"type":"response.timeout","id":"m_timeout","ts":"2026-08-03T00:00:01.000Z","item_ids":["in_wrong"],"stage":"first_output"}
+            """);
+
+        var result = await webSocket.ReceiveAsync(new byte[64], CancellationToken.None).WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(VoiceProtocolConstants.ClosePolicyViolation));
         });
     }
 
@@ -329,6 +642,34 @@ public class VoiceHandlerEndToEndTests
     }
 
     [Test]
+    public async Task TimeoutBeforeProactiveAcceptanceClosesWithPolicyViolation()
+    {
+        var handler = new PendingProactiveTimeoutHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, """
+            {"type":"user.speech_started","id":"m_speech","ts":"2026-08-03T00:00:01.000Z"}
+            """);
+        using var created = await ReceiveJsonAsync(webSocket);
+        var responseId = created.RootElement.GetProperty("response_id").GetString()!;
+
+        await SendAsync(webSocket, $$"""
+            {"type":"response.timeout","id":"m_timeout","ts":"2026-08-03T00:00:02.000Z","response_id":"{{responseId}}","stage":"first_output"}
+            """);
+
+        var close = await webSocket.ReceiveAsync(new byte[64], CancellationToken.None).WaitAsync(TestTimeout);
+        var admissionFailure = await handler.AdmissionFailure.Task.WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(VoiceProtocolConstants.ClosePolicyViolation));
+            Assert.That(admissionFailure, Is.TypeOf<VoiceBridgeConnectionClosedException>());
+        });
+    }
+
+    [Test]
     public async Task AcceptedProactiveResponseBlocksLaterTurnUntilTerminal()
     {
         var handler = new ProactiveOrderingHandler();
@@ -347,9 +688,6 @@ public class VoiceHandlerEndToEndTests
         await handler.ProactiveAccepted.Task.WaitAsync(TestTimeout);
 
         await SendAsync(webSocket, UserMessageFrame("m_user", "in_later", "later"));
-        Assert.That(
-            async () => await handler.UserTurnStarted.Task.WaitAsync(TimeSpan.FromMilliseconds(250)),
-            Throws.TypeOf<TimeoutException>());
 
         handler.AllowProactiveCompletion.TrySetResult();
         using var proactiveOutput = await ReceiveJsonAsync(webSocket);
@@ -359,7 +697,13 @@ public class VoiceHandlerEndToEndTests
         using var replyOutput = await ReceiveJsonAsync(webSocket);
         using var replyDone = await ReceiveJsonAsync(webSocket);
 
-        Assert.That(replyCreated.RootElement.GetProperty("in_reply_to")[0].GetString(), Is.EqualTo("in_later"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(proactiveOutput.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.output_text.done"));
+            Assert.That(proactiveDone.RootElement.GetProperty("type").GetString(), Is.EqualTo("response.done"));
+            Assert.That(handler.UserTurnStartedBeforeProactiveTerminal, Is.False);
+            Assert.That(replyCreated.RootElement.GetProperty("in_reply_to")[0].GetString(), Is.EqualTo("in_later"));
+        });
     }
 
     [Test]
@@ -426,6 +770,8 @@ public class VoiceHandlerEndToEndTests
         {
             Assert.That(outcome.Kind, Is.EqualTo("cancelled"));
             Assert.That(outcome.HeardText, Is.EqualTo("Wr"));
+            Assert.That(handler.IsTerminalAtOutcome, Is.True);
+            Assert.That(handler.IsCancellationRequestedAtOutcome, Is.True);
         });
     }
 
@@ -446,13 +792,14 @@ public class VoiceHandlerEndToEndTests
 
         handler.CancelAwait.TrySetResult();
         await handler.CancelAwaitCancelled.Task.WaitAsync(TestTimeout);
-        Assert.That(
-            async () => await ReceiveTextAsync(webSocket).WaitAsync(TimeSpan.FromMilliseconds(250)),
-            Throws.TypeOf<TimeoutException>());
+        Assert.That(handler.ResponseWasTerminalAfterAwaitCancellation, Is.False);
 
         await SendAsync(webSocket, $$"""
             {"type":"response.cancelled","id":"m_cancelled","ts":"2026-08-03T00:00:02.000Z","response_id":"{{responseId}}","item_id":"{{itemId}}","heard_text":"safe"}
             """);
+
+        await handler.TerminalObserved.Task.WaitAsync(TestTimeout);
+        Assert.That(handler.CancelPendingAtTerminal, Is.False);
     }
 
     [Test]
@@ -530,6 +877,57 @@ public class VoiceHandlerEndToEndTests
         using var done = await ReceiveJsonAsync(webSocket);
 
         Assert.That(mutationResult.RootElement.GetProperty("type").GetString(), Is.EqualTo("conversation.item.created"));
+    }
+
+    [Test]
+    public async Task HistoryMutationCanInsertAfterUserInputItem()
+    {
+        var handler = new HistoryIdentityHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, UserMessageFrame("m_user", "in_anchor", "anchor"));
+        using var created = await ReceiveJsonAsync(webSocket);
+        using var output = await ReceiveJsonAsync(webSocket);
+        using var done = await ReceiveJsonAsync(webSocket);
+        await SendAsync(webSocket, """
+            {"type":"conversation.item.create","id":"m_history","ts":"2026-08-03T00:00:01.000Z","previous_item_id":"in_anchor","item":{"id":"hi_after_anchor","role":"user","content":[{"type":"input_text","text":"context"}]}}
+            """);
+
+        using var mutationResult = await ReceiveJsonAsync(webSocket);
+        var mutation = await handler.HistoryCreated.Task.WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(mutation.PreviousItemId, Is.EqualTo("in_anchor"));
+            Assert.That(mutationResult.RootElement.GetProperty("type").GetString(), Is.EqualTo("conversation.item.created"));
+        });
+    }
+
+    [Test]
+    public async Task ReusedHistoryItemIdClosesWithPolicyViolationBeforeSecondCallback()
+    {
+        var handler = new HistoryIdentityHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        using var webSocket = await ConnectAndActivateAsync(app);
+
+        await SendAsync(webSocket, """
+            {"type":"conversation.item.create","id":"m_history_1","ts":"2026-08-03T00:00:01.000Z","item":{"id":"hi_reused","role":"user","content":[{"type":"input_text","text":"first"}]}}
+            """);
+        using var firstResult = await ReceiveJsonAsync(webSocket);
+        await handler.HistoryCreated.Task.WaitAsync(TestTimeout);
+        await SendAsync(webSocket, """
+            {"type":"conversation.item.create","id":"m_history_2","ts":"2026-08-03T00:00:02.000Z","item":{"id":"hi_reused","role":"user","content":[{"type":"input_text","text":"second"}]}}
+            """);
+
+        var close = await webSocket.ReceiveAsync(new byte[128], CancellationToken.None).WaitAsync(TestTimeout);
+        Assert.Multiple(() =>
+        {
+            Assert.That(close.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            Assert.That((int?)webSocket.CloseStatus, Is.EqualTo(1008));
+            Assert.That(handler.HistoryCallbackCount, Is.EqualTo(1));
+        });
     }
 
     [Test]
@@ -682,6 +1080,7 @@ public class VoiceHandlerEndToEndTests
         using var done = await ReceiveJsonAsync(webSocket);
         var responseId = created.RootElement.GetProperty("response_id").GetString()!;
         var customerParent = await handler.CustomerParent.Task.WaitAsync(TestTimeout);
+        var customerBaggage = await handler.CustomerBaggage.Task.WaitAsync(TestTimeout);
 
         await SendAsync(webSocket, """
             {"type":"session.end","id":"m_end","ts":"2026-08-03T00:00:02.000Z","reason":"caller_hangup"}
@@ -709,9 +1108,167 @@ public class VoiceHandlerEndToEndTests
             Assert.That(turn.TraceId, Is.EqualTo(connection.TraceId));
             Assert.That(turn.ParentSpanId, Is.EqualTo(connection.SpanId));
             Assert.That(customerParent, Is.EqualTo(turn.SpanId));
+            Assert.That(customerBaggage.InvocationId, Is.Not.Null.And.Not.Empty);
+            Assert.That(customerBaggage.SessionId, Is.Not.Null.And.Not.Empty);
             Assert.That(turn.GetTagItem("gen_ai.response.id"), Is.EqualTo(responseId));
             Assert.That(turn.Tags.Any(tag => tag.Value?.Contains("sensitive transcript", StringComparison.Ordinal) == true), Is.False);
         });
+    }
+
+    [Test]
+    public async Task DelayedConnectionActivityStillParentsLaterTurn()
+    {
+        var listenerStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseListener = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var connectionStarted = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var turnStarted = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsTelemetry.SourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+            {
+                if (options.Name == "agentserver.connection")
+                {
+                    listenerStarted.TrySetResult();
+                    releaseListener.Task.GetAwaiter().GetResult();
+                }
+
+                return ActivitySamplingResult.AllDataAndRecorded;
+            },
+            ActivityStarted = activity =>
+            {
+                if (activity.OperationName == "agentserver.connection")
+                {
+                    connectionStarted.TrySetResult(activity);
+                }
+                else if (activity.OperationName == "hosted_agent.turn")
+                {
+                    turnStarted.TrySetResult(activity);
+                }
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var handler = new NoInputHandler();
+        await using var app = BuildApp(handler);
+        await app.StartAsync();
+        try
+        {
+            var connectTask = ConnectAndActivateAsync(app);
+            await listenerStarted.Task.WaitAsync(TestTimeout);
+            using var webSocket = await connectTask.WaitAsync(TestTimeout);
+
+            releaseListener.TrySetResult();
+            var connection = await connectionStarted.Task.WaitAsync(TestTimeout);
+            var telemetryDrained = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var dispatcher = app.Services.GetRequiredService<TelemetryCallbackDispatcher>();
+            Assert.That(dispatcher.TryQueueCritical(telemetryDrained.SetResult), Is.True);
+            await telemetryDrained.Task.WaitAsync(TestTimeout);
+
+            await SendAsync(webSocket, """
+                {"type":"user.no_input","id":"m_no_input","ts":"2026-08-03T00:00:01.000Z","item_id":"in_delayed_parent","count":1}
+                """);
+            using var created = await ReceiveJsonAsync(webSocket);
+            using var output = await ReceiveJsonAsync(webSocket);
+            using var done = await ReceiveJsonAsync(webSocket);
+            var turn = await turnStarted.Task.WaitAsync(TestTimeout);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(turn.TraceId, Is.EqualTo(connection.TraceId));
+                Assert.That(turn.ParentSpanId, Is.EqualTo(connection.SpanId));
+                Assert.That(turn.GetTagItem("azure.ai.agentserver.trace.parent_fallback"), Is.Null);
+            });
+        }
+        finally
+        {
+            releaseListener.TrySetResult();
+        }
+    }
+
+    [Test]
+    public async Task TurnCreatedWhileConnectionActivityIsPendingUsesExplicitFallback()
+    {
+        var listenerStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseListener = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var turnStopped = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var fallbackRecorded = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var meterListener = new MeterListener();
+        meterListener.InstrumentPublished = (instrument, activeListener) =>
+        {
+            if (instrument.Name == "azure.ai.agentserver.invocations.voice.trace.parent_fallbacks")
+            {
+                activeListener.EnableMeasurementEvents(instrument);
+            }
+        };
+        meterListener.SetMeasurementEventCallback<long>((instrument, measurement, tags, state) =>
+        {
+            var matchingReason = false;
+            foreach (var tag in tags)
+            {
+                if (tag.Key == "reason" &&
+                    string.Equals(tag.Value as string, "connection_activity_pending", StringComparison.Ordinal))
+                {
+                    matchingReason = true;
+                    break;
+                }
+            }
+
+            if (measurement == 1 && matchingReason)
+            {
+                fallbackRecorded.TrySetResult();
+            }
+        });
+        meterListener.Start();
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsTelemetry.SourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+            {
+                if (options.Name == "agentserver.connection")
+                {
+                    listenerStarted.TrySetResult();
+                    releaseListener.Task.GetAwaiter().GetResult();
+                }
+
+                return ActivitySamplingResult.AllDataAndRecorded;
+            },
+            ActivityStopped = activity =>
+            {
+                if (activity.OperationName == "hosted_agent.turn")
+                {
+                    turnStopped.TrySetResult(activity);
+                }
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        await using var app = BuildApp(new NoInputHandler());
+        await app.StartAsync();
+        try
+        {
+            var connectTask = ConnectAndActivateAsync(app);
+            await listenerStarted.Task.WaitAsync(TestTimeout);
+            using var webSocket = await connectTask.WaitAsync(TestTimeout);
+
+            await SendAsync(webSocket, """
+                {"type":"user.no_input","id":"m_no_input","ts":"2026-08-03T00:00:01.000Z","item_id":"in_fallback","count":1}
+                """);
+            using var created = await ReceiveJsonAsync(webSocket);
+            using var output = await ReceiveJsonAsync(webSocket);
+            using var done = await ReceiveJsonAsync(webSocket);
+
+            releaseListener.TrySetResult();
+            var turn = await turnStopped.Task.WaitAsync(TestTimeout);
+            await fallbackRecorded.Task.WaitAsync(TestTimeout);
+            Assert.That(
+                turn.GetTagItem("azure.ai.agentserver.trace.parent_fallback"),
+                Is.EqualTo(true));
+        }
+        finally
+        {
+            releaseListener.TrySetResult();
+        }
     }
 
     [Test]
@@ -929,6 +1486,63 @@ public class VoiceHandlerEndToEndTests
             response.SendTextAsync($"Silence count {noInput.Count}", cancellationToken);
     }
 
+    private sealed class AgentTerminalPhaseHandler : VoiceHandler
+    {
+        private int _signalCallbackCount;
+        private int _historyCallbackCount;
+        private int _userMessageCallbackCount;
+
+        public TaskCompletionSource TerminalSent { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public TaskCompletionSource SessionEnded { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public int SignalCallbackCount => Volatile.Read(ref _signalCallbackCount);
+
+        public int HistoryCallbackCount => Volatile.Read(ref _historyCallbackCount);
+
+        public int UserMessageCallbackCount => Volatile.Read(ref _userMessageCallbackCount);
+
+        protected override async Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken)
+        {
+            Interlocked.Increment(ref _userMessageCallbackCount);
+            await session.EndCallAsync("test_complete", cancellationToken: cancellationToken);
+            TerminalSent.TrySetResult();
+        }
+
+        protected override Task OnUserSpeechStartedAsync(
+            VoiceSession session,
+            UserSpeechStartedEvent speechStarted,
+            CancellationToken cancellationToken)
+        {
+            Interlocked.Increment(ref _signalCallbackCount);
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnConversationItemCreateAsync(
+            VoiceSession session,
+            ConversationItemCreateEvent create,
+            CancellationToken cancellationToken)
+        {
+            Interlocked.Increment(ref _historyCallbackCount);
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnSessionEndAsync(
+            VoiceSession session,
+            SessionEndEvent sessionEnd,
+            CancellationToken cancellationToken)
+        {
+            SessionEnded.TrySetResult();
+            return Task.CompletedTask;
+        }
+    }
+
     private sealed class SynchronousThrowStartupHandler : VoiceHandler
     {
         protected override Task OnSessionStartAsync(
@@ -957,6 +1571,43 @@ public class VoiceHandlerEndToEndTests
             UserMessageEvent message,
             VoiceResponse response,
             CancellationToken cancellationToken) => Task.CompletedTask;
+    }
+
+    private sealed class ContextCapturingHandler : VoiceHandler
+    {
+        public TaskCompletionSource<InvocationContext> Context { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override Task OnSessionStartAsync(
+            VoiceSession session,
+            SessionStartEvent startEvent,
+            CancellationToken cancellationToken)
+        {
+            Context.TrySetResult(session.InvocationContext);
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+    }
+
+    private sealed class BlockingTurnHandler : VoiceHandler
+    {
+        public TaskCompletionSource TurnStarted { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override async Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken)
+        {
+            TurnStarted.TrySetResult();
+            await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+        }
     }
 
     private abstract class CancellableTurnHandler : VoiceHandler
@@ -1146,6 +1797,8 @@ public class VoiceHandlerEndToEndTests
 
     private sealed class ProactiveOrderingHandler : VoiceHandler
     {
+        private int _proactiveTerminal;
+
         public TaskCompletionSource ProactiveAccepted { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -1155,12 +1808,15 @@ public class VoiceHandlerEndToEndTests
         public TaskCompletionSource UserTurnStarted { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
+        public bool UserTurnStartedBeforeProactiveTerminal { get; private set; }
+
         protected override Task OnUserMessageAsync(
             VoiceSession session,
             UserMessageEvent message,
             VoiceResponse response,
             CancellationToken cancellationToken)
         {
+            UserTurnStartedBeforeProactiveTerminal = Volatile.Read(ref _proactiveTerminal) == 0;
             UserTurnStarted.TrySetResult();
             return response.SendTextAsync("later reply", cancellationToken);
         }
@@ -1181,6 +1837,42 @@ public class VoiceHandlerEndToEndTests
             await AllowProactiveCompletion.Task.WaitAsync(cancellationToken);
             await response.SendTextAsync("proactive", cancellationToken);
             await response.CompleteAsync(cancellationToken);
+            Volatile.Write(ref _proactiveTerminal, 1);
+        }
+    }
+
+    private sealed class PendingProactiveTimeoutHandler : VoiceHandler
+    {
+        public TaskCompletionSource<Exception> AdmissionFailure { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        protected override Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken) => Task.CompletedTask;
+
+        protected override Task OnUserSpeechStartedAsync(
+            VoiceSession session,
+            UserSpeechStartedEvent speechStarted,
+            CancellationToken cancellationToken)
+        {
+            _ = StartProactiveAsync(session, cancellationToken);
+            return Task.CompletedTask;
+        }
+
+        private async Task StartProactiveAsync(
+            VoiceSession session,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                await session.StartProactiveResponseAsync(cancellationToken: cancellationToken);
+            }
+            catch (Exception exception) when (exception is VoiceBridgeConnectionClosedException or OperationCanceledException)
+            {
+                AdmissionFailure.TrySetResult(exception);
+            }
         }
     }
 
@@ -1188,6 +1880,10 @@ public class VoiceHandlerEndToEndTests
     {
         public TaskCompletionSource<ResponseCancellationOutcome> Outcome { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public bool IsTerminalAtOutcome { get; private set; }
+
+        public bool IsCancellationRequestedAtOutcome { get; private set; }
 
         protected override async Task OnUserMessageAsync(
             VoiceSession session,
@@ -1197,6 +1893,8 @@ public class VoiceHandlerEndToEndTests
         {
             await response.SendTextDeltaAsync("Wrong", cancellationToken);
             var outcome = await response.CancelAsync("self_correction");
+            IsTerminalAtOutcome = response.IsTerminal;
+            IsCancellationRequestedAtOutcome = response.CancellationToken.IsCancellationRequested;
             Outcome.TrySetResult(outcome);
         }
     }
@@ -1209,6 +1907,13 @@ public class VoiceHandlerEndToEndTests
         public TaskCompletionSource CancelAwaitCancelled { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
+        public TaskCompletionSource TerminalObserved { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public bool ResponseWasTerminalAfterAwaitCancellation { get; private set; }
+
+        public bool CancelPendingAtTerminal { get; private set; }
+
         protected override async Task OnUserMessageAsync(
             VoiceSession session,
             UserMessageEvent message,
@@ -1216,6 +1921,11 @@ public class VoiceHandlerEndToEndTests
             CancellationToken cancellationToken)
         {
             await response.SendTextAsync("safe", cancellationToken);
+            _ = response.CancellationToken.Register(() =>
+            {
+                CancelPendingAtTerminal = response.IsCancelPending;
+                TerminalObserved.TrySetResult();
+            });
             using var cancelAwaitCancellation = new CancellationTokenSource();
             var cancellationTask = CancelAwait.Task.ContinueWith(
                 _ => cancelAwaitCancellation.Cancel(),
@@ -1228,6 +1938,7 @@ public class VoiceHandlerEndToEndTests
             }
             catch (OperationCanceledException) when (cancelAwaitCancellation.IsCancellationRequested)
             {
+                ResponseWasTerminalAfterAwaitCancellation = response.IsTerminal;
                 CancelAwaitCancelled.TrySetResult();
             }
             finally
@@ -1317,6 +2028,32 @@ public class VoiceHandlerEndToEndTests
             UserTurnStarted.TrySetResult();
             return response.SendTextAsync("after history", cancellationToken);
         }
+    }
+
+    private sealed class HistoryIdentityHandler : VoiceHandler
+    {
+        private int _historyCallbackCount;
+
+        public TaskCompletionSource<ConversationItemCreateEvent> HistoryCreated { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public int HistoryCallbackCount => Volatile.Read(ref _historyCallbackCount);
+
+        protected override Task OnConversationItemCreateAsync(
+            VoiceSession session,
+            ConversationItemCreateEvent create,
+            CancellationToken cancellationToken)
+        {
+            Interlocked.Increment(ref _historyCallbackCount);
+            HistoryCreated.TrySetResult(create);
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnUserMessageAsync(
+            VoiceSession session,
+            UserMessageEvent message,
+            VoiceResponse response,
+            CancellationToken cancellationToken) => response.SendTextAsync("anchor", cancellationToken);
     }
 
     private sealed class DedupeHandler : VoiceHandler
@@ -1416,6 +2153,9 @@ public class VoiceHandlerEndToEndTests
         public TaskCompletionSource<ActivitySpanId> CustomerParent { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
 
+        public TaskCompletionSource<(string? InvocationId, string? SessionId)> CustomerBaggage { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
         protected override async Task OnUserMessageAsync(
             VoiceSession session,
             UserMessageEvent message,
@@ -1424,6 +2164,9 @@ public class VoiceHandlerEndToEndTests
         {
             using var customerActivity = CustomerActivitySource.StartActivity("customer.model");
             CustomerParent.TrySetResult(customerActivity!.ParentSpanId);
+            CustomerBaggage.TrySetResult((
+                customerActivity.GetBaggageItem("azure.ai.agentserver.invocation_id"),
+                customerActivity.GetBaggageItem("azure.ai.agentserver.session_id")));
             await response.SendTextAsync("safe reply", cancellationToken);
         }
     }

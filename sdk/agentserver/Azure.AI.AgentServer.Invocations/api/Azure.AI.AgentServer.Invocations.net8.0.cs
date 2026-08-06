@@ -273,6 +273,7 @@ namespace Azure.AI.AgentServer.Invocations.Voice
         protected VoiceSession() { }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, object?>? Caller { get { throw null; } }
         public virtual string? Greeting { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Invocations.InvocationContext InvocationContext { get { throw null; } }
         public virtual int? NoInputTimeoutMs { get { throw null; } }
         public virtual bool Reconnect { get { throw null; } }
         public virtual Azure.AI.AgentServer.Invocations.Voice.ResponseTimeouts ResponseTimeouts { get { throw null; } }

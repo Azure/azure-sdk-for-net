@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Reflection;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Azure.AI.AgentServer.Invocations.Voice.Internal;
 using NUnit.Framework;
@@ -9,6 +10,26 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceTurnLeaseTests
 {
+    [Test]
+    public void ReleasingTextDropsChunkBackingCapacity()
+    {
+        var item = new VoiceTextItem(new StubResponse(), "it_test");
+        for (var index = 0; index < VoiceProtocolConstants.MaxOutputItemChunks; index++)
+        {
+            item.CommitDelta(string.Empty, deltaBytes: 0, escapedDeltaBytes: 0);
+        }
+
+        item.ReleaseText();
+
+        var chunksField = typeof(VoiceTextItem).GetField("_chunks", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        var chunks = (List<string>)chunksField.GetValue(item)!;
+        Assert.Multiple(() =>
+        {
+            Assert.That(chunks.Count, Is.Zero);
+            Assert.That(chunks.Capacity, Is.Zero);
+        });
+    }
+
     [Test]
     public void OnlyOneNonTerminalTurnCanBeActive()
     {

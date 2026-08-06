@@ -30,11 +30,12 @@ public class VoiceProtocolCodecTests
     }
 
     [Test]
-    public void DecodeFrameRequiresEnvelopeIdPrefix()
+    public void DecodeFrameAcceptsOpaqueEnvelopeId()
     {
-        var exception = Assert.Throws<VoiceBridgeProtocolException>(() =>
-            VoiceProtocolCodec.DecodeFrame("""{"type":"session.ready","id":"wrong","ts":"2026-07-29T00:00:00.000Z"}"""));
-        Assert.That(exception!.Message, Does.Contain("m_"));
+        var decoded = VoiceProtocolCodec.DecodeFrame(
+            """{"type":"session.ready","id":"018f4f6e-opaque","ts":"2026-07-29T00:00:00.000Z"}""");
+
+        Assert.That(decoded.GetProperty("id").GetString(), Is.EqualTo("018f4f6e-opaque"));
     }
 
     [Test]
@@ -128,6 +129,22 @@ public class VoiceProtocolCodecTests
     }
 
     [Test]
+    public void ParseSessionStartPreservesLargeCallerInteger()
+    {
+        var frame = """
+        {"type":"session.start","id":"m_1","ts":"2026-07-29T00:00:00.000Z",
+         "protocol_version":"1.0","reconnect":false,
+         "response_timeouts":{"first_output_ms":1,"idle_ms":1,"max_duration_ms":1},
+         "caller":{"custom_parameters":{"order_id":9007199254740993}}}
+        """;
+
+        var start = VoiceProtocolCodec.ParseSessionStart(VoiceProtocolCodec.DecodeFrame(frame));
+        var customParameters = (IReadOnlyDictionary<string, object?>)start.Caller!["custom_parameters"]!;
+
+        Assert.That(customParameters["order_id"], Is.EqualTo(9007199254740993m));
+    }
+
+    [Test]
     public void ParseSessionStartRejectsWrongVersion()
     {
         var frame = """
@@ -177,7 +194,7 @@ public class VoiceProtocolCodecTests
     }
 
     [Test]
-    public void ParseUserMessageRejectsNoSupportedContentParts()
+    public void ParseUserMessageSkipsUnknownContentParts()
     {
         var frame = """
         {"type":"user.message","id":"m_2","ts":"2026-07-29T00:00:00.000Z",
@@ -185,8 +202,9 @@ public class VoiceProtocolCodecTests
         """;
         var root = VoiceProtocolCodec.DecodeFrame(frame);
 
-        var exception = Assert.Throws<VoiceBridgeProtocolException>(() => VoiceProtocolCodec.ParseUserMessage(root));
-        Assert.That(exception!.Message, Does.Contain("supported"));
+        var message = VoiceProtocolCodec.ParseUserMessage(root);
+
+        Assert.That(message.Content, Is.Empty);
     }
 
     [Test]
@@ -202,6 +220,15 @@ public class VoiceProtocolCodecTests
             Assert.Throws<VoiceBridgeProtocolException>(() => VoiceProtocolCodec.ParseResponseTimeout(neither));
             Assert.Throws<VoiceBridgeProtocolException>(() => VoiceProtocolCodec.ParseResponseTimeout(both));
         });
+    }
+
+    [Test]
+    public void ParseResponseTimeoutTreatsExplicitNullAsPresent()
+    {
+        var root = VoiceProtocolCodec.DecodeFrame(
+            """{"type":"response.timeout","id":"m_4","ts":"2026-07-29T00:00:00.000Z","stage":"idle","response_id":null,"item_ids":["in_1"]}""");
+
+        Assert.Throws<VoiceBridgeProtocolException>(() => VoiceProtocolCodec.ParseResponseTimeout(root));
     }
 
     [Test]
@@ -236,6 +263,15 @@ public class VoiceProtocolCodecTests
     }
 
     [Test]
+    public void ParseDtmfDoesNotTreatExplicitNullCollectedFieldsAsAbsent()
+    {
+        var root = VoiceProtocolCodec.DecodeFrame(
+            """{"type":"dtmf","id":"m_4","ts":"2026-07-29T00:00:00.000Z","digits":"1","collection_id":null,"item_id":null,"completion_reason":null}""");
+
+        Assert.Throws<VoiceBridgeProtocolException>(() => VoiceProtocolCodec.ParseDtmf(root));
+    }
+
+    [Test]
     public void ParseConversationItemCreateRejectsPrivilegedRole()
     {
         var root = VoiceProtocolCodec.DecodeFrame(
@@ -247,6 +283,7 @@ public class VoiceProtocolCodecTests
 
     [TestCase(null)]
     [TestCase("root")]
+    [TestCase("in_predecessor")]
     [TestCase("hi_predecessor")]
     [TestCase("it_predecessor")]
     public void ParseConversationItemCreateAcceptsValidPreviousItemId(string? previousItemId)
@@ -274,7 +311,7 @@ public class VoiceProtocolCodecTests
     [TestCase("root_")]
     [TestCase("hi_")]
     [TestCase("it_")]
-    [TestCase("in_predecessor")]
+    [TestCase("in_")]
     [TestCase("r_predecessor")]
     [TestCase("ROOT")]
     [TestCase("arbitrary")]

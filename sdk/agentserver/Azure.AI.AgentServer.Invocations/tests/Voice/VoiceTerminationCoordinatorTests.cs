@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Net.WebSockets;
 using Azure.AI.AgentServer.Invocations.Internal;
 using Azure.AI.AgentServer.Invocations.Voice;
@@ -11,6 +12,48 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 
 public class VoiceTerminationCoordinatorTests
 {
+    [Test]
+    public async Task ResponseTerminationDoesNotRunActivityListenerOnProtocolPath()
+    {
+        var listenerStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseListener = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == "VoiceTerminationCoordinatorTests",
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
+            ActivityStopped = _ =>
+            {
+                listenerStarted.TrySetResult();
+                releaseListener.Task.GetAwaiter().GetResult();
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+        using var source = new ActivitySource("VoiceTerminationCoordinatorTests");
+        var activity = source.StartActivity("turn")!;
+        using var webSocket = new StubWebSocket();
+        using var runtimeCancellation = new CancellationTokenSource();
+        var turnLease = new VoiceTurnLease();
+        var response = new StubResponse();
+        turnLease.Activate(response, "reactive", release: null, activity);
+        var coordinator = CreateCoordinator(webSocket, runtimeCancellation, turnLease);
+
+        try
+        {
+            var reservation = await Task.Run(() => coordinator.TryTerminateResponse(response, "timeout"))
+                .WaitAsync(TimeSpan.FromSeconds(1));
+            var telemetryCompletion = VoiceTerminationCoordinator.ApplyResponseTermination(reservation);
+            await listenerStarted.Task.WaitAsync(TimeSpan.FromSeconds(1));
+            Assert.That(telemetryCompletion.IsCompleted, Is.False);
+            releaseListener.TrySetResult();
+            await telemetryCompletion.WaitAsync(TimeSpan.FromSeconds(1));
+        }
+        finally
+        {
+            releaseListener.TrySetResult();
+            coordinator.MarkCompleted();
+        }
+    }
+
     [Test]
     public async Task ConnectionSealAndApplyRunExactlyOnce()
     {

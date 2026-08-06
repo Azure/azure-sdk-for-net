@@ -28,38 +28,73 @@ internal static class VoiceMetrics
         "azure.ai.agentserver.invocations.voice.response.terminals");
     private static readonly Counter<long> ProtocolViolations = Meter.CreateCounter<long>(
         "azure.ai.agentserver.invocations.voice.protocol.violations");
-    private static readonly UpDownCounter<long> ActiveConnections = Meter.CreateUpDownCounter<long>(
-        "azure.ai.agentserver.invocations.voice.active_connections");
+    private static readonly ObservableGauge<long> ActiveConnections = Meter.CreateObservableGauge(
+        "azure.ai.agentserver.invocations.voice.active_connections",
+        () => Interlocked.Read(ref _activeConnections));
     private static readonly Counter<long> CloseCodes = Meter.CreateCounter<long>(
         "azure.ai.agentserver.invocations.voice.close_codes");
+    private static readonly Counter<long> ParentFallbacks = Meter.CreateCounter<long>(
+        "azure.ai.agentserver.invocations.voice.trace.parent_fallbacks");
+    private static long _activeConnections;
 
-    public static void ConnectionOpened() => ActiveConnections.Add(1);
+    internal static long ActiveConnectionCount => Interlocked.Read(ref _activeConnections);
 
-    public static void ConnectionClosed() => ActiveConnections.Add(-1);
-
-    public static void RecordActivation(string result) =>
-        Activations.Add(1, new KeyValuePair<string, object?>("result", result));
-
-    public static void RecordCallback(string kind, long startedTimestamp, bool failed)
+    public static void ConnectionOpened(TelemetryCallbackDispatcher dispatcher)
     {
-        CallbackDuration.Record(
-            Stopwatch.GetElapsedTime(startedTimestamp).TotalMilliseconds,
-            new KeyValuePair<string, object?>("kind", kind));
-        if (failed)
-        {
-            CallbackErrors.Add(1, new KeyValuePair<string, object?>("kind", kind));
-        }
+        _ = dispatcher;
+        Interlocked.Increment(ref _activeConnections);
     }
 
-    public static void RecordTerminal(string kind) =>
-        ResponseTerminals.Add(1, new KeyValuePair<string, object?>("kind", kind));
+    public static void ConnectionClosed(TelemetryCallbackDispatcher dispatcher)
+    {
+        _ = dispatcher;
+        Interlocked.Decrement(ref _activeConnections);
+    }
 
-    public static void RecordFirstOutput(long startedTimestamp) =>
-        FirstOutputDuration.Record(Stopwatch.GetElapsedTime(startedTimestamp).TotalMilliseconds);
+    public static void RecordActivation(TelemetryCallbackDispatcher dispatcher, string result) =>
+        InvocationsTelemetry.QueueCallback(dispatcher, () =>
+            Activations.Add(1, new KeyValuePair<string, object?>("result", result)));
 
-    public static void RecordProtocolViolation(int closeCode) =>
-        ProtocolViolations.Add(1, new KeyValuePair<string, object?>("close_code", closeCode));
+    public static void RecordCallback(
+        TelemetryCallbackDispatcher dispatcher,
+        string kind,
+        long startedTimestamp,
+        bool failed)
+    {
+        var duration = Stopwatch.GetElapsedTime(startedTimestamp).TotalMilliseconds;
+        InvocationsTelemetry.QueueCallback(dispatcher, () =>
+        {
+            CallbackDuration.Record(
+                duration,
+                new KeyValuePair<string, object?>("kind", kind));
+            if (failed)
+            {
+                CallbackErrors.Add(1, new KeyValuePair<string, object?>("kind", kind));
+            }
+        });
+    }
 
-    public static void RecordCloseCode(int closeCode) =>
-        CloseCodes.Add(1, new KeyValuePair<string, object?>("code", closeCode));
+    public static void RecordTerminal(TelemetryCallbackDispatcher dispatcher, string kind) =>
+        InvocationsTelemetry.QueueCallback(dispatcher, () =>
+            ResponseTerminals.Add(1, new KeyValuePair<string, object?>("kind", kind)));
+
+    public static void RecordFirstOutput(TelemetryCallbackDispatcher dispatcher, long startedTimestamp)
+    {
+        var duration = Stopwatch.GetElapsedTime(startedTimestamp).TotalMilliseconds;
+        InvocationsTelemetry.QueueCallback(dispatcher, () => FirstOutputDuration.Record(duration));
+    }
+
+    public static void RecordProtocolViolation(TelemetryCallbackDispatcher dispatcher, int closeCode) =>
+        InvocationsTelemetry.QueueCallback(dispatcher, () =>
+            ProtocolViolations.Add(1, new KeyValuePair<string, object?>("close_code", closeCode)));
+
+    public static void RecordCloseCode(TelemetryCallbackDispatcher dispatcher, int closeCode) =>
+        InvocationsTelemetry.QueueCallback(dispatcher, () =>
+            CloseCodes.Add(1, new KeyValuePair<string, object?>("code", closeCode)));
+
+    public static void RecordParentFallback(TelemetryCallbackDispatcher dispatcher) =>
+        InvocationsTelemetry.QueueCallback(dispatcher, () =>
+            ParentFallbacks.Add(
+                1,
+                new KeyValuePair<string, object?>("reason", "connection_activity_pending")));
 }

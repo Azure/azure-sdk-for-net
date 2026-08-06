@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Invocations.Voice;
 public class VoiceTextItem
 {
     private readonly VoiceResponse _response;
-    private readonly List<string> _chunks = new();
+    private List<string> _chunks = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="VoiceTextItem"/> class for mocking.
@@ -112,5 +112,5 @@ public class VoiceTextItem
 
     internal void MarkDone() => IsDone = true;
 
-    internal void ReleaseText() => _chunks.Clear();
+    internal void ReleaseText() => _chunks = new List<string>();
 }

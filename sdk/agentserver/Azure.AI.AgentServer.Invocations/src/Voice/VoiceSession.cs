@@ -21,16 +21,27 @@ public class VoiceSession
     {
         _connection = null!;
         StartEvent = null!;
+        InvocationContext = null!;
     }
 
-    internal VoiceSession(IVoiceConnection connection, SessionStartEvent startEvent)
+    internal VoiceSession(
+        IVoiceConnection connection,
+        SessionStartEvent startEvent,
+        InvocationContext invocationContext)
     {
         _connection = connection;
         StartEvent = startEvent;
+        InvocationContext = invocationContext;
     }
 
     /// <summary>Gets the immutable <c>session.start</c> event for this call.</summary>
     public virtual SessionStartEvent StartEvent { get; }
+
+    /// <summary>
+    /// Gets the immutable invocation transport context, including resolved
+    /// identifiers, client headers, query parameters, and platform identity.
+    /// </summary>
+    public virtual InvocationContext InvocationContext { get; }
 
     /// <summary>Gets a value indicating whether this activation reattached an existing session.</summary>
     public virtual bool Reconnect => StartEvent.Reconnect;

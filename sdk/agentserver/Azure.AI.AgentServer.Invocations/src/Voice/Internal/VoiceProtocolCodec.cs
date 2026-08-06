@@ -55,7 +55,7 @@ internal static class VoiceProtocolCodec
             }
 
             RequireNonEmptyString(root, "type");
-            RequirePrefixedId(root, "id", VoiceProtocolConstants.EnvelopeIdPrefix);
+            RequireNonEmptyString(root, "id");
             ValidateTimestamp(root);
             return root.Clone();
         }
@@ -153,7 +153,7 @@ internal static class VoiceProtocolCodec
     /// <summary>Parses and validates a <c>conversation.item.create</c> mutation.</summary>
     public static ConversationItemCreateEvent ParseConversationItemCreate(JsonElement root)
     {
-        var requestId = RequirePrefixedId(root, "id", VoiceProtocolConstants.EnvelopeIdPrefix);
+        var requestId = RequireNonEmptyStringValue(root, "id");
         if (!root.TryGetProperty("item", out var item) || item.ValueKind != JsonValueKind.Object)
         {
             throw new VoiceBridgeProtocolException("conversation.item.create item must be an object.");
@@ -170,17 +170,24 @@ internal static class VoiceProtocolCodec
         var previousItemId = OptionalString(root, "previous_item_id");
         if (previousItemId is not null &&
             previousItemId != "root" &&
+            !HasPrefix(previousItemId, VoiceProtocolConstants.InputItemPrefix) &&
             !HasPrefix(previousItemId, VoiceProtocolConstants.HistoryItemPrefix) &&
             !HasPrefix(previousItemId, VoiceProtocolConstants.OutputItemPrefix))
         {
             throw new VoiceBridgeProtocolException(
-                "previous_item_id must be root or start with hi_ or it_.",
+                "previous_item_id must be root or start with in_, hi_, or it_.",
                 VoiceProtocolConstants.ClosePolicyViolation);
+        }
+
+        var content = ParseContentParts(item, "conversation.item.create");
+        if (content.Count == 0)
+        {
+            throw new VoiceBridgeProtocolException("conversation.item.create contains no supported content parts.");
         }
 
         return new ConversationItemCreateEvent(
             requestId,
-            new ConversationHistoryItem(itemId, ParseContentParts(item, "conversation.item.create")),
+            new ConversationHistoryItem(itemId, content),
             previousItemId);
     }
 
@@ -197,7 +204,7 @@ internal static class VoiceProtocolCodec
         }
 
         return new ConversationItemDeleteEvent(
-            RequirePrefixedId(root, "id", VoiceProtocolConstants.EnvelopeIdPrefix),
+            RequireNonEmptyStringValue(root, "id"),
             itemId);
     }
 
@@ -205,9 +212,9 @@ internal static class VoiceProtocolCodec
     public static object ParseDtmf(JsonElement root)
     {
         var digits = RequireString(root, "digits");
-        var hasCollection = HasNonNullProperty(root, "collection_id");
-        var hasItem = HasNonNullProperty(root, "item_id");
-        var hasReason = HasNonNullProperty(root, "completion_reason");
+        var hasCollection = root.TryGetProperty("collection_id", out _);
+        var hasItem = root.TryGetProperty("item_id", out _);
+        var hasReason = root.TryGetProperty("completion_reason", out _);
         if (!hasCollection && !hasItem && !hasReason)
         {
             if (digits.Length != 1 || !IsDtmfKey(digits[0]))
@@ -295,8 +302,8 @@ internal static class VoiceProtocolCodec
     public static ResponseTimeoutEvent ParseResponseTimeout(JsonElement root)
     {
         var stage = RequireNonEmptyStringValue(root, "stage");
-        var hasResponseId = HasNonNullProperty(root, "response_id");
-        var hasItemIds = HasNonNullProperty(root, "item_ids");
+        var hasResponseId = root.TryGetProperty("response_id", out _);
+        var hasItemIds = root.TryGetProperty("item_ids", out _);
         if (hasResponseId == hasItemIds)
         {
             throw new VoiceBridgeProtocolException(
@@ -393,11 +400,6 @@ internal static class VoiceProtocolCodec
                     // Unknown open-enum content parts are ignored for forward compatibility.
                     break;
             }
-        }
-
-        if (parts.Count == 0)
-        {
-            throw new VoiceBridgeProtocolException($"{messageName} contains no supported content parts.");
         }
 
         return parts.AsReadOnly();
@@ -503,7 +505,8 @@ internal static class VoiceProtocolCodec
         JsonValueKind.Array => Array.AsReadOnly(value.EnumerateArray().Select(FreezeJsonValue).ToArray()),
         JsonValueKind.String => value.GetString(),
         JsonValueKind.Number when value.TryGetInt64(out var integer) => integer,
-        JsonValueKind.Number => value.GetDouble(),
+        JsonValueKind.Number when value.TryGetDecimal(out var decimalValue) => decimalValue,
+        JsonValueKind.Number => value.Clone(),
         JsonValueKind.True => true,
         JsonValueKind.False => false,
         JsonValueKind.Null => null,
@@ -577,9 +580,6 @@ internal static class VoiceProtocolCodec
         var marker = prefix + "_";
         return value.StartsWith(marker, StringComparison.Ordinal) && value.Length > marker.Length;
     }
-
-    private static bool HasNonNullProperty(JsonElement root, string name) =>
-        root.TryGetProperty(name, out var element) && element.ValueKind != JsonValueKind.Null;
 
     private static bool IsDtmfKey(char value) =>
         (value >= '0' && value <= '9') || value is '*' or '#';

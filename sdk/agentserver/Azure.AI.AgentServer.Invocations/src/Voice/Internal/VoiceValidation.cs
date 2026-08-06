@@ -93,7 +93,7 @@ internal static partial class VoiceValidation
         {
             if (SupportedVoiceFields.Contains(field.Key))
             {
-                normalized[field.Key] = field.Value;
+                normalized[field.Key] = NormalizeJsonElement(field.Value);
             }
         }
 
@@ -142,35 +142,51 @@ internal static partial class VoiceValidation
 
         if (normalized.TryGetValue("temperature", out var temperature) && temperature is not null)
         {
-            if (temperature is bool)
+            var numericTemperature = temperature switch
             {
-                throw new ArgumentException("voice.temperature must be a number or null.", nameof(voice));
-            }
-
-            double numericTemperature;
-            try
-            {
-                numericTemperature = Convert.ToDouble(temperature, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            catch (Exception exception) when (exception is FormatException or InvalidCastException or OverflowException)
-            {
-                throw new ArgumentException("voice.temperature must be a number or null.", nameof(voice), exception);
-            }
+                byte value => value,
+                sbyte value => value,
+                short value => value,
+                ushort value => value,
+                int value => value,
+                uint value => value,
+                long value => value,
+                ulong value => value,
+                float value => value,
+                double value => value,
+                decimal value => (double)value,
+                _ => throw new ArgumentException("voice.temperature must be a number or null.", nameof(voice)),
+            };
 
             if (!double.IsFinite(numericTemperature) || numericTemperature is < 0 or > 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(voice), "voice.temperature must be between 0.0 and 1.0.");
             }
+
+            // Write back one canonical CLR number so every accepted input
+            // serializes as a JSON number.
+            normalized["temperature"] = numericTemperature;
         }
 
         if (normalized.TryGetValue("prefer_locales", out var locales) && locales is not null)
         {
-            if (locales is not IEnumerable<string> localeValues || localeValues.Any(locale => string.IsNullOrEmpty(locale)))
+            if (locales is string || locales is not System.Collections.IEnumerable localeValues)
             {
                 throw new ArgumentException("voice.prefer_locales must contain non-empty strings or be null.", nameof(voice));
             }
 
-            normalized["prefer_locales"] = localeValues.ToArray();
+            var materializedLocales = new List<string>();
+            foreach (var value in localeValues)
+            {
+                if (value is not string locale || locale.Length == 0)
+                {
+                    throw new ArgumentException("voice.prefer_locales must contain non-empty strings or be null.", nameof(voice));
+                }
+
+                materializedLocales.Add(locale);
+            }
+
+            normalized["prefer_locales"] = materializedLocales.ToArray();
         }
 
         if (voiceType is not null)
@@ -194,6 +210,29 @@ internal static partial class VoiceValidation
         }
 
         return normalized;
+    }
+
+    private static object? NormalizeJsonElement(object? value)
+    {
+        if (value is not JsonElement element)
+        {
+            return value;
+        }
+
+        return element.ValueKind switch
+        {
+            JsonValueKind.String => element.GetString(),
+            JsonValueKind.Number when element.TryGetInt64(out var integer) => integer,
+            JsonValueKind.Number when element.TryGetDecimal(out var decimalValue) => decimalValue,
+            JsonValueKind.Number => element.GetDouble(),
+            JsonValueKind.True => true,
+            JsonValueKind.False => false,
+            JsonValueKind.Null => null,
+            JsonValueKind.Array => element.EnumerateArray()
+                .Select(item => NormalizeJsonElement(item))
+                .ToArray(),
+            _ => element.Clone(),
+        };
     }
 
     private static HashSet<string> AzureFields(params string[] required)

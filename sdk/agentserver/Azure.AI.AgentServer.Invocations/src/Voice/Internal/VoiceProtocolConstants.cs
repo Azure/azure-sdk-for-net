@@ -29,9 +29,9 @@ internal static class VoiceProtocolConstants
 
     // Bounded runtime limits that mirror the Python implementation.
     public const int MaxCallbackQueue = 128;
-    public const int MaxSeenMessages = 4096;
     public const int MaxPendingProactive = 16;
     public const int MaxRecentResponses = 64;
+    public const long MaxTrackedIdentityBytes = 64L * 1024 * 1024;
     public const int MaxFrameBytes = 1024 * 1024;
     public const int MaxResponseItems = 1024;
     public const int MaxOutputItemChunks = 4096;

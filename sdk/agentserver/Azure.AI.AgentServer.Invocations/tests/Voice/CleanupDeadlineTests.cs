@@ -31,6 +31,19 @@ public class CleanupDeadlineTests
         Assert.That(deadline.Remaining, Is.EqualTo(TimeSpan.FromSeconds(5)));
     }
 
+    [Test]
+    public void CloseEventCancellationUsesExhaustedSharedDeadline()
+    {
+        var timeProvider = new ManualTimeProvider();
+        var deadline = new CleanupDeadline(TimeSpan.FromSeconds(5), timeProvider);
+        deadline.Start();
+        timeProvider.Advance(TimeSpan.FromSeconds(5));
+
+        using var cancellation = WebSocketEndpointHandler.CreateCloseEventCancellation(deadline);
+
+        Assert.That(cancellation.IsCancellationRequested, Is.True);
+    }
+
     private sealed class ManualTimeProvider : TimeProvider
     {
         private long _timestamp;

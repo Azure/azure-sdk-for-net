@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -222,6 +224,125 @@ public class WebSocketEndpointTests
     }
 
     [Test]
+    public async Task BlockingConnectionActivityListenerDoesNotBlockHandler()
+    {
+        var listenerStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseListener = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var listenerReturned = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var activityStopped = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == "Azure.AI.AgentServer.Invocations",
+            Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+            {
+                if (options.Name == "agentserver.connection")
+                {
+                    listenerStarted.TrySetResult();
+                    releaseListener.Task.GetAwaiter().GetResult();
+                    listenerReturned.TrySetResult();
+                }
+
+                return ActivitySamplingResult.AllData;
+            },
+            ActivityStopped = activity =>
+            {
+                if (activity.OperationName == "agentserver.connection")
+                {
+                    activityStopped.TrySetResult(activity);
+                }
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+        var app = BuildApp(new EchoWebSocketInvocationHandler());
+        await app.StartAsync();
+        try
+        {
+            var client = app.GetTestServer().CreateWebSocketClient();
+            using var webSocket = await client.ConnectAsync(
+                new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+            await listenerStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+            var payload = Encoding.UTF8.GetBytes("telemetry must not block");
+            await webSocket.SendAsync(payload, WebSocketMessageType.Text, true, CancellationToken.None);
+            var buffer = new byte[64];
+            var received = await webSocket.ReceiveAsync(buffer, CancellationToken.None)
+                .WaitAsync(TimeSpan.FromSeconds(1));
+
+            Assert.That(
+                Encoding.UTF8.GetString(buffer, 0, received.Count),
+                Is.EqualTo("telemetry must not block"));
+
+            await webSocket.SendAsync(
+                ReadOnlyMemory<byte>.Empty,
+                WebSocketMessageType.Text,
+                endOfMessage: true,
+                CancellationToken.None);
+            var closeFrame = await webSocket.ReceiveAsync(buffer, CancellationToken.None)
+                .WaitAsync(TimeSpan.FromSeconds(2));
+            Assert.That(closeFrame.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+            await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "ack", CancellationToken.None);
+
+            releaseListener.TrySetResult();
+            await listenerReturned.Task.WaitAsync(TimeSpan.FromSeconds(2));
+            var stopped = await activityStopped.Task.WaitAsync(TimeSpan.FromSeconds(2));
+            var taggedDuration = Convert.ToInt64(
+                stopped.GetTagItem(InvocationsWebSocketConstants.AttrSpanDurationMs),
+                System.Globalization.CultureInfo.InvariantCulture);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stopped.GetTagItem(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1000));
+                Assert.That(taggedDuration, Is.GreaterThan(50));
+                Assert.That(
+                    Math.Abs(stopped.Duration.TotalMilliseconds - taggedDuration),
+                    Is.LessThan(25),
+                    "The actual span duration must describe the same connection lifetime as duration_ms.");
+                Assert.That(stopped.Status, Is.EqualTo(ActivityStatusCode.Ok));
+            });
+        }
+        finally
+        {
+            releaseListener.TrySetResult();
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task ConnectionActivityPreservesInvocationAndSessionBaggage()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "ws-baggage-session");
+        FoundryEnvironment.Reload();
+
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == "Azure.AI.AgentServer.Invocations",
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+        var handler = new CaptureBaggageInvocationHandler();
+        var app = BuildApp(handler);
+        await app.StartAsync();
+        try
+        {
+            var client = app.GetTestServer().CreateWebSocketClient();
+            using var webSocket = await client.ConnectAsync(
+                new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+
+            var observed = await handler.Observed.Task.WaitAsync(TimeSpan.FromSeconds(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(observed.InvocationBaggage, Is.EqualTo(observed.InvocationId));
+                Assert.That(observed.SessionBaggage, Is.EqualTo("ws-baggage-session"));
+            });
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
     public async Task HandlerInitiatedClose_PreservesItsCloseCode()
     {
         var app = BuildApp(new HandlerInitiatedCloseInvocationHandler(
@@ -241,6 +362,79 @@ public class WebSocketEndpointTests
             Assert.That((int)ws.CloseStatus!, Is.EqualTo(1008),
                 "Handler-initiated CloseAsync must be preserved (no double-close from the SDK).");
             Assert.That(ws.CloseStatusDescription, Is.EqualTo("policy violation"));
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task EndpointCleanup_PreservesSelectedPolicyViolationCloseCode()
+    {
+        // Model a typed protocol layer that selected a policy-violation terminal
+        // but returned before it wrote a Close frame itself. Endpoint cleanup
+        // must retry that valid selected code unchanged rather than rewriting it
+        // to NormalClosure (1000).
+        var app = BuildApp(new SelectCloseCodeInvocationHandler(1008));
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            var wsClient = server.CreateWebSocketClient();
+            var uri = new Uri(server.BaseAddress, "invocations_ws");
+
+            using var ws = await wsClient.ConnectAsync(uri, CancellationToken.None);
+            var buffer = new byte[64];
+            var frame = await ws.ReceiveAsync(buffer, CancellationToken.None);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(frame.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+                Assert.That((int?)ws.CloseStatus, Is.EqualTo(1008));
+            });
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task EndpointCleanup_MapsInvalidSelectedCodeInWireAndTelemetry()
+    {
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var app = BuildApp(new SelectCloseCodeInvocationHandler(1006), captured);
+        await app.StartAsync();
+        try
+        {
+            var client = app.GetTestServer().CreateWebSocketClient();
+            using var webSocket = await client.ConnectAsync(
+                new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+            var buffer = new byte[64];
+            var frame = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
+            try
+            {
+                await webSocket.CloseOutputAsync(
+                    WebSocketCloseStatus.NormalClosure,
+                    "ack",
+                    CancellationToken.None);
+            }
+            catch (WebSocketException)
+            {
+            }
+
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(frame.MessageType, Is.EqualTo(WebSocketMessageType.Close));
+                Assert.That(webSocket.CloseStatus, Is.EqualTo(WebSocketCloseStatus.InternalServerError));
+                Assert.That(
+                    closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
+                    Is.EqualTo(1011));
+            });
         }
         finally
         {
@@ -272,6 +466,32 @@ public class WebSocketEndpointTests
             Assert.That(frame.MessageType, Is.EqualTo(WebSocketMessageType.Close));
             Assert.That(ws.CloseStatus, Is.EqualTo(WebSocketCloseStatus.InternalServerError),
                 "Handler-internal OCE (different token than RequestAborted) must surface as 1011, not 1000.");
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
+    [Test]
+    public async Task ClientAbort_LogsAbnormalClosure1006()
+    {
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var app = BuildApp(new EchoWebSocketInvocationHandler(), captured);
+        await app.StartAsync();
+        try
+        {
+            var client = app.GetTestServer().CreateWebSocketClient();
+            using var webSocket = await client.ConnectAsync(
+                new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+
+            webSocket.Abort();
+
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+            Assert.That(
+                closeEvent.GetValue("azure.ai.agentserver.invocations_ws.close_code"),
+                Is.EqualTo(1006));
         }
         finally
         {
@@ -613,6 +833,25 @@ public class WebSocketEndpointTests
         }
     }
 
+    private sealed class SelectCloseCodeInvocationHandler : InvocationWebSocketHandler
+    {
+        private readonly int _closeCode;
+
+        public SelectCloseCodeInvocationHandler(int closeCode)
+        {
+            _closeCode = closeCode;
+        }
+
+        public override Task HandleWebSocketAsync(
+            WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
+        {
+            var trackingWebSocket = webSocket as TrackingWebSocket
+                ?? throw new InvalidOperationException("The endpoint did not provide a tracking WebSocket.");
+            trackingWebSocket.RecordCloseCode(_closeCode);
+            return Task.CompletedTask;
+        }
+    }
+
     private sealed class HandlerOceFromUnrelatedTokenInvocationHandler : InvocationWebSocketHandler
     {
         public override Task HandleWebSocketAsync(
@@ -656,4 +895,25 @@ public class WebSocketEndpointTests
             catch (OperationCanceledException) { }
         }
     }
+
+    private sealed class CaptureBaggageInvocationHandler : InvocationWebSocketHandler
+    {
+        public TaskCompletionSource<ObservedBaggage> Observed { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public override Task HandleWebSocketAsync(
+            WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
+        {
+            Observed.TrySetResult(new ObservedBaggage(
+                context.InvocationId,
+                Activity.Current?.GetBaggageItem("azure.ai.agentserver.invocation_id"),
+                Activity.Current?.GetBaggageItem("azure.ai.agentserver.session_id")));
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed record ObservedBaggage(
+        string InvocationId,
+        string? InvocationBaggage,
+        string? SessionBaggage);
 }

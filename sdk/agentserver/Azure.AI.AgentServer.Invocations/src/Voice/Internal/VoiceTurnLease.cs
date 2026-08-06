@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.AI.AgentServer.Invocations.Internal;
 
 namespace Azure.AI.AgentServer.Invocations.Voice.Internal;
 
@@ -23,10 +24,13 @@ internal readonly record struct VoiceTurnTermination(
     string TerminalKind,
     VoiceTurnToken Token,
     VoiceResponse? Response,
-    Task? CustomerTask)
+    Task? CustomerTask,
+    VoiceTurnLeaseState? LeaseState)
 {
     public static VoiceTurnTermination None(string terminalKind) =>
-        new(false, terminalKind, default, null, null);
+        new(false, terminalKind, default, null, null, null);
+
+    internal Task Complete() => LeaseState?.Complete(TerminalKind) ?? Task.CompletedTask;
 }
 
 /// <summary>
@@ -34,23 +38,28 @@ internal readonly record struct VoiceTurnTermination(
 /// </summary>
 internal sealed class VoiceTurnLeaseState
 {
+    private readonly object _completionSync = new();
     private readonly TaskCompletionSource _completion =
         new(TaskCreationOptions.RunContinuationsAsynchronously);
     private readonly TaskCompletionSource? _release;
-    private readonly Activity? _activity;
+    private readonly TelemetryCallbackDispatcher _telemetryDispatcher;
+    private Activity? _activity;
+    private Task? _terminalCompletion;
 
     public VoiceTurnLeaseState(
         VoiceTurnToken token,
         VoiceResponse response,
         string kind,
         TaskCompletionSource? release,
-        Activity? activity)
+        Activity? activity,
+        TelemetryCallbackDispatcher telemetryDispatcher)
     {
         Token = token;
         Response = response;
         Kind = kind;
         _release = release;
         _activity = activity;
+        _telemetryDispatcher = telemetryDispatcher;
     }
 
     public VoiceTurnToken Token { get; }
@@ -65,6 +74,8 @@ internal sealed class VoiceTurnLeaseState
 
     internal void SetCustomerTask(Task customerTask) => CustomerTask = customerTask;
 
+    internal void SetActivity(Activity activity) => _activity = activity;
+
     internal void ClearCustomerTask(Task customerTask)
     {
         if (ReferenceEquals(CustomerTask, customerTask))
@@ -73,11 +84,36 @@ internal sealed class VoiceTurnLeaseState
         }
     }
 
-    internal void Complete(string terminalKind)
+    internal Task Complete(string terminalKind)
     {
-        StopActivity(_activity, terminalKind);
-        _completion.TrySetResult();
-        _release?.TrySetResult();
+        lock (_completionSync)
+        {
+            if (_terminalCompletion is not null)
+            {
+                return _terminalCompletion;
+            }
+
+            _completion.TrySetResult();
+            _release?.TrySetResult();
+            _terminalCompletion = StopActivityAsync(_telemetryDispatcher, _activity, terminalKind);
+            return _terminalCompletion;
+        }
+    }
+
+    private static Task StopActivityAsync(
+        TelemetryCallbackDispatcher telemetryDispatcher,
+        Activity? activity,
+        string terminalKind)
+    {
+        if (activity is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        return InvocationsTelemetry.StopActivityAsync(
+            telemetryDispatcher,
+            activity,
+            () => StopActivity(activity, terminalKind));
     }
 
     private static void StopActivity(Activity? activity, string terminalKind)
@@ -115,8 +151,14 @@ internal sealed class VoiceTurnLeaseState
 internal sealed class VoiceTurnLease
 {
     private readonly object _sync = new();
+    private readonly TelemetryCallbackDispatcher _telemetryDispatcher;
     private VoiceTurnLeaseState? _current;
     private long _nextGeneration;
+
+    public VoiceTurnLease(TelemetryCallbackDispatcher? telemetryDispatcher = null)
+    {
+        _telemetryDispatcher = telemetryDispatcher ?? new TelemetryCallbackDispatcher();
+    }
 
     public VoiceTurnLeaseState? Current
     {
@@ -147,7 +189,13 @@ internal sealed class VoiceTurnLease
 
             var generation = checked(++_nextGeneration);
             var token = new VoiceTurnToken(generation, response.ResponseId);
-            _current = new VoiceTurnLeaseState(token, response, kind, release, activity);
+            _current = new VoiceTurnLeaseState(
+                token,
+                response,
+                kind,
+                release,
+                activity,
+                _telemetryDispatcher);
             return new VoiceTurnActivation(token);
         }
     }
@@ -183,6 +231,21 @@ internal sealed class VoiceTurnLease
         }
     }
 
+    public bool TrySetActivity(VoiceTurnToken token, Activity activity)
+    {
+        ArgumentNullException.ThrowIfNull(activity);
+        lock (_sync)
+        {
+            if (_current?.Token != token)
+            {
+                return false;
+            }
+
+            _current.SetActivity(activity);
+            return true;
+        }
+    }
+
     public void ClearCustomerTask(VoiceTurnToken token, Task customerTask)
     {
         lock (_sync)
@@ -195,6 +258,13 @@ internal sealed class VoiceTurnLease
     }
 
     public VoiceTurnTermination TryTerminate(VoiceResponse response, string terminalKind)
+    {
+        var termination = TryDetach(response, terminalKind);
+        _ = termination.Complete();
+        return termination;
+    }
+
+    public VoiceTurnTermination TryDetach(VoiceResponse response, string terminalKind)
     {
         ArgumentNullException.ThrowIfNull(response);
         ArgumentException.ThrowIfNullOrEmpty(terminalKind);
@@ -211,13 +281,13 @@ internal sealed class VoiceTurnLease
             _current = null;
         }
 
-        terminal.Complete(terminalKind);
         return new VoiceTurnTermination(
             true,
             terminalKind,
             terminal.Token,
             terminal.Response,
-            terminal.CustomerTask);
+            terminal.CustomerTask,
+            terminal);
     }
 
     public VoiceTurnTermination TryTerminateCurrent(string terminalKind)

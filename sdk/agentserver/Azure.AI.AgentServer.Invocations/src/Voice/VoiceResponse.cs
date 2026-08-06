@@ -18,6 +18,9 @@ public class VoiceResponse
     private readonly SemaphoreSlim _operationGate = new(1, 1);
     private readonly List<VoiceTextItem> _items = new();
     private readonly CancellationTokenSource _responseCancellation;
+    private Guid[] _releasedItemIds = [];
+    private CancellationTokenRegistration _connectionCancellationRegistration;
+    private int _connectionCancellationRegistrationDisposed;
     private VoiceTextItem? _simpleItem;
     private int _responseBytes;
     private bool _advancedItems;
@@ -49,10 +52,16 @@ public class VoiceResponse
     {
         _connection = connection;
         ResponseId = responseId;
-        InReplyTo = inReplyTo;
+        InReplyTo = inReplyTo is null ? null : Array.AsReadOnly(inReplyTo.ToArray());
         _wireOpened = wireOpened;
         _accepted = accepted;
-        _responseCancellation = CancellationTokenSource.CreateLinkedTokenSource(connectionCancellationToken);
+        _responseCancellation = new CancellationTokenSource();
+        if (connectionCancellationToken.CanBeCanceled)
+        {
+            _connectionCancellationRegistration = connectionCancellationToken.UnsafeRegister(
+                static state => ((VoiceResponse)state!).OnConnectionCancelled(),
+                this);
+        }
     }
 
     /// <summary>Gets the library-allocated response ID with the <c>r_</c> prefix.</summary>
@@ -102,6 +111,17 @@ public class VoiceResponse
         }
     }
 
+    internal bool IsAccepted
+    {
+        get
+        {
+            lock (_stateSync)
+            {
+                return _accepted;
+            }
+        }
+    }
+
     internal int RetainedOutputChunkCount
     {
         get
@@ -112,6 +132,9 @@ public class VoiceResponse
             }
         }
     }
+
+    internal bool IsConnectionCancellationRegistrationDisposed =>
+        Volatile.Read(ref _connectionCancellationRegistrationDisposed) != 0;
 
     internal readonly record struct SendReservation(long Generation, bool OpensResponse);
 
@@ -137,6 +160,7 @@ public class VoiceResponse
         Action commit,
         bool terminal)
     {
+        var releaseConnectionRegistration = false;
         ArgumentNullException.ThrowIfNull(commit);
         lock (_stateSync)
         {
@@ -156,10 +180,16 @@ public class VoiceResponse
                 _terminal = true;
                 _sealed = true;
                 _generation++;
+                releaseConnectionRegistration = true;
             }
-
-            return true;
         }
+
+        if (releaseConnectionRegistration)
+        {
+            ReleaseConnectionCancellationRegistration();
+        }
+
+        return true;
     }
 
     internal void ReserveCancellation()
@@ -229,7 +259,7 @@ public class VoiceResponse
         string text,
         IReadOnlyDictionary<string, object?>? voice,
         CancellationToken cancellationToken = default) =>
-        GetSimpleItem().SendTextAsync(text, voice, cancellationToken);
+        SendSimpleItemTextAsync(text, voice, cancellationToken);
 
     /// <summary>Streams one increment through the simple output item.</summary>
     /// <param name="delta">The next text fragment.</param>
@@ -247,7 +277,7 @@ public class VoiceResponse
         string delta,
         IReadOnlyDictionary<string, object?>? voice,
         CancellationToken cancellationToken = default) =>
-        GetSimpleItem().SendTextDeltaAsync(delta, voice, cancellationToken);
+        SendSimpleItemDeltaAsync(delta, voice, cancellationToken);
 
     /// <summary>
     /// Completes the streamed simple item. The library emits the full
@@ -265,7 +295,7 @@ public class VoiceResponse
     public virtual Task SendTextDoneAsync(
         IReadOnlyDictionary<string, object?>? voice,
         CancellationToken cancellationToken = default) =>
-        GetSimpleItem(create: false).SendTextDoneAsync(voice, cancellationToken);
+        SendSimpleItemDoneAsync(voice, cancellationToken);
 
     /// <summary>Explicitly resolves this input prefix without opening a response.</summary>
     /// <param name="reason">An optional open-enum decline reason.</param>
@@ -437,7 +467,7 @@ public class VoiceResponse
 
             await EnsureOpenAsync(cancellationToken).ConfigureAwait(false);
             await _connection.RegisterDtmfCollectionAsync(
-                ResponseId,
+                this,
                 collectionId,
                 maxDigits,
                 terminator,
@@ -542,50 +572,87 @@ public class VoiceResponse
         var escapedTextBytes = VoiceSendTransaction.MeasureEscapedStringBytes(text);
         var voicePayload = VoiceValidation.NormalizeVoice(voice);
         await _operationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
-        var registerSimpleItem = false;
         try
         {
-            lock (_stateSync)
-            {
-                registerSimpleItem = PrepareItemLocked(item, allowSimpleRegistration: true);
-                if (item.IsStarted || item.IsDone)
-                {
-                    throw new InvalidOperationException("The response item has already started.");
-                }
-
-                ValidateTextBudgetLocked(item, textBytes, escapedTextBytes, additionalChunk: true);
-            }
-
-            var fields = new Dictionary<string, object?>
-            {
-                ["response_id"] = ResponseId,
-                ["item_id"] = item.ItemId,
-                ["text"] = text,
-            };
-            AddVoice(fields, voicePayload);
-            await _connection.SendResponseFrameAsync(
-                this,
-                "response.output_text.done",
-                fields,
-                () =>
-                {
-                    if (registerSimpleItem)
-                    {
-                        _simpleItem = item;
-                        _items.Add(item);
-                    }
-
-                    item.CommitCompleteText(text, textBytes, escapedTextBytes);
-                    _responseBytes += textBytes;
-                },
-                terminal: false,
-                terminalKind: null,
+            await SendItemTextCoreAsync(
+                item,
+                text,
+                textBytes,
+                escapedTextBytes,
+                voicePayload,
                 cancellationToken).ConfigureAwait(false);
         }
         finally
         {
             _operationGate.Release();
         }
+    }
+
+    private async Task SendSimpleItemTextAsync(
+        string text,
+        IReadOnlyDictionary<string, object?>? voice,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+        var textBytes = Encoding.UTF8.GetByteCount(text);
+        var escapedTextBytes = VoiceSendTransaction.MeasureEscapedStringBytes(text);
+        var voicePayload = VoiceValidation.NormalizeVoice(voice);
+        await _operationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            var item = GetSimpleItem();
+            await SendItemTextCoreAsync(
+                item,
+                text,
+                textBytes,
+                escapedTextBytes,
+                voicePayload,
+                cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _operationGate.Release();
+        }
+    }
+
+    private async Task SendItemTextCoreAsync(
+        VoiceTextItem item,
+        string text,
+        int textBytes,
+        int escapedTextBytes,
+        IReadOnlyDictionary<string, object?>? voicePayload,
+        CancellationToken cancellationToken)
+    {
+        lock (_stateSync)
+        {
+            PrepareItemLocked(item);
+            if (item.IsStarted || item.IsDone)
+            {
+                throw new InvalidOperationException("The response item has already started.");
+            }
+
+            ValidateTextBudgetLocked(item, textBytes, escapedTextBytes, additionalChunk: true);
+        }
+
+        var fields = new Dictionary<string, object?>
+        {
+            ["response_id"] = ResponseId,
+            ["item_id"] = item.ItemId,
+            ["text"] = text,
+        };
+        AddVoice(fields, voicePayload);
+        await _connection.SendResponseFrameAsync(
+            this,
+            "response.output_text.done",
+            fields,
+            () =>
+            {
+                item.CommitCompleteText(text, textBytes, escapedTextBytes);
+                _responseBytes += textBytes;
+            },
+            terminal: false,
+            terminalKind: null,
+            cancellationToken).ConfigureAwait(false);
     }
 
     internal async Task SendItemDeltaAsync(
@@ -599,44 +666,14 @@ public class VoiceResponse
         var escapedDeltaBytes = VoiceSendTransaction.MeasureEscapedStringBytes(delta);
         var voicePayload = VoiceValidation.NormalizeVoice(voice);
         await _operationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
-        var registerSimpleItem = false;
         try
         {
-            lock (_stateSync)
-            {
-                registerSimpleItem = PrepareItemLocked(item, allowSimpleRegistration: true);
-                if (item.IsDone)
-                {
-                    throw new InvalidOperationException("The response item is already complete.");
-                }
-
-                ValidateTextBudgetLocked(item, deltaBytes, escapedDeltaBytes, additionalChunk: true);
-            }
-
-            var fields = new Dictionary<string, object?>
-            {
-                ["response_id"] = ResponseId,
-                ["item_id"] = item.ItemId,
-                ["delta"] = delta,
-            };
-            AddVoice(fields, voicePayload);
-            await _connection.SendResponseFrameAsync(
-                this,
-                "response.output_text.delta",
-                fields,
-                () =>
-                {
-                    if (registerSimpleItem)
-                    {
-                        _simpleItem = item;
-                        _items.Add(item);
-                    }
-
-                    item.CommitDelta(delta, deltaBytes, escapedDeltaBytes);
-                    _responseBytes += deltaBytes;
-                },
-                terminal: false,
-                terminalKind: null,
+            await SendItemDeltaCoreAsync(
+                item,
+                delta,
+                deltaBytes,
+                escapedDeltaBytes,
+                voicePayload,
                 cancellationToken).ConfigureAwait(false);
         }
         finally
@@ -645,52 +682,144 @@ public class VoiceResponse
         }
     }
 
-    internal async Task SendItemDoneAsync(
-        VoiceTextItem item,
+    private async Task SendSimpleItemDeltaAsync(
+        string delta,
         IReadOnlyDictionary<string, object?>? voice,
         CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(delta);
+        var deltaBytes = Encoding.UTF8.GetByteCount(delta);
+        var escapedDeltaBytes = VoiceSendTransaction.MeasureEscapedStringBytes(delta);
         var voicePayload = VoiceValidation.NormalizeVoice(voice);
-        string fullText;
         await _operationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            lock (_stateSync)
-            {
-                PrepareItemLocked(item);
-                if (!item.IsStarted || item.ChunkCount == 0)
-                {
-                    throw new InvalidOperationException("SendTextDoneAsync requires at least one preceding delta.");
-                }
-
-                if (item.IsDone)
-                {
-                    throw new InvalidOperationException("The response item is already complete.");
-                }
-
-                fullText = item.GetFullText();
-            }
-
-            var fields = new Dictionary<string, object?>
-            {
-                ["response_id"] = ResponseId,
-                ["item_id"] = item.ItemId,
-                ["text"] = fullText,
-            };
-            AddVoice(fields, voicePayload);
-            await _connection.SendResponseFrameAsync(
-                this,
-                "response.output_text.done",
-                fields,
-                item.MarkDone,
-                terminal: false,
-                terminalKind: null,
+            var item = GetSimpleItem();
+            await SendItemDeltaCoreAsync(
+                item,
+                delta,
+                deltaBytes,
+                escapedDeltaBytes,
+                voicePayload,
                 cancellationToken).ConfigureAwait(false);
         }
         finally
         {
             _operationGate.Release();
         }
+    }
+
+    private async Task SendItemDeltaCoreAsync(
+        VoiceTextItem item,
+        string delta,
+        int deltaBytes,
+        int escapedDeltaBytes,
+        IReadOnlyDictionary<string, object?>? voicePayload,
+        CancellationToken cancellationToken)
+    {
+        lock (_stateSync)
+        {
+            PrepareItemLocked(item);
+            if (item.IsDone)
+            {
+                throw new InvalidOperationException("The response item is already complete.");
+            }
+
+            ValidateTextBudgetLocked(item, deltaBytes, escapedDeltaBytes, additionalChunk: true);
+        }
+
+        var fields = new Dictionary<string, object?>
+        {
+            ["response_id"] = ResponseId,
+            ["item_id"] = item.ItemId,
+            ["delta"] = delta,
+        };
+        AddVoice(fields, voicePayload);
+        await _connection.SendResponseFrameAsync(
+            this,
+            "response.output_text.delta",
+            fields,
+            () =>
+            {
+                item.CommitDelta(delta, deltaBytes, escapedDeltaBytes);
+                _responseBytes += deltaBytes;
+            },
+            terminal: false,
+            terminalKind: null,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    internal async Task SendItemDoneAsync(
+        VoiceTextItem item,
+        IReadOnlyDictionary<string, object?>? voice,
+        CancellationToken cancellationToken)
+    {
+        var voicePayload = VoiceValidation.NormalizeVoice(voice);
+        await _operationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            await SendItemDoneCoreAsync(item, voicePayload, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _operationGate.Release();
+        }
+    }
+
+    private async Task SendSimpleItemDoneAsync(
+        IReadOnlyDictionary<string, object?>? voice,
+        CancellationToken cancellationToken)
+    {
+        var voicePayload = VoiceValidation.NormalizeVoice(voice);
+        await _operationGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            var item = GetSimpleItem(create: false);
+            await SendItemDoneCoreAsync(item, voicePayload, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _operationGate.Release();
+        }
+    }
+
+    private async Task SendItemDoneCoreAsync(
+        VoiceTextItem item,
+        IReadOnlyDictionary<string, object?>? voicePayload,
+        CancellationToken cancellationToken)
+    {
+        string fullText;
+        lock (_stateSync)
+        {
+            PrepareItemLocked(item);
+            if (!item.IsStarted || item.ChunkCount == 0)
+            {
+                throw new InvalidOperationException("SendTextDoneAsync requires at least one preceding delta.");
+            }
+
+            if (item.IsDone)
+            {
+                throw new InvalidOperationException("The response item is already complete.");
+            }
+
+            fullText = item.GetFullText();
+        }
+
+        var fields = new Dictionary<string, object?>
+        {
+            ["response_id"] = ResponseId,
+            ["item_id"] = item.ItemId,
+            ["text"] = fullText,
+        };
+        AddVoice(fields, voicePayload);
+        await _connection.SendResponseFrameAsync(
+            this,
+            "response.output_text.done",
+            fields,
+            item.MarkDone,
+            terminal: false,
+            terminalKind: null,
+            cancellationToken).ConfigureAwait(false);
     }
 
     internal async Task CompleteCallbackAsync(CancellationToken cancellationToken)
@@ -800,7 +929,13 @@ public class VoiceResponse
     {
         lock (_stateSync)
         {
-            return _items.Any(item => item.ItemId == itemId && item.IsStarted);
+            if (_items.Any(item => item.ItemId == itemId && item.IsStarted))
+            {
+                return true;
+            }
+
+            return TryParseOutputItemId(itemId, out var parsed) &&
+                Array.BinarySearch(_releasedItemIds, parsed) >= 0;
         }
     }
 
@@ -808,11 +943,39 @@ public class VoiceResponse
     {
         lock (_stateSync)
         {
+            if (_items.Count == 0)
+            {
+                return;
+            }
+
+            var itemIds = new List<Guid>(_items.Count);
             foreach (var item in _items)
             {
                 item.ReleaseText();
+                if (item.IsStarted && TryParseOutputItemId(item.ItemId, out var itemId))
+                {
+                    itemIds.Add(itemId);
+                }
             }
+
+            itemIds.Sort();
+            _releasedItemIds = itemIds.ToArray();
+            _items.Clear();
+            _items.TrimExcess();
+            _simpleItem = null;
         }
+    }
+
+    private static bool TryParseOutputItemId(string itemId, out Guid value)
+    {
+        const string Prefix = "it_";
+        if (!itemId.StartsWith(Prefix, StringComparison.Ordinal))
+        {
+            value = default;
+            return false;
+        }
+
+        return Guid.TryParseExact(itemId.AsSpan(Prefix.Length), "N", out value);
     }
 
     private VoiceTextItem GetSimpleItem(bool create = true)
@@ -832,7 +995,8 @@ public class VoiceResponse
                     throw new InvalidOperationException("SendTextDoneAsync requires at least one preceding delta.");
                 }
 
-                return new VoiceTextItem(this, VoiceIds.New(VoiceProtocolConstants.OutputItemPrefix));
+                _simpleItem = new VoiceTextItem(this, VoiceIds.New(VoiceProtocolConstants.OutputItemPrefix));
+                _items.Add(_simpleItem);
             }
 
             return _simpleItem;
@@ -888,8 +1052,13 @@ public class VoiceResponse
         CancelResponseWork();
     }
 
-    private void CancelResponseWork()
+    private void CancelResponseWork(bool disposeConnectionRegistration = true)
     {
+        if (disposeConnectionRegistration)
+        {
+            ReleaseConnectionCancellationRegistration();
+        }
+
         // Customer cancellation callbacks must never run inline: a terminal can
         // be applied while the connection holds the send gate or a response
         // operation gate, and a callback that re-enters the send path would
@@ -907,6 +1076,37 @@ public class VoiceResponse
         }
     }
 
+    private void OnConnectionCancelled()
+    {
+        lock (_stateSync)
+        {
+            // A normal response terminal that committed before the connection
+            // cancellation owns the outcome. Unregister cannot recall a callback
+            // already queued by CancellationTokenSource, so that callback must
+            // re-arbitrate against terminal state under the response lock.
+            if (_terminal)
+            {
+                return;
+            }
+
+            _sealed = true;
+            _generation++;
+        }
+
+        CancelResponseWork(disposeConnectionRegistration: false);
+    }
+
+    private void ReleaseConnectionCancellationRegistration()
+    {
+        if (Interlocked.Exchange(ref _connectionCancellationRegistrationDisposed, 1) == 0)
+        {
+            // Unregister is deliberately non-blocking. The parent token may be
+            // cancelling concurrently, and waiting for its callback while the
+            // response or connection send gate is held could deadlock teardown.
+            _connectionCancellationRegistration.Unregister();
+        }
+    }
+
     private static void ObserveCancelFaults(Task cancelTask) =>
         _ = cancelTask.ContinueWith(
             static completed => { _ = completed.Exception; },
@@ -914,17 +1114,12 @@ public class VoiceResponse
             TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously,
             TaskScheduler.Default);
 
-    private bool PrepareItemLocked(VoiceTextItem item, bool allowSimpleRegistration = false)
+    private void PrepareItemLocked(VoiceTextItem item)
     {
         EnsureWritableLocked();
         var index = _items.IndexOf(item);
         if (index < 0)
         {
-            if (allowSimpleRegistration && !_advancedItems && _simpleItem is null)
-            {
-                return true;
-            }
-
             throw new InvalidOperationException("The text item does not belong to this response.");
         }
 
@@ -935,8 +1130,6 @@ public class VoiceResponse
                 throw new InvalidOperationException("Complete the previous response item first.");
             }
         }
-
-        return false;
     }
 
     private void ValidateTextBudgetLocked(
@@ -1000,6 +1193,7 @@ public class VoiceResponse
         }
 
         _sealed = true;
+        _cancelPending = false;
     }
 
     private void EnsureLocallyWritableLocked()

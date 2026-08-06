@@ -34,6 +34,7 @@ public static class InvocationsServerServiceCollectionExtensions
 
         // Register activity source as singleton (virtual → mockable)
         services.TryAddSingleton<InvocationsActivitySource>();
+        services.TryAddSingleton<TelemetryCallbackDispatcher>();
 
         // Register endpoint handlers as scoped (per-request)
         services.AddScoped<InvocationEndpointHandler>();

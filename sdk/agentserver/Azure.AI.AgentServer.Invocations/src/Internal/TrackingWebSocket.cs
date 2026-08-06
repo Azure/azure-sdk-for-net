@@ -14,16 +14,28 @@ internal sealed class TrackingWebSocket : WebSocket
     private const int NoCloseCode = -1;
 
     private readonly WebSocket _inner;
+    private readonly bool _ownsTelemetryDispatcher;
     private int _selectedCloseCode = NoCloseCode;
+    private int _aborted;
     private int _disposed;
 
-    public TrackingWebSocket(WebSocket inner, TimeSpan cleanupBudget)
+    public TrackingWebSocket(
+        WebSocket inner,
+        TimeSpan cleanupBudget,
+        TelemetryCallbackDispatcher? telemetryDispatcher = null)
     {
         _inner = inner ?? throw new ArgumentNullException(nameof(inner));
         CleanupDeadline = new CleanupDeadline(cleanupBudget);
+        TelemetryDispatcher = telemetryDispatcher ?? new TelemetryCallbackDispatcher();
+        ConnectionActivityContext = new ConnectionActivityContextProvider();
+        _ownsTelemetryDispatcher = telemetryDispatcher is null;
     }
 
     public CleanupDeadline CleanupDeadline { get; }
+
+    public TelemetryCallbackDispatcher TelemetryDispatcher { get; }
+
+    public ConnectionActivityContextProvider ConnectionActivityContext { get; }
 
     public int? SelectedCloseCode
     {
@@ -33,6 +45,8 @@ internal sealed class TrackingWebSocket : WebSocket
             return value == NoCloseCode ? null : value;
         }
     }
+
+    public bool WasAborted => Volatile.Read(ref _aborted) != 0;
 
     public override WebSocketCloseStatus? CloseStatus => _inner.CloseStatus;
 
@@ -45,7 +59,11 @@ internal sealed class TrackingWebSocket : WebSocket
     public void RecordCloseCode(int closeCode) =>
         Interlocked.CompareExchange(ref _selectedCloseCode, closeCode, NoCloseCode);
 
-    public override void Abort() => _inner.Abort();
+    public override void Abort()
+    {
+        Volatile.Write(ref _aborted, 1);
+        _inner.Abort();
+    }
 
     public override async Task CloseAsync(
         WebSocketCloseStatus closeStatus,
@@ -62,11 +80,17 @@ internal sealed class TrackingWebSocket : WebSocket
         {
             await _inner.CloseAsync(closeStatus, statusDescription, linkedCancellation.Token).ConfigureAwait(false);
         }
-        catch (OperationCanceledException) when (
-            deadlineCancellation.IsCancellationRequested &&
-            !cancellationToken.IsCancellationRequested)
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            _inner.Abort();
+            // Preserve the caller's cancellation attribution: rethrow with the
+            // original request token so upstream identity checks classify this
+            // as caller cancellation rather than an internal handler failure.
+            throw new OperationCanceledException(cancellationToken);
+        }
+        catch (OperationCanceledException) when (deadlineCancellation.IsCancellationRequested)
+        {
+            // The shared cleanup deadline expired; abort best-effort.
+            Abort();
         }
     }
 
@@ -85,11 +109,17 @@ internal sealed class TrackingWebSocket : WebSocket
         {
             await _inner.CloseOutputAsync(closeStatus, statusDescription, linkedCancellation.Token).ConfigureAwait(false);
         }
-        catch (OperationCanceledException) when (
-            deadlineCancellation.IsCancellationRequested &&
-            !cancellationToken.IsCancellationRequested)
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            _inner.Abort();
+            // Preserve the caller's cancellation attribution: rethrow with the
+            // original request token so upstream identity checks classify this
+            // as caller cancellation rather than an internal handler failure.
+            throw new OperationCanceledException(cancellationToken);
+        }
+        catch (OperationCanceledException) when (deadlineCancellation.IsCancellationRequested)
+        {
+            // The shared cleanup deadline expired; abort best-effort.
+            Abort();
         }
     }
 
@@ -109,7 +139,17 @@ internal sealed class TrackingWebSocket : WebSocket
     {
         if (Interlocked.Exchange(ref _disposed, 1) == 0)
         {
-            _inner.Dispose();
+            try
+            {
+                _inner.Dispose();
+            }
+            finally
+            {
+                if (_ownsTelemetryDispatcher)
+                {
+                    TelemetryDispatcher.Dispose();
+                }
+            }
         }
     }
 }

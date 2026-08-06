@@ -37,7 +37,7 @@ internal interface IVoiceConnection
         CancellationToken cancellationToken);
 
     Task RegisterDtmfCollectionAsync(
-        string responseId,
+        VoiceResponse response,
         string collectionId,
         int maxDigits,
         string? terminator,

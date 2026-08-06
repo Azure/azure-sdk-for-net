@@ -77,8 +77,7 @@ internal readonly record struct VoiceTerminationOutcome(
 /// </summary>
 internal sealed class VoiceTerminationCoordinator
 {
-    private const int MaxTrackedResponseIds = 4096;
-
+    private const int EstimatedTerminalIdBytes = 128;
     private readonly object _sync = new();
     private readonly CleanupDeadline _deadline;
     private readonly CancellationTokenSource _runtimeCancellation;
@@ -104,6 +103,7 @@ internal sealed class VoiceTerminationCoordinator
     private int _completeStarted;
     private int _deadlineEnforcementStarted;
     private int _completed;
+    private long _terminalIdBytes;
 
     public VoiceTerminationCoordinator(
         CleanupDeadline deadline,
@@ -133,6 +133,12 @@ internal sealed class VoiceTerminationCoordinator
     public VoiceTurnLease TurnLease => _turnLease;
 
     public bool IsTerminating => Volatile.Read(ref _beginStarted) != 0;
+
+    public void StartDeadline()
+    {
+        _deadline.Start();
+        StartDeadlineEnforcement();
+    }
 
     public VoiceConnectionTerminationRequest? Request
     {
@@ -171,8 +177,7 @@ internal sealed class VoiceTerminationCoordinator
             _request = request;
         }
 
-        _deadline.Start();
-        StartDeadlineEnforcement();
+        StartDeadline();
         try
         {
             var snapshot = await _sealAsync(request, cancellationToken).ConfigureAwait(false);
@@ -230,27 +235,37 @@ internal sealed class VoiceTerminationCoordinator
         lock (_sync)
         {
             added = _terminalResponseIds.Add(response.ResponseId);
-            if (_terminalResponseIds.Count > MaxTrackedResponseIds)
+            if (added)
             {
-                throw new VoiceBridgeProtocolException(
-                    "Terminal response tracking limit exceeded.",
-                    VoiceProtocolConstants.ClosePolicyViolation);
+                _terminalIdBytes = checked(_terminalIdBytes + EstimatedTerminalIdBytes);
+                if (_terminalIdBytes > VoiceProtocolConstants.MaxTrackedIdentityBytes)
+                {
+                    throw new VoiceBridgeProtocolException(
+                        "Terminal response identity tracking byte limit exceeded.",
+                        VoiceProtocolConstants.ClosePolicyViolation);
+                }
             }
         }
 
-        if (added)
-        {
-            response.ReleaseOutputBuffers();
-        }
-
         var turnTermination = added
-            ? _turnLease.TryTerminate(response, terminalKind)
+            ? _turnLease.TryDetach(response, terminalKind)
             : VoiceTurnTermination.None(terminalKind);
         return new VoiceResponseTermination(
             added,
             terminalKind,
             response,
             turnTermination);
+    }
+
+    public static Task ApplyResponseTermination(VoiceResponseTermination termination)
+    {
+        if (!termination.IsNewTerminal)
+        {
+            return Task.CompletedTask;
+        }
+
+        termination.Response.ReleaseOutputBuffers();
+        return termination.TurnTermination.Complete();
     }
 
     public bool IsResponseTerminal(string responseId)
@@ -268,6 +283,7 @@ internal sealed class VoiceTerminationCoordinator
         lock (_sync)
         {
             _terminalResponseIds.Clear();
+            _terminalIdBytes = 0;
         }
 
         Volatile.Write(ref _completed, 1);
@@ -312,15 +328,37 @@ internal sealed class VoiceTerminationCoordinator
 
     private void CancelRuntime()
     {
+        // The runtime token is linked to customer-visible response tokens, so a
+        // blocking cancellation registration must not stall bounded teardown.
+        // Initiate cancellation off the current stack (CancelAsync sets the
+        // token state synchronously but dispatches registered callbacks) and
+        // observe any faults without blocking the termination path.
+        Task cancelTask;
         try
         {
-            _runtimeCancellation.Cancel(throwOnFirstException: false);
+            cancelTask = _runtimeCancellation.CancelAsync();
         }
-        catch (AggregateException)
+        catch (ObjectDisposedException)
         {
-            // Customer cancellation registrations cannot prevent teardown.
+            return;
+        }
+
+        if (!cancelTask.IsCompleted)
+        {
+            ObserveCancelFaults(cancelTask);
+        }
+        else if (cancelTask.IsFaulted)
+        {
+            _ = cancelTask.Exception;
         }
     }
+
+    private static void ObserveCancelFaults(Task cancelTask) =>
+        _ = cancelTask.ContinueWith(
+            static completed => { _ = completed.Exception; },
+            CancellationToken.None,
+            TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously,
+            TaskScheduler.Default);
 
     private void AbortBestEffort()
     {
