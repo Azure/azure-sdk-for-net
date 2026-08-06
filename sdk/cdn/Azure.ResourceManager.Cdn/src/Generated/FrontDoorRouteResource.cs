@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string frontDoorRouteApiVersion);
             _routesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _routesRestClient = new Routes(_routesClientDiagnostics, Pipeline, Endpoint, frontDoorRouteApiVersion ?? "2025-09-01-preview");
+            _routesRestClient = new Routes(_routesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRouteApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _routesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorRoutePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorRouteResource> operation = new CdnArmOperation<FrontDoorRouteResource>(
-                    new FrontDoorRouteOperationSource(Client),
+                    new FrontDoorRouteResourceOperationSource(Client),
                     _routesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _routesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorRoutePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorRouteResource> operation = new CdnArmOperation<FrontDoorRouteResource>(
-                    new FrontDoorRouteOperationSource(Client),
+                    new FrontDoorRouteResourceOperationSource(Client),
                     _routesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -95,10 +95,14 @@ namespace Azure.Provisioning.KeyVault
         {
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
-            _notBefore = DefineProperty<DateTimeOffset>(nameof(NotBefore), new string[] { "nbf" });
-            _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "exp" });
-            _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true);
-            _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true);
+            _notBefore = DefineProperty<DateTimeOffset>(nameof(NotBefore), new string[] { "nbf" }, format: "U");
+            _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "exp" }, format: "U");
+            _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true, format: "U");
+            _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true, format: "U");
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecretAttributes that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

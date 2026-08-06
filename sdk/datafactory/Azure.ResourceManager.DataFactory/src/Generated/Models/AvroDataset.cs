@@ -15,16 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AvroDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="AvroDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AvroDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "Avro";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AvroDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -33,36 +23,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="dataLocation">
-        /// The location of the avro storage.
-        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
-        /// </param>
-        /// <param name="avroCompressionCodec"> The data avroCompressionCodec. Type: string (or Expression with resultType string). </param>
-        /// <param name="avroCompressionLevel"></param>
-        internal AvroDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, DataFactoryElement<string> avroCompressionCodec, int? avroCompressionLevel) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Avro dataset properties. </param>
+        internal AvroDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AvroDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            DataLocation = dataLocation;
-            AvroCompressionCodec = avroCompressionCodec;
-            AvroCompressionLevel = avroCompressionLevel;
-            DatasetType = datasetType ?? "Avro";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvroDataset"/> for deserialization. </summary>
-        internal AvroDataset()
+        /// <summary> Avro dataset properties. </summary>
+        internal AvroDatasetTypeProperties TypeProperties { get; set; }
+
+        /// <summary> The location of the avro storage. </summary>
+        public DatasetLocation DataLocation
         {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DataLocation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AvroDatasetTypeProperties();
+                }
+                TypeProperties.DataLocation = value;
+            }
         }
 
-        /// <summary>
-        /// The location of the avro storage.
-        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
-        /// </summary>
-        public DatasetLocation DataLocation { get; set; }
         /// <summary> The data avroCompressionCodec. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AvroCompressionCodec { get; set; }
-        /// <summary> Gets or sets the avro compression level. </summary>
-        public int? AvroCompressionLevel { get; set; }
+        public DataFactoryElement<string> AvroCompressionCodec
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AvroCompressionCodec;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AvroDatasetTypeProperties();
+                }
+                TypeProperties.AvroCompressionCodec = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AvroCompressionLevel. </summary>
+        public int? AvroCompressionLevel
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AvroCompressionLevel;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AvroDatasetTypeProperties();
+                }
+                TypeProperties.AvroCompressionLevel = value;
+            }
+        }
     }
 }

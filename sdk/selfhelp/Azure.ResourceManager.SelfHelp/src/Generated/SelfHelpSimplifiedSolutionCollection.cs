@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             TryGetApiVersion(SelfHelpSimplifiedSolutionResource.ResourceType, out string selfHelpSimplifiedSolutionApiVersion);
             _simplifiedSolutionsResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpSimplifiedSolutionResource.ResourceType.Namespace, Diagnostics);
-            _simplifiedSolutionsResourcesRestClient = new SimplifiedSolutionsResources(_simplifiedSolutionsResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpSimplifiedSolutionApiVersion ?? "2024-03-01-preview");
+            _simplifiedSolutionsResourcesRestClient = new SimplifiedSolutionsResources(_simplifiedSolutionsResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSimplifiedSolutionApiVersion ?? "2024-03-01-preview");
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.ToString(), simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
-                    new SelfHelpSimplifiedSolutionOperationSource(Client),
+                    new SelfHelpSimplifiedSolutionResourceOperationSource(Client),
                     _simplifiedSolutionsResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.ToString(), simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
-                    new SelfHelpSimplifiedSolutionOperationSource(Client),
+                    new SelfHelpSimplifiedSolutionResourceOperationSource(Client),
                     _simplifiedSolutionsResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

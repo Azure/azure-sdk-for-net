@@ -45,6 +45,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         MCP,
         MCPConnection,
         MCPToolbox,
+        MCPToolboxWithPreview,
         OpenAPI,
         OpenAPIConnection,
         A2A,
@@ -56,6 +57,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         ConnectedAgent,
         DeepResearch,
         AzureFunctionTool,
+        WorkIQTool,
     }
 
     public Dictionary<ToolType, string> ToolPrompts = new()
@@ -94,9 +96,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
         {ToolType.MCPToolbox, "What tools are available?"},
+        {ToolType.MCPToolboxWithPreview, "What tools are available?"},
         {ToolType.A2A, "What can the secondary agent do?"},
         {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
         {ToolType.AzureFunctionTool, "What is the most prevalent element in the universe? What would foo say?"},
+        {ToolType.WorkIQTool, "What meetings do I have scheduled today?"},
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -129,8 +133,10 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPToolbox, "You are a helpful assistant." },
+        {ToolType.MCPToolboxWithPreview, "You are a helpful assistant." },
         {ToolType.A2A, "You are a helpful assistant."},
         {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
+        {ToolType.WorkIQTool, "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions." },
     };
 
     public Dictionary<ToolType, string> ExpectedOutput = new()
@@ -199,6 +205,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.FabricIQ, "mcp_call"},
         {ToolType.A2A, "a2a_preview_call_output"},
         {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
+        {ToolType.WorkIQTool, "a2a_preview_call_output"}
     };
     #endregion
 
@@ -208,11 +215,11 @@ public class AgentsTestBase : ProjectsClientTestBase
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private readonly List<string> _conversationIDs = [];
-    private readonly List<string> _memoryStoreNames = [];
     private ProjectConversationsClient _conversations = null;
-    private AIProjectMemoryStores _stores = null;
+    protected readonly string MEMORY_STORE_NAME = "test-memory-store";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly string TOOLBOX_NAME = "ToolBoxForTest";
+    protected readonly int PAGE_SIZE = 3;
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -300,12 +307,14 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
+            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: MEMORY_STORE_NAME);
         }
         catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
-        memoryDefinitions.Options = new(true, true);
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
+        {
+            Options = new(true, true)
+        };
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
         int pollingInterval = Mode != RecordedTestMode.Playback ? 500 : 0;
         MemoryUpdateResult updateResult = await projectClient.MemoryStores.WaitForMemoriesUpdateAsync(
@@ -317,7 +326,6 @@ public class AgentsTestBase : ProjectsClientTestBase
             },
             pollingInterval: pollingInterval);
         Assert.That(updateResult.Status, Is.EqualTo(MemoryStoreUpdateStatus.Completed), $"Unexpected memory store update status: {updateResult.Status}, error details: {updateResult.ErrorDetails}.");
-        _memoryStoreNames.Add(store.Name);
         return store;
     }
 
@@ -392,7 +400,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never"),
+            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
@@ -456,32 +464,45 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteToolboxAsync(name: TOOLBOX_NAME);
+            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteAsync(name: TOOLBOX_NAME);
         }
         catch
         {
             // Nothing here
         }
     }
-    private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient)
+    private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient, bool usePreview)
     {
         await RemoveToolBoxMayBe(projectClient);
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
-        {
-            Name = "ToolBoxSearch",
-            Description = "Search for the toolboxes"
         };
-        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateToolboxVersionAsync(
+        ToolboxTool searchTool;
+        if (usePreview)
+        {
+            searchTool = new ToolboxSearchPreviewToolboxTool()
+            {
+                Name = "ToolBoxSearch",
+                Description = "Search for the toolboxes"
+            };
+        }
+        else
+        {
+            searchTool = new ToolSearchToolboxTool()
+            {
+                Name = "ToolBoxSearch",
+                Description = "Search for the toolboxes"
+            };
+        }
+        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateVersionAsync(
             name: TOOLBOX_NAME,
             tools: [mcp, codeInterpreter, searchTool],
             description: "Toolbox for the unit test."
@@ -493,7 +514,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         }
         else
         {
-            authToken = ((DefaultAzureCredential)TestEnvironment.Credential).GetToken(new(scopes: ["https://ai.azure.com/.default"]), cancellationToken: default).Token;
+            authToken = ((AzureCliCredential)GetTestTokenProvider()).GetToken(new(scopes: ["https://ai.azure.com/.default"]), cancellationToken: default).Token;
         }
         return ResponseTool.CreateMcpTool(
             serverLabel: "search-tool",
@@ -595,7 +616,9 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.A2A => GetA2ATool(false),
             ToolType.A2ASpecialConnection => GetA2ATool(true),
             ToolType.AzureFunction => GetFunctionTool(),
-            ToolType.MCPToolbox => await GetToolBoxAsync(projectClient),
+            ToolType.MCPToolbox => await GetToolBoxAsync(projectClient, false),
+            ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
+            ToolType.WorkIQTool => new WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         string instructions;
@@ -626,7 +649,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
 
         // Remove conversations.
         if (_conversations is not null)
@@ -645,20 +668,21 @@ public class AgentsTestBase : ProjectsClientTestBase
                 }
             }
         }
-        if (_stores != null)
+        List<string> memoryStores = await projectClient.MemoryStores.GetMemoryStoresAsync()
+            .Select(x => x.Name)
+            .Where(x => x.StartsWith(MEMORY_STORE_NAME))
+            .ToListAsync();
+        foreach (string name in memoryStores)
         {
-            foreach (string name in _memoryStoreNames)
+            try
             {
-                try
-                {
-                    await _stores.DeleteMemoryStoreAsync(name: name);
-                }
-                catch (RequestFailedException ex)
-                {
-                    // Throw only if it is the error other then "Not found."
-                    if (ex.Status != 404)
-                        throw;
-                }
+                await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: name);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Throw only if it is the error other then "Not found."
+                if (ex.Status != 404)
+                    throw;
             }
         }
         // Remove Vector stores
@@ -679,7 +703,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT)).ToListAsync();
         foreach (string hostedAgent in hostedAgents)
         {
-            projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            try
+            {
+                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            }
+            catch { }
         }
         await RemoveToolBoxMayBe(projectClient);
     }

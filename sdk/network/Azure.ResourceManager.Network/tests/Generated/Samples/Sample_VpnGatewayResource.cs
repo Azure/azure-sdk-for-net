@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnGatewayResource vpnGateway = client.GetVpnGatewayResource(vpnGatewayResourceId);
 
             // invoke the operation
-            await vpnGateway.DeleteAsync(WaitUntil.Completed);
+            await vpnGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<VpnGatewayResource> lro = await vpnGateway.UpdateAsync(WaitUntil.Completed, vpnGatewayParameters);
+            ArmOperation<VpnGatewayResource> lro = await vpnGateway.UpdateAsync(WaitUntil.Completed, vpnGatewayParameters, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnGatewayResource vpnGateway = client.GetVpnGatewayResource(vpnGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<VpnGatewayResource> lro = await vpnGateway.ResetAsync(WaitUntil.Completed);
+            ArmOperation<VpnGatewayResource> lro = await vpnGateway.ResetAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
-            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnGatewayResource vpnGateway = client.GetVpnGatewayResource(vpnGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed);
+            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
-            ArmOperation<string> lro = await vpnGateway.StopPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await vpnGateway.StopPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingTransactionKind : IEquatable<BillingTransactionKind>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> All. </summary>
+        private const string AllValue = "All";
+        /// <summary> Reservation. </summary>
+        private const string ReservationValue = "Reservation";
 
         /// <summary> Initializes a new instance of <see cref="BillingTransactionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingTransactionKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string AllValue = "All";
-        private const string ReservationValue = "Reservation";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingTransactionKind Other { get; } = new BillingTransactionKind(OtherValue);
+
         /// <summary> All. </summary>
         public static BillingTransactionKind All { get; } = new BillingTransactionKind(AllValue);
+
         /// <summary> Reservation. </summary>
         public static BillingTransactionKind Reservation { get; } = new BillingTransactionKind(ReservationValue);
+
         /// <summary> Determines if two <see cref="BillingTransactionKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingTransactionKind left, BillingTransactionKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingTransactionKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingTransactionKind left, BillingTransactionKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingTransactionKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingTransactionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingTransactionKind(string value) => new BillingTransactionKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingTransactionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingTransactionKind?(string value) => value == null ? null : new BillingTransactionKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingTransactionKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingTransactionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

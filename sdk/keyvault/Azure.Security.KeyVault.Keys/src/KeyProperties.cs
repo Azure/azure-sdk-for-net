@@ -151,6 +151,12 @@ namespace Azure.Security.KeyVault.Keys
         public int? KeySize { get => _attributes.KeySize; internal set => _attributes.KeySize = value; }
 
         /// <summary>
+        /// Gets the external key reference, if available. Only populated on Managed HSM with service
+        /// version <c>2026-01-01-preview</c> or later when the key is registered as an external key.
+        /// </summary>
+        public ExternalKey ExternalKey { get => _attributes.ExternalKey; internal set => _attributes.ExternalKey = value; }
+
+        /// <summary>
         /// Parses the key identifier into the <see cref="VaultUri"/>, <see cref="Name"/>, and <see cref="Version"/> of the key.
         /// </summary>
         /// <param name="id">The key vault object identifier.</param>

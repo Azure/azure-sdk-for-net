@@ -1,0 +1,18 @@
+# Azure.AI.AgentServer.Invocations approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# AZC0100 fires on awaits that omit ConfigureAwait(false). This package is a
+# server-side hosting library that runs on the ASP.NET Core request pipeline,
+# where there is no UI / SynchronizationContext to capture; ConfigureAwait(false)
+# is at best unnecessary and at worst incorrect for hosted-service / middleware
+# scenarios. The Azure.Core guideline that AZC0100 enforces is targeted at
+# client libraries called from arbitrary contexts and does not apply here.
+# Same exemption as the parent Azure.AI.AgentServer.Core; see AGENTS.md §0.VI.
+nowarn:AZC0100
+
+# AZC0004 fires on async APIs that lack a corresponding sync variant. This
+# package only exposes async APIs by design — its surface area is the agent
+# invocation pipeline on top of AgentServer.Core, where sync variants would
+# either deadlock under ASP.NET Core or duplicate code without value.
+# Same exemption as the parent Azure.AI.AgentServer.Core (and AMQP-based SDKs).
+nowarn:AZC0004

@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal ToolSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolSearchExecutionType? execution, string description, EmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
+        internal ToolSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolSearchExecutionKind? execution, string description, EmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
         {
             Execution = execution;
             Description = description;
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Whether tool search is executed by the server or by the client. </summary>
-        public ToolSearchExecutionType? Execution { get; set; }
+        public ToolSearchExecutionKind? Execution { get; set; }
 
         /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }

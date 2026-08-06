@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
+    /// <summary>
+    /// Network function properties.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NetworkFunctionValueWithSecrets"/> and <see cref="NetworkFunctionValueWithoutSecrets"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownNetworkFunctionPropertiesFormat))]
-    public partial class NetworkFunctionPropertiesFormat : IUtf8JsonSerializable, IJsonModel<NetworkFunctionPropertiesFormat>
+    public abstract partial class NetworkFunctionPropertiesFormat : IJsonModel<NetworkFunctionPropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionPropertiesFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/> for deserialization. </summary>
+        internal NetworkFunctionPropertiesFormat()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFunctionPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFunctionPropertiesFormat IPersistableModel<NetworkFunctionPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFunctionPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFunctionPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,41 +77,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
+            if (Optional.IsDefined(PublisherScope))
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionGroupName))
+            if (Optional.IsDefined(NetworkFunctionDefinitionGroupName))
             {
                 writer.WritePropertyName("networkFunctionDefinitionGroupName"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionVersion))
+            if (Optional.IsDefined(NetworkFunctionDefinitionVersion))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersion"u8);
                 writer.WriteStringValue(NetworkFunctionDefinitionVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
+            if (Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
             {
                 writer.WritePropertyName("networkFunctionDefinitionOfferingLocation"u8);
-                writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation);
+                writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation.Value);
             }
             if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {
@@ -90,21 +138,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 writer.WritePropertyName("roleOverrideValues"u8);
                 writer.WriteStartArray();
-                foreach (var item in RoleOverrideValues)
+                foreach (string item in RoleOverrideValues)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,66 +166,42 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
         }
 
-        NetworkFunctionPropertiesFormat IJsonModel<NetworkFunctionPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFunctionPropertiesFormat IJsonModel<NetworkFunctionPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFunctionPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
         }
 
-        internal static NetworkFunctionPropertiesFormat DeserializeNetworkFunctionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFunctionPropertiesFormat DeserializeNetworkFunctionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("configurationType", out JsonElement discriminator))
+            if (element.TryGetProperty("configurationType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element, options);
-                    case "Secret": return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element, options);
+                    case "Secret":
+                        return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element, options);
+                    case "Open":
+                        return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element, options);
                 }
             }
             return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element, options);
         }
-
-        BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkFunctionPropertiesFormat IPersistableModel<NetworkFunctionPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkFunctionPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

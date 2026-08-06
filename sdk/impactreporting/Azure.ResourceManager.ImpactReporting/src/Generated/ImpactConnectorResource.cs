@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             TryGetApiVersion(ResourceType, out string impactConnectorApiVersion);
             _connectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
-            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
+            _connectorsRestClient = new Connectors(_connectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, impactConnectorApiVersion ?? "2024-05-01-preview");
             ValidateResourceId(id);
         }
 

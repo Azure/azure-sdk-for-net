@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(ResourceType, out string cloudEndpointApiVersion);
             _cloudEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            _cloudEndpointsRestClient = new CloudEndpoints(_cloudEndpointsClientDiagnostics, Pipeline, Endpoint, cloudEndpointApiVersion ?? "2022-09-01");
+            _cloudEndpointsRestClient = new CloudEndpoints(_cloudEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudEndpointApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _cloudEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<CloudEndpointResource> operation = new StorageSyncArmOperation<CloudEndpointResource>(
-                    new CloudEndpointOperationSource(Client),
+                    new CloudEndpointResourceOperationSource(Client),
                     _cloudEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _cloudEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<CloudEndpointResource> operation = new StorageSyncArmOperation<CloudEndpointResource>(
-                    new CloudEndpointOperationSource(Client),
+                    new CloudEndpointResourceOperationSource(Client),
                     _cloudEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

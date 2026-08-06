@@ -14,3 +14,5 @@ extends:
       safeName: AzureResourceManagerContainerRegistryTasks
     - name: Azure.Provisioning.ContainerRegistry
       safeName: AzureProvisioningContainerRegistry
+    - name: Azure.Provisioning.ContainerRegistry.Tasks
+      safeName: AzureProvisioningContainerRegistryTasks

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct VersioningScheme : IEquatable<VersioningScheme>
     {
         private readonly string _value;
+        /// <summary> The API Version is passed in a path segment. </summary>
+        private const string SegmentValue = "Segment";
+        /// <summary> The API Version is passed in a query parameter. </summary>
+        private const string QueryValue = "Query";
+        /// <summary> The API Version is passed in a HTTP header. </summary>
+        private const string HeaderValue = "Header";
 
         /// <summary> Initializes a new instance of <see cref="VersioningScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VersioningScheme(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SegmentValue = "Segment";
-        private const string QueryValue = "Query";
-        private const string HeaderValue = "Header";
-
-        /// <summary> Segment. </summary>
+        /// <summary> The API Version is passed in a path segment. </summary>
         public static VersioningScheme Segment { get; } = new VersioningScheme(SegmentValue);
-        /// <summary> Query. </summary>
+
+        /// <summary> The API Version is passed in a query parameter. </summary>
         public static VersioningScheme Query { get; } = new VersioningScheme(QueryValue);
-        /// <summary> Header. </summary>
+
+        /// <summary> The API Version is passed in a HTTP header. </summary>
         public static VersioningScheme Header { get; } = new VersioningScheme(HeaderValue);
+
         /// <summary> Determines if two <see cref="VersioningScheme"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VersioningScheme left, VersioningScheme right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VersioningScheme"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VersioningScheme left, VersioningScheme right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VersioningScheme"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VersioningScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VersioningScheme(string value) => new VersioningScheme(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VersioningScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VersioningScheme?(string value) => value == null ? null : new VersioningScheme(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VersioningScheme other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VersioningScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

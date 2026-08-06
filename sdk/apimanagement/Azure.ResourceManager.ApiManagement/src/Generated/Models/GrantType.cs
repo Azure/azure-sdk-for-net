@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The GrantType. </summary>
+    /// <summary></summary>
     public readonly partial struct GrantType : IEquatable<GrantType>
     {
         private readonly string _value;
+        /// <summary> Authorization Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.1. </summary>
+        private const string AuthorizationCodeValue = "authorizationCode";
+        /// <summary> Implicit Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.2. </summary>
+        private const string ImplicitValue = "implicit";
+        /// <summary> Resource Owner Password Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.3. </summary>
+        private const string ResourceOwnerPasswordValue = "resourceOwnerPassword";
+        /// <summary> Client Credentials Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.4. </summary>
+        private const string ClientCredentialsValue = "clientCredentials";
 
         /// <summary> Initializes a new instance of <see cref="GrantType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GrantType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AuthorizationCodeValue = "authorizationCode";
-        private const string ImplicitValue = "implicit";
-        private const string ResourceOwnerPasswordValue = "resourceOwnerPassword";
-        private const string ClientCredentialsValue = "clientCredentials";
+            _value = value;
+        }
 
         /// <summary> Authorization Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.1. </summary>
         public static GrantType AuthorizationCode { get; } = new GrantType(AuthorizationCodeValue);
+
         /// <summary> Implicit Code Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.2. </summary>
         public static GrantType Implicit { get; } = new GrantType(ImplicitValue);
+
         /// <summary> Resource Owner Password Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.3. </summary>
         public static GrantType ResourceOwnerPassword { get; } = new GrantType(ResourceOwnerPasswordValue);
+
         /// <summary> Client Credentials Grant flow as described https://tools.ietf.org/html/rfc6749#section-4.4. </summary>
         public static GrantType ClientCredentials { get; } = new GrantType(ClientCredentialsValue);
+
         /// <summary> Determines if two <see cref="GrantType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GrantType left, GrantType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GrantType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GrantType left, GrantType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GrantType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GrantType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GrantType(string value) => new GrantType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GrantType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GrantType?(string value) => value == null ? null : new GrantType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GrantType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GrantType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

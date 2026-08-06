@@ -11,18 +11,18 @@ namespace Azure.Provisioning.Batch
     public enum NetworkSecurityPerimeterConfigurationProvisioningState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 2,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 3,
         /// <summary> Accepted. </summary>
-        Accepted,
+        Accepted = 4,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 5,
         /// <summary> Canceled. </summary>
-        Canceled
+        Canceled = 6
     }
 }

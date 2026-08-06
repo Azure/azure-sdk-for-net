@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.Network.Samples
                 RuleType = InboundSecurityRuleType.Permanent,
                 Rules = {new InboundSecurityRules
 {
-Name = "inboundRule1",
 Protocol = InboundSecurityRulesProtocol.Tcp,
 SourceAddressPrefix = "50.20.121.5/32",
 DestinationPortRange = 22,
@@ -82,7 +81,7 @@ DestinationPortRanges = {"80-100"},
 AppliesOn = {"slbip1"},
 }},
             };
-            ArmOperation<InboundSecurityRuleResource> lro = await inboundSecurityRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<InboundSecurityRuleResource> lro = await inboundSecurityRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             InboundSecurityRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogMonitorResource.ResourceType, out string datadogMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _datadogMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _monitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogMonitorResource> operation = new DatadogArmOperation<DatadogMonitorResource>(
-                    new DatadogMonitorOperationSource(Client),
+                    new DatadogMonitorResourceOperationSource(Client),
                     _monitorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _monitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogMonitorResource> operation = new DatadogArmOperation<DatadogMonitorResource>(
-                    new DatadogMonitorOperationSource(Client),
+                    new DatadogMonitorResourceOperationSource(Client),
                     _monitorsClientDiagnostics,
                     Pipeline,
                     message.Request,

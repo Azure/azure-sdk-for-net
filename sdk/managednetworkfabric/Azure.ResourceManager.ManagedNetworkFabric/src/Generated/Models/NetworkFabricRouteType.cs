@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricRouteType : IEquatable<NetworkFabricRouteType>
     {
         private readonly string _value;
+        /// <summary> RouteType-Static. </summary>
+        private const string StaticValue = "Static";
+        /// <summary> RouteType-OptionA. </summary>
+        private const string OptionAValue = "OptionA";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRouteType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricRouteType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StaticValue = "Static";
-        private const string OptionAValue = "OptionA";
+            _value = value;
+        }
 
         /// <summary> RouteType-Static. </summary>
         public static NetworkFabricRouteType Static { get; } = new NetworkFabricRouteType(StaticValue);
+
         /// <summary> RouteType-OptionA. </summary>
         public static NetworkFabricRouteType OptionA { get; } = new NetworkFabricRouteType(OptionAValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricRouteType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricRouteType left, NetworkFabricRouteType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricRouteType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricRouteType left, NetworkFabricRouteType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricRouteType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricRouteType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricRouteType(string value) => new NetworkFabricRouteType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricRouteType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricRouteType?(string value) => value == null ? null : new NetworkFabricRouteType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricRouteType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricRouteType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

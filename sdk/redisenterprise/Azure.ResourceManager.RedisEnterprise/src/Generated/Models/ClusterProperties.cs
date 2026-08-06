@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="resourceState"> Current resource status of the cluster. </param>
         /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
+        /// <param name="migratedEndpoint"> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HighAvailability = highAvailability;
             MinimumTlsVersion = minimumTlsVersion;
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             ResourceState = resourceState;
             RedisVersion = redisVersion;
             PrivateEndpointConnections = privateEndpointConnections;
+            MigratedEndpoint = migratedEndpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -89,6 +91,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> List of private endpoint connections associated with the specified Redis Enterprise cluster. </summary>
         [WirePath("privateEndpointConnections")]
         public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
+
+        /// <summary> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </summary>
+        [WirePath("migratedEndpoint")]
+        public string MigratedEndpoint { get; }
 
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
         [WirePath("encryption.customerManagedKeyEncryption")]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterSecuritySettingApiVersion);
             _securitySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _securitySettingsRestClient = new SecuritySettings(_securitySettingsClientDiagnostics, Pipeline, Endpoint, hciClusterSecuritySettingApiVersion ?? "2026-04-30");
+            _securitySettingsRestClient = new SecuritySettings(_securitySettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterSecuritySettingApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterSecuritySettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
+                    new HciClusterSecuritySettingResourceOperationSource(Client),
                     _securitySettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterSecuritySettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
+                    new HciClusterSecuritySettingResourceOperationSource(Client),
                     _securitySettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

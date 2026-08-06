@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             TryGetApiVersion(ResourceSyncRuleResource.ResourceType, out string resourceSyncRuleApiVersion);
             _resourceSyncRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations", ResourceSyncRuleResource.ResourceType.Namespace, Diagnostics);
-            _resourceSyncRulesRestClient = new ResourceSyncRules(_resourceSyncRulesClientDiagnostics, Pipeline, Endpoint, resourceSyncRuleApiVersion ?? "2021-08-31-preview");
+            _resourceSyncRulesRestClient = new ResourceSyncRules(_resourceSyncRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceSyncRuleApiVersion ?? "2021-08-31-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _resourceSyncRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, ResourceSyncRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
-                    new ResourceSyncRuleOperationSource(Client),
+                    new ResourceSyncRuleResourceOperationSource(Client),
                     _resourceSyncRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _resourceSyncRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, ResourceSyncRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
-                    new ResourceSyncRuleOperationSource(Client),
+                    new ResourceSyncRuleResourceOperationSource(Client),
                     _resourceSyncRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

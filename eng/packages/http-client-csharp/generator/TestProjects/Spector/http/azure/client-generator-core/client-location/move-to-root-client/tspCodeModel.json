@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "MoveToRootClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient",
       "doc": "Test for @clientLocation decorator - moving operations between clients",
       "methods": [
@@ -16,11 +17,13 @@
           "$id": "2",
           "kind": "basic",
           "name": "getHealthStatus",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "getHealthStatus",
+            "isExactName": false,
             "resourceName": "ResourceOperations",
             "accessibility": "public",
             "parameters": [],
@@ -30,7 +33,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -80,7 +84,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -92,17 +97,20 @@
           "$id": "7",
           "kind": "client",
           "name": "ResourceOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient",
           "methods": [
             {
               "$id": "8",
               "kind": "basic",
               "name": "getResource",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "9",
                 "name": "getResource",
+                "isExactName": false,
                 "resourceName": "ResourceOperations",
                 "accessibility": "public",
                 "parameters": [],
@@ -112,7 +120,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "GET",
@@ -162,7 +171,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.ResourceOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.ResourceOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

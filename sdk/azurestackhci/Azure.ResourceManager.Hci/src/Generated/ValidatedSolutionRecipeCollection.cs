@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(ValidatedSolutionRecipeResource.ResourceType, out string validatedSolutionRecipeApiVersion);
             _location = location;
             _validatedSolutionRecipesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ValidatedSolutionRecipeResource.ResourceType.Namespace, Diagnostics);
-            _validatedSolutionRecipesRestClient = new ValidatedSolutionRecipes(_validatedSolutionRecipesClientDiagnostics, Pipeline, Endpoint, validatedSolutionRecipeApiVersion ?? "2026-04-30");
+            _validatedSolutionRecipesRestClient = new ValidatedSolutionRecipes(_validatedSolutionRecipesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, validatedSolutionRecipeApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 

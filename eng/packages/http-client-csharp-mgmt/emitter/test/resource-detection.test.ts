@@ -640,6 +640,120 @@ interface ChildResources {
     );
   });
 
+  it("legacy child resource parent detection ignores ARM type segment casing differences", async () => {
+    const program = await typeSpecCompile(
+      `
+model IotHubDescription is TrackedResource<IotHubDescriptionProperties> {
+  ...ResourceNameParameter<
+    Resource = IotHubDescription,
+    KeyName = "resourceName",
+    SegmentName = "IotHubs",
+    NamePattern = ""
+  >;
+}
+
+model IotHubDescriptionProperties {
+  description?: string;
+}
+
+@parentResource(IotHubDescription)
+model GroupIdInformation is ProxyResource<GroupIdInformationProperties, false> {
+  ...ResourceNameParameter<
+    Resource = GroupIdInformation,
+    KeyName = "groupId",
+    SegmentName = "privateLinkResources",
+    NamePattern = ""
+  >;
+}
+
+model GroupIdInformationProperties {
+  description?: string;
+}
+
+model GroupIdInformationList is GroupIdInformation[];
+
+alias GroupIdInformationOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+
+    @path
+    @segment("iotHubs")
+    resourceName: string;
+  },
+  {
+    @path
+    @segment("privateLinkResources")
+    groupId: string;
+  }
+>;
+
+@armResourceOperations
+interface IotHubDescriptions {
+  get is ArmResourceRead<IotHubDescription>;
+}
+
+@armResourceOperations
+interface GroupIdInformations {
+  get is GroupIdInformationOps.Read<GroupIdInformation>;
+  list is GroupIdInformationOps.ListSinglePage<
+    GroupIdInformation,
+    Response = ArmResponse<GroupIdInformationList>
+  >;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.Devices" }
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+
+    const hubResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.path ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}"
+    );
+    ok(hubResource);
+
+    const groupIdResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.Devices/iotHubs/privateLinkResources"
+    );
+    ok(groupIdResource);
+    strictEqual(
+      groupIdResource.metadata.resourceIdPattern.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}"
+    );
+    strictEqual(
+      groupIdResource.metadata.parentResourceId?.path,
+      hubResource.metadata.resourceIdPattern.path
+    );
+
+    const readMethod = groupIdResource.metadata.methods.find(
+      (m: any) => m.kind === "Read"
+    );
+    ok(readMethod);
+    strictEqual(
+      readMethod.operationPath.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}"
+    );
+
+    const listMethod = groupIdResource.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(listMethod);
+    strictEqual(
+      listMethod.scope.scopeIdPattern?.path,
+      hubResource.metadata.resourceIdPattern.path
+    );
+  });
+
   it("resource with grand parent under a resource group", async () => {
     const program = await typeSpecCompile(
       `
@@ -3012,6 +3126,90 @@ interface Widgets {
       widgetResource.metadata.methods.filter((m) => m.kind === "Action").length,
       1,
       "GET action returning metadata should stay classified as Action"
+    );
+  });
+
+  it("places clientOption collection action on the child collection resource", async () => {
+    const program = await typeSpecCompile(
+      `
+@subscriptionResource
+model Location is ProxyResource<LocationProperties> {
+  ...ResourceNameParameter<Location>;
+}
+
+model LocationProperties {
+  description?: string;
+}
+
+@subscriptionResource
+@parentResource(Location)
+model Alert is ProxyResource<AlertProperties> {
+  ...ResourceNameParameter<Alert>;
+}
+
+model AlertProperties {
+  description?: string;
+}
+
+@armResourceOperations
+interface Locations {
+  get is ArmResourceRead<Location>;
+}
+
+@armResourceOperations
+interface Alerts {
+  get is ArmResourceRead<Alert>;
+  listByParent is ArmResourceListByParent<Alert>;
+}
+
+interface AlertActions {
+  @post
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{locationName}/alerts/default/simulate")
+  simulate(
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+    @path locationName: string
+  ): ArmAcceptedLroResponse;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Mark collection action placement"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Mark collection action placement"
+@@clientOption(AlertActions.simulate, "resource-operation-kind", "CollectionAction", "csharp");
+`,
+      runner,
+      { providerNamespace: "Microsoft.Security" }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const alertResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.Security/locations/alerts"
+    );
+    ok(alertResource, "Alert resource should be detected");
+
+    const collectionAction = alertResource.metadata.methods.find(
+      (m: any) =>
+        m.kind === "CollectionAction" &&
+        m.operationPath.path.endsWith("/alerts/default/simulate")
+    );
+    ok(collectionAction, "simulate should be placed on the alert collection");
+    strictEqual(
+      collectionAction.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{locationName}"
+    );
+
+    const locationResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.Security/locations"
+    );
+    ok(locationResource, "Location resource should be detected");
+    strictEqual(
+      locationResource.metadata.methods.some((m: any) =>
+        m.operationPath.path.endsWith("/alerts/default/simulate")
+      ),
+      false,
+      "simulate should not be placed on the location resource"
     );
   });
 

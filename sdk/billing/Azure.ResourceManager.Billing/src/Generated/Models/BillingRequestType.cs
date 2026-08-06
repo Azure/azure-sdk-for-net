@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingRequestType : IEquatable<BillingRequestType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> InvoiceAccess. </summary>
+        private const string InvoiceAccessValue = "InvoiceAccess";
+        /// <summary> ProvisioningAccess. </summary>
+        private const string ProvisioningAccessValue = "ProvisioningAccess";
+        /// <summary> RoleAssignment. </summary>
+        private const string RoleAssignmentValue = "RoleAssignment";
+        /// <summary> UpdateBillingPolicy. </summary>
+        private const string UpdateBillingPolicyValue = "UpdateBillingPolicy";
 
         /// <summary> Initializes a new instance of <see cref="BillingRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingRequestType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string InvoiceAccessValue = "InvoiceAccess";
-        private const string ProvisioningAccessValue = "ProvisioningAccess";
-        private const string RoleAssignmentValue = "RoleAssignment";
-        private const string UpdateBillingPolicyValue = "UpdateBillingPolicy";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingRequestType Other { get; } = new BillingRequestType(OtherValue);
+
         /// <summary> InvoiceAccess. </summary>
         public static BillingRequestType InvoiceAccess { get; } = new BillingRequestType(InvoiceAccessValue);
+
         /// <summary> ProvisioningAccess. </summary>
         public static BillingRequestType ProvisioningAccess { get; } = new BillingRequestType(ProvisioningAccessValue);
+
         /// <summary> RoleAssignment. </summary>
         public static BillingRequestType RoleAssignment { get; } = new BillingRequestType(RoleAssignmentValue);
+
         /// <summary> UpdateBillingPolicy. </summary>
         public static BillingRequestType UpdateBillingPolicy { get; } = new BillingRequestType(UpdateBillingPolicyValue);
+
         /// <summary> Determines if two <see cref="BillingRequestType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingRequestType left, BillingRequestType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingRequestType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingRequestType left, BillingRequestType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingRequestType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingRequestType(string value) => new BillingRequestType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingRequestType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingRequestType?(string value) => value == null ? null : new BillingRequestType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingRequestType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingRequestType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

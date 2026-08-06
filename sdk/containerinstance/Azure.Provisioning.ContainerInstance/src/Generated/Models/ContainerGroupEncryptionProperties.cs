@@ -92,6 +92,10 @@ namespace Azure.Provisioning.ContainerInstance
             _keyName = DefineProperty<string>(nameof(KeyName), new string[] { "keyName" }, isRequired: true);
             _keyVersion = DefineProperty<string>(nameof(KeyVersion), new string[] { "keyVersion" }, isRequired: true);
             _identity = DefineProperty<string>(nameof(Identity), new string[] { "identity" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupEncryptionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

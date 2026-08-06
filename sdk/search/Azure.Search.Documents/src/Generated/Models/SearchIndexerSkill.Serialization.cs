@@ -12,7 +12,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for skills. </summary>
+    /// <summary>
+    /// Base type for skills.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ConditionalSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="OcrSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="ShaperSkill"/>, <see cref="MergeSkill"/>, <see cref="SentimentSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SplitSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="WebApiSkill"/>, <see cref="AzureMachineLearningSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="VisionVectorizeSkill"/>, <see cref="ContentUnderstandingSkill"/>, and <see cref="ChatCompletionSkill"/>.
+    /// </summary>
     public partial class SearchIndexerSkill : IJsonModel<SearchIndexerSkill>
     {
         /// <summary> Initializes a new instance of <see cref="SearchIndexerSkill"/> for deserialization. </summary>
@@ -189,8 +192,12 @@ namespace Azure.Search.Documents.Indexes.Models
                         return DocumentIntelligenceLayoutSkill.DeserializeDocumentIntelligenceLayoutSkill(element, options);
                     case "#Microsoft.Skills.Custom.WebApiSkill":
                         return WebApiSkill.DeserializeWebApiSkill(element, options);
+                    case "#Microsoft.Skills.Custom.AmlSkill":
+                        return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element, options);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill":
                         return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element, options);
+                    case "#Microsoft.Skills.Vision.VectorizeSkill":
+                        return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element, options);
                     case "#Microsoft.Skills.Util.ContentUnderstandingSkill":
                         return ContentUnderstandingSkill.DeserializeContentUnderstandingSkill(element, options);
                     case "#Microsoft.Skills.Custom.ChatCompletionSkill":

@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscNodeReport : IUtf8JsonSerializable, IJsonModel<DscNodeReport>
+    /// <summary> Definition of the dsc node report type. </summary>
+    public partial class DscNodeReport : IJsonModel<DscNodeReport>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscNodeReport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DscNodeReport PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDscNodeReport(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DscNodeReport>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscNodeReport IPersistableModel<DscNodeReport>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DscNodeReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DscNodeReport"/> from. </param>
+        internal static DscNodeReport FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDscNodeReport(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DscNodeReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +77,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(EndOn))
             {
-                if (EndOn != null)
-                {
-                    writer.WritePropertyName("endTime"u8);
-                    writer.WriteStringValue(EndOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("endTime");
-                }
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -53,15 +94,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(StartOn))
             {
-                if (StartOn != null)
-                {
-                    writer.WritePropertyName("startTime"u8);
-                    writer.WriteStringValue(StartOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startTime");
-                }
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(DscNodeReportType))
             {
@@ -107,7 +141,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (var item in Errors)
+                foreach (DscReportError item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -117,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
-                foreach (var item in Resources)
+                foreach (DscReportResource item in Resources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -137,8 +171,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 writer.WritePropertyName("iPV4Addresses"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPV4Addresses)
+                foreach (string item in IPV4Addresses)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -147,8 +186,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 writer.WritePropertyName("iPV6Addresses"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPV6Addresses)
+                foreach (string item in IPV6Addresses)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -163,15 +207,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("rawErrors"u8);
                 writer.WriteStringValue(RawErrors);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -180,30 +224,35 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        DscNodeReport IJsonModel<DscNodeReport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscNodeReport IJsonModel<DscNodeReport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DscNodeReport JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscNodeReport)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDscNodeReport(document.RootElement, options);
         }
 
-        internal static DscNodeReport DeserializeDscNodeReport(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DscNodeReport DeserializeDscNodeReport(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? endTime = default;
-            DateTimeOffset? lastModifiedTime = default;
-            DateTimeOffset? startTime = default;
-            string type = default;
+            DateTimeOffset? endOn = default;
+            DateTimeOffset? lastModifiedOn = default;
+            DateTimeOffset? startOn = default;
+            string dscNodeReportType = default;
             string reportId = default;
             string status = default;
             string refreshMode = default;
@@ -219,174 +268,186 @@ namespace Azure.ResourceManager.Automation.Models
             IReadOnlyList<string> ipV6Addresses = default;
             int? numberOfResources = default;
             string rawErrors = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endTime"u8))
+                if (prop.NameEquals("endTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
+                        endOn = null;
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"u8))
+                if (prop.NameEquals("lastModifiedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModifiedTime = property.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startTime = null;
+                        startOn = null;
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    dscNodeReportType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reportId"u8))
+                if (prop.NameEquals("reportId"u8))
                 {
-                    reportId = property.Value.GetString();
+                    reportId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshMode"u8))
+                if (prop.NameEquals("refreshMode"u8))
                 {
-                    refreshMode = property.Value.GetString();
+                    refreshMode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rebootRequested"u8))
+                if (prop.NameEquals("rebootRequested"u8))
                 {
-                    rebootRequested = property.Value.GetString();
+                    rebootRequested = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reportFormatVersion"u8))
+                if (prop.NameEquals("reportFormatVersion"u8))
                 {
-                    reportFormatVersion = property.Value.GetString();
+                    reportFormatVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationVersion"u8))
+                if (prop.NameEquals("configurationVersion"u8))
                 {
-                    configurationVersion = property.Value.GetString();
+                    configurationVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"u8))
+                if (prop.NameEquals("errors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DscReportError> array = new List<DscReportError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DscReportError.DeserializeDscReportError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("resources"u8))
+                if (prop.NameEquals("resources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DscReportResource> array = new List<DscReportResource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DscReportResource.DeserializeDscReportResource(item, options));
                     }
                     resources = array;
                     continue;
                 }
-                if (property.NameEquals("metaConfiguration"u8))
+                if (prop.NameEquals("metaConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value, options);
+                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("hostName"u8))
+                if (prop.NameEquals("hostName"u8))
                 {
-                    hostName = property.Value.GetString();
+                    hostName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iPV4Addresses"u8))
+                if (prop.NameEquals("iPV4Addresses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     ipV4Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("iPV6Addresses"u8))
+                if (prop.NameEquals("iPV6Addresses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     ipV6Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("numberOfResources"u8))
+                if (prop.NameEquals("numberOfResources"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    numberOfResources = property.Value.GetInt32();
+                    numberOfResources = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rawErrors"u8))
+                if (prop.NameEquals("rawErrors"u8))
                 {
-                    rawErrors = property.Value.GetString();
+                    rawErrors = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DscNodeReport(
-                endTime,
-                lastModifiedTime,
-                startTime,
-                type,
+                endOn,
+                lastModifiedOn,
+                startOn,
+                dscNodeReportType,
                 reportId,
                 status,
                 refreshMode,
@@ -402,38 +463,7 @@ namespace Azure.ResourceManager.Automation.Models
                 ipV6Addresses ?? new ChangeTrackingList<string>(),
                 numberOfResources,
                 rawErrors,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DscNodeReport>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DscNodeReport IPersistableModel<DscNodeReport>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDscNodeReport(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DscNodeReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

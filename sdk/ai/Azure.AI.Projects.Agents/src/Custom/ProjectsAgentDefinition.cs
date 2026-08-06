@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents;
 
@@ -12,10 +13,19 @@ public abstract partial class ProjectsAgentDefinition
     [CodeGenMember("RaiConfig")]
     public ContentFilterConfiguration ContentFilterConfiguration { get; set; }
 
+    /// <summary> Creates a prompt-based declarative agent definition for the specified model. </summary>
+    /// <param name="model">The model deployment to use for this agent.</param>
     public static DeclarativeAgentDefinition CreatePromptAgentDefinition(string model)
         => new(model);
+    /// <summary> Creates a workflow-based agent definition from a workflow YAML document. </summary>
+    /// <param name="workflowYamlDocument">The workflow defined as a YAML document.</param>
+    [Experimental("AAIP001")]
     public static WorkflowAgentDefinition CreateWorkflowAgentDefinitionFromYaml(string workflowYamlDocument)
         => WorkflowAgentDefinition.FromYaml(workflowYamlDocument);
+    /// <summary> Creates a hosted agent definition with the specified container configuration. </summary>
+    /// <param name="containerProtocolVersions">Protocol versions supported by the hosted container.</param>
+    /// <param name="cpuConfiguration">The CPU configuration string for the hosted container.</param>
+    /// <param name="memoryConfiguration">The memory configuration string for the hosted container.</param>
     public static HostedAgentDefinition CreateHostedAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpuConfiguration, string memoryConfiguration)
         => new(containerProtocolVersions, cpuConfiguration, memoryConfiguration);
 }

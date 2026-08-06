@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AzureFirewallThreatIntelMode : IEquatable<AzureFirewallThreatIntelMode>
     {
         private readonly string _value;
+        /// <summary> Alert. </summary>
+        private const string AlertValue = "Alert";
+        /// <summary> Deny. </summary>
+        private const string DenyValue = "Deny";
+        /// <summary> Off. </summary>
+        private const string OffValue = "Off";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallThreatIntelMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFirewallThreatIntelMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlertValue = "Alert";
-        private const string DenyValue = "Deny";
-        private const string OffValue = "Off";
+            _value = value;
+        }
 
         /// <summary> Alert. </summary>
         public static AzureFirewallThreatIntelMode Alert { get; } = new AzureFirewallThreatIntelMode(AlertValue);
+
         /// <summary> Deny. </summary>
         public static AzureFirewallThreatIntelMode Deny { get; } = new AzureFirewallThreatIntelMode(DenyValue);
+
         /// <summary> Off. </summary>
         public static AzureFirewallThreatIntelMode Off { get; } = new AzureFirewallThreatIntelMode(OffValue);
+
         /// <summary> Determines if two <see cref="AzureFirewallThreatIntelMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureFirewallThreatIntelMode left, AzureFirewallThreatIntelMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureFirewallThreatIntelMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureFirewallThreatIntelMode left, AzureFirewallThreatIntelMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallThreatIntelMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureFirewallThreatIntelMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureFirewallThreatIntelMode(string value) => new AzureFirewallThreatIntelMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureFirewallThreatIntelMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureFirewallThreatIntelMode?(string value) => value == null ? null : new AzureFirewallThreatIntelMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFirewallThreatIntelMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureFirewallThreatIntelMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

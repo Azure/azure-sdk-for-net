@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -15,8 +16,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessageImageContent"/>. </summary>
         /// <param name="image"> The image content. </param>
-        internal KnowledgeBaseMessageImageContent(KnowledgeBaseImageContent image) : base(KnowledgeBaseMessageContentType.Image)
+        /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
+        public KnowledgeBaseMessageImageContent(KnowledgeBaseImageContent image) : base(KnowledgeBaseMessageContentType.Image)
         {
+            Argument.AssertNotNull(image, nameof(image));
+
             Image = image;
         }
 
@@ -30,6 +34,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> The image content. </summary>
-        public KnowledgeBaseImageContent Image { get; }
+        public KnowledgeBaseImageContent Image { get; set; }
     }
 }

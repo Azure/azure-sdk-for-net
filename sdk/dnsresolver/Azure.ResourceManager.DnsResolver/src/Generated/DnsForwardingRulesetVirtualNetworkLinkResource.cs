@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsForwardingRulesetVirtualNetworkLinkApiVersion);
             _virtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, dnsForwardingRulesetVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
+            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsForwardingRulesetVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _virtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsForwardingRulesetVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(
-                    new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client),
+                    new DnsForwardingRulesetVirtualNetworkLinkResourceOperationSource(Client),
                     _virtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _virtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsForwardingRulesetVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(
-                    new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client),
+                    new DnsForwardingRulesetVirtualNetworkLinkResourceOperationSource(Client),
                     _virtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,

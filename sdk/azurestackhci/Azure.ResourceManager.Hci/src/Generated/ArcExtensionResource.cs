@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string arcExtensionApiVersion);
             _extensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, arcExtensionApiVersion ?? "2026-04-30");
+            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arcExtensionApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _extensionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ArcExtensionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<ArcExtensionResource> operation = new HciArmOperation<ArcExtensionResource>(
-                    new ArcExtensionOperationSource(Client),
+                    new ArcExtensionResourceOperationSource(Client),
                     _extensionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _extensionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ArcExtensionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<ArcExtensionResource> operation = new HciArmOperation<ArcExtensionResource>(
-                    new ArcExtensionOperationSource(Client),
+                    new ArcExtensionResourceOperationSource(Client),
                     _extensionsClientDiagnostics,
                     Pipeline,
                     message.Request,

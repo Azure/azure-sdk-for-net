@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SyncConflictResolutionPolicy : IEquatable<SyncConflictResolutionPolicy>
     {
         private readonly string _value;
+        /// <summary> HubWin. </summary>
+        private const string HubWinValue = "HubWin";
+        /// <summary> MemberWin. </summary>
+        private const string MemberWinValue = "MemberWin";
 
         /// <summary> Initializes a new instance of <see cref="SyncConflictResolutionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncConflictResolutionPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HubWinValue = "HubWin";
-        private const string MemberWinValue = "MemberWin";
+            _value = value;
+        }
 
         /// <summary> HubWin. </summary>
         public static SyncConflictResolutionPolicy HubWin { get; } = new SyncConflictResolutionPolicy(HubWinValue);
+
         /// <summary> MemberWin. </summary>
         public static SyncConflictResolutionPolicy MemberWin { get; } = new SyncConflictResolutionPolicy(MemberWinValue);
+
         /// <summary> Determines if two <see cref="SyncConflictResolutionPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyncConflictResolutionPolicy left, SyncConflictResolutionPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyncConflictResolutionPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyncConflictResolutionPolicy left, SyncConflictResolutionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncConflictResolutionPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyncConflictResolutionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyncConflictResolutionPolicy(string value) => new SyncConflictResolutionPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyncConflictResolutionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyncConflictResolutionPolicy?(string value) => value == null ? null : new SyncConflictResolutionPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyncConflictResolutionPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyncConflictResolutionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

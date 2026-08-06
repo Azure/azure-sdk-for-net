@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterOfferApiVersion);
             _offersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Endpoint, hciClusterOfferApiVersion ?? "2026-04-30");
+            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterOfferApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 

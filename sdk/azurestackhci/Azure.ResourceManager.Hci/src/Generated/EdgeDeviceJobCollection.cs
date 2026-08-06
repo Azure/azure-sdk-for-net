@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,7 +40,18 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(EdgeDeviceJobResource.ResourceType, out string edgeDeviceJobApiVersion);
             _edgeDeviceJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", EdgeDeviceJobResource.ResourceType.Namespace, Diagnostics);
-            _edgeDeviceJobsRestClient = new EdgeDeviceJobs(_edgeDeviceJobsClientDiagnostics, Pipeline, Endpoint, edgeDeviceJobApiVersion ?? "2026-04-30");
+            _edgeDeviceJobsRestClient = new EdgeDeviceJobs(_edgeDeviceJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDeviceJobApiVersion ?? "2026-04-30");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != HciEdgeDeviceResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciEdgeDeviceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
@@ -81,7 +93,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, jobsName, EdgeDeviceJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeDeviceJobResource> operation = new HciArmOperation<EdgeDeviceJobResource>(
-                    new EdgeDeviceJobOperationSource(Client),
+                    new EdgeDeviceJobResourceOperationSource(Client),
                     _edgeDeviceJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +151,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, jobsName, EdgeDeviceJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeDeviceJobResource> operation = new HciArmOperation<EdgeDeviceJobResource>(
-                    new EdgeDeviceJobOperationSource(Client),
+                    new EdgeDeviceJobResourceOperationSource(Client),
                     _edgeDeviceJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

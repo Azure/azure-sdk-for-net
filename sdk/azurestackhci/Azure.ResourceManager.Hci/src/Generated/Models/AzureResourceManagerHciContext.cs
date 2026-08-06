@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Hci.Models;
 using Azure.ResourceManager.Models;
 
@@ -162,7 +161,6 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(RemoteSupportNodeSettings))]
     [ModelReaderWriterBuildable(typeof(RemoteSupportProperties))]
     [ModelReaderWriterBuildable(typeof(RemoteSupportSession))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SanAdapterIPConfig))]
     [ModelReaderWriterBuildable(typeof(SanAdapterProperties))]
     [ModelReaderWriterBuildable(typeof(SanClusterNetworkConfig))]

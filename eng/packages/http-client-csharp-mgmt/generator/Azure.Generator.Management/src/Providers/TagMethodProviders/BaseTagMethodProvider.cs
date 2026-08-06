@@ -260,6 +260,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     statements.Add(foreachStatement);
                 }
 
+                if (_resource.TagPatchHookMethodName is not null)
+                {
+                    statements.Add(This.Invoke(_resource.TagPatchHookMethodName, [patchVar, resourceDataVar]).Terminate());
+                }
+
                 // Apply the specific tag operation to the patch
                 statements.Add(tagOperation(patchVar.Property("Tags")));
                 statements.Add(UpdateResourceStatement(patchVar, cancellationTokenParam, _updateMethodProvider, out resultVar));

@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() { Name = subnet1Name, AddressPrefix = "10.0.1.0/24", }, new SubnetData() { Name = subnet2Name, AddressPrefix = "10.0.2.0/24", } }
+                Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24", }, new SubnetData() { AddressPrefix = "10.0.2.0/24", } }
             };
 
             // Put Vnet
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
-            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet, System.Threading.CancellationToken.None);
             Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Tests
             vnet.AddressSpace.AddressPrefixes[0] = "10.1.0.0/16";
             vnet.Subnets[0].AddressPrefix = "10.1.1.0/24";
             vnet.Subnets[1].AddressPrefix = "10.1.2.0/24";
-            var remoteVirtualNetworkOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, remoteVirtualNetworkName, vnet);
+            var remoteVirtualNetworkOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, remoteVirtualNetworkName, vnet, System.Threading.CancellationToken.None);
             Response<VirtualNetworkResource> remoteVirtualNetwork = await remoteVirtualNetworkOperation.WaitForCompletionAsync();
             ;
 
@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.Network.Tests
 
             var peering = new VirtualNetworkPeeringData
             {
-                Name = vnetPeeringName,
                 RemoteVirtualNetwork = new WritableSubResource
                 {
                     Id = remoteVirtualNetwork.Value.Id
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put peering in the vnet
-            var putPeeringOperation = await virtualNetworkPeeringCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetPeeringName, peering);
+            var putPeeringOperation = await virtualNetworkPeeringCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetPeeringName, peering, null, System.Threading.CancellationToken.None);
             Response<VirtualNetworkPeeringResource> putPeering = await putPeeringOperation.WaitForCompletionAsync();
             ;
             Assert.NotNull(putPeering.Value.Data.ETag);
@@ -140,14 +139,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(VirtualNetworkPeeringState.Initiated, listPeering.ElementAt(0).Data.PeeringState);
 
             // delete peering
-            await getPeering.Value.DeleteAsync(WaitUntil.Completed);
+            await getPeering.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             listPeeringAP = virtualNetworkPeeringCollection.GetAllAsync();
             listPeering = await listPeeringAP.ToEnumerableAsync();
             Assert.IsEmpty(listPeering);
 
             // Delete Vnet
-            await putVnetResponse.Value.DeleteAsync(WaitUntil.Completed);
-            await remoteVirtualNetwork.Value.DeleteAsync(WaitUntil.Completed);
+            await putVnetResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
+            await remoteVirtualNetwork.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // Get all Vnets
             getAllVnetsAP = virtualNetworkCollection.GetAllAsync();

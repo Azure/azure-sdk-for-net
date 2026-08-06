@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(HciClusterUpdateRunResource.ResourceType, out string hciClusterUpdateRunApiVersion);
             _updateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterUpdateRunResource.ResourceType.Namespace, Diagnostics);
-            _updateRunsRestClient = new UpdateRuns(_updateRunsClientDiagnostics, Pipeline, Endpoint, hciClusterUpdateRunApiVersion ?? "2026-04-30");
+            _updateRunsRestClient = new UpdateRuns(_updateRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterUpdateRunApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 

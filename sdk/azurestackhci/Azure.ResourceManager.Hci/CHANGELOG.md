@@ -6,15 +6,18 @@
 
 - Upgraded API version to `2026-04-30` (stable).
 
-### Breaking Changes
+### Other Changes
 
 - Removed preview-only resource types: `ClusterJobResource`, `DevicePoolResource`, `EdgeMachineResource`, `EdgeMachineJobResource`, `OsImageResource`, `PlatformUpdateResource`, `UpdateContentResource`, `HciClusterPublisherResource`.
 - Removed preview-only models and operations related to: ownership voucher validation, Kubernetes versions, SDN integration, confidential VM, and OS provisioning.
 - Removed many model factory overloads that referenced removed resource types.
 
+## 1.3.0-beta.2 (2026-06-06)
+
 ### Other Changes
 
-- Updated `tsp-location.yaml` to use the latest stable API commit.
+- Upgraded dependent Azure.Core to 1.58.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.3.0-beta.1 (2026-04-23)
 

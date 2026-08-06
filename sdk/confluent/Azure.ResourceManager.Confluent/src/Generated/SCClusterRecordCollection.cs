@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(SCClusterRecordResource.ResourceType, out string scClusterRecordApiVersion);
             _scClusterRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", SCClusterRecordResource.ResourceType.Namespace, Diagnostics);
-            _scClusterRecordsRestClient = new SCClusterRecords(_scClusterRecordsClientDiagnostics, Pipeline, Endpoint, scClusterRecordApiVersion ?? "2025-08-18-preview");
+            _scClusterRecordsRestClient = new SCClusterRecords(_scClusterRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scClusterRecordApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
         }
 

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? force = false;
-            await networkManager.DeleteAsync(WaitUntil.Completed, force: force);
+            await networkManager.DeleteAsync(WaitUntil.Completed, force: force, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 ConfigurationIds = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resoureGroupSample/providers/Microsoft.Network/networkManagers/testNetworkManager/securityAdminConfigurations/SampleSecurityAdminConfig" },
             };
-            ArmOperation<NetworkManagerCommit> lro = await networkManager.PostNetworkManagerCommitAsync(WaitUntil.Completed, networkManagerCommit);
+            ArmOperation<NetworkManagerCommit> lro = await networkManager.PostNetworkManagerCommitAsync(WaitUntil.Completed, networkManagerCommit, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerCommit result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network.Samples
                 DeploymentTypes = { NetworkConfigurationDeploymentType.Connectivity, new NetworkConfigurationDeploymentType("AdminPolicy") },
                 SkipToken = "FakeSkipTokenCode",
             };
-            await foreach (NetworkManagerDeploymentStatus item in networkManager.GetNetworkManagerDeploymentStatusAsync(content))
+            await foreach (var item in networkManager.GetNetworkManagerDeploymentStatusAsync(content, null, System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

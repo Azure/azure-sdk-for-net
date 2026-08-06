@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 ProjectEnvironmentTypeListResult result = ProjectEnvironmentTypeListResult.FromResponse(response);
-                yield return Page<DevCenterProjectEnvironmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevCenterProjectEnvironmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

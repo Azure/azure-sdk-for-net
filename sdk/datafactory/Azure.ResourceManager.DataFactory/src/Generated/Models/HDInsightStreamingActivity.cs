@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -32,16 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(output, nameof(output));
             Argument.AssertNotNull(filePaths, nameof(filePaths));
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            Arguments = new ChangeTrackingList<BinaryData>();
-            Mapper = mapper;
-            Reducer = reducer;
-            Input = input;
-            Output = output;
-            FilePaths = filePaths.ToList();
-            CommandEnvironment = new ChangeTrackingList<BinaryData>();
-            Defines = new ChangeTrackingDictionary<string, BinaryData>();
-            ActivityType = "HDInsightStreaming";
+            TypeProperties = new HDInsightStreamingActivityTypeProperties(mapper, reducer, input, output, filePaths);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/>. </summary>
@@ -52,182 +43,170 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="storageLinkedServices"> Storage linked service references. </param>
-        /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
-        /// <param name="getDebugInfo"> Debug info option. </param>
-        /// <param name="mapper"> Mapper executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="reducer"> Reducer executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
-        /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
-        /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
-        /// <param name="fileLinkedService"> Linked service reference where the files are located. </param>
-        /// <param name="combiner"> Combiner executable name. Type: string (or Expression with resultType string). </param>
-        /// <param name="commandEnvironment"> Command line environment values. </param>
-        /// <param name="defines"> Allows user to specify defines for streaming job request. </param>
-        internal HDInsightStreamingActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> mapper, DataFactoryElement<string> reducer, DataFactoryElement<string> input, DataFactoryElement<string> output, IList<BinaryData> filePaths, DataFactoryLinkedServiceReference fileLinkedService, DataFactoryElement<string> combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> HDInsight streaming activity properties. </param>
+        internal HDInsightStreamingActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, HDInsightStreamingActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
-            StorageLinkedServices = storageLinkedServices;
-            Arguments = arguments;
-            GetDebugInfo = getDebugInfo;
-            Mapper = mapper;
-            Reducer = reducer;
-            Input = input;
-            Output = output;
-            FilePaths = filePaths;
-            FileLinkedService = fileLinkedService;
-            Combiner = combiner;
-            CommandEnvironment = commandEnvironment;
-            Defines = defines;
-            ActivityType = activityType ?? "HDInsightStreaming";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/> for deserialization. </summary>
-        internal HDInsightStreamingActivity()
+        /// <summary> HDInsight streaming activity properties. </summary>
+        internal HDInsightStreamingActivityTypeProperties TypeProperties { get; set; }
+
+        /// <summary> User specified arguments to HDInsightActivity. </summary>
+        public IList<BinaryData> Arguments
         {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                return TypeProperties.Arguments;
+            }
         }
 
-        /// <summary> Storage linked service references. </summary>
-        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
-        /// <summary>
-        /// User specified arguments to HDInsightActivity.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
-        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
+        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.GetDebugInfo;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                TypeProperties.GetDebugInfo = value;
+            }
+        }
+
         /// <summary> Mapper executable name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Mapper { get; set; }
+        public DataFactoryElement<string> Mapper
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Mapper;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                TypeProperties.Mapper = value;
+            }
+        }
+
         /// <summary> Reducer executable name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Reducer { get; set; }
+        public DataFactoryElement<string> Reducer
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Reducer;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                TypeProperties.Reducer = value;
+            }
+        }
+
         /// <summary> Input blob path. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Input { get; set; }
+        public DataFactoryElement<string> Input
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Input;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                TypeProperties.Input = value;
+            }
+        }
+
         /// <summary> Output blob path. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Output { get; set; }
-        /// <summary>
-        /// Paths to streaming job files. Can be directories.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> FilePaths { get; }
-        /// <summary> Linked service reference where the files are located. </summary>
-        public DataFactoryLinkedServiceReference FileLinkedService { get; set; }
+        public DataFactoryElement<string> Output
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Output;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                TypeProperties.Output = value;
+            }
+        }
+
+        /// <summary> Paths to streaming job files. Can be directories. </summary>
+        public IList<BinaryData> FilePaths
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                return TypeProperties.FilePaths;
+            }
+        }
+
         /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Combiner { get; set; }
-        /// <summary>
-        /// Command line environment values.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> CommandEnvironment { get; }
-        /// <summary>
-        /// Allows user to specify defines for streaming job request.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> Defines { get; }
+        public DataFactoryElement<string> Combiner
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Combiner;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                TypeProperties.Combiner = value;
+            }
+        }
+
+        /// <summary> Command line environment values. </summary>
+        public IList<BinaryData> CommandEnvironment
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                return TypeProperties.CommandEnvironment;
+            }
+        }
+
+        /// <summary> Allows user to specify defines for streaming job request. </summary>
+        public IDictionary<string, BinaryData> Defines
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightStreamingActivityTypeProperties();
+                }
+                return TypeProperties.Defines;
+            }
+        }
     }
 }

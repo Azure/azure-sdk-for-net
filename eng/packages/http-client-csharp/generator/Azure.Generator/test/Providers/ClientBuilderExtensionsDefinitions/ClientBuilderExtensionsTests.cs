@@ -17,13 +17,17 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
 {
     public class ClientBuilderExtensionsTests
     {
+        private const string LastContractStub =
+            "namespace Microsoft.Extensions.Azure { public static class SamplesClientBuilderExtensions {} }";
+
         [Test]
         public void AddsClientExtensionForApiKeyAuth()
         {
             var client = InputFactory.Client("TestClient", "Samples", "");
             var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                clients: () => [client]);
+                clients: () => [client],
+                lastContractSources: [LastContractStub]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
@@ -40,7 +44,8 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var client = InputFactory.Client("TestClient", "Samples", "");
             var plugin = MockHelpers.LoadMockGenerator(
                 oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
-                clients: () => [client]);
+                clients: () => [client],
+                lastContractSources: [LastContractStub]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
@@ -58,7 +63,8 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
                 oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
-                clients: () => [client]);
+                clients: () => [client],
+                lastContractSources: [LastContractStub]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
@@ -77,7 +83,8 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
                 oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
-                clients: () => [client1, client2]);
+                clients: () => [client1, client2],
+                lastContractSources: [LastContractStub]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
@@ -94,7 +101,8 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var inputClient = InputFactory.Client("TestClient", "Samples", "");
             var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                clients: () => [inputClient]);
+                clients: () => [inputClient],
+                lastContractSources: [LastContractStub]);
 
             var client = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientProvider>().Single();
@@ -116,7 +124,8 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var inputClient = InputFactory.Client("TestClient", "Samples", "");
             var plugin = MockHelpers.LoadMockGenerator(
                 oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
-                clients: () => [inputClient]);
+                clients: () => [inputClient],
+                lastContractSources: [LastContractStub]);
 
             var client = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientProvider>().Single();
@@ -134,6 +143,20 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
             var writer = new TypeProviderWriter(builderExtensions!);
             var file = writer.Write();
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
+        public void DoesNotAddExtensionMethodsClassWhenNotInLastContract()
+        {
+            var client = InputFactory.Client("TestClient", "Samples", "");
+            var plugin = MockHelpers.LoadMockGenerator(
+                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
+                clients: () => [client]);
+
+            var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
+
+            Assert.IsNull(builderExtensions);
         }
 
         [Test]
@@ -175,7 +198,8 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
                     }
 
                     return provider;
-                });
+                },
+                lastContractSources: [LastContractStub]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
                 .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();

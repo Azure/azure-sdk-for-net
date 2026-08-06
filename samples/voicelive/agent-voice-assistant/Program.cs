@@ -3,6 +3,7 @@
 
 using System.CommandLine;
 using System.CommandLine.Parsing;
+using System.Diagnostics;
 using Azure.AI.VoiceLive.Samples;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
@@ -38,7 +39,7 @@ namespace Azure.AI.VoiceLive.Samples
     ///
     /// REQUIREMENTS:
     ///     - Azure.AI.VoiceLive
-    ///     - Azure.Identity
+    ///     - Azure.Core (DefaultAzureCredential in Azure.Identity namespace)
     ///     - NAudio
     ///     - Microsoft.Extensions.Configuration
     ///     - System.CommandLine
@@ -81,6 +82,10 @@ namespace Azure.AI.VoiceLive.Samples
             {
                 Description = "Enable verbose logging"
             };
+            var showTracesOption = new Option<bool>("--show-traces")
+            {
+                Description = "Print VoiceLive telemetry spans to console"
+            };
 
             rootCommand.Add(endpointOption);
             rootCommand.Add(agentNameOption);
@@ -90,6 +95,7 @@ namespace Azure.AI.VoiceLive.Samples
             rootCommand.Add(foundryOverrideOption);
             rootCommand.Add(authIdentityOption);
             rootCommand.Add(verboseOption);
+            rootCommand.Add(showTracesOption);
 
             var parseResult = rootCommand.Parse(args);
             if (parseResult.Errors.Count > 0)
@@ -134,6 +140,8 @@ namespace Azure.AI.VoiceLive.Samples
                 ?? Environment.GetEnvironmentVariable("AGENT_AUTH_IDENTITY_CLIENT_ID");
 
             var verbose = parseResult.GetValue(verboseOption);
+            var showTraces = parseResult.GetValue(showTracesOption)
+                || string.Equals(Environment.GetEnvironmentVariable("VOICELIVE_ENABLE_CONSOLE_TRACING"), "true", StringComparison.OrdinalIgnoreCase);
 
             if (string.IsNullOrEmpty(endpoint))
             {
@@ -153,6 +161,8 @@ namespace Azure.AI.VoiceLive.Samples
                 builder.AddConsole();
                 builder.SetMinimumLevel(verbose ? LogLevel.Debug : LogLevel.Information);
             });
+
+            using var traceListener = EnableVoiceLiveConsoleTracing(showTraces);
 
             var logger = loggerFactory.CreateLogger<Program>();
 
@@ -193,6 +203,41 @@ namespace Azure.AI.VoiceLive.Samples
             }
 
             return 0;
+        }
+
+        private static IDisposable? EnableVoiceLiveConsoleTracing(bool enabled)
+        {
+            if (!enabled)
+                return null;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = source => source.Name == "Azure.AI.VoiceLive",
+                Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+                SampleUsingParentId = (ref ActivityCreationOptions<string> _) => ActivitySamplingResult.AllDataAndRecorded,
+                ActivityStopped = activity =>
+                {
+                    Console.WriteLine($"'{activity.DisplayName}' : {FormatTags(activity.TagObjects)}");
+                    foreach (ActivityEvent evt in activity.Events)
+                    {
+                        Console.WriteLine($"  Event '{evt.Name}': {FormatTags(evt.Tags)}");
+                    }
+                }
+            };
+
+            ActivitySource.AddActivityListener(listener);
+            Console.WriteLine("VoiceLive console tracing enabled.");
+            return listener;
+        }
+
+        private static string FormatTags(IEnumerable<KeyValuePair<string, object?>> tags)
+        {
+            var parts = new List<string>();
+            foreach (KeyValuePair<string, object?> kvp in tags)
+            {
+                parts.Add($"{kvp.Key}={kvp.Value}");
+            }
+            return "{" + string.Join(", ", parts) + "}";
         }
 
         private static bool CheckAudioSystem(ILogger logger)

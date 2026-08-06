@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Application Monitoring Open Telemetry Metrics Profile for Kubernetes Application Container Metrics. Collects OpenTelemetry metrics of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
+    /// <summary> Application Monitoring Open Telemetry Metrics Profile for AKS. Collects OpenTelemetry metrics of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
     public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,12 +24,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics"/>. </summary>
         /// <param name="isAppMonitoringOpenTelemetryMetricsEnabled"> Indicates if Application Monitoring Open Telemetry Metrics is enabled or not. </param>
-        /// <param name="port"> The Open Telemetry host port for Open Telemetry metrics. If not specified, the default port is 28333. </param>
+        /// <param name="httpPort"> The host port for Open Telemetry HTTP/PROTOBUF metrics. If not specified, the default port is 28333. </param>
+        /// <param name="grpcPort"> The host port for Open Telemetry GRPC metrics. If not specified, the default port is 28334. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(bool? isAppMonitoringOpenTelemetryMetricsEnabled, long? port, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(bool? isAppMonitoringOpenTelemetryMetricsEnabled, long? httpPort, long? grpcPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAppMonitoringOpenTelemetryMetricsEnabled = isAppMonitoringOpenTelemetryMetricsEnabled;
-            Port = port;
+            HttpPort = httpPort;
+            GrpcPort = grpcPort;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,8 +39,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("enabled")]
         public bool? IsAppMonitoringOpenTelemetryMetricsEnabled { get; set; }
 
-        /// <summary> The Open Telemetry host port for Open Telemetry metrics. If not specified, the default port is 28333. </summary>
-        [WirePath("port")]
-        public long? Port { get; set; }
+        /// <summary> The host port for Open Telemetry HTTP/PROTOBUF metrics. If not specified, the default port is 28333. </summary>
+        [WirePath("httpPort")]
+        public long? HttpPort { get; set; }
+
+        /// <summary> The host port for Open Telemetry GRPC metrics. If not specified, the default port is 28334. </summary>
+        [WirePath("grpcPort")]
+        public long? GrpcPort { get; set; }
     }
 }

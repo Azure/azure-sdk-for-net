@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Confluent
                     yield break;
                 }
                 ListTopicsSuccessResponse result = ListTopicsSuccessResponse.FromResponse(response);
-                yield return Page<TopicRecordData>.FromValues((IReadOnlyList<TopicRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TopicRecordData>.FromValues((IReadOnlyList<TopicRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

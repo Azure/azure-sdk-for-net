@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 writer.WritePropertyName("arcAgentryConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (ArcAgentryConfigurations item in ArcAgentryConfigurations)
+                foreach (ConnectedClusterArcAgentryConfiguration item in ArcAgentryConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -254,23 +255,23 @@ namespace Azure.ResourceManager.Kubernetes.Models
             int? totalNodeCount = default;
             int? totalCoreCount = default;
             string agentVersion = default;
-            ProvisioningState? provisioningState = default;
+            ConnectedClusterProvisioningState? provisioningState = default;
             string distribution = default;
             string distributionVersion = default;
             string infrastructure = default;
             string offering = default;
             DateTimeOffset? managedIdentityCertificateExpirationOn = default;
             DateTimeOffset? lastConnectivityOn = default;
-            ConnectivityStatus? connectivityStatus = default;
-            PrivateLinkState? privateLinkState = default;
-            string privateLinkScopeResourceId = default;
-            AzureHybridBenefit? azureHybridBenefit = default;
-            AadProfile aadProfile = default;
-            ArcAgentProfile arcAgentProfile = default;
-            SecurityProfile securityProfile = default;
-            OidcIssuerProfile oidcIssuerProfile = default;
+            ConnectedClusterConnectivityStatus? connectivityStatus = default;
+            ConnectedClusterPrivateLinkState? privateLinkState = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
+            ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default;
+            ConnectedClusterAadProfile aadProfile = default;
+            ConnectedClusterArcAgentProfile arcAgentProfile = default;
+            ConnectedClusterSecurityProfile securityProfile = default;
+            ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default;
             Gateway gateway = default;
-            IList<ArcAgentryConfigurations> arcAgentryConfigurations = default;
+            IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default;
             IReadOnlyDictionary<string, string> miscellaneousProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ConnectedClusterProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("distribution"u8))
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    connectivityStatus = new ConnectivityStatus(prop.Value.GetString());
+                    connectivityStatus = new ConnectedClusterConnectivityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateLinkState"u8))
@@ -370,12 +371,16 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    privateLinkState = new PrivateLinkState(prop.Value.GetString());
+                    privateLinkState = new ConnectedClusterPrivateLinkState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateLinkScopeResourceId"u8))
                 {
-                    privateLinkScopeResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateLinkScopeResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("azureHybridBenefit"u8))
@@ -384,7 +389,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    azureHybridBenefit = new AzureHybridBenefit(prop.Value.GetString());
+                    azureHybridBenefit = new ConnectedClusterAzureHybridBenefit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("aadProfile"u8))
@@ -393,7 +398,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    aadProfile = AadProfile.DeserializeAadProfile(prop.Value, options);
+                    aadProfile = ConnectedClusterAadProfile.DeserializeConnectedClusterAadProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("arcAgentProfile"u8))
@@ -402,7 +407,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    arcAgentProfile = ArcAgentProfile.DeserializeArcAgentProfile(prop.Value, options);
+                    arcAgentProfile = ConnectedClusterArcAgentProfile.DeserializeConnectedClusterArcAgentProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))
@@ -411,7 +416,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(prop.Value, options);
+                    securityProfile = ConnectedClusterSecurityProfile.DeserializeConnectedClusterSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("oidcIssuerProfile"u8))
@@ -420,7 +425,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    oidcIssuerProfile = OidcIssuerProfile.DeserializeOidcIssuerProfile(prop.Value, options);
+                    oidcIssuerProfile = ConnectedClusterOidcIssuerProfile.DeserializeConnectedClusterOidcIssuerProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("gateway"u8))
@@ -439,10 +444,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    List<ArcAgentryConfigurations> array = new List<ArcAgentryConfigurations>();
+                    List<ConnectedClusterArcAgentryConfiguration> array = new List<ConnectedClusterArcAgentryConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ArcAgentryConfigurations.DeserializeArcAgentryConfigurations(item, options));
+                        array.Add(ConnectedClusterArcAgentryConfiguration.DeserializeConnectedClusterArcAgentryConfiguration(item, options));
                     }
                     arcAgentryConfigurations = array;
                     continue;
@@ -495,7 +500,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 securityProfile,
                 oidcIssuerProfile,
                 gateway,
-                arcAgentryConfigurations ?? new ChangeTrackingList<ArcAgentryConfigurations>(),
+                arcAgentryConfigurations ?? new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>(),
                 miscellaneousProperties ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }

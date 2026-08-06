@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(HciSkuResource.ResourceType, out string hciSkuApiVersion);
             _skusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciSkuResource.ResourceType.Namespace, Diagnostics);
-            _skusRestClient = new Skus(_skusClientDiagnostics, Pipeline, Endpoint, hciSkuApiVersion ?? "2026-04-30");
+            _skusRestClient = new Skus(_skusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciSkuApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 

@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterUpdateSummaryApiVersion);
             _updateSummariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _updateSummariesRestClient = new UpdateSummaries(_updateSummariesClientDiagnostics, Pipeline, Endpoint, hciClusterUpdateSummaryApiVersion ?? "2026-04-30");
+            _updateSummariesRestClient = new UpdateSummaries(_updateSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterUpdateSummaryApiVersion ?? "2026-04-30");
             _updateSummariesOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _updateSummariesOperationGroupRestClient = new UpdateSummariesOperationGroup(_updateSummariesOperationGroupClientDiagnostics, Pipeline, Endpoint, hciClusterUpdateSummaryApiVersion ?? "2026-04-30");
+            _updateSummariesOperationGroupRestClient = new UpdateSummariesOperationGroup(_updateSummariesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterUpdateSummaryApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 

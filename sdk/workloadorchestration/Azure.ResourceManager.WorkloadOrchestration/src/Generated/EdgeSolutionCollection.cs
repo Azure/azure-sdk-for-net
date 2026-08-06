@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSolutionResource.ResourceType, out string edgeSolutionApiVersion);
             _solutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSolutionResource.ResourceType.Namespace, Diagnostics);
-            _solutionsRestClient = new Solutions(_solutionsClientDiagnostics, Pipeline, Endpoint, edgeSolutionApiVersion ?? "2025-06-01");
+            _solutionsRestClient = new Solutions(_solutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _solutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, solutionName, EdgeSolutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionResource>(
-                    new EdgeSolutionOperationSource(Client),
+                    new EdgeSolutionResourceOperationSource(Client),
                     _solutionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _solutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, solutionName, EdgeSolutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionResource>(
-                    new EdgeSolutionOperationSource(Client),
+                    new EdgeSolutionResourceOperationSource(Client),
                     _solutionsClientDiagnostics,
                     Pipeline,
                     message.Request,

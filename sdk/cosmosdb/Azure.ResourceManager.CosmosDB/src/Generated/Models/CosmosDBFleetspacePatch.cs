@@ -8,81 +8,100 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Represents a fleetspace resource for updates. </summary>
     public partial class CosmosDBFleetspacePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspacePatch"/>. </summary>
         public CosmosDBFleetspacePatch()
         {
-            DataRegions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspacePatch"/>. </summary>
-        /// <param name="provisioningState"> A provisioning state of the Fleetspace. </param>
-        /// <param name="fleetspaceApiKind"> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </param>
-        /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
-        /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
-        /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBFleetspacePatch(CosmosDBStatus? provisioningState, CosmosDBFleetspaceApiKind? fleetspaceApiKind, CosmosDBFleetspaceServiceTier? serviceTier, IList<AzureLocation> dataRegions, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the fleetspace. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBFleetspacePatch(FleetspaceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            FleetspaceApiKind = fleetspaceApiKind;
-            ServiceTier = serviceTier;
-            DataRegions = dataRegions;
-            ThroughputPoolConfiguration = throughputPoolConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A provisioning state of the Fleetspace. </summary>
-        [WirePath("properties.provisioningState")]
-        public CosmosDBStatus? ProvisioningState { get; set; }
+        /// <summary> Properties of the fleetspace. </summary>
+        [WirePath("properties")]
+        internal FleetspaceProperties Properties { get; set; }
+
         /// <summary> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </summary>
         [WirePath("properties.fleetspaceApiKind")]
-        public CosmosDBFleetspaceApiKind? FleetspaceApiKind { get; set; }
+        public CosmosDBFleetspaceApiKind? FleetspaceApiKind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FleetspaceApiKind;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                Properties.FleetspaceApiKind = value;
+            }
+        }
+
         /// <summary> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </summary>
         [WirePath("properties.serviceTier")]
-        public CosmosDBFleetspaceServiceTier? ServiceTier { get; set; }
+        public CosmosDBFleetspaceServiceTier? ServiceTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceTier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                Properties.ServiceTier = value;
+            }
+        }
+
         /// <summary> List of data regions assigned to the fleetspace. Eg [westus2]. </summary>
         [WirePath("properties.dataRegions")]
-        public IList<AzureLocation> DataRegions { get; }
+        public IList<AzureLocation> DataRegions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                return Properties.DataRegions;
+            }
+        }
+
         /// <summary> Configuration for throughput pool in the fleetspace. </summary>
         [WirePath("properties.throughputPoolConfiguration")]
-        public CosmosDBFleetspaceThroughputPoolConfiguration ThroughputPoolConfiguration { get; set; }
+        public CosmosDBFleetspaceThroughputPoolConfiguration ThroughputPoolConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThroughputPoolConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceProperties();
+                }
+                Properties.ThroughputPoolConfiguration = value;
+            }
+        }
     }
 }

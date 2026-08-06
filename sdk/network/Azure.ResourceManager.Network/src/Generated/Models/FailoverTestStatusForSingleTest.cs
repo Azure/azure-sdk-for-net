@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FailoverTestStatusForSingleTest : IEquatable<FailoverTestStatusForSingleTest>
     {
         private readonly string _value;
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> StartFailed. </summary>
+        private const string StartFailedValue = "StartFailed";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> StopFailed. </summary>
+        private const string StopFailedValue = "StopFailed";
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
 
         /// <summary> Initializes a new instance of <see cref="FailoverTestStatusForSingleTest"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FailoverTestStatusForSingleTest(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string StartingValue = "Starting";
-        private const string RunningValue = "Running";
-        private const string StartFailedValue = "StartFailed";
-        private const string StoppingValue = "Stopping";
-        private const string CompletedValue = "Completed";
-        private const string StopFailedValue = "StopFailed";
-        private const string InvalidValue = "Invalid";
-        private const string ExpiredValue = "Expired";
+            _value = value;
+        }
 
         /// <summary> NotStarted. </summary>
         public static FailoverTestStatusForSingleTest NotStarted { get; } = new FailoverTestStatusForSingleTest(NotStartedValue);
+
         /// <summary> Starting. </summary>
         public static FailoverTestStatusForSingleTest Starting { get; } = new FailoverTestStatusForSingleTest(StartingValue);
+
         /// <summary> Running. </summary>
         public static FailoverTestStatusForSingleTest Running { get; } = new FailoverTestStatusForSingleTest(RunningValue);
+
         /// <summary> StartFailed. </summary>
         public static FailoverTestStatusForSingleTest StartFailed { get; } = new FailoverTestStatusForSingleTest(StartFailedValue);
+
         /// <summary> Stopping. </summary>
         public static FailoverTestStatusForSingleTest Stopping { get; } = new FailoverTestStatusForSingleTest(StoppingValue);
+
         /// <summary> Completed. </summary>
         public static FailoverTestStatusForSingleTest Completed { get; } = new FailoverTestStatusForSingleTest(CompletedValue);
+
         /// <summary> StopFailed. </summary>
         public static FailoverTestStatusForSingleTest StopFailed { get; } = new FailoverTestStatusForSingleTest(StopFailedValue);
+
         /// <summary> Invalid. </summary>
         public static FailoverTestStatusForSingleTest Invalid { get; } = new FailoverTestStatusForSingleTest(InvalidValue);
+
         /// <summary> Expired. </summary>
         public static FailoverTestStatusForSingleTest Expired { get; } = new FailoverTestStatusForSingleTest(ExpiredValue);
+
         /// <summary> Determines if two <see cref="FailoverTestStatusForSingleTest"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FailoverTestStatusForSingleTest left, FailoverTestStatusForSingleTest right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FailoverTestStatusForSingleTest"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FailoverTestStatusForSingleTest left, FailoverTestStatusForSingleTest right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverTestStatusForSingleTest"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FailoverTestStatusForSingleTest"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FailoverTestStatusForSingleTest(string value) => new FailoverTestStatusForSingleTest(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FailoverTestStatusForSingleTest"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FailoverTestStatusForSingleTest?(string value) => value == null ? null : new FailoverTestStatusForSingleTest(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailoverTestStatusForSingleTest other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FailoverTestStatusForSingleTest other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

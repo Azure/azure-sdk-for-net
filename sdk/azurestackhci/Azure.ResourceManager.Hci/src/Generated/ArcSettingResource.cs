@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string arcSettingApiVersion);
             _arcSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _arcSettingsRestClient = new ArcSettings(_arcSettingsClientDiagnostics, Pipeline, Endpoint, arcSettingApiVersion ?? "2026-04-30");
+            _arcSettingsRestClient = new ArcSettings(_arcSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arcSettingApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<ArcSettingResource> operation = new HciArmOperation<ArcSettingResource>(
-                    new ArcSettingOperationSource(Client),
+                    new ArcSettingResourceOperationSource(Client),
                     _arcSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _arcSettingsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReconcileArcSettingsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<ArcSettingResource> operation = new HciArmOperation<ArcSettingResource>(
-                    new ArcSettingOperationSource(Client),
+                    new ArcSettingResourceOperationSource(Client),
                     _arcSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ArcSettingResource.ResourceType, out string arcSettingApiVersion);
             _arcSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ArcSettingResource.ResourceType.Namespace, Diagnostics);
-            _arcSettingsRestClient = new ArcSettings(_arcSettingsClientDiagnostics, Pipeline, Endpoint, arcSettingApiVersion ?? "2026-04-30");
+            _arcSettingsRestClient = new ArcSettings(_arcSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, arcSettingApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 

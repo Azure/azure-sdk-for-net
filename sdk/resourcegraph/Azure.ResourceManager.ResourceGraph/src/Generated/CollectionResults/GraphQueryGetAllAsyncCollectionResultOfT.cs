@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ResourceGraph
                     yield break;
                 }
                 GraphQueryListResult result = GraphQueryListResult.FromResponse(response);
-                yield return Page<ResourceGraphQueryData>.FromValues((IReadOnlyList<ResourceGraphQueryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ResourceGraphQueryData>.FromValues((IReadOnlyList<ResourceGraphQueryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

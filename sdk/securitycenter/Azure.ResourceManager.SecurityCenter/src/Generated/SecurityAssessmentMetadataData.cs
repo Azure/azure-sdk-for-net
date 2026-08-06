@@ -13,127 +13,285 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityAssessmentMetadata data model.
-    /// Security assessment metadata response
-    /// </summary>
+    /// <summary> Security assessment metadata response. </summary>
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataData"/>. </summary>
         public SecurityAssessmentMetadataData()
         {
-            Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();
-            Threats = new ChangeTrackingList<SecurityThreat>();
-            Tactics = new ChangeTrackingList<SecurityAssessmentTactic>();
-            Techniques = new ChangeTrackingList<SecurityAssessmentTechnique>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User friendly display name of the assessment. </param>
-        /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
-        /// <param name="description"> Human readable description of the assessment. </param>
-        /// <param name="remediationDescription"> Human readable description of what you should do to mitigate this security issue. </param>
-        /// <param name="categories"></param>
-        /// <param name="severity"> The severity level of the assessment. </param>
-        /// <param name="userImpact"> The user impact of the assessment. </param>
-        /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
-        /// <param name="threats"></param>
-        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
-        /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
-        /// <param name="partnerData"> Describes the partner that created the assessment. </param>
-        /// <param name="publishDates"></param>
-        /// <param name="plannedDeprecationDate"></param>
-        /// <param name="tactics"></param>
-        /// <param name="techniques"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity? severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType? assessmentType, SecurityAssessmentMetadataPartner partnerData, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Describes properties of an assessment metadata response. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAssessmentMetadataPropertiesResult properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            PolicyDefinitionId = policyDefinitionId;
-            Description = description;
-            RemediationDescription = remediationDescription;
-            Categories = categories;
-            Severity = severity;
-            UserImpact = userImpact;
-            ImplementationEffort = implementationEffort;
-            Threats = threats;
-            IsPreview = isPreview;
-            AssessmentType = assessmentType;
-            PartnerData = partnerData;
-            PublishDates = publishDates;
-            PlannedDeprecationDate = plannedDeprecationDate;
-            Tactics = tactics;
-            Techniques = techniques;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Describes properties of an assessment metadata response. </summary>
+        internal SecurityAssessmentMetadataPropertiesResult Properties { get; set; }
+
         /// <summary> User friendly display name of the assessment. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
-        public ResourceIdentifier PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PolicyDefinitionId;
+            }
+        }
+
         /// <summary> Human readable description of the assessment. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Human readable description of what you should do to mitigate this security issue. </summary>
-        public string RemediationDescription { get; set; }
-        /// <summary> Gets the categories. </summary>
-        public IList<SecurityAssessmentResourceCategory> Categories { get; }
+        public string RemediationDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemediationDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.RemediationDescription = value;
+            }
+        }
+
+        /// <summary> Gets the Categories. </summary>
+        public IList<SecurityAssessmentResourceCategory> Categories
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                return Properties.Categories;
+            }
+        }
+
         /// <summary> The severity level of the assessment. </summary>
-        public SecurityAssessmentSeverity? Severity { get; set; }
+        public SecurityAssessmentSeverity? Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new SecurityAssessmentMetadataPropertiesResult();
+                    }
+                    Properties.Severity = value.Value;
+                }
+            }
+        }
+
         /// <summary> The user impact of the assessment. </summary>
-        public SecurityAssessmentUserImpact? UserImpact { get; set; }
+        public SecurityAssessmentUserImpact? UserImpact
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserImpact;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.UserImpact = value;
+            }
+        }
+
         /// <summary> The implementation effort required to remediate this assessment. </summary>
-        public ImplementationEffort? ImplementationEffort { get; set; }
-        /// <summary> Gets the threats. </summary>
-        public IList<SecurityThreat> Threats { get; }
+        public ImplementationEffort? ImplementationEffort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImplementationEffort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.ImplementationEffort = value;
+            }
+        }
+
+        /// <summary> Gets the Threats. </summary>
+        public IList<SecurityThreat> Threats
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                return Properties.Threats;
+            }
+        }
+
         /// <summary> True if this assessment is in preview release status. </summary>
-        public bool? IsPreview { get; set; }
+        public bool? IsPreview
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPreview;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.IsPreview = value;
+            }
+        }
+
         /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
-        public SecurityAssessmentType? AssessmentType { get; set; }
+        public SecurityAssessmentType? AssessmentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssessmentType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new SecurityAssessmentMetadataPropertiesResult();
+                    }
+                    Properties.AssessmentType = value.Value;
+                }
+            }
+        }
+
         /// <summary> Describes the partner that created the assessment. </summary>
-        public SecurityAssessmentMetadataPartner PartnerData { get; set; }
-        /// <summary> Gets or sets the publish dates. </summary>
-        public SecurityAssessmentPublishDates PublishDates { get; set; }
-        /// <summary> Gets or sets the planned deprecation date. </summary>
-        public string PlannedDeprecationDate { get; set; }
-        /// <summary> Gets the tactics. </summary>
-        public IList<SecurityAssessmentTactic> Tactics { get; }
-        /// <summary> Gets the techniques. </summary>
-        public IList<SecurityAssessmentTechnique> Techniques { get; }
+        public SecurityAssessmentMetadataPartner PartnerData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.PartnerData = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PublishDates. </summary>
+        public SecurityAssessmentPublishDates PublishDates
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishDates;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.PublishDates = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PlannedDeprecationDate. </summary>
+        public string PlannedDeprecationDate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlannedDeprecationDate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                Properties.PlannedDeprecationDate = value;
+            }
+        }
+
+        /// <summary> Gets the Tactics. </summary>
+        public IList<SecurityAssessmentTactic> Tactics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                return Properties.Tactics;
+            }
+        }
+
+        /// <summary> Gets the Techniques. </summary>
+        public IList<SecurityAssessmentTechnique> Techniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                return Properties.Techniques;
+            }
+        }
     }
 }

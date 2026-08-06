@@ -39,13 +39,12 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
                 },
                 KeyVaultProperties = new OperationalInsightsKeyVaultProperties()
                 {
-                    KeyVaultUri = new Uri("", UriKind.Relative),
                     KeyName = "",
                     KeyVersion = "",
                 }
             };
             var cluster = (await _resourceGroup.GetOperationalInsightsClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData)).Value;
-            Assert.IsTrue(cluster.Data.KeyVaultProperties.KeyVaultUri.ToString().Equals(""));
+            Assert.IsNull(cluster.Data.KeyVaultProperties.KeyVaultUri);
         }
     }
 }

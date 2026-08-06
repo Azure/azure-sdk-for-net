@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,38 +21,74 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="DiskImagePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sourceVirtualMachine"> The source virtual machine from which Image is created. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="hyperVGeneration"> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </param>
-        internal DiskImagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource sourceVirtualMachine, ImageStorageProfile storageProfile, string provisioningState, HyperVGeneration? hyperVGeneration) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes the properties of an Image. </param>
+        internal DiskImagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            SourceVirtualMachine = sourceVirtualMachine;
-            StorageProfile = storageProfile;
-            ProvisioningState = provisioningState;
-            HyperVGeneration = hyperVGeneration;
+            Properties = properties;
         }
 
-        /// <summary> The source virtual machine from which Image is created. </summary>
-        internal WritableSubResource SourceVirtualMachine { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SourceVirtualMachineId
+        /// <summary> Describes the properties of an Image. </summary>
+        internal ImageProperties Properties { get; set; }
+
+        /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
+        public ImageStorageProfile StorageProfile
         {
-            get => SourceVirtualMachine is null ? default : SourceVirtualMachine.Id;
+            get
+            {
+                return Properties is null ? default : Properties.StorageProfile;
+            }
             set
             {
-                if (SourceVirtualMachine is null)
-                    SourceVirtualMachine = new WritableSubResource();
-                SourceVirtualMachine.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ImageProperties();
+                }
+                Properties.StorageProfile = value;
             }
         }
 
-        /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
-        public ImageStorageProfile StorageProfile { get; set; }
         /// <summary> The provisioning state. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Specifies the HyperVGenerationType of the VirtualMachine created from the image. From API Version 2019-03-01 if the image source is a blob, then we need the user to specify the value, if the source is managed resource like disk or snapshot, we may require the user to specify the property if we cannot deduce it from the source managed resource. </summary>
-        public HyperVGeneration? HyperVGeneration { get; set; }
+        public HyperVGeneration? HyperVGeneration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HyperVGeneration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ImageProperties();
+                }
+                Properties.HyperVGeneration = value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier SourceVirtualMachineId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceVirtualMachineId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ImageProperties();
+                }
+                Properties.SourceVirtualMachineId = value;
+            }
+        }
     }
 }

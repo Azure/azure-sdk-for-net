@@ -188,7 +188,7 @@ namespace Azure.Analytics.Purview.DataMap
             string typeName = default;
             string lastModifiedTS = default;
             string entityGuid = default;
-            EntityStatus? entityStatus = default;
+            DataMapEntityStatus? entityStatus = default;
             bool? removePropagationsOnEntityDelete = default;
             IList<TimeBoundary> validityPeriods = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -236,7 +236,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    entityStatus = new EntityStatus(prop.Value.GetString());
+                    entityStatus = new DataMapEntityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("removePropagationsOnEntityDelete"u8))
