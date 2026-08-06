@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2026-07-26)
+## 1.0.0 (2026-08-06)
 
 General availability of the Azure AI Discovery client library for .NET.
 
