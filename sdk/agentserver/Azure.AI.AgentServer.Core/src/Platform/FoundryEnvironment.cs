@@ -134,16 +134,6 @@ public static class FoundryEnvironment
     /// </summary>
     public static bool IsAgent365TracingEnabled { get; private set; }
 
-    /// <summary>
-    /// Indicates whether the hosted Task Storage API should be used. Returns <c>true</c> only when
-    /// <see cref="IsHosted"/> is <c>true</c> and the <c>FOUNDRY_TASK_API_ENABLED</c> environment
-    /// variable is set to <c>"1"</c>, <c>"true"</c>, or <c>"yes"</c> (case-insensitive). The hosted
-    /// Task Storage API is not yet generally available, so it is opt-in: in a hosted environment
-    /// where the flag is unset, the SDK falls back to the local file-backed task store. Internal —
-    /// not part of the public API surface (mirrors the Python SDK's <c>FOUNDRY_TASK_API_ENABLED</c> gate).
-    /// </summary>
-    internal static bool IsTaskApiEnabled { get; private set; }
-
     static FoundryEnvironment() => Reload();
 
     /// <summary>
@@ -212,14 +202,5 @@ public static class FoundryEnvironment
         // A365 tracing enabled when both hosted and explicitly opted in.
         IsAgent365TracingEnabled = IsHosted
             && string.Equals(Environment.GetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
-
-        // Hosted Task Storage API opt-in (not yet GA): use the HTTP-backed store only when hosted
-        // AND FOUNDRY_TASK_API_ENABLED is 1/true/yes; otherwise the local file store is used even in
-        // a hosted environment. Mirrors the Python SDK's FOUNDRY_TASK_API_ENABLED gate.
-        var taskApiEnv = Environment.GetEnvironmentVariable("FOUNDRY_TASK_API_ENABLED")?.Trim();
-        IsTaskApiEnabled = IsHosted
-            && (string.Equals(taskApiEnv, "1", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(taskApiEnv, "true", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(taskApiEnv, "yes", StringComparison.OrdinalIgnoreCase));
     }
 }
