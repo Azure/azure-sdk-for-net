@@ -28,7 +28,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="TestData\" />
+    <Compile Remove="**\TestData\**\*.cs" />
+    <None Include="**\TestData\**\*.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

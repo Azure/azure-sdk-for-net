@@ -66,6 +66,12 @@ namespace Test.Extensions.Plugin.Visitors
             var deserializeMethod = serializationProvider.Methods
                 .First(m => m.Signature.Name.StartsWith("Deserialize", StringComparison.Ordinal));
             Assert.That(HasExperimentalSuppression(deserializeMethod.Suppressions), Is.True, "The discriminated base deserializer should suppress AAIP001 because it references experimental subtypes.");
+
+            // Validate the full generated serialization file against the expected TestData baseline,
+            // ensuring the inline #pragma warning disable/restore AAIP001 directives are emitted with
+            // the per-type justification.
+            var file = new TypeProviderWriter(serializationProvider).Write();
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         /// <summary>
@@ -104,6 +110,12 @@ namespace Test.Extensions.Plugin.Visitors
             Assert.That(serializationProvider.Methods.All(m => HasExperimentalSuppression(m.Suppressions)), Is.True, "All serialization methods should suppress AAIP001 when the model has an experimental property.");
             Assert.That(serializationProvider.Constructors.All(c => HasExperimentalSuppression(c.Suppressions)), Is.True, "All serialization constructors should suppress AAIP001 when the model has an experimental property.");
             Assert.That(containerProvider.Constructors.Any(c => HasExperimentalSuppression(c.Suppressions)), Is.True, "The model's own full deserialization constructor should suppress AAIP001.");
+
+            // Validate the full generated serialization file against the expected TestData baseline,
+            // ensuring the inline #pragma warning disable/restore AAIP001 directives are emitted with
+            // the per-type justification.
+            var file = new TypeProviderWriter(serializationProvider).Write();
+            Assert.That(file.Content, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
         /// <summary>
