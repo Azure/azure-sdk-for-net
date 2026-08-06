@@ -37,7 +37,8 @@ extends:
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
-      skipCodeownersVerification: true
+      # DO NOT MERGE TO MAIN
+      # skipCodeownersVerification: true
       triggeringPaths:
       - /.config
       - /.devcontainer
