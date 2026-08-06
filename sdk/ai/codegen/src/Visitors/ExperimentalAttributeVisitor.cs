@@ -29,9 +29,6 @@ namespace Extensions.Plugin.Visitors
     {
         private const string DiagnosticId = "AAIP001";
 
-        private const string SerializationSuppressionJustification =
-            "Generated code references experimental members that are part of this library's own preview surface.";
-
         private readonly HashSet<string> _experimentalClasses = new(StringComparer.Ordinal);
         private readonly HashSet<string> _experimentalProperties = new(StringComparer.Ordinal);
 
@@ -347,11 +344,11 @@ namespace Extensions.Plugin.Visitors
             {
                 foreach (MethodProvider method in serializationProvider.Methods)
                 {
-                    AddExperimentalSuppression(method);
+                    AddExperimentalSuppression(method, model.Type.Name);
                 }
                 foreach (ConstructorProvider constructor in serializationProvider.Constructors)
                 {
-                    AddExperimentalSuppression(constructor);
+                    AddExperimentalSuppression(constructor, model.Type.Name);
                 }
             }
             // The full deserialization constructor lives on the model itself and assigns the
@@ -360,7 +357,7 @@ namespace Extensions.Plugin.Visitors
             {
                 foreach (ConstructorProvider constructor in model.Constructors)
                 {
-                    AddExperimentalSuppression(constructor);
+                    AddExperimentalSuppression(constructor, model.Type.Name);
                 }
             }
         }
@@ -382,26 +379,26 @@ namespace Extensions.Plugin.Visitors
             return false;
         }
 
-        private static void AddExperimentalSuppression(MethodProvider method)
+        private static void AddExperimentalSuppression(MethodProvider method, string typeName)
         {
             if (IsAlreadyExperimental(method.Signature.Attributes) || HasExperimentalSuppression(method.Suppressions))
             {
                 return;
             }
-            method.Update(suppressions: [.. method.Suppressions, CreateExperimentalSuppression()]);
+            method.Update(suppressions: [.. method.Suppressions, CreateExperimentalSuppression(typeName)]);
         }
 
-        private static void AddExperimentalSuppression(ConstructorProvider constructor)
+        private static void AddExperimentalSuppression(ConstructorProvider constructor, string typeName)
         {
             if (IsAlreadyExperimental(constructor.Signature.Attributes) || HasExperimentalSuppression(constructor.Suppressions))
             {
                 return;
             }
-            constructor.Update(suppressions: [.. constructor.Suppressions, CreateExperimentalSuppression()]);
+            constructor.Update(suppressions: [.. constructor.Suppressions, CreateExperimentalSuppression(typeName)]);
         }
 
-        private static SuppressionStatement CreateExperimentalSuppression() =>
-            new(inner: null, code: Snippet.Literal(DiagnosticId), justification: SerializationSuppressionJustification);
+        private static SuppressionStatement CreateExperimentalSuppression(string typeName) =>
+            new(inner: null, code: Snippet.Literal(DiagnosticId), justification: $"`{typeName}` is experimental and may change in future versions");
 
         private static bool IsAlreadyExperimental(IEnumerable<AttributeStatement> attributes) =>
             attributes.Any(attribute => attribute.Type.Equals(typeof(ExperimentalAttribute)));
