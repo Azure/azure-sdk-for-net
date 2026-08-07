@@ -11,37 +11,38 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Mocking;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments.Mocking;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.Resources. </summary>
-    public static partial class ResourcesExtensions
+    /// <summary> A class to add extension methods to Azure.ResourceManager.Resources.Deployments. </summary>
+    public static partial class ResourcesDeploymentsExtensions
     {
         /// <param name="client"></param>
-        private static MockableResourcesArmClient GetMockableResourcesArmClient(ArmClient client)
+        private static MockableResourcesDeploymentsArmClient GetMockableResourcesDeploymentsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableResourcesArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableResourcesDeploymentsArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="subscriptionResource"></param>
-        private static MockableResourcesSubscriptionResource GetMockableResourcesSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableResourcesDeploymentsSubscriptionResource GetMockableResourcesDeploymentsSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableResourcesSubscriptionResource(client, subscriptionResource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableResourcesDeploymentsSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <param name="tenantResource"></param>
-        private static MockableResourcesTenantResource GetMockableResourcesTenantResource(TenantResource tenantResource)
+        private static MockableResourcesDeploymentsTenantResource GetMockableResourcesDeploymentsTenantResource(TenantResource tenantResource)
         {
-            return tenantResource.GetCachedClient(client => new MockableResourcesTenantResource(client, tenantResource.Id));
+            return tenantResource.GetCachedClient(client => new MockableResourcesDeploymentsTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="ArmDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsArmClient.GetArmDeploymentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -52,14 +53,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetArmDeploymentResource(id);
+            return GetMockableResourcesDeploymentsArmClient(client).GetArmDeploymentResource(id);
         }
 
         /// <summary>
         /// Gets a collection of <see cref="ArmDeploymentCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeployments(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsArmClient.GetArmDeployments(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -70,14 +71,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetArmDeployments(scope);
+            return GetMockableResourcesDeploymentsArmClient(client).GetArmDeployments(scope);
         }
 
         /// <summary>
         /// Gets a deployment.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeployment(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsArmClient.GetArmDeployment(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -90,14 +91,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetArmDeployment(scope, deploymentName, cancellationToken);
+            return GetMockableResourcesDeploymentsArmClient(client).GetArmDeployment(scope, deploymentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a deployment.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsArmClient.GetArmDeploymentAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -110,14 +111,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableResourcesArmClient(client).GetArmDeploymentAsync(scope, deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesDeploymentsArmClient(client).GetArmDeploymentAsync(scope, deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Calculate the hash of the given template.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateDeploymentTemplateHashAsync(BinaryData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsTenantResource.CalculateDeploymentTemplateHashAsync(BinaryData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -128,14 +129,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableResourcesTenantResource(tenantResource).CalculateDeploymentTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesDeploymentsTenantResource(tenantResource).CalculateDeploymentTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Calculate the hash of the given template.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateDeploymentTemplateHash(BinaryData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesDeploymentsTenantResource.CalculateDeploymentTemplateHash(BinaryData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableResourcesTenantResource(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
+            return GetMockableResourcesDeploymentsTenantResource(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
         }
     }
 }

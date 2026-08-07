@@ -10,30 +10,11 @@ using Azure.Core;
 
 // NOTE: All the GetArmDeployments and GetArmDeployment operations are existed in the library before, but now can't be generated from TypeSpec because of the scope implementation change.
 // To avoid breaking customers who are using these operations, we use customization code to keep them, would like to be removed in the future when MPG can provide some better way to handle this kind of scenario.
-namespace Azure.ResourceManager.Resources.Mocking
+namespace Azure.ResourceManager.Resources.Deployments.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    public partial class MockableResourcesResourceGroupResource : ArmResource
+    public partial class MockableResourcesDeploymentsTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesResourceGroupResource"/> class for mocking. </summary>
-        protected MockableResourcesResourceGroupResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesResourceGroupResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ArmDeploymentResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ArmDeploymentResources in the TenantResource. </summary>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public virtual ArmDeploymentCollection GetArmDeployments()
         {

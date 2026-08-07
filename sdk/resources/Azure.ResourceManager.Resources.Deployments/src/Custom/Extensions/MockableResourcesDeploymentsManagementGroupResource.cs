@@ -6,18 +6,34 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 // NOTE: All the GetArmDeployments and GetArmDeployment operations are existed in the library before, but now can't be generated from TypeSpec because of the scope implementation change.
 // To avoid breaking customers who are using these operations, we use customization code to keep them, would like to be removed in the future when MPG can provide some better way to handle this kind of scenario.
-namespace Azure.ResourceManager.Resources.Mocking
+namespace Azure.ResourceManager.Resources.Deployments.Mocking
 {
-    [CodeGenSuppress("WhatIfAtSubscriptionScopeAsync", typeof(WaitUntil), typeof(string), typeof(ArmDeploymentWhatIfContent), typeof(CancellationToken))]   // The WhatIf operations are all moved to ArmDeploymentResource. Not scope out this operation from the client.tsp is intentional for genrating other related classes for the customized WhatIf operations.
-    [CodeGenSuppress("WhatIfAtSubscriptionScope", typeof(WaitUntil), typeof(string), typeof(ArmDeploymentWhatIfContent), typeof(CancellationToken))]        // The WhatIf operations are all moved to ArmDeploymentResource. Not scope out this operation from the client.tsp is intentional for genrating other related classes for the customized WhatIf operations.
-    public partial class MockableResourcesSubscriptionResource : ArmResource
+    /// <summary> A class to add extension methods to ManagementGroupResource. </summary>
+    public partial class MockableResourcesDeploymentsManagementGroupResource : ArmResource
     {
-        /// <summary> Gets a collection of ArmDeploymentResources in the SubscriptionResource. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsManagementGroupResource"/> class for mocking. </summary>
+        protected MockableResourcesDeploymentsManagementGroupResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsManagementGroupResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal MockableResourcesDeploymentsManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+        }
+
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of ArmDeploymentResources in the ManagementGroupResource. </summary>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public virtual ArmDeploymentCollection GetArmDeployments()
         {
@@ -45,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [Azure.Core.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             return await GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
@@ -72,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [Azure.Core.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public virtual Response<ArmDeploymentResource> GetArmDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
             return GetArmDeployments().Get(deploymentName, cancellationToken);

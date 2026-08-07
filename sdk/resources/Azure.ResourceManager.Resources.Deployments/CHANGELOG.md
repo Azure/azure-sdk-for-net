@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed the SDK root namespace from `Azure.ResourceManager.Resources` to `Azure.ResourceManager.Resources.Deployments` (and corresponding `Models`, `Mocking` sub-namespaces) to align with the package name.
+
 ### Bugs Fixed
 
 ### Other Changes
