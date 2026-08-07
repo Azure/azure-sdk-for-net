@@ -28,6 +28,9 @@
   <PropertyGroup>
     <CodeCoverageExcludeByFile>
       **/Generated/Internal/CodeGenMemberAttribute.cs,
+      **/Generated/Internal/CodeGenSerializationAttribute.cs,
+      **/Generated/Internal/CodeGenSuppressAttribute.cs,
+      **/Generated/Internal/CodeGenTypeAttribute.cs,
       **/Generated/Internal/ChangeTrackingDictionary.cs,
       **/Generated/Internal/ChangeTrackingList.cs,
       **/Generated/Internal/ErrorResult.cs,
