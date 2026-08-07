@@ -886,8 +886,6 @@ public class SampleEndToEndTests
     /// </summary>
     private static async Task<TestEnv> CreateResilientResearchServerAsync()
     {
-        var checkpointStore = new Snippets.SampleResilientResearchSnippets.CheckpointStore(
-            Path.Combine(Path.GetTempPath(), "research-checkpoints-" + Guid.NewGuid().ToString("N")[..8]));
         var model = CreateMockResponsesClient();
 
         ResilientTaskBuilder? tasks = null;
@@ -911,7 +909,7 @@ public class SampleEndToEndTests
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
                         (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            streams, model, "test-model", ctx, checkpointStore,
+                            streams, model, "test-model", ctx,
                             numPhases: 2, callsPerPhase: 2,
                             interPhaseCooldown: TimeSpan.Zero,
                             intraPhaseCooldown: TimeSpan.Zero,
