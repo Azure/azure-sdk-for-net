@@ -30,6 +30,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public const string FilterReceivedAt = FilterReceivedAtPartNameV2 + " > ";
         public const string FilterReceivedAtFormatString = FilterReceivedAt + "{0}";
         public static readonly AmqpSymbol SessionFilterName = AmqpConstants.Vendor + ":session-filter";
+        public static readonly AmqpSymbol NonExclusiveSessionFilterName = AmqpConstants.Vendor + ":non-exclusive-session-filter";
         public static readonly AmqpSymbol MessageReceiptsFilterName = AmqpConstants.Vendor + ":message-receipts-filter";
         public static readonly AmqpSymbol ClientSideCursorFilterName = AmqpConstants.Vendor + ":client-side-filter";
         public static readonly TimeSpan ClientMinimumTokenRefreshInterval = TimeSpan.FromMinutes(4);

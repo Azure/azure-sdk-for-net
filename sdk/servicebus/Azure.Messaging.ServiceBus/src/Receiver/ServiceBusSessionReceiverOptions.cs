@@ -44,6 +44,24 @@ namespace Azure.Messaging.ServiceBus
         public string Identifier { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the session is locked exclusively by this receiver. When <c>true</c>
+        /// (the default), the session is locked exclusively and no other receiver can access it until the lock is released.
+        /// When <c>false</c>, the session is locked non-exclusively, allowing another receiver to cooperatively take over the
+        /// session by presenting its <see cref="SessionLockToken"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public bool IsSessionExclusive { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the session lock token to present when cooperatively taking over a non-exclusive session. This must be
+        /// the token previously assigned by the service to the session (see <see cref="ServiceBusSessionReceiver.SessionLockToken"/>),
+        /// and is only valid when <see cref="IsSessionExclusive"/> is <c>false</c> and a specific session is being accepted
+        /// (validated when the receiver is created).
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public Guid? SessionLockToken { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -76,7 +94,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                Identifier = Identifier
+                Identifier = Identifier,
+                IsSessionExclusive = IsSessionExclusive,
+                SessionLockToken = SessionLockToken
             };
     }
 }
