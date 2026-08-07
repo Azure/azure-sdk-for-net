@@ -23,7 +23,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Encodes elevation data in Mapbox Terrarium RGB format. </summary>
         private const string TerrariumValue = "terrarium";
         /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
-        private const string TerrainrgbValue = "terrainrgb";
+        private const string TerrainRgbValue = "terrainrgb";
         /// <summary> Calculates slope from elevation data. </summary>
         private const string SlopeValue = "slope";
         /// <summary> Casts data to a different type. </summary>
@@ -68,7 +68,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static TerrainAlgorithm Terrarium { get; } = new TerrainAlgorithm(TerrariumValue);
 
         /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
-        public static TerrainAlgorithm Terrainrgb { get; } = new TerrainAlgorithm(TerrainrgbValue);
+        public static TerrainAlgorithm TerrainRgb { get; } = new TerrainAlgorithm(TerrainRgbValue);
 
         /// <summary> Calculates slope from elevation data. </summary>
         public static TerrainAlgorithm Slope { get; } = new TerrainAlgorithm(SlopeValue);

@@ -56,7 +56,6 @@ overrides:
       - Rplumbo
       - stac
       - Stac
-      - Terrainrgb
       - tilejson
       - Tilejson
       - unscale

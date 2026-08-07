@@ -798,206 +798,307 @@ namespace Azure.Analytics.PlanetaryComputer
         protected DataClient() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CropCollectionFeature(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropCollectionFeatureOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropCollectionFeatureAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropCollectionFeatureOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropCollectionFeatureByFormat(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropCollectionFeatureByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropCollectionFeatureByFormatAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropCollectionFeatureByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropCollectionFeatureWidthByHeight(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropCollectionFeatureWidthByHeightOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropCollectionFeatureWidthByHeightAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropCollectionFeatureWidthByHeightOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropFeature(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropFeatureOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropFeatureAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropFeatureOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropFeatureByFormat(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropFeatureByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropFeatureByFormatAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropFeatureByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropFeatureWidthByHeight(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropFeatureWidthByHeightOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropFeatureWidthByHeightAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropFeatureWidthByHeightOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropSearchFeature(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropSearchFeatureOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropSearchFeatureAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropSearchFeatureOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropSearchFeatureByFormat(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropSearchFeatureByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropSearchFeatureByFormatAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropSearchFeatureByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CropSearchFeatureWidthByHeight(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropSearchFeatureWidthByHeightOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CropSearchFeatureWidthByHeightAsync(Azure.Core.RequestContent content, Azure.Analytics.PlanetaryComputer.CropSearchFeatureWidthByHeightOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetClassMapLegend(string classmapName, int? trimStart, int? trimEnd, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.ClassMapLegendResult> GetClassMapLegend(string classmapName, int? trimStart = default(int?), int? trimEnd = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetClassMapLegendAsync(string classmapName, int? trimStart, int? trimEnd, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.ClassMapLegendResult>> GetClassMapLegendAsync(string classmapName, int? trimStart = default(int?), int? trimEnd = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionAssetsForBbox(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForBboxOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>> GetCollectionAssetsForBbox(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForBboxOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAssetsForBboxAsync(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForBboxOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>>> GetCollectionAssetsForBboxAsync(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForBboxOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionAssetsForTile(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>> GetCollectionAssetsForTile(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAssetsForTileAsync(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>>> GetCollectionAssetsForTileAsync(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionAssetsForTileNoTms(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileNoTmsOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>> GetCollectionAssetsForTileNoTms(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileNoTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAssetsForTileNoTmsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileNoTmsOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>>> GetCollectionAssetsForTileNoTmsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionAssetsForTileNoTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionBboxCrop(Azure.Analytics.PlanetaryComputer.GetCollectionBboxCropOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionBboxCropAsync(Azure.Analytics.PlanetaryComputer.GetCollectionBboxCropOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionBboxCropWithDimensions(Azure.Analytics.PlanetaryComputer.GetCollectionBboxCropWithDimensionsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionBboxCropWithDimensionsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionBboxCropWithDimensionsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionInfo(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration> GetCollectionInfo(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionInfoAsync(string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration>> GetCollectionInfoAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint> GetCollectionPoint(Azure.Analytics.PlanetaryComputer.GetCollectionPointOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionPointAssets(Azure.Analytics.PlanetaryComputer.GetCollectionPointAssetsOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacItemPointAsset>> GetCollectionPointAssets(Azure.Analytics.PlanetaryComputer.GetCollectionPointAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionPointAssetsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionPointAssetsOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacItemPointAsset>>> GetCollectionPointAssetsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionPointAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint>> GetCollectionPointAsync(Azure.Analytics.PlanetaryComputer.GetCollectionPointOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionTile(Azure.Analytics.PlanetaryComputer.GetCollectionTileOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionTileByFormat(Azure.Analytics.PlanetaryComputer.GetCollectionTileByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileByFormatAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionTileByScale(Azure.Analytics.PlanetaryComputer.GetCollectionTileByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionTileByScaleAndFormat(Azure.Analytics.PlanetaryComputer.GetCollectionTileByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileByScaleAndFormatAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileByScaleAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetCollectionTileJson(Azure.Analytics.PlanetaryComputer.GetCollectionTileJsonOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetCollectionTileJsonAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileJsonOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetCollectionTileJsonByTms(Azure.Analytics.PlanetaryComputer.GetCollectionTileJsonByTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetCollectionTileJsonByTmsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileJsonByTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionTileNoTms(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileNoTmsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionTileNoTmsByFormat(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileNoTmsByFormatAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionTileNoTmsByScale(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionTileNoTmsByScaleAndFormat(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileNoTmsByScaleAndFormatAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionTileNoTmsByScaleAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTileNoTmsByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetMetadata> GetCollectionTilesetMetadata(Azure.Analytics.PlanetaryComputer.GetCollectionTilesetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetMetadata>> GetCollectionTilesetMetadataAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTilesetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetList> GetCollectionTilesets(Azure.Analytics.PlanetaryComputer.GetCollectionTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetList>> GetCollectionTilesetsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionWmtsCapabilities(Azure.Analytics.PlanetaryComputer.GetCollectionWmtsCapabilitiesOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionWmtsCapabilitiesAsync(Azure.Analytics.PlanetaryComputer.GetCollectionWmtsCapabilitiesOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollectionWmtsCapabilitiesByTms(Azure.Analytics.PlanetaryComputer.GetCollectionWmtsCapabilitiesByTmsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionWmtsCapabilitiesByTmsAsync(Azure.Analytics.PlanetaryComputer.GetCollectionWmtsCapabilitiesByTmsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetIntervalLegend(string classmapName, int? trimStart, int? trimEnd, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<long>>>> GetIntervalLegend(string classmapName, int? trimStart = default(int?), int? trimEnd = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetIntervalLegendAsync(string classmapName, int? trimStart, int? trimEnd, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<long>>>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default(int?), int? trimEnd = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.AssetStatisticsResult> GetItemAssetStatistics(Azure.Analytics.PlanetaryComputer.GetItemAssetStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.AssetStatisticsResult>> GetItemAssetStatisticsAsync(Azure.Analytics.PlanetaryComputer.GetItemAssetStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetItemAvailableAssets(Azure.Analytics.PlanetaryComputer.GetItemAvailableAssetsOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> GetItemAvailableAssets(Azure.Analytics.PlanetaryComputer.GetItemAvailableAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemAvailableAssetsAsync(Azure.Analytics.PlanetaryComputer.GetItemAvailableAssetsOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> GetItemAvailableAssetsAsync(Azure.Analytics.PlanetaryComputer.GetItemAvailableAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetItemBboxCrop(Azure.Analytics.PlanetaryComputer.GetItemBboxCropOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemBboxCropAsync(Azure.Analytics.PlanetaryComputer.GetItemBboxCropOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetItemBboxCropWithDimensions(Azure.Analytics.PlanetaryComputer.GetItemBboxCropWithDimensionsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemBboxCropWithDimensionsAsync(Azure.Analytics.PlanetaryComputer.GetItemBboxCropWithDimensionsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemBounds> GetItemBounds(Azure.Analytics.PlanetaryComputer.GetItemTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemBounds>> GetItemBoundsAsync(Azure.Analytics.PlanetaryComputer.GetItemTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson> GetItemFeatureStatistics(Azure.Analytics.PlanetaryComputer.GeoJsonFeature body, Azure.Analytics.PlanetaryComputer.GetItemFeatureStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson>> GetItemFeatureStatisticsAsync(Azure.Analytics.PlanetaryComputer.GeoJsonFeature body, Azure.Analytics.PlanetaryComputer.GetItemFeatureStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerInfoMapResult> GetItemInfo(Azure.Analytics.PlanetaryComputer.GetItemInfoOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerInfoMapResult>> GetItemInfoAsync(Azure.Analytics.PlanetaryComputer.GetItemInfoOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature> GetItemInfoGeoJson(Azure.Analytics.PlanetaryComputer.GetItemInfoOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>> GetItemInfoGeoJsonAsync(Azure.Analytics.PlanetaryComputer.GetItemInfoOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint> GetItemPoint(Azure.Analytics.PlanetaryComputer.GetItemPointOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint>> GetItemPointAsync(Azure.Analytics.PlanetaryComputer.GetItemPointOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetItemPreview(Azure.Analytics.PlanetaryComputer.GetItemPreviewOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemPreviewAsync(Azure.Analytics.PlanetaryComputer.GetItemPreviewOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetItemPreviewWithFormat(Azure.Analytics.PlanetaryComputer.GetItemPreviewWithFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemPreviewWithFormatAsync(Azure.Analytics.PlanetaryComputer.GetItemPreviewWithFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics> GetItemStatistics(Azure.Analytics.PlanetaryComputer.GetItemStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics>> GetItemStatisticsAsync(Azure.Analytics.PlanetaryComputer.GetItemStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetItemTileJson(Azure.Analytics.PlanetaryComputer.GetItemTileJsonOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetItemTileJsonAsync(Azure.Analytics.PlanetaryComputer.GetItemTileJsonOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetItemTileJsonByTms(Azure.Analytics.PlanetaryComputer.GetItemTileJsonByTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetItemTileJsonByTmsAsync(Azure.Analytics.PlanetaryComputer.GetItemTileJsonByTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetItemWmtsCapabilities(Azure.Analytics.PlanetaryComputer.GetItemWmtsCapabilitiesOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemWmtsCapabilitiesAsync(Azure.Analytics.PlanetaryComputer.GetItemWmtsCapabilitiesOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetItemWmtsCapabilitiesByTms(Azure.Analytics.PlanetaryComputer.GetItemWmtsCapabilitiesByTmsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemWmtsCapabilitiesByTmsAsync(Azure.Analytics.PlanetaryComputer.GetItemWmtsCapabilitiesByTmsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetLegend(Azure.Analytics.PlanetaryComputer.GetLegendOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLegendAsync(Azure.Analytics.PlanetaryComputer.GetLegendOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchAssetsForTile(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>> GetSearchAssetsForTile(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchAssetsForTileAsync(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.TilerAssetGeoJson>>> GetSearchAssetsForTileAsync(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSearchAssetsForTileNoTms(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileNoTmsOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>> GetSearchAssetsForTileNoTms(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileNoTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchAssetsForTileNoTmsAsync(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileNoTmsOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>>> GetSearchAssetsForTileNoTmsAsync(Azure.Analytics.PlanetaryComputer.GetSearchAssetsForTileNoTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSearchBboxAssets(Azure.Analytics.PlanetaryComputer.GetSearchBboxAssetsOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>> GetSearchBboxAssets(Azure.Analytics.PlanetaryComputer.GetSearchBboxAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchBboxAssetsAsync(Azure.Analytics.PlanetaryComputer.GetSearchBboxAssetsOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<System.BinaryData>>> GetSearchBboxAssetsAsync(Azure.Analytics.PlanetaryComputer.GetSearchBboxAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSearchBboxCrop(Azure.Analytics.PlanetaryComputer.GetSearchBboxCropOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchBboxCropAsync(Azure.Analytics.PlanetaryComputer.GetSearchBboxCropOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchBboxCropWithDimensions(Azure.Analytics.PlanetaryComputer.GetSearchBboxCropWithDimensionsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchBboxCropWithDimensionsAsync(Azure.Analytics.PlanetaryComputer.GetSearchBboxCropWithDimensionsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchInfo(string searchId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration> GetSearchInfo(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchInfoAsync(string searchId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration>> GetSearchInfoAsync(string searchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint> GetSearchPoint(Azure.Analytics.PlanetaryComputer.GetSearchPointOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint>> GetSearchPointAsync(Azure.Analytics.PlanetaryComputer.GetSearchPointOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSearchPointWithAssets(Azure.Analytics.PlanetaryComputer.GetSearchPointWithAssetsOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacItemPointAsset>> GetSearchPointWithAssets(Azure.Analytics.PlanetaryComputer.GetSearchPointWithAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchPointWithAssetsAsync(Azure.Analytics.PlanetaryComputer.GetSearchPointWithAssetsOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacItemPointAsset>>> GetSearchPointWithAssetsAsync(Azure.Analytics.PlanetaryComputer.GetSearchPointWithAssetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSearchTile(Azure.Analytics.PlanetaryComputer.GetSearchTileOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchTileByFormat(Azure.Analytics.PlanetaryComputer.GetSearchTileByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileByFormatAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchTileByScale(Azure.Analytics.PlanetaryComputer.GetSearchTileByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchTileByScaleAndFormat(Azure.Analytics.PlanetaryComputer.GetSearchTileByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileByScaleAndFormatAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileByScaleAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetSearchTileJson(Azure.Analytics.PlanetaryComputer.GetSearchTileJsonOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetSearchTileJsonAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileJsonOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata> GetSearchTileJsonByTms(Azure.Analytics.PlanetaryComputer.GetSearchTileJsonByTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileJsonMetadata>> GetSearchTileJsonByTmsAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileJsonByTmsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSearchTileNoTms(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileNoTmsAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchTileNoTmsByFormat(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileNoTmsByFormatAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchTileNoTmsByScale(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchTileNoTmsByScaleAndFormat(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileNoTmsByScaleAndFormatAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchTileNoTmsByScaleAsync(Azure.Analytics.PlanetaryComputer.GetSearchTileNoTmsByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetMetadata> GetSearchTilesetMetadata(Azure.Analytics.PlanetaryComputer.GetSearchTilesetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetMetadata>> GetSearchTilesetMetadataAsync(Azure.Analytics.PlanetaryComputer.GetSearchTilesetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetList> GetSearchTilesets(Azure.Analytics.PlanetaryComputer.GetSearchTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetList>> GetSearchTilesetsAsync(Azure.Analytics.PlanetaryComputer.GetSearchTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSearchWmtsCapabilities(Azure.Analytics.PlanetaryComputer.GetSearchWmtsCapabilitiesOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchWmtsCapabilitiesAsync(Azure.Analytics.PlanetaryComputer.GetSearchWmtsCapabilitiesOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSearchWmtsCapabilitiesByTms(Azure.Analytics.PlanetaryComputer.GetSearchWmtsCapabilitiesByTmsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSearchWmtsCapabilitiesByTmsAsync(Azure.Analytics.PlanetaryComputer.GetSearchWmtsCapabilitiesByTmsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTile(Azure.Analytics.PlanetaryComputer.GetTileOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileAsync(Azure.Analytics.PlanetaryComputer.GetTileOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTileByFormat(Azure.Analytics.PlanetaryComputer.GetTileByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileByFormatAsync(Azure.Analytics.PlanetaryComputer.GetTileByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTileByScale(Azure.Analytics.PlanetaryComputer.GetTileByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTileByScaleAndFormat(Azure.Analytics.PlanetaryComputer.GetTileByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileByScaleAndFormatAsync(Azure.Analytics.PlanetaryComputer.GetTileByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileByScaleAsync(Azure.Analytics.PlanetaryComputer.GetTileByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTileMatrices(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> GetTileMatrices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileMatricesAsync(Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> GetTileMatricesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTileMatrixDefinitions(string tileMatrixSetId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileMatrixSet> GetTileMatrixDefinitions(string tileMatrixSetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileMatrixSet>> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTileNoTms(Azure.Analytics.PlanetaryComputer.GetTileNoTmsOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileNoTmsAsync(Azure.Analytics.PlanetaryComputer.GetTileNoTmsOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTileNoTmsByFormat(Azure.Analytics.PlanetaryComputer.GetTileNoTmsByFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileNoTmsByFormatAsync(Azure.Analytics.PlanetaryComputer.GetTileNoTmsByFormatOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTileNoTmsByScale(Azure.Analytics.PlanetaryComputer.GetTileNoTmsByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTileNoTmsByScaleAndFormat(Azure.Analytics.PlanetaryComputer.GetTileNoTmsByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileNoTmsByScaleAndFormatAsync(Azure.Analytics.PlanetaryComputer.GetTileNoTmsByScaleAndFormatOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileNoTmsByScaleAsync(Azure.Analytics.PlanetaryComputer.GetTileNoTmsByScaleOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetMetadata> GetTilesetMetadata(Azure.Analytics.PlanetaryComputer.GetItemTilesetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetMetadata>> GetTilesetMetadataAsync(Azure.Analytics.PlanetaryComputer.GetItemTilesetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetList> GetTilesets(Azure.Analytics.PlanetaryComputer.GetItemTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSetList>> GetTilesetsAsync(Azure.Analytics.PlanetaryComputer.GetItemTilesetsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(Azure.Analytics.PlanetaryComputer.RegisterMosaic body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RegisterMosaicsSearch(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(Azure.Analytics.PlanetaryComputer.RegisterMosaic body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> RegisterMosaicsSearchAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class DefaultLocation : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.DefaultLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.DefaultLocation>
@@ -3901,31 +4002,45 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CancelAllOperations(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response CancelAllOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelAllOperationsAsync(Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelAllOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CancelOperation(System.Guid operationId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response CancelOperation(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelOperationAsync(System.Guid operationId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelOperationAsync(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionInformation> Create(string collectionId, Azure.Analytics.PlanetaryComputer.IngestionInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionInformation>> CreateAsync(string collectionId, Azure.Analytics.PlanetaryComputer.IngestionInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateRun(string collectionId, System.Guid ingestionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionRun> CreateRun(string collectionId, System.Guid ingestionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateRunAsync(string collectionId, System.Guid ingestionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionRun>> CreateRunAsync(string collectionId, System.Guid ingestionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionSource> CreateSource(Azure.Analytics.PlanetaryComputer.IngestionSource body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateSource(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionSource>> CreateSourceAsync(Azure.Analytics.PlanetaryComputer.IngestionSource body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateSourceAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation Delete(Azure.WaitUntil waitUntil, string collectionId, System.Guid ingestionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation Delete(Azure.WaitUntil waitUntil, string collectionId, System.Guid ingestionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteAsync(Azure.WaitUntil waitUntil, string collectionId, System.Guid ingestionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteAsync(Azure.WaitUntil waitUntil, string collectionId, System.Guid ingestionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteSource(System.Guid sourceId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteSource(System.Guid sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSourceAsync(System.Guid sourceId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSourceAsync(System.Guid sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Get(string collectionId, System.Guid ingestionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionInformation> Get(string collectionId, System.Guid ingestionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3933,7 +4048,9 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Pageable<Azure.Analytics.PlanetaryComputer.IngestionInformation> GetAll(string collectionId, int? maxCount = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetAllAsync(string collectionId, int? maxCount, int? skip, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Analytics.PlanetaryComputer.IngestionInformation> GetAllAsync(string collectionId, int? maxCount = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAsync(string collectionId, System.Guid ingestionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionInformation>> GetAsync(string collectionId, System.Guid ingestionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetManagedIdentities(Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Analytics.PlanetaryComputer.ManagedIdentityMetadata> GetManagedIdentities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3941,7 +4058,9 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.AsyncPageable<Azure.Analytics.PlanetaryComputer.ManagedIdentityMetadata> GetManagedIdentitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetOperation(System.Guid operationId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.PlanetaryComputerOperation> GetOperation(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(System.Guid operationId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.PlanetaryComputerOperation>> GetOperationAsync(System.Guid operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Analytics.PlanetaryComputer.PlanetaryComputerOperation> GetOperations(int? maxCount = default(int?), int? skip = default(int?), string collectionId = null, Azure.Analytics.PlanetaryComputer.PlanetaryComputerOperationStatus? status = default(Azure.Analytics.PlanetaryComputer.PlanetaryComputerOperationStatus?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetOperations(int? maxCount, int? skip, string collectionId, string status, Azure.RequestContext context) { throw null; }
@@ -3949,7 +4068,9 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.AsyncPageable<System.BinaryData> GetOperationsAsync(int? maxCount, int? skip, string collectionId, string status, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetRun(string collectionId, System.Guid ingestionId, System.Guid runId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionRun> GetRun(string collectionId, System.Guid ingestionId, System.Guid runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRunAsync(string collectionId, System.Guid ingestionId, System.Guid runId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionRun>> GetRunAsync(string collectionId, System.Guid ingestionId, System.Guid runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetRuns(string collectionId, System.Guid ingestionId, int? maxCount, int? skip, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Analytics.PlanetaryComputer.IngestionRun> GetRuns(string collectionId, System.Guid ingestionId, int? maxCount = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3957,7 +4078,9 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.AsyncPageable<Azure.Analytics.PlanetaryComputer.IngestionRun> GetRunsAsync(string collectionId, System.Guid ingestionId, int? maxCount = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSource(System.Guid sourceId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionSource> GetSource(System.Guid sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSourceAsync(System.Guid sourceId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionSource>> GetSourceAsync(System.Guid sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetSources(int? maxCount, int? skip, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Analytics.PlanetaryComputer.IngestionSourceSummary> GetSources(int? maxCount = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3965,9 +4088,12 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.AsyncPageable<Azure.Analytics.PlanetaryComputer.IngestionSourceSummary> GetSourcesAsync(int? maxCount = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionSource> ReplaceSource(System.Guid sourceId, Azure.Analytics.PlanetaryComputer.IngestionSource body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplaceSource(System.Guid sourceId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.IngestionSource>> ReplaceSourceAsync(System.Guid sourceId, Azure.Analytics.PlanetaryComputer.IngestionSource body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplaceSourceAsync(System.Guid sourceId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Update(string collectionId, System.Guid ingestionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string collectionId, System.Guid ingestionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class IngestionInformation : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.IngestionInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.IngestionInformation>
@@ -4205,15 +4331,21 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetToken(string collectionId, int? durationInMinutes, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken> GetToken(string collectionId, int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTokenAsync(string collectionId, int? durationInMinutes, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken>> GetTokenAsync(string collectionId, int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetUrl(System.Uri href, int? durationInMinutes, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink> GetUrl(System.Uri href, int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUrlAsync(System.Uri href, int? durationInMinutes, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink>> GetUrlAsync(System.Uri href, int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RevokeToken(int? durationInMinutes, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response RevokeToken(int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokenAsync(int? durationInMinutes, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokenAsync(int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MosaicMetadata : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.MosaicMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.MosaicMetadata>
@@ -5017,7 +5149,9 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacMosaic> AddMosaic(string collectionId, Azure.Analytics.PlanetaryComputer.StacMosaic body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AddMosaic(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacMosaic>> AddMosaicAsync(string collectionId, Azure.Analytics.PlanetaryComputer.StacMosaic body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> AddMosaicAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation CreateCollection(Azure.WaitUntil waitUntil, Azure.Analytics.PlanetaryComputer.StacCollection body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation CreateCollection(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -5025,107 +5159,160 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection> CreateCollectionAsset(string collectionId, Azure.Analytics.PlanetaryComputer.StacAssetData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateCollectionAsset(string collectionId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection>> CreateCollectionAssetAsync(string collectionId, Azure.Analytics.PlanetaryComputer.StacAssetData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateCollectionAssetAsync(string collectionId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> CreateCollectionAsync(Azure.WaitUntil waitUntil, Azure.Analytics.PlanetaryComputer.StacCollection body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> CreateCollectionAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation CreateItem(Azure.WaitUntil waitUntil, string collectionId, Azure.Analytics.PlanetaryComputer.StacItemOrStacItemCollection body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation CreateItem(Azure.WaitUntil waitUntil, string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> CreateItemAsync(Azure.WaitUntil waitUntil, string collectionId, Azure.Analytics.PlanetaryComputer.StacItemOrStacItemCollection body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> CreateItemAsync(Azure.WaitUntil waitUntil, string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateQueryables(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacQueryable>> CreateQueryables(string collectionId, System.Collections.Generic.IEnumerable<Azure.Analytics.PlanetaryComputer.StacQueryable> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateQueryablesAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacQueryable>>> CreateQueryablesAsync(string collectionId, System.Collections.Generic.IEnumerable<Azure.Analytics.PlanetaryComputer.StacQueryable> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.RenderConfiguration> CreateRenderOption(string collectionId, Azure.Analytics.PlanetaryComputer.RenderConfiguration body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateRenderOption(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.RenderConfiguration>> CreateRenderOptionAsync(string collectionId, Azure.Analytics.PlanetaryComputer.RenderConfiguration body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateRenderOptionAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation DeleteCollection(Azure.WaitUntil waitUntil, string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation DeleteCollection(Azure.WaitUntil waitUntil, string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteCollectionAsset(string collectionId, string assetId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection> DeleteCollectionAsset(string collectionId, string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteCollectionAssetAsync(string collectionId, string assetId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection>> DeleteCollectionAssetAsync(string collectionId, string assetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteCollectionAsync(Azure.WaitUntil waitUntil, string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteCollectionAsync(Azure.WaitUntil waitUntil, string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation DeleteItem(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation DeleteItem(Azure.WaitUntil waitUntil, string collectionId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteItemAsync(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> DeleteItemAsync(Azure.WaitUntil waitUntil, string collectionId, string itemId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteMosaic(string collectionId, string mosaicId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteMosaic(string collectionId, string mosaicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMosaicAsync(string collectionId, string mosaicId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMosaicAsync(string collectionId, string mosaicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteQueryable(string collectionId, string queryableName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteQueryable(string collectionId, string queryableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteQueryableAsync(string collectionId, string queryableName, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteQueryableAsync(string collectionId, string queryableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteRenderOption(string collectionId, string renderOptionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteRenderOption(string collectionId, string renderOptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRenderOptionAsync(string collectionId, string renderOptionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRenderOptionAsync(string collectionId, string renderOptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection> GetCollection(string collectionId, Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollection(string collectionId, string sign, int? durationInMinutes, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection>> GetCollectionAsync(string collectionId, Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionAsync(string collectionId, string sign, int? durationInMinutes, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetCollectionConfiguration(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.UserCollectionSettings> GetCollectionConfiguration(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionConfigurationAsync(string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.UserCollectionSettings>> GetCollectionConfigurationAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollectionQueryables(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.QueryableDefinitionsResult> GetCollectionQueryables(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionQueryablesAsync(string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.QueryableDefinitionsResult>> GetCollectionQueryablesAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacCatalogCollections> GetCollections(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCollections(string sign, int? durationInMinutes, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacCatalogCollections>> GetCollectionsAsync(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionsAsync(string sign, int? durationInMinutes, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetCollectionThumbnail(Azure.Analytics.PlanetaryComputer.GetCollectionThumbnailOptions options, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionThumbnailAsync(Azure.Analytics.PlanetaryComputer.GetCollectionThumbnailOptions options, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetConformanceClasses(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacConformanceClasses> GetConformanceClasses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConformanceClassesAsync(Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacConformanceClasses>> GetConformanceClassesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacItem> GetItem(string collectionId, string itemId, Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetItem(string collectionId, string itemId, string sign, int? durationInMinutes, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacItem>> GetItemAsync(string collectionId, string itemId, Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemAsync(string collectionId, string itemId, string sign, int? durationInMinutes, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetItemCollection(Azure.Analytics.PlanetaryComputer.GetItemCollectionOptions options, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemCollection> GetItemCollection(Azure.Analytics.PlanetaryComputer.GetItemCollectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetItemCollectionAsync(Azure.Analytics.PlanetaryComputer.GetItemCollectionOptions options, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemCollection>> GetItemCollectionAsync(Azure.Analytics.PlanetaryComputer.GetItemCollectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetLandingPage(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacLandingPage> GetLandingPage(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLandingPageAsync(Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacLandingPage>> GetLandingPageAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetMosaic(string collectionId, string mosaicId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacMosaic> GetMosaic(string collectionId, string mosaicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMosaicAsync(string collectionId, string mosaicId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacMosaic>> GetMosaicAsync(string collectionId, string mosaicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetMosaics(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacMosaic>> GetMosaics(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMosaicsAsync(string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.StacMosaic>>> GetMosaicsAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetPartitionType(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.PartitionKind> GetPartitionType(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetPartitionTypeAsync(string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.PartitionKind>> GetPartitionTypeAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetQueryables(Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.QueryableDefinitionsResult> GetQueryables(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetQueryablesAsync(Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.QueryableDefinitionsResult>> GetQueryablesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetRenderOption(string collectionId, string renderOptionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.RenderConfiguration> GetRenderOption(string collectionId, string renderOptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRenderOptionAsync(string collectionId, string renderOptionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.RenderConfiguration>> GetRenderOptionAsync(string collectionId, string renderOptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetRenderOptions(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.RenderConfiguration>> GetRenderOptions(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRenderOptionsAsync(string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.PlanetaryComputer.RenderConfiguration>>> GetRenderOptionsAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTileSettings(string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSettings> GetTileSettings(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTileSettingsAsync(string collectionId, Azure.RequestContext context) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSettings>> GetTileSettingsAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection> ReplaceCollection(string collectionId, Azure.Analytics.PlanetaryComputer.StacCollection body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplaceCollection(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -5133,39 +5320,58 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection> ReplaceCollectionAsset(string collectionId, string assetId, Azure.Analytics.PlanetaryComputer.StacAssetData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplaceCollectionAsset(string collectionId, string assetId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection>> ReplaceCollectionAssetAsync(string collectionId, string assetId, Azure.Analytics.PlanetaryComputer.StacAssetData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplaceCollectionAssetAsync(string collectionId, string assetId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacCollection>> ReplaceCollectionAsync(string collectionId, Azure.Analytics.PlanetaryComputer.StacCollection body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplaceCollectionAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation ReplaceItem(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.Analytics.PlanetaryComputer.StacItem body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation ReplaceItem(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> ReplaceItemAsync(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.Analytics.PlanetaryComputer.StacItem body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> ReplaceItemAsync(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacMosaic> ReplaceMosaic(string collectionId, string mosaicId, Azure.Analytics.PlanetaryComputer.StacMosaic body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplaceMosaic(string collectionId, string mosaicId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacMosaic>> ReplaceMosaicAsync(string collectionId, string mosaicId, Azure.Analytics.PlanetaryComputer.StacMosaic body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplaceMosaicAsync(string collectionId, string mosaicId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response ReplacePartitionType(string collectionId, Azure.Analytics.PlanetaryComputer.PartitionKind body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplacePartitionType(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplacePartitionTypeAsync(string collectionId, Azure.Analytics.PlanetaryComputer.PartitionKind body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplacePartitionTypeAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacQueryable> ReplaceQueryable(string collectionId, string queryableName, Azure.Analytics.PlanetaryComputer.StacQueryable body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplaceQueryable(string collectionId, string queryableName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacQueryable>> ReplaceQueryableAsync(string collectionId, string queryableName, Azure.Analytics.PlanetaryComputer.StacQueryable body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplaceQueryableAsync(string collectionId, string queryableName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.RenderConfiguration> ReplaceRenderOption(string collectionId, string renderOptionId, Azure.Analytics.PlanetaryComputer.RenderConfiguration body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplaceRenderOption(string collectionId, string renderOptionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.RenderConfiguration>> ReplaceRenderOptionAsync(string collectionId, string renderOptionId, Azure.Analytics.PlanetaryComputer.RenderConfiguration body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplaceRenderOptionAsync(string collectionId, string renderOptionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.TileSettings> ReplaceTileSettings(string collectionId, Azure.Analytics.PlanetaryComputer.TileSettings body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReplaceTileSettings(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.TileSettings>> ReplaceTileSettingsAsync(string collectionId, Azure.Analytics.PlanetaryComputer.TileSettings body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReplaceTileSettingsAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemCollection> Search(Azure.Analytics.PlanetaryComputer.StacSearchParameters body, Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Search(Azure.Core.RequestContent content, string sign = null, int? durationInMinutes = default(int?), Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.PlanetaryComputer.StacItemCollection>> SearchAsync(Azure.Analytics.PlanetaryComputer.StacSearchParameters body, Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode? sign = default(Azure.Analytics.PlanetaryComputer.StacAssetUrlSigningMode?), int? durationInMinutes = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> SearchAsync(Azure.Core.RequestContent content, string sign = null, int? durationInMinutes = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation UpdateItem(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Operation> UpdateItemAsync(Azure.WaitUntil waitUntil, string collectionId, string itemId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class StacCollection : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacCollection>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.StacCollection>
@@ -5716,7 +5922,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm NormalizedIndex { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm Slope { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm Std { get { throw null; } }
-        public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm Terrainrgb { get { throw null; } }
+        public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm TerrainRgb { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm Terrarium { get { throw null; } }
         public static Azure.Analytics.PlanetaryComputer.TerrainAlgorithm Var { get { throw null; } }
         public bool Equals(Azure.Analytics.PlanetaryComputer.TerrainAlgorithm other) { throw null; }
