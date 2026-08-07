@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.OpenTelemetry" />
+    <PackageReference Include="System.Net.ServerSentEvents" />
   </ItemGroup>
   <!-- Ship a global using so consumers can write AgentHost.Run<T>() with zero usings. -->
   <ItemGroup>
