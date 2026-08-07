@@ -9,8 +9,7 @@ import {
   typeSpecCompile
 } from "./test-util.js";
 
-it("distributes a shared list operation to every expanded dynamic-parent resource", async () => {
-  // CODING_FLOW_EXECUTION_PROBE
+it("distributes a shared list operation only to supported expanded dynamic-parent resources", async () => {
   const runner = await createEmitterTestHost();
   const program = await typeSpecCompile(
     `
@@ -24,7 +23,19 @@ model Domain is TrackedResource<DomainProperties> {
 }
 model DomainProperties {}
 
+model PartnerNamespace is TrackedResource<PartnerNamespaceProperties> {
+  ...ResourceNameParameter<PartnerNamespace>;
+}
+model PartnerNamespaceProperties {}
+
 union ParentType {
+  string,
+  topics: "topics",
+  domains: "domains",
+  partnerNamespaces: "partnerNamespaces",
+}
+
+union ListParentType {
   string,
   topics: "topics",
   domains: "domains",
@@ -43,6 +54,11 @@ interface Topics {
 @armResourceOperations
 interface Domains {
   get is ArmResourceRead<Domain>;
+}
+
+@armResourceOperations
+interface PartnerNamespaces {
+  get is ArmResourceRead<PartnerNamespace>;
 }
 
 @armResourceOperations
@@ -80,7 +96,7 @@ interface PrivateEndpointConnections {
   listByResource is ArmResourceListByParent<
     PrivateEndpointConnection,
     Parameters = {
-      @path parentType: ParentType;
+      @path parentType: ListParentType;
       @path parentName: string;
     }
   >;
@@ -96,11 +112,26 @@ interface PrivateEndpointConnections {
     resource.metadata.resourceType.endsWith("/privateEndpointConnections")
   );
 
-  strictEqual(expandedResources.length, 2);
+  strictEqual(expandedResources.length, 3);
+  const listTargetTypes = expandedResources
+    .filter((resource) =>
+      resource.metadata.methods.some((method) => method.kind === "List")
+    )
+    .map((resource) => resource.metadata.resourceIdPattern.segments.at(-4))
+    .sort();
+
+  strictEqual(
+    listTargetTypes.join(","),
+    "domains,topics",
+    "the shared List operation should only target parents supported by its enum"
+  );
   for (const resource of expandedResources) {
+    const listMethods = resource.metadata.methods.filter(
+      (method) => method.kind === "List"
+    );
     ok(
-      resource.metadata.methods.some((method) => method.kind === "List"),
-      `${resource.metadata.resourceName} is missing the shared List operation`
+      listMethods.length <= 1,
+      `${resource.metadata.resourceName} has duplicate List operations`
     );
   }
 });
