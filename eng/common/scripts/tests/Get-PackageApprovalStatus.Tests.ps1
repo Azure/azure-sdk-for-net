@@ -29,7 +29,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
         & $scriptPath -Language python -PackageName azure-test -PackageVersion 1.0.0 -ApiHash abc123 -RepoOwner Contoso
 
         ($global:CapturedAzSdkArguments -join "|") | Should Be (@(
-            "api-review", "get-approval-status",
+            "package", "get-approval-status",
             "--language", "python",
             "--package-name", "azure-test",
             "--package-version", "1.0.0",
@@ -61,7 +61,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
     It "logs a reproducible command invocation" {
         $messages = @(& $scriptPath -Language python -PackageName "azure test" -PackageVersion 1.0.0 6>&1)
 
-        ($messages -join [Environment]::NewLine) | Should Match 'Command: azsdk api-review get-approval-status --language python --package-name "azure test" --package-version 1.0.0 --output json'
+        ($messages -join [Environment]::NewLine) | Should Match 'Command: azsdk package get-approval-status --language python --package-name "azure test" --package-version 1.0.0 --output json'
     }
 
     It "shows Review Hub and APIView results before the overall result" {

@@ -140,7 +140,7 @@ function Invoke-AzSdkCommand([string[]] $Arguments) {
 }
 
 $arguments = @(
-    "api-review",
+    "package",
     "get-approval-status",
     "--language", $Language,
     "--package-name", $PackageName,
