@@ -504,11 +504,11 @@ function assignRemainingOperations(
       sdkMethod?.operation?.verb === "get"
         ? getCollectionItemModelIdLocal(sdkMethod)
         : undefined;
-    const listTarget =
+    const listTargets =
       itemModelId && identifiedResourceModelIds.has(itemModelId)
-        ? findListTargetResource(resources, operationPath, itemModelId)
-        : undefined;
-    const actionTarget = listTarget
+        ? findListTargetResources(resources, operationPath, itemModelId)
+        : [];
+    const actionTarget = listTargets.length > 0
       ? undefined
       : findLongestPrefixMatch(
           operationPath,
@@ -516,13 +516,22 @@ function assignRemainingOperations(
           (resource) => resource.metadata.resourceIdPattern
         );
 
-    if (listTarget) {
-      listTarget.metadata.methods.push({
-        methodId,
-        kind: ResourceOperationKind.List,
-        operationPath,
-        scope: buildListOperationScope(resources, operationPath)
-      });
+    if (listTargets.length > 0) {
+      for (const listTarget of listTargets) {
+        if (
+          listTarget.metadata.methods.some(
+            (resourceMethod) => resourceMethod.methodId === methodId
+          )
+        ) {
+          continue;
+        }
+        listTarget.metadata.methods.push({
+          methodId,
+          kind: ResourceOperationKind.List,
+          operationPath,
+          scope: buildListOperationScope(resources, operationPath)
+        });
+      }
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
       const isCollectionAction = isResourceCollectionAction(sdkMethod);
@@ -600,11 +609,11 @@ function getCollectionContextPath(
   );
 }
 
-function findListTargetResource(
+function findListTargetResources(
   resources: ValidArmResourceSchema[],
   operationPath: RequestPath,
   itemModelId: string
-): ValidArmResourceSchema | undefined {
+): ValidArmResourceSchema[] {
   const candidates = resources.filter(
     (resource) => resource.resourceModelId === itemModelId
   );
@@ -613,11 +622,24 @@ function findListTargetResource(
     operationPath.isPrefixOf(resource.metadata.resourceIdPattern)
   );
   if (collectionMatches.length > 0) {
-    return shortestResourcePath(collectionMatches);
+    return selectListTargets(collectionMatches, operationPath);
+  }
+
+  if (detectDynamicTypeSegments(operationPath).length > 0) {
+    const collectionType = operationPath.segments.at(-1);
+    const dynamicCollectionMatches = candidates.filter(
+      (resource) =>
+        collectionType !== undefined &&
+        resource.metadata.resourceType.split("/").at(-1) === collectionType &&
+        operationPath.hasSameScopeNesting(resource.metadata.resourceIdPattern)
+    );
+    if (dynamicCollectionMatches.length > 0) {
+      return selectListTargets(dynamicCollectionMatches, operationPath);
+    }
   }
 
   const operationType = operationPath.resourceType;
-  if (operationType === undefined) return undefined;
+  if (operationType === undefined) return [];
 
   const scopeCollectionMatches = candidates.filter(
     (resource) =>
@@ -625,19 +647,25 @@ function findListTargetResource(
       operationPath.hasSameScopeNesting(resource.metadata.resourceIdPattern) &&
       operationPathEndsWithResourceType(operationPath, operationType)
   );
-  return shortestResourcePath(scopeCollectionMatches);
+  return selectListTargets(scopeCollectionMatches, operationPath);
 }
 
-function shortestResourcePath(
-  resources: ValidArmResourceSchema[]
-): ValidArmResourceSchema | undefined {
-  return resources
-    .slice()
-    .sort(
-      (a, b) =>
-        a.metadata.resourceIdPattern.length -
-        b.metadata.resourceIdPattern.length
-    )[0];
+function selectListTargets(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath
+): ValidArmResourceSchema[] {
+  if (resources.length === 0) return [];
+
+  const shortestLength = Math.min(
+    ...resources.map((resource) => resource.metadata.resourceIdPattern.length)
+  );
+  const shortestResources = resources.filter(
+    (resource) => resource.metadata.resourceIdPattern.length === shortestLength
+  );
+
+  return detectDynamicTypeSegments(operationPath).length > 0
+    ? shortestResources
+    : shortestResources.slice(0, 1);
 }
 
 function buildListOperationScope(
