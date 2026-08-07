@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Publisher is introduced after the selected 2026-04-30 API version, so this compatibility model is maintained here.
+// Publisher was removed from stable APIs starting with 2026-02-01 and is now preview-only.
+// This release targets a stable API, so this compatibility model is maintained as customization code.
 
 #nullable disable
 

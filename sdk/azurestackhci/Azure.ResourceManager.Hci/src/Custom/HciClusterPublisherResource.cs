@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Publisher is introduced after the selected 2026-04-30 API version, so this compatibility resource is maintained here.
+// Publisher was removed from stable APIs starting with 2026-02-01 and is now preview-only.
+// This release targets a stable API, so this compatibility resource is maintained as customization code.
 
 #nullable disable
 
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterPublisherApiVersion);
             _publishersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterPublisherApiVersion ?? "2026-04-30");
+            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterPublisherApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -103,10 +104,6 @@ namespace Azure.ResourceManager.Hci
         /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="HciClusterPublisherResource"/>. </description>
         /// </item>
@@ -149,10 +146,6 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Publishers_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

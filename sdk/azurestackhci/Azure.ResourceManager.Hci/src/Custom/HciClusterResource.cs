@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Hci
         public virtual AsyncPageable<HciClusterOfferResource> GetHciClusterOffersAsync(string expand = default, CancellationToken cancellationToken = default)
             => GetByClusterAsync(expand, cancellationToken);
 
-        // Publisher is introduced after the selected 2026-04-30 API version, so these resource entry points are maintained here.
+        // Publisher was removed from stable APIs starting with 2026-02-01 and is now preview-only.
+        // This release targets a stable API, so these resource entry points are maintained as customization code.
         /// <summary> Gets a collection of HciClusterPublishers in the <see cref="HciClusterResource"/>. </summary>
         /// <returns> An object representing collection of HciClusterPublishers and their operations over a HciClusterPublisherResource. </returns>
         public virtual HciClusterPublisherCollection GetHciClusterPublishers()

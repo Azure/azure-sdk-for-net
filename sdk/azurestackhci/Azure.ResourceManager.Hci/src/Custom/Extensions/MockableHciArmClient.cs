@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.Hci.Mocking
 {
     public partial class MockableHciArmClient
     {
-        // Publisher is introduced after the selected 2026-04-30 API version, so this mockable resource entry point is maintained here.
+        // Publisher was removed from stable APIs starting with 2026-02-01 and is now preview-only.
+        // This release targets a stable API, so this mockable resource entry point is maintained as customization code.
         /// <summary> Gets an object representing a <see cref="HciClusterPublisherResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciClusterPublisherResource"/> object. </returns>

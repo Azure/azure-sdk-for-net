@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.Hci.Models
         public static PublisherData PublisherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default)
          => throw new NotSupportedException("This method is now deprecated. Please use the new method `HciClusterPublisherData` moving forward.");
 
-        // Publisher is introduced after the selected 2026-04-30 API version, so its model factory is maintained here.
+        // Publisher was removed from stable APIs starting with 2026-02-01 and is now preview-only.
+        // This release targets a stable API, so its model factory is maintained as customization code.
         /// <param name="id"> Fully qualified resource ID for the resource. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
