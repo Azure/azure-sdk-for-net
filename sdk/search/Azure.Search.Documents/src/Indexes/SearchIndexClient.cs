@@ -13,7 +13,6 @@ using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Utilities;
-using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -406,7 +405,7 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
         public virtual Pageable<SearchIndex> GetIndexes(
             CancellationToken cancellationToken) =>
-            GetIndexes(cancellationToken: cancellationToken);
+            GetIndexes(search: null, pageSize: null, searchType: default, cancellationToken: cancellationToken);
 #pragma warning restore AZC0002
 
         /// <summary>
@@ -419,7 +418,7 @@ namespace Azure.Search.Documents.Indexes
 #pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
             CancellationToken cancellationToken) =>
-            GetIndexesAsync(cancellationToken: cancellationToken);
+            GetIndexesAsync(search: null, pageSize: null, searchType: default, cancellationToken: cancellationToken);
 #pragma warning restore AZC0002
 
         /// <summary>
@@ -431,7 +430,7 @@ namespace Azure.Search.Documents.Indexes
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BinaryData> GetIndexes(
             RequestContext context) =>
-            GetIndexes(context: context);
+            GetIndexes(search: null, pageSize: null, searchType: null, context: context);
 
         /// <summary>
         /// Gets a list of all indexes.
@@ -442,7 +441,7 @@ namespace Azure.Search.Documents.Indexes
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BinaryData> GetIndexesAsync(
             RequestContext context) =>
-            GetIndexesAsync(context: context);
+            GetIndexesAsync(search: null, pageSize: null, searchType: null, context: context);
 
         /// <summary>
         /// Gets a list of all indexes with selected properties.

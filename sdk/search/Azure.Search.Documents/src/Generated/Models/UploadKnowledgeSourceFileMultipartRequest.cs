@@ -10,14 +10,15 @@ using System.ClientModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UploadKnowledgeSourceFileMultipartRequest. </summary>
+    /// <summary> Multipart request for uploading a file to a File knowledge source. </summary>
     public partial class UploadKnowledgeSourceFileMultipartRequest
     {
         /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartRequest"/>. </summary>
-        /// <param name="metadata"> The JSON metadata part describing the file. </param>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="contentPath"> The file path for the content file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="contentPath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="contentPath"/> is an empty string, and was expected to be non-empty. </exception>
@@ -32,7 +33,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartRequest"/>. </summary>
-        /// <param name="metadata"> The JSON metadata part describing the file. </param>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The content for the content file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="content"/> is null. </exception>
         [Experimental("SCME0004")]
@@ -46,7 +47,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartRequest"/>. </summary>
-        /// <param name="metadata"> The JSON metadata part describing the file. </param>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The content for the content file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="content"/> is null. </exception>
         [Experimental("SCME0004")]
@@ -60,8 +61,8 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartRequest"/>. </summary>
-        /// <param name="metadata"> The JSON metadata part describing the file. </param>
-        /// <param name="content"> The raw file content part. </param>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
+        /// <param name="content"> The raw file content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="content"/> is null. </exception>
         [Experimental("SCME0004")]
         public UploadKnowledgeSourceFileMultipartRequest(FileUploadMetadata metadata, FileBinaryContent content)
@@ -73,10 +74,10 @@ namespace Azure.Search.Documents.Models
             Content = content;
         }
 
-        /// <summary> The JSON metadata part describing the file. </summary>
+        /// <summary> The JSON metadata describing the file. </summary>
         public FileUploadMetadata Metadata { get; }
 
-        /// <summary> The raw file content part. </summary>
+        /// <summary> The raw file content. </summary>
         [Experimental("SCME0004")]
         public FileBinaryContent Content { get; }
     }

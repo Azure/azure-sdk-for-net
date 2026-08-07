@@ -7,9 +7,10 @@
 
 using System.ClientModel;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
 #pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary></summary>
     public partial class UploadKnowledgeSourceFileMultipartRequest

@@ -100,7 +100,7 @@
             "type": "bool",
             "defaultValue": true,
             "metadata": {
-                "description": "Whether to deploy OpenAI embedding models. Set to false if you only need the chat model (gpt-5-mini) for knowledge retrieval tests."
+                "description": "Whether to deploy OpenAI embedding models. Set to false if you only need the chat model (gpt-5.4-mini) for knowledge retrieval tests."
             }
         }
     },
@@ -227,14 +227,14 @@
             }
         },
         {
-            "name": "[concat(variables('openAiAccountName'), '/gpt-5-mini')]",
+            "name": "[concat(variables('openAiAccountName'), '/gpt-5.4-mini')]",
             "type": "Microsoft.CognitiveServices/accounts/deployments",
             "apiVersion": "[variables('openAiApiVersion')]",
             "properties": {
                 "model": {
-                    "name": "gpt-5-mini",
+                    "name": "gpt-5.4-mini",
                     "format": "OpenAI",
-                    "version": "2025-08-07"
+                    "version": "2026-03-17"
                 }
             },
             "sku": {
@@ -243,26 +243,6 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName'))]"
-            ]
-        },
-        {
-            "name": "[concat(variables('openAiAccountName'), '/text-embedding-3-small')]",
-            "type": "Microsoft.CognitiveServices/accounts/deployments",
-            "apiVersion": "[variables('openAiApiVersion')]",
-            "condition": "[parameters('deployEmbeddings')]",
-            "properties": {
-                "model": {
-                    "name": "text-embedding-3-small",
-                    "format": "OpenAI",
-                    "version": "1"
-                }
-            },
-            "sku": {
-                "name": "Standard",
-                "capacity": 30
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'gpt-5-mini')]"
             ]
         },
         {
@@ -282,7 +262,7 @@
                 "capacity": 30
             },
             "dependsOn": [
-                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'text-embedding-3-small')]"
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'gpt-5.4-mini')]"
             ]
         },
         {

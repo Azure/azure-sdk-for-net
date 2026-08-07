@@ -2879,10 +2879,10 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The UploadKnowledgeSourceFileMultipartRequest. </summary>
-        /// <param name="metadata"> The JSON metadata part describing the file. </param>
-        /// <param name="content"> The raw file content part. </param>
-        /// <returns> A new <see cref="Models.UploadKnowledgeSourceFileMultipartRequest"/> instance for mocking. </returns>
+        /// <summary> Multipart request for uploading a file to a File knowledge source. </summary>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
+        /// <param name="content"> The raw file content. </param>
+        /// <returns> A new <see cref="Indexes.Models.UploadKnowledgeSourceFileMultipartRequest"/> instance for mocking. </returns>
         [Experimental("SCME0004")]
         public static UploadKnowledgeSourceFileMultipartRequest UploadKnowledgeSourceFileMultipartRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
         {
@@ -2900,10 +2900,10 @@ namespace Azure.Search.Documents.Models
             return new FileUploadMetadata(fileName, metadata, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The UpdateKnowledgeSourceFileRequest. </summary>
-        /// <param name="metadata"> The JSON metadata part describing the file. </param>
-        /// <param name="content"> The raw file content part. </param>
-        /// <returns> A new <see cref="Models.UpdateKnowledgeSourceFileRequest"/> instance for mocking. </returns>
+        /// <summary> Multipart request for updating a file in a File knowledge source. </summary>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
+        /// <param name="content"> The raw file content. </param>
+        /// <returns> A new <see cref="Indexes.Models.UpdateKnowledgeSourceFileRequest"/> instance for mocking. </returns>
         [Experimental("SCME0004")]
         public static UpdateKnowledgeSourceFileRequest UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
         {
@@ -5942,6 +5942,57 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties: null,
                 docUrl,
                 citationUrl);
+        }
+
+        /// <summary> Emitted once retrieval preflight validation completes, before any activity begins. </summary>
+        /// <param name="requestId"> A service-generated identifier that correlates all events in this retrieval stream. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base being queried. </param>
+        /// <param name="outputMode"> The effective output mode for this retrieval. </param>
+        /// <param name="reasoningEffort"> The effective reasoning effort for this retrieval. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalStartedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseRetrievalStartedEvent KnowledgeBaseRetrievalStartedEvent(string requestId = default, string knowledgeBaseName = default, KnowledgeRetrievalOutputMode outputMode = default, KnowledgeRetrievalReasoningEffort reasoningEffort = default)
+        {
+            return new KnowledgeBaseRetrievalStartedEvent(requestId, knowledgeBaseName, outputMode, reasoningEffort, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted immediately before an individual retrieval activity begins executing. </summary>
+        /// <param name="id"> The ID of the activity record, matching the `id` on the corresponding `activity.completed` event. </param>
+        /// <param name="type"> The type of the activity that has started. </param>
+        /// <param name="startedAt"> The time at which the activity started. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source used by the activity, when the activity targets a knowledge source. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseActivityStartedEvent KnowledgeBaseActivityStartedEvent(int id = default, KnowledgeBaseActivityRecordType @type = default, DateTimeOffset startedAt = default, string knowledgeSourceName = default)
+        {
+            return new KnowledgeBaseActivityStartedEvent(id, @type, startedAt, knowledgeSourceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted when a fully validated and post-processed synthesized answer is available. </summary>
+        /// <param name="messageIndex"> The zero-based index of the completed message in the final response array. </param>
+        /// <param name="message"> The completed answer message. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerCompletedEvent KnowledgeBaseAnswerCompletedEvent(int messageIndex = default, KnowledgeBaseMessage message = default)
+        {
+            return new KnowledgeBaseAnswerCompletedEvent(messageIndex, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted in place of `response.completed` if retrieval fails after the stream starts. </summary>
+        /// <param name="error"> The error detail explaining why the retrieval stream failed. </param>
+        /// <param name="activity"> Activity records that completed before the retrieval failed. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseStreamErrorEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseStreamErrorEvent KnowledgeBaseStreamErrorEvent(KnowledgeBaseErrorDetail error = default, IEnumerable<KnowledgeBaseActivityRecord> activity = default)
+        {
+            activity ??= new ChangeTrackingList<KnowledgeBaseActivityRecord>();
+
+            return new KnowledgeBaseStreamErrorEvent(error, activity.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted after retrieval completes successfully. </summary>
+        /// <param name="statusCode"> The semantic HTTP status of the completed retrieval. </param>
+        /// <param name="response"> The authoritative completed retrieval response. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseResponseCompletedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseResponseCompletedEvent KnowledgeBaseResponseCompletedEvent(KnowledgeBaseRetrievalStatusCode statusCode = default, KnowledgeBaseRetrievalResponse response = default)
+        {
+            return new KnowledgeBaseResponseCompletedEvent(statusCode, response, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
