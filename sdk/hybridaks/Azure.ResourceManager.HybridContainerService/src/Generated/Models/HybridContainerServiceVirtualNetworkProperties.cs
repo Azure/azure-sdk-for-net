@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Properties of the virtual network resource. </summary>
     public partial class HybridContainerServiceVirtualNetworkProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkProperties"/>. </summary>
         public HybridContainerServiceVirtualNetworkProperties()
@@ -54,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkProperties"/>. </summary>
-        /// <param name="infraVnetProfile"></param>
+        /// <param name="infraVnetProfile"> Infrastructure network profile for HCI platform. </param>
         /// <param name="vipPool"> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </param>
         /// <param name="vmipPool"> Range of IP Addresses for Kubernetes node VMs. </param>
         /// <param name="dnsServers"> List of DNS server IP Addresses associated with the network. </param>
         /// <param name="gateway"> IP Address of the Gateway associated with the network. </param>
         /// <param name="ipAddressPrefix"> IP Address Prefix of the network. </param>
         /// <param name="vlanId"> VLAN Id used by the network. </param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
         /// <param name="status"> Status of the virtual network resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridContainerServiceVirtualNetworkProperties(InfraVnetProfile infraVnetProfile, IList<KubernetesVirtualIPItem> vipPool, IList<VirtualMachineIPItem> vmipPool, IList<string> dnsServers, string gateway, string ipAddressPrefix, int? vlanId, HybridContainerServiceProvisioningState? provisioningState, HybridContainerServiceNetworkStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceVirtualNetworkProperties(InfraVnetProfile infraVnetProfile, IList<KubernetesVirtualIPItem> vipPool, IList<VirtualMachineIPItem> vmipPool, IList<string> dnsServers, string gateway, string ipAddressPrefix, int? vlanId, HybridContainerServiceProvisioningState? provisioningState, HybridContainerServiceNetworkStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InfraVnetProfile = infraVnetProfile;
             VipPool = vipPool;
@@ -75,43 +47,60 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             VlanId = vlanId;
             ProvisioningState = provisioningState;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the infra vnet profile. </summary>
+        /// <summary> Infrastructure network profile for HCI platform. </summary>
         internal InfraVnetProfile InfraVnetProfile { get; set; }
+
+        /// <summary> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </summary>
+        public IList<KubernetesVirtualIPItem> VipPool { get; }
+
+        /// <summary> Range of IP Addresses for Kubernetes node VMs. </summary>
+        public IList<VirtualMachineIPItem> VmipPool { get; }
+
+        /// <summary> List of DNS server IP Addresses associated with the network. </summary>
+        public IList<string> DnsServers { get; }
+
+        /// <summary> IP Address of the Gateway associated with the network. </summary>
+        public string Gateway { get; set; }
+
+        /// <summary> IP Address Prefix of the network. </summary>
+        public string IPAddressPrefix { get; set; }
+
+        /// <summary> VLAN Id used by the network. </summary>
+        public int? VlanId { get; set; }
+
+        /// <summary> The provisioning state of the virtual network resource. </summary>
+        public HybridContainerServiceProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Status of the virtual network resource. </summary>
+        internal HybridContainerServiceNetworkStatus Status { get; }
+
         /// <summary> Infrastructure network profile for HCI platform. </summary>
         public HciInfraVnetProfile InfraVnetHci
         {
-            get => InfraVnetProfile is null ? default : InfraVnetProfile.Hci;
+            get
+            {
+                return InfraVnetProfile is null ? default : InfraVnetProfile.Hci;
+            }
             set
             {
                 if (InfraVnetProfile is null)
+                {
                     InfraVnetProfile = new InfraVnetProfile();
+                }
                 InfraVnetProfile.Hci = value;
             }
         }
 
-        /// <summary> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </summary>
-        public IList<KubernetesVirtualIPItem> VipPool { get; }
-        /// <summary> Range of IP Addresses for Kubernetes node VMs. </summary>
-        public IList<VirtualMachineIPItem> VmipPool { get; }
-        /// <summary> List of DNS server IP Addresses associated with the network. </summary>
-        public IList<string> DnsServers { get; }
-        /// <summary> IP Address of the Gateway associated with the network. </summary>
-        public string Gateway { get; set; }
-        /// <summary> IP Address Prefix of the network. </summary>
-        public string IPAddressPrefix { get; set; }
-        /// <summary> VLAN Id used by the network. </summary>
-        public int? VlanId { get; set; }
-        /// <summary> Gets the provisioning state. </summary>
-        public HybridContainerServiceProvisioningState? ProvisioningState { get; }
-        /// <summary> Status of the virtual network resource. </summary>
-        internal HybridContainerServiceNetworkStatus Status { get; }
         /// <summary> The detailed status of the long running operation. </summary>
         public VirtualNetworkPropertiesStatusOperationStatus OperationStatus
         {
-            get => Status?.OperationStatus;
+            get
+            {
+                return Status is null ? default : Status.OperationStatus;
+            }
         }
     }
 }

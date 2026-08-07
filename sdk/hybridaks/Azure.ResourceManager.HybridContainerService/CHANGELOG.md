@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Updated to API version `2026-04-01-preview`, adding agent pool GPU counts, Cilium network policy, cluster security profiles, and key rotation status.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated the package code generation from AutoRest to TypeSpec.
 
 ## 1.0.2 (2026-04-27)
 

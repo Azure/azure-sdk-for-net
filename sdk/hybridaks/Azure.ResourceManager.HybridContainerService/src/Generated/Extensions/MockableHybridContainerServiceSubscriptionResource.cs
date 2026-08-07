@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HybridContainerService;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridContainerService.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableHybridContainerServiceSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics;
-        private VirtualNetworksRestOperations _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient;
+        private ClientDiagnostics _virtualNetworksClientDiagnostics;
+        private VirtualNetworks _virtualNetworksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridContainerServiceSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHybridContainerServiceSubscriptionResource for mocking. </summary>
         protected MockableHybridContainerServiceSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridContainerServiceSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHybridContainerServiceSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHybridContainerServiceSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics => _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", HybridContainerServiceVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-        private VirtualNetworksRestOperations HybridContainerServiceVirtualNetworkvirtualNetworksRestClient => _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridContainerServiceVirtualNetworkResource.ResourceType));
+        private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         /// <summary>
         /// Lists the virtual networks in the specified subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
         /// Lists the virtual networks in the specified subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), HybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HybridContainerServiceVirtualNetworkData, HybridContainerServiceVirtualNetworkResource>(new VirtualNetworksGetBySubscriptionCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks"), data => new HybridContainerServiceVirtualNetworkResource(Client, data));
         }
     }
 }
