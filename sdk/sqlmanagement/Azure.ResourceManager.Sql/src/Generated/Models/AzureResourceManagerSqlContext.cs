@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -313,10 +314,16 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(ManagedInstancePrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(ManagedInstancePrivateLinkServiceConnectionStateProperty))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceProperties))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Sql.Models.ManagedInstanceQuery is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ManagedInstanceQuery))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Sql.Models.ManagedInstanceQuery is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ManagedInstanceQueryData))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceQueryResource))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceQueryStatistics))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceResource))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(ManagedInstanceResourceGetTopQueriesOptions))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(ManagedInstanceServerConfigurationOptionData))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceServerConfigurationOptionResource))]
     [ModelReaderWriterBuildable(typeof(ManagedInstanceServerTrustCertificateResource))]
@@ -400,7 +407,9 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(ReplicationLinkUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupLongTermRetentionBackupResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupLongTermRetentionManagedInstanceBackupResource))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceWithWritableName))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseData))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseProperties))]
@@ -542,12 +551,17 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SqlServerJobAgentData))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobAgentPatch))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobAgentResource))]
+    [ModelReaderWriterBuildable(typeof(SqlServerJobAgentResourceGetJobExecutionsByAgentOptions))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobCredentialData))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobCredentialResource))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobData))]
+    [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionCollectionGetAllOptions))]
+    [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionData))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionResource))]
+    [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionStepCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionStepResource))]
+    [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionStepTargetCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobExecutionStepTargetResource))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobResource))]
     [ModelReaderWriterBuildable(typeof(SqlServerJobSchedule))]
@@ -610,6 +624,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLongTermRetentionBackupResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLongTermRetentionManagedInstanceBackupResource))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions))]
     [ModelReaderWriterBuildable(typeof(SubscriptionUsageData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionUsageListResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionUsageProperties))]
@@ -676,6 +691,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(WorkloadGroupListResult))]
     [ModelReaderWriterBuildable(typeof(WorkloadGroupProperties))]
     [ModelReaderWriterBuildable(typeof(WorkloadGroupResource))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZonePinningCapability))]
     public partial class AzureResourceManagerSqlContext : ModelReaderWriterContext
     {
