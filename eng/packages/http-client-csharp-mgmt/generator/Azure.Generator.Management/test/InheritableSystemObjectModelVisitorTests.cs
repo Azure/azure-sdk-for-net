@@ -205,19 +205,21 @@ namespace Azure.Generator.Mgmt.Tests
         /// <summary>
         /// Verifies that when custom code overrides a model's base type to an inheritable
         /// system type (e.g., TrackedResourceData) that is NOT present as an
-        /// InheritableSystemObjectModelProvider, the visitor uses CLR reflection to enumerate
-        /// base properties and filters them from the model.
+        /// InheritableSystemObjectModelProvider, the visitor uses known management type metadata
+        /// to filter inherited properties from the model.
         /// </summary>
         [Test]
-        public void CustomCodeBaseTypeOverride_UsesClrReflectionFallback()
+        public void CustomCodeBaseTypeOverride_UsesKnownManagementTypeMetadata()
         {
             // The upgraded base generator no longer exposes framework properties through
-            // SystemObjectModelProvider.Properties, so use an empty input model to exercise
-            // the CLR reflection fallback.
+            // SystemObjectModelProvider.Properties in this path, so use an empty input model
+            // to exercise the management metadata fallback.
             var trackedResourceInputModel = InputFactory.Model(
                 "TrackedResource",
                 properties: [],
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
+                .SetValue(trackedResourceInputModel, "Azure.ResourceManager.CommonTypes.TrackedResource");
 
             // Create a simple model with properties that overlap TrackedResourceData's properties
             var inputModel = InputFactory.Model(
@@ -256,7 +258,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(result, Is.Not.Null);
 
             // Properties from TrackedResourceData (Id, Name, ResourceType, SystemData, Tags, Location)
-            // should be filtered using CLR reflection.
+            // should be filtered using known management type metadata.
             // Only CustomProp should remain.
             var propertyNames = result!.Properties.Select(p => p.Name).ToList();
             Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from TrackedResourceData base)");

@@ -121,9 +121,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
             if (currentModel is SystemObjectModelProvider systemModel)
             {
-                foreach (var property in systemModel.SystemType.FrameworkType.GetProperties())
+                if (KnownManagementTypes.TryGetInheritableSystemTypePropertyNames(
+                    systemModel.CrossLanguageDefinitionId,
+                    out var propertyNames))
                 {
-                    basePropertyNames.Add(property.Name);
+                    basePropertyNames.UnionWith(propertyNames);
                 }
             }
 
