@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 441
-- Management Plane (MPG): 259
+- Total libraries: 442
+- Management Plane (MPG): 260
   - Autorest/Swagger: 43
-  - New Emitter (TypeSpec): 216
+  - New Emitter (TypeSpec): 217
   - Old TypeSpec: 0
 - Data Plane (DPG): 129
   - Autorest/Swagger: 30
@@ -136,7 +136,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 216 / 216 (100%)
+**Migration Status**: 217 / 217 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -259,6 +259,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | keyvault | Azure.ResourceManager.KeyVault | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.Extensions | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes | ✅ |
+| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes | ✅ |
 | kusto | Azure.ResourceManager.Kusto | ✅ |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
