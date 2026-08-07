@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-07-24 22:35:59 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-08-07 06:31:50 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 433
-- Management Plane (MPG): 253
+- Total libraries: 434
+- Management Plane (MPG): 254
   - Autorest/Swagger: 47
-  - New Emitter (TypeSpec): 206
+  - New Emitter (TypeSpec): 207
   - Old TypeSpec: 0
 - Data Plane (DPG): 130
   - Autorest/Swagger: 33
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 33
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 206 / 206 (100%)
+**Migration Status**: 207 / 207 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -212,6 +212,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
 | devtestlabs | Azure.ResourceManager.DevTestLabs | ✅ |
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | ✅ |
+| discovery | Azure.ResourceManager.Discovery | ✅ |
 | dns | Azure.ResourceManager.Dns | ✅ |
 | dnsresolver | Azure.ResourceManager.DnsResolver | ✅ |
 | domainregistration | Azure.ResourceManager.DomainRegistration | ✅ |
