@@ -536,7 +536,11 @@ function assignRemainingOperations(
           methodId,
           kind: ResourceOperationKind.List,
           operationPath,
-          scope: buildListOperationScope(resources, operationPath)
+          scope: buildListOperationScope(
+            resources,
+            operationPath,
+            listTarget
+          )
         });
       }
     } else if (actionTarget) {
@@ -814,9 +818,27 @@ function selectListTargets(
 
 function buildListOperationScope(
   resources: ValidArmResourceSchema[],
-  operationPath: RequestPath
+  operationPath: RequestPath,
+  listTarget: ValidArmResourceSchema
 ): ArmScopeInfo {
   const scope = buildScopeInfoFromPath(operationPath);
+  if (detectDynamicTypeSegments(operationPath).length > 0) {
+    const collectionPath = getResourceCollectionPath(
+      listTarget.metadata.resourceIdPattern
+    );
+    const concreteParentPath =
+      listTarget.metadata.parentResourceId ??
+      (collectionPath
+        ? RequestPath.fromSegments(collectionPath.segments.slice(0, -1))
+        : undefined);
+    if (concreteParentPath) {
+      return {
+        ...scope,
+        scopeIdPattern: concreteParentPath
+      };
+    }
+  }
+
   const parentResourcePath = resources
     .map((resource) => resource.metadata.resourceIdPattern)
     .filter((resourcePath) => resourcePath.isPrefixOf(operationPath))

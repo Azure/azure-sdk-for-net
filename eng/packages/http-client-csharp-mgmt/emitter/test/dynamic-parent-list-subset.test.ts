@@ -2,6 +2,7 @@ import { ok, strictEqual } from "assert";
 import { createModel } from "@typespec/http-client-csharp";
 import { it } from "vitest";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
+import { RequestPath } from "../src/resource-metadata.js";
 import {
   createCSharpSdkContext,
   createEmitterContext,
@@ -133,5 +134,15 @@ interface PrivateEndpointConnections {
       listMethods.length <= 1,
       `${resource.metadata.resourceName} has duplicate List operations`
     );
+    if (listMethods.length === 1) {
+      const expectedScope = RequestPath.fromSegments(
+        resource.metadata.resourceIdPattern.segments.slice(0, -2)
+      );
+      strictEqual(
+        listMethods[0].scope.scopeIdPattern.path,
+        expectedScope.path,
+        `${resource.metadata.resourceName} List operation should use its concrete parent scope`
+      );
+    }
   }
 });
