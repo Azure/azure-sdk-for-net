@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -118,9 +117,32 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             {
                 basePropertyNames.Add(property.Name);
             }
-            currentModel = currentModel.BaseModelProvider;
+
+            currentModel = ResolveBaseModelProvider(currentModel);
         }
         return basePropertyNames;
+    }
+
+    private static ModelProvider? ResolveBaseModelProvider(ModelProvider model)
+    {
+        var baseModelProvider = model.BaseModelProvider;
+        if (baseModelProvider is not null)
+        {
+            return baseModelProvider;
+        }
+
+        // A system provider can be visited before MTG has created and registered the provider
+        // for its TypeSpec base model. Create that provider so its properties are available.
+        if (model is SystemObjectModelProvider systemModel &&
+            ManagementClientGenerator.Instance.InputLibrary.ModelsByCrossLanguageDefinitionId.TryGetValue(
+                systemModel.CrossLanguageDefinitionId,
+                out var inputModel) &&
+            inputModel.BaseModel is not null)
+        {
+            return ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel.BaseModel);
+        }
+
+        return null;
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
