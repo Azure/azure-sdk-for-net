@@ -51,7 +51,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <returns>A <see cref="AIProjectConnection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public virtual AIProjectConnection GetConnection(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AIProjectConnection> GetConnection(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(connectionName))
             {
