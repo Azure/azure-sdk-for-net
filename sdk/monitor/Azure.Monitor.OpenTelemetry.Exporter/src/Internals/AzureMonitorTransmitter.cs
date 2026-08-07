@@ -13,6 +13,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -27,8 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// </summary>
     internal class AzureMonitorTransmitter : ITransmitter
     {
-        private const int RetentionPeriodMilliseconds = 7 * 24 * 60 * 60 * 1000;
-
         internal readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
         internal readonly AzureMonitorStatsbeat? _statsbeat;
@@ -128,12 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(connectionVars.InstrumentationKey, storageDirectory);
 
-                    // Retention is extended well past the package default of two days: telemetry
-                    // persisted by a short-lived process is only delivered by a later run, which on a
-                    // developer machine can easily be after a weekend. The size cap is the real bound.
-                    return new FileBlobProvider(
-                        storageDirectory,
-                        retentionPeriodInMilliseconds: RetentionPeriodMilliseconds);
+                    return new FileBlobProvider(storageDirectory);
                 }
                 catch (Exception ex)
                 {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals

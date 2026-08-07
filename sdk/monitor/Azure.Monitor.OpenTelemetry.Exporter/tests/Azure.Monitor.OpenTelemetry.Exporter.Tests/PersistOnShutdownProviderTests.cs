@@ -9,6 +9,7 @@ using System.Linq;
 using Azure.Core.TestFramework;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
 using OpenTelemetry;

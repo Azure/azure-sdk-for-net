@@ -18,8 +18,6 @@
 
 - Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
 
-- Offline storage retention was raised from two days to seven so that telemetry persisted by an infrequently run application is not deleted before its next run.
-
 ### Other Changes
 
 ## 1.8.3 (2026-07-24)

@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
 {
     /// <summary>
     /// Controls the "write to persistent storage, then upload out-of-band" behavior used when a
