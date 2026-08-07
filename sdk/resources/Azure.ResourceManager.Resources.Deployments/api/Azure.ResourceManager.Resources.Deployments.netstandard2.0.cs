@@ -96,8 +96,6 @@ namespace Azure.ResourceManager.Resources.Deployments
         public static Azure.ResourceManager.Resources.Deployments.ArmDeploymentCollection GetArmDeployments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.ResourceManager.Resources.Deployments.ArmDeploymentCollection GetArmDeployments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.Resources.Deployments.ArmDeploymentCollection GetArmDeployments(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Deployments.Models.WhatIfOperationResult> WhatIfAtSubscriptionScope(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.Resources.Deployments.Models.ArmDeploymentWhatIfContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Deployments.Models.WhatIfOperationResult>> WhatIfAtSubscriptionScopeAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.Resources.Deployments.Models.ArmDeploymentWhatIfContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Resources.Deployments.Mocking
@@ -130,8 +128,6 @@ namespace Azure.ResourceManager.Resources.Deployments.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Resources.Deployments.ArmDeploymentResource> GetArmDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Deployments.ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.Deployments.ArmDeploymentCollection GetArmDeployments() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Deployments.Models.WhatIfOperationResult> WhatIfAtSubscriptionScope(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.Resources.Deployments.Models.ArmDeploymentWhatIfContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Deployments.Models.WhatIfOperationResult>> WhatIfAtSubscriptionScopeAsync(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.Resources.Deployments.Models.ArmDeploymentWhatIfContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableResourcesDeploymentsTenantResource : Azure.ResourceManager.ArmResource
     {
