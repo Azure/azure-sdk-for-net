@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
 
@@ -8,9 +9,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class PersistentStorageExtensions
     {
+        private const int MaxBlobsToEvict = 32;
+
         internal static ExportResult SaveTelemetry(this PersistentBlobProvider storage, byte[] content)
         {
             return storage.TryCreateBlob(content, out _) ? ExportResult.Success : ExportResult.Failure;
+        }
+
+        /// <summary>
+        /// Saves telemetry, making room oldest-first when the storage directory has reached its size
+        /// cap. The storage provider drops new telemetry when full and never evicts, which would
+        /// otherwise let a stale backlog permanently starve current telemetry.
+        /// </summary>
+        internal static ExportResult SaveTelemetryWithEviction(this PersistentBlobProvider storage, byte[] content)
+        {
+            var result = storage.SaveTelemetry(content);
+            if (result == ExportResult.Success)
+            {
+                return result;
+            }
+
+            return TryEvictOldest(storage) ? storage.SaveTelemetry(content) : result;
+        }
+
+        private static bool TryEvictOldest(PersistentBlobProvider storage)
+        {
+            var evicted = false;
+
+            // The provider enumerates newest-first, so the tail of this list is the oldest telemetry.
+            var blobs = new List<PersistentBlob>(storage.GetBlobs());
+            for (int i = blobs.Count - 1, count = 0; i >= 0 && count < MaxBlobsToEvict; i--, count++)
+            {
+                evicted |= blobs[i].TryDelete();
+            }
+
+            return evicted;
         }
     }
 }

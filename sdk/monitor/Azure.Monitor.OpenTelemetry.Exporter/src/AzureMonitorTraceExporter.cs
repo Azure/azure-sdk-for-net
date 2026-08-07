@@ -39,6 +39,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal AzureMonitorResource? TraceResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
 
+        internal ITransmitter Transmitter => _transmitter;
+
+        /// <inheritdoc/>
+        protected override bool OnShutdown(int timeoutMilliseconds)
+        {
+            // Only reached when a caller supplied their own processor, which has already exported
+            // the final batch. Kicks the storage drain so anything previously persisted still gets
+            // a chance to upload.
+            _transmitter.DrainStorage(PersistOnShutdownConfig.ResolveDrainWait(timeoutMilliseconds));
+
+            return base.OnShutdown(timeoutMilliseconds);
+        }
+
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
         {

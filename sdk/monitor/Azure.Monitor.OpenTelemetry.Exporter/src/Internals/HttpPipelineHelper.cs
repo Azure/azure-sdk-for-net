@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             ItemsAccepted = null
         };
 
-        private static bool IsRetriableStatus(int statusCode) => statusCode == ResponseStatusCodes.RequestTimeout
+        internal static bool IsRetriableStatus(int statusCode) => statusCode == ResponseStatusCodes.RequestTimeout
                                                                                 || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
                                                                                 || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache
                                                                                 || statusCode == ResponseStatusCodes.Unauthorized
@@ -353,7 +353,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (blobProvider != null && TryGetRequestContent(httpMessage.Request.Content, out var content))
             {
-                result.ExportResult = blobProvider.SaveTelemetry(content);
+                result.ExportResult = blobProvider.SaveTelemetryWithEviction(content);
                 result.WillRetry = (result.ExportResult == ExportResult.Success);
                 result.SavedToStorage = result.WillRetry;
             }
@@ -429,7 +429,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            result.ExportResult = blobProvider.SaveTelemetry(partialContent);
+            result.ExportResult = blobProvider.SaveTelemetryWithEviction(partialContent);
             result.WillRetry = (result.ExportResult == ExportResult.Success);
             result.SavedToStorage = result.WillRetry;
 
@@ -456,7 +456,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (blobProvider != null && TryGetRequestContent(httpMessage.Request.Content, out var content))
                 {
-                    result.ExportResult = blobProvider.SaveTelemetry(content);
+                    result.ExportResult = blobProvider.SaveTelemetryWithEviction(content);
                     result.WillRetry = (result.ExportResult == ExportResult.Success);
                     result.SavedToStorage = result.WillRetry;
                 }
