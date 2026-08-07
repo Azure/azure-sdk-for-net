@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated code generation from the legacy TypeSpec C# emitter to the new C# generator.
+
 ## 2.0.0-beta.1 (2026-08-05)
 
 ### Features Added
