@@ -1470,6 +1470,44 @@ namespace Azure.ResourceManager.Hci
             return GetArcSettings().Get(arcSettingName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of HciClusterOffers in the <see cref="HciClusterResource"/>. </summary>
+        /// <param name="publisherName"> The publisherName for the resource. </param>
+        /// <returns> An object representing collection of HciClusterOffers and their operations over a HciClusterOfferResource. </returns>
+        public virtual HciClusterOfferCollection GetHciClusterOffers(string publisherName)
+        {
+            return new HciClusterOfferCollection(Client, Id, publisherName);
+        }
+
+        /// <summary> Get Offer resource details within a publisher of HCI Cluster. </summary>
+        /// <param name="publisherName"> The publisherName for the resource. </param>
+        /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HciClusterOfferResource>> GetHciClusterOfferAsync(string publisherName, string offerName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+
+            return await GetHciClusterOffers(publisherName).GetAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get Offer resource details within a publisher of HCI Cluster. </summary>
+        /// <param name="publisherName"> The publisherName for the resource. </param>
+        /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HciClusterOfferResource> GetHciClusterOffer(string publisherName, string offerName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+
+            return GetHciClusterOffers(publisherName).Get(offerName, expand, cancellationToken);
+        }
+
         /// <summary> Gets a collection of HciClusterDeploymentSettings in the <see cref="HciClusterResource"/>. </summary>
         /// <returns> An object representing collection of HciClusterDeploymentSettings and their operations over a HciClusterDeploymentSettingResource. </returns>
         public virtual HciClusterDeploymentSettingCollection GetHciClusterDeploymentSettings()
@@ -1501,39 +1539,6 @@ namespace Azure.ResourceManager.Hci
             Argument.AssertNotNullOrEmpty(deploymentSettingsName, nameof(deploymentSettingsName));
 
             return GetHciClusterDeploymentSettings().Get(deploymentSettingsName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of HciClusterPublishers in the <see cref="HciClusterResource"/>. </summary>
-        /// <returns> An object representing collection of HciClusterPublishers and their operations over a HciClusterPublisherResource. </returns>
-        public virtual HciClusterPublisherCollection GetHciClusterPublishers()
-        {
-            return GetCachedClient(client => new HciClusterPublisherCollection(client, Id));
-        }
-
-        /// <summary> Get Publisher resource details of HCI Cluster. </summary>
-        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HciClusterPublisherResource>> GetHciClusterPublisherAsync(string publisherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-
-            return await GetHciClusterPublishers().GetAsync(publisherName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get Publisher resource details of HCI Cluster. </summary>
-        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HciClusterPublisherResource> GetHciClusterPublisher(string publisherName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-
-            return GetHciClusterPublishers().Get(publisherName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HciClusterSecuritySettings in the <see cref="HciClusterResource"/>. </summary>

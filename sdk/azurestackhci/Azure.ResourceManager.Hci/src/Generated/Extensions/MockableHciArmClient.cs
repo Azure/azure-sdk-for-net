@@ -165,15 +165,6 @@ namespace Azure.ResourceManager.Hci.Mocking
             return new ArcExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HciClusterPublisherResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterPublisherResource"/> object. </returns>
-        public virtual HciClusterPublisherResource GetHciClusterPublisherResource(ResourceIdentifier id)
-        {
-            HciClusterPublisherResource.ValidateResourceId(id);
-            return new HciClusterPublisherResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="HciClusterSecuritySettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
