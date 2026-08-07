@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.AgentServer.Responses;
+namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Provides a mechanism for receiving push-based asynchronous notifications.
@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// via <see cref="IAsyncDisposable"/> rather than <see cref="CancellationToken"/>.
 /// </remarks>
 [SuppressMessage("Usage", "AZC0112", Justification = "Observer pattern uses IAsyncDisposable for cancellation, not CancellationToken. Adding CancellationToken would break the established async observer contract.")]
-public interface IAsyncObserver<in T>
+internal interface IAsyncObserver<in T>
 {
     /// <summary>
     /// Provides the observer with new data.

@@ -156,6 +156,10 @@ The library provides durable **task** and resumable **streaming** primitives for
 
 `FoundryStateStore` is a durable, server-backed store for agent state. Each store is bound to a caller-chosen name and holds items — keyed JSON values — that you read, write, and list. Use it to persist checkpoints, conversation state, or counters across requests and restarts. `FoundryStateStore.GetOrCreateAsync` fetches or creates the store in one call, and items support tags, store-level TTL, and optimistic concurrency via `If-Match`. See the [state store guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/StateStoreGuide.md).
 
+### Resilient tasks and streaming
+
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddEventStreams()`, then run work through `ITaskInvoker` and emit progress through `EventStreamRegistry`. Tasks survive process restarts, support multi-turn conversations and steering, and persist idempotent state via `TaskMetadata`. See the [Tasks guide][tasks_guide] and the [Streaming guide][streaming_guide] for full walkthroughs.
+
 ## Examples
 
 You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples).
