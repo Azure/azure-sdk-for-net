@@ -44,6 +44,7 @@ $autorestConfig = $inputJson.autorestConfig
 $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
 $apiVersion = $inputJson.apiVersion
 $sdkReleaseType = $inputJson.sdkReleaseType
+$runMode = $inputJson.runMode
 
 function Test-MgmtSdkUsingNewGenerator {
     param(
@@ -224,7 +225,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
         $readmeFiles[$i] = $readme
         $autorestConfigYaml = ConvertTo-YAML $yml
     }
-    Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+    Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -runMode $runMode -generatedSDKPackages $generatedSDKPackages
     $generatedSDKPackages[$generatedSDKPackages.Count - 1]['readmeMd'] = @($readmeFile)
 }
 
@@ -245,7 +246,7 @@ foreach( $file in $inputFilePaths) {
 }
 
 if ($inputFileToGen) {
-    UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+    UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -runMode $runMode -generatedSDKPackages $generatedSDKPackages
 }
 
 $exitCode = 0
@@ -331,6 +332,7 @@ if ($relatedTypeSpecProjectFolder) {
             -path $relativeSdkPath `
             -downloadUrlPrefix $downloadUrlPrefix `
             -serviceType $serviceType `
+            -runMode $runMode `
             -skipGenerate `
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir

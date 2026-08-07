@@ -565,6 +565,7 @@ function Invoke-GenerateAndBuildSDK () {
         [string]$sdkRootPath,
         [string]$autorestConfigYaml = "",
         [string]$downloadUrlPrefix = "",
+        [string]$runMode = "",
         [object]$generatedSDKPackages
     )
     $readmeFile = $readmeAbsolutePath -replace "\\", "/"
@@ -687,7 +688,7 @@ function Invoke-GenerateAndBuildSDK () {
         # $packageName = $package.packageName
         Write-Host "projectFolder:$projectFolder"
 
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -serviceType $serviceType -runMode $runMode -generatedSDKPackages $generatedSDKPackages
     }
 }
 
@@ -919,6 +920,35 @@ function New-MgmtPackageScaffolding()
     Write-Host "Management SDK scaffolding complete for $packageName"
 }
 
+function Get-ApiCompatBreakingChangeItems {
+    param([string]$logFilePath)
+
+    $breakingChangeItems = @()
+    if (Test-Path $logFilePath) {
+        foreach ($line in (Get-Content -Path $logFilePath)) {
+            if ($line -match "error\s+CP\d{4}\s*:\s*(?<breakingChange>.*)\s+\[[^\]]+\]\s*$") {
+                $breakingChangeItems += $matches["breakingChange"]
+            }
+        }
+    }
+
+    return $breakingChangeItems
+}
+
+function Test-ApiCompatFailure {
+    param([string]$logFilePath)
+
+    if (Test-Path $logFilePath) {
+        foreach ($line in (Get-Content -Path $logFilePath)) {
+            if ($line -match "(?i)\berror\b.*(?:\bCP\d{4}\b|Api\s*Compat)") {
+                return $true
+            }
+        }
+    }
+
+    return $false
+}
+
 function GeneratePackage()
 {
     param(
@@ -927,6 +957,7 @@ function GeneratePackage()
         [string]$path,
         [string]$downloadUrlPrefix="",
         [string]$serviceType="data-plane",
+        [string]$runMode="",
         [switch]$skipGenerate,
         [object]$generatedSDKPackages,
         [string]$specRepoRoot=""
@@ -978,7 +1009,72 @@ function GeneratePackage()
         if (![string]::IsNullOrWhiteSpace($version)) {
             New-ChangeLogIfNotExists -projectFolder $projectFolder -version $version
         }
-        
+
+        if ($runMode -eq "spec-pull-request") {
+            $logFilePath = Join-Path $srcPath 'log.txt'
+
+            Write-Host "Start package-scoped Release build, pack, and API compatibility validation: $srcPath"
+            dotnet pack $srcPath --configuration Release /p:ValidateRunApiCompat=true "/flp:v=m;LogFile=$logFilePath"
+            if ($LASTEXITCODE) {
+                $breakingChangeItems = @(Get-ApiCompatBreakingChangeItems -logFilePath $logFilePath)
+                if ($breakingChangeItems.Count -gt 0) {
+                    $breakingChanges = $breakingChangeItems -join ",`n"
+                    $content = "Breaking Changes: $breakingChanges"
+                    $hasBreakingChange = $true
+                    Write-Host "Breaking changes detected. Packing with API compatibility disabled to produce the APIView artifact."
+                }
+
+                if (Test-ApiCompatFailure -logFilePath $logFilePath) {
+                    if (!$hasBreakingChange) {
+                        Write-Host "[WARNING] API compatibility validation failed without breaking-change diagnostics. Packing with API compatibility disabled to produce the APIView artifact."
+                    }
+                    dotnet pack $srcPath --configuration Release /p:RunApiCompat=false
+                    if ($LASTEXITCODE) {
+                        Write-Host "[WARNING] Failed to build and pack the sdk package: $packageName for service: $service. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                        $result = "warning"
+                    } elseif (!$hasBreakingChange) {
+                        $result = "warning"
+                    }
+                } else {
+                    Write-Host "[WARNING] Package validation failed without ApiCompat diagnostics. Skipping the fallback pack because disabling API compatibility cannot repair this failure."
+                    $result = "warning"
+                }
+            }
+
+            if (Test-Path $logFilePath) {
+                Remove-Item $logFilePath
+            }
+
+            Push-Location $sdkRootPath
+            $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
+            if (-not (Test-Path $artifactsPath)) {
+                Write-Host "[ERROR] Artifact folder not found for $artifactsPath. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            } else {
+                $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+            }
+
+            if ($artifacts.count -eq 0) {
+                Write-Host "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            } else {
+                $apiViewArtifact = $artifacts[0]
+            }
+            Pop-Location
+
+            if ($artifacts.count -gt 0) {
+                $fileName = Split-Path $artifacts[0] -Leaf
+                $full = "Download the $packageName package from [here]($downloadUrlPrefix/$fileName)"
+                $installInstructions = [PSCustomObject]@{
+                    full = $full
+                    lite = $full
+                }
+            }
+            Write-Host "Start to export api for $packageName"
+            & $sdkRootPath/eng/scripts/Export-API.ps1 -PackagePath $projectFolder -SdkRepoPath $sdkRootPath
+            if (!$?) {
+                Write-Host "[WARNING] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                $result = "warning"
+            }
+        } else {
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
@@ -1055,21 +1151,20 @@ function GeneratePackage()
             }
             else {
                 Write-Host "Breaking changes detected in the build log."
-                $logFile = Get-Content -Path $logFilePath | select-object -SkipLast 1
-                $regex = "error( ?):( ?)(?<breakingChange>.*) .*\["
-                foreach ($line in $logFile) {
-                    if ($line -match $regex) {
-                        $breakingChangeItems += $matches["breakingChange"]
-                    }
+                $breakingChangeItems = @(Get-ApiCompatBreakingChangeItems -logFilePath $logFilePath)
+                if ($breakingChangeItems.Count -gt 0) {
+                    $breakingChanges = $breakingChangeItems -join ",`n"
+                    $content = "Breaking Changes: $breakingChanges"
+                    $hasBreakingChange = $true
+                } else {
+                    Write-Host "[WARNING] API compatibility validation failed without recognized ApiCompat diagnostics."
                 }
-                $breakingChanges = $breakingChangeItems -join ",`n"
-                $content = "Breaking Changes: $breakingChanges"
-                $hasBreakingChange = $true
             }
 
             if (Test-Path $logFilePath) {
                 Remove-Item $logFilePath
             }
+        }
         }
     }
 
@@ -1115,6 +1210,7 @@ function UpdateExistingSDKByInputFiles()
         [string]$headSha = "",
         [string]$repoHttpsUrl,
         [string]$downloadUrlPrefix="",
+        [string]$runMode="",
         [object]$generatedSDKPackages
     )
 
@@ -1151,7 +1247,7 @@ function UpdateExistingSDKByInputFiles()
         $serviceType = $matches["serviceType"]
         $projectFolder = Join-Path $sdkRootPath $sdkPath
         $projectFolder = Resolve-Path -Path $projectFolder
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -runMode $runMode -generatedSDKPackages $generatedSDKPackages
     }
 
 }
