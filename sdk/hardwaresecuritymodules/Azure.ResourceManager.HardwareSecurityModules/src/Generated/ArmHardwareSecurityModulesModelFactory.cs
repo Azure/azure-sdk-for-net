@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="state"> The Payment HSM State. </param>
         /// <param name="stateMessage"> The Payment HSM State message. </param>
         /// <returns> A new <see cref="Models.PaymentHsmProperties"/> instance for mocking. </returns>
-        public static PaymentHsmProperties PaymentHsmProperties(string appFqdn = default, string mgmtFqdn = default, HsmState? state = default, string stateMessage = default)
+        public static PaymentHsmProperties PaymentHsmProperties(string appFqdn = default, string mgmtFqdn = default, HardwareSecurityModuleState? state = default, string stateMessage = default)
         {
             return new PaymentHsmProperties(appFqdn, mgmtFqdn, state, stateMessage, default);
         }
