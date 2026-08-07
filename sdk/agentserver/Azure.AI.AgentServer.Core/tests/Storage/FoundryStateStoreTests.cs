@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Storage;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -16,10 +18,25 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Core.Tests.Storage;
 
 [TestFixture]
+[NonParallelizable]
 public class FoundryStateStoreTests
 {
     private const string BaseUrl = "https://foundry.example.com/storage/";
     private const string DefaultName = "langGraphCheckpoints/thread-abc";
+    private string? _previousHostingEnvironment;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _previousHostingEnvironment = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "test");
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", _previousHostingEnvironment);
+    }
 
     private static string Enc(string value)
     {
@@ -442,5 +459,230 @@ public class FoundryStateStoreTests
         Assert.That(
             async () => await store.GetItemAsync(string.Empty),
             Throws.InstanceOf<ArgumentException>());
+    }
+
+    [Test]
+    public async Task ItemOperation_DoesNotForwardAmbientCallId()
+    {
+        var transport = new MockTransport(Json(404, """{"error":{"message":"not found"}}"""));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+        FoundryAgentRequestContext? previous = FoundryAgentRequestContext.Exchange(
+            new FoundryAgentRequestContext { CallId = "ambient-call" });
+
+        try
+        {
+            await store.GetItemAsync("missing");
+        }
+        finally
+        {
+            FoundryAgentRequestContext.Exchange(previous);
+        }
+
+        Assert.That(
+            transport.SingleRequest.Headers.TryGetValue(PlatformHeaders.FoundryCallId, out _),
+            Is.False);
+    }
+
+    [TestCase(0)]
+    [TestCase(-2)]
+    public void GetOrCreate_RejectsInvalidItemTtl(int itemTtlSeconds)
+    {
+        var transport = new MockTransport();
+
+        Assert.That(
+            async () => await FoundryStateStore.GetOrCreateAsync(
+                "invalid-ttl",
+                new MockCredential(),
+                new Uri("https://foundry.example.com/"),
+                false,
+                itemTtlSeconds,
+                null,
+                null,
+                null,
+                "v1",
+                new FoundryStorageClientOptions { Transport = transport },
+                CancellationToken.None),
+            Throws.InstanceOf<ArgumentOutOfRangeException>());
+        Assert.That(transport.Requests, Is.Empty);
+    }
+
+    [Test]
+    public void GetOrCreate_RejectsUserIsolationInLocalFallback()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+
+        Assert.That(
+            async () => await FoundryStateStore.GetOrCreateAsync(
+                "local-isolated",
+                userIsolation: true),
+            Throws.InstanceOf<NotSupportedException>());
+    }
+
+    [Test]
+    public async Task LocalFallback_PersistsAcrossClientInstances()
+    {
+        string stateRoot = Path.Combine(Path.GetTempPath(), "agentserver-state-" + Guid.NewGuid().ToString("N"));
+        string? previousRoot = Environment.GetEnvironmentVariable("AGENTSERVER_STATE_ROOT");
+        string? previousHosting = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+
+        try
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", stateRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+
+            FoundryStateStore first = await FoundryStateStore.GetOrCreateAsync(
+                "local-checkpoints",
+                credential: null);
+            await first.SetItemAsync(
+                "step/1",
+                new Dictionary<string, BinaryData> { ["done"] = BinaryData.FromObjectAsJson(true) },
+                tags: new Dictionary<string, string> { ["kind"] = "checkpoint" });
+
+            FoundryStateStore second = await FoundryStateStore.GetOrCreateAsync(
+                "local-checkpoints",
+                credential: null);
+            StateStoreItem? item = await second.GetItemAsync("step/1");
+            StateStoreItemKeyPage page = await second.ListKeysAsync(
+                tags: new Dictionary<string, string> { ["kind"] = "checkpoint" });
+
+            Assert.That(item, Is.Not.Null);
+            Assert.That(item!.Value["done"].ToObjectFromJson<bool>(), Is.True);
+            Assert.That(page.Keys.Select(key => key.Key), Is.EqualTo(new[] { "step/1" }));
+            Assert.That(
+                Directory.GetFiles(Path.Combine(stateRoot, "state_stores"), "*.json"),
+                Has.Length.EqualTo(1));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", previousRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", previousHosting);
+            if (Directory.Exists(stateRoot))
+            {
+                Directory.Delete(stateRoot, recursive: true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task LocalFallback_IgnoresExplicitEndpointAndCredential()
+    {
+        string stateRoot = Path.Combine(Path.GetTempPath(), "agentserver-state-" + Guid.NewGuid().ToString("N"));
+        string? previousRoot = Environment.GetEnvironmentVariable("AGENTSERVER_STATE_ROOT");
+        string? previousHosting = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+
+        try
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", stateRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+
+            FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+                "local-explicit-endpoint",
+                new MockCredential(),
+                new Uri("https://foundry.example.com/"));
+            await store.SetItemAsync(
+                "state",
+                new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson(1) });
+
+            StateStoreItem? item = await store.GetItemAsync("state");
+            Assert.That(item, Is.Not.Null);
+            Assert.That(item!.Value["value"].ToObjectFromJson<int>(), Is.EqualTo(1));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", previousRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", previousHosting);
+            if (Directory.Exists(stateRoot))
+            {
+                Directory.Delete(stateRoot, recursive: true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task LocalFallback_EnforcesConflictsAndEtags()
+    {
+        string stateRoot = Path.Combine(Path.GetTempPath(), "agentserver-state-" + Guid.NewGuid().ToString("N"));
+        string? previousRoot = Environment.GetEnvironmentVariable("AGENTSERVER_STATE_ROOT");
+        string? previousHosting = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+
+        try
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", stateRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+
+            FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync("local-etags", credential: null);
+            StateStoreItemRef created = await store.CreateItemAsync(
+                "counter",
+                new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson(1) });
+
+            Assert.That(
+                async () => await store.CreateItemAsync(
+                    "counter",
+                    new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson(2) }),
+                Throws.InstanceOf<FoundryStorageConflictException>());
+            Assert.That(
+                async () => await store.SetItemAsync(
+                    "counter",
+                    new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson(2) },
+                    ifMatch: "\"stale\""),
+                Throws.InstanceOf<FoundryStoragePreconditionException>());
+
+            StateStoreItemRef updated = await store.SetItemAsync(
+                "counter",
+                new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson(2) },
+                ifMatch: created.Etag);
+            Assert.That(updated.Etag, Is.Not.EqualTo(created.Etag));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", previousRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", previousHosting);
+            if (Directory.Exists(stateRoot))
+            {
+                Directory.Delete(stateRoot, recursive: true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task LocalFallback_PreservesOriginalStoreConfiguration()
+    {
+        string stateRoot = Path.Combine(Path.GetTempPath(), "agentserver-state-" + Guid.NewGuid().ToString("N"));
+        string? previousRoot = Environment.GetEnvironmentVariable("AGENTSERVER_STATE_ROOT");
+        string? previousHosting = Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT");
+
+        try
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", stateRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+
+            await FoundryStateStore.GetOrCreateAsync(
+                "local-config",
+                itemTtlSeconds: -1,
+                description: "original");
+            FoundryStateStore reopened = await FoundryStateStore.GetOrCreateAsync(
+                "local-config",
+                itemTtlSeconds: 60,
+                description: "replacement");
+
+            await reopened.SetItemAsync(
+                "state",
+                new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson(1) });
+
+            StateStore? info = await reopened.GetAsync();
+            StateStoreItem? item = await reopened.GetItemAsync("state");
+            Assert.That(info!.ItemTtlSeconds, Is.EqualTo(-1));
+            Assert.That(info.Description, Is.EqualTo("original"));
+            Assert.That(item, Is.Not.Null);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("AGENTSERVER_STATE_ROOT", previousRoot);
+            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", previousHosting);
+            if (Directory.Exists(stateRoot))
+            {
+                Directory.Delete(stateRoot, recursive: true);
+            }
+        }
     }
 }
