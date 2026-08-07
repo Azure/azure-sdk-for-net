@@ -118,6 +118,15 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             {
                 basePropertyNames.Add(property.Name);
             }
+
+            if (currentModel is SystemObjectModelProvider systemModel)
+            {
+                foreach (var property in systemModel.SystemType.FrameworkType.GetProperties())
+                {
+                    basePropertyNames.Add(property.Name);
+                }
+            }
+
             currentModel = currentModel.BaseModelProvider;
         }
         return basePropertyNames;
