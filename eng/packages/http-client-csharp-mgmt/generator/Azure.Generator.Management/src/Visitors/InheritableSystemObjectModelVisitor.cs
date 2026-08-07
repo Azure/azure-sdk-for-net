@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -121,17 +120,42 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
             if (currentModel is SystemObjectModelProvider systemModel)
             {
-                if (KnownManagementTypes.TryGetInheritableSystemTypePropertyNames(
-                    systemModel.CrossLanguageDefinitionId,
-                    out var propertyNames))
-                {
-                    basePropertyNames.UnionWith(propertyNames);
-                }
+                AddSourceTypeProperties(systemModel.SystemType, basePropertyNames);
             }
 
             currentModel = currentModel.BaseModelProvider;
         }
         return basePropertyNames;
+    }
+
+    private static void AddSourceTypeProperties(CSharpType type, HashSet<string> propertyNames)
+    {
+        var visitedTypes = new HashSet<string>(StringComparer.Ordinal);
+        CSharpType? currentType = type;
+        while (currentType is not null &&
+            visitedTypes.Add($"{currentType.Namespace}.{currentType.Name}"))
+        {
+            var sourceType = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(
+                currentType.Namespace,
+                currentType.Name,
+                currentType.DeclaringType?.Name,
+                includeReferencedAssemblies: true);
+            if (sourceType is null)
+            {
+                return;
+            }
+
+            foreach (var property in sourceType.Properties)
+            {
+                if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public) ||
+                    property.Modifiers.HasFlag(MethodSignatureModifiers.Protected))
+                {
+                    propertyNames.Add(property.Name);
+                }
+            }
+
+            currentType = sourceType.BaseType;
+        }
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)

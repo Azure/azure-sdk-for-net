@@ -37,14 +37,6 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
         };
 
-        private static readonly IReadOnlyDictionary<string, IReadOnlyList<string>> _inheritableSystemTypePropertyNames = new Dictionary<string, IReadOnlyList<string>>()
-        {
-            ["Azure.ResourceManager.CommonTypes.ProxyResource"] = ["Id", "Name", "ResourceType", "SystemData"],
-            ["Azure.ResourceManager.CommonTypes.ExtensionResource"] = ["Id", "Name", "ResourceType", "SystemData"],
-            ["Azure.ResourceManager.CommonTypes.Resource"] = ["Id", "Name", "ResourceType", "SystemData"],
-            ["Azure.ResourceManager.CommonTypes.TrackedResource"] = ["Id", "Name", "ResourceType", "SystemData", "Location", "Tags"],
-        };
-
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToSystemTypeMap = new Dictionary<string, CSharpType>()
         {
             ["Azure.ResourceManager.CommonTypes.ExtendedLocation"] = typeof(ExtendedLocation),
@@ -132,9 +124,6 @@ namespace Azure.Generator.Management.Primitives
         public static bool IsKnownManagementType(CSharpType type) => _knownTypes.Contains(type);
 
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
-
-        public static bool TryGetInheritableSystemTypePropertyNames(string id, [MaybeNullWhen(false)] out IReadOnlyList<string> propertyNames)
-            => _inheritableSystemTypePropertyNames.TryGetValue(id, out propertyNames);
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
