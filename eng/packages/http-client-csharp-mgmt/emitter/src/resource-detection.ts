@@ -634,16 +634,36 @@ function findListTargetResources(
   }
 
   if (detectDynamicTypeSegments(operationPath).length > 0) {
-    const collectionType = operationPath.segments.at(-1);
     const dynamicCollectionMatches = candidates.filter(
+      (resource) =>
+        matchesDynamicCollectionRoute(resource, operationPath, sdkMethod)
+    );
+    if (dynamicCollectionMatches.length > 0) {
+      return selectListTargets(
+        dynamicCollectionMatches,
+        operationPath,
+        sdkMethod
+      );
+    }
+
+    // Some synthesized list routes do not retain the resource's provider path.
+    // Preserve that fallback only when all candidates represent one route shape.
+    const collectionType = operationPath.segments.at(-1);
+    const compatibleDynamicCollectionMatches = candidates.filter(
       (resource) =>
         collectionType !== undefined &&
         resource.metadata.resourceType.split("/").at(-1) === collectionType &&
         operationPath.hasSameScopeNesting(resource.metadata.resourceIdPattern)
     );
-    if (dynamicCollectionMatches.length > 0) {
+    if (
+      compatibleDynamicCollectionMatches.length > 0 &&
+      hasSingleDynamicCollectionRoute(
+        compatibleDynamicCollectionMatches,
+        operationPath
+      )
+    ) {
       return selectListTargets(
-        dynamicCollectionMatches,
+        compatibleDynamicCollectionMatches,
         operationPath,
         sdkMethod
       );
@@ -660,6 +680,88 @@ function findListTargetResources(
       operationPathEndsWithResourceType(operationPath, operationType)
   );
   return selectListTargets(scopeCollectionMatches, operationPath, sdkMethod);
+}
+
+function matchesDynamicCollectionRoute(
+  resource: ValidArmResourceSchema,
+  operationPath: RequestPath,
+  sdkMethod: SdkMethod<SdkHttpOperation>
+): boolean {
+  const resourceCollectionPath = getResourceCollectionPath(
+    resource.metadata.resourceIdPattern
+  );
+  if (
+    resourceCollectionPath === undefined ||
+    resourceCollectionPath.length !== operationPath.length
+  ) {
+    return false;
+  }
+
+  const resolvedOperationSegments = [...operationPath.segments];
+  for (const segment of detectDynamicTypeSegments(operationPath)) {
+    const parameter = sdkMethod.operation.parameters.find(
+      (candidate) =>
+        candidate.kind === "path" &&
+        candidate.serializedName === segment.typeParamName &&
+        candidate.type.kind === "enum"
+    );
+    if (!parameter || parameter.type.kind !== "enum") {
+      return false;
+    }
+
+    const segmentIndex =
+      operationPath.lastProvidersSegmentIndex + segment.typeIndex + 1;
+    const expandedValue = resourceCollectionPath.segments[segmentIndex];
+    if (
+      expandedValue === undefined ||
+      !parameter.type.values.some(
+        (value) =>
+          typeof value.value === "string" &&
+          value.value.toLowerCase() === expandedValue.toLowerCase()
+      )
+    ) {
+      return false;
+    }
+    resolvedOperationSegments[segmentIndex] = expandedValue;
+  }
+
+  return RequestPath.fromSegments(resolvedOperationSegments).equals(
+    resourceCollectionPath
+  );
+}
+
+function hasSingleDynamicCollectionRoute(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath
+): boolean {
+  const dynamicSegmentIndexes = new Set(
+    detectDynamicTypeSegments(operationPath).map(
+      (segment) =>
+        operationPath.lastProvidersSegmentIndex + segment.typeIndex + 1
+    )
+  );
+  const routeShapes = new Set<string>();
+
+  for (const resource of resources) {
+    const collectionPath = getResourceCollectionPath(
+      resource.metadata.resourceIdPattern
+    );
+    if (collectionPath === undefined) return false;
+
+    routeShapes.add(
+      collectionPath.segments
+        .map((segment, index) =>
+          dynamicSegmentIndexes.has(index)
+            ? "{dynamicType}"
+            : isVariableSegment(segment)
+              ? "{}"
+              : segment.toLowerCase()
+        )
+        .join("/")
+    );
+  }
+
+  return routeShapes.size === 1;
 }
 
 function selectListTargets(
