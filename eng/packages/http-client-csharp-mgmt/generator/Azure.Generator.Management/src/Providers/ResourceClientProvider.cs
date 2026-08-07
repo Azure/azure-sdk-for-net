@@ -144,7 +144,7 @@ namespace Azure.Generator.Management.Providers
                     }
                 }
 
-                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForType(
                     customizedDataType.Namespace,
                     customizedDataType.Name,
                     declaringTypeName: null);
