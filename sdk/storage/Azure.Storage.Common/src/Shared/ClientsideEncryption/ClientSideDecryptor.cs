@@ -20,7 +20,7 @@ namespace Azure.Storage.Cryptography
         /// <summary>
         /// A cache for encryption key if high level API spans across multiple service calls.
         /// </summary>
-        private ContentEncryptionKeyCache s_contentEncryptionKeyCache;
+        private ContentEncryptionKeyCache _contentEncryptionKeyCache;
 
         /// <summary>
         /// Clients that can upload data have a key encryption key stored on them. Checking if
@@ -390,9 +390,9 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            if (s_contentEncryptionKeyCache != null)
+            if (_contentEncryptionKeyCache != null)
             {
-                if (s_contentEncryptionKeyCache.TryGetKey(encryptionData, out Memory<byte> cek))
+                if (_contentEncryptionKeyCache.TryGetKey(encryptionData, out Memory<byte> cek))
                 {
                     return cek;
                 }
@@ -465,7 +465,7 @@ namespace Azure.Storage.Cryptography
                     throw Errors.InvalidArgument(nameof(encryptionData));
             }
 
-            s_contentEncryptionKeyCache = new(
+            _contentEncryptionKeyCache = new(
                 unwrappedKey,
                 encryptionData.WrappedContentKey.KeyId,
                 encryptionData.EncryptionAgent.EncryptionVersion);
