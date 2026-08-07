@@ -56,19 +56,17 @@ namespace Azure.Security.KeyVault.Secrets
             _diagnostics = new ClientDiagnostics(options);
 
             // Build the HttpPipeline directly from the customer's SecretClientOptions
-            // (which extends ClientOptions). This is the legacy SecretClient construction
-            // path. Doing it this way picks up *everything* the customer configured —
-            // AddPolicy entries (per-call + per-retry), custom RetryPolicy / RetryOptions,
-            // Transport, Diagnostics.LoggedHeaderNames + LoggedQueryParameters,
-            // ApplicationId — automatically. None of those need explicit copy code, and
-            // future fields added to ClientOptions are picked up for free.
-            //
-            // The challenge-based auth policy is the same one the legacy SecretClient
-            // used so recordings remain byte-identical.
-            var authPolicy = new ChallengeBasedAuthenticationPolicy(
-                credential, options.DisableChallengeResourceVerification);
-
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            // (which extends ClientOptions) so AddPolicy entries, custom RetryPolicy /
+            // RetryOptions, Transport, Diagnostics allow-lists and ApplicationId all flow
+            // through automatically. The challenge-based auth policy is the same one the
+            // legacy SecretClient used. The explicit transport options enable
+            // Proof-of-Possession (PoP) token binding in the authentication policy.
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
 
             _generated = new KeyVaultSecretsClient(
                 vaultUri,
