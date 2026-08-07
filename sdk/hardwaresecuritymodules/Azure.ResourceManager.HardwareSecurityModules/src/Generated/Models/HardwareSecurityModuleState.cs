@@ -12,7 +12,7 @@ using Azure.ResourceManager.HardwareSecurityModules;
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> The state of an HSM resource. </summary>
-    public readonly partial struct HsmState : IEquatable<HsmState>
+    public readonly partial struct HardwareSecurityModuleState : IEquatable<HardwareSecurityModuleState>
     {
         private readonly string _value;
         /// <summary> The HSM state is unknown. </summary>
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> The HSM deletion has been delayed. </summary>
         private const string DelayedDeletionValue = "DelayedDeletion";
 
-        /// <summary> Initializes a new instance of <see cref="HsmState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModuleState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HsmState(string value)
+        public HardwareSecurityModuleState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -53,68 +53,68 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The HSM state is unknown. </summary>
-        public static HsmState Unknown { get; } = new HsmState(UnknownValue);
+        public static HardwareSecurityModuleState Unknown { get; } = new HardwareSecurityModuleState(UnknownValue);
 
         /// <summary> The HSM is being deployed. </summary>
-        public static HsmState Deploying { get; } = new HsmState(DeployingValue);
+        public static HardwareSecurityModuleState Deploying { get; } = new HardwareSecurityModuleState(DeployingValue);
 
         /// <summary> The HSM's software load balancer (SLB) is being configured. </summary>
-        public static HsmState ConfiguringSlb { get; } = new HsmState(ConfiguringSlbValue);
+        public static HardwareSecurityModuleState ConfiguringSlb { get; } = new HardwareSecurityModuleState(ConfiguringSlbValue);
 
         /// <summary> The HSM is starting. </summary>
-        public static HsmState Starting { get; } = new HsmState(StartingValue);
+        public static HardwareSecurityModuleState Starting { get; } = new HardwareSecurityModuleState(StartingValue);
 
         /// <summary> The HSM has started and is running. </summary>
-        public static HsmState Started { get; } = new HsmState(StartedValue);
+        public static HardwareSecurityModuleState Started { get; } = new HardwareSecurityModuleState(StartedValue);
 
         /// <summary> The HSM has failed. </summary>
-        public static HsmState Failed { get; } = new HsmState(FailedValue);
+        public static HardwareSecurityModuleState Failed { get; } = new HardwareSecurityModuleState(FailedValue);
 
         /// <summary> The HSM is being relocated. </summary>
-        public static HsmState Relocating { get; } = new HsmState(RelocatingValue);
+        public static HardwareSecurityModuleState Relocating { get; } = new HardwareSecurityModuleState(RelocatingValue);
 
         /// <summary> The HSM is being deleted. </summary>
-        public static HsmState Deleting { get; } = new HsmState(DeletingValue);
+        public static HardwareSecurityModuleState Deleting { get; } = new HardwareSecurityModuleState(DeletingValue);
 
         /// <summary> The HSM's software load balancer (SLB) entry is being deleted. </summary>
-        public static HsmState DeletingSlbEntry { get; } = new HsmState(DeletingSlbEntryValue);
+        public static HardwareSecurityModuleState DeletingSlbEntry { get; } = new HardwareSecurityModuleState(DeletingSlbEntryValue);
 
         /// <summary> The HSM is being provisioned for the first time. </summary>
-        public static HsmState InitialProvisioning { get; } = new HsmState(InitialProvisioningValue);
+        public static HardwareSecurityModuleState InitialProvisioning { get; } = new HardwareSecurityModuleState(InitialProvisioningValue);
 
         /// <summary> The HSM is being updated. </summary>
-        public static HsmState Updating { get; } = new HsmState(UpdatingValue);
+        public static HardwareSecurityModuleState Updating { get; } = new HardwareSecurityModuleState(UpdatingValue);
 
         /// <summary> The HSM is running in a degraded state. </summary>
-        public static HsmState Degraded { get; } = new HsmState(DegradedValue);
+        public static HardwareSecurityModuleState Degraded { get; } = new HardwareSecurityModuleState(DegradedValue);
 
         /// <summary> The HSM deletion has been delayed. </summary>
-        public static HsmState DelayedDeletion { get; } = new HsmState(DelayedDeletionValue);
+        public static HardwareSecurityModuleState DelayedDeletion { get; } = new HardwareSecurityModuleState(DelayedDeletionValue);
 
-        /// <summary> Determines if two <see cref="HsmState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HardwareSecurityModuleState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(HsmState left, HsmState right) => left.Equals(right);
+        public static bool operator ==(HardwareSecurityModuleState left, HardwareSecurityModuleState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HsmState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HardwareSecurityModuleState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(HsmState left, HsmState right) => !left.Equals(right);
+        public static bool operator !=(HardwareSecurityModuleState left, HardwareSecurityModuleState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HsmState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HardwareSecurityModuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HsmState(string value) => new HsmState(value);
+        public static implicit operator HardwareSecurityModuleState(string value) => new HardwareSecurityModuleState(value);
 
-        /// <summary> Converts a string to a <see cref="HsmState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HardwareSecurityModuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HsmState?(string value) => value == null ? null : new HsmState(value);
+        public static implicit operator HardwareSecurityModuleState?(string value) => value == null ? null : new HardwareSecurityModuleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HsmState other && Equals(other);
+        public override bool Equals(object obj) => obj is HardwareSecurityModuleState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(HsmState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HardwareSecurityModuleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
