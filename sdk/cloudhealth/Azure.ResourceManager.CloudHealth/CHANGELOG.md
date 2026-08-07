@@ -6,12 +6,6 @@
 
 Additional Signal refresh interval added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.3 (2026-06-08)
 
 ### Features Added
