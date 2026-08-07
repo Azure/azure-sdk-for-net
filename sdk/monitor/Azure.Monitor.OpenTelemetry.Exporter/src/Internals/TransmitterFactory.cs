@@ -32,20 +32,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
-            if (!_transmitters.TryGetValue(key, out ITransmitter? transmitter))
+            lock (_lockObj)
             {
-                lock (_lockObj)
+                if (!_transmitters.TryGetValue(key, out ITransmitter? transmitter))
                 {
-                    if (!_transmitters.TryGetValue(key, out transmitter))
-                    {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
+                    transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
-                        _transmitters.Add(key, transmitter);
-                    }
+                    _transmitters.Add(key, transmitter);
                 }
-            }
 
-            return transmitter;
+                // Each exporter handed this instance shares its lifetime, so the instance must
+                // outlive the first of them to be disposed.
+                (transmitter as AzureMonitorTransmitter)?.AddReference();
+
+                return transmitter;
+            }
         }
 
         internal void Set(string connectionString, ITransmitter transmitter)

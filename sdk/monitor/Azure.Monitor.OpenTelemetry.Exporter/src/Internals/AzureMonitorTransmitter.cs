@@ -38,11 +38,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private readonly bool _isAadEnabled;
         private readonly string? _storageDirectory;
+        private readonly object _drainLock = new();
+        private int _referenceCount;
         private int _persistOnlyScopeCount;
         private Task? _inFlightDrain;
         private Stopwatch? _drainStarted;
         private int _drainWaitMilliseconds;
-        private bool _disposed;
+        internal bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
         {
@@ -184,7 +186,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal bool IsPersistOnly => Volatile.Read(ref _persistOnlyScopeCount) > 0;
 
+        internal Task? InFlightDrain => _inFlightDrain;
+
         public IDisposable BeginPersistOnlyScope() => new PersistOnlyScope(this);
+
+        /// <summary>
+        /// Records that another exporter shares this instance. Balanced by <see cref="Dispose()"/>.
+        /// </summary>
+        internal void AddReference() => Interlocked.Increment(ref _referenceCount);
 
         public void DrainStorage(int waitMilliseconds)
         {
@@ -194,10 +203,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return;
             }
 
-            _drainWaitMilliseconds = waitMilliseconds;
-            _drainStarted = Stopwatch.StartNew();
-            var drain = handler.DrainAsync();
-            _inFlightDrain = drain;
+            Task drain;
+
+            lock (_drainLock)
+            {
+                var existing = _inFlightDrain;
+                if (existing != null && !existing.IsCompleted)
+                {
+                    // Each signal shuts down separately but shares this transmitter. Replacing a
+                    // running drain with a fresh task would hand Dispose a no-op to wait on and let
+                    // teardown proceed underneath the real one.
+                    drain = existing;
+                    waitMilliseconds = GetRemainingDrainWait();
+                }
+                else
+                {
+                    _drainWaitMilliseconds = waitMilliseconds;
+                    _drainStarted = Stopwatch.StartNew();
+                    drain = handler.DrainAsync();
+                    _inFlightDrain = drain;
+                }
+            }
 
             WaitForDrain(drain, waitMilliseconds);
         }
@@ -393,10 +419,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     // Give an in-flight drain whatever is left of the budget the caller allowed
                     // before the HTTP pipeline goes away. Whatever it does not finish stays on disk.
-                    var drain = _inFlightDrain;
+                    Task? drain;
+                    int remaining;
+                    lock (_drainLock)
+                    {
+                        drain = _inFlightDrain;
+                        remaining = GetRemainingDrainWait();
+                    }
+
                     if (drain != null)
                     {
-                        WaitForDrain(drain, GetRemainingDrainWait());
+                        WaitForDrain(drain, remaining);
                     }
 
                     _transmitFromStorageHandler?.Dispose();
@@ -414,6 +447,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public void Dispose()
         {
+            // Every exporter using the same connection string shares this instance, so tearing it
+            // down when the first of them is disposed would stop storage draining for the rest.
+            if (Interlocked.Decrement(ref _referenceCount) > 0)
+            {
+                return;
+            }
+
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);

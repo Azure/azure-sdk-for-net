@@ -264,6 +264,95 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             return accepted;
         }
 
+        [Fact]
+        public void DrainRePersistsOnlyTheRetryableSubsetOfAPartialSuccess()
+        {
+            // Index 1 is retryable, index 2 is not; index 0 was accepted.
+            const string PartialSuccess = "{\"itemsReceived\":3,\"itemsAccepted\":1,\"errors\":["
+                + "{\"index\":1,\"statusCode\":500,\"message\":\"Internal Server Error\"},"
+                + "{\"index\":2,\"statusCode\":400,\"message\":\"Invalid instrumentation key\"}]}";
+
+            using var transmitter = CreateTransmitter(_ => new MockResponse(206).SetContent(PartialSuccess), out var transport);
+
+            SeedBlobs(transmitter, count: 3);
+
+            transmitter._transmitFromStorageHandler!.Drain();
+
+            // The three originals are superseded by a single blob holding just the retryable item.
+            Assert.Single(transport.Requests);
+            Assert.Single(transmitter._fileBlobProvider!.GetBlobs());
+            Assert.Equal(0, CountFiles("*.lock"));
+        }
+
+        [Fact]
+        public void DrainKeepsTheBatchWhenAPartialSuccessCannotBeRead()
+        {
+            using var transmitter = CreateTransmitter(_ => new MockResponse(206), out _);
+
+            SeedBlobs(transmitter, count: 3);
+
+            transmitter._transmitFromStorageHandler!.Drain();
+
+            // Without a readable response there is no way to know what was accepted, so discarding
+            // the batch would lose telemetry that ingestion never confirmed.
+            Assert.Equal(3, CountFiles("*.lock"));
+            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+        }
+
+        [Fact]
+        public void SharedTransmitterSurvivesUntilEveryExporterIsDisposed()
+        {
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint={TestEndpoint}",
+                StorageDirectory = _storageRoot,
+                Transport = new MockTransport(_ => new MockResponse(200).SetContent("Ok")),
+                EnableStatsbeat = false,
+            };
+
+            var platform = new MockPlatform();
+            var first = (AzureMonitorTransmitter)TransmitterFactory.Instance.Get(options, platform);
+            var second = (AzureMonitorTransmitter)TransmitterFactory.Instance.Get(options, platform);
+
+            Assert.Same(first, second);
+
+            // Every signal shares one transmitter, so the first provider to shut down must not take
+            // storage draining away from the others.
+            first.Dispose();
+            Assert.False(first._disposed);
+
+            second.Dispose();
+            Assert.True(first._disposed);
+        }
+
+        [Fact]
+        public void ConcurrentShutdownsShareASingleInFlightDrain()
+        {
+            using var gate = new ManualResetEventSlim(false);
+            using var transmitter = CreateTransmitter(
+                _ =>
+                {
+                    gate.Wait(TimeSpan.FromSeconds(10));
+                    return new MockResponse(200).SetContent("{\"itemsReceived\":1,\"itemsAccepted\":1,\"errors\":[]}");
+                },
+                out _);
+
+            SeedBlobs(transmitter, count: 1);
+
+            transmitter.DrainStorage(0);
+            var started = transmitter.InFlightDrain;
+            Assert.NotNull(started);
+            Assert.False(started!.IsCompleted);
+
+            // A second signal shutting down must not replace the running drain with a no-op that
+            // would let disposal proceed underneath it.
+            transmitter.DrainStorage(0);
+            Assert.Same(started, transmitter.InFlightDrain);
+
+            gate.Set();
+            started.Wait(TimeSpan.FromSeconds(10));
+        }
+
         [Theory]
         [InlineData(Timeout.Infinite, 0)]
         [InlineData(-5, 0)]

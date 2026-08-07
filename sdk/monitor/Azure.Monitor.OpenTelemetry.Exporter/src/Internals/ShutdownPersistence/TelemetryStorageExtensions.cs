@@ -39,7 +39,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
                 return result;
             }
 
-            return TryEvictOldest(storage) ? storage.SaveTelemetry(content) : result;
+            // The provider enumerates newest-first, so this walks backwards to reach the oldest
+            // telemetry, retrying after each eviction to discard no more than necessary.
+            var blobs = new List<PersistentBlob>(storage.GetBlobs());
+            for (int i = blobs.Count - 1, evicted = 0; i >= 0 && evicted < MaxBlobsToEvict; i--)
+            {
+                if (!blobs[i].TryDelete())
+                {
+                    continue;
+                }
+
+                evicted++;
+
+                result = storage.SaveTelemetry(content);
+                if (result == ExportResult.Success)
+                {
+                    return result;
+                }
+            }
+
+            return result;
         }
 
         private static bool IsAtCapacity(string? storageDirectory, long maxSizeInBytes)
@@ -67,20 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence
             }
 
             return false;
-        }
-
-        private static bool TryEvictOldest(PersistentBlobProvider storage)
-        {
-            var evicted = false;
-
-            // The provider enumerates newest-first, so the tail of this list is the oldest telemetry.
-            var blobs = new List<PersistentBlob>(storage.GetBlobs());
-            for (int i = blobs.Count - 1, count = 0; i >= 0 && count < MaxBlobsToEvict; i--, count++)
-            {
-                evicted |= blobs[i].TryDelete();
-            }
-
-            return evicted;
         }
     }
 }
