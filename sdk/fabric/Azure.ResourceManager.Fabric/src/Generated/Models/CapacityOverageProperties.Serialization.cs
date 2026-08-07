@@ -13,52 +13,52 @@ using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> The updatable properties of the FabricCapacity. </summary>
-    public partial class FabricCapacityUpdateProperties : IJsonModel<FabricCapacityUpdateProperties>
+    /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+    public partial class CapacityOverageProperties : IJsonModel<CapacityOverageProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricCapacityUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CapacityOverageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacityUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFabricCapacityUpdateProperties(document.RootElement, options);
+                        return DeserializeCapacityOverageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricCapacityUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacityUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FabricCapacityUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FabricCapacityUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CapacityOverageProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricCapacityUpdateProperties IPersistableModel<FabricCapacityUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CapacityOverageProperties IPersistableModel<CapacityOverageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FabricCapacityUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CapacityOverageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FabricCapacityUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CapacityOverageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacityUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricCapacityUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Overage))
+            if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("overage"u8);
-                writer.WriteObjectValue(Overage, options);
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Administration))
+            if (Optional.IsDefined(ThresholdCapacityUnitHours))
             {
-                writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration, options);
+                writer.WritePropertyName("thresholdCapacityUnitHours"u8);
+                writer.WriteNumberValue(ThresholdCapacityUnitHours.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,50 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricCapacityUpdateProperties IJsonModel<FabricCapacityUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CapacityOverageProperties IJsonModel<CapacityOverageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricCapacityUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CapacityOverageProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacityUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityOverageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricCapacityUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityOverageProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricCapacityUpdateProperties(document.RootElement, options);
+            return DeserializeCapacityOverageProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FabricCapacityUpdateProperties DeserializeFabricCapacityUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CapacityOverageProperties DeserializeCapacityOverageProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CapacityOverageProperties overage = default;
-            FabricCapacityAdministration administration = default;
+            CapacityOverageState? state = default;
+            int? thresholdCapacityUnitHours = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("overage"u8))
+                if (prop.NameEquals("state"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overage = CapacityOverageProperties.DeserializeCapacityOverageProperties(prop.Value, options);
+                    state = new CapacityOverageState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("administration"u8))
+                if (prop.NameEquals("thresholdCapacityUnitHours"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    administration = FabricCapacityAdministration.DeserializeFabricCapacityAdministration(prop.Value, options);
+                    thresholdCapacityUnitHours = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricCapacityUpdateProperties(overage, administration, additionalBinaryDataProperties);
+            return new CapacityOverageProperties(state, thresholdCapacityUnitHours, additionalBinaryDataProperties);
         }
     }
 }
