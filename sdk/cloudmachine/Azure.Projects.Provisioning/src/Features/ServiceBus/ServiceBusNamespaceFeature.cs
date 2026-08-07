@@ -6,8 +6,15 @@ using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects;
 
+/// <summary>
+/// Represents a provisioning feature that emits an Azure Service Bus namespace resource.
+/// </summary>
 public class ServiceBusNamespaceFeature : AzureProjectFeature
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ServiceBusNamespaceFeature"/> class.
+    /// </summary>
+    /// <param name="namespaceName">The name of the Service Bus namespace.</param>
     public ServiceBusNamespaceFeature(string namespaceName)
     {
         Name = namespaceName;
@@ -15,10 +22,23 @@ public class ServiceBusNamespaceFeature : AzureProjectFeature
         Tier = ServiceBusSkuTier.Standard;
     }
 
+    /// <summary>
+    /// Gets the name of the Service Bus namespace.
+    /// </summary>
     public string Name { get; }
+    /// <summary>
+    /// Gets the SKU name for the Service Bus namespace.
+    /// </summary>
     public ServiceBusSkuName Sku { get; }
+    /// <summary>
+    /// Gets the SKU tier for the Service Bus namespace.
+    /// </summary>
     public ServiceBusSkuTier Tier { get; }
 
+    /// <summary>
+    /// Emits the provisioning constructs for the Service Bus namespace into the specified infrastructure.
+    /// </summary>
+    /// <param name="infrastructure">The project infrastructure to emit constructs into.</param>
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         var sb = new ServiceBusNamespace("cm_servicebus", ServiceBusNamespace.ResourceVersions.V2024_01_01)

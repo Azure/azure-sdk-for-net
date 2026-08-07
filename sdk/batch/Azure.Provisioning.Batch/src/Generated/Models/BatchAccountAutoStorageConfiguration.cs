@@ -78,7 +78,7 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _lastKeySyncedOn = DefineProperty<DateTimeOffset>(nameof(LastKeySyncedOn), new string[] { "lastKeySync" });
+            _lastKeySyncedOn = DefineProperty<DateTimeOffset>(nameof(LastKeySyncedOn), new string[] { "lastKeySync" }, format: "O");
             _storageAccountId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountId), new string[] { "storageAccountId" });
             _authenticationMode = DefineProperty<BatchAutoStorageAuthenticationMode>(nameof(AuthenticationMode), new string[] { "authenticationMode" });
             _nodeIdentity = DefineModelProperty<ComputeNodeIdentityReference>(nameof(NodeIdentity), new string[] { "nodeIdentityReference" });
