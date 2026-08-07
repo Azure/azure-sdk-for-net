@@ -15,21 +15,12 @@ using static Azure.Storage.Cryptography.Models.ClientSideEncryptionVersionExtens
 
 namespace Azure.Storage.Cryptography
 {
-    /// <summary>
-    /// Decryptor for a single storage resource being downloaded. Security protections exist for
-    /// multi-part downloads within that single resource, but prevent this decryptor from being
-    /// used for multiple different resource downloads.
-    /// </summary>
     internal class ClientSideDecryptor
     {
         /// <summary>
-        /// A cache for the content encryption key if high level API spans across multiple service calls
-        /// (e.g. partitioned download).
-        /// This cache implements protections against a downgrade attack during a multi-part download.
-        /// Those protections only work for the single resource being downloaded. Cache cannot be reused
-        /// across multiple different resources.
+        /// A cache for encryption key if high level API spans across multiple service calls.
         /// </summary>
-        private readonly AsyncLocal<ContentEncryptionKeyCache> s_contentEncryptionKeyCache = new();
+        private ContentEncryptionKeyCache s_contentEncryptionKeyCache;
 
         /// <summary>
         /// Clients that can upload data have a key encryption key stored on them. Checking if
@@ -47,9 +38,6 @@ namespace Azure.Storage.Cryptography
         {
             _potentialCachedIKeyEncryptionKey = options.KeyEncryptionKey;
             _keyResolver = options.KeyResolver;
-            // We don't care about CSE version here.
-            // The download version is whatever the metadata says it is.
-            // We verify the metadata elsewhere.
         }
 
         /// <summary>
@@ -402,10 +390,9 @@ namespace Azure.Storage.Cryptography
             bool async,
             CancellationToken cancellationToken)
         {
-            ContentEncryptionKeyCache cekCache = s_contentEncryptionKeyCache.Value;
-            if (cekCache != null)
+            if (s_contentEncryptionKeyCache != null)
             {
-                if (cekCache.TryGetKey(encryptionData, out Memory<byte> cek))
+                if (s_contentEncryptionKeyCache.TryGetKey(encryptionData, out Memory<byte> cek))
                 {
                     return cek;
                 }
@@ -478,10 +465,10 @@ namespace Azure.Storage.Cryptography
                     throw Errors.InvalidArgument(nameof(encryptionData));
             }
 
-            if (s_contentEncryptionKeyCache.Value != default)
-            {
-                s_contentEncryptionKeyCache.Value.Key = unwrappedKey;
-            }
+            s_contentEncryptionKeyCache = new(
+                unwrappedKey,
+                encryptionData.WrappedContentKey.KeyId,
+                encryptionData.EncryptionAgent.EncryptionVersion);
 
             return unwrappedKey;
         }
