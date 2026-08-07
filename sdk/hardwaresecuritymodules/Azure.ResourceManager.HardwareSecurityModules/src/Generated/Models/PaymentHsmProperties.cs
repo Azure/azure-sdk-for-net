@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="state"> The Payment HSM State. </param>
         /// <param name="stateMessage"> The Payment HSM State message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PaymentHsmProperties(string appFqdn, string mgmtFqdn, HsmState? state, string stateMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PaymentHsmProperties(string appFqdn, string mgmtFqdn, HardwareSecurityModuleState? state, string stateMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppFqdn = appFqdn;
             MgmtFqdn = mgmtFqdn;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public string MgmtFqdn { get; }
 
         /// <summary> The Payment HSM State. </summary>
-        public HsmState? State { get; }
+        public HardwareSecurityModuleState? State { get; }
 
         /// <summary> The Payment HSM State message. </summary>
         public string StateMessage { get; }

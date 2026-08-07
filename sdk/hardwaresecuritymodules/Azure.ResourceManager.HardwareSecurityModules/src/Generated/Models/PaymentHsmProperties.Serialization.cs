@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
             string appFqdn = default;
             string mgmtFqdn = default;
-            HsmState? state = default;
+            HardwareSecurityModuleState? state = default;
             string stateMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    state = new HsmState(prop.Value.GetString());
+                    state = new HardwareSecurityModuleState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("stateMessage"u8))
