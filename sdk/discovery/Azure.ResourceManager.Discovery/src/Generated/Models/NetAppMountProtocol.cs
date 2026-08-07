@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Discovery.Models
     {
         private readonly string _value;
         /// <summary> NFS protocol. Version of NFS used may vary based on storage type. </summary>
-        private const string NFSValue = "NFS";
+        private const string NfsValue = "NFS";
 
         /// <summary> Initializes a new instance of <see cref="NetAppMountProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.Discovery.Models
 
             _value = value;
         }
+
+        /// <summary> NFS protocol. Version of NFS used may vary based on storage type. </summary>
+        public static NetAppMountProtocol Nfs { get; } = new NetAppMountProtocol(NfsValue);
 
         /// <summary> Determines if two <see cref="NetAppMountProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
