@@ -8,5 +8,4 @@ if ((requestConditions?.IfUnmodifiedSince != null))
 }
 
 using global::Azure.Core.HttpMessage message = this.CreateFooRequest(requestConditions, context);
-message.BufferResponse = false;
 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
