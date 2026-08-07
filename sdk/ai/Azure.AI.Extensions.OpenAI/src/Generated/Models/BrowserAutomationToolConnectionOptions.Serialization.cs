@@ -10,56 +10,56 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
-    public partial class BrowserAutomationToolConnectionParameters : IJsonModel<BrowserAutomationToolConnectionParameters>
+    public partial class BrowserAutomationToolConnectionOptions : IJsonModel<BrowserAutomationToolConnectionOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionParameters"/> for deserialization. </summary>
-        internal BrowserAutomationToolConnectionParameters()
+        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionOptions"/> for deserialization. </summary>
+        internal BrowserAutomationToolConnectionOptions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrowserAutomationToolConnectionParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BrowserAutomationToolConnectionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBrowserAutomationToolConnectionParameters(document.RootElement, options);
+                        return DeserializeBrowserAutomationToolConnectionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrowserAutomationToolConnectionParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BrowserAutomationToolConnectionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BrowserAutomationToolConnectionParameters IPersistableModel<BrowserAutomationToolConnectionParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BrowserAutomationToolConnectionOptions IPersistableModel<BrowserAutomationToolConnectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrowserAutomationToolConnectionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BrowserAutomationToolConnectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BrowserAutomationToolConnectionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BrowserAutomationToolConnectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("project_connection_id"u8);
             writer.WriteStringValue(ProjectConnectionId);
@@ -96,24 +96,24 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BrowserAutomationToolConnectionParameters IJsonModel<BrowserAutomationToolConnectionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BrowserAutomationToolConnectionOptions IJsonModel<BrowserAutomationToolConnectionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrowserAutomationToolConnectionParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BrowserAutomationToolConnectionOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolConnectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BrowserAutomationToolConnectionOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBrowserAutomationToolConnectionParameters(document.RootElement, options);
+            return DeserializeBrowserAutomationToolConnectionOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BrowserAutomationToolConnectionParameters DeserializeBrowserAutomationToolConnectionParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrowserAutomationToolConnectionOptions DeserializeBrowserAutomationToolConnectionOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties);
+            return new BrowserAutomationToolConnectionOptions(projectConnectionId, additionalBinaryDataProperties);
         }
     }
 }

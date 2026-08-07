@@ -10,25 +10,25 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
     [Experimental("AAIP001")]
-    public partial class BrowserAutomationToolConnectionParameters
+    public partial class BrowserAutomationToolConnectionOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionOptions"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public BrowserAutomationToolConnectionParameters(string projectConnectionId)
+        public BrowserAutomationToolConnectionOptions(string projectConnectionId)
         {
             Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
             ProjectConnectionId = projectConnectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionOptions"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserAutomationToolConnectionParameters(string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BrowserAutomationToolConnectionOptions(string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

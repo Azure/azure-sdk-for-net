@@ -11,17 +11,17 @@ namespace Azure.AI.Extensions.OpenAI
     /// Authentication type for OpenApi endpoint. Allowed types are:
     /// <list type="bullet"><item><description>Anonymous (no authentication required)</description></item><item><description>Project Connection (requires project_connection_id to endpoint, as setup in AI Foundry)</description></item><item><description>Managed_Identity (requires audience for identity based auth)</description></item></list>
     /// </summary>
-    internal readonly partial struct OpenApiAuthType : IEquatable<OpenApiAuthType>
+    internal readonly partial struct OpenApiAuthenticationKind : IEquatable<OpenApiAuthenticationKind>
     {
         private readonly string _value;
         private const string AnonymousValue = "anonymous";
         private const string ProjectConnectionValue = "project_connection";
         private const string ManagedIdentityValue = "managed_identity";
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OpenApiAuthType(string value)
+        public OpenApiAuthenticationKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,38 +29,38 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Gets the Anonymous. </summary>
-        public static OpenApiAuthType Anonymous { get; } = new OpenApiAuthType(AnonymousValue);
+        public static OpenApiAuthenticationKind Anonymous { get; } = new OpenApiAuthenticationKind(AnonymousValue);
 
         /// <summary> Gets the ProjectConnection. </summary>
-        public static OpenApiAuthType ProjectConnection { get; } = new OpenApiAuthType(ProjectConnectionValue);
+        public static OpenApiAuthenticationKind ProjectConnection { get; } = new OpenApiAuthenticationKind(ProjectConnectionValue);
 
         /// <summary> Gets the ManagedIdentity. </summary>
-        public static OpenApiAuthType ManagedIdentity { get; } = new OpenApiAuthType(ManagedIdentityValue);
+        public static OpenApiAuthenticationKind ManagedIdentity { get; } = new OpenApiAuthenticationKind(ManagedIdentityValue);
 
-        /// <summary> Determines if two <see cref="OpenApiAuthType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="OpenApiAuthenticationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OpenApiAuthType left, OpenApiAuthType right) => left.Equals(right);
+        public static bool operator ==(OpenApiAuthenticationKind left, OpenApiAuthenticationKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OpenApiAuthType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="OpenApiAuthenticationKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OpenApiAuthType left, OpenApiAuthType right) => !left.Equals(right);
+        public static bool operator !=(OpenApiAuthenticationKind left, OpenApiAuthenticationKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OpenApiAuthType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OpenApiAuthenticationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenApiAuthType(string value) => new OpenApiAuthType(value);
+        public static implicit operator OpenApiAuthenticationKind(string value) => new OpenApiAuthenticationKind(value);
 
-        /// <summary> Converts a string to a <see cref="OpenApiAuthType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OpenApiAuthenticationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OpenApiAuthType?(string value) => value == null ? null : new OpenApiAuthType(value);
+        public static implicit operator OpenApiAuthenticationKind?(string value) => value == null ? null : new OpenApiAuthenticationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OpenApiAuthType other && Equals(other);
+        public override bool Equals(object obj) => obj is OpenApiAuthenticationKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OpenApiAuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OpenApiAuthenticationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

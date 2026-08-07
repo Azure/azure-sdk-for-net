@@ -10,10 +10,10 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
-    public partial class OpenApiManagedAuthDetails : OpenApiAuthenticationDetails, IJsonModel<OpenApiManagedAuthDetails>
+    public partial class OpenApiManagedAuthenticationDetails : OpenApiAuthenticationDetails, IJsonModel<OpenApiManagedAuthenticationDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthDetails"/> for deserialization. </summary>
-        internal OpenApiManagedAuthDetails()
+        /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthenticationDetails"/> for deserialization. </summary>
+        internal OpenApiManagedAuthenticationDetails()
         {
         }
 
@@ -21,45 +21,45 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override OpenApiAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenApiManagedAuthDetails(document.RootElement, options);
+                        return DeserializeOpenApiManagedAuthenticationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenApiManagedAuthDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiManagedAuthenticationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OpenApiManagedAuthDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiManagedAuthenticationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenApiManagedAuthDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OpenApiManagedAuthenticationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiManagedAuthDetails IPersistableModel<OpenApiManagedAuthDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenApiManagedAuthDetails)PersistableModelCreateCore(data, options);
+        OpenApiManagedAuthenticationDetails IPersistableModel<OpenApiManagedAuthenticationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (OpenApiManagedAuthenticationDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenApiManagedAuthDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OpenApiManagedAuthenticationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OpenApiManagedAuthDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OpenApiManagedAuthenticationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenApiManagedAuthDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiManagedAuthenticationDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("security_scheme"u8);
@@ -82,37 +82,37 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenApiManagedAuthDetails IJsonModel<OpenApiManagedAuthDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OpenApiManagedAuthDetails)JsonModelCreateCore(ref reader, options);
+        OpenApiManagedAuthenticationDetails IJsonModel<OpenApiManagedAuthenticationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OpenApiManagedAuthenticationDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override OpenApiAuthenticationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenApiManagedAuthDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiManagedAuthenticationDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenApiManagedAuthDetails(document.RootElement, options);
+            return DeserializeOpenApiManagedAuthenticationDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OpenApiManagedAuthDetails DeserializeOpenApiManagedAuthDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static OpenApiManagedAuthenticationDetails DeserializeOpenApiManagedAuthenticationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OpenApiAuthType @type = default;
+            OpenApiAuthenticationKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             OpenApiManagedSecurityScheme securityScheme = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new OpenApiAuthType(prop.Value.GetString());
+                    kind = new OpenApiAuthenticationKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("security_scheme"u8))
@@ -125,7 +125,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenApiManagedAuthDetails(@type, additionalBinaryDataProperties, securityScheme);
+            return new OpenApiManagedAuthenticationDetails(kind, additionalBinaryDataProperties, securityScheme);
         }
     }
 }

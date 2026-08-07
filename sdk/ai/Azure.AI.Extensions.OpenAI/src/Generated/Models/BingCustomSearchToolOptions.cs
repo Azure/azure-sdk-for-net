@@ -22,7 +22,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// resource attached to the tool.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations)
+        public BingCustomSearchToolOptions(IEnumerable<BingCustomSearchOptions> searchConfigurations)
         {
             Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingCustomSearchToolOptions(IList<BingCustomSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingCustomSearchToolOptions(IList<BingCustomSearchOptions> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchConfigurations = searchConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,6 +45,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public IList<BingCustomSearchConfiguration> SearchConfigurations { get; }
+        public IList<BingCustomSearchOptions> SearchConfigurations { get; }
     }
 }

@@ -55,9 +55,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// search configuration resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="OpenAI.BingGroundingSearchToolOptions"/> instance for mocking. </returns>
-        public static BingGroundingSearchToolOptions BingGroundingSearchToolOptions(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations = default)
+        public static BingGroundingSearchToolOptions BingGroundingSearchToolOptions(IEnumerable<BingGroundingSearchOptions> searchConfigurations = default)
         {
-            searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchConfiguration>();
+            searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchOptions>();
 
             return new BingGroundingSearchToolOptions(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
@@ -68,10 +68,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="language"> The language to use for user interface strings when calling Bing API. </param>
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingSearchConfiguration"/> instance for mocking. </returns>
-        public static BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string projectConnectionId = default, string market = default, string language = default, long? count = default, string freshness = default)
+        /// <returns> A new <see cref="OpenAI.BingGroundingSearchOptions"/> instance for mocking. </returns>
+        public static BingGroundingSearchOptions BingGroundingSearchOptions(string projectConnectionId = default, string market = default, string language = default, long? count = default, string freshness = default)
         {
-            return new BingGroundingSearchConfiguration(
+            return new BingGroundingSearchOptions(
                 projectConnectionId,
                 market,
                 language,
@@ -203,42 +203,42 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
-        /// <param name="auth"> Open API authentication details. </param>
-        /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
+        /// <param name="authentication"> Open API authentication details. </param>
+        /// <param name="defaultParameters"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiFunctionDefinition"/> instance for mocking. </returns>
-        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> specification = default, OpenApiAuthenticationDetails auth = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
         {
             specification ??= new ChangeTrackingDictionary<string, BinaryData>();
-            defaultParams ??= new ChangeTrackingList<string>();
+            defaultParameters ??= new ChangeTrackingList<string>();
             functions ??= new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
 
             return new OpenApiFunctionDefinition(
                 name,
                 description,
                 specification,
-                auth,
-                defaultParams.ToList(),
+                authentication,
+                defaultParameters.ToList(),
                 functions.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>.
         /// </summary>
-        /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
+        /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string @type = default)
+        public static OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string kind = default)
         {
-            return new UnknownOpenApiAuthenticationDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
+            return new UnknownOpenApiAuthenticationDetails(new OpenApiAuthenticationKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi anonymous authentication. </summary>
         /// <returns> A new <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails()
         {
-            return new OpenAPIAnonymousAuthenticationDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
+            return new OpenAPIAnonymousAuthenticationDetails(OpenApiAuthenticationKind.Anonymous, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi project connection authentication. </summary>
@@ -246,7 +246,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
         {
-            return new OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthenticationKind.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
@@ -259,10 +259,10 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Security details for OpenApi managed_identity authentication. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiManagedAuthDetails"/> instance for mocking. </returns>
-        public static OpenApiManagedAuthDetails OpenApiManagedAuthDetails(OpenApiManagedSecurityScheme securityScheme = default)
+        /// <returns> A new <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiManagedAuthenticationDetails OpenApiManagedAuthenticationDetails(OpenApiManagedSecurityScheme securityScheme = default)
         {
-            return new OpenApiManagedAuthDetails(OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiManagedAuthenticationDetails(OpenApiAuthenticationKind.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
@@ -301,9 +301,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <returns> A new <see cref="OpenAI.BingCustomSearchToolOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static BingCustomSearchToolOptions BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
+        public static BingCustomSearchToolOptions BingCustomSearchToolOptions(IEnumerable<BingCustomSearchOptions> searchConfigurations = default)
         {
-            searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
+            searchConfigurations ??= new ChangeTrackingList<BingCustomSearchOptions>();
 
             return new BingCustomSearchToolOptions(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
@@ -315,11 +315,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
-        /// <returns> A new <see cref="OpenAI.BingCustomSearchConfiguration"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static BingCustomSearchConfiguration BingCustomSearchConfiguration(string projectConnectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        public static BingCustomSearchOptions BingCustomSearchOptions(string projectConnectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
         {
-            return new BingCustomSearchConfiguration(
+            return new BingCustomSearchOptions(
                 projectConnectionId,
                 instanceName,
                 market,
@@ -342,18 +342,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionParameters connection = default)
+        public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection = default)
         {
             return new BrowserAutomationToolOptions(connection, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
         /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolConnectionOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string projectConnectionId = default)
+        public static BrowserAutomationToolConnectionOptions BrowserAutomationToolConnectionOptions(string projectConnectionId = default)
         {
-            return new BrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties: null);
+            return new BrowserAutomationToolConnectionOptions(projectConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
@@ -593,20 +593,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
-        /// <param name="id0"></param>
-        /// <param name="internalConsentLink"></param>
+        /// <param name="consentLink"></param>
         /// <param name="serverLabel"></param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string id0 = default, string internalConsentLink = default, string serverLabel = default)
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, Uri consentLink = default, string serverLabel = default)
         {
             return new OAuthConsentRequestResponseItem(
                 @type,
                 id,
                 agentReference,
                 responseId,
-                id0,
-                internalConsentLink,
+                consentLink,
                 serverLabel,
                 additionalBinaryDataProperties: null);
         }

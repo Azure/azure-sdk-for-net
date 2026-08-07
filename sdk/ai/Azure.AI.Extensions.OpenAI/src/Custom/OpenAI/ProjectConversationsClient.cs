@@ -41,14 +41,14 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="options"> The options used to create the conversation. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created project conversation. </returns>
-    public virtual ClientResult<ProjectConversation> CreateProjectConversation(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ConversationResource> CreateProjectConversation(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
         using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
         try
         {
             ClientResult protocolResult = base.CreateConversation(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
-            var result = protocolResult.ToAgentClientResult<ProjectConversation>();
+            var result = protocolResult.ToOpenAIResult<ConversationResource>();
             scope?.RecordConversationId(result.Value?.Id);
             return result;
         }
@@ -63,14 +63,14 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="options"> The options used to create the conversation. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created project conversation. </returns>
-    public virtual async Task<ClientResult<ProjectConversation>> CreateProjectConversationAsync(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ConversationResource>> CreateProjectConversationAsync(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
         using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
         try
         {
             ClientResult protocolResult = await base.CreateConversationAsync(BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            var result = protocolResult.ToAgentClientResult<ProjectConversation>();
+            var result = protocolResult.ToOpenAIResult<ConversationResource>();
             scope?.RecordConversationId(result.Value?.Id);
             return result;
         }
