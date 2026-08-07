@@ -261,6 +261,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
 | machinelearningservices | Azure.ResourceManager.MachineLearning | ✅ |
 | maintenance | Azure.ResourceManager.Maintenance | ✅ |
+| managedapplications | Azure.ResourceManager.ManagedApplications | ✅ |
 | managednetworkfabric | Azure.ResourceManager.ManagedNetworkFabric | ✅ |
 | managedops | Azure.ResourceManager.ManagedOps | ✅ |
 | managedserviceidentity | Azure.ResourceManager.ManagedServiceIdentities | ✅ |
