@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!--
+      TARGET FRAMEWORK:
+      - net472: Full repro on Windows with .NET Framework 4.7.2 (the issue environment)
+      - net8.0: Cross-platform demo (MissingMethodException won't occur, but shows the code path)
+      
+      Toggle the TargetFramework below to switch between them.
+    -->
+    <TargetFramework>net8.0</TargetFramework>
+    <!-- Uncomment below and comment out net8.0 above to test on .NET Framework 4.7.2:
+    <TargetFramework>net472</TargetFramework>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    -->
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <!-- Opt out of Central Package Management since this is a standalone repro sample -->
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Issue #58093: These are the dependencies that trigger the bug.
+      Azure.ResourceManager.Sql 1.4.0 GA requires Azure.Core >= 1.52.0,
+      which requires System.Diagnostics.DiagnosticSource >= 9.0.0.
+      
+      On .NET Framework 4.7.2 with stale binding redirects, the runtime loads
+      an older DiagnosticSource that lacks ActivitySource(string) constructor.
+    -->
+    <PackageReference Include="Azure.ResourceManager.Sql" Version="1.4.0" />
+    <PackageReference Include="Azure.Identity" Version="1.13.2" />
+
+    <!-- Required for net472 cross-compilation on non-Windows -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
